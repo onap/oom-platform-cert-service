@@ -46,3 +46,18 @@
      
     ```   
  Should return {"status":"UP"}
+
+### Running CSITs
+Pull csit repository
+    
+    ```
+     https://gerrit.onap.org/r/admin/repos/integration/csit
+    
+    ```
+Go to created directory and run
+    
+    ```
+     sudo ./run-csit.sh plans/aaf/cert-service
+    
+    ```
+
