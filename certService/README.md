@@ -18,3 +18,16 @@
      mvn clean package
 
     ```
+    
+### Building Docker image
+    ```
+    docker build -t cert-service .
+
+    ```
+
+### Running Docker container
+    ```
+    docker run -p 8080:8080 --name cert-service cert-service
+
+    ```
+    
