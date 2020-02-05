@@ -36,6 +36,7 @@
         <spring-boot-starter.version>2.2.4.RELEASE</spring-boot-starter.version>
         <maven-javadoc-plugin.version>3.0.1</maven-javadoc-plugin.version>
         <maven-surefire-plugin.version>3.0.0-M1</maven-surefire-plugin.version>
+        <spring-boot-starter-actuator.version>2.2.4.RELEASE</spring-boot-starter-actuator.version>
     </properties>
 
     <dependencyManagement>
@@ -80,6 +81,11 @@
             <artifactId>assertj-core</artifactId>
             <version>${assertj-core.version}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+            <version>${spring-boot-starter-actuator.version}</version>
         </dependency>
     </dependencies>
 

@@ -30,4 +30,19 @@
     docker run -p 8080:8080 --name cert-service cert-service
 
     ```
-    
+
+### Health Check
+ Browser:
+ 
+    ```
+     http://<localhost>:8080/actuator/health
+     
+    ```
+     
+ Curl:   
+ 
+    ```
+     curl localhost:8080/actuator/health 
+     
+    ```   
+ Should return {"status":"UP"}
