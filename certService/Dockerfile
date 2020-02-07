@@ -2,6 +2,12 @@ FROM docker.io/openjdk:11-jre-slim
 
 ARG VERSION=0.0.1-SNAPSHOT
 
-COPY target/cert-service-${VERSION}.jar ./app/cert-service.jar
+RUN groupadd certService && useradd -g certService certService
 
-ENTRYPOINT ["java","-jar","./app/cert-service.jar"]
+RUN chown -R certService:certService /var/log
+
+USER certService:certService
+
+COPY target/cert-service-${VERSION}.jar ./opt/onap/aaf/certservice/cert-service.jar
+
+ENTRYPOINT ["java","-jar","./opt/onap/aaf/certservice/cert-service.jar"]

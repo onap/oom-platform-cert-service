@@ -60,4 +60,27 @@ Go to created directory and run
      sudo ./run-csit.sh plans/aaf/cert-service
     
     ```
+### Logs locally
+
+path: 
+
+    ```
+     var/log/onap/aaf/certservice/
+    ```    
+### Logs in Docker container
+    ```
+     docker exec -it cert-service bash
+    ```
+
+path:
+
+    ```
+      cd /var/log/onap/aaf/certservice
+    ```
+You should see:    
+audit.log  error.log  trace.log
+
+
+     
+     
 
