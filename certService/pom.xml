@@ -38,6 +38,7 @@
         <spring-boot-starter-actuator.version>2.2.4.RELEASE</spring-boot-starter-actuator.version>
         <spring-boot-starter-log4j2.version>2.1.5.RELEASE</spring-boot-starter-log4j2.version>
         <springdoc-openapi-ui.version>1.2.21</springdoc-openapi-ui.version>
+        <docker-maven-plugin.version>0.33.0</docker-maven-plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -144,6 +145,7 @@
                     <quiet>true</quiet>
                     <verbose>false</verbose>
                     <useStandardDocletOptions>false</useStandardDocletOptions>
+                    <javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
                 </configuration>
                 <executions>
                     <execution>
@@ -164,4 +166,58 @@
         </plugins>
     </build>
 
+    <profiles>
+        <profile>
+            <id>docker</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>io.fabric8</groupId>
+                        <artifactId>docker-maven-plugin</artifactId>
+                        <version>${docker-maven-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>start</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>build</goal>
+                                    <goal>start</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>stop</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>stop</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <images>
+                                <image>
+                                    <name>cert-service</name>
+                                    <build>
+                                        <dockerFile>${project.basedir}/Dockerfile</dockerFile >
+                                    </build>
+                                    <run>
+                                        <ports>
+                                            <port>8080:8080</port>
+                                        </ports>
+                                        <wait>
+                                            <!-- Check for this URL to return a 200 return code .... -->
+                                            <url>http://localhost:8080/actuator/health</url>
+                                            <time>120000</time>
+                                        </wait>
+                                    </run>
+                                </image>
+                            </images>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

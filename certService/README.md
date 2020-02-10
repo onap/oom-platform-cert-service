@@ -19,11 +19,23 @@
 
     ```
     
-### Building Docker image
+### Building Docker image manually
     ```
     docker build -t cert-service .
 
     ```
+    
+### Install the package into the local repository
+    ```
+    mvn clean install
+   
+    ```     
+    
+### Building Docker image and  install the package into the local repository
+    ```
+    mvn clean install -P docker
+   
+    ```   
 
 ### Running Docker container
     ```
