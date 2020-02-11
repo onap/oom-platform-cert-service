@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}-deployment
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.appLabel }}
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.appLabel }}
+    spec:
+      containers:
+      - name: aaf-cert-service
+        image: {{ .Values.repository }}/{{ .Values.image }}
+        imagePullPolicy: {{ .Values.pullPolicy }}
+        ports:
+        - containerPort: {{ .Values.containerPort }}
+        livenessProbe:
+          httpGet:
+            port: {{ .Values.containerPort }}
+            path: {{ .Values.healthcheck.path }}
+            initialDelaySeconds: {{ .Values.liveness.initialDelaySeconds }}
+            periodSeconds: {{ .Values.liveness.periodSeconds }}
+        readinessProbe:
+          httpGet:
+            port: {{ .Values.containerPort }}
+            path: {{ .Values.healthcheck.path }}
+            initialDelaySeconds: {{ .Values.readiness.initialDelaySeconds }}
+            periodSeconds: {{ .Values.readiness.periodSeconds }}
+        resources:
+          {{ toYaml .Values.resources }}
