@@ -1,7 +1,7 @@
 target/
 !**/src/main/**
 !**/src/test/**
-*/var
+**/var
 
 ### STS ###
 .apt_generated

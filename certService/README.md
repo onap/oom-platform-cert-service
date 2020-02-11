@@ -96,3 +96,17 @@ audit.log  error.log  trace.log
     ```     
       https://sonarcloud.io/dashboard?id=onap_aaf-certservice
     ```
+
+### RestAPI
+API is described by Swagger ( OpenAPI 3.0 ) on endpoint /docs 
+( endpoint is defined in properties as springdoc.swagger-ui.path )
+  
+    ```
+    http://localchost:8080/docs
+    
+    ```
+
+### Sonar results
+    ```     
+      https://sonarcloud.io/dashboard?id=onap_aaf-certservice
+    ```

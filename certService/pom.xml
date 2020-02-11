@@ -20,7 +20,6 @@
         <artifactId>aaf-certservice-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <groupId>org.onap.aaf</groupId>
     <artifactId>cert-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>cert-service</name>
@@ -38,6 +37,7 @@
         <spring-boot-starter-actuator.version>2.2.4.RELEASE</spring-boot-starter-actuator.version>
         <spring-boot-starter-log4j2.version>2.1.5.RELEASE</spring-boot-starter-log4j2.version>
         <springdoc-openapi-ui.version>1.2.21</springdoc-openapi-ui.version>
+        <bouncycastle.version>1.60</bouncycastle.version>
         <docker-maven-plugin.version>0.33.0</docker-maven-plugin.version>
     </properties>
 
@@ -104,6 +104,16 @@
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-ui</artifactId>
             <version>${springdoc-openapi-ui.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcpkix-jdk15on</artifactId>
+            <version>${bouncycastle.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk15on</artifactId>
+            <version>${bouncycastle.version}</version>
         </dependency>
     </dependencies>
 
