@@ -20,7 +20,6 @@
         <artifactId>aaf-certservice-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <groupId>org.onap.aaf</groupId>
     <artifactId>cert-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>cert-service</name>
@@ -39,6 +38,7 @@
         <spring-boot-starter-log4j2.version>2.1.5.RELEASE</spring-boot-starter-log4j2.version>
         <springdoc-openapi-ui.version>1.2.21</springdoc-openapi-ui.version>
         <docker-maven-plugin.version>0.33.0</docker-maven-plugin.version>
+        <docker.tag>${project.version}</docker.tag>
     </properties>
 
     <dependencyManagement>
@@ -168,6 +168,14 @@
 
     <profiles>
         <profile>
+            <id>docker-staging</id>
+            <properties>
+                <docker.tag>${project.version}-STAGING-${maven.build.timestamp}</docker.tag>
+                <docker.latest.tag>${project.version}-STAGING-latest</docker.latest.tag>
+            </properties>
+        </profile>
+
+        <profile>
             <id>docker</id>
             <activation>
                 <activeByDefault>false</activeByDefault>
@@ -180,27 +188,67 @@
                         <version>${docker-maven-plugin.version}</version>
                         <executions>
                             <execution>
-                                <id>start</id>
-                                <phase>pre-integration-test</phase>
+                                <id>clean-images</id>
+                                <phase>pre-clean</phase>
                                 <goals>
-                                    <goal>build</goal>
-                                    <goal>start</goal>
+                                    <goal>remove</goal>
                                 </goals>
+                                <configuration>
+                                    <removeAll>true</removeAll>
+                                    <image>onap/cert-service</image>
+                                </configuration>
                             </execution>
                             <execution>
-                                <id>stop</id>
-                                <phase>post-integration-test</phase>
+                                <id>generate-images</id>
+                                <phase>install</phase>
                                 <goals>
-                                    <goal>stop</goal>
+                                    <goal>build</goal>
                                 </goals>
+                            </execution>
+<!--                            It has to be published on nexus firstly to uncomment integration tests-->
+<!--                            <execution>-->
+<!--                                <id>start</id>-->
+<!--                                <phase>pre-integration-test</phase>-->
+<!--                                <goals>-->
+<!--                                    <goal>start</goal>-->
+<!--                                </goals>-->
+<!--                            </execution>-->
+<!--                            <execution>-->
+<!--                                <id>stop</id>-->
+<!--                                <phase>post-integration-test</phase>-->
+<!--                                <goals>-->
+<!--                                    <goal>stop</goal>-->
+<!--                                </goals>-->
+<!--                            </execution>-->
+                            <execution>
+                                <id>push-images</id>
+                                <phase>deploy</phase>
+                                <goals>
+                                    <goal>push</goal>
+                                </goals>
+                                <configuration>
+                                    <image>onap/cert-service</image>
+                                </configuration>
                             </execution>
                         </executions>
                         <configuration>
+                            <apiVersion>1.23</apiVersion>
+                            <registry>nexus3.onap.org:10001</registry>
+                            <authConfig>
+                                <pull>
+                                    <username>docker</username>
+                                    <password>docker</password>
+                                </pull>
+                            </authConfig>
                             <images>
                                 <image>
-                                    <name>cert-service</name>
+                                    <name>onap/cert-service</name>
+                                    <alias>cert-service</alias>
                                     <build>
                                         <dockerFile>${project.basedir}/Dockerfile</dockerFile >
+                                        <tags>
+                                            <tag>${docker.tag}</tag>
+                                        </tags>
                                     </build>
                                     <run>
                                         <ports>
