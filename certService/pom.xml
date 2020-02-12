@@ -18,11 +18,11 @@
     <parent>
         <groupId>org.onap.aaf</groupId>
         <artifactId>aaf-certservice-parent</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>0.0.1</version>
     </parent>
 
     <artifactId>cert-service</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>cert-service</name>
     <description>Certification service</description>
     <packaging>jar</packaging>

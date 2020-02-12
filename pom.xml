@@ -24,7 +24,7 @@
 
     <groupId>org.onap.aaf</groupId>
     <artifactId>aaf-certservice-parent</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>aaf-certservice-parent</name>
     <description>AAF Certification Service parent</description>
     <packaging>pom</packaging>
