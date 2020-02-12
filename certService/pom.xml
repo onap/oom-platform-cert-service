@@ -20,6 +20,7 @@
         <artifactId>aaf-certservice-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
+
     <artifactId>cert-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>cert-service</name>
@@ -279,4 +280,22 @@
             </build>
         </profile>
     </profiles>
+
+    <distributionManagement>
+        <repository>
+            <id>ecomp-releases</id>
+            <name>AAF Release Repository</name>
+            <url>${nexusproxy}${releaseNexusPath}</url>
+        </repository>
+        <snapshotRepository>
+            <id>ecomp-snapshots</id>
+            <name>AAF Snapshot Repository</name>
+            <url>${nexusproxy}${snapshotNexusPath}</url>
+        </snapshotRepository>
+        <site>
+            <id>ecomp-site</id>
+            <url>dav:${nexusproxy}${sitePath}</url>
+        </site>
+    </distributionManagement>
+
 </project>

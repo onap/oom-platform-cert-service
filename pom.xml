@@ -21,13 +21,41 @@
         <artifactId>oparent</artifactId>
         <version>3.0.0</version>
     </parent>
+
     <groupId>org.onap.aaf</groupId>
     <artifactId>aaf-certservice-parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>aaf-certservice-parent</name>
     <description>AAF Certification Service parent</description>
     <packaging>pom</packaging>
+
+    <properties>
+        <nexusproxy>https://nexus.onap.org</nexusproxy>
+        <snapshotNexusPath>/content/repositories/snapshots/</snapshotNexusPath>
+        <releaseNexusPath>/content/repositories/releases/</releaseNexusPath>
+        <stagingNexusPath>/content/repositories/staging/</stagingNexusPath>
+        <sitePath>/content/sites/site/org/onap/aaf/cert-service/${project.artifactId}/${project.version}</sitePath>
+    </properties>
+
     <modules>
         <module>certService</module>
     </modules>
+
+    <distributionManagement>
+        <repository>
+            <id>ecomp-releases</id>
+            <name>AAF Release Repository</name>
+            <url>${nexusproxy}${releaseNexusPath}</url>
+        </repository>
+        <snapshotRepository>
+            <id>ecomp-snapshots</id>
+            <name>AAF Snapshot Repository</name>
+            <url>${nexusproxy}${snapshotNexusPath}</url>
+        </snapshotRepository>
+        <site>
+            <id>ecomp-site</id>
+            <url>dav:${nexusproxy}${sitePath}</url>
+        </site>
+    </distributionManagement>
+
 </project>
