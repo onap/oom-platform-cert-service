@@ -77,7 +77,7 @@ class CsrModelTest {
                 .thenReturn(wrongKryInfo);
         when(wrongKryInfo.getEncoded())
                 .thenThrow(new IOException());
-        PemObject testPrivateKey = pemObjectFactory.createPmObject(TEST_PK);
+        PemObject testPrivateKey = pemObjectFactory.createPemObject(TEST_PK);
         CsrModel csrModel = new CsrModel(testCsr, testPrivateKey);
 
         // when
@@ -96,16 +96,16 @@ class CsrModelTest {
     private CsrModel generateTestCsrModel() throws CsrDecryptionException, IOException {
         PemObjectFactory pemObjectFactory = new PemObjectFactory();
         PKCS10CertificationRequest testCsr = new PKCS10CertificationRequest(
-                pemObjectFactory.createPmObject(TEST_CSR).getContent()
+                pemObjectFactory.createPemObject(TEST_CSR).getContent()
         );
-        PemObject testPrivateKey = pemObjectFactory.createPmObject(TEST_PK);
+        PemObject testPrivateKey = pemObjectFactory.createPemObject(TEST_PK);
         return new CsrModel(testCsr, testPrivateKey);
     }
 
     private PemObject generateTestPublicKey() throws CsrDecryptionException, IOException {
         PemObjectFactory pemObjectFactory = new PemObjectFactory();
         PKCS10CertificationRequest testCsr = new PKCS10CertificationRequest(
-                pemObjectFactory.createPmObject(TEST_CSR).getContent()
+                pemObjectFactory.createPemObject(TEST_CSR).getContent()
         );
         return new PemObject("PUBLIC KEY", testCsr.getSubjectPublicKeyInfo().getEncoded());
     }

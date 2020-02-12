@@ -46,7 +46,7 @@ class PemObjectFactoryTest {
     @Test
     void shouldTransformStringInToPemObjectAndBackToString() throws CsrDecryptionException {
         // when
-        PemObject pemObject = pemObjectFactory.createPmObject(TEST_PEM);
+        PemObject pemObject = pemObjectFactory.createPemObject(TEST_PEM);
         String parsedPemObject = pemObjectToString(pemObject);
 
         // then
@@ -57,7 +57,7 @@ class PemObjectFactoryTest {
     void shouldThrowExceptionWhenParsingPemFailed() {
         // when
         Exception exception = assertThrows(
-                CsrDecryptionException.class, () -> pemObjectFactory.createPmObject(TEST_WRONG_PEM)
+                CsrDecryptionException.class, () -> pemObjectFactory.createPemObject(TEST_WRONG_PEM)
         );
 
         String expectedMessage = "Unable to create PEM";

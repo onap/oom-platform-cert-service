@@ -31,7 +31,7 @@ import org.onap.aaf.certservice.certification.exceptions.CsrDecryptionException;
 
 public class PemObjectFactory {
 
-    public PemObject createPmObject(String pem) throws CsrDecryptionException {
+    public PemObject createPemObject(String pem) throws CsrDecryptionException {
 
         try (StringReader stringReader = new StringReader(pem);
              PemReader pemReader = new PemReader(stringReader)) {

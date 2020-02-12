@@ -67,7 +67,7 @@ class CertificationServiceTest {
                 certificationService.signCertificate("TestCa", "encryptedCSR", "encryptedPK");
 
         // then
-        assertEquals(testResponse.getStatusCode(), HttpStatus.OK);
+        assertEquals(HttpStatus.OK, testResponse.getStatusCode());
         assertTrue(
                 testResponse.toString().contains(testStringCsr)
         );
