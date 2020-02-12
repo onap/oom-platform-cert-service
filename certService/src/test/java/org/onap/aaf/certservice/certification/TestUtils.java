@@ -22,7 +22,7 @@ package org.onap.aaf.certservice.certification;
 
 import org.bouncycastle.util.io.pem.PemObject;
 import org.bouncycastle.util.io.pem.PemWriter;
-import org.onap.aaf.certservice.certification.exceptions.CsrDecryptionException;
+import org.onap.aaf.certservice.certification.exceptions.PemDecryptionException;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -33,7 +33,7 @@ public final class TestUtils {
     private TestUtils() {
     }
 
-    public static String pemObjectToString(PemObject pemObject) throws CsrDecryptionException {
+    public static String pemObjectToString(PemObject pemObject) throws PemDecryptionException {
         try (StringWriter output = new StringWriter()) {
             PemWriter pemWriter = new PemWriter(output);
             pemWriter.writeObject(pemObject);
@@ -41,7 +41,7 @@ public final class TestUtils {
             return output.getBuffer().toString();
 
         } catch (IOException e) {
-            throw new CsrDecryptionException("Writing PAM Object to string failed", e);
+            throw new PemDecryptionException("Writing PAM Object to string failed", e);
         }
     }
 }

@@ -26,6 +26,7 @@ import java.util.Base64;
 import org.bouncycastle.pkcs.PKCS10CertificationRequest;
 import org.bouncycastle.util.io.pem.PemObject;
 import org.onap.aaf.certservice.certification.exceptions.CsrDecryptionException;
+import org.onap.aaf.certservice.certification.exceptions.PemDecryptionException;
 import org.onap.aaf.certservice.certification.model.CsrModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +39,8 @@ public class CsrModelFactory {
     private static final Logger LOGGER = LoggerFactory.getLogger(CsrModelFactory.class);
     private final PemObjectFactory pemObjectFactory = new PemObjectFactory();
 
-    public CsrModel createCsrModel(StringBase64 csr, StringBase64 privateKey) throws CsrDecryptionException {
+    public CsrModel createCsrModel(StringBase64 csr, StringBase64 privateKey)
+            throws CsrDecryptionException, PemDecryptionException {
         LOGGER.debug("Decoded CSR: \n{}", csr);
 
         try {

@@ -20,10 +20,15 @@
 
 package org.onap.aaf.certservice.api;
 
+import com.google.gson.Gson;
+import org.onap.aaf.certservice.certification.CertificationModelFactory;
 import org.onap.aaf.certservice.certification.CsrModelFactory;
 import org.onap.aaf.certservice.certification.CsrModelFactory.StringBase64;
 import org.onap.aaf.certservice.certification.exceptions.CsrDecryptionException;
+import org.onap.aaf.certservice.certification.exceptions.PemDecryptionException;
+import org.onap.aaf.certservice.certification.model.CertificationModel;
 import org.onap.aaf.certservice.certification.model.CsrModel;
+import org.onap.aaf.certservice.certification.model.ErrorResponseModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,10 +46,12 @@ public class CertificationService {
     private static final Logger LOGGER = LoggerFactory.getLogger(CertificationService.class);
 
     private final CsrModelFactory csrModelFactory;
+    private final CertificationModelFactory certificationModelFactory;
 
     @Autowired
-    CertificationService(CsrModelFactory csrModelFactory) {
+    CertificationService(CsrModelFactory csrModelFactory, CertificationModelFactory certificationModelFactory) {
         this.csrModelFactory = csrModelFactory;
+        this.certificationModelFactory = certificationModelFactory;
     }
 
     /**
@@ -56,7 +63,7 @@ public class CertificationService {
      * @param encodedPrivateKey Private key for CSR, needed for PoP, encoded in Base64 form
      * @return JSON containing trusted certificates and certificate chain
      */
-    @GetMapping("v1/certificate/{caName}")
+    @GetMapping(value = "v1/certificate/{caName}", produces = "application/json; charset=utf-8")
     public ResponseEntity<String> signCertificate(
             @PathVariable String caName,
             @RequestHeader("CSR") String encodedCsr,
@@ -71,11 +78,25 @@ public class CertificationService {
                     new StringBase64(encodedPrivateKey)
             );
             LOGGER.debug("Received CSR meta data: \n{}", csrModel);
-            return new ResponseEntity<>(csrModel.toString(), HttpStatus.OK);
+            CertificationModel certificationModel = certificationModelFactory
+                    .createCertificationModel(csrModel,caName);
+            return new ResponseEntity<>(
+                    new Gson().toJson(certificationModel),
+                    HttpStatus.OK);
         } catch (CsrDecryptionException e) {
-            LOGGER.error("Exception occurred during certificate signing:", e);
-            return new ResponseEntity<>("Wrong certificate signing request (CSR) format", HttpStatus.BAD_REQUEST);
+            LOGGER.error("Exception occurred during decoding certificate sign request:", e);
+            return getErrorResponseEntity("Wrong certificate signing request (CSR) format");
+        } catch (PemDecryptionException e) {
+            LOGGER.error("Exception occurred during decoding key:", e);
+            return getErrorResponseEntity("Wrong key (PK) format");
         }
+    }
+
+    private ResponseEntity<String> getErrorResponseEntity(String errorMessage) {
+        ErrorResponseModel errorResponse = new ErrorResponseModel(errorMessage);
+        return new ResponseEntity<>(
+                new Gson().toJson(errorResponse),
+                HttpStatus.BAD_REQUEST);
     }
 
 

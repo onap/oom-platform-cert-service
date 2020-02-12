@@ -25,6 +25,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.onap.aaf.certservice.certification.CsrModelFactory.StringBase64;
 import org.onap.aaf.certservice.certification.exceptions.CsrDecryptionException;
+import org.onap.aaf.certservice.certification.exceptions.DecryptionException;
 import org.onap.aaf.certservice.certification.model.CsrModel;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -44,7 +45,7 @@ class CsrModelFactoryTest {
     }
 
     @Test
-    void shouldDecryptCsrAndReturnStringWithDataAboutIt() throws CsrDecryptionException {
+    void shouldDecryptCsrAndReturnStringWithDataAboutIt() throws DecryptionException {
         // given
         String encoderCsr = new String(Base64.encode(TEST_CSR.getBytes()));
         String encoderPK = new String(Base64.encode(TEST_PK.getBytes()));
