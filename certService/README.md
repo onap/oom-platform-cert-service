@@ -1,7 +1,7 @@
 # Cert service
 
 ### For developers
-    * AAF Cert Service is a Spring Boot application
+    * AAF Cert Service Api is a Spring Boot application
     * Code style
         Use Google code formatter in your IDE.
         For IntelliJ use [https://plugins.jetbrains.com/plugin/8527-google-java-format]
@@ -21,7 +21,7 @@
     
 ### Building Docker image manually
     ```
-    docker build -t cert-service .
+    docker build -t aaf-certservice-api .
 
     ```
     
@@ -39,7 +39,7 @@
 
 ### Running Docker container
     ```
-    docker run -p 8080:8080 --name cert-service cert-service
+    docker run -p 8080:8080 --name aaf-certservice-api onap/aaf-certservice-api
 
     ```
 
@@ -81,7 +81,7 @@ path:
     ```    
 ### Logs in Docker container
     ```
-     docker exec -it cert-service bash
+     docker exec -it aaf-certservice-api bash
     ```
 
 path:
