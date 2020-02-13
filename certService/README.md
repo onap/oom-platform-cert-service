@@ -96,6 +96,12 @@ audit.log  error.log  trace.log
     ```     
       https://sonarcloud.io/dashboard?id=onap_aaf-certservice
     ```
+    
+ ### Maven artifacts
+ All maven artifacts are deployed under nexus uri:
+     ```
+        https://nexus.onap.org/content/repositories/snapshots/org/onap/aaf/certservice/
+    ```
 
 ### RestAPI
 API is described by Swagger ( OpenAPI 3.0 ) on endpoint /docs 
