@@ -42,7 +42,7 @@ committers:
     - name: 'Pawel Baniewski'
       email: 'pawel.baniewski@nokia.com'
       company: 'Nokia'
-      id: 'pawel.baniewski@nokia.com'
+      id: 'baniewsk'
       timezone: 'Europe/Warsaw'
 tsc:
     # yamllint disable rule:line-length
