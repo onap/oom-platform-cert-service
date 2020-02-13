@@ -20,9 +20,11 @@
 
 package org.onap.aaf.certservice.certification.exceptions;
 
-public class PemDecryptionException extends DecryptionException {
-    public PemDecryptionException(String message, Throwable cause) {
+public class KeyDecryptionException extends DecryptionException {
+    public KeyDecryptionException(String message, Throwable cause) {
         super(message, cause);
     }
-
+    public KeyDecryptionException(String message) {
+        super(message);
+    }
 }

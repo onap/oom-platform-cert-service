@@ -30,7 +30,7 @@ import org.onap.aaf.certservice.certification.CsrModelFactory;
 import org.onap.aaf.certservice.certification.CsrModelFactory.StringBase64;
 import org.onap.aaf.certservice.certification.exceptions.CsrDecryptionException;
 import org.onap.aaf.certservice.certification.exceptions.DecryptionException;
-import org.onap.aaf.certservice.certification.exceptions.PemDecryptionException;
+import org.onap.aaf.certservice.certification.exceptions.KeyDecryptionException;
 import org.onap.aaf.certservice.certification.model.CertificationModel;
 import org.onap.aaf.certservice.certification.model.CsrModel;
 import org.springframework.http.HttpStatus;
@@ -41,7 +41,7 @@ import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -93,43 +93,41 @@ class CertificationServiceTest {
     }
 
     @Test
-    void shouldReturnBadRequestWhenCreatingCsrModelFails() throws DecryptionException {
+    void shouldThrowCsrDecryptionExceptionWhenCreatingCsrModelFails() throws DecryptionException {
         // given
+        String expectedMessage = "Incorrect CSR, decryption failed";
         when(csrModelFactory.createCsrModel(any(StringBase64.class), any(StringBase64.class)))
-                .thenThrow(new CsrDecryptionException("CSR creation fail",new IOException()));
+                .thenThrow(new CsrDecryptionException(expectedMessage,new IOException()));
 
         // when
-        ResponseEntity<String> testResponse =
-                certificationService.signCertificate("TestCa", "encryptedCSR", "encryptedPK");
-
-        String expectedMessage = "Wrong certificate signing request (CSR) format";
-
-        // then
-        assertEquals(HttpStatus.BAD_REQUEST, testResponse.getStatusCode());
-        assertTrue(
-                testResponse.toString().contains(expectedMessage)
+        Exception exception = assertThrows(
+                CsrDecryptionException.class, () -> certificationService.
+                        signCertificate("TestCa", "encryptedCSR", "encryptedPK")
         );
 
+        String actualMessage = exception.getMessage();
+
+        // then
+        assertEquals(expectedMessage, actualMessage);
     }
 
     @Test
-    void shouldReturnBadRequestWhenCreatingPemModelFails() throws DecryptionException {
+    void shouldThrowPemDecryptionExceptionWhenCreatingPemModelFails() throws DecryptionException {
         // given
+        String expectedMessage = "Incorrect PEM, decryption failed";
         when(csrModelFactory.createCsrModel(any(StringBase64.class), any(StringBase64.class)))
-                .thenThrow(new PemDecryptionException("PEM creation fail",new IOException()));
+                .thenThrow(new KeyDecryptionException(expectedMessage,new IOException()));
 
         // when
-        ResponseEntity<String> testResponse =
-                certificationService.signCertificate("TestCa", "encryptedCSR", "encryptedPK");
-
-        String expectedMessage = "Wrong key (PK) format";
-
-        // then
-        assertEquals(HttpStatus.BAD_REQUEST, testResponse.getStatusCode());
-        assertTrue(
-                testResponse.toString().contains(expectedMessage)
+        Exception exception = assertThrows(
+                KeyDecryptionException.class, () -> certificationService.
+                        signCertificate("TestCa", "encryptedCSR", "encryptedPK")
         );
 
+        String actualMessage = exception.getMessage();
+
+        // then
+        assertEquals(expectedMessage, actualMessage);
     }
 
 }

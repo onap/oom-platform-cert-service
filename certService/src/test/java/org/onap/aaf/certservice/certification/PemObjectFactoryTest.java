@@ -23,8 +23,8 @@ package org.onap.aaf.certservice.certification;
 import org.bouncycastle.util.io.pem.PemObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.onap.aaf.certservice.certification.exceptions.CsrDecryptionException;
-import org.onap.aaf.certservice.certification.exceptions.PemDecryptionException;
+import org.onap.aaf.certservice.certification.exceptions.DecryptionException;
+import org.onap.aaf.certservice.certification.exceptions.KeyDecryptionException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -45,9 +45,11 @@ class PemObjectFactoryTest {
     }
 
     @Test
-    void shouldTransformStringInToPemObjectAndBackToString() throws PemDecryptionException {
+    void shouldTransformStringInToPemObjectAndBackToString() throws DecryptionException {
         // when
-        PemObject pemObject = pemObjectFactory.createPemObject(TEST_PEM);
+        PemObject pemObject = pemObjectFactory.createPemObject(TEST_PEM).orElseThrow(
+                () -> new DecryptionException("Pem decryption failed")
+        );
         String parsedPemObject = pemObjectToString(pemObject);
 
         // then
@@ -56,12 +58,16 @@ class PemObjectFactoryTest {
 
     @Test
     void shouldThrowExceptionWhenParsingPemFailed() {
+        // given
+        String expectedMessage = "Unable to create PEM";
+
         // when
         Exception exception = assertThrows(
-                PemDecryptionException.class, () -> pemObjectFactory.createPemObject(TEST_WRONG_PEM)
+                DecryptionException.class, () -> pemObjectFactory.createPemObject(TEST_WRONG_PEM).orElseThrow(
+                        () -> new DecryptionException(expectedMessage)
+                )
         );
 
-        String expectedMessage = "Unable to create PEM";
         String actualMessage = exception.getMessage();
 
         // then
