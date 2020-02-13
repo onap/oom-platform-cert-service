@@ -24,6 +24,7 @@ import org.bouncycastle.util.io.pem.PemObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.onap.aaf.certservice.certification.exceptions.CsrDecryptionException;
+import org.onap.aaf.certservice.certification.exceptions.PemDecryptionException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -44,7 +45,7 @@ class PemObjectFactoryTest {
     }
 
     @Test
-    void shouldTransformStringInToPemObjectAndBackToString() throws CsrDecryptionException {
+    void shouldTransformStringInToPemObjectAndBackToString() throws PemDecryptionException {
         // when
         PemObject pemObject = pemObjectFactory.createPemObject(TEST_PEM);
         String parsedPemObject = pemObjectToString(pemObject);
@@ -57,7 +58,7 @@ class PemObjectFactoryTest {
     void shouldThrowExceptionWhenParsingPemFailed() {
         // when
         Exception exception = assertThrows(
-                CsrDecryptionException.class, () -> pemObjectFactory.createPemObject(TEST_WRONG_PEM)
+                PemDecryptionException.class, () -> pemObjectFactory.createPemObject(TEST_WRONG_PEM)
         );
 
         String expectedMessage = "Unable to create PEM";

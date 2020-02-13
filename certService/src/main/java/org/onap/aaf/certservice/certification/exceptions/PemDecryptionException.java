@@ -20,8 +20,9 @@
 
 package org.onap.aaf.certservice.certification.exceptions;
 
-public class CsrDecryptionException extends DecryptionException {
-    public CsrDecryptionException(String message, Throwable cause) {
+public class PemDecryptionException extends DecryptionException {
+    public PemDecryptionException(String message, Throwable cause) {
         super(message, cause);
     }
+
 }

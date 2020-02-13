@@ -26,18 +26,18 @@ import java.io.StringReader;
 import org.bouncycastle.util.io.pem.PemObject;
 import org.bouncycastle.util.io.pem.PemReader;
 
-import org.onap.aaf.certservice.certification.exceptions.CsrDecryptionException;
+import org.onap.aaf.certservice.certification.exceptions.PemDecryptionException;
 
 
 public class PemObjectFactory {
 
-    public PemObject createPemObject(String pem) throws CsrDecryptionException {
+    public PemObject createPemObject(String pem) throws PemDecryptionException {
 
         try (StringReader stringReader = new StringReader(pem);
              PemReader pemReader = new PemReader(stringReader)) {
             return pemReader.readPemObject();
         } catch (IOException e) {
-            throw new CsrDecryptionException("Unable to create PEM", e);
+            throw new PemDecryptionException("Unable to create PEM", e);
         }
     }
 

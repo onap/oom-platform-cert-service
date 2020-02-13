@@ -26,6 +26,8 @@ import org.bouncycastle.util.io.pem.PemObject;
 import org.junit.jupiter.api.Test;
 import org.onap.aaf.certservice.certification.PemObjectFactory;
 import org.onap.aaf.certservice.certification.exceptions.CsrDecryptionException;
+import org.onap.aaf.certservice.certification.exceptions.DecryptionException;
+import org.onap.aaf.certservice.certification.exceptions.PemDecryptionException;
 
 import java.io.IOException;
 
@@ -44,7 +46,7 @@ class CsrModelTest {
 
 
     @Test
-    void shouldByConstructedAndReturnProperFields() throws CsrDecryptionException, IOException {
+    void shouldByConstructedAndReturnProperFields() throws DecryptionException, IOException {
         // given
         PemObject testPublicKey = generateTestPublicKey();
 
@@ -68,7 +70,7 @@ class CsrModelTest {
     }
 
     @Test
-    void shouldThrowExceptionWhenKeyIsNotCorrect() throws IOException, CsrDecryptionException {
+    void shouldThrowExceptionWhenKeyIsNotCorrect() throws PemDecryptionException ,IOException {
         // given
         PemObjectFactory pemObjectFactory = new PemObjectFactory();
         PKCS10CertificationRequest testCsr = mock(PKCS10CertificationRequest.class);
@@ -93,7 +95,7 @@ class CsrModelTest {
         assertTrue(actualMessage.contains(expectedMessage));
     }
 
-    private CsrModel generateTestCsrModel() throws CsrDecryptionException, IOException {
+    private CsrModel generateTestCsrModel() throws PemDecryptionException, IOException {
         PemObjectFactory pemObjectFactory = new PemObjectFactory();
         PKCS10CertificationRequest testCsr = new PKCS10CertificationRequest(
                 pemObjectFactory.createPemObject(TEST_CSR).getContent()
@@ -102,7 +104,7 @@ class CsrModelTest {
         return new CsrModel(testCsr, testPrivateKey);
     }
 
-    private PemObject generateTestPublicKey() throws CsrDecryptionException, IOException {
+    private PemObject generateTestPublicKey() throws PemDecryptionException, IOException {
         PemObjectFactory pemObjectFactory = new PemObjectFactory();
         PKCS10CertificationRequest testCsr = new PKCS10CertificationRequest(
                 pemObjectFactory.createPemObject(TEST_CSR).getContent()

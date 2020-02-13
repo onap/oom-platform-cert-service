@@ -18,10 +18,27 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.certification.exceptions;
+package org.onap.aaf.certservice.certification.model;
 
-public class CsrDecryptionException extends DecryptionException {
-    public CsrDecryptionException(String message, Throwable cause) {
-        super(message, cause);
+import java.util.Collections;
+import java.util.List;
+
+public class CertificationModel {
+
+    private final List<String> certificateChain;
+    private final List<String> trustedCertificates;
+
+    public CertificationModel(List<String> certificateChain, List<String> trustedCertificates) {
+        this.certificateChain = certificateChain;
+        this.trustedCertificates = trustedCertificates;
     }
+
+    public List<String> getCertificateChain() {
+        return Collections.unmodifiableList(certificateChain);
+    }
+
+    public List<String> getTrustedCertificates() {
+        return Collections.unmodifiableList(trustedCertificates);
+    }
+
 }
