@@ -22,10 +22,10 @@
         <version>3.0.0</version>
     </parent>
     <groupId>org.onap.aaf.certservice</groupId>
-    <artifactId>aaf-certservice-parent</artifactId>
+    <artifactId>aaf-certservice</artifactId>
     <version>0.0.1</version>
-    <name>aaf-certservice-parent</name>
-    <description>AAF Certification Service parent</description>
+    <name>aaf-certservice</name>
+    <description>AAF Certification Service</description>
     <packaging>pom</packaging>
 
     <properties>

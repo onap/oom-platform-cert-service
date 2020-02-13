@@ -17,14 +17,13 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.onap.aaf.certservice</groupId>
-        <artifactId>aaf-certservice-parent</artifactId>
+        <artifactId>aaf-certservice</artifactId>
         <version>0.0.1</version>
     </parent>
-
-    <artifactId>cert-service</artifactId>
+    <artifactId>aaf-certservice-api</artifactId>
     <version>0.0.1</version>
-    <name>cert-service</name>
-    <description>Certification service</description>
+    <name>aaf-certservice-api</name>
+    <description>AAF Certification Service Api</description>
     <packaging>jar</packaging>
 
     <properties>
