@@ -1,6 +1,6 @@
 FROM docker.io/openjdk:11-jre-slim
 
-ARG VERSION=0.0.1-SNAPSHOT
+ARG VERSION=1.0.0-SNAPSHOT
 
 RUN groupadd certService && useradd -g certService certService
 
