@@ -42,6 +42,8 @@
         <docker.tag>${project.version}</docker.tag>
         <springdoc-openapi-maven-plugin.apiDocsUrl>http://localhost:8080/v3/api-docs
         </springdoc-openapi-maven-plugin.apiDocsUrl>
+        <docker-maven-plugin.image-name>onap/${project.artifactId}</docker-maven-plugin.image-name>
+        <springdoc-openapi-maven-plugin.version>0.2</springdoc-openapi-maven-plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -190,7 +192,7 @@
             <plugin>
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-maven-plugin</artifactId>
-                <version>0.2</version>
+                <version>${springdoc-openapi-maven-plugin.version}</version>
                 <executions>
                     <execution>
                         <phase>integration-test</phase>
@@ -237,7 +239,7 @@
                                 </goals>
                                 <configuration>
                                     <removeAll>true</removeAll>
-                                    <image>onap/cert-service</image>
+                                    <image>${docker-maven-plugin.image-name}</image>
                                 </configuration>
                             </execution>
                             <execution>
@@ -269,7 +271,7 @@
                                     <goal>push</goal>
                                 </goals>
                                 <configuration>
-                                    <image>onap/cert-service</image>
+                                    <image>${docker-maven-plugin.image-name}</image>
                                 </configuration>
                             </execution>
                         </executions>
@@ -284,7 +286,7 @@
                             </authConfig>
                             <images>
                                 <image>
-                                    <name>onap/cert-service</name>
+                                    <name>${docker-maven-plugin.image-name}</name>
                                     <alias>cert-service</alias>
                                     <build>
                                         <dockerFile>${project.basedir}/Dockerfile</dockerFile >
