@@ -106,4 +106,42 @@ class CsrModelFactoryTest {
         assertTrue(actualMessage.contains(expectedMessage));
     }
 
+
+    @Test
+    void shouldThrowCsrDecryptionExceptionWhenCsrIsNotInBase64Encoding() {
+        // given
+        String encoderPK = new String(Base64.encode(TEST_PK.getBytes()));
+        String wrongCsr = "Not Base 64 Csr";
+
+        // when
+        Exception exception = assertThrows(
+                CsrDecryptionException.class, () -> csrModelFactory
+                        .createCsrModel(new StringBase64(wrongCsr), new StringBase64(encoderPK))
+        );
+
+        String expectedMessage = "Incorrect CSR, decryption failed";
+        String actualMessage = exception.getMessage();
+
+        // then
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
+    void shouldThrowKeyDecryptionExceptionWhenPKIsNotInBase64Encoding() {
+        // given
+        String encoderPK = "Not Base64 Key";
+        String wrongCsr = new String(Base64.encode(TEST_CSR.getBytes()));
+
+        // when
+        Exception exception = assertThrows(
+                KeyDecryptionException.class, () -> csrModelFactory
+                        .createCsrModel(new StringBase64(wrongCsr), new StringBase64(encoderPK))
+        );
+
+        String expectedMessage = "Incorrect Key, decryption failed";
+        String actualMessage = exception.getMessage();
+
+        // then
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
 }
