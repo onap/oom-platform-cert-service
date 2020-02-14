@@ -27,7 +27,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 class CertServiceApplicationTests {
 
     @Test
-    void contextLoads() {
+    // We are excluding this line in Sonar due to fact that
+    // this test checks if Spring context is loaded and does not require assertion
+    void contextLoads() { // NOSONAR
     }
-
 }
