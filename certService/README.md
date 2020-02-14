@@ -1,5 +1,11 @@
 # Cert service
 
+### General description
+More information about the project and all its functionalities you can find under the wiki page: 
+    ```
+    https://wiki.onap.org/display/DW/AAF+Certification+Service
+    ``` 
+
 ### For developers
     * AAF Cert Service Api is a Spring Boot application
     * Code style
@@ -20,9 +26,9 @@
     ```
     
 ### Building Docker image manually
+Go to the certService subfolder and execute following statement (1.0.0-SNAPSHOT is related to a current project.version parameter):
     ```
-    docker build -t aaf-certservice-api .
-
+    docker build --build-arg VERSION=1.0.0-SNAPSHOT -t onap/org.onap.aaf.certservice.aaf-certservice-api .
     ```
     
 ### Install the package into the local repository
@@ -39,7 +45,7 @@
 
 ### Running Docker container
     ```
-    docker run -p 8080:8080 --name aaf-certservice-api onap/aaf-certservice-api
+    docker run -p 8080:8080 --name aaf-certservice-api onap/org.onap.aaf.certservice.aaf-certservice-api
 
     ```
 
@@ -101,6 +107,12 @@ audit.log  error.log  trace.log
  All maven artifacts are deployed under nexus uri:
      ```
         https://nexus.onap.org/content/repositories/snapshots/org/onap/aaf/certservice/
+    ```
+        
+ ### Docker artifacts
+ All docker images are hosted under nexus3 uri:
+     ```
+        https://nexus3.onap.org/repository/docker.snapshot/v2/onap/org.onap.aaf.certservice.aaf-certservice-api/
     ```
 
 ### RestAPI
