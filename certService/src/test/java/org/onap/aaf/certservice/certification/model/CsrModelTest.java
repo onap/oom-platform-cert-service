@@ -24,10 +24,11 @@ import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
 import org.bouncycastle.pkcs.PKCS10CertificationRequest;
 import org.bouncycastle.util.io.pem.PemObject;
 import org.junit.jupiter.api.Test;
+import org.onap.aaf.certservice.certification.PKCS10CertificationRequestFactory;
 import org.onap.aaf.certservice.certification.PemObjectFactory;
 import org.onap.aaf.certservice.certification.exceptions.CsrDecryptionException;
 import org.onap.aaf.certservice.certification.exceptions.DecryptionException;
-import org.onap.aaf.certservice.certification.exceptions.PemDecryptionException;
+import org.onap.aaf.certservice.certification.exceptions.KeyDecryptionException;
 
 import java.io.IOException;
 
@@ -44,7 +45,10 @@ import static org.onap.aaf.certservice.certification.TestUtils.pemObjectToString
 
 class CsrModelTest {
 
-
+    private final PKCS10CertificationRequestFactory certificationRequestFactory
+            = new PKCS10CertificationRequestFactory();
+    private final PemObjectFactory pemObjectFactory
+            = new PemObjectFactory();
     @Test
     void shouldByConstructedAndReturnProperFields() throws DecryptionException, IOException {
         // given
@@ -70,7 +74,7 @@ class CsrModelTest {
     }
 
     @Test
-    void shouldThrowExceptionWhenKeyIsNotCorrect() throws PemDecryptionException ,IOException {
+    void shouldThrowExceptionWhenPublicKeyIsNotCorrect() throws KeyDecryptionException, IOException {
         // given
         PemObjectFactory pemObjectFactory = new PemObjectFactory();
         PKCS10CertificationRequest testCsr = mock(PKCS10CertificationRequest.class);
@@ -79,7 +83,9 @@ class CsrModelTest {
                 .thenReturn(wrongKryInfo);
         when(wrongKryInfo.getEncoded())
                 .thenThrow(new IOException());
-        PemObject testPrivateKey = pemObjectFactory.createPemObject(TEST_PK);
+        PemObject testPrivateKey = pemObjectFactory.createPemObject(TEST_PK).orElseThrow(
+                () -> new KeyDecryptionException("Private key decoding fail")
+        );
         CsrModel csrModel = new CsrModel(testCsr, testPrivateKey);
 
         // when
@@ -95,20 +101,26 @@ class CsrModelTest {
         assertTrue(actualMessage.contains(expectedMessage));
     }
 
-    private CsrModel generateTestCsrModel() throws PemDecryptionException, IOException {
-        PemObjectFactory pemObjectFactory = new PemObjectFactory();
-        PKCS10CertificationRequest testCsr = new PKCS10CertificationRequest(
-                pemObjectFactory.createPemObject(TEST_CSR).getContent()
+    private CsrModel generateTestCsrModel() throws DecryptionException {
+        PemObject testPrivateKey = pemObjectFactory.createPemObject(TEST_PK).orElseThrow(
+                () -> new DecryptionException("Incorrect Private Key, decryption failed")
         );
-        PemObject testPrivateKey = pemObjectFactory.createPemObject(TEST_PK);
+        PKCS10CertificationRequest testCsr = generateTestCertificationRequest();
         return new CsrModel(testCsr, testPrivateKey);
     }
 
-    private PemObject generateTestPublicKey() throws PemDecryptionException, IOException {
-        PemObjectFactory pemObjectFactory = new PemObjectFactory();
-        PKCS10CertificationRequest testCsr = new PKCS10CertificationRequest(
-                pemObjectFactory.createPemObject(TEST_CSR).getContent()
-        );
+    private PemObject generateTestPublicKey() throws DecryptionException, IOException {
+        PKCS10CertificationRequest testCsr = generateTestCertificationRequest();
         return new PemObject("PUBLIC KEY", testCsr.getSubjectPublicKeyInfo().getEncoded());
     }
+
+    private PKCS10CertificationRequest generateTestCertificationRequest() throws DecryptionException {
+        return pemObjectFactory.createPemObject(TEST_CSR)
+                .flatMap(
+                        certificationRequestFactory::createKCS10CertificationRequest
+                ).orElseThrow(
+                        () -> new DecryptionException("Incorrect CSR, decryption failed")
+                );
+    }
+
 }

@@ -26,6 +26,7 @@ import org.junit.jupiter.api.Test;
 import org.onap.aaf.certservice.certification.CsrModelFactory.StringBase64;
 import org.onap.aaf.certservice.certification.exceptions.CsrDecryptionException;
 import org.onap.aaf.certservice.certification.exceptions.DecryptionException;
+import org.onap.aaf.certservice.certification.exceptions.KeyDecryptionException;
 import org.onap.aaf.certservice.certification.model.CsrModel;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -33,6 +34,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.onap.aaf.certservice.certification.TestData.TEST_CSR;
 import static org.onap.aaf.certservice.certification.TestData.TEST_PK;
 import static org.onap.aaf.certservice.certification.TestData.TEST_WRONG_CSR;
+import static org.onap.aaf.certservice.certification.TestData.TEST_WRONG_PEM;
 
 
 class CsrModelFactoryTest {
@@ -66,9 +68,8 @@ class CsrModelFactoryTest {
         );
     }
 
-
     @Test
-    void shouldThrowCsrDecryptionExceptionWhenCsrAreIncorrect() {
+    void shouldThrowCsrDecryptionExceptionWhenCsrIsIncorrect() {
         // given
         String encoderPK = new String(Base64.encode(TEST_PK.getBytes()));
         String wrongCsr = new String(Base64.encode(TEST_WRONG_CSR.getBytes()));
@@ -80,6 +81,25 @@ class CsrModelFactoryTest {
         );
 
         String expectedMessage = "Incorrect CSR, decryption failed";
+        String actualMessage = exception.getMessage();
+
+        // then
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
+    void shouldThrowKeyDecryptionExceptionWhenKeyIsIncorrect() {
+        // given
+        String encoderPK = new String(Base64.encode(TEST_WRONG_PEM.getBytes()));
+        String wrongCsr = new String(Base64.encode(TEST_CSR.getBytes()));
+
+        // when
+        Exception exception = assertThrows(
+                KeyDecryptionException.class, () -> csrModelFactory
+                        .createCsrModel(new StringBase64(wrongCsr), new StringBase64(encoderPK))
+        );
+
+        String expectedMessage = "Incorrect Key, decryption failed";
         String actualMessage = exception.getMessage();
 
         // then

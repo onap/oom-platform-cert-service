@@ -22,22 +22,21 @@ package org.onap.aaf.certservice.certification;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.Optional;
 
 import org.bouncycastle.util.io.pem.PemObject;
 import org.bouncycastle.util.io.pem.PemReader;
 
-import org.onap.aaf.certservice.certification.exceptions.PemDecryptionException;
-
 
 public class PemObjectFactory {
 
-    public PemObject createPemObject(String pem) throws PemDecryptionException {
+    public Optional<PemObject> createPemObject(String pem) {
 
         try (StringReader stringReader = new StringReader(pem);
              PemReader pemReader = new PemReader(stringReader)) {
-            return pemReader.readPemObject();
+            return Optional.ofNullable(pemReader.readPemObject());
         } catch (IOException e) {
-            throw new PemDecryptionException("Unable to create PEM", e);
+            return Optional.empty();
         }
     }
 

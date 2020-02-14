@@ -24,11 +24,9 @@ import com.google.gson.Gson;
 import org.onap.aaf.certservice.certification.CertificationModelFactory;
 import org.onap.aaf.certservice.certification.CsrModelFactory;
 import org.onap.aaf.certservice.certification.CsrModelFactory.StringBase64;
-import org.onap.aaf.certservice.certification.exceptions.CsrDecryptionException;
-import org.onap.aaf.certservice.certification.exceptions.PemDecryptionException;
+import org.onap.aaf.certservice.certification.exceptions.DecryptionException;
 import org.onap.aaf.certservice.certification.model.CertificationModel;
 import org.onap.aaf.certservice.certification.model.CsrModel;
-import org.onap.aaf.certservice.certification.model.ErrorResponseModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,35 +66,19 @@ public class CertificationService {
             @PathVariable String caName,
             @RequestHeader("CSR") String encodedCsr,
             @RequestHeader("PK") String encodedPrivateKey
-    ) {
+    ) throws DecryptionException {
+
         caName = caName.replaceAll("[\n|\r|\t]", "_");
         LOGGER.info("Received certificate signing request for CA named: {}", caName);
+        CsrModel csrModel = csrModelFactory.createCsrModel(
+                new StringBase64(encodedCsr),
+                new StringBase64(encodedPrivateKey)
+        );
+        LOGGER.debug("Received CSR meta data: \n{}", csrModel);
+        CertificationModel certificationModel = certificationModelFactory
+                .createCertificationModel(csrModel,caName);
+        return new ResponseEntity<>(new Gson().toJson(certificationModel), HttpStatus.OK);
 
-        try {
-            CsrModel csrModel = csrModelFactory.createCsrModel(
-                    new StringBase64(encodedCsr),
-                    new StringBase64(encodedPrivateKey)
-            );
-            LOGGER.debug("Received CSR meta data: \n{}", csrModel);
-            CertificationModel certificationModel = certificationModelFactory
-                    .createCertificationModel(csrModel,caName);
-            return new ResponseEntity<>(
-                    new Gson().toJson(certificationModel),
-                    HttpStatus.OK);
-        } catch (CsrDecryptionException e) {
-            LOGGER.error("Exception occurred during decoding certificate sign request:", e);
-            return getErrorResponseEntity("Wrong certificate signing request (CSR) format");
-        } catch (PemDecryptionException e) {
-            LOGGER.error("Exception occurred during decoding key:", e);
-            return getErrorResponseEntity("Wrong key (PK) format");
-        }
-    }
-
-    private ResponseEntity<String> getErrorResponseEntity(String errorMessage) {
-        ErrorResponseModel errorResponse = new ErrorResponseModel(errorMessage);
-        return new ResponseEntity<>(
-                new Gson().toJson(errorResponse),
-                HttpStatus.BAD_REQUEST);
     }
 
 

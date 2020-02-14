@@ -20,28 +20,19 @@
 
 package org.onap.aaf.certservice.certification;
 
+import org.bouncycastle.pkcs.PKCS10CertificationRequest;
 import org.bouncycastle.util.io.pem.PemObject;
-import org.bouncycastle.util.io.pem.PemWriter;
-import org.onap.aaf.certservice.certification.exceptions.KeyDecryptionException;
 
 import java.io.IOException;
-import java.io.StringWriter;
+import java.util.Optional;
 
+public class PKCS10CertificationRequestFactory {
 
-public final class TestUtils {
-
-    private TestUtils() {
-    }
-
-    public static String pemObjectToString(PemObject pemObject) throws KeyDecryptionException {
-        try (StringWriter output = new StringWriter()) {
-            PemWriter pemWriter = new PemWriter(output);
-            pemWriter.writeObject(pemObject);
-            pemWriter.close();
-            return output.getBuffer().toString();
-
+    public Optional<PKCS10CertificationRequest>  createKCS10CertificationRequest(PemObject pemObject) {
+        try {
+            return Optional.of(new PKCS10CertificationRequest(pemObject.getContent()));
         } catch (IOException e) {
-            throw new KeyDecryptionException("Writing PAM Object to string failed", e);
+            return Optional.empty();
         }
     }
 }

@@ -20,13 +20,13 @@
 
 package org.onap.aaf.certservice.certification;
 
-import java.io.IOException;
 import java.util.Base64;
 
 import org.bouncycastle.pkcs.PKCS10CertificationRequest;
 import org.bouncycastle.util.io.pem.PemObject;
 import org.onap.aaf.certservice.certification.exceptions.CsrDecryptionException;
-import org.onap.aaf.certservice.certification.exceptions.PemDecryptionException;
+import org.onap.aaf.certservice.certification.exceptions.DecryptionException;
+import org.onap.aaf.certservice.certification.exceptions.KeyDecryptionException;
 import org.onap.aaf.certservice.certification.model.CsrModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,22 +37,35 @@ import org.springframework.stereotype.Service;
 public class CsrModelFactory {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CsrModelFactory.class);
-    private final PemObjectFactory pemObjectFactory = new PemObjectFactory();
+    private final PemObjectFactory pemObjectFactory
+            = new PemObjectFactory();
+    private final PKCS10CertificationRequestFactory certificationRequestFactory
+            = new PKCS10CertificationRequestFactory();
+
 
     public CsrModel createCsrModel(StringBase64 csr, StringBase64 privateKey)
-            throws CsrDecryptionException, PemDecryptionException {
+            throws DecryptionException {
         LOGGER.debug("Decoded CSR: \n{}", csr);
+        PKCS10CertificationRequest decodedCsr = decodeCsr(csr);
+        PemObject decodedPrivateKey = decodePrivateKey(privateKey);
+        return new CsrModel(decodedCsr, decodedPrivateKey);
+    }
 
-        try {
-            PemObject pemObject = pemObjectFactory.createPemObject(csr.asString());
-            PKCS10CertificationRequest decodedCsr = new PKCS10CertificationRequest(
-                    pemObject.getContent()
-            );
-            PemObject decodedPrivateKey = pemObjectFactory.createPemObject(privateKey.asString());
-            return new CsrModel(decodedCsr, decodedPrivateKey);
-        } catch (IOException e) {
-            throw new CsrDecryptionException("Incorrect CSR, decryption failed", e);
-        }
+    private PemObject decodePrivateKey(StringBase64 privateKey)
+            throws KeyDecryptionException {
+        return pemObjectFactory.createPemObject(privateKey.asString()).orElseThrow(
+                () -> new KeyDecryptionException("Incorrect Key, decryption failed")
+        );
+    }
+
+    private PKCS10CertificationRequest decodeCsr(StringBase64 csr)
+            throws CsrDecryptionException {
+        return pemObjectFactory.createPemObject(csr.asString())
+                .flatMap(
+                        certificationRequestFactory::createKCS10CertificationRequest
+                ).orElseThrow(
+                        () -> new CsrDecryptionException("Incorrect CSR, decryption failed")
+                );
     }
 
     public static class StringBase64 {
@@ -67,6 +80,7 @@ public class CsrModelFactory {
             return new String(decoder.decode(value));
         }
     }
+
 }
 
 
