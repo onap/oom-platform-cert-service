@@ -24,18 +24,25 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.Optional;
 
+import org.bouncycastle.util.encoders.DecoderException;
 import org.bouncycastle.util.io.pem.PemObject;
 import org.bouncycastle.util.io.pem.PemReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class PemObjectFactory {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(PemObjectFactory.class);
 
     public Optional<PemObject> createPemObject(String pem) {
 
         try (StringReader stringReader = new StringReader(pem);
              PemReader pemReader = new PemReader(stringReader)) {
+            LOGGER.debug("Creating pem object from: {}", pem);
             return Optional.ofNullable(pemReader.readPemObject());
-        } catch (IOException e) {
+        } catch (DecoderException | IOException e) {
+            LOGGER.error("Exception occurred during creation of PEM:", e);
             return Optional.empty();
         }
     }

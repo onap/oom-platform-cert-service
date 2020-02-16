@@ -21,17 +21,24 @@
 package org.onap.aaf.certservice.certification;
 
 import org.bouncycastle.pkcs.PKCS10CertificationRequest;
+import org.bouncycastle.util.encoders.DecoderException;
 import org.bouncycastle.util.io.pem.PemObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Optional;
 
 public class PKCS10CertificationRequestFactory {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(PKCS10CertificationRequestFactory.class);
+
     public Optional<PKCS10CertificationRequest>  createKCS10CertificationRequest(PemObject pemObject) {
         try {
+            LOGGER.debug("Creating certification request from pem object");
             return Optional.of(new PKCS10CertificationRequest(pemObject.getContent()));
-        } catch (IOException e) {
+        } catch (DecoderException | IOException e) {
+            LOGGER.error("Exception occurred during creation of certification request:", e);
             return Optional.empty();
         }
     }

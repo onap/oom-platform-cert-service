@@ -40,7 +40,7 @@ public class CertificationModelFactory {
 
 
     public CertificationModel createCertificationModel(CsrModel csr, String caName) {
-        LOGGER.info("Generating certificates for CA named: {}, and certificate signing request:\n{}",
+        LOGGER.info("Generating certification model for CA named: {}, and certificate signing request:\n{}",
                 caName, csr);
         return new CertificationModel(
                 Arrays.asList(ENTITY_CERT, INTERMEDIATE_CERT),

@@ -29,6 +29,8 @@ import org.onap.aaf.certservice.certification.exceptions.CsrDecryptionException;
 import org.onap.aaf.certservice.certification.exceptions.DecryptionException;
 import org.onap.aaf.certservice.certification.exceptions.KeyDecryptionException;
 import org.onap.aaf.certservice.certification.model.CsrModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 
@@ -71,6 +73,7 @@ public class CsrModelFactory {
     public static class StringBase64 {
         private final String value;
         private final Base64.Decoder decoder = Base64.getDecoder();
+        private static final Logger LOGGER = LoggerFactory.getLogger(StringBase64.class);
 
         public StringBase64(String value) {
             this.value = value;
@@ -78,8 +81,11 @@ public class CsrModelFactory {
 
         public Optional<String> asString() {
             try {
-                return Optional.of(new String(decoder.decode(value)));
+                String decodedString = new String(decoder.decode(value));
+                LOGGER.debug("Decoded string: {}", decodedString);
+                return Optional.of(decodedString);
             } catch(RuntimeException e) {
+                LOGGER.error("Exception occurred during decoding:", e);
                 return Optional.empty();
             }
         }
