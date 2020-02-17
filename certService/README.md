@@ -54,7 +54,15 @@ Go to the certService subfolder and execute following statement (1.0.0-SNAPSHOT 
     docker run -p 8080:8080 --name aaf-certservice-api nexus3.onap.org:10001/onap/org.onap.aaf.certservice.aaf-certservice-api:1.0.0
 
     ```
-    
+
+### Running Docker container from docker-compose with EJBCA
+ Docker-compose uses nexus image of certservice.
+ 
+    ```
+    docker-compose up
+     
+    ```
+
 ### Health Check
  Browser:
  
