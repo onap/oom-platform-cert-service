@@ -64,6 +64,8 @@
         <docker-image.latest>${project.version}</docker-image.latest>
         <version>${project.version}</version>
         <docker.http_proxy/>
+        <immutables.version>2.7.5</immutables.version>
+
 
     </properties>
 
@@ -259,6 +261,7 @@
                 <version>${mockito-core.version}</version>
                 <scope>test</scope>
             </dependency>
+
             <dependency>
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-junit-jupiter</artifactId>
