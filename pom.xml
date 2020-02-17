@@ -52,6 +52,7 @@
         <springdoc-openapi-maven-plugin.version>0.2</springdoc-openapi-maven-plugin.version>
         <gson.version>2.8.6</gson.version>
         <docker-maven-plugin.version>0.33.0</docker-maven-plugin.version>
+        <junit.version>5.6.0</junit.version>
 
         <!-- Docker -->
         <skipDockerPush>true</skipDockerPush>
@@ -69,6 +70,27 @@
         <module>certService</module>
         <module>certServiceClient</module>
     </modules>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot-starter.version}</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>${maven-javadoc-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${maven-surefire-plugin.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 
     <distributionManagement>
         <repository>
@@ -154,6 +176,12 @@
 
             <!--   Test dependecies    -->
 
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-engine</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
             <dependency>
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-core</artifactId>
