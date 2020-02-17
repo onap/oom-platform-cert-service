@@ -18,6 +18,12 @@ More information about the project and all its functionalities you can find unde
      mvn spring-boot:run
 
     ```
+    
+### Running Locally with Developer Tools
+    ```
+     mvn spring-boot:run -Pdev
+
+    ```
 
 ### Project building
     ```
