@@ -1,5 +1,4 @@
-/*
- * ============LICENSE_START=======================================================
+/*============LICENSE_START=======================================================
  * aaf-certservice-client
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
@@ -17,13 +16,14 @@
  * limitations under the License.
  * ============LICENSE_END=========================================================
  */
-
 package org.onap.aaf.certservice.client;
 
-public class CertServiceClientApp {
-    public static void main(String[] args) {
-        CertServiceClient certServiceClient = new CertServiceClient();
-        certServiceClient.run(args);
+public class CertServiceClient {
+    public void run(String[] args) {
+        exit(0);
     }
 
+    protected void exit(int statusCode){
+        System.exit(statusCode);
+    }
 }

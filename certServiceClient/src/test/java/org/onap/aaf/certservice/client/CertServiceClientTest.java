@@ -20,15 +20,29 @@
 package org.onap.aaf.certservice.client;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Spy;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-class CertServiceClientAppTest {
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.verify;
+
+@ExtendWith(MockitoExtension.class)
+class CertServiceClientTest {
+    @Spy
+    CertServiceClient certServiceClient = new CertServiceClient();
 
     //  Sonar check for this test disabled due to lack of assertion in test.
     //  Intention of this test is to check if app runs without exiting Java.
     @Test
-    public void mainShouldSucceed() {   //NOSONAR
+    public void shouldExitWithZero_onApplicationSuccessfulFinish() {   //NOSONAR
+        //  given
         String[] params = {""};
-        CertServiceClientApp.main(params);
+        doNothing().when(certServiceClient).exit(0);
+        //  when
+        certServiceClient.run(params);
+        //  then
+        verify(certServiceClient).exit(0);
     }
 
 }
