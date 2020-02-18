@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Configuration status="INFO">
+
+    <Appenders>
+        <Console name="CONSOLE" target="SYSTEM_OUT">
+            <PatternLayout
+                    pattern="%d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd HH:mm:ss.SSS}} %highlight{${LOG_LEVEL_PATTERN:-%5p}}{FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=green, DEBUG=green bold, TRACE=blue} %style{%pid}{magenta} [%15.15t] %style{%-40.40C{1.}}{cyan} : %m%n%throwable"/>
+        </Console>
+
+        <RollingFile fileName="var/log/onap/aaf/certservice-client/certservice-client.log" filePattern="logs/certservice-client-%d{yyyy-MM-dd}-%i.log" name="ROLLING_FILE">
+            <PatternLayout pattern="[%d{ISO8601}][%-5p][%-5c] %m%n"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="64 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+
+    </Appenders>
+
+    <Loggers>
+
+        <Logger name="reactor.netty" level="WARN"/>
+        <Logger name="reactor.netty.tcp.TcpServer" level="OFF"/>
+        <Logger name="io.netty" level="INFO"/>
+        <Logger name="io.netty.util" level="WARN"/>
+
+        <Root level="DEBUG">
+            <AppenderRef ref="CONSOLE"/>
+            <AppenderRef ref="ROLLING_FILE"/>
+        </Root>
+
+    </Loggers>
+</Configuration>

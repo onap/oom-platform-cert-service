@@ -25,5 +25,4 @@ public class CertServiceClientApp {
         CertServiceClient certServiceClient = new CertServiceClient();
         certServiceClient.run(args);
     }
-
 }
