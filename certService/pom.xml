@@ -92,6 +92,16 @@
 
     <profiles>
         <profile>
+            <id>dev</id>
+            <dependencies>
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-devtools</artifactId>
+                    <optional>true</optional>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
             <id>docker-staging</id>
             <properties>
                 <docker.tag>${project.version}-STAGING-${maven.build.timestamp}</docker.tag>
