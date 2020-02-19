@@ -19,18 +19,46 @@
 
 package org.onap.aaf.certservice.client;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.onap.aaf.certservice.client.api.ExitableException;
+import org.onap.aaf.certservice.client.certification.KeyPairFactory;
+import org.onap.aaf.certservice.client.configuration.EnvsForClient;
+import org.onap.aaf.certservice.client.configuration.EnvsForCsr;
+import org.onap.aaf.certservice.client.configuration.factory.ClientConfigurationFactory;
+import org.onap.aaf.certservice.client.configuration.factory.CsrConfigurationFactory;
+import org.onap.aaf.certservice.client.configuration.model.ClientConfiguration;
+import org.onap.aaf.certservice.client.configuration.model.CsrConfiguration;
+
+import java.security.KeyPair;
+import java.util.Optional;
+
+import static org.onap.aaf.certservice.client.certification.EncryptionAlgorithmConstants.KEY_SIZE;
+import static org.onap.aaf.certservice.client.certification.EncryptionAlgorithmConstants.RSA_ENCRYPTION_ALGORITHM;
 
 public class CertServiceClient {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CertServiceClient.class);
+    private AppExitHandler appExitHandler;
 
-    public void run(String[] args) {
-        exit(0);
+    public CertServiceClient(AppExitHandler appExitHandler) {
+        this.appExitHandler = appExitHandler;
     }
 
-    protected void exit(int statusCode){
-        LOGGER.debug("Application exits with following exit code: " + statusCode);
-        System.exit(statusCode);
+    public void run() {
+        ClientConfiguration clientConfiguration;
+        CsrConfiguration csrConfiguration;
+        clientConfiguration = new ClientConfigurationFactory(new EnvsForClient()).create();
+        csrConfiguration = new CsrConfigurationFactory(new EnvsForCsr()).create();
+
+        KeyPairFactory keyPairFactory = new KeyPairFactory(RSA_ENCRYPTION_ALGORITHM, KEY_SIZE);
+        Optional<KeyPair> keyPair = generateKeyPair(keyPairFactory);
+
+        appExitHandler.exit(0);
+    }
+
+    public Optional<KeyPair> generateKeyPair(KeyPairFactory keyPairFactory) {
+        try {
+            return Optional.of(keyPairFactory.create());
+        } catch (ExitableException e) {
+            appExitHandler.exit(e.applicationExitCode());
+        }
+        return Optional.empty();
     }
 }

@@ -17,12 +17,19 @@
  * limitations under the License.
  * ============LICENSE_END=========================================================
  */
+package org.onap.aaf.certservice.client.configuration.exception;
 
-package org.onap.aaf.certservice.client;
+import org.onap.aaf.certservice.client.api.ExitCode;
+import org.onap.aaf.certservice.client.api.ExitableException;
 
-public class CertServiceClientApp {
-    public static void main(String[] args) {
-        CertServiceClient certServiceClient = new CertServiceClient();
-        certServiceClient.run(args);
+public class ClientConfigurationException extends ExitableException {
+    private static final ExitCode EXIT_CODE = ExitCode.CLIENT_CONFIGURATION_EXCEPTION;
+
+    public ClientConfigurationException(String message) {
+        super(message);
+    }
+
+    public int applicationExitCode() {
+        return EXIT_CODE.getValue();
     }
 }

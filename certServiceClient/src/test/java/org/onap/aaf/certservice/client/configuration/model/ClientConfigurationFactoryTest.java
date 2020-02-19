@@ -1,6 +1,6 @@
 /*
  * ============LICENSE_START=======================================================
- * PROJECT
+ * aaf-certservice-client
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
  * ================================================================================
@@ -18,12 +18,13 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.client.model;
+package org.onap.aaf.certservice.client.configuration.model;
 
 import org.junit.jupiter.api.Test;
-import org.onap.aaf.certservice.client.common.ClientConfigurationEnvs;
-import org.onap.aaf.certservice.client.common.EnvsForClient;
-import org.onap.aaf.certservice.client.exceptions.ClientConfigurationException;
+import org.onap.aaf.certservice.client.configuration.ClientConfigurationEnvs;
+import org.onap.aaf.certservice.client.configuration.EnvsForClient;
+import org.onap.aaf.certservice.client.configuration.exception.ClientConfigurationException;
+import org.onap.aaf.certservice.client.configuration.factory.ClientConfigurationFactory;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -40,7 +41,6 @@ public class ClientConfigurationFactoryTest {
     final String OUTPUT_PATH_INVALID = "/opt//app/osaaf";
 
     private EnvsForClient envsForClient = mock(EnvsForClient.class);
-
 
     @Test
     void create_shouldReturnSuccessWhenAllVariablesAreSetAndValid() {

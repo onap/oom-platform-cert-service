@@ -1,6 +1,6 @@
 /*
  * ============LICENSE_START=======================================================
- * PROJECT
+ * aaf-certservice-client
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
  * ================================================================================
@@ -18,12 +18,13 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.client.model;
+package org.onap.aaf.certservice.client.configuration.model;
 
 import org.junit.jupiter.api.Test;
-import org.onap.aaf.certservice.client.common.CsrConfigurationEnvs;
-import org.onap.aaf.certservice.client.common.EnvsForCsr;
-import org.onap.aaf.certservice.client.exceptions.CsrConfigurationException;
+import org.onap.aaf.certservice.client.configuration.CsrConfigurationEnvs;
+import org.onap.aaf.certservice.client.configuration.EnvsForCsr;
+import org.onap.aaf.certservice.client.configuration.exception.CsrConfigurationException;
+import org.onap.aaf.certservice.client.configuration.factory.CsrConfigurationFactory;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;

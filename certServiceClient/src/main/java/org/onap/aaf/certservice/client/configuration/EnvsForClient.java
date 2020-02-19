@@ -1,6 +1,6 @@
 /*
  * ============LICENSE_START=======================================================
- * PROJECT
+ * aaf-certservice-client
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
  * ================================================================================
@@ -17,18 +17,16 @@
  * limitations under the License.
  * ============LICENSE_END=========================================================
  */
-
-package org.onap.aaf.certservice.client.common;
+package org.onap.aaf.certservice.client.configuration;
 
 public class EnvsForClient {
+    private static final EnvProvider envProvider = new EnvProvider();
+    private final String urlToCertService;
+    private final String requestTimeOut;
+    private final String outputPath;
+    private final String caName;
 
-    private String urlToCertService;
-    private String requestTimeOut;
-    private String outputPath;
-    private String caName;
-
-    EnvsForClient() {
-        EnvProvider envProvider = new EnvProvider();
+    public EnvsForClient() {
         this.urlToCertService = envProvider.readEnvVariable(ClientConfigurationEnvs.REQUEST_URL.toString());
         this.requestTimeOut = envProvider.readEnvVariable(ClientConfigurationEnvs.REQUEST_TIMEOUT.toString());
         this.outputPath = envProvider.readEnvVariable(ClientConfigurationEnvs.OUTPUT_PATH.toString());
