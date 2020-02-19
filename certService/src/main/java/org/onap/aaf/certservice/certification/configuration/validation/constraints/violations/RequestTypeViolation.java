@@ -18,20 +18,32 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.PropertySource;
+package org.onap.aaf.certservice.certification.configuration.validation.constraints.violations;
 
-@SpringBootApplication
-@PropertySource(value={"classpath:application.properties"})
-public class CertServiceApplication {
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
-    // We are excluding this line in Sonar due to fact that
-    // Spring is handling arguments
-    public static void main(String[] args) { // NOSONAR
-        SpringApplication.run(CertServiceApplication.class, args);
+public class RequestTypeViolation implements URLServerViolation {
+
+    private final static List<String> VALID_REQUESTS = Collections.singletonList("http");
+
+    @Override
+    public boolean validate(String serverUrl) {
+        try {
+            AtomicBoolean isValid = new AtomicBoolean(false);
+            String protocol = new URL(serverUrl).getProtocol();
+            VALID_REQUESTS.forEach(requestType -> {
+                if (protocol.equals(requestType)) {
+                    isValid.set(true);
+                }
+            });
+            return isValid.get();
+        } catch (MalformedURLException e) {
+            return false;
+        }
     }
-
 }

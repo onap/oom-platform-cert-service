@@ -18,20 +18,26 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice;
+package org.onap.aaf.certservice.certification.configuration.validation.constraints.violations;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.PropertySource;
+import java.net.MalformedURLException;
+import java.net.URL;
 
-@SpringBootApplication
-@PropertySource(value={"classpath:application.properties"})
-public class CertServiceApplication {
+public class PortNumberViolation implements URLServerViolation {
 
-    // We are excluding this line in Sonar due to fact that
-    // Spring is handling arguments
-    public static void main(String[] args) { // NOSONAR
-        SpringApplication.run(CertServiceApplication.class, args);
+    private static final int MIN_PORT = 1;
+    private static final int MAX_PORT = 65535;
+    private static final int PORT_UNDEFINED = -1;
+
+    @Override
+    public boolean validate(String serverUrl) {
+        try {
+            URL url = new URL(serverUrl);
+            int port = url.getPort();
+            return port >= MIN_PORT && port <= MAX_PORT || port == PORT_UNDEFINED;
+        } catch (MalformedURLException e) {
+            return false;
+        }
     }
 
 }

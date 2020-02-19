@@ -18,20 +18,38 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.PropertySource;
+package org.onap.aaf.certservice.certification.configuration.validation.constraints;
 
-@SpringBootApplication
-@PropertySource(value={"classpath:application.properties"})
-public class CertServiceApplication {
+import org.junit.jupiter.api.Test;
 
-    // We are excluding this line in Sonar due to fact that
-    // Spring is handling arguments
-    public static void main(String[] args) { // NOSONAR
-        SpringApplication.run(CertServiceApplication.class, args);
+import static org.junit.jupiter.api.Assertions.*;
+
+class Cmpv2URLValidatorTest {
+
+    private Cmpv2URLValidator validator = new Cmpv2URLValidator();
+
+    @Test
+    public void givenCorrectURLWhenValidatingShouldReturnTrue() {
+        //given
+        String URL = "http://127.0.0.1/ejbca/publicweb/cmp/cmp";
+
+        //when
+        boolean result = validator.isValid(URL, null);
+
+        //then
+        assertTrue(result);
     }
 
+    @Test
+    public void givenIncorrectURLWhenValidatingShouldReturnFalse() {
+        //given
+        String URL = "httttp://127.0.0.1:80000/ejbca/publicweb/cmp/cmp";
+
+        //when
+        boolean result = validator.isValid(URL, null);
+
+        //then
+        assertFalse(result);
+    }
 }

@@ -20,9 +20,13 @@
 
 package org.onap.aaf.certservice.certification.configuration.model;
 
+import org.hibernate.validator.constraints.Length;
+
 public class Authentication {
 
+    @Length(min = 1, max = 256)
     private String iak;
+    @Length(min = 1, max = 256)
     private String rv;
 
     public String getIak() {

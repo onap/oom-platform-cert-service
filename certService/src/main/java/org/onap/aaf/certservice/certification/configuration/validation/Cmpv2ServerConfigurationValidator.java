@@ -18,20 +18,31 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice;
+package org.onap.aaf.certservice.certification.configuration.validation;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.PropertySource;
+import org.onap.aaf.certservice.certification.configuration.model.Cmpv2Server;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-@SpringBootApplication
-@PropertySource(value={"classpath:application.properties"})
-public class CertServiceApplication {
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
+import java.security.InvalidParameterException;
+import java.util.Set;
 
-    // We are excluding this line in Sonar due to fact that
-    // Spring is handling arguments
-    public static void main(String[] args) { // NOSONAR
-        SpringApplication.run(CertServiceApplication.class, args);
+@Service
+public class Cmpv2ServerConfigurationValidator {
+
+    private final Validator validator;
+
+    @Autowired
+    public Cmpv2ServerConfigurationValidator(Validator validator) {
+        this.validator = validator;
     }
 
+    public void validate(Cmpv2Server serverDetails) {
+        Set<ConstraintViolation<Cmpv2Server>> violations = validator.validate(serverDetails);
+        if (!violations.isEmpty()) {
+            throw new InvalidParameterException(violations.toString());
+        }
+    }
 }

@@ -18,20 +18,8 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice;
+package org.onap.aaf.certservice.certification.configuration.validation.constraints.violations;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.PropertySource;
-
-@SpringBootApplication
-@PropertySource(value={"classpath:application.properties"})
-public class CertServiceApplication {
-
-    // We are excluding this line in Sonar due to fact that
-    // Spring is handling arguments
-    public static void main(String[] args) { // NOSONAR
-        SpringApplication.run(CertServiceApplication.class, args);
-    }
-
+public interface URLServerViolation {
+    boolean validate(String url);
 }

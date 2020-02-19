@@ -23,6 +23,8 @@ package org.onap.aaf.certservice.certification.configuration;
 import org.onap.aaf.certservice.certification.configuration.model.Cmpv2Server;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -39,20 +41,19 @@ import org.springframework.context.event.EventListener;
 @Configuration
 public class CmpServersConfig {
 
-    private static final String CMP_SERVERS_CONFIG_FILENAME = "cmpServers.json";
-
     private static final Logger LOGGER = LoggerFactory.getLogger(CmpServersConfig.class);
+    private static final String CMP_SERVERS_CONFIG_FILENAME = "cmpServers.json";
     private static final String REFRESHING_CONFIGURATION = "Refreshing configuration";
 
-    @Value("${app.config.path}")
     private String configPath;
-
-    private CmpServersConfigLoader cmpServersConfigLoader;
     private List<Cmpv2Server> cmpServers;
+    private final CmpServersConfigLoader cmpServersConfigLoader;
 
     @Autowired
-    public CmpServersConfig(CmpServersConfigLoader cmpServersConfigLoader) {
+    public CmpServersConfig(@Value("${app.config.path}") String configPath,
+                            CmpServersConfigLoader cmpServersConfigLoader) {
         this.cmpServersConfigLoader = cmpServersConfigLoader;
+        this.configPath = configPath;
     }
 
     @PostConstruct

@@ -18,20 +18,22 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice;
+package org.onap.aaf.certservice.certification.configuration.validation.constraints;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.PropertySource;
+import javax.validation.Constraint;
+import javax.validation.Payload;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
 
-@SpringBootApplication
-@PropertySource(value={"classpath:application.properties"})
-public class CertServiceApplication {
+import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
+import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-    // We are excluding this line in Sonar due to fact that
-    // Spring is handling arguments
-    public static void main(String[] args) { // NOSONAR
-        SpringApplication.run(CertServiceApplication.class, args);
-    }
-
+@Target( { FIELD, ANNOTATION_TYPE })
+@Retention(RUNTIME)
+@Constraint(validatedBy = Cmpv2URLValidator.class)
+public @interface Cmpv2URL {
+    String message() default "Server URL is invalid.";
+    Class<?>[] groups() default {};
+    Class<? extends Payload>[] payload() default {};
 }

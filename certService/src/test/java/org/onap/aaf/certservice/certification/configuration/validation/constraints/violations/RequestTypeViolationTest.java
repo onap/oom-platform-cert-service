@@ -18,20 +18,37 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice;
+package org.onap.aaf.certservice.certification.configuration.validation.constraints.violations;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.PropertySource;
+import org.junit.jupiter.api.Test;
 
-@SpringBootApplication
-@PropertySource(value={"classpath:application.properties"})
-public class CertServiceApplication {
+import static org.junit.jupiter.api.Assertions.*;
 
-    // We are excluding this line in Sonar due to fact that
-    // Spring is handling arguments
-    public static void main(String[] args) { // NOSONAR
-        SpringApplication.run(CertServiceApplication.class, args);
+class RequestTypeViolationTest {
+
+    private RequestTypeViolation violation = new RequestTypeViolation();
+
+    @Test
+    public void givenValidRequestTypeShouldReturnTrue() {
+        //given
+        String validURL = "http://127.0.0.1/ejbca/publicweb/cmp/cmp";
+
+        //when
+        boolean result = violation.validate(validURL);
+
+        //then
+        assertTrue(result);
     }
 
+    @Test
+    public void givenInvalidRequestTypeShouldReturnFalse() {
+        //given
+        String invalidURL = "htestps://127.0.0.1/ejbca/publicweb/cmp/cmp";
+
+        //when
+        boolean result = violation.validate(invalidURL);
+
+        //then
+        assertFalse(result);
+    }
 }

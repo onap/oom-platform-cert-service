@@ -21,7 +21,13 @@
 package org.onap.aaf.certservice.certification.configuration;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.onap.aaf.certservice.CertServiceApplication;
 import org.onap.aaf.certservice.certification.configuration.model.Cmpv2Server;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.io.IOException;
 import java.util.List;
@@ -29,6 +35,8 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes = CertServiceApplication.class)
 class CmpServersConfigLoaderTest {
     private static final String EXISTING_CONFIG_FILENAME = "cmpServers.json";
     private static final String NONEXISTING_CONFIG_FILENAME = "nonexisting_cmpServers.json";
@@ -49,13 +57,16 @@ class CmpServersConfigLoaderTest {
             "RV", "yyy"
     );
 
+    @Autowired
+    private CmpServersConfigLoader configLoader;
+
     @Test
-    public void shouldLoadCmpServersConfigWhenFileAvailable() throws IOException {
+    public void shouldLoadCmpServersConfigWhenFileAvailable() {
         // Given
         String path = getClass().getClassLoader().getResource(EXISTING_CONFIG_FILENAME).getFile();
 
         // When
-        List<Cmpv2Server> cmpServers = new CmpServersConfigLoader().load(path);
+        List<Cmpv2Server> cmpServers = configLoader.load(path);
 
         // Then
         assertThat(cmpServers).isNotNull();
@@ -67,7 +78,7 @@ class CmpServersConfigLoaderTest {
     @Test()
     public void shouldReturnEmptyListWhenFileMissing() {
         // When
-        List<Cmpv2Server> cmpServers = new CmpServersConfigLoader().load(NONEXISTING_CONFIG_FILENAME);
+        List<Cmpv2Server> cmpServers = configLoader.load(NONEXISTING_CONFIG_FILENAME);
 
         // Then
         assertThat(cmpServers).isNotNull();

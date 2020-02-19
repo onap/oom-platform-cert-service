@@ -20,12 +20,21 @@
 
 package org.onap.aaf.certservice.certification.configuration.model;
 
+import org.hibernate.validator.constraints.Length;
+import org.onap.aaf.certservice.certification.configuration.validation.constraints.Cmpv2URL;
+
+import javax.validation.Valid;
+
 public class Cmpv2Server {
 
+    @Valid
     private Authentication authentication;
     private CaMode caMode;
+    @Length(min = 1, max = 128)
     private String caName;
+    @Length(min = 4, max = 256)
     private String issuerDN;
+    @Cmpv2URL
     private String url;
 
     public Authentication getAuthentication() {
