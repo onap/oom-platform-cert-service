@@ -12,6 +12,10 @@ spec:
       labels:
         app: {{ .Values.appLabel }}
     spec:
+      volumes:
+      - name: {{ .Values.volume.name }}
+        secret:
+          secretName: {{ .Values.secret.name }}
       containers:
       - name: aaf-cert-service
         image: {{ .Values.repository }}/{{ .Values.image }}
@@ -30,5 +34,9 @@ spec:
             path: {{ .Values.healthcheck.path }}
             initialDelaySeconds: {{ .Values.readiness.initialDelaySeconds }}
             periodSeconds: {{ .Values.readiness.periodSeconds }}
+        volumeMounts:
+        - name: {{ .Values.volume.name }}
+          mountPath: {{ .Values.volume.mountPath }}
+          readOnly: true
         resources:
           {{ toYaml .Values.resources }}

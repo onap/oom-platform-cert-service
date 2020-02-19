@@ -21,27 +21,26 @@
 package org.onap.aaf.certservice.certification.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import org.onap.aaf.certservice.certification.CertificationModelFactory;
 import org.onap.aaf.certservice.certification.configuration.model.CmpServers;
 import org.onap.aaf.certservice.certification.configuration.model.Cmpv2Server;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+@Component
 class CmpServersConfigLoader {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CertificationModelFactory.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CmpServersConfigLoader.class);
 
     List<Cmpv2Server> load(String path) {
         List<Cmpv2Server> result = new ArrayList<>();
         try {
             result = loadConfigFromFile(path).getCmpv2Servers();
-        } catch (FileNotFoundException e) {
-            LOGGER.error("CMP Servers configuration file not found: ", e);
+            LOGGER.info(String.format("CMP Servers configuration successfully loaded from file '%s'", path));
         } catch (IOException e) {
             LOGGER.error("Exception occurred during CMP Servers configuration loading: ", e);
         }
@@ -50,11 +49,6 @@ class CmpServersConfigLoader {
 
     private CmpServers loadConfigFromFile(String path) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        URL resource = getClass().getClassLoader().getResource(path);
-        if (resource == null) {
-            throw new FileNotFoundException();
-        }
-        String configFilePath = resource.getFile();
-        return objectMapper.readValue(new File(configFilePath), CmpServers.class);
+        return objectMapper.readValue(new File(path), CmpServers.class);
     }
 }
