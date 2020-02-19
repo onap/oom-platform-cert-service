@@ -18,10 +18,12 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.certification.exceptions;
+package org.onap.aaf.certservice.certification;
 
 import com.google.gson.Gson;
-import org.onap.aaf.certservice.certification.model.ErrorResponseModel;
+import org.onap.aaf.certservice.certification.exception.CsrDecryptionException;
+import org.onap.aaf.certservice.certification.exception.ErrorResponseModel;
+import org.onap.aaf.certservice.certification.exception.KeyDecryptionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

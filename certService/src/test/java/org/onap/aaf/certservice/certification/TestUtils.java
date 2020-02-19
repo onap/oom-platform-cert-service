@@ -22,7 +22,7 @@ package org.onap.aaf.certservice.certification;
 
 import org.bouncycastle.util.io.pem.PemObject;
 import org.bouncycastle.util.io.pem.PemWriter;
-import org.onap.aaf.certservice.certification.exceptions.KeyDecryptionException;
+import org.onap.aaf.certservice.certification.exception.KeyDecryptionException;
 
 import java.io.IOException;
 import java.io.StringWriter;

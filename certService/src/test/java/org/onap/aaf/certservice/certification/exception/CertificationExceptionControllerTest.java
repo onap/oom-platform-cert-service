@@ -23,10 +23,7 @@ package org.onap.aaf.certservice.certification.exception;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.onap.aaf.certservice.certification.exceptions.CertificationExceptionController;
-import org.onap.aaf.certservice.certification.exceptions.CsrDecryptionException;
-import org.onap.aaf.certservice.certification.exceptions.KeyDecryptionException;
-import org.onap.aaf.certservice.certification.model.ErrorResponseModel;
+import org.onap.aaf.certservice.certification.CertificationExceptionController;
 import org.springframework.http.ResponseEntity;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

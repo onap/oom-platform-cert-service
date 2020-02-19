@@ -23,8 +23,7 @@ package org.onap.aaf.certservice.certification;
 import org.bouncycastle.util.io.pem.PemObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.onap.aaf.certservice.certification.exceptions.DecryptionException;
-import org.onap.aaf.certservice.certification.exceptions.KeyDecryptionException;
+import org.onap.aaf.certservice.certification.exception.DecryptionException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;

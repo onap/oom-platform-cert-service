@@ -18,13 +18,13 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.certification.exceptions;
+package org.onap.aaf.certservice.certification.exception;
 
-public class DecryptionException extends Exception {
-    public DecryptionException(String message, Throwable cause) {
+public class KeyDecryptionException extends DecryptionException {
+    public KeyDecryptionException(String message, Throwable cause) {
         super(message, cause);
     }
-    public DecryptionException(String message) {
+    public KeyDecryptionException(String message) {
         super(message);
     }
 }

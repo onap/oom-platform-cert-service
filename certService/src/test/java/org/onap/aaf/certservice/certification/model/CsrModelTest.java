@@ -26,9 +26,9 @@ import org.bouncycastle.util.io.pem.PemObject;
 import org.junit.jupiter.api.Test;
 import org.onap.aaf.certservice.certification.PKCS10CertificationRequestFactory;
 import org.onap.aaf.certservice.certification.PemObjectFactory;
-import org.onap.aaf.certservice.certification.exceptions.CsrDecryptionException;
-import org.onap.aaf.certservice.certification.exceptions.DecryptionException;
-import org.onap.aaf.certservice.certification.exceptions.KeyDecryptionException;
+import org.onap.aaf.certservice.certification.exception.CsrDecryptionException;
+import org.onap.aaf.certservice.certification.exception.DecryptionException;
+import org.onap.aaf.certservice.certification.exception.KeyDecryptionException;
 
 import java.io.IOException;
 

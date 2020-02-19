@@ -18,13 +18,19 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.certification.exceptions;
+package org.onap.aaf.certservice.certification.exception;
 
-public class CsrDecryptionException extends DecryptionException {
-    public CsrDecryptionException(String message, Throwable cause) {
-        super(message, cause);
+public class ErrorResponseModel {
+
+    private final String errorMessage;
+
+    public ErrorResponseModel(String errorMessage) {
+        this.errorMessage = errorMessage;
     }
-    public CsrDecryptionException(String message) {
-        super(message);
+
+    public String getErrorMessage() {
+        return errorMessage;
     }
+
 }
+

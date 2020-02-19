@@ -24,7 +24,7 @@ import com.google.gson.Gson;
 import org.onap.aaf.certservice.certification.CertificationModelFactory;
 import org.onap.aaf.certservice.certification.CsrModelFactory;
 import org.onap.aaf.certservice.certification.CsrModelFactory.StringBase64;
-import org.onap.aaf.certservice.certification.exceptions.DecryptionException;
+import org.onap.aaf.certservice.certification.exception.DecryptionException;
 import org.onap.aaf.certservice.certification.model.CertificationModel;
 import org.onap.aaf.certservice.certification.model.CsrModel;
 import org.slf4j.Logger;

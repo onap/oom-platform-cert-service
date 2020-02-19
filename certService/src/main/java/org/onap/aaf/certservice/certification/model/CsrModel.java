@@ -34,11 +34,10 @@ import org.bouncycastle.asn1.x509.GeneralNames;
 import org.bouncycastle.pkcs.PKCS10CertificationRequest;
 import org.bouncycastle.util.io.pem.PemObject;
 
-import org.onap.aaf.certservice.certification.exceptions.CsrDecryptionException;
+import org.onap.aaf.certservice.certification.exception.CsrDecryptionException;
 
 
 public class CsrModel {
-
 
     private final PKCS10CertificationRequest csr;
     private final PemObject privateKey;

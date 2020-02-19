@@ -18,19 +18,13 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.certification.model;
+package org.onap.aaf.certservice.certification.exception;
 
-public class ErrorResponseModel {
-
-    private final String errorMessage;
-
-    public ErrorResponseModel(String errorMessage) {
-        this.errorMessage = errorMessage;
+public class DecryptionException extends Exception {
+    public DecryptionException(String message, Throwable cause) {
+        super(message, cause);
     }
-
-    public String getErrorMessage() {
-        return errorMessage;
+    public DecryptionException(String message) {
+        super(message);
     }
-
 }
-

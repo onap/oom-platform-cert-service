@@ -25,9 +25,9 @@ import java.util.Optional;
 
 import org.bouncycastle.pkcs.PKCS10CertificationRequest;
 import org.bouncycastle.util.io.pem.PemObject;
-import org.onap.aaf.certservice.certification.exceptions.CsrDecryptionException;
-import org.onap.aaf.certservice.certification.exceptions.DecryptionException;
-import org.onap.aaf.certservice.certification.exceptions.KeyDecryptionException;
+import org.onap.aaf.certservice.certification.exception.CsrDecryptionException;
+import org.onap.aaf.certservice.certification.exception.DecryptionException;
+import org.onap.aaf.certservice.certification.exception.KeyDecryptionException;
 import org.onap.aaf.certservice.certification.model.CsrModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
