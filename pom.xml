@@ -13,7 +13,7 @@
 	============LICENSE_END=========================================================
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -51,6 +51,8 @@
         <docker-maven-plugin.version>0.33.0</docker-maven-plugin.version>
         <springdoc-openapi-maven-plugin.version>0.2</springdoc-openapi-maven-plugin.version>
         <gson.version>2.8.6</gson.version>
+        <httpcomponents.version>4.5.6</httpcomponents.version>
+        <commons-io.version>2.6</commons-io.version>
         <docker-maven-plugin.version>0.33.0</docker-maven-plugin.version>
         <junit.version>5.5.2</junit.version>
         <mockito-junit-jupiter.version>2.17.0</mockito-junit-jupiter.version>
@@ -77,6 +79,24 @@
     <build>
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <groupId>org.springdoc</groupId>
+                    <artifactId>springdoc-openapi-maven-plugin</artifactId>
+                    <version>${springdoc-openapi-maven-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <phase>integration-test</phase>
+                            <goals>
+                                <goal>generate</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <apiDocsUrl>${springdoc-openapi-maven-plugin.apiDocsUrl}</apiDocsUrl>
+                        <outputFileName>api-docs.json</outputFileName>
+                        <outputDir>${project.build.directory}</outputDir>
+                    </configuration>
+                </plugin>
                 <plugin>
                     <groupId>org.springdoc</groupId>
                     <artifactId>springdoc-openapi-maven-plugin</artifactId>
@@ -226,6 +246,16 @@
                 <groupId>com.google.code.gson</groupId>
                 <artifactId>gson</artifactId>
                 <version>${gson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>${httpcomponents.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons-io.version}</version>
             </dependency>
             <dependency>
                 <!-- Import dependency management from Spring Boot -->
