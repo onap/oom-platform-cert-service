@@ -20,28 +20,54 @@
 
 package org.onap.aaf.certservice.certification.configuration;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
 import org.onap.aaf.certservice.CertServiceApplication;
+import org.onap.aaf.certservice.certification.configuration.model.Cmpv2Server;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.startsWith;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = CertServiceApplication.class)
+@TestPropertySource(properties = {"app.config.path=/fake/path/to/config"})
 class CmpServersConfigTest {
+
+    private static final List<Cmpv2Server> SAMPLE_CMP_SERVERS = List.of(
+            new Cmpv2Server(),
+            new Cmpv2Server()
+    );
+
+    @MockBean
+    private CmpServersConfigLoader cmpServersConfigLoader;
 
     @Autowired
     private CmpServersConfig cmpServersConfig;
 
     @Test
-    public void shouldLoadCmpServersConfig() {
+    public void shouldCallLoaderWithPathFromPropertiesWhenCreated() {
+        Mockito.verify(cmpServersConfigLoader).load(startsWith("/fake/path/to/config"));
+    }
+
+    @Test
+    public void shouldReturnLoadedServersWhenGetCalled() {
+        // Given
+        Mockito.when(cmpServersConfigLoader.load(any())).thenReturn(SAMPLE_CMP_SERVERS);
+        this.cmpServersConfig.loadConfiguration();      // Manual PostConstruct call
+
+        // When
+        List<Cmpv2Server> receivedCmpServers = this.cmpServersConfig.getCmpServers();
+
         // Then
-        assertThat(cmpServersConfig.getCmpServers()).isNotNull();
-        assertThat(cmpServersConfig.getCmpServers().size()).isEqualTo(2);
-        assertThat(cmpServersConfig.getCmpServers().get(0).getCaName()).isEqualTo("TEST");
-        assertThat(cmpServersConfig.getCmpServers().get(1).getCaName()).isEqualTo("TEST2");
+        assertThat(receivedCmpServers).hasSize(SAMPLE_CMP_SERVERS.size());
     }
 }

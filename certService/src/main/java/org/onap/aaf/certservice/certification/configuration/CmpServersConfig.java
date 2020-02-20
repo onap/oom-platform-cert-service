@@ -20,21 +20,30 @@
 
 package org.onap.aaf.certservice.certification.configuration;
 
+import org.onap.aaf.certservice.certification.configuration.model.Cmpv2Server;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+
+import javax.annotation.PostConstruct;
+import java.io.File;
 import java.util.Collections;
 import java.util.List;
-import javax.annotation.PostConstruct;
-import org.onap.aaf.certservice.certification.configuration.model.Cmpv2Server;
-import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class CmpServersConfig {
-
     private static final String CMP_SERVERS_CONFIG_FILENAME = "cmpServers.json";
+
+    @Autowired
+    private CmpServersConfigLoader cmpServersConfigLoader;
+    @Value("${app.config.path}")
+    private String configPath;
     private List<Cmpv2Server> cmpServers;
 
     @PostConstruct
-    private void loadConfiguration() {
-        cmpServers = Collections.unmodifiableList(new CmpServersConfigLoader().load(CMP_SERVERS_CONFIG_FILENAME));
+    void loadConfiguration() {
+        String configFilePath = configPath + File.separator + CMP_SERVERS_CONFIG_FILENAME;
+        this.cmpServers = Collections.unmodifiableList(cmpServersConfigLoader.load(configFilePath));
     }
 
     public List<Cmpv2Server> getCmpServers() {
