@@ -54,6 +54,7 @@
         <docker-maven-plugin.version>0.33.0</docker-maven-plugin.version>
         <junit.version>5.5.2</junit.version>
         <mockito-junit-jupiter.version>2.17.0</mockito-junit-jupiter.version>
+        <maven-shade-plugin.version>3.2.2</maven-shade-plugin.version>
 
         <!-- Docker -->
         <skipDockerPush>true</skipDockerPush>
