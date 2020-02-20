@@ -1,0 +1,7 @@
+{
+    "timestamp": "2020-02-25T06:36:23.651+0000",
+    "status": 400,
+    "error": "Bad Request",
+    "message": "Missing request header 'PK' for method parameter of type String",
+    "path": "//v1/certificate/TestCA"
+}
