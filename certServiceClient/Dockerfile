@@ -10,4 +10,4 @@ USER certServiceClient:certServiceClient
 
 COPY target/aaf-certservice-client-${VERSION}.jar ./opt/onap/aaf/certservice/aaf-certservice-client.jar
 
-ENTRYPOINT ["echo","================================ THIS IS CERT-SERVICE-CLIENT CONTAINER RUNNING ================================"]
+ENTRYPOINT ["java","-jar","./opt/onap/aaf/certservice/aaf-certservice-client.jar"]
