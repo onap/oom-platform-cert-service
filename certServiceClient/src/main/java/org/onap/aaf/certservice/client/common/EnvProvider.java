@@ -1,5 +1,6 @@
-/*============LICENSE_START=======================================================
- * aaf-certservice-client
+/*
+ * ============LICENSE_START=======================================================
+ * PROJECT
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
  * ================================================================================
@@ -17,14 +18,12 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.client;
+package org.onap.aaf.certservice.client.common;
 
-public class CertServiceClient {
-    public void run(String[] args) {
-        exit(0);
-    }
+import org.onap.aaf.certservice.client.exceptions.ClientConfigurationException;
 
-    protected void exit(int statusCode){
-        System.exit(statusCode);
+public class EnvProvider {
+    public String readEnvVariable(String envVariable) throws ClientConfigurationException {
+        return System.getProperty(envVariable);
     }
 }
