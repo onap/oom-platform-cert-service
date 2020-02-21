@@ -19,12 +19,18 @@
 
 package org.onap.aaf.certservice.client;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class CertServiceClient {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CertServiceClient.class);
+
     public void run(String[] args) {
         exit(0);
     }
 
     protected void exit(int statusCode){
+        LOGGER.debug("Application exits with following exit code: " + statusCode);
         System.exit(statusCode);
     }
 }
