@@ -21,7 +21,9 @@ services:
       retries: 9
 
   certservice:
-    image: nexus3.onap.org:10001/onap/org.onap.aaf.certservice.aaf-certservice-api:1.0.0
+    image: onap/org.onap.aaf.certservice.aaf-certservice-api:latest
+    volumes:
+      - ./helm/aaf-cert-service/resources/cmpServers.json:/etc/onap/aaf/certservice/cmpServers.json
     container_name: certservice
     ports:
       - "8080:8080"

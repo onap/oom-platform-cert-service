@@ -46,6 +46,7 @@
         <maven-surefire-plugin.version>3.0.0-M4</maven-surefire-plugin.version>
         <spring-boot-starter-actuator.version>2.2.4.RELEASE</spring-boot-starter-actuator.version>
         <spring-boot-starter-log4j2.version>2.1.5.RELEASE</spring-boot-starter-log4j2.version>
+        <spring-cloud-starter-config.version>2.2.1.RELEASE</spring-cloud-starter-config.version>
         <springdoc-openapi-ui.version>1.2.30</springdoc-openapi-ui.version>
         <bouncycastle.version>1.60</bouncycastle.version>
         <docker-maven-plugin.version>0.33.0</docker-maven-plugin.version>
