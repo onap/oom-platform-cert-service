@@ -15,7 +15,7 @@
  */
 package org.onap.aaf.certservice.cmpv2Client;
 
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.spy;
@@ -32,14 +32,12 @@ import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.Security;
-import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -128,10 +126,92 @@ class Cmpv2ClientTest {
     }
     CmpClientImpl cmpClient = spy(new CmpClientImpl(httpClient));
     // when
-    Certificate certificate =
+    List<List<X509Certificate>> cmpClientResult =
         cmpClient.createCertificate("data", "RA", csrMeta, cert, notBefore, notAfter);
     // then
-    assertNull(certificate);
+    assertNotNull(cmpClientResult);
+  }
+
+  @Test
+  void shouldReturnValidPkiMessageWhenCreateCertificateRequestMessageMethodCalledWithValidCsr2()
+      throws Exception {
+    // given
+    Date beforeDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").parse("2019/11/11 12:00:00");
+    Date afterDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").parse("2020/11/11 12:00:00");
+    setCsrMetaValuesAndDateValues(
+        rdns,
+        "CN=CommonName",
+        "CN=ManagementCA",
+        "CommonName.com",
+        "CommonName@cn.com",
+        "password",
+        "http://127.0.0.1/ejbca/publicweb/cmp/cmp",
+        beforeDate,
+        afterDate);
+    when(httpClient.execute(any())).thenReturn(httpResponse);
+    when(httpResponse.getEntity()).thenReturn(httpEntity);
+
+    try (final InputStream is =
+        this.getClass().getResourceAsStream("/ReturnedSuccessPKIMessageWithCertificateFile");
+        BufferedInputStream bis = new BufferedInputStream(is)) {
+
+      byte[] ba = IOUtils.toByteArray(bis);
+      doAnswer(
+          invocation -> {
+            OutputStream os = (ByteArrayOutputStream) invocation.getArguments()[0];
+            os.write(ba);
+            return null;
+          })
+          .when(httpEntity)
+          .writeTo(any(OutputStream.class));
+    }
+    CmpClientImpl cmpClient = spy(new CmpClientImpl(httpClient));
+    // when
+    List<List<X509Certificate>> cmpClientResult =
+        cmpClient.createCertificate("data", "RA", csrMeta, cert, notBefore, notAfter);
+    // then
+    assertNotNull(cmpClientResult);
+  }
+
+  @Test
+  void shouldReturnCmpClientExceptionWithPkiErrorExceptionWhenCmpClientCalledWithBadPassword()
+      throws Exception {
+    // given
+    Date beforeDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").parse("2019/11/11 12:00:00");
+    Date afterDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").parse("2020/11/11 12:00:00");
+    setCsrMetaValuesAndDateValues(
+        rdns,
+        "CN=CommonName",
+        "CN=ManagementCA",
+        "CommonName.com",
+        "CommonName@cn.com",
+        "password",
+        "http://127.0.0.1/ejbca/publicweb/cmp/cmp",
+        beforeDate,
+        afterDate);
+    when(httpClient.execute(any())).thenReturn(httpResponse);
+    when(httpResponse.getEntity()).thenReturn(httpEntity);
+
+    try (final InputStream is =
+            this.getClass().getResourceAsStream("/ReturnedFailurePKIMessageBadPassword");
+        BufferedInputStream bis = new BufferedInputStream(is)) {
+
+      byte[] ba = IOUtils.toByteArray(bis);
+      doAnswer(
+              invocation -> {
+                OutputStream os = (ByteArrayOutputStream) invocation.getArguments()[0];
+                os.write(ba);
+                return null;
+              })
+          .when(httpEntity)
+          .writeTo(any(OutputStream.class));
+    }
+    CmpClientImpl cmpClient = spy(new CmpClientImpl(httpClient));
+
+    // then
+    Assertions.assertThrows(
+        CmpClientException.class,
+        () -> cmpClient.createCertificate("data", "RA", csrMeta, cert, notBefore, notAfter));
   }
 
   @Test
@@ -154,9 +234,7 @@ class Cmpv2ClientTest {
     // then
     Assertions.assertThrows(
         IllegalArgumentException.class,
-        () ->
-            cmpClient.createCertificate(
-                "data", "RA", csrMeta, cert, notBefore, notAfter));
+        () -> cmpClient.createCertificate("data", "RA", csrMeta, cert, notBefore, notAfter));
   }
 
   @Test
@@ -180,9 +258,7 @@ class Cmpv2ClientTest {
     // then
     Assertions.assertThrows(
         CmpClientException.class,
-        () ->
-            cmpClient.createCertificate(
-                "data", "RA", csrMeta, cert, notBefore, notAfter));
+        () -> cmpClient.createCertificate("data", "RA", csrMeta, cert, notBefore, notAfter));
   }
 
   private void setCsrMetaValuesAndDateValues(

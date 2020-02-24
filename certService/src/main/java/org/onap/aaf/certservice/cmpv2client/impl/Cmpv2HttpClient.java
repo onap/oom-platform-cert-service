@@ -1,6 +1,7 @@
-/*
- * Copyright (C) 2019 Ericsson Software Technology AB. All rights reserved.
- *
+/*-
+ * ============LICENSE_START=======================================================
+ *  Copyright (C) 2020 Nordix Foundation.
+ * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -11,7 +12,10 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- * limitations under the License
+ * limitations under the License.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ * ============LICENSE_END=========================================================
  */
 
 package org.onap.aaf.certservice.cmpv2client.impl;
@@ -33,16 +37,28 @@ class Cmpv2HttpClient {
 
   private static final String CONTENT_TYPE = "Content-type";
   private static final String CMP_REQUEST_MIMETYPE = "application/pkixcmp";
-  private CloseableHttpClient httpClient;
+  private final CloseableHttpClient httpClient;
 
-  public Cmpv2HttpClient(CloseableHttpClient httpClient){
+  /**
+   * constructor for Cmpv2HttpClient
+   *
+   * @param httpClient CloseableHttpClient used for sending/recieve request.
+   */
+  public Cmpv2HttpClient(CloseableHttpClient httpClient) {
     this.httpClient = httpClient;
   }
 
+  /**
+   * Send Post Request to Server
+   *
+   * @param pkiMessage PKIMessage to send to server
+   * @param urlString url for the server we're sending request
+   * @param caName name of CA server
+   * @return
+   * @throws CmpClientException thrown if problems with connecting or parsing response to server
+   */
   public byte[] postRequest(
-      final PKIMessage pkiMessage,
-      final String urlString,
-      final String caName)
+      final PKIMessage pkiMessage, final String urlString, final String caName)
       throws CmpClientException {
     try (final ByteArrayOutputStream byteArrOutputStream = new ByteArrayOutputStream()) {
       final HttpPost postRequest = new HttpPost(urlString);
@@ -57,7 +73,7 @@ class Cmpv2HttpClient {
       return byteArrOutputStream.toByteArray();
     } catch (IOException ioe) {
       CmpClientException cmpClientException =
-          new CmpClientException("IOException error while trying to connect CA " + caName, ioe);
+          new CmpClientException(String.format("IOException error while trying to connect CA %s",caName), ioe);
       LOG.error("IOException error {}, while trying to connect CA {}", ioe.getMessage(), caName);
       throw cmpClientException;
     }
