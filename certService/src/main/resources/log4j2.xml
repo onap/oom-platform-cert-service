@@ -14,25 +14,24 @@
             <LevelRangeFilter maxLevel="ERROR" minLevel="ERROR"/>
             <PatternLayout pattern="[%d{ISO8601}][%-5p][%-5c] %m%n"/>
             <Policies>
-                <SizeBasedTriggeringPolicy size="64 MB"/>
+                <SizeBasedTriggeringPolicy size="50 MB"/>
             </Policies>
             <DefaultRolloverStrategy max="10"/>
         </RollingFile>
 
-        <RollingFile fileName="var/log/onap/aaf/certservice/trace.log" filePattern="logs/trace-%d{yyyy-MM-dd}-%i.log" name="TRACE_LOG">
-            <LevelRangeFilter maxLevel="TRACE" minLevel="ERROR"/>
+        <RollingFile fileName="var/log/onap/aaf/certservice/debug.log" filePattern="logs/debug-%d{yyyy-MM-dd}-%i.log" name="DEBUG_LOG">
+            <LevelRangeFilter maxLevel="DEBUG" minLevel="ERROR"/>
             <PatternLayout pattern="[%d{ISO8601}][%-5p][%-5c] %m%n"/>
             <Policies>
-                <SizeBasedTriggeringPolicy size="64 MB"/>
+                <SizeBasedTriggeringPolicy size="50 MB"/>
             </Policies>
-            <DefaultRolloverStrategy max="10"/>
         </RollingFile>
 
         <RollingFile fileName="var/log/onap/aaf/certservice/audit.log" filePattern="logs/audit-%d{yyyy-MM-dd}-%i.log" name="AUDIT_LOG">
             <LevelRangeFilter maxLevel="INFO" minLevel="INFO"/>
             <PatternLayout pattern="[%d{ISO8601}][%-5p][%-5c] %m%n"/>
             <Policies>
-                <SizeBasedTriggeringPolicy size="32 MB"/>
+                <SizeBasedTriggeringPolicy size="50 MB"/>
             </Policies>
             <DefaultRolloverStrategy max="10"/>
         </RollingFile>
@@ -48,10 +47,10 @@
         <Logger name="io.micrometer" level="ERROR"/>
         <Logger name="io.swagger" level="ERROR"/>
 
-        <Root additivity="false" level="TRACE">
+        <Root additivity="false" level="DEBUG">
             <AppenderRef ref="CONSOLE"/>
             <AppenderRef ref="ERROR_LOG"/>
-            <AppenderRef ref="TRACE_LOG"/>
+            <AppenderRef ref="DEBUG_LOG"/>
             <AppenderRef ref="AUDIT_LOG"/>
         </Root>
 

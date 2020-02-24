@@ -52,12 +52,12 @@ mvn clean install -P docker
 
 ### Running Docker container local
 ```
-docker run -p 8080:8080 --name aaf-certservice-api onap/org.onap.aaf.certservice.aaf-certservice-api
+docker run -p 8080:8080 --name aaf-certservice-api --mount type=bind,source=/<absolute_path>/cmpServers.json,target=/etc/onap/aaf/certservice/cmpServers.json onap/org.onap.aaf.certservice.aaf-certservice-api
 ```
 
 ### Running Docker container from nexus
 ```
-docker run -p 8080:8080 --name aaf-certservice-api nexus3.onap.org:10001/onap/org.onap.aaf.certservice.aaf-certservice-api:1.0.0
+docker run -p 8080:8080 --name aaf-certservice-api --mount type=bind,source=/<absolute_path>/cmpServers.json,target=/etc/onap/aaf/certservice/cmpServers.json nexus3.onap.org:10001/onap/org.onap.aaf.certservice.aaf-certservice-api:1.0.0
 ```
 
 ### Running Docker container from docker-compose with EJBCA
