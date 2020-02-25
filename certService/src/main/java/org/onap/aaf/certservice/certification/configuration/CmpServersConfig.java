@@ -37,7 +37,6 @@ import java.util.Collections;
 import java.util.List;
 import org.springframework.context.event.EventListener;
 
-@RefreshScope
 @Configuration
 public class CmpServersConfig {
 
