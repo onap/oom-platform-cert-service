@@ -16,9 +16,22 @@
  * limitations under the License.
  * ============LICENSE_END=========================================================
  */
+
 package org.onap.aaf.certservice.client.certification;
 
-public class EncryptionAlgorithmConstants {
+public final class EncryptionAlgorithmConstants {
+
+    private EncryptionAlgorithmConstants() {}
+
     public static final String RSA_ENCRYPTION_ALGORITHM = "RSA";
+    public static final String SIGN_ALGORITHM = "SHA1withRSA";
     public static final int KEY_SIZE = 2048;
+
+    public static final String COMMON_NAME = "CN";
+    public static final String ORGANIZATION = "O";
+    public static final String ORGANIZATION_UNIT = "OU";
+    public static final String LOCATION = "L";
+    public static final String STATE = "ST";
+    public static final String COUNTRY = "C";
+
 }

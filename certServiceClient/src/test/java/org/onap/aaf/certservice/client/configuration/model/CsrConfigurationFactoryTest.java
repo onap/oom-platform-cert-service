@@ -61,7 +61,7 @@ public class CsrConfigurationFactoryTest {
 
         // then
         assertThat(configuration.getCommonName()).isEqualTo(COMMON_NAME_VALID);
-        assertThat(configuration.getSubjectAlternativeNames()).isEqualTo(SANS_VALID);
+        assertThat(configuration.getSans()).isEqualTo(SANS_VALID);
         assertThat(configuration.getCountry()).isEqualTo(COUNTRY_VALID);
         assertThat(configuration.getLocation()).isEqualTo(LOCATION_VALID);
         assertThat(configuration.getOrganization()).isEqualTo(ORGANIZATION_VALID);

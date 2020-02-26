@@ -20,6 +20,7 @@
 package org.onap.aaf.certservice.client;
 
 import org.onap.aaf.certservice.client.api.ExitableException;
+import org.onap.aaf.certservice.client.certification.CsrFactory;
 import org.onap.aaf.certservice.client.certification.KeyPairFactory;
 import org.onap.aaf.certservice.client.configuration.EnvsForClient;
 import org.onap.aaf.certservice.client.configuration.EnvsForCsr;
@@ -47,10 +48,11 @@ public class CertServiceClient {
             ClientConfiguration clientConfiguration = new ClientConfigurationFactory(new EnvsForClient()).create();
             CsrConfiguration csrConfiguration = new CsrConfigurationFactory(new EnvsForCsr()).create();
             KeyPair keyPair = keyPairFactory.create();
+            CsrFactory csrFactory = new CsrFactory(csrConfiguration);
+            String csr = csrFactory.createEncodedCsr(keyPair);
         } catch (ExitableException e) {
             appExitHandler.exit(e.applicationExitCode());
         }
         appExitHandler.exit(SUCCESS_EXIT_CODE.getValue());
     }
-
 }

@@ -29,7 +29,7 @@ public class CsrConfiguration implements ConfigurationModel {
     private String country;
     private String organizationUnit;
     private String location;
-    private String subjectAlternativeNames;
+    private String sans;
 
 
     public String getCommonName() {
@@ -86,12 +86,12 @@ public class CsrConfiguration implements ConfigurationModel {
         return this;
     }
 
-    public String getSubjectAlternativeNames() {
-        return subjectAlternativeNames;
+    public String getSans() {
+        return sans;
     }
 
     public CsrConfiguration setSubjectAlternativeNames(String subjectAlternativeNames) {
-        this.subjectAlternativeNames = subjectAlternativeNames;
+        this.sans = subjectAlternativeNames;
         return this;
     }
 }
