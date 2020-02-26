@@ -20,6 +20,7 @@
 
 package org.onap.aaf.certservice.certification.configuration.model;
 
+import org.bouncycastle.asn1.x500.X500Name;
 import org.hibernate.validator.constraints.Length;
 import org.onap.aaf.certservice.certification.configuration.validation.constraints.Cmpv2URL;
 
@@ -32,8 +33,7 @@ public class Cmpv2Server {
     private CaMode caMode;
     @Length(min = 1, max = 128)
     private String caName;
-    @Length(min = 4, max = 256)
-    private String issuerDN;
+    private X500Name issuerDN;
     @Cmpv2URL
     private String url;
 
@@ -61,11 +61,11 @@ public class Cmpv2Server {
         this.caName = caName;
     }
 
-    public String getIssuerDN() {
+    public X500Name getIssuerDN() {
         return issuerDN;
     }
 
-    public void setIssuerDN(String issuerDN) {
+    public void setIssuerDN(X500Name issuerDN) {
         this.issuerDN = issuerDN;
     }
 

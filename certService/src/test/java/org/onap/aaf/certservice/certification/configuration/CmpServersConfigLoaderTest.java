@@ -88,7 +88,7 @@ class CmpServersConfigLoaderTest {
     private void verifyThatCmpServerEquals(Cmpv2Server cmpv2Server, Map<String, String> expected) {
         assertThat(cmpv2Server.getCaName()).isEqualTo(expected.get("CA_NAME"));
         assertThat(cmpv2Server.getUrl()).isEqualTo(expected.get("URL"));
-        assertThat(cmpv2Server.getIssuerDN()).isEqualTo(expected.get("ISSUER_DN"));
+        assertThat(cmpv2Server.getIssuerDN().toString()).isEqualTo(expected.get("ISSUER_DN"));
         assertThat(cmpv2Server.getCaMode().name()).isEqualTo(expected.get("CA_MODE"));
         assertThat(cmpv2Server.getAuthentication().getIak()).isEqualTo(expected.get("IAK"));
         assertThat(cmpv2Server.getAuthentication().getRv()).isEqualTo(expected.get("RV"));

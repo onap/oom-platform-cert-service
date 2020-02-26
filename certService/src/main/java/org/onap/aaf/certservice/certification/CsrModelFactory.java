@@ -47,7 +47,7 @@ public class CsrModelFactory {
             throws DecryptionException {
         PKCS10CertificationRequest decodedCsr = decodeCsr(csr);
         PemObject decodedPrivateKey = decodePrivateKey(privateKey);
-        return new CsrModel(decodedCsr, decodedPrivateKey);
+        return new CsrModel.CsrModelBuilder(decodedCsr, decodedPrivateKey).build();
     }
 
     private PemObject decodePrivateKey(StringBase64 privateKey)

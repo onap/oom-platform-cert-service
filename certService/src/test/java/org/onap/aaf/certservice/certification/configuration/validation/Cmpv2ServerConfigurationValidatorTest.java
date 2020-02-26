@@ -20,6 +20,7 @@
 
 package org.onap.aaf.certservice.certification.configuration.validation;
 
+import org.bouncycastle.asn1.x500.X500Name;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -84,15 +85,6 @@ class Cmpv2ServerConfigurationValidatorTest {
     }
 
     @Test
-    public void givenWrongIssuerDNLengthInURLServerDetailsWhenValidatingShouldThrowException() {
-        //given
-        server.setIssuerDN("123");
-
-        //then
-        assertThrows(IllegalArgumentException.class, () -> validator.validate(server));
-    }
-
-    @Test
     public void givenWrongRVLengthInURLServerDetailsWhenValidatingShouldThrowException() {
         //given
         authentication.setRv("");
@@ -114,7 +106,7 @@ class Cmpv2ServerConfigurationValidatorTest {
         server = new Cmpv2Server();
         server.setCaMode(CaMode.CLIENT);
         server.setCaName("TEST");
-        server.setIssuerDN("CN=ManagementCA");
+        server.setIssuerDN(new X500Name("CN=ManagementCA"));
         server.setUrl("http://127.0.0.1/ejbca/publicweb/cmp/cmp");
         server.setAuthentication(authentication);
     }

@@ -20,6 +20,7 @@
 
 package org.onap.aaf.certservice.certification.configuration;
 
+import org.bouncycastle.asn1.x500.X500Name;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -83,7 +84,7 @@ class Cmpv2ServerProviderTest {
     private Cmpv2Server createTestServer() {
         Cmpv2Server testServer = new Cmpv2Server();
         testServer.setCaName(TEST_CA);
-        testServer.setIssuerDN("testIssuer");
+        testServer.setIssuerDN(new X500Name("CN=testIssuer"));
         testServer.setUrl("http://test.ca.server");
         Authentication testAuthentication = new Authentication();
         testAuthentication.setIak("testIak");
