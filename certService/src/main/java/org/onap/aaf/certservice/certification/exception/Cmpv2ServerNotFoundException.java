@@ -18,38 +18,12 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.certification.configuration.model;
+package org.onap.aaf.certservice.certification.exception;
 
-import org.hibernate.validator.constraints.Length;
+import org.webjars.NotFoundException;
 
-public class Authentication {
-
-    @Length(min = 1, max = 256)
-    private String iak;
-    @Length(min = 1, max = 256)
-    private String rv;
-
-    public String getIak() {
-        return iak;
-    }
-
-    public void setIak(String iak) {
-        this.iak = iak;
-    }
-
-    public String getRv() {
-        return rv;
-    }
-
-    public void setRv(String rv) {
-        this.rv = rv;
-    }
-
-    @Override
-    public String toString() {
-        return "Authentication{" +
-                "  iak=*****" +
-                ", rv=*****" +
-                '}';
+public class Cmpv2ServerNotFoundException extends NotFoundException {
+    public Cmpv2ServerNotFoundException(String message) {
+        super(message);
     }
 }

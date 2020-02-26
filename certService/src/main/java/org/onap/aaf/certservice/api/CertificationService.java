@@ -76,7 +76,7 @@ public class CertificationService {
         );
         LOGGER.debug("Received CSR meta data: \n{}", csrModel);
         CertificationModel certificationModel = certificationModelFactory
-                .createCertificationModel(csrModel,caName);
+                .createCertificationModel(csrModel, caName);
         return new ResponseEntity<>(new Gson().toJson(certificationModel), HttpStatus.OK);
 
     }

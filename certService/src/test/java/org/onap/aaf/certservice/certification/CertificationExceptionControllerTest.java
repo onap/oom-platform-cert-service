@@ -18,12 +18,15 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.certification.exception;
+package org.onap.aaf.certservice.certification;
 
 import com.google.gson.Gson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.onap.aaf.certservice.certification.CertificationExceptionController;
+import org.onap.aaf.certservice.certification.exception.Cmpv2ServerNotFoundException;
+import org.onap.aaf.certservice.certification.exception.CsrDecryptionException;
+import org.onap.aaf.certservice.certification.exception.ErrorResponseModel;
+import org.onap.aaf.certservice.certification.exception.KeyDecryptionException;
 import org.springframework.http.ResponseEntity;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -68,4 +71,18 @@ class CertificationExceptionControllerTest {
         assertEquals(expectedMessage, response.getErrorMessage());
     }
 
+    @Test
+    void shouldReturnResponseEntityWithAppropriateErrorMessageWhenGivenCaNameIsNotPresentInConfig() {
+        // given
+        String expectedMessage = "Certification authority not found for given CAName";
+        Cmpv2ServerNotFoundException csrDecryptionException = new Cmpv2ServerNotFoundException("test Ca exception");
+
+        // when
+        ResponseEntity<String> responseEntity = certificationExceptionController.handle(csrDecryptionException);
+
+        ErrorResponseModel response = new Gson().fromJson(responseEntity.getBody(), ErrorResponseModel.class);
+
+        // then
+        assertEquals(expectedMessage, response.getErrorMessage());
+    }
 }
