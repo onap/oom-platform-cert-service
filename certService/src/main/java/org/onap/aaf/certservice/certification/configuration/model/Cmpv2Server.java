@@ -77,4 +77,15 @@ public class Cmpv2Server {
         this.url = url;
     }
 
+    @Override
+    public String toString() {
+        return "Cmpv2Server{" +
+                "authentication=" + authentication +
+                ", caMode=" + caMode +
+                ", caName='" + caName + '\'' +
+                ", issuerDN='" + issuerDN + '\'' +
+                ", url='" + url + '\'' +
+                '}';
+    }
+
 }

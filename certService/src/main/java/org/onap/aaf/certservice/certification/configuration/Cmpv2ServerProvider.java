@@ -18,38 +18,29 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.certification.configuration.model;
+package org.onap.aaf.certservice.certification.configuration;
 
-import org.hibernate.validator.constraints.Length;
+import org.onap.aaf.certservice.certification.configuration.model.Cmpv2Server;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-public class Authentication {
+import java.util.Optional;
 
-    @Length(min = 1, max = 256)
-    private String iak;
-    @Length(min = 1, max = 256)
-    private String rv;
+@Component
+public class Cmpv2ServerProvider {
 
-    public String getIak() {
-        return iak;
+    private final CmpServersConfig cmpServersConfig;
+
+    @Autowired
+    Cmpv2ServerProvider(CmpServersConfig cmpServersConfig) {
+        this.cmpServersConfig = cmpServersConfig;
     }
 
-    public void setIak(String iak) {
-        this.iak = iak;
+    public Optional<Cmpv2Server> getCmpv2Server(String caName) {
+        return cmpServersConfig.getCmpServers()
+                .stream()
+                .filter(server -> server.getCaName().equals(caName))
+                .findFirst();
     }
 
-    public String getRv() {
-        return rv;
-    }
-
-    public void setRv(String rv) {
-        this.rv = rv;
-    }
-
-    @Override
-    public String toString() {
-        return "Authentication{" +
-                "  iak=*****" +
-                ", rv=*****" +
-                '}';
-    }
 }

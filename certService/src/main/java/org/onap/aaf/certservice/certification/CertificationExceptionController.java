@@ -21,6 +21,7 @@
 package org.onap.aaf.certservice.certification;
 
 import com.google.gson.Gson;
+import org.onap.aaf.certservice.certification.exception.Cmpv2ServerNotFoundException;
 import org.onap.aaf.certservice.certification.exception.CsrDecryptionException;
 import org.onap.aaf.certservice.certification.exception.ErrorResponseModel;
 import org.onap.aaf.certservice.certification.exception.KeyDecryptionException;
@@ -39,20 +40,27 @@ public class CertificationExceptionController {
     @ExceptionHandler(value = CsrDecryptionException.class)
     public ResponseEntity<String> handle(CsrDecryptionException exception) {
         LOGGER.error("Exception occurred during decoding certificate sign request:", exception);
-        return getErrorResponseEntity("Wrong certificate signing request (CSR) format");
+        return getErrorResponseEntity("Wrong certificate signing request (CSR) format", HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(value = KeyDecryptionException.class)
     public ResponseEntity<String> handle(KeyDecryptionException exception) {
         LOGGER.error("Exception occurred during decoding key:", exception);
-        return getErrorResponseEntity("Wrong key (PK) format");
+        return getErrorResponseEntity("Wrong key (PK) format", HttpStatus.BAD_REQUEST);
     }
 
-    private ResponseEntity<String> getErrorResponseEntity(String errorMessage) {
+    @ExceptionHandler(value = Cmpv2ServerNotFoundException.class)
+    public ResponseEntity<String> handle(Cmpv2ServerNotFoundException exception) {
+        LOGGER.error("Exception occurred selecting CMPv2 server:", exception);
+        return getErrorResponseEntity("Certification authority not found for given CAName", HttpStatus.NOT_FOUND);
+    }
+
+    private ResponseEntity<String> getErrorResponseEntity(String errorMessage, HttpStatus status) {
         ErrorResponseModel errorResponse = new ErrorResponseModel(errorMessage);
         return new ResponseEntity<>(
                 new Gson().toJson(errorResponse),
-                HttpStatus.BAD_REQUEST
+                status
         );
     }
+
 }
