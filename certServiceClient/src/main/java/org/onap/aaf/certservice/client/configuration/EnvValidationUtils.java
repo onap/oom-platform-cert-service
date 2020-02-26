@@ -1,6 +1,6 @@
 /*
  * ============LICENSE_START=======================================================
- * PROJECT
+ * aaf-certservice-client
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
  * ================================================================================
@@ -18,7 +18,7 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.client.common;
+package org.onap.aaf.certservice.client.configuration;
 
 import java.util.regex.Pattern;
 
@@ -60,7 +60,6 @@ public final class EnvValidationUtils {
     static Boolean isHttpProtocolsPresent(String stringToCheck) {
         return Pattern.compile("[h][t][t][p][:][/][/]|[h][t][t][p][s][:][/][/]").matcher(stringToCheck).find();
     }
-
 
     public static Boolean isSpecialCharsPresent(String stringToCheck) {
         return Pattern.compile("[~#@*$+%!()?/{}<>\\|_^]").matcher(stringToCheck).find();

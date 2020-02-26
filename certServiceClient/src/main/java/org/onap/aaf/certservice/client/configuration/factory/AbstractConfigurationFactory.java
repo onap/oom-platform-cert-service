@@ -1,6 +1,6 @@
 /*
  * ============LICENSE_START=======================================================
- * PROJECT
+ * aaf-certservice-client
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
  * ================================================================================
@@ -18,14 +18,10 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.client.common;
+package org.onap.aaf.certservice.client.configuration.factory;
 
-public enum CsrConfigurationEnvs {
-    COMMON_NAME,
-    ORGANIZATION,
-    ORGANIZATION_UNIT,
-    LOCATION,
-    STATE,
-    COUNTRY,
-    SANS
+import org.onap.aaf.certservice.client.configuration.model.ConfigurationModel;
+
+public interface AbstractConfigurationFactory<T extends ConfigurationModel> {
+    T create();
 }

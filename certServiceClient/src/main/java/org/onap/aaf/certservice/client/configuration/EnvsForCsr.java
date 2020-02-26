@@ -1,6 +1,6 @@
 /*
  * ============LICENSE_START=======================================================
- * PROJECT
+ * aaf-certservice-client
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
  * ================================================================================
@@ -17,10 +17,11 @@
  * limitations under the License.
  * ============LICENSE_END=========================================================
  */
+package org.onap.aaf.certservice.client.configuration;
 
-package org.onap.aaf.certservice.client.common;
 
 public class EnvsForCsr {
+    private final EnvProvider envProvider = new EnvProvider();
     private String commonName;
     private String organization;
     private String organizationUnit;
@@ -29,8 +30,7 @@ public class EnvsForCsr {
     private String country;
     private String subjectAlternativesName;
 
-    EnvsForCsr() {
-        EnvProvider envProvider = new EnvProvider();
+    public EnvsForCsr() {
         this.commonName = envProvider.readEnvVariable(CsrConfigurationEnvs.COMMON_NAME.toString());
         this.organization = envProvider.readEnvVariable(CsrConfigurationEnvs.ORGANIZATION.toString());
         this.organizationUnit = envProvider.readEnvVariable(CsrConfigurationEnvs.ORGANIZATION_UNIT.toString());
@@ -63,7 +63,6 @@ public class EnvsForCsr {
     public String getCountry() {
         return country;
     }
-
 
     public String getSubjectAlternativesName() {
         return subjectAlternativesName;

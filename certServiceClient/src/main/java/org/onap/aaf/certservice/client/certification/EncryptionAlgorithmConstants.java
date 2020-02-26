@@ -1,6 +1,5 @@
-/*
- * ============LICENSE_START=======================================================
- * PROJECT
+/*============LICENSE_START=======================================================
+ * aaf-certservice-client
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
  * ================================================================================
@@ -17,9 +16,9 @@
  * limitations under the License.
  * ============LICENSE_END=========================================================
  */
+package org.onap.aaf.certservice.client.certification;
 
-package org.onap.aaf.certservice.client.model;
-
-public interface AbstractConfigurationFactory<T extends ConfigurationModel> {
-    T create();
+public class EncryptionAlgorithmConstants {
+    public static final String RSA_ENCRYPTION_ALGORITHM = "RSA";
+    public static final int KEY_SIZE = 2048;
 }

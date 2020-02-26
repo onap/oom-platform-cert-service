@@ -1,6 +1,6 @@
 /*
  * ============LICENSE_START=======================================================
- * PROJECT
+ * aaf-certservice-client
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
  * ================================================================================
@@ -18,21 +18,22 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.client.model;
+package org.onap.aaf.certservice.client.configuration.factory;
 
-import org.onap.aaf.certservice.client.common.CsrConfigurationEnvs;
-import org.onap.aaf.certservice.client.common.EnvValidationUtils;
-import org.onap.aaf.certservice.client.common.EnvsForCsr;
-import org.onap.aaf.certservice.client.exceptions.CsrConfigurationException;
+import org.onap.aaf.certservice.client.configuration.CsrConfigurationEnvs;
+import org.onap.aaf.certservice.client.configuration.EnvValidationUtils;
+import org.onap.aaf.certservice.client.configuration.EnvsForCsr;
+import org.onap.aaf.certservice.client.configuration.exception.CsrConfigurationException;
+import org.onap.aaf.certservice.client.configuration.model.CsrConfiguration;
 
 import java.util.Optional;
 
-class CsrConfigurationFactory implements AbstractConfigurationFactory<CsrConfiguration> {
+public class CsrConfigurationFactory implements AbstractConfigurationFactory<CsrConfiguration> {
 
     private final EnvsForCsr envsForCsr;
 
 
-    CsrConfigurationFactory(EnvsForCsr envsForCsr) {
+    public CsrConfigurationFactory(EnvsForCsr envsForCsr) {
         this.envsForCsr = envsForCsr;
     }
 

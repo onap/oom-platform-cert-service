@@ -1,6 +1,6 @@
 /*
  * ============LICENSE_START=======================================================
- * PROJECT
+ * aaf-certservice-client
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
  * ================================================================================
@@ -18,24 +18,24 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.client.model;
+package org.onap.aaf.certservice.client.configuration.factory;
 
-import org.onap.aaf.certservice.client.common.ClientConfigurationEnvs;
-import org.onap.aaf.certservice.client.common.EnvValidationUtils;
-import org.onap.aaf.certservice.client.common.EnvsForClient;
-import org.onap.aaf.certservice.client.exceptions.ClientConfigurationException;
+import org.onap.aaf.certservice.client.configuration.ClientConfigurationEnvs;
+import org.onap.aaf.certservice.client.configuration.EnvValidationUtils;
+import org.onap.aaf.certservice.client.configuration.EnvsForClient;
+import org.onap.aaf.certservice.client.configuration.exception.ClientConfigurationException;
+import org.onap.aaf.certservice.client.configuration.model.ClientConfiguration;
 
 import java.util.Optional;
 
-class ClientConfigurationFactory implements AbstractConfigurationFactory<ClientConfiguration> {
+public class ClientConfigurationFactory implements AbstractConfigurationFactory<ClientConfiguration> {
 
     private final EnvsForClient envsForClient;
 
 
-    ClientConfigurationFactory(EnvsForClient envsForClient) {
+    public ClientConfigurationFactory(EnvsForClient envsForClient) {
         this.envsForClient = envsForClient;
     }
-
 
     @Override
     public ClientConfiguration create() throws ClientConfigurationException {

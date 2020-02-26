@@ -1,6 +1,6 @@
 /*
  * ============LICENSE_START=======================================================
- * PROJECT
+ * aaf-certservice-client
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
  * ================================================================================
@@ -18,9 +18,9 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.client.model;
+package org.onap.aaf.certservice.client.configuration.model;
 
-public class ClientConfiguration implements ConfigurationModel{
+public class ClientConfiguration implements ConfigurationModel {
 
     Integer DEFAULT_TIMEOUT_MS = 30000;
     String DEFAULT_REQUEST_URL = "http://cert-service:8080/v1/certificate/";
