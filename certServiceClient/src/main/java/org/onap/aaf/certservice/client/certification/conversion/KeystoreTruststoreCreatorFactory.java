@@ -16,25 +16,20 @@
  * limitations under the License.
  * ============LICENSE_END=========================================================
  */
-package org.onap.aaf.certservice.client.api;
 
-public enum ExitCode {
-    SUCCESS_EXIT_CODE(0),
-    CLIENT_CONFIGURATION_EXCEPTION(1),
-    CSR_CONFIGURATION_EXCEPTION(2),
-    KEY_PAIR_GENERATION_EXCEPTION(3),
-    CSR_GENERATION_EXCEPTION(4),
-    CERT_SERVICE_API_CONNECTION_EXCEPTION(5),
-    HTTP_CLIENT_EXCEPTION(6),
-    PKCS12_CONVERSION_EXCEPTION(7);
+package org.onap.aaf.certservice.client.certification.conversion;
 
-    private final int value;
+public class KeystoreTruststoreCreatorFactory {
+    private final String outputPath;
 
-    ExitCode(int value) {
-        this.value = value;
+    public KeystoreTruststoreCreatorFactory(String outputPath) {
+        this.outputPath = outputPath;
     }
 
-    public int getValue() {
-        return value;
+    public KeystoreTruststoreCreator create() {
+        return new KeystoreTruststoreCreator(
+            new PKCS12FilesCreator(outputPath),
+            new RandomPasswordGenerator(),
+            new PemToPKCS12Converter());
     }
 }
