@@ -21,6 +21,7 @@
 package org.onap.aaf.certservice.certification;
 
 import java.util.Base64;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.bouncycastle.pkcs.PKCS10CertificationRequest;
@@ -89,6 +90,15 @@ public class CsrModelFactory {
                 return Optional.empty();
             }
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            StringBase64 that = (StringBase64) o;
+            return Objects.equals(value, that.value);
+        }
+
     }
 
 }

@@ -27,49 +27,77 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.onap.aaf.certservice.certification.configuration.Cmpv2ServerProvider;
 import org.onap.aaf.certservice.certification.configuration.model.Cmpv2Server;
+import org.onap.aaf.certservice.certification.exception.Cmpv2ClientAdapterException;
 import org.onap.aaf.certservice.certification.exception.Cmpv2ServerNotFoundException;
+import org.onap.aaf.certservice.certification.exception.CsrDecryptionException;
+import org.onap.aaf.certservice.certification.exception.DecryptionException;
 import org.onap.aaf.certservice.certification.model.CertificationModel;
 import org.onap.aaf.certservice.certification.model.CsrModel;
+import org.onap.aaf.certservice.cmpv2client.exceptions.CmpClientException;
 
-import java.util.Optional;
+import java.util.Arrays;
+import java.util.Base64;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.onap.aaf.certservice.certification.CertificationData.CA_CERT;
 import static org.onap.aaf.certservice.certification.CertificationData.ENTITY_CERT;
 import static org.onap.aaf.certservice.certification.CertificationData.INTERMEDIATE_CERT;
 import static org.onap.aaf.certservice.certification.CertificationData.EXTRA_CA_CERT;
+import static org.onap.aaf.certservice.certification.TestData.TEST_CSR;
+import static org.onap.aaf.certservice.certification.TestData.TEST_PK;
+import static org.onap.aaf.certservice.certification.TestData.TEST_WRONG_CSR;
+import static org.onap.aaf.certservice.certification.TestData.TEST_WRONG_PEM;
 
 @ExtendWith(MockitoExtension.class)
 class CertificationModelFactoryTest {
 
     private static final String TEST_CA = "testCA";
+    private static final String ENCODED_CSR = getEncodedString(TEST_CSR);
+    private static final String ENCODED_PK = getEncodedString(TEST_PK);
+    private static final String ENCODED_WRONG_CSR = getEncodedString(TEST_WRONG_CSR);
+    private static final String ENCODED_WRONG_PK = getEncodedString(TEST_WRONG_PEM);
 
     private CertificationModelFactory certificationModelFactory;
 
     @Mock
-    Cmpv2ServerProvider cmpv2ServerProvider;
+    private Cmpv2ServerProvider cmpv2ServerProvider;
+    @Mock
+    private  CsrModelFactory csrModelFactory;
+    @Mock
+    private  CertificationProvider certificationProvider;
+
+
+    private static String getEncodedString(String testCsr) {
+        return Base64.getEncoder().encodeToString(testCsr.getBytes());
+    }
 
     @BeforeEach
     void setUp() {
-        certificationModelFactory = new CertificationModelFactory(cmpv2ServerProvider);
+        certificationModelFactory =
+                new CertificationModelFactory(csrModelFactory, cmpv2ServerProvider, certificationProvider);
     }
 
     @Test
-    void shouldCreateProperCertificationModelWhenGivenProperCsrModelAndCaName() {
-        // given
-        CsrModel mockedCsrModel = mock(CsrModel.class);
-        when(cmpv2ServerProvider.getCmpv2Server(TEST_CA)).thenReturn(Optional.of(createTestCmpv2Server()));
+    void shouldCreateProperCertificationModelWhenGivenProperCsrModelAndCaName()
+            throws CmpClientException, DecryptionException, Cmpv2ClientAdapterException {
 
-        // when
+        // Given
+        CsrModel csrModel = mockCsrFactoryModelCreation();
+        Cmpv2Server testServer = mockCmpv2ProviderServerSelection();
+        mockCertificateProviderCertificateSigning(csrModel, testServer);
+
+        // When
         CertificationModel certificationModel =
-                certificationModelFactory.createCertificationModel(mockedCsrModel ,TEST_CA);
+                certificationModelFactory.createCertificationModel(ENCODED_CSR, ENCODED_PK,TEST_CA);
 
-        //then
+        // Then
         assertEquals(2, certificationModel.getCertificateChain().size());
         assertThat(certificationModel.getCertificateChain()).contains(INTERMEDIATE_CERT, ENTITY_CERT);
         assertEquals(2, certificationModel.getTrustedCertificates().size());
@@ -77,23 +105,116 @@ class CertificationModelFactoryTest {
     }
 
     @Test
-    void shouldThrowCmpv2ServerNotFoundExceptionWhenGivenWrongCaName() {
-        // given
-        String expectedMessage = "CA not found";
-        CsrModel mockedCsrModel = mock(CsrModel.class);
-        when(cmpv2ServerProvider.getCmpv2Server(TEST_CA)).thenThrow(new Cmpv2ServerNotFoundException(expectedMessage));
-
-        // when
-        Exception exception = assertThrows(
-                Cmpv2ServerNotFoundException.class, () ->
-                        certificationModelFactory.createCertificationModel(mockedCsrModel ,TEST_CA)
+    void shouldThrowDecryptionExceptionWhenGivenWrongEncodedCSR()
+            throws DecryptionException {
+        // Given
+        String expectedMessage = "Incorrect CSR, decryption failed";
+        when(
+                csrModelFactory.createCsrModel(
+                        eq(new CsrModelFactory.StringBase64(ENCODED_WRONG_CSR)),
+                        eq(new CsrModelFactory.StringBase64(ENCODED_WRONG_PK))
+                )
+        ).thenThrow(
+                new CsrDecryptionException(expectedMessage)
         );
 
-        // then
+        // When
+        Exception exception = assertThrows(
+                DecryptionException.class, () ->
+                        certificationModelFactory.createCertificationModel(ENCODED_WRONG_CSR, ENCODED_WRONG_PK, TEST_CA)
+        );
+
+        // Then
         assertTrue(exception.getMessage().contains(expectedMessage));
     }
 
-    private Cmpv2Server createTestCmpv2Server() {
+    @Test
+    void shouldThrowCmpv2ServerNotFoundExceptionWhenGivenWrongCaName()
+            throws DecryptionException {
+        // Given
+        String expectedMessage = "CA not found";
+        mockCsrFactoryModelCreation();
+        when(
+                cmpv2ServerProvider.getCmpv2Server(TEST_CA)
+        ).thenThrow(
+                new Cmpv2ServerNotFoundException(expectedMessage)
+        );
+
+        // When
+        Exception exception = assertThrows(
+                Cmpv2ServerNotFoundException.class, () ->
+                        certificationModelFactory.createCertificationModel(ENCODED_CSR, ENCODED_PK, TEST_CA)
+        );
+
+        // Then
+        assertTrue(exception.getMessage().contains(expectedMessage));
+    }
+
+    @Test
+    void shouldThrowCmpClientExceptionWhenSigningCsrFailed()
+            throws DecryptionException, CmpClientException, Cmpv2ClientAdapterException {
+        // Given
+        String expectedMessage = "failed to sign certificate";
+        CsrModel csrModel = mockCsrFactoryModelCreation();
+        Cmpv2Server testServer = mockCmpv2ProviderServerSelection();
+        when(
+                certificationProvider.signCsr(eq(csrModel), eq(testServer))
+        ).thenThrow(
+                new CmpClientException(expectedMessage)
+        );
+
+        // When
+        Exception exception = assertThrows(
+                CmpClientException.class, () ->
+                        certificationModelFactory.createCertificationModel(ENCODED_CSR, ENCODED_PK, TEST_CA)
+        );
+
+        // Then
+        assertTrue(exception.getMessage().contains(expectedMessage));
+    }
+
+
+    private void mockCertificateProviderCertificateSigning(CsrModel csrModel, Cmpv2Server testServer)
+            throws CmpClientException, Cmpv2ClientAdapterException {
+        CertificationModel expectedCertificationModel = getCertificationModel();
+        when(
+                certificationProvider.signCsr(eq(csrModel), eq(testServer))
+        ).thenReturn(expectedCertificationModel);
+    }
+
+    private Cmpv2Server mockCmpv2ProviderServerSelection() {
+        Cmpv2Server testServer = getCmpv2Server();
+        when(
+                cmpv2ServerProvider.getCmpv2Server(eq(TEST_CA))
+        ).thenReturn(testServer);
+        return testServer;
+    }
+
+    private CsrModel mockCsrFactoryModelCreation()
+            throws DecryptionException {
+        CsrModel csrModel = getCsrModel();
+        when(
+                csrModelFactory.createCsrModel(
+                        eq(new CsrModelFactory.StringBase64(ENCODED_CSR)),
+                        eq(new CsrModelFactory.StringBase64(ENCODED_PK))
+                )
+        ).thenReturn(csrModel);
+        return csrModel;
+    }
+
+    private Cmpv2Server getCmpv2Server() {
         return new Cmpv2Server();
     }
+
+    private CsrModel getCsrModel() {
+        return mock(CsrModel.class);
+    }
+
+    private CertificationModel getCertificationModel() {
+        List<String> testTrustedCertificates = Arrays.asList(CA_CERT, EXTRA_CA_CERT);
+        List<String> testCertificationChain = Arrays.asList(INTERMEDIATE_CERT, ENTITY_CERT);
+        return new CertificationModel(testCertificationChain, testTrustedCertificates);
+    }
+
+
 }

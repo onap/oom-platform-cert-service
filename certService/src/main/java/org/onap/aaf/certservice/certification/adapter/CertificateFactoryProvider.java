@@ -1,6 +1,6 @@
 /*
  * ============LICENSE_START=======================================================
- * PROJECT
+ * Cert Service
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
  * ================================================================================
@@ -18,26 +18,25 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.certification.configuration;
+package org.onap.aaf.certservice.certification.adapter;
 
-import org.onap.aaf.certservice.certification.configuration.model.Cmpv2Server;
-import org.onap.aaf.certservice.certification.exception.Cmpv2ServerNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.io.InputStream;
+import java.security.NoSuchProviderException;
+import java.security.Security;
+import java.security.cert.CertificateException;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.springframework.stereotype.Component;
 
 @Component
-public class Cmpv2ServerProvider {
+public class CertificateFactoryProvider {
 
-    private final CmpServersConfig cmpServersConfig;
-
-    @Autowired
-    Cmpv2ServerProvider(CmpServersConfig cmpServersConfig) {
-        this.cmpServersConfig = cmpServersConfig;
+    static {
+        Security.addProvider(new BouncyCastleProvider());
     }
 
-    public Cmpv2Server getCmpv2Server(String caName) {
-        return cmpServersConfig.getCmpServers().stream().filter(server -> server.getCaName().equals(caName)).findFirst()
-                       .orElseThrow(() -> new Cmpv2ServerNotFoundException("No server found for given CA name"));
+    X509Certificate generateCertificate(InputStream inStream) throws CertificateException, NoSuchProviderException {
+        return (X509Certificate) CertificateFactory.getInstance("X.509", "BC").generateCertificate(inStream);
     }
-
 }

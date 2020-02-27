@@ -1,6 +1,6 @@
 /*
  * ============LICENSE_START=======================================================
- * PROJECT
+ * Cert Service
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
  * ================================================================================
@@ -18,26 +18,11 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.certification.configuration;
+package org.onap.aaf.certservice.certification.exception;
 
-import org.onap.aaf.certservice.certification.configuration.model.Cmpv2Server;
-import org.onap.aaf.certservice.certification.exception.Cmpv2ServerNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+public class Cmpv2ClientAdapterException extends Exception {
 
-@Component
-public class Cmpv2ServerProvider {
-
-    private final CmpServersConfig cmpServersConfig;
-
-    @Autowired
-    Cmpv2ServerProvider(CmpServersConfig cmpServersConfig) {
-        this.cmpServersConfig = cmpServersConfig;
+    public Cmpv2ClientAdapterException(Throwable cause) {
+        super(cause);
     }
-
-    public Cmpv2Server getCmpv2Server(String caName) {
-        return cmpServersConfig.getCmpServers().stream().filter(server -> server.getCaName().equals(caName)).findFirst()
-                       .orElseThrow(() -> new Cmpv2ServerNotFoundException("No server found for given CA name"));
-    }
-
 }

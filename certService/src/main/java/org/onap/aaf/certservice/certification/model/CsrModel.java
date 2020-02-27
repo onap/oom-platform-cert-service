@@ -29,6 +29,7 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -54,9 +55,8 @@ public class CsrModel {
     private final PublicKey publicKey;
     private final List<String> sans;
 
-    CsrModel(
-            PKCS10CertificationRequest csr, X500Name subjectData,
-            PrivateKey privateKey, PublicKey publicKey, List<String> sans) {
+    CsrModel(PKCS10CertificationRequest csr, X500Name subjectData, PrivateKey privateKey, PublicKey publicKey,
+            List<String> sans) {
         this.csr = csr;
         this.subjectData = subjectData;
         this.privateKey = privateKey;
@@ -86,8 +86,7 @@ public class CsrModel {
 
     @Override
     public String toString() {
-        return "Subject: { " + subjectData
-                + " ,SANs: " + sans + " }";
+        return "Subject: { " + subjectData + " ,SANs: " + sans + " }";
     }
 
     public static class CsrModelBuilder {
@@ -95,9 +94,7 @@ public class CsrModel {
         private final PKCS10CertificationRequest csr;
         private final PemObject privateKey;
 
-        public CsrModel build()
-                throws DecryptionException
-        {
+        public CsrModel build() throws DecryptionException {
 
             X500Name subjectData = getSubjectData();
             PrivateKey javaPrivateKey = convertingPemPrivateKeyToJavaSecurityPrivateKey(getPrivateKey());
@@ -129,20 +126,26 @@ public class CsrModel {
         }
 
         private List<String> getSansData() {
-            Extensions extensions =
-                    Extensions.getInstance(csr.getAttributes()[0].getAttrValues().getObjectAt(0));
-            GeneralName[] arrayOfAlternativeNames =
-                    GeneralNames.fromExtensions(extensions, Extension.subjectAlternativeName).getNames();
+            if (!isAttrsEmpty() && !isAttrsValuesEmpty()) {
+                Extensions extensions = Extensions.getInstance(csr.getAttributes()[0].getAttrValues().getObjectAt(0));
+                GeneralName[] arrayOfAlternativeNames =
+                        GeneralNames.fromExtensions(extensions, Extension.subjectAlternativeName).getNames();
+                return Arrays.stream(arrayOfAlternativeNames).map(GeneralName::getName).map(Objects::toString)
+                               .collect(Collectors.toList());
+            }
+            return Collections.emptyList();
+        }
 
-            return Arrays.stream(arrayOfAlternativeNames)
-                    .map(GeneralName::getName)
-                    .map(Objects::toString)
-                    .collect(Collectors.toList());
+        private boolean isAttrsValuesEmpty() {
+            return csr.getAttributes()[0].getAttrValues().size() == 0;
+        }
+
+        private boolean isAttrsEmpty() {
+            return csr.getAttributes().length == 0;
         }
 
         private PrivateKey convertingPemPrivateKeyToJavaSecurityPrivateKey(PemObject privateKey)
-                throws KeyDecryptionException
-        {
+                throws KeyDecryptionException {
             try {
                 KeyFactory factory = KeyFactory.getInstance("RSA");
                 PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(privateKey.getContent());
@@ -153,8 +156,7 @@ public class CsrModel {
         }
 
         private PublicKey convertingPemPublicKeyToJavaSecurityPublicKey(PemObject publicKey)
-                throws KeyDecryptionException
-        {
+                throws KeyDecryptionException {
             try {
                 KeyFactory factory = KeyFactory.getInstance("RSA");
                 X509EncodedKeySpec keySpec = new X509EncodedKeySpec(publicKey.getContent());

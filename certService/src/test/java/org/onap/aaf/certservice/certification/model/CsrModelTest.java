@@ -50,15 +50,15 @@ class CsrModelTest {
             = new PemObjectFactory();
     @Test
     void shouldByConstructedAndReturnProperFields() throws DecryptionException, IOException {
-        // given
+        // Given
         PemObject testPrivateKey = getPemPrivateKey();
         PemObject testPublicKey = generateTestPublicKey();
         PKCS10CertificationRequest testCsr = generateTestCertificationRequest();
 
-        // when
+        // When
         CsrModel csrModel = generateTestCsrModel(testCsr);
 
-        // then
+        // Then
         assertThat(csrModel.getCsr())
                 .isEqualTo(testCsr);
         assertThat(csrModel.getPrivateKey().getEncoded())
@@ -75,7 +75,7 @@ class CsrModelTest {
 
     @Test
     void shouldThrowExceptionWhenPublicKeyIsNotCorrect() throws DecryptionException, IOException {
-        // given
+        // Given
         PemObject testPrivateKey = getPemPrivateKey();
         PKCS10CertificationRequest testCsr = mock(PKCS10CertificationRequest.class);
         SubjectPublicKeyInfo wrongKryInfo = mock(SubjectPublicKeyInfo.class);
@@ -84,7 +84,7 @@ class CsrModelTest {
         when(wrongKryInfo.getEncoded())
                 .thenThrow(new IOException());
 
-        // when
+        // When
         Exception exception = assertThrows(
                 CsrDecryptionException.class,
                 () -> new CsrModel.CsrModelBuilder(testCsr, testPrivateKey).build()
@@ -93,13 +93,13 @@ class CsrModelTest {
         String expectedMessage = "Reading Public Key from CSR failed";
         String actualMessage = exception.getMessage();
 
-        // then
+        // Then
         assertTrue(actualMessage.contains(expectedMessage));
     }
 
     @Test
     void shouldThrowExceptionWhenPrivateKeyPemIsNotProperPrivateKey() throws KeyDecryptionException, IOException {
-        // given
+        // Given
         PemObject testPrivateKey = getPemWrongKey();
         PKCS10CertificationRequest testCsr = mock(PKCS10CertificationRequest.class);
         SubjectPublicKeyInfo wrongKryInfo = mock(SubjectPublicKeyInfo.class);
@@ -108,7 +108,7 @@ class CsrModelTest {
         when(wrongKryInfo.getEncoded())
                 .thenThrow(new IOException());
 
-        // when
+        // When
         Exception exception = assertThrows(
                 KeyDecryptionException.class,
                 () -> new CsrModel.CsrModelBuilder(testCsr, testPrivateKey).build()
@@ -117,13 +117,13 @@ class CsrModelTest {
         String expectedMessage = "Converting Private Key failed";
         String actualMessage = exception.getMessage();
 
-        // then
+        // Then
         assertTrue(actualMessage.contains(expectedMessage));
     }
 
     @Test
     void shouldThrowExceptionWhenPublicKeyPemIsNotProperPublicKey() throws KeyDecryptionException, IOException {
-        // given
+        // Given
         PemObject testPrivateKey = getPemPrivateKey();
         PemObject testPublicKey = getPemWrongKey();
         PKCS10CertificationRequest testCsr = mock(PKCS10CertificationRequest.class);
@@ -133,7 +133,7 @@ class CsrModelTest {
         when(wrongKryInfo.getEncoded())
                 .thenReturn(testPublicKey.getContent());
 
-        // when
+        // When
         Exception exception = assertThrows(
                 KeyDecryptionException.class,
                 () -> new CsrModel.CsrModelBuilder(testCsr, testPrivateKey).build()
@@ -142,7 +142,7 @@ class CsrModelTest {
         String expectedMessage = "Converting Public Key from CSR failed";
         String actualMessage = exception.getMessage();
 
-        // then
+        // Then
         assertTrue(actualMessage.contains(expectedMessage));
     }
 

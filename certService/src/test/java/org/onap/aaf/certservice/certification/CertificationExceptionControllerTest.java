@@ -23,13 +23,17 @@ package org.onap.aaf.certservice.certification;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.onap.aaf.certservice.certification.exception.Cmpv2ClientAdapterException;
 import org.onap.aaf.certservice.certification.exception.Cmpv2ServerNotFoundException;
 import org.onap.aaf.certservice.certification.exception.CsrDecryptionException;
 import org.onap.aaf.certservice.certification.exception.ErrorResponseModel;
 import org.onap.aaf.certservice.certification.exception.KeyDecryptionException;
+import org.onap.aaf.certservice.cmpv2client.exceptions.CmpClientException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class CertificationExceptionControllerTest {
 
@@ -43,46 +47,98 @@ class CertificationExceptionControllerTest {
 
     @Test
     void shouldReturnResponseEntityWithAppropriateErrorMessageWhenGivenCsrDecryptionException() {
-        // given
+        // Given
         String expectedMessage = "Wrong certificate signing request (CSR) format";
         CsrDecryptionException csrDecryptionException = new CsrDecryptionException("test csr exception");
 
-        // when
+        // When
         ResponseEntity<String> responseEntity = certificationExceptionController.handle(csrDecryptionException);
 
         ErrorResponseModel response = new Gson().fromJson(responseEntity.getBody(), ErrorResponseModel.class);
 
-        // then
+        // Then
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
         assertEquals(expectedMessage, response.getErrorMessage());
     }
 
     @Test
     void shouldReturnResponseEntityWithAppropriateErrorMessageWhenGivenKeyDecryptionException() {
-        // given
+        // Given
         String expectedMessage = "Wrong key (PK) format";
         KeyDecryptionException csrDecryptionException = new KeyDecryptionException("test pk exception");
 
-        // when
+        // When
         ResponseEntity<String> responseEntity = certificationExceptionController.handle(csrDecryptionException);
 
         ErrorResponseModel response = new Gson().fromJson(responseEntity.getBody(), ErrorResponseModel.class);
 
-        // then
+        // Then
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
         assertEquals(expectedMessage, response.getErrorMessage());
     }
 
     @Test
     void shouldReturnResponseEntityWithAppropriateErrorMessageWhenGivenCaNameIsNotPresentInConfig() {
-        // given
+        // Given
         String expectedMessage = "Certification authority not found for given CAName";
         Cmpv2ServerNotFoundException csrDecryptionException = new Cmpv2ServerNotFoundException("test Ca exception");
 
-        // when
+        // When
         ResponseEntity<String> responseEntity = certificationExceptionController.handle(csrDecryptionException);
 
         ErrorResponseModel response = new Gson().fromJson(responseEntity.getBody(), ErrorResponseModel.class);
 
-        // then
+        // Then
+        assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
         assertEquals(expectedMessage, response.getErrorMessage());
     }
+
+    @Test
+    void shouldReturnResponseEntityWithAppropriateErrorMessageWhenCallingCmpClientFail() {
+        // Given
+        String expectedMessage = "Exception occurred during call to cmp client";
+        CmpClientException cmpClientException = new CmpClientException("Calling CMPv2 client failed");
+
+        // When
+        ResponseEntity<String> responseEntity = certificationExceptionController.handle(cmpClientException);
+
+        ErrorResponseModel response = new Gson().fromJson(responseEntity.getBody(), ErrorResponseModel.class);
+
+        // Then
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, responseEntity.getStatusCode());
+        assertEquals(expectedMessage, response.getErrorMessage());
+    }
+
+    @Test
+    void shouldReturnResponseEntityWithAppropriateErrorMessageWhenModelTransformationInAdapterFail() {
+        // Given
+        String expectedMessage = "Exception occurred parsing cmp client response";
+        Cmpv2ClientAdapterException cmpv2ClientAdapterException = new Cmpv2ClientAdapterException(new Throwable());
+
+        // When
+        ResponseEntity<String> responseEntity = certificationExceptionController.handle(cmpv2ClientAdapterException);
+
+        ErrorResponseModel response = new Gson().fromJson(responseEntity.getBody(), ErrorResponseModel.class);
+
+        // Then
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, responseEntity.getStatusCode());
+        assertEquals(expectedMessage, response.getErrorMessage());
+    }
+
+    @Test
+    void shouldThrowCmpClientExceptionWhenNotHandledRunTimeExceptionOccur() {
+        // Given
+        String expectedMessage = "Runtime exception occurred calling cmp client business logic";
+        RuntimeException runtimeException = new RuntimeException("Unknown runtime exception");
+
+        // When
+        Exception exception = assertThrows(
+                CmpClientException.class, () ->
+                        certificationExceptionController.handle(runtimeException)
+        );
+
+        // Then
+        assertEquals(expectedMessage, exception.getMessage());
+    }
+
 }

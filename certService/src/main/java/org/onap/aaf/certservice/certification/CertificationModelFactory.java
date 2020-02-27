@@ -22,9 +22,12 @@ package org.onap.aaf.certservice.certification;
 
 import org.onap.aaf.certservice.certification.configuration.Cmpv2ServerProvider;
 import org.onap.aaf.certservice.certification.configuration.model.Cmpv2Server;
+import org.onap.aaf.certservice.certification.exception.Cmpv2ClientAdapterException;
 import org.onap.aaf.certservice.certification.exception.Cmpv2ServerNotFoundException;
+import org.onap.aaf.certservice.certification.exception.DecryptionException;
 import org.onap.aaf.certservice.certification.model.CertificationModel;
 import org.onap.aaf.certservice.certification.model.CsrModel;
+import org.onap.aaf.certservice.cmpv2client.exceptions.CmpClientException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,28 +45,35 @@ public class CertificationModelFactory {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CertificationModelFactory.class);
 
+    private final CsrModelFactory csrModelFactory;
     private final Cmpv2ServerProvider cmpv2ServerProvider;
+    private final CertificationProvider certificationProvider;
 
     @Autowired
-    CertificationModelFactory(Cmpv2ServerProvider cmpv2ServerProvider) {
+    CertificationModelFactory(
+            CsrModelFactory csrModelFactory,
+            Cmpv2ServerProvider cmpv2ServerProvider,
+            CertificationProvider certificationProvider
+    ) {
         this.cmpv2ServerProvider = cmpv2ServerProvider;
+        this.csrModelFactory = csrModelFactory;
+        this.certificationProvider = certificationProvider;
     }
 
-    public CertificationModel createCertificationModel(CsrModel csr, String caName) {
-        LOGGER.info("Generating certification model for CA named: {}, and certificate signing request:\n{}",
-                caName, csr);
-
-        return cmpv2ServerProvider
-                .getCmpv2Server(caName)
-                .map(this::generateCertificationModel)
-                .orElseThrow(() -> new Cmpv2ServerNotFoundException("No server found for given CA name"));
-    }
-
-    private CertificationModel generateCertificationModel(Cmpv2Server cmpv2Server) {
-        LOGGER.debug("Found server for given CA name: \n{}", cmpv2Server);
-        return new CertificationModel(
-                Arrays.asList(ENTITY_CERT, INTERMEDIATE_CERT),
-                Arrays.asList(CA_CERT, EXTRA_CA_CERT)
+    public CertificationModel createCertificationModel(String encodedCsr, String encodedPrivateKey, String caName)
+            throws DecryptionException, CmpClientException, Cmpv2ClientAdapterException {
+        CsrModel csrModel = csrModelFactory.createCsrModel(
+                new CsrModelFactory.StringBase64(encodedCsr),
+                new CsrModelFactory.StringBase64(encodedPrivateKey)
         );
+        LOGGER.debug("Received CSR meta data: \n{}", csrModel);
+
+        Cmpv2Server cmpv2Server = cmpv2ServerProvider.getCmpv2Server(caName);
+        LOGGER.debug("Found server for given CA name: \n{}", cmpv2Server);
+
+        LOGGER.info("Sending sign request for certification model for CA named: {}, and certificate signing request:\n{}",
+                caName, csrModel);
+        return certificationProvider.signCsr(csrModel, cmpv2Server);
     }
+
 }

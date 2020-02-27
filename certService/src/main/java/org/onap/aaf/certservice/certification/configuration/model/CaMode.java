@@ -21,5 +21,15 @@
 package org.onap.aaf.certservice.certification.configuration.model;
 
 public enum CaMode {
-    RA, CLIENT
+    RA("RA"), CLIENT("Client");
+
+    private String profile;
+
+    CaMode(String profile) {
+        this.profile = profile;
+    }
+
+    public String getProfile(){
+        return profile;
+    }
 }

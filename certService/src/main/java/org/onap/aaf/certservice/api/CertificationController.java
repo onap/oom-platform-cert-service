@@ -24,9 +24,13 @@ import com.google.gson.Gson;
 import org.onap.aaf.certservice.certification.CertificationModelFactory;
 import org.onap.aaf.certservice.certification.CsrModelFactory;
 import org.onap.aaf.certservice.certification.CsrModelFactory.StringBase64;
+import org.onap.aaf.certservice.certification.configuration.Cmpv2ServerProvider;
+import org.onap.aaf.certservice.certification.configuration.model.Cmpv2Server;
+import org.onap.aaf.certservice.certification.exception.Cmpv2ClientAdapterException;
 import org.onap.aaf.certservice.certification.exception.DecryptionException;
 import org.onap.aaf.certservice.certification.model.CertificationModel;
 import org.onap.aaf.certservice.certification.model.CsrModel;
+import org.onap.aaf.certservice.cmpv2client.exceptions.CmpClientException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,12 +47,10 @@ public class CertificationController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CertificationController.class);
 
-    private final CsrModelFactory csrModelFactory;
     private final CertificationModelFactory certificationModelFactory;
 
     @Autowired
-    CertificationController(CsrModelFactory csrModelFactory, CertificationModelFactory certificationModelFactory) {
-        this.csrModelFactory = csrModelFactory;
+    CertificationController(CertificationModelFactory certificationModelFactory) {
         this.certificationModelFactory = certificationModelFactory;
     }
 
@@ -66,17 +68,11 @@ public class CertificationController {
             @PathVariable String caName,
             @RequestHeader("CSR") String encodedCsr,
             @RequestHeader("PK") String encodedPrivateKey
-    ) throws DecryptionException {
-
+    ) throws DecryptionException, CmpClientException, Cmpv2ClientAdapterException {
         caName = caName.replaceAll("[\n|\r|\t]", "_");
         LOGGER.info("Received certificate signing request for CA named: {}", caName);
-        CsrModel csrModel = csrModelFactory.createCsrModel(
-                new StringBase64(encodedCsr),
-                new StringBase64(encodedPrivateKey)
-        );
-        LOGGER.debug("Received CSR meta data: \n{}", csrModel);
         CertificationModel certificationModel = certificationModelFactory
-                .createCertificationModel(csrModel, caName);
+                .createCertificationModel(encodedCsr, encodedPrivateKey, caName);
         return new ResponseEntity<>(new Gson().toJson(certificationModel), HttpStatus.OK);
 
     }

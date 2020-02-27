@@ -1,6 +1,6 @@
 /*
  * ============LICENSE_START=======================================================
- * PROJECT
+ * Cert Service
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
  * ================================================================================
@@ -18,26 +18,30 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.certification.configuration;
+package org.onap.aaf.certservice.certification;
 
+import org.onap.aaf.certservice.certification.adapter.Cmpv2ClientAdapter;
 import org.onap.aaf.certservice.certification.configuration.model.Cmpv2Server;
-import org.onap.aaf.certservice.certification.exception.Cmpv2ServerNotFoundException;
+import org.onap.aaf.certservice.certification.exception.Cmpv2ClientAdapterException;
+import org.onap.aaf.certservice.certification.model.CertificationModel;
+import org.onap.aaf.certservice.certification.model.CsrModel;
+import org.onap.aaf.certservice.cmpv2client.exceptions.CmpClientException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
-public class Cmpv2ServerProvider {
+@Service
+public class CertificationProvider {
 
-    private final CmpServersConfig cmpServersConfig;
+    private final Cmpv2ClientAdapter cmpv2ClientAdapter;
 
     @Autowired
-    Cmpv2ServerProvider(CmpServersConfig cmpServersConfig) {
-        this.cmpServersConfig = cmpServersConfig;
+    public  CertificationProvider(Cmpv2ClientAdapter cmpv2ClientAdapter) {
+        this.cmpv2ClientAdapter = cmpv2ClientAdapter;
     }
 
-    public Cmpv2Server getCmpv2Server(String caName) {
-        return cmpServersConfig.getCmpServers().stream().filter(server -> server.getCaName().equals(caName)).findFirst()
-                       .orElseThrow(() -> new Cmpv2ServerNotFoundException("No server found for given CA name"));
+    CertificationModel signCsr(CsrModel csrModel, Cmpv2Server server)
+            throws CmpClientException, Cmpv2ClientAdapterException {
+        return cmpv2ClientAdapter.callCmpClient(csrModel, server);
     }
 
 }

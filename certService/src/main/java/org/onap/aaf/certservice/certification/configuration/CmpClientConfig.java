@@ -1,6 +1,6 @@
 /*
  * ============LICENSE_START=======================================================
- * PROJECT
+ * Cert Service
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
  * ================================================================================
@@ -17,27 +17,33 @@
  * limitations under the License.
  * ============LICENSE_END=========================================================
  */
-
 package org.onap.aaf.certservice.certification.configuration;
 
-import org.onap.aaf.certservice.certification.configuration.model.Cmpv2Server;
-import org.onap.aaf.certservice.certification.exception.Cmpv2ServerNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.onap.aaf.certservice.cmpv2client.api.CmpClient;
+import org.onap.aaf.certservice.cmpv2client.impl.CmpClientImpl;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.context.annotation.RequestScope;
 
-@Component
-public class Cmpv2ServerProvider {
+@Configuration
+public class CmpClientConfig {
 
-    private final CmpServersConfig cmpServersConfig;
-
-    @Autowired
-    Cmpv2ServerProvider(CmpServersConfig cmpServersConfig) {
-        this.cmpServersConfig = cmpServersConfig;
+    @Bean
+    CmpClient cmpClient(CloseableHttpClient closeableHttpClient){
+        return new CmpClientImpl(closeableHttpClient);
     }
 
-    public Cmpv2Server getCmpv2Server(String caName) {
-        return cmpServersConfig.getCmpServers().stream().filter(server -> server.getCaName().equals(caName)).findFirst()
-                       .orElseThrow(() -> new Cmpv2ServerNotFoundException("No server found for given CA name"));
+    @Bean
+    @RequestScope
+    CloseableHttpClient closeableHttpClient(HttpClientBuilder httpClientBuilder){
+        return httpClientBuilder.build();
+    }
+
+    @Bean
+    HttpClientBuilder httpClientBuilder(){
+        return HttpClientBuilder.create();
     }
 
 }

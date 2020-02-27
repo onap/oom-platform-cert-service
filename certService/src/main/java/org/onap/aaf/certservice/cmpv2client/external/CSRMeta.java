@@ -207,4 +207,12 @@ public class CSRMeta {
     public void issuerEmail(String issuerEmail) {
         this.issuerEmail = issuerEmail;
     }
+
+    public void setIssuerName(X500Name issuerName) {
+        this.issuerName = issuerName;
+    }
+
+    public void setName(X500Name name) {
+        this.name = name;
+    }
 }

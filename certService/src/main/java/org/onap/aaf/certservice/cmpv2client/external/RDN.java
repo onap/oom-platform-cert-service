@@ -75,6 +75,7 @@ public class RDN {
                 break; // surname
             case "email":
             case "EMAIL":
+            case "E":
             case "emailaddress":
             case "EMAILADDRESS":
                 aoi = BCStyle.EmailAddress;

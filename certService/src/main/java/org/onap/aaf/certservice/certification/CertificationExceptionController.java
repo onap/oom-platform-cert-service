@@ -21,10 +21,12 @@
 package org.onap.aaf.certservice.certification;
 
 import com.google.gson.Gson;
+import org.onap.aaf.certservice.certification.exception.Cmpv2ClientAdapterException;
 import org.onap.aaf.certservice.certification.exception.Cmpv2ServerNotFoundException;
 import org.onap.aaf.certservice.certification.exception.CsrDecryptionException;
 import org.onap.aaf.certservice.certification.exception.ErrorResponseModel;
 import org.onap.aaf.certservice.certification.exception.KeyDecryptionException;
+import org.onap.aaf.certservice.cmpv2client.exceptions.CmpClientException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -40,19 +42,51 @@ public class CertificationExceptionController {
     @ExceptionHandler(value = CsrDecryptionException.class)
     public ResponseEntity<String> handle(CsrDecryptionException exception) {
         LOGGER.error("Exception occurred during decoding certificate sign request:", exception);
-        return getErrorResponseEntity("Wrong certificate signing request (CSR) format", HttpStatus.BAD_REQUEST);
+        return getErrorResponseEntity(
+                "Wrong certificate signing request (CSR) format",
+                HttpStatus.BAD_REQUEST
+        );
     }
 
     @ExceptionHandler(value = KeyDecryptionException.class)
     public ResponseEntity<String> handle(KeyDecryptionException exception) {
         LOGGER.error("Exception occurred during decoding key:", exception);
-        return getErrorResponseEntity("Wrong key (PK) format", HttpStatus.BAD_REQUEST);
+        return getErrorResponseEntity(
+                "Wrong key (PK) format",
+                HttpStatus.BAD_REQUEST
+        );
     }
 
     @ExceptionHandler(value = Cmpv2ServerNotFoundException.class)
     public ResponseEntity<String> handle(Cmpv2ServerNotFoundException exception) {
         LOGGER.error("Exception occurred selecting CMPv2 server:", exception);
-        return getErrorResponseEntity("Certification authority not found for given CAName", HttpStatus.NOT_FOUND);
+        return getErrorResponseEntity(
+                "Certification authority not found for given CAName",
+                HttpStatus.NOT_FOUND
+        );
+    }
+
+    @ExceptionHandler(value = CmpClientException.class)
+    public ResponseEntity<String> handle(CmpClientException exception) {
+        LOGGER.error("Exception occurred calling cmp client:", exception);
+        return getErrorResponseEntity(
+                "Exception occurred during call to cmp client",
+                HttpStatus.INTERNAL_SERVER_ERROR
+        );
+    }
+
+    @ExceptionHandler(value = RuntimeException.class)
+    public ResponseEntity<String> handle(RuntimeException exception) throws CmpClientException {
+        throw new CmpClientException("Runtime exception occurred calling cmp client business logic", exception);
+    }
+    
+    @ExceptionHandler(value = Cmpv2ClientAdapterException.class)
+    public ResponseEntity<String> handle(Cmpv2ClientAdapterException exception) {
+        LOGGER.error("Exception occurred parsing cmp client response:", exception);
+        return getErrorResponseEntity(
+                "Exception occurred parsing cmp client response",
+                HttpStatus.INTERNAL_SERVER_ERROR
+        );
     }
 
     private ResponseEntity<String> getErrorResponseEntity(String errorMessage, HttpStatus status) {
