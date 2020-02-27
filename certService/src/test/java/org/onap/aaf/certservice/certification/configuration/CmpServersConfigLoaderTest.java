@@ -39,7 +39,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ContextConfiguration(classes = CertServiceApplication.class)
 class CmpServersConfigLoaderTest {
     private static final String EXISTING_CONFIG_FILENAME = "cmpServers.json";
-    private static final String NONEXISTING_CONFIG_FILENAME = "nonexisting_cmpServers.json";
+    private static final String NONEXISTING_CONFIG_FILENAME = "nonExisting_cmpServers.json";
     private static final Map<String, String> EXPECTED_FIRST_CMP_SERVER = Map.of(
             "CA_NAME", "TEST",
             "URL", "http://127.0.0.1/ejbca/publicweb/cmp/cmp",
@@ -61,7 +61,7 @@ class CmpServersConfigLoaderTest {
     private CmpServersConfigLoader configLoader;
 
     @Test
-    public void shouldLoadCmpServersConfigWhenFileAvailable() {
+    void shouldLoadCmpServersConfigWhenFileAvailable() {
         // Given
         String path = getClass().getClassLoader().getResource(EXISTING_CONFIG_FILENAME).getFile();
 
@@ -75,8 +75,8 @@ class CmpServersConfigLoaderTest {
         verifyThatCmpServerEquals(cmpServers.get(1), EXPECTED_SECOND_CMP_SERVER);
     }
 
-    @Test()
-    public void shouldReturnEmptyListWhenFileMissing() {
+    @Test
+    void shouldReturnEmptyListWhenFileMissing() {
         // When
         List<Cmpv2Server> cmpServers = configLoader.load(NONEXISTING_CONFIG_FILENAME);
 

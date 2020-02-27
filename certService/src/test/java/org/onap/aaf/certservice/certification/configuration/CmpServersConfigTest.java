@@ -20,16 +20,17 @@
 
 package org.onap.aaf.certservice.certification.configuration;
 
+import org.bouncycastle.asn1.x500.X500Name;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.onap.aaf.certservice.CertServiceApplication;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.onap.aaf.certservice.certification.configuration.model.Authentication;
+import org.onap.aaf.certservice.certification.configuration.model.CaMode;
 import org.onap.aaf.certservice.certification.configuration.model.Cmpv2Server;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.cloud.context.scope.refresh.RefreshScopeRefreshedEvent;
 
 import java.util.List;
 
@@ -37,29 +38,31 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.startsWith;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = CertServiceApplication.class)
-@TestPropertySource(properties = {"app.config.path=/fake/path/to/config"})
+@ExtendWith(MockitoExtension.class)
 class CmpServersConfigTest {
 
-    private static final List<Cmpv2Server> SAMPLE_CMP_SERVERS = List.of(
-            new Cmpv2Server(),
-            new Cmpv2Server()
-    );
+    private static final String APP_CONFIG_PATH = "/fake/path/to/config";
 
-    @MockBean
+    private static final List<Cmpv2Server> SAMPLE_CMP_SERVERS = generateTestConfiguration();
+
+    @Mock
     private CmpServersConfigLoader cmpServersConfigLoader;
 
-    @Autowired
     private CmpServersConfig cmpServersConfig;
 
-    @Test
-    public void shouldCallLoaderWithPathFromPropertiesWhenCreated() {
-        Mockito.verify(cmpServersConfigLoader).load(startsWith("/fake/path/to/config"));
+    @BeforeEach
+    void setUp() {
+        cmpServersConfig = new CmpServersConfig(APP_CONFIG_PATH, cmpServersConfigLoader);
     }
 
     @Test
-    public void shouldReturnLoadedServersWhenGetCalled() {
+    void shouldCallLoaderWithPathFromPropertiesWhenCreated() {
+        this.cmpServersConfig.loadConfiguration();      // Manual PostConstruct call
+        Mockito.verify(cmpServersConfigLoader).load(startsWith(APP_CONFIG_PATH));
+    }
+
+    @Test
+    void shouldReturnLoadedServersWhenGetCalled() {
         // Given
         Mockito.when(cmpServersConfigLoader.load(any())).thenReturn(SAMPLE_CMP_SERVERS);
         this.cmpServersConfig.loadConfiguration();      // Manual PostConstruct call
@@ -68,6 +71,65 @@ class CmpServersConfigTest {
         List<Cmpv2Server> receivedCmpServers = this.cmpServersConfig.getCmpServers();
 
         // Then
-        assertThat(receivedCmpServers).hasSize(SAMPLE_CMP_SERVERS.size());
+        assertThat(receivedCmpServers).containsAll(SAMPLE_CMP_SERVERS);
     }
+
+    @Test
+    void shouldReturnLoadedServersAfterRefreshWhenGetCalled() {
+        // Given
+        Mockito.when(cmpServersConfigLoader.load(any())).thenReturn(SAMPLE_CMP_SERVERS);
+
+        List<Cmpv2Server> receivedCmpServers = this.cmpServersConfig.getCmpServers();
+        assertThat(receivedCmpServers).isNull();
+
+        this.cmpServersConfig.onRefreshScope(new RefreshScopeRefreshedEvent());
+
+        // When
+        receivedCmpServers = this.cmpServersConfig.getCmpServers();
+
+        // Then
+        assertThat(receivedCmpServers).containsAll(SAMPLE_CMP_SERVERS);
+    }
+
+    @Test
+    void shouldNotReturnIakAndRvWhenToStringMethodIsUsed() {
+        // Given
+        Mockito.when(cmpServersConfigLoader.load(any())).thenReturn(SAMPLE_CMP_SERVERS);
+        this.cmpServersConfig.loadConfiguration();      // Manual PostConstruct call
+
+        // When
+        List<Cmpv2Server> receivedCmpServers = this.cmpServersConfig.getCmpServers();
+
+        // Then
+        receivedCmpServers.forEach((server)-> assertThat(server.toString())
+                .doesNotContain(
+                        server.getAuthentication().getIak(),
+                        server.getAuthentication().getRv()
+                ));
+    }
+
+    private static List<Cmpv2Server> generateTestConfiguration() {
+        Cmpv2Server testServer1 = new Cmpv2Server();
+        testServer1.setCaName("TEST_CA1");
+        testServer1.setIssuerDN(new X500Name("CN=testIssuer"));
+        testServer1.setUrl("http://test.ca.server");
+        Authentication testAuthentication1 = new Authentication();
+        testAuthentication1.setIak("testIak");
+        testAuthentication1.setRv("testRv");
+        testServer1.setAuthentication(testAuthentication1);
+        testServer1.setCaMode(CaMode.RA);
+
+        Cmpv2Server testServer2 = new Cmpv2Server();
+        testServer2.setCaName("TEST_CA2");
+        testServer2.setIssuerDN(new X500Name("CN=testIssuer2"));
+        testServer2.setUrl("http://test.ca.server");
+        Authentication testAuthentication2 = new Authentication();
+        testAuthentication2.setIak("test2Iak");
+        testAuthentication2.setRv("test2Rv");
+        testServer2.setAuthentication(testAuthentication2);
+        testServer2.setCaMode(CaMode.CLIENT);
+
+        return List.of(testServer1, testServer2);
+    }
+
 }

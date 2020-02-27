@@ -51,12 +51,11 @@ class CmpServersConfigLoader {
         try {
             servers = loadConfigFromFile(path).getCmpv2Servers();
             servers.forEach(validator::validate);
-            LOGGER.info(String.format("CMP Servers configuration successfully loaded from file '%s'", path));
+            LOGGER.info("CMP Servers configuration successfully loaded from file {}", path);
         } catch (IOException e) {
             LOGGER.error("Exception occurred during CMP Servers configuration loading: ", e);
         } catch (InvalidParameterException e) {
             LOGGER.error("Validation of CMPv2 servers configuration failed:", e);
-            throw e;
         }
 
         return servers;
