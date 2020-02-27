@@ -27,12 +27,18 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.security.Security;
 import java.security.cert.X509Certificate;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -77,11 +83,13 @@ class Cmpv2ClientTest {
   private static ArrayList<RDN> rdns;
 
   @BeforeEach
-  void setUp() throws NoSuchProviderException, NoSuchAlgorithmException {
+  void setUp()
+      throws NoSuchProviderException, NoSuchAlgorithmException, IOException,
+          InvalidKeySpecException {
     KeyPairGenerator keyGenerator;
     keyGenerator = KeyPairGenerator.getInstance("RSA", BouncyCastleProvider.PROVIDER_NAME);
     keyGenerator.initialize(2048);
-    keyPair = keyGenerator.generateKeyPair();
+    keyPair = LoadKeyPair();
     rdns = new ArrayList<>();
     try {
       rdns.add(new RDN("O=CommonCompany"));
@@ -89,6 +97,27 @@ class Cmpv2ClientTest {
       e.printStackTrace();
     }
     initMocks(this);
+  }
+
+  public KeyPair LoadKeyPair()
+      throws IOException, NoSuchAlgorithmException, InvalidKeySpecException,
+          NoSuchProviderException {
+
+    final InputStream privateInputStream = this.getClass().getResourceAsStream("/privateKey");
+    final InputStream publicInputStream = this.getClass().getResourceAsStream("/publicKey");
+    BufferedInputStream bis = new BufferedInputStream(privateInputStream);
+    byte[] privateBytes = IOUtils.toByteArray(bis);
+    bis = new BufferedInputStream(publicInputStream);
+    byte[] publicBytes = IOUtils.toByteArray(bis);
+
+    KeyFactory keyFactory = KeyFactory.getInstance("RSA", BouncyCastleProvider.PROVIDER_NAME);
+    X509EncodedKeySpec publicKeySpec = new X509EncodedKeySpec(publicBytes);
+    PublicKey publicKey = keyFactory.generatePublic(publicKeySpec);
+
+    PKCS8EncodedKeySpec privateKeySpec = new PKCS8EncodedKeySpec(privateBytes);
+    PrivateKey privateKey = keyFactory.generatePrivate(privateKeySpec);
+
+    return new KeyPair(publicKey, privateKey);
   }
 
   @Test
@@ -103,8 +132,9 @@ class Cmpv2ClientTest {
         "CN=ManagementCA",
         "CommonName.com",
         "CommonName@cn.com",
-        "password",
+        "mypassword",
         "http://127.0.0.1/ejbca/publicweb/cmp/cmp",
+        "senderKID",
         beforeDate,
         afterDate);
     when(httpClient.execute(any())).thenReturn(httpResponse);
@@ -133,8 +163,9 @@ class Cmpv2ClientTest {
   }
 
   @Test
-  void shouldReturnValidPkiMessageWhenCreateCertificateRequestMessageMethodCalledWithValidCsr2()
-      throws Exception {
+  void
+      shouldThrowCmpClientExceptionWhenCreateCertificateRequestMessageMethodCalledWithWrongProtectedBytesInResponse()
+          throws Exception {
     // given
     Date beforeDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").parse("2019/11/11 12:00:00");
     Date afterDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").parse("2020/11/11 12:00:00");
@@ -146,35 +177,35 @@ class Cmpv2ClientTest {
         "CommonName@cn.com",
         "password",
         "http://127.0.0.1/ejbca/publicweb/cmp/cmp",
+        "senderKID",
         beforeDate,
         afterDate);
     when(httpClient.execute(any())).thenReturn(httpResponse);
     when(httpResponse.getEntity()).thenReturn(httpEntity);
 
     try (final InputStream is =
-        this.getClass().getResourceAsStream("/ReturnedSuccessPKIMessageWithCertificateFile");
+            this.getClass().getResourceAsStream("/ReturnedSuccessPKIMessageWithCertificateFile");
         BufferedInputStream bis = new BufferedInputStream(is)) {
 
       byte[] ba = IOUtils.toByteArray(bis);
       doAnswer(
-          invocation -> {
-            OutputStream os = (ByteArrayOutputStream) invocation.getArguments()[0];
-            os.write(ba);
-            return null;
-          })
+              invocation -> {
+                OutputStream os = (ByteArrayOutputStream) invocation.getArguments()[0];
+                os.write(ba);
+                return null;
+              })
           .when(httpEntity)
           .writeTo(any(OutputStream.class));
     }
     CmpClientImpl cmpClient = spy(new CmpClientImpl(httpClient));
-    // when
-    List<List<X509Certificate>> cmpClientResult =
-        cmpClient.createCertificate("data", "RA", csrMeta, cert, notBefore, notAfter);
     // then
-    assertNotNull(cmpClientResult);
+    Assertions.assertThrows(
+        CmpClientException.class,
+        () -> cmpClient.createCertificate("data", "RA", csrMeta, cert, notBefore, notAfter));
   }
 
   @Test
-  void shouldReturnCmpClientExceptionWithPkiErrorExceptionWhenCmpClientCalledWithBadPassword()
+  void shouldThrowCmpClientExceptionWithPkiErrorExceptionWhenCmpClientCalledWithBadPassword()
       throws Exception {
     // given
     Date beforeDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").parse("2019/11/11 12:00:00");
@@ -187,6 +218,7 @@ class Cmpv2ClientTest {
         "CommonName@cn.com",
         "password",
         "http://127.0.0.1/ejbca/publicweb/cmp/cmp",
+        "senderKID",
         beforeDate,
         afterDate);
     when(httpClient.execute(any())).thenReturn(httpResponse);
@@ -228,6 +260,7 @@ class Cmpv2ClientTest {
         "CommonName@cn.com",
         "password",
         "http://127.0.0.1/ejbca/publicweb/cmp/cmp",
+        "senderKID",
         beforeDate,
         afterDate);
     CmpClientImpl cmpClient = new CmpClientImpl(httpClient);
@@ -251,6 +284,7 @@ class Cmpv2ClientTest {
         "Common@cn.com",
         "myPassword",
         "http://127.0.0.1/ejbca/publicweb/cmp/cmpTest",
+        "sender",
         beforeDate,
         afterDate);
     when(httpClient.execute(any())).thenThrow(IOException.class);
@@ -269,6 +303,7 @@ class Cmpv2ClientTest {
       String email,
       String password,
       String externalCaUrl,
+      String senderKid,
       Date notBefore,
       Date notAfter) {
     csrMeta = new CSRMeta(rdns);
@@ -280,6 +315,7 @@ class Cmpv2ClientTest {
     when(kpg.generateKeyPair()).thenReturn(keyPair);
     csrMeta.keypair();
     csrMeta.caUrl(externalCaUrl);
+    csrMeta.senderKid(senderKid);
 
     this.notBefore = notBefore;
     this.notAfter = notAfter;

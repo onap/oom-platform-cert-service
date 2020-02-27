@@ -20,9 +20,13 @@
 
 package org.onap.aaf.certservice.cmpv2client.impl;
 
+import java.security.PublicKey;
 import static org.onap.aaf.certservice.cmpv2client.impl.CmpResponseHelper.checkIfCmpResponseContainsError;
 import static org.onap.aaf.certservice.cmpv2client.impl.CmpResponseHelper.getCertfromByteArray;
 import static org.onap.aaf.certservice.cmpv2client.impl.CmpResponseHelper.verifyAndReturnCertChainAndTrustSTore;
+import static org.onap.aaf.certservice.cmpv2client.impl.CmpResponseValidationHelper.checkImplicitConfirm;
+import static org.onap.aaf.certservice.cmpv2client.impl.CmpResponseValidationHelper.verifyPasswordBasedProtection;
+import static org.onap.aaf.certservice.cmpv2client.impl.CmpResponseValidationHelper.verifySignature;
 
 import java.io.IOException;
 import java.security.cert.CertificateParsingException;
@@ -38,7 +42,9 @@ import org.bouncycastle.asn1.cmp.CMPCertificate;
 import org.bouncycastle.asn1.cmp.CertRepMessage;
 import org.bouncycastle.asn1.cmp.CertResponse;
 import org.bouncycastle.asn1.cmp.PKIBody;
+import org.bouncycastle.asn1.cmp.PKIHeader;
 import org.bouncycastle.asn1.cmp.PKIMessage;
+import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
 import org.onap.aaf.certservice.cmpv2client.exceptions.CmpClientException;
 import org.onap.aaf.certservice.cmpv2client.api.CmpClient;
 import org.onap.aaf.certservice.cmpv2client.external.CSRMeta;
@@ -51,7 +57,7 @@ import org.slf4j.LoggerFactory;
  */
 public class CmpClientImpl implements CmpClient {
 
-  private final Logger LOG = LoggerFactory.getLogger(CmpClientImpl.class);
+  private static final Logger LOG = LoggerFactory.getLogger(CmpClientImpl.class);
   private final CloseableHttpClient httpClient;
 
   private static final String DEFAULT_PROFILE = "RA";
@@ -82,6 +88,7 @@ public class CmpClientImpl implements CmpClient {
             .with(CreateCertRequest::setNotBefore, notBefore)
             .with(CreateCertRequest::setNotAfter, notAfter)
             .with(CreateCertRequest::setInitAuthPassword, csrMeta.password())
+            .with(CreateCertRequest::setSenderKid, csrMeta.senderKid())
             .build();
 
     final PKIMessage pkiMessage = certRequest.generateCertReq();
@@ -94,6 +101,45 @@ public class CmpClientImpl implements CmpClient {
       String caName, String profile, CSRMeta csrMeta, X509Certificate csr)
       throws CmpClientException {
     return createCertificate(caName, profile, csrMeta, csr, null, null);
+  }
+
+  private void checkCmpResponse(
+      final PKIMessage respPkiMessage, final PublicKey publicKey, final String initAuthPassword)
+      throws CmpClientException {
+    final PKIHeader header = respPkiMessage.getHeader();
+    final AlgorithmIdentifier protectionAlgo = header.getProtectionAlg();
+    verifySignatureWithPublicKey(respPkiMessage, publicKey);
+    verifyProtectionWithProtectionAlgo(respPkiMessage, initAuthPassword, header, protectionAlgo);
+  }
+
+  private void verifySignatureWithPublicKey(PKIMessage respPkiMessage, PublicKey publicKey)
+      throws CmpClientException {
+    if (Objects.nonNull(publicKey)) {
+      LOG.debug("Verifying signature of the response.");
+      verifySignature(respPkiMessage, publicKey);
+    } else {
+      LOG.error("Public Key is not available, therefore cannot verify signature");
+      throw new CmpClientException(
+          "Public Key is not available, therefore cannot verify signature");
+    }
+  }
+
+  private void verifyProtectionWithProtectionAlgo(
+      PKIMessage respPkiMessage,
+      String initAuthPassword,
+      PKIHeader header,
+      AlgorithmIdentifier protectionAlgo)
+      throws CmpClientException {
+    if (Objects.nonNull(protectionAlgo)) {
+      LOG.debug("Verifying PasswordBased Protection of the Response.");
+      verifyPasswordBasedProtection(respPkiMessage, initAuthPassword, protectionAlgo);
+      checkImplicitConfirm(header);
+    } else {
+      LOG.error(
+          "Protection Algorithm is not available when expecting PBE protected response containing protection algorithm");
+      throw new CmpClientException(
+          "Protection Algorithm is not available when expecting PBE protected response containing protection algorithm");
+    }
   }
 
   private List<List<X509Certificate>> checkCmpCertRepMessage(final PKIMessage respPkiMessage)
@@ -128,10 +174,11 @@ public class CmpClientImpl implements CmpClient {
         certResponse.getCertifiedKeyPair().getCertOrEncCert().getCertificate();
     final Optional<X509Certificate> leafCertificate =
         getCertfromByteArray(cmpCertificate.getEncoded(), X509Certificate.class);
-    ArrayList<X509Certificate> certChain = new ArrayList<>();
-    ArrayList<X509Certificate> trustStore = new ArrayList<>();
-    return verifyAndReturnCertChainAndTrustSTore(
-        respPkiMessage, certRepMessage, leafCertificate.get(), certChain, trustStore);
+    if (leafCertificate.isPresent()) {
+      return verifyAndReturnCertChainAndTrustSTore(
+          respPkiMessage, certRepMessage, leafCertificate.get());
+    }
+    return Collections.emptyList();
   }
 
   private CertResponse getCertificateResponseContainingNewCertificate(
@@ -184,8 +231,9 @@ public class CmpClientImpl implements CmpClient {
     final byte[] respBytes = cmpv2HttpClient.postRequest(pkiMessage, csrMeta.caUrl(), caName);
     try {
       final PKIMessage respPkiMessage = PKIMessage.getInstance(respBytes);
-      LOG.info("Recieved response from Server");
+      LOG.info("Received response from Server");
       checkIfCmpResponseContainsError(respPkiMessage);
+      checkCmpResponse(respPkiMessage, csrMeta.keypair().getPublic(), csrMeta.password());
       return checkCmpCertRepMessage(respPkiMessage);
     } catch (IllegalArgumentException iae) {
       CmpClientException cmpClientException =

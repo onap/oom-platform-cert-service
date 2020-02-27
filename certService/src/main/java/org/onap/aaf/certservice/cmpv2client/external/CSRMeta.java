@@ -48,7 +48,7 @@ public class CSRMeta {
     private X500Name name;
     private X500Name issuerName;
     private Certificate certificate;
-    private SecureRandom random = new SecureRandom();
+    private String senderKid;
 
     public CSRMeta(List<RDN> rdns) {
         this.rdns = rdns;
@@ -186,6 +186,14 @@ public class CSRMeta {
 
     public void caUrl(String caUrl) {
         CaUrl = caUrl;
+    }
+
+    public String senderKid() {
+        return senderKid;
+    }
+
+    public void senderKid(String senderKid) {
+        this.senderKid = senderKid;
     }
 
     public String issuerCn() {

@@ -31,6 +31,8 @@ import org.bouncycastle.asn1.ASN1GeneralizedTime;
 import org.bouncycastle.asn1.DEROctetString;
 import org.bouncycastle.asn1.DEROutputStream;
 import org.bouncycastle.asn1.DERSequence;
+import org.bouncycastle.asn1.cmp.CMPObjectIdentifiers;
+import org.bouncycastle.asn1.cmp.InfoTypeAndValue;
 import org.bouncycastle.asn1.cmp.PKIBody;
 import org.bouncycastle.asn1.cmp.PKIHeader;
 import org.bouncycastle.asn1.cmp.PKIHeaderBuilder;
@@ -129,7 +131,7 @@ public final class CmpUtil {
    * @return PKIHeaderBuilder
    */
   static PKIHeader generatePkiHeader(
-      X500Name subjectDn, X500Name issuerDn, AlgorithmIdentifier protectionAlg) {
+      X500Name subjectDn, X500Name issuerDn, AlgorithmIdentifier protectionAlg, String senderKid) {
     LOGGER.info("Generating a Pki Header Builder");
     PKIHeaderBuilder pkiHeaderBuilder =
         new PKIHeaderBuilder(
@@ -139,6 +141,8 @@ public final class CmpUtil {
     pkiHeaderBuilder.setSenderNonce(new DEROctetString(createRandomBytes()));
     pkiHeaderBuilder.setTransactionID(new DEROctetString(createRandomBytes()));
     pkiHeaderBuilder.setProtectionAlg(protectionAlg);
+    pkiHeaderBuilder.setGeneralInfo(new InfoTypeAndValue(CMPObjectIdentifiers.it_implicitConfirm));
+    pkiHeaderBuilder.setSenderKID(new DEROctetString(senderKid.getBytes()));
 
     return pkiHeaderBuilder.build();
   }
