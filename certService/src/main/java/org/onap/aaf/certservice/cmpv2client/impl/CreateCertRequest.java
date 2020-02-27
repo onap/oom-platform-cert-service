@@ -1,6 +1,7 @@
-/*
- * Copyright (C) 2020 Ericsson Software Technology AB. All rights reserved.
- *
+/*-
+ * ============LICENSE_START=======================================================
+ *  Copyright (C) 2020 Nordix Foundation.
+ * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -11,7 +12,10 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- * limitations under the License
+ * limitations under the License.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ * ============LICENSE_END=========================================================
  */
 
 package org.onap.aaf.certservice.cmpv2client.impl;
@@ -20,11 +24,9 @@ import static org.onap.aaf.certservice.cmpv2client.impl.CmpUtil.createRandomByte
 import static org.onap.aaf.certservice.cmpv2client.impl.CmpUtil.createRandomInt;
 import static org.onap.aaf.certservice.cmpv2client.impl.CmpUtil.generatePkiHeader;
 
-import java.io.IOException;
 import java.security.KeyPair;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import org.bouncycastle.asn1.DERUTF8String;
 import org.bouncycastle.asn1.cmp.PKIBody;
 import org.bouncycastle.asn1.cmp.PKIHeader;
@@ -39,16 +41,12 @@ import org.bouncycastle.asn1.crmf.ProofOfPossession;
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
 import org.onap.aaf.certservice.cmpv2client.exceptions.CmpClientException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of the CmpClient Interface conforming to RFC4210 (Certificate Management Protocol
  * (CMP)) and RFC4211 (Certificate Request Message Format (CRMF)) standards.
  */
 class CreateCertRequest {
-
-  private static final Logger LOG = LoggerFactory.getLogger(CreateCertRequest.class);
 
   private X500Name issuerDn;
   private X500Name subjectDn;
@@ -58,8 +56,8 @@ class CreateCertRequest {
   private Date notAfter;
   private String initAuthPassword;
 
-  private static final int iterations = createRandomInt(5000);
-  private static final byte[] salt = createRandomBytes();
+  private static final int ITERATIONS = createRandomInt(5000);
+  private static final byte[] SALT = createRandomBytes();
   private final int certReqId = createRandomInt(Integer.MAX_VALUE);
 
   public void setIssuerDn(X500Name issuerDn) {
@@ -120,10 +118,10 @@ class CreateCertRequest {
 
     final PKIHeader pkiHeader =
         generatePkiHeader(
-            subjectDn, issuerDn, CmpMessageHelper.protectionAlgoIdentifier(iterations, salt));
+            subjectDn, issuerDn, CmpMessageHelper.protectionAlgoIdentifier(ITERATIONS, SALT));
     final PKIBody pkiBody = new PKIBody(PKIBody.TYPE_CERT_REQ, certReqMessages);
 
     return CmpMessageHelper.protectPkiMessage(
-        pkiHeader, pkiBody, initAuthPassword, iterations, salt);
+        pkiHeader, pkiBody, initAuthPassword, ITERATIONS, SALT);
   }
 }

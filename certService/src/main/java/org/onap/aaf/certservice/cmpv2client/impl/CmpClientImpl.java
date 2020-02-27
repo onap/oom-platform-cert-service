@@ -1,6 +1,7 @@
-/*
- * Copyright (C) 2020 Ericsson Software Technology AB. All rights reserved.
- *
+/*-
+ * ============LICENSE_START=======================================================
+ *  Copyright (C) 2020 Nordix Foundation.
+ * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -11,14 +12,32 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- * limitations under the License
+ * limitations under the License.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ * ============LICENSE_END=========================================================
  */
 
 package org.onap.aaf.certservice.cmpv2client.impl;
 
+import static org.onap.aaf.certservice.cmpv2client.impl.CmpResponseHelper.checkIfCmpResponseContainsError;
+import static org.onap.aaf.certservice.cmpv2client.impl.CmpResponseHelper.getCertfromByteArray;
+import static org.onap.aaf.certservice.cmpv2client.impl.CmpResponseHelper.verifyAndReturnCertChainAndTrustSTore;
+
+import java.io.IOException;
+import java.security.cert.CertificateParsingException;
 import java.security.cert.X509Certificate;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.bouncycastle.asn1.cmp.CMPCertificate;
+import org.bouncycastle.asn1.cmp.CertRepMessage;
+import org.bouncycastle.asn1.cmp.CertResponse;
+import org.bouncycastle.asn1.cmp.PKIBody;
 import org.bouncycastle.asn1.cmp.PKIMessage;
 import org.onap.aaf.certservice.cmpv2client.exceptions.CmpClientException;
 import org.onap.aaf.certservice.cmpv2client.api.CmpClient;
@@ -38,12 +57,12 @@ public class CmpClientImpl implements CmpClient {
   private static final String DEFAULT_PROFILE = "RA";
   private static final String DEFAULT_CA_NAME = "Certification Authority";
 
-  public CmpClientImpl(CloseableHttpClient httpClient){
+  public CmpClientImpl(CloseableHttpClient httpClient) {
     this.httpClient = httpClient;
   }
 
   @Override
-  public X509Certificate createCertificate(
+  public List<List<X509Certificate>> createCertificate(
       String caName,
       String profile,
       CSRMeta csrMeta,
@@ -67,21 +86,57 @@ public class CmpClientImpl implements CmpClient {
 
     final PKIMessage pkiMessage = certRequest.generateCertReq();
     Cmpv2HttpClient cmpv2HttpClient = new Cmpv2HttpClient(httpClient);
-    final byte[] respBytes =
-        cmpv2HttpClient.postRequest(pkiMessage, csrMeta.caUrl(), caName);
-    final PKIMessage respPkiMessage = PKIMessage.getInstance(respBytes);
-    // todo: add response validation and return Certificate
-    return null;
+    return retrieveCertificates(caName, csrMeta, pkiMessage, cmpv2HttpClient);
   }
 
   @Override
-  public X509Certificate createCertificate(
-      String caName,
-      String profile,
-      CSRMeta csrMeta,
-      X509Certificate csr)
+  public List<List<X509Certificate>> createCertificate(
+      String caName, String profile, CSRMeta csrMeta, X509Certificate csr)
       throws CmpClientException {
     return createCertificate(caName, profile, csrMeta, csr, null, null);
+  }
+
+  private List<List<X509Certificate>> checkCmpCertRepMessage(final PKIMessage respPkiMessage)
+      throws CmpClientException {
+    final PKIBody pkiBody = respPkiMessage.getBody();
+    if (Objects.nonNull(pkiBody) && pkiBody.getContent() instanceof CertRepMessage) {
+      final CertRepMessage certRepMessage = (CertRepMessage) pkiBody.getContent();
+      if (Objects.nonNull(certRepMessage)) {
+        final CertResponse certResponse =
+            getCertificateResponseContainingNewCertificate(certRepMessage);
+        try {
+          return verifyReturnCertChainAndTrustStore(respPkiMessage, certRepMessage, certResponse);
+        } catch (IOException | CertificateParsingException ex) {
+          CmpClientException cmpClientException =
+              new CmpClientException(
+                  "Exception occurred while retrieving Certificates from response", ex);
+          LOG.error("Exception occurred while retrieving Certificates from response", ex);
+          throw cmpClientException;
+        }
+      } else {
+        return new ArrayList<>(Collections.emptyList());
+      }
+    }
+    return new ArrayList<>(Collections.emptyList());
+  }
+
+  private List<List<X509Certificate>> verifyReturnCertChainAndTrustStore(
+      PKIMessage respPkiMessage, CertRepMessage certRepMessage, CertResponse certResponse)
+      throws CertificateParsingException, CmpClientException, IOException {
+    LOG.info("Verifying certificates returned as part of CertResponse.");
+    final CMPCertificate cmpCertificate =
+        certResponse.getCertifiedKeyPair().getCertOrEncCert().getCertificate();
+    final Optional<X509Certificate> leafCertificate =
+        getCertfromByteArray(cmpCertificate.getEncoded(), X509Certificate.class);
+    ArrayList<X509Certificate> certChain = new ArrayList<>();
+    ArrayList<X509Certificate> trustStore = new ArrayList<>();
+    return verifyAndReturnCertChainAndTrustSTore(
+        respPkiMessage, certRepMessage, leafCertificate.get(), certChain, trustStore);
+  }
+
+  private CertResponse getCertificateResponseContainingNewCertificate(
+      CertRepMessage certRepMessage) {
+    return certRepMessage.getResponse()[0];
   }
 
   /**
@@ -100,8 +155,7 @@ public class CmpClientImpl implements CmpClient {
       final String incomingProfile,
       final CloseableHttpClient httpClient,
       final Date notBefore,
-      final Date notAfter)
-      throws IllegalArgumentException {
+      final Date notAfter) {
 
     String caName;
     String caProfile;
@@ -121,6 +175,24 @@ public class CmpClientImpl implements CmpClient {
 
     if (notBefore != null && notAfter != null && notBefore.compareTo(notAfter) > 0) {
       throw new IllegalArgumentException("Before Date is set after the After Date");
+    }
+  }
+
+  private List<List<X509Certificate>> retrieveCertificates(
+      String caName, CSRMeta csrMeta, PKIMessage pkiMessage, Cmpv2HttpClient cmpv2HttpClient)
+      throws CmpClientException {
+    final byte[] respBytes = cmpv2HttpClient.postRequest(pkiMessage, csrMeta.caUrl(), caName);
+    try {
+      final PKIMessage respPkiMessage = PKIMessage.getInstance(respBytes);
+      LOG.info("Recieved response from Server");
+      checkIfCmpResponseContainsError(respPkiMessage);
+      return checkCmpCertRepMessage(respPkiMessage);
+    } catch (IllegalArgumentException iae) {
+      CmpClientException cmpClientException =
+          new CmpClientException(
+              "Error encountered while processing response from CA server ", iae);
+      LOG.error("Error encountered while processing response from CA server ", iae);
+      throw cmpClientException;
     }
   }
 }
