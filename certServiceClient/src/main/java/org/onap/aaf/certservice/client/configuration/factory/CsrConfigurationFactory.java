@@ -43,32 +43,32 @@ public class CsrConfigurationFactory implements AbstractConfigurationFactory<Csr
 
         CsrConfiguration configuration = new CsrConfiguration();
 
-        Optional.ofNullable(envsForCsr.getCommonName()).filter(EnvValidationUtils::isEnvExists)
+        envsForCsr.getCommonName()
                 .filter(EnvValidationUtils::isCommonNameValid)
                 .map(configuration::setCommonName)
                 .orElseThrow(() -> new CsrConfigurationException(CsrConfigurationEnvs.COMMON_NAME + " is invalid."));
 
-        Optional.ofNullable(envsForCsr.getOrganization()).filter(EnvValidationUtils::isEnvExists)
+        envsForCsr.getOrganization()
                 .filter(org -> !EnvValidationUtils.isSpecialCharsPresent(org))
                 .map(configuration::setOrganization)
                 .orElseThrow(() -> new CsrConfigurationException(CsrConfigurationEnvs.ORGANIZATION + " is invalid."));
 
-        Optional.ofNullable(envsForCsr.getState()).filter(EnvValidationUtils::isEnvExists)
+        envsForCsr.getState()
                 .map(configuration::setState)
                 .orElseThrow(() -> new CsrConfigurationException(CsrConfigurationEnvs.STATE + " is invalid."));
 
-        Optional.ofNullable(envsForCsr.getCountry()).filter(EnvValidationUtils::isEnvExists)
+        envsForCsr.getCountry()
                 .filter(EnvValidationUtils::isCountryValid)
                 .map(configuration::setCountry)
                 .orElseThrow(() -> new CsrConfigurationException(CsrConfigurationEnvs.COUNTRY + " is invalid."));
 
-        Optional.ofNullable(envsForCsr.getOrganizationUnit()).filter(EnvValidationUtils::isEnvExists)
+        envsForCsr.getOrganizationUnit()
                 .map(configuration::setOrganizationUnit);
 
-        Optional.ofNullable(envsForCsr.getLocation()).filter(EnvValidationUtils::isEnvExists)
+        envsForCsr.getLocation()
                 .map(configuration::setLocation);
 
-        Optional.ofNullable(envsForCsr.getSubjectAlternativesName()).filter(EnvValidationUtils::isEnvExists)
+        envsForCsr.getSubjectAlternativesName()
                 .map(configuration::setSubjectAlternativeNames);
 
         return configuration;

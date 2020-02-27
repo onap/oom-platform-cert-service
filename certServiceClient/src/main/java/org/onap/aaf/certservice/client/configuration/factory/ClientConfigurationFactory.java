@@ -42,18 +42,18 @@ public class ClientConfigurationFactory implements AbstractConfigurationFactory<
 
         ClientConfiguration configuration = new ClientConfiguration();
 
-        Optional.ofNullable(envsForClient.getUrlToCertService()).filter(EnvValidationUtils::isEnvExists)
+        envsForClient.getUrlToCertService()
                 .map(configuration::setUrlToCertService);
 
-        Optional.ofNullable(envsForClient.getRequestTimeOut()).filter(EnvValidationUtils::isEnvExists)
+        envsForClient.getRequestTimeOut()
                 .map(timeout -> configuration.setRequestTimeout(Integer.valueOf(timeout)));
 
-        Optional.ofNullable(envsForClient.getOutputPath()).filter(EnvValidationUtils::isEnvExists)
+        envsForClient.getOutputPath()
                 .filter(EnvValidationUtils::isPathValid)
                 .map(configuration::setCertsOutputPath)
                 .orElseThrow(() -> new ClientConfigurationException(ClientConfigurationEnvs.OUTPUT_PATH + " is invalid."));
 
-        Optional.ofNullable(envsForClient.getCaName()).filter(EnvValidationUtils::isEnvExists)
+        envsForClient.getCaName()
                 .filter(EnvValidationUtils::isAlphaNumeric)
                 .map(configuration::setCaName)
                 .orElseThrow(() -> new ClientConfigurationException(ClientConfigurationEnvs.CA_NAME + " is invalid."));

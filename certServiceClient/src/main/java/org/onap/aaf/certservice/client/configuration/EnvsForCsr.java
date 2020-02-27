@@ -19,52 +19,42 @@
  */
 package org.onap.aaf.certservice.client.configuration;
 
+import java.util.Optional;
 
 public class EnvsForCsr {
     private final EnvProvider envProvider = new EnvProvider();
-    private String commonName;
-    private String organization;
-    private String organizationUnit;
-    private String location;
-    private String state;
-    private String country;
-    private String subjectAlternativesName;
 
-    public EnvsForCsr() {
-        this.commonName = envProvider.readEnvVariable(CsrConfigurationEnvs.COMMON_NAME.toString());
-        this.organization = envProvider.readEnvVariable(CsrConfigurationEnvs.ORGANIZATION.toString());
-        this.organizationUnit = envProvider.readEnvVariable(CsrConfigurationEnvs.ORGANIZATION_UNIT.toString());
-        this.location = envProvider.readEnvVariable(CsrConfigurationEnvs.LOCATION.toString());
-        this.state = envProvider.readEnvVariable(CsrConfigurationEnvs.STATE.toString());
-        this.country = envProvider.readEnvVariable(CsrConfigurationEnvs.COUNTRY.toString());
-        this.subjectAlternativesName = envProvider.readEnvVariable(CsrConfigurationEnvs.SANS.toString());
+    public EnvsForCsr() {}
+
+    public Optional<String> getCommonName() {
+        return readEnv(CsrConfigurationEnvs.COMMON_NAME);
     }
 
-    public String getCommonName() {
-        return commonName;
+    public Optional<String> getOrganization() {
+        return readEnv(CsrConfigurationEnvs.ORGANIZATION);
     }
 
-    public String getOrganization() {
-        return organization;
+    public Optional<String> getOrganizationUnit() {
+        return readEnv(CsrConfigurationEnvs.ORGANIZATION_UNIT);
     }
 
-    public String getOrganizationUnit() {
-        return organizationUnit;
+    public Optional<String> getLocation() {
+        return readEnv(CsrConfigurationEnvs.LOCATION);
     }
 
-    public String getLocation() {
-        return location;
+    public Optional<String> getState() {
+        return readEnv(CsrConfigurationEnvs.STATE);
     }
 
-    public String getState() {
-        return state;
+    public Optional<String> getCountry() {
+        return readEnv(CsrConfigurationEnvs.COUNTRY);
     }
 
-    public String getCountry() {
-        return country;
+    public Optional<String> getSubjectAlternativesName() {
+        return readEnv(CsrConfigurationEnvs.SANS);
     }
 
-    public String getSubjectAlternativesName() {
-        return subjectAlternativesName;
+    private Optional<String> readEnv(CsrConfigurationEnvs envName) {
+        return envProvider.readEnvVariable(envName.toString());
     }
 }

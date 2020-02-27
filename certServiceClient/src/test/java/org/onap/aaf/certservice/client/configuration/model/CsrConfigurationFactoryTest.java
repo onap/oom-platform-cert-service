@@ -26,6 +26,8 @@ import org.onap.aaf.certservice.client.configuration.EnvsForCsr;
 import org.onap.aaf.certservice.client.configuration.exception.CsrConfigurationException;
 import org.onap.aaf.certservice.client.configuration.factory.CsrConfigurationFactory;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.Mockito.mock;
@@ -33,14 +35,14 @@ import static org.mockito.Mockito.when;
 
 public class CsrConfigurationFactoryTest {
 
-    final String COMMON_NAME_VALID = "onap.org";
-    final String SANS_VALID = "test-name";
-    final String COUNTRY_VALID = "US";
-    final String LOCATION_VALID = "San-Francisco";
-    final String ORGANIZATION_VALID =  "Linux-Foundation";
-    final String ORGANIZATION_UNIT_VALID = "ONAP";
-    final String STATE_VALID = "California";
-    final String COMMON_NAME_INVALID = "onap.org*&";
+    private final String COMMON_NAME_VALID = "onap.org";
+    private final String SANS_VALID = "test-name";
+    private final String COUNTRY_VALID = "US";
+    private final String LOCATION_VALID = "San-Francisco";
+    private final String ORGANIZATION_VALID =  "Linux-Foundation";
+    private final String ORGANIZATION_UNIT_VALID = "ONAP";
+    private final String STATE_VALID = "California";
+    private final String COMMON_NAME_INVALID = "onap.org*&";
 
     private EnvsForCsr envsForCsr = mock(EnvsForCsr.class);
 
@@ -48,13 +50,13 @@ public class CsrConfigurationFactoryTest {
     @Test
     void create_shouldReturnSuccessWhenAllVariablesAreSetAndValid() throws CsrConfigurationException {
         // given
-        when(envsForCsr.getCommonName()).thenReturn(COMMON_NAME_VALID);
-        when(envsForCsr.getSubjectAlternativesName()).thenReturn(SANS_VALID);
-        when(envsForCsr.getCountry()).thenReturn(COUNTRY_VALID);
-        when(envsForCsr.getLocation()).thenReturn(LOCATION_VALID);
-        when(envsForCsr.getOrganization()).thenReturn(ORGANIZATION_VALID);
-        when(envsForCsr.getOrganizationUnit()).thenReturn(ORGANIZATION_UNIT_VALID);
-        when(envsForCsr.getState()).thenReturn(STATE_VALID);
+        when(envsForCsr.getCommonName()).thenReturn(Optional.of(COMMON_NAME_VALID));
+        when(envsForCsr.getSubjectAlternativesName()).thenReturn(Optional.of(SANS_VALID));
+        when(envsForCsr.getCountry()).thenReturn(Optional.of(COUNTRY_VALID));
+        when(envsForCsr.getLocation()).thenReturn(Optional.of(LOCATION_VALID));
+        when(envsForCsr.getOrganization()).thenReturn(Optional.of(ORGANIZATION_VALID));
+        when(envsForCsr.getOrganizationUnit()).thenReturn(Optional.of(ORGANIZATION_UNIT_VALID));
+        when(envsForCsr.getState()).thenReturn(Optional.of(STATE_VALID));
 
         // when
         CsrConfiguration configuration = new CsrConfigurationFactory(envsForCsr).create();
@@ -72,10 +74,10 @@ public class CsrConfigurationFactoryTest {
     @Test
     void create_shouldReturnSuccessWhenNotRequiredVariablesAreNotSet() throws CsrConfigurationException {
         // given
-        when(envsForCsr.getCommonName()).thenReturn(COMMON_NAME_VALID);
-        when(envsForCsr.getState()).thenReturn(STATE_VALID);
-        when(envsForCsr.getCountry()).thenReturn(COUNTRY_VALID);
-        when(envsForCsr.getOrganization()).thenReturn(ORGANIZATION_VALID);
+        when(envsForCsr.getCommonName()).thenReturn(Optional.of(COMMON_NAME_VALID));
+        when(envsForCsr.getState()).thenReturn(Optional.of(STATE_VALID));
+        when(envsForCsr.getCountry()).thenReturn(Optional.of(COUNTRY_VALID));
+        when(envsForCsr.getOrganization()).thenReturn(Optional.of(ORGANIZATION_VALID));
 
         // when
         CsrConfiguration configuration = new CsrConfigurationFactory(envsForCsr).create();
@@ -91,13 +93,13 @@ public class CsrConfigurationFactoryTest {
     @Test
     void create_shouldReturnCsrConfigurationExceptionWhenCommonNameContainsSpecialCharacters() {
         // given
-        when(envsForCsr.getCommonName()).thenReturn(COMMON_NAME_INVALID);
-        when(envsForCsr.getSubjectAlternativesName()).thenReturn(SANS_VALID);
-        when(envsForCsr.getCountry()).thenReturn(COUNTRY_VALID);
-        when(envsForCsr.getLocation()).thenReturn(LOCATION_VALID);
-        when(envsForCsr.getOrganization()).thenReturn(ORGANIZATION_VALID);
-        when(envsForCsr.getOrganizationUnit()).thenReturn(ORGANIZATION_UNIT_VALID);
-        when(envsForCsr.getState()).thenReturn(SANS_VALID);
+        when(envsForCsr.getCommonName()).thenReturn(Optional.of(COMMON_NAME_INVALID));
+        when(envsForCsr.getSubjectAlternativesName()).thenReturn(Optional.of(SANS_VALID));
+        when(envsForCsr.getCountry()).thenReturn(Optional.of(COUNTRY_VALID));
+        when(envsForCsr.getLocation()).thenReturn(Optional.of(LOCATION_VALID));
+        when(envsForCsr.getOrganization()).thenReturn(Optional.of(ORGANIZATION_VALID));
+        when(envsForCsr.getOrganizationUnit()).thenReturn(Optional.of(ORGANIZATION_UNIT_VALID));
+        when(envsForCsr.getState()).thenReturn(Optional.of(SANS_VALID));
 
         // when
         CsrConfigurationFactory configurationFactory = new CsrConfigurationFactory(envsForCsr);
