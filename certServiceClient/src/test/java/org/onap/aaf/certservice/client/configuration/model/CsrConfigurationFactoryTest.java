@@ -46,7 +46,7 @@ public class CsrConfigurationFactoryTest {
 
 
     @Test
-    void create_shouldReturnSuccessWhenAllVariablesAreSetAndValid() {
+    void create_shouldReturnSuccessWhenAllVariablesAreSetAndValid() throws CsrConfigurationException {
         // given
         when(envsForCsr.getCommonName()).thenReturn(COMMON_NAME_VALID);
         when(envsForCsr.getSubjectAlternativesName()).thenReturn(SANS_VALID);
@@ -70,7 +70,7 @@ public class CsrConfigurationFactoryTest {
     }
 
     @Test
-    void create_shouldReturnSuccessWhenNotRequiredVariablesAreNotSet() {
+    void create_shouldReturnSuccessWhenNotRequiredVariablesAreNotSet() throws CsrConfigurationException {
         // given
         when(envsForCsr.getCommonName()).thenReturn(COMMON_NAME_VALID);
         when(envsForCsr.getState()).thenReturn(STATE_VALID);

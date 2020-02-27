@@ -17,14 +17,10 @@
  * limitations under the License.
  * ============LICENSE_END=========================================================
  */
-
 package org.onap.aaf.certservice.client.configuration;
 
-
-import org.onap.aaf.certservice.client.configuration.exception.ClientConfigurationException;
-
 public class EnvProvider {
-    public String readEnvVariable(String envVariable) throws ClientConfigurationException {
+    public String readEnvVariable(String envVariable) {
         return System.getProperty(envVariable);
     }
 }

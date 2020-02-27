@@ -37,7 +37,7 @@ public class KeyPairFactory {
         this.keySize = keySize;
     }
 
-    public KeyPair create() {
+    public KeyPair create() throws KeyPairGenerationException {
         try {
             return createKeyPairGenerator().generateKeyPair();
         } catch (NoSuchAlgorithmException e) {

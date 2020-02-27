@@ -43,7 +43,7 @@ public class ClientConfigurationFactoryTest {
     private EnvsForClient envsForClient = mock(EnvsForClient.class);
 
     @Test
-    void create_shouldReturnSuccessWhenAllVariablesAreSetAndValid() {
+    void create_shouldReturnSuccessWhenAllVariablesAreSetAndValid() throws ClientConfigurationException {
         // given
         when(envsForClient.getCaName()).thenReturn(CA_NAME_VALID);
         when(envsForClient.getOutputPath()).thenReturn(OUTPUT_PATH_VALID);
@@ -61,7 +61,7 @@ public class ClientConfigurationFactoryTest {
     }
 
     @Test
-    void create_shouldReturnSuccessWhenDefaultVariablesAreNotSet() {
+    void create_shouldReturnSuccessWhenDefaultVariablesAreNotSet() throws ClientConfigurationException {
         // given
         when(envsForClient.getCaName()).thenReturn(CA_NAME_VALID);
         when(envsForClient.getOutputPath()).thenReturn(OUTPUT_PATH_VALID);

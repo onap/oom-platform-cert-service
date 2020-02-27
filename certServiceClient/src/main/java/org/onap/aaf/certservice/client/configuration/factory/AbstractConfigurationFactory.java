@@ -20,8 +20,10 @@
 
 package org.onap.aaf.certservice.client.configuration.factory;
 
+import org.onap.aaf.certservice.client.configuration.exception.ClientConfigurationException;
+import org.onap.aaf.certservice.client.configuration.exception.CsrConfigurationException;
 import org.onap.aaf.certservice.client.configuration.model.ConfigurationModel;
 
 public interface AbstractConfigurationFactory<T extends ConfigurationModel> {
-    T create();
+    T create() throws ClientConfigurationException, CsrConfigurationException;
 }

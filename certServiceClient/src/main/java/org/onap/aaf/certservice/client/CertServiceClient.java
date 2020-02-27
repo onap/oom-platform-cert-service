@@ -29,8 +29,8 @@ import org.onap.aaf.certservice.client.configuration.model.ClientConfiguration;
 import org.onap.aaf.certservice.client.configuration.model.CsrConfiguration;
 
 import java.security.KeyPair;
-import java.util.Optional;
 
+import static org.onap.aaf.certservice.client.api.ExitCode.SUCCESS_EXIT_CODE;
 import static org.onap.aaf.certservice.client.certification.EncryptionAlgorithmConstants.KEY_SIZE;
 import static org.onap.aaf.certservice.client.certification.EncryptionAlgorithmConstants.RSA_ENCRYPTION_ALGORITHM;
 
@@ -42,23 +42,15 @@ public class CertServiceClient {
     }
 
     public void run() {
-        ClientConfiguration clientConfiguration;
-        CsrConfiguration csrConfiguration;
-        clientConfiguration = new ClientConfigurationFactory(new EnvsForClient()).create();
-        csrConfiguration = new CsrConfigurationFactory(new EnvsForCsr()).create();
-
         KeyPairFactory keyPairFactory = new KeyPairFactory(RSA_ENCRYPTION_ALGORITHM, KEY_SIZE);
-        Optional<KeyPair> keyPair = generateKeyPair(keyPairFactory);
-
-        appExitHandler.exit(0);
-    }
-
-    public Optional<KeyPair> generateKeyPair(KeyPairFactory keyPairFactory) {
         try {
-            return Optional.of(keyPairFactory.create());
+            ClientConfiguration clientConfiguration = new ClientConfigurationFactory(new EnvsForClient()).create();
+            CsrConfiguration csrConfiguration = new CsrConfigurationFactory(new EnvsForCsr()).create();
+            KeyPair keyPair = keyPairFactory.create();
         } catch (ExitableException e) {
             appExitHandler.exit(e.applicationExitCode());
         }
-        return Optional.empty();
+        appExitHandler.exit(SUCCESS_EXIT_CODE.getValue());
     }
+
 }

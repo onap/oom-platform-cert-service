@@ -18,7 +18,7 @@
  */
 package org.onap.aaf.certservice.client.api;
 
-public abstract class ExitableException extends RuntimeException {
+public abstract class ExitableException extends Exception {
     public ExitableException(Throwable e) {
         super(e);
     }

@@ -22,48 +22,26 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.onap.aaf.certservice.client.certification.KeyPairFactory;
 
-import java.security.KeyPair;
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.onap.aaf.certservice.client.certification.EncryptionAlgorithmConstants.KEY_SIZE;
-import static org.onap.aaf.certservice.client.certification.EncryptionAlgorithmConstants.RSA_ENCRYPTION_ALGORITHM;
+import static org.onap.aaf.certservice.client.api.ExitCode.CLIENT_CONFIGURATION_EXCEPTION;
+import static org.onap.aaf.certservice.client.api.ExitCode.SUCCESS_EXIT_CODE;
 
 @ExtendWith(MockitoExtension.class)
 class CertServiceClientTest {
-    private static final int DUMMY_EXIT_CODE = 888;
     @Spy
     AppExitHandler appExitHandler = new AppExitHandler();
-
     @Test
-    public void shouldExitWithDefinedExitCode_onGenerateKeyPairCallWhereExitableExceptionIsThrown() {
+    public void shouldExitWithDefinedExitCode_onRunCallWhenNoEnvsPresent() {
         //  given
-        KeyPairFactory keyPairFactory = mock(KeyPairFactory.class);
-        when(keyPairFactory.create()).thenThrow(new DummyExitableException());
-        doNothing().when(appExitHandler).exit(DUMMY_EXIT_CODE);
+        doNothing().when(appExitHandler).exit(CLIENT_CONFIGURATION_EXCEPTION.getValue());
+        doNothing().when(appExitHandler).exit(SUCCESS_EXIT_CODE.getValue());
         CertServiceClient certServiceClient = new CertServiceClient(appExitHandler);
         //  when
-        Optional<KeyPair> keyPair = certServiceClient.generateKeyPair(keyPairFactory);
+        certServiceClient.run();
         //  then
-        verify(appExitHandler).exit(DUMMY_EXIT_CODE);
-        assertThat(keyPair).isEmpty();
+        verify(appExitHandler).exit(CLIENT_CONFIGURATION_EXCEPTION.getValue());
+        verify(appExitHandler).exit(SUCCESS_EXIT_CODE.getValue());
     }
-
-    @Test
-    public void shouldReturnKeyPair_onGenerateKeyPairCall() {
-        //  given
-        KeyPairFactory keyPairFactory = new KeyPairFactory(RSA_ENCRYPTION_ALGORITHM, KEY_SIZE);
-        CertServiceClient certServiceClient = new CertServiceClient(appExitHandler);
-        //  when
-        Optional<KeyPair> keyPair = certServiceClient.generateKeyPair(keyPairFactory);
-        //  then
-        assertThat(keyPair).hasValueSatisfying(value -> assertThat(value).isInstanceOf(KeyPair.class));
-    }
-
 }
