@@ -20,13 +20,17 @@
 
 package org.onap.aaf.certservice.client.configuration.model;
 
+import org.assertj.core.api.Condition;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.onap.aaf.certservice.client.api.ExitCode;
 import org.onap.aaf.certservice.client.configuration.CsrConfigurationEnvs;
 import org.onap.aaf.certservice.client.configuration.EnvsForCsr;
 import org.onap.aaf.certservice.client.configuration.exception.CsrConfigurationException;
 import org.onap.aaf.certservice.client.configuration.factory.CsrConfigurationFactory;
 
 import java.util.Optional;
+import java.util.function.Predicate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -43,23 +47,30 @@ public class CsrConfigurationFactoryTest {
     private final String ORGANIZATION_UNIT_VALID = "ONAP";
     private final String STATE_VALID = "California";
     private final String COMMON_NAME_INVALID = "onap.org*&";
+    private final String COUNTRY_INVALID = "PLA";
+    private final String ORGANIZATION_INVALID = "Linux?Foundation";
 
     private EnvsForCsr envsForCsr = mock(EnvsForCsr.class);
+    private CsrConfigurationFactory testedFactory;
+    private Condition<CsrConfigurationException> expectedExitCodeCondition = new Condition<>("Correct exit code"){
+        @Override
+        public boolean matches(CsrConfigurationException e) {
+            return e.applicationExitCode() == ExitCode.CSR_CONFIGURATION_EXCEPTION.getValue();
+        }
+    };
 
+    @BeforeEach
+    void setUp() {
+        testedFactory = new CsrConfigurationFactory(envsForCsr);
+    }
 
     @Test
-    void create_shouldReturnSuccessWhenAllVariablesAreSetAndValid() throws CsrConfigurationException {
+    void shouldReturnCorrectConfiguration_WhenAllVariablesAreSetAndValid() throws CsrConfigurationException {
         // given
-        when(envsForCsr.getCommonName()).thenReturn(Optional.of(COMMON_NAME_VALID));
-        when(envsForCsr.getSubjectAlternativesName()).thenReturn(Optional.of(SANS_VALID));
-        when(envsForCsr.getCountry()).thenReturn(Optional.of(COUNTRY_VALID));
-        when(envsForCsr.getLocation()).thenReturn(Optional.of(LOCATION_VALID));
-        when(envsForCsr.getOrganization()).thenReturn(Optional.of(ORGANIZATION_VALID));
-        when(envsForCsr.getOrganizationUnit()).thenReturn(Optional.of(ORGANIZATION_UNIT_VALID));
-        when(envsForCsr.getState()).thenReturn(Optional.of(STATE_VALID));
+        mockEnvsWithAllValidParameters();
 
         // when
-        CsrConfiguration configuration = new CsrConfigurationFactory(envsForCsr).create();
+        CsrConfiguration configuration = testedFactory.create();
 
         // then
         assertThat(configuration.getCommonName()).isEqualTo(COMMON_NAME_VALID);
@@ -72,15 +83,12 @@ public class CsrConfigurationFactoryTest {
     }
 
     @Test
-    void create_shouldReturnSuccessWhenNotRequiredVariablesAreNotSet() throws CsrConfigurationException {
+    void shouldReturnCorrectConfiguration_WhenNotRequiredVariablesAreNotSet() throws CsrConfigurationException {
         // given
-        when(envsForCsr.getCommonName()).thenReturn(Optional.of(COMMON_NAME_VALID));
-        when(envsForCsr.getState()).thenReturn(Optional.of(STATE_VALID));
-        when(envsForCsr.getCountry()).thenReturn(Optional.of(COUNTRY_VALID));
-        when(envsForCsr.getOrganization()).thenReturn(Optional.of(ORGANIZATION_VALID));
+        mockEnvsWithValidRequiredParameters();
 
         // when
-        CsrConfiguration configuration = new CsrConfigurationFactory(envsForCsr).create();
+        CsrConfiguration configuration = testedFactory.create();
 
         // then
         assertThat(configuration.getCommonName()).isEqualTo(COMMON_NAME_VALID);
@@ -91,22 +99,89 @@ public class CsrConfigurationFactoryTest {
 
 
     @Test
-    void create_shouldReturnCsrConfigurationExceptionWhenCommonNameContainsSpecialCharacters() {
+    void shouldThrowCsrConfigurationException_WhenCommonNameInvalid() {
         // given
-        when(envsForCsr.getCommonName()).thenReturn(Optional.of(COMMON_NAME_INVALID));
-        when(envsForCsr.getSubjectAlternativesName()).thenReturn(Optional.of(SANS_VALID));
-        when(envsForCsr.getCountry()).thenReturn(Optional.of(COUNTRY_VALID));
-        when(envsForCsr.getLocation()).thenReturn(Optional.of(LOCATION_VALID));
-        when(envsForCsr.getOrganization()).thenReturn(Optional.of(ORGANIZATION_VALID));
-        when(envsForCsr.getOrganizationUnit()).thenReturn(Optional.of(ORGANIZATION_UNIT_VALID));
-        when(envsForCsr.getState()).thenReturn(Optional.of(SANS_VALID));
-
-        // when
-        CsrConfigurationFactory configurationFactory = new CsrConfigurationFactory(envsForCsr);
+        mockEnvsWithInvalidCommonName();
 
         // when/then
         assertThatExceptionOfType(CsrConfigurationException.class)
-                .isThrownBy(configurationFactory::create)
-                .withMessageContaining(CsrConfigurationEnvs.COMMON_NAME + " is invalid.");
+                .isThrownBy(testedFactory::create)
+                .withMessageContaining(CsrConfigurationEnvs.COMMON_NAME + " is invalid.")
+                .has(expectedExitCodeCondition);
+    }
+
+    @Test
+    void shouldThrowCsrConfigurationException_WhenOrganizationInvalid() {
+        // given
+        mockEnvsWithInvalidOrganization();
+
+        // when/then
+        assertThatExceptionOfType(CsrConfigurationException.class)
+                .isThrownBy(testedFactory::create)
+                .withMessageContaining(CsrConfigurationEnvs.ORGANIZATION + " is invalid.")
+                .has(expectedExitCodeCondition);
+
+    }
+
+    @Test
+    void shouldThrowCsrConfigurationException_WhenCountryInvalid() {
+        // given
+        mockEnvsWithInvalidCountry();
+
+        // when/then
+        assertThatExceptionOfType(CsrConfigurationException.class)
+                .isThrownBy(testedFactory::create)
+                .withMessageContaining(CsrConfigurationEnvs.COUNTRY + " is invalid.")
+                .has(expectedExitCodeCondition);
+
+    }
+
+    @Test
+    void shouldThrowCsrConfigurationExceptionWhenStateInvalid() {
+        // given
+        mockEnvsWithInvalidState();
+        // when/then
+        assertThatExceptionOfType(CsrConfigurationException.class)
+                .isThrownBy(testedFactory::create)
+                .withMessageContaining(CsrConfigurationEnvs.STATE + " is invalid.")
+                .has(expectedExitCodeCondition);
+    }
+
+    private void mockEnvsWithAllValidParameters() {
+        mockEnvsWithValidRequiredParameters();
+        mockEnvsWithValidOptionalParameters();
+    }
+
+    private void mockEnvsWithValidOptionalParameters() {
+        when(envsForCsr.getOrganizationUnit()).thenReturn(Optional.of(ORGANIZATION_UNIT_VALID));
+        when(envsForCsr.getLocation()).thenReturn(Optional.of(LOCATION_VALID));
+        when(envsForCsr.getSubjectAlternativesName()).thenReturn(Optional.of(SANS_VALID));
+    }
+
+    private void mockEnvsWithValidRequiredParameters() {
+        when(envsForCsr.getCommonName()).thenReturn(Optional.of(COMMON_NAME_VALID));
+        when(envsForCsr.getCountry()).thenReturn(Optional.of(COUNTRY_VALID));
+        when(envsForCsr.getOrganization()).thenReturn(Optional.of(ORGANIZATION_VALID));
+        when(envsForCsr.getState()).thenReturn(Optional.of(STATE_VALID));
+    }
+
+    private void mockEnvsWithInvalidCommonName() {
+        mockEnvsWithAllValidParameters();
+        when(envsForCsr.getCommonName()).thenReturn(Optional.of(COMMON_NAME_INVALID));
+    }
+
+    private void mockEnvsWithInvalidCountry() {
+        mockEnvsWithAllValidParameters();
+        when(envsForCsr.getCountry()).thenReturn(Optional.of(COUNTRY_INVALID));
+    }
+
+    private void mockEnvsWithInvalidOrganization() {
+        mockEnvsWithAllValidParameters();
+        when(envsForCsr.getOrganization()).thenReturn(Optional.of(ORGANIZATION_INVALID));
+    }
+
+    private void mockEnvsWithInvalidState() {
+        mockEnvsWithAllValidParameters();
+        when(envsForCsr.getState()).thenReturn(Optional.empty());
     }
 }

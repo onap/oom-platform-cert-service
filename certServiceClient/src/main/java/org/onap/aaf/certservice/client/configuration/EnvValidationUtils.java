@@ -27,7 +27,7 @@ public final class EnvValidationUtils {
     private EnvValidationUtils() {}
 
     public static Boolean isPathValid(String path) {
-        return path.matches("^/|(/[a-zA-Z0-9_-]+)+$");
+        return path.matches("^/|(/[a-zA-Z0-9_-]+)+/?$");
     }
 
     public static Boolean isAlphaNumeric(String caName) {
