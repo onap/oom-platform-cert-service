@@ -1,4 +1,4 @@
-/**
+/*
  * ============LICENSE_START====================================================
  * org.onap.aaf
  * ===========================================================================
@@ -30,54 +30,51 @@ import org.bouncycastle.cert.CertException;
 
 public class RDN {
 
-    public String tag;
-    public String value;
-    public ASN1ObjectIdentifier aoi;
+    private String tag;
+    private String value;
+    private ASN1ObjectIdentifier aoi;
+
+    public String getValue() {
+        return value;
+    }
+
+    public ASN1ObjectIdentifier getAoi() {
+        return aoi;
+    }
 
     public RDN(final String tagValue) throws CertException {
         String[] tv = Split.splitTrim('=', tagValue);
-        switch (tv[0]) {
+        switch (tv[0].toLowerCase()) {
             case "cn":
-            case "CN":
                 aoi = BCStyle.CN;
                 break;
             case "c":
-            case "C":
                 aoi = BCStyle.C;
                 break;
             case "st":
-            case "ST":
                 aoi = BCStyle.ST;
                 break;
             case "l":
-            case "L":
                 aoi = BCStyle.L;
                 break;
             case "o":
-            case "O":
                 aoi = BCStyle.O;
                 break;
             case "ou":
-            case "OU":
                 aoi = BCStyle.OU;
                 break;
             case "dc":
-            case "DC":
                 aoi = BCStyle.DC;
                 break;
             case "gn":
-            case "GN":
                 aoi = BCStyle.GIVENNAME;
                 break;
             case "sn":
-            case "SN":
                 aoi = BCStyle.SN;
-                break; // surname
+                break;
             case "email":
-            case "EMAIL":
-            case "E":
+            case "e":
             case "emailaddress":
-            case "EMAILADDRESS":
                 aoi = BCStyle.EmailAddress;
                 break; // should be SAN extension
             case "initials":

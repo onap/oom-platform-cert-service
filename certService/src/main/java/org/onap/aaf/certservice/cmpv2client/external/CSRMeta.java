@@ -67,7 +67,7 @@ public class CSRMeta {
                 }
             }
             for (RDN rdn : rdns) {
-                xnb.addRDN(rdn.aoi, rdn.value);
+                xnb.addRDN(rdn.getAoi(), rdn.getValue());
             }
             name = xnb.build();
         }
