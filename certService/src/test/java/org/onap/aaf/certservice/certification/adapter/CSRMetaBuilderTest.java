@@ -72,14 +72,14 @@ public class CSRMetaBuilderTest {
         CSRMeta createdCSRMeta = csrMetaBuilder.build(testCsrModel, testServer);
 
         // Then
-        assertThat(createdCSRMeta.password()).isEqualTo(testServer.getAuthentication().getIak());
-        assertThat(createdCSRMeta.senderKid()).isEqualTo(testServer.getAuthentication().getRv());
-        assertThat(createdCSRMeta.caUrl()).isEqualTo(testServer.getUrl());
-        assertThat(createdCSRMeta.sans()).containsAll(testSans);
-        assertThat(createdCSRMeta.keyPair().getPrivate()).isEqualTo(mockPrivateKey);
-        assertThat(createdCSRMeta.keyPair().getPublic()).isEqualTo(mockPublicKey);
-        assertThat(createdCSRMeta.x500Name()).isEqualTo(TEST_SUBJECT_DATA);
-        assertThat(createdCSRMeta.issuerx500Name()).isEqualTo(TEST_SUBJECT_DATA);
+        assertThat(createdCSRMeta.getPassword()).isEqualTo(testServer.getAuthentication().getIak());
+        assertThat(createdCSRMeta.getSenderKid()).isEqualTo(testServer.getAuthentication().getRv());
+        assertThat(createdCSRMeta.getCaUrl()).isEqualTo(testServer.getUrl());
+        assertThat(createdCSRMeta.getSans()).containsAll(testSans);
+        assertThat(createdCSRMeta.getKeyPair().getPrivate()).isEqualTo(mockPrivateKey);
+        assertThat(createdCSRMeta.getKeyPair().getPublic()).isEqualTo(mockPublicKey);
+        assertThat(createdCSRMeta.getX500Name()).isEqualTo(TEST_SUBJECT_DATA);
+        assertThat(createdCSRMeta.getIssuerX500Name()).isEqualTo(TEST_SUBJECT_DATA);
     }
 
     private Cmpv2Server createTestServer() {

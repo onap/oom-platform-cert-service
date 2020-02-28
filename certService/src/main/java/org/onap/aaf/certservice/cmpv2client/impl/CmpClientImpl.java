@@ -81,14 +81,14 @@ public class CmpClientImpl implements CmpClient {
 
     final CreateCertRequest certRequest =
         CmpMessageBuilder.of(CreateCertRequest::new)
-            .with(CreateCertRequest::setIssuerDn, csrMeta.issuerx500Name())
-            .with(CreateCertRequest::setSubjectDn, csrMeta.x500Name())
-            .with(CreateCertRequest::setSansList, csrMeta.sans())
-            .with(CreateCertRequest::setSubjectKeyPair, csrMeta.keyPair())
+            .with(CreateCertRequest::setIssuerDn, csrMeta.getIssuerX500Name())
+            .with(CreateCertRequest::setSubjectDn, csrMeta.getX500Name())
+            .with(CreateCertRequest::setSansList, csrMeta.getSans())
+            .with(CreateCertRequest::setSubjectKeyPair, csrMeta.getKeyPair())
             .with(CreateCertRequest::setNotBefore, notBefore)
             .with(CreateCertRequest::setNotAfter, notAfter)
-            .with(CreateCertRequest::setInitAuthPassword, csrMeta.password())
-            .with(CreateCertRequest::setSenderKid, csrMeta.senderKid())
+            .with(CreateCertRequest::setInitAuthPassword, csrMeta.getPassword())
+            .with(CreateCertRequest::setSenderKid, csrMeta.getSenderKid())
             .build();
 
     final PKIMessage pkiMessage = certRequest.generateCertReq();
@@ -212,12 +212,12 @@ public class CmpClientImpl implements CmpClient {
         "Validate before creating Certificate Request for CA :{} in Mode {} ", caName, caProfile);
 
     CmpUtil.notNull(csrMeta, "CSRMeta Instance");
-    CmpUtil.notNull(csrMeta.x500Name(), "Subject DN");
-    CmpUtil.notNull(csrMeta.issuerx500Name(), "Issuer DN");
-    CmpUtil.notNull(csrMeta.password(), "IAK/RV Password");
+    CmpUtil.notNull(csrMeta.getX500Name(), "Subject DN");
+    CmpUtil.notNull(csrMeta.getIssuerX500Name(), "Issuer DN");
+    CmpUtil.notNull(csrMeta.getPassword(), "IAK/RV Password");
     CmpUtil.notNull(cert, "Certificate Signing Request (CSR)");
-    CmpUtil.notNull(csrMeta.caUrl(), "External CA URL");
-    CmpUtil.notNull(csrMeta.keypair(), "Subject KeyPair");
+    CmpUtil.notNull(csrMeta.getCaUrl(), "External CA URL");
+    CmpUtil.notNull(csrMeta.getKeyPairOrGenerateIfNull(), "Subject KeyPair");
     CmpUtil.notNull(httpClient, "Closeable Http Client");
 
     if (notBefore != null && notAfter != null && notBefore.compareTo(notAfter) > 0) {
@@ -228,12 +228,12 @@ public class CmpClientImpl implements CmpClient {
   private List<List<X509Certificate>> retrieveCertificates(
       String caName, CSRMeta csrMeta, PKIMessage pkiMessage, Cmpv2HttpClient cmpv2HttpClient)
       throws CmpClientException {
-    final byte[] respBytes = cmpv2HttpClient.postRequest(pkiMessage, csrMeta.caUrl(), caName);
+    final byte[] respBytes = cmpv2HttpClient.postRequest(pkiMessage, csrMeta.getCaUrl(), caName);
     try {
       final PKIMessage respPkiMessage = PKIMessage.getInstance(respBytes);
       LOG.info("Received response from Server");
       checkIfCmpResponseContainsError(respPkiMessage);
-      checkCmpResponse(respPkiMessage, csrMeta.keypair().getPublic(), csrMeta.password());
+      checkCmpResponse(respPkiMessage, csrMeta.getKeyPairOrGenerateIfNull().getPublic(), csrMeta.getPassword());
       return checkCmpCertRepMessage(respPkiMessage);
     } catch (IllegalArgumentException iae) {
       CmpClientException cmpClientException =

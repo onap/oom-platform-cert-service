@@ -1,4 +1,4 @@
-/**
+/*
  * ============LICENSE_START====================================================
  * org.onap.aaf
  * ===========================================================================
@@ -23,7 +23,6 @@
 package org.onap.aaf.certservice.cmpv2client.external;
 
 import java.security.KeyPair;
-import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 import org.bouncycastle.asn1.x500.X500Name;
@@ -41,7 +40,7 @@ public class CSRMeta {
     private String issuerCn;
     private String issuerEmail;
     private String password;
-    private String CaUrl;
+    private String caUrl;
     private List<RDN> rdns;
     private ArrayList<String> sanList = new ArrayList<>();
     private KeyPair keyPair;
@@ -54,27 +53,27 @@ public class CSRMeta {
         this.rdns = rdns;
     }
 
-    public X500Name x500Name() {
+    public X500Name getX500Name() {
         if (name == null) {
-            X500NameBuilder xnb = new X500NameBuilder();
-            xnb.addRDN(BCStyle.CN, cn);
-            xnb.addRDN(BCStyle.E, email);
+            X500NameBuilder nameBuilder = new X500NameBuilder();
+            nameBuilder.addRDN(BCStyle.CN, cn);
+            nameBuilder.addRDN(BCStyle.E, email);
             if (mechID != null) {
                 if (environment == null) {
-                    xnb.addRDN(BCStyle.OU, mechID);
+                    nameBuilder.addRDN(BCStyle.OU, mechID);
                 } else {
-                    xnb.addRDN(BCStyle.OU, mechID + ':' + environment);
+                    nameBuilder.addRDN(BCStyle.OU, mechID + ':' + environment);
                 }
             }
             for (RDN rdn : rdns) {
-                xnb.addRDN(rdn.getAoi(), rdn.getValue());
+                nameBuilder.addRDN(rdn.getAoi(), rdn.getValue());
             }
-            name = xnb.build();
+            name = nameBuilder.build();
         }
         return name;
     }
 
-    public X500Name issuerx500Name() {
+    public X500Name getIssuerX500Name() {
         if (issuerName == null) {
             X500NameBuilder xnb = new X500NameBuilder();
             xnb.addRDN(BCStyle.CN, issuerCn);
@@ -86,125 +85,114 @@ public class CSRMeta {
         return issuerName;
     }
 
-    public CSRMeta san(String v) {
+    public void addSan(String v) {
         sanList.add(v);
-        return this;
     }
 
-    public List<String> sans() {
+    public List<String> getSans() {
         return sanList;
     }
 
-    public KeyPair keypair() {
+    public KeyPair getKeyPairOrGenerateIfNull() {
         if (keyPair == null) {
             keyPair = Factory.generateKeyPair();
         }
         return keyPair;
     }
 
-    public KeyPair keyPair() {
+    public KeyPair getKeyPair() {
         return keyPair;
     }
 
-    public void keyPair(KeyPair keyPair) {
+    public void setKeyPair(KeyPair keyPair) {
         this.keyPair = keyPair;
     }
 
-    /** @return the cn */
-    public String cn() {
+    public String getCn() {
         return cn;
     }
 
-    /** @param cn the cn to set */
-    public void cn(String cn) {
+    public void setCn(String cn) {
         this.cn = cn;
     }
 
-    /** Environment of Service MechID is good for */
-    public void environment(String env) {
+    public void setEnvironment(String env) {
         environment = env;
     }
 
-    /** @return */
-    public String environment() {
+    public String getEnvironment() {
         return environment;
     }
 
-    /** @return the mechID */
-    public String mechID() {
+    public String getMechID() {
         return mechID;
     }
 
-    /** @param mechID the mechID to set */
-    public void mechID(String mechID) {
+    public void setMechID(String mechID) {
         this.mechID = mechID;
     }
 
-    /** @return the email */
-    public String email() {
+    public String getEmail() {
         return email;
     }
 
-    /** @param email the email to set */
-    public void email(String email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
-    /** @return the challenge */
-    public String challenge() {
+    public String getChallenge() {
         return challenge;
     }
 
-    /** @param challenge the challenge to set */
-    public void challenge(String challenge) {
+    public void setChallenge(String challenge) {
         this.challenge = challenge;
     }
 
-    public void password(String password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 
-    public String password() {
+    public String getPassword() {
         return password;
     }
 
-    public void certificate(Certificate certificate) {
+    public void setCertificate(Certificate certificate) {
         this.certificate = certificate;
     }
 
-    public Certificate certificate() {
+    public Certificate getCertificate() {
         return certificate;
     }
 
-    public void issuerCn(String issuerCn) {
+    public void setIssuerCn(String issuerCn) {
         this.issuerCn = issuerCn;
     }
 
-    public String caUrl() {
-        return CaUrl;
+    public String getCaUrl() {
+        return caUrl;
     }
 
-    public void caUrl(String caUrl) {
-        CaUrl = caUrl;
+    public void setCaUrl(String caUrl) {
+        this.caUrl = caUrl;
     }
 
-    public String senderKid() {
+    public String getSenderKid() {
         return senderKid;
     }
 
-    public void senderKid(String senderKid) {
+    public void setSenderKid(String senderKid) {
         this.senderKid = senderKid;
     }
 
-    public String issuerCn() {
+    public String getIssuerCn() {
         return issuerCn;
     }
 
-    public String issuerEmail() {
+    public String getIssuerEmail() {
         return issuerEmail;
     }
 
-    public void issuerEmail(String issuerEmail) {
+    public void setIssuerEmail(String issuerEmail) {
         this.issuerEmail = issuerEmail;
     }
 

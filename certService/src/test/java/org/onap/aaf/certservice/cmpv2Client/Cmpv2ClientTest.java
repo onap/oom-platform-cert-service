@@ -89,7 +89,7 @@ class Cmpv2ClientTest {
     KeyPairGenerator keyGenerator;
     keyGenerator = KeyPairGenerator.getInstance("RSA", BouncyCastleProvider.PROVIDER_NAME);
     keyGenerator.initialize(2048);
-    keyPair = LoadKeyPair();
+    keyPair = loadKeyPair();
     rdns = new ArrayList<>();
     try {
       rdns.add(new RDN("O=CommonCompany"));
@@ -99,7 +99,7 @@ class Cmpv2ClientTest {
     initMocks(this);
   }
 
-  public KeyPair LoadKeyPair()
+  public KeyPair loadKeyPair()
       throws IOException, NoSuchAlgorithmException, InvalidKeySpecException,
           NoSuchProviderException {
 
@@ -307,16 +307,15 @@ class Cmpv2ClientTest {
       Date notBefore,
       Date notAfter) {
     csrMeta = new CSRMeta(rdns);
-    csrMeta.cn(cn);
-    csrMeta.san(san);
-    csrMeta.password(password);
-    csrMeta.email(email);
-    csrMeta.issuerCn(issuerCn);
+    csrMeta.setCn(cn);
+    csrMeta.addSan(san);
+    csrMeta.setPassword(password);
+    csrMeta.setEmail(email);
+    csrMeta.setIssuerCn(issuerCn);
     when(kpg.generateKeyPair()).thenReturn(keyPair);
-    csrMeta.keypair();
-    csrMeta.caUrl(externalCaUrl);
-    csrMeta.senderKid(senderKid);
-
+    csrMeta.getKeyPairOrGenerateIfNull();
+    csrMeta.setCaUrl(externalCaUrl);
+    csrMeta.setSenderKid(senderKid);
     this.notBefore = notBefore;
     this.notAfter = notAfter;
   }
