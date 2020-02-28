@@ -34,10 +34,6 @@ public final class EnvValidationUtils {
         return caName.matches("^[a-zA-Z0-9]*$");
     }
 
-    public static Boolean isEnvExists(String envValue) {
-        return envValue != null && !"".equals(envValue);
-    }
-
     public static Boolean isCountryValid(String country) {
         return country.matches("^([A-Z][A-Z])$");
     }

@@ -26,6 +26,8 @@ import org.onap.aaf.certservice.client.configuration.EnvsForClient;
 import org.onap.aaf.certservice.client.configuration.exception.ClientConfigurationException;
 import org.onap.aaf.certservice.client.configuration.factory.ClientConfigurationFactory;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.Mockito.mock;
@@ -33,22 +35,22 @@ import static org.mockito.Mockito.when;
 
 public class ClientConfigurationFactoryTest {
 
-    final String CA_NAME_VALID =  "caaaftest2";
-    final String TIME_OUT_VALID = "30000";
-    final String OUTPUT_PATH_VALID = "/opt/app/osaaf";
-    final String URL_TO_CERT_SERVICE_VALID = "http://cert-service:8080/v1/certificate/";
-    final String CA_NAME_INVALID =  "caaaftest2#$";
-    final String OUTPUT_PATH_INVALID = "/opt//app/osaaf";
+    private final String CA_NAME_VALID =  "caaaftest2";
+    private final String TIME_OUT_VALID = "30000";
+    private final String OUTPUT_PATH_VALID = "/opt/app/osaaf";
+    private final String URL_TO_CERT_SERVICE_VALID = "http://cert-service:8080/v1/certificate/";
+    private final String CA_NAME_INVALID =  "caaaftest2#$";
+    private final String OUTPUT_PATH_INVALID = "/opt//app/osaaf";
 
     private EnvsForClient envsForClient = mock(EnvsForClient.class);
 
     @Test
     void create_shouldReturnSuccessWhenAllVariablesAreSetAndValid() throws ClientConfigurationException {
         // given
-        when(envsForClient.getCaName()).thenReturn(CA_NAME_VALID);
-        when(envsForClient.getOutputPath()).thenReturn(OUTPUT_PATH_VALID);
-        when(envsForClient.getRequestTimeOut()).thenReturn(TIME_OUT_VALID);
-        when(envsForClient.getUrlToCertService()).thenReturn(URL_TO_CERT_SERVICE_VALID);
+        when(envsForClient.getCaName()).thenReturn(Optional.of(CA_NAME_VALID));
+        when(envsForClient.getOutputPath()).thenReturn(Optional.of(OUTPUT_PATH_VALID));
+        when(envsForClient.getRequestTimeOut()).thenReturn(Optional.of(TIME_OUT_VALID));
+        when(envsForClient.getUrlToCertService()).thenReturn(Optional.of(URL_TO_CERT_SERVICE_VALID));
 
         // when
         ClientConfiguration configuration = new ClientConfigurationFactory(envsForClient).create();
@@ -63,8 +65,8 @@ public class ClientConfigurationFactoryTest {
     @Test
     void create_shouldReturnSuccessWhenDefaultVariablesAreNotSet() throws ClientConfigurationException {
         // given
-        when(envsForClient.getCaName()).thenReturn(CA_NAME_VALID);
-        when(envsForClient.getOutputPath()).thenReturn(OUTPUT_PATH_VALID);
+        when(envsForClient.getCaName()).thenReturn(Optional.of(CA_NAME_VALID));
+        when(envsForClient.getOutputPath()).thenReturn(Optional.of(OUTPUT_PATH_VALID));
 
         // when
         ClientConfiguration configuration = new ClientConfigurationFactory(envsForClient).create();
@@ -79,7 +81,7 @@ public class ClientConfigurationFactoryTest {
     @Test
     void create_shouldReturnClientExceptionWhenRequiredVariableIsNotSet() {
         // given
-        when(envsForClient.getOutputPath()).thenReturn(OUTPUT_PATH_VALID);
+        when(envsForClient.getOutputPath()).thenReturn(Optional.of(OUTPUT_PATH_VALID));
 
         // when
         ClientConfigurationFactory configurationFactory = new ClientConfigurationFactory(envsForClient);
@@ -93,10 +95,10 @@ public class ClientConfigurationFactoryTest {
     @Test
     void create_shouldReturnClientExceptionWhenCANameContainsSpecialCharacters() {
         // given
-        when(envsForClient.getCaName()).thenReturn(CA_NAME_INVALID);
-        when(envsForClient.getOutputPath()).thenReturn(OUTPUT_PATH_VALID);
-        when(envsForClient.getRequestTimeOut()).thenReturn(TIME_OUT_VALID);
-        when(envsForClient.getUrlToCertService()).thenReturn(URL_TO_CERT_SERVICE_VALID);
+        when(envsForClient.getCaName()).thenReturn(Optional.of(CA_NAME_INVALID));
+        when(envsForClient.getOutputPath()).thenReturn(Optional.of(OUTPUT_PATH_VALID));
+        when(envsForClient.getRequestTimeOut()).thenReturn(Optional.of(TIME_OUT_VALID));
+        when(envsForClient.getUrlToCertService()).thenReturn(Optional.of(URL_TO_CERT_SERVICE_VALID));
 
         // when
         ClientConfigurationFactory configurationFactory = new ClientConfigurationFactory(envsForClient);
@@ -110,10 +112,10 @@ public class ClientConfigurationFactoryTest {
     @Test
     void create_shouldReturnClientExceptionWhenOutputPathContainsSpecialCharacters() {
         // given
-        when(envsForClient.getCaName()).thenReturn(CA_NAME_VALID);
-        when(envsForClient.getOutputPath()).thenReturn(OUTPUT_PATH_INVALID);
-        when(envsForClient.getRequestTimeOut()).thenReturn(TIME_OUT_VALID);
-        when(envsForClient.getUrlToCertService()).thenReturn(URL_TO_CERT_SERVICE_VALID);
+        when(envsForClient.getCaName()).thenReturn(Optional.of(CA_NAME_VALID));
+        when(envsForClient.getOutputPath()).thenReturn(Optional.of(OUTPUT_PATH_INVALID));
+        when(envsForClient.getRequestTimeOut()).thenReturn(Optional.of(TIME_OUT_VALID));
+        when(envsForClient.getUrlToCertService()).thenReturn(Optional.of(URL_TO_CERT_SERVICE_VALID));
 
         // when
         ClientConfigurationFactory configurationFactory = new ClientConfigurationFactory(envsForClient);

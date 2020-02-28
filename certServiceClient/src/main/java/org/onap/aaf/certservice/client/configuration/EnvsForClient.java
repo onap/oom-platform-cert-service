@@ -19,33 +19,31 @@
  */
 package org.onap.aaf.certservice.client.configuration;
 
+import java.util.Optional;
+
 public class EnvsForClient {
-    private static final EnvProvider envProvider = new EnvProvider();
-    private final String urlToCertService;
-    private final String requestTimeOut;
-    private final String outputPath;
-    private final String caName;
+    private final EnvProvider envProvider = new EnvProvider();
 
     public EnvsForClient() {
-        this.urlToCertService = envProvider.readEnvVariable(ClientConfigurationEnvs.REQUEST_URL.toString());
-        this.requestTimeOut = envProvider.readEnvVariable(ClientConfigurationEnvs.REQUEST_TIMEOUT.toString());
-        this.outputPath = envProvider.readEnvVariable(ClientConfigurationEnvs.OUTPUT_PATH.toString());
-        this.caName = envProvider.readEnvVariable(ClientConfigurationEnvs.CA_NAME.toString());
     }
 
-    public String getUrlToCertService() {
-        return urlToCertService;
+    public Optional<String> getUrlToCertService() {
+        return readEnv(ClientConfigurationEnvs.REQUEST_URL);
     }
 
-    public String getRequestTimeOut() {
-        return requestTimeOut;
+    public Optional<String> getRequestTimeOut() {
+        return readEnv(ClientConfigurationEnvs.REQUEST_TIMEOUT);
     }
 
-    public String getOutputPath() {
-        return outputPath;
+    public Optional<String> getOutputPath() {
+        return readEnv(ClientConfigurationEnvs.OUTPUT_PATH);
     }
 
-    public String getCaName() {
-        return caName;
+    public Optional<String> getCaName() {
+        return readEnv(ClientConfigurationEnvs.CA_NAME);
+    }
+
+    private Optional<String> readEnv(ClientConfigurationEnvs envName) {
+        return envProvider.readEnvVariable(envName.toString());
     }
 }
