@@ -4,7 +4,7 @@ ARG VERSION=${version}
 
 RUN groupadd certService && useradd -g certService certService
 
-RUN apt-get update && apt-get install -y vim
+RUN apt-get update && apt-get install -y vim curl
 
 RUN chown -R certService:certService /var/log
 
