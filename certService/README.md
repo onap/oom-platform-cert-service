@@ -84,15 +84,23 @@ curl localhost:8080/actuator/health
 ```   
  Should return {"status":"UP"}
 
-### Running CSITs
-Pull csit repository
+### AAF CertService CSITs
+#### CSIT repository
 ```
 https://gerrit.onap.org/r/admin/repos/integration/csit
 ```
-Go to created directory and run
+
+####How to run tests locally
+1. Checkout CSIT repository
+2. Configure CSIT local environment
+3. Inside CSIT directory execute
 ```
-sudo ./run-csit.sh plans/aaf/cert-service
+sudo ./run-csit.sh plans/aaf/certservice
 ```
+
+####Jenkins build
+https://jenkins.onap.org/view/CSIT/job/aaf-master-csit-certservice/
+
 ### Logs locally
 
 path: 
