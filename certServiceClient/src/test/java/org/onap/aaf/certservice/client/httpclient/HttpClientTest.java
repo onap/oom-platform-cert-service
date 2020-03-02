@@ -29,6 +29,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.onap.aaf.certservice.client.api.ExitCode;
 import org.onap.aaf.certservice.client.httpclient.exception.CertServiceApiResponseException;
+import org.onap.aaf.certservice.client.httpclient.exception.HttpClientException;
 import org.onap.aaf.certservice.client.httpclient.model.CertServiceResponse;
 
 import java.io.ByteArrayInputStream;
@@ -111,6 +112,37 @@ class HttpClientTest {
 
         // then
         assertEquals(ExitCode.CERT_SERVICE_API_CONNECTION_EXCEPTION.getValue(), exception.applicationExitCode());
+    }
+
+    @Test
+    void shouldThrowHttpClientException_WhenCannotExecuteRequestToAPI() throws Exception{
+
+        //given
+        when(closeableHttpClient.execute(any(HttpGet.class))).thenThrow(IOException.class);
+
+        //when
+        HttpClientException exception =
+                assertThrows(HttpClientException.class,
+                        () -> httpClient.retrieveCertServiceData(CA_NAME, CSR, ""));
+
+        //then
+        assertEquals(ExitCode.HTTP_CLIENT_EXCEPTION.getValue(), exception.applicationExitCode());
+    }
+
+    @Test
+    void shouldThrowHttpClientException_WhenCannotParseResponseToString() throws Exception{
+
+        //given
+        mockServerResponse(HTTP_OK, CORRECT_RESPONSE);
+        when(httpEntity.getContent()).thenThrow(IOException.class);
+
+        //when
+        HttpClientException exception =
+                assertThrows(HttpClientException.class,
+                        () -> httpClient.retrieveCertServiceData(CA_NAME, CSR, ""));
+
+        //then
+        assertEquals(ExitCode.HTTP_CLIENT_EXCEPTION.getValue(), exception.applicationExitCode());
     }
 
     private void mockServerResponse(int serverCodeResponse, String stringResponse)
