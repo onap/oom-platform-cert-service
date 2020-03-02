@@ -26,6 +26,5 @@ public abstract class ExitableException extends Exception {
     public ExitableException(String message) {
         super(message);
     }
-
     public abstract int applicationExitCode();
 }

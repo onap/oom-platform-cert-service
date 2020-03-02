@@ -1,4 +1,5 @@
-/*============LICENSE_START=======================================================
+/*
+ * ============LICENSE_START=======================================================
  * aaf-certservice-client
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
@@ -16,24 +17,24 @@
  * limitations under the License.
  * ============LICENSE_END=========================================================
  */
-package org.onap.aaf.certservice.client.api;
 
-public enum ExitCode {
-    SUCCESS_EXIT_CODE(0),
-    CLIENT_CONFIGURATION_EXCEPTION(1),
-    CSR_CONFIGURATION_EXCEPTION(2),
-    KEY_PAIR_GENERATION_EXCEPTION(3),
-    CSR_GENERATION_EXCEPTION(4),
-    CERT_SERVICE_API_CONNECTION_EXCEPTION(5),
-    HTTP_CLIENT_EXCEPTION(6);
+package org.onap.aaf.certservice.client.httpclient.model;
 
-    private final int value;
+public class ErrorCertServiceResponse {
 
-    ExitCode(int value) {
-        this.value = value;
+    private final String message;
+    private final String path;
+
+    public ErrorCertServiceResponse(String message, String path) {
+        this.message = message;
+        this.path = path;
     }
 
-    public int getValue() {
-        return value;
+    public String getMessage() {
+        return message;
+    }
+
+    public String getPath() {
+        return path;
     }
 }

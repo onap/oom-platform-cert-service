@@ -1,4 +1,5 @@
-/*============LICENSE_START=======================================================
+/*
+ * ============LICENSE_START=======================================================
  * aaf-certservice-client
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
@@ -16,24 +17,24 @@
  * limitations under the License.
  * ============LICENSE_END=========================================================
  */
-package org.onap.aaf.certservice.client.api;
 
-public enum ExitCode {
-    SUCCESS_EXIT_CODE(0),
-    CLIENT_CONFIGURATION_EXCEPTION(1),
-    CSR_CONFIGURATION_EXCEPTION(2),
-    KEY_PAIR_GENERATION_EXCEPTION(3),
-    CSR_GENERATION_EXCEPTION(4),
-    CERT_SERVICE_API_CONNECTION_EXCEPTION(5),
-    HTTP_CLIENT_EXCEPTION(6);
+package org.onap.aaf.certservice.client.httpclient;
 
-    private final int value;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 
-    ExitCode(int value) {
-        this.value = value;
+public class CloseableHttpClientProvider {
+
+    private final int timeout;
+
+    public CloseableHttpClientProvider(int timeout) {
+        this.timeout = timeout;
     }
 
-    public int getValue() {
-        return value;
+    public CloseableHttpClient getClient() {
+        RequestConfig config =
+                RequestConfig.custom().setConnectionRequestTimeout(timeout).build();
+        return HttpClientBuilder.create().setDefaultRequestConfig(config).build();
     }
 }
