@@ -16,26 +16,20 @@
  * limitations under the License.
  * ============LICENSE_END=========================================================
  */
-package org.onap.aaf.certservice.client.api;
 
-public enum ExitCode {
-    SUCCESS_EXIT_CODE(0),
-    CLIENT_CONFIGURATION_EXCEPTION(1),
-    CSR_CONFIGURATION_EXCEPTION(2),
-    KEY_PAIR_GENERATION_EXCEPTION(3),
-    CSR_GENERATION_EXCEPTION(4),
-    CERT_SERVICE_API_CONNECTION_EXCEPTION(5),
-    HTTP_CLIENT_EXCEPTION(6),
-    PKCS12_CONVERSION_EXCEPTION(7),
-    PK_TO_PEM_ENCODING_EXCEPTION(8);
+package org.onap.aaf.certservice.client.certification.exception;
 
-    private final int value;
+import org.onap.aaf.certservice.client.api.ExitCode;
+import org.onap.aaf.certservice.client.api.ExitableException;
 
-    ExitCode(int value) {
-        this.value = value;
+public class PkEncodingException extends ExitableException {
+    private static final ExitCode EXIT_CODE = ExitCode.PK_TO_PEM_ENCODING_EXCEPTION;
+
+    public PkEncodingException(Throwable e) {
+        super(e);
     }
 
-    public int getValue() {
-        return value;
+    public int applicationExitCode() {
+        return EXIT_CODE.getValue();
     }
 }

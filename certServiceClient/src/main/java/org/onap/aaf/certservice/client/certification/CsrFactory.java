@@ -66,12 +66,12 @@ public class CsrFactory {
     }
 
 
-    public String createEncodedCsr(KeyPair keyPair) throws CsrGenerationException {
+    public String createCsrInPem(KeyPair keyPair) throws CsrGenerationException {
         PKCS10CertificationRequest request;
         String csrParameters = getMandatoryParameters().append(getOptionalParameters()).toString();
         X500Principal subject = new X500Principal(csrParameters);
         request = createPKCS10Csr(subject, keyPair);
-        return encodeToBase64(convertPKC10CsrToPem(request));
+        return convertPKC10CsrToPem(request);
     }
 
 
@@ -150,9 +150,5 @@ public class CsrFactory {
 
     private static Boolean isParameterPresent(String parameter) {
         return parameter != null && !"".equals(parameter);
-    }
-
-    private static String encodeToBase64(String csrInPem) {
-        return Base64.getEncoder().encodeToString(csrInPem.getBytes(StandardCharsets.UTF_8));
     }
 }

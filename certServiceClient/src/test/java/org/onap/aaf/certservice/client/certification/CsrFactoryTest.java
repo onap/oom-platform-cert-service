@@ -52,7 +52,7 @@ public class CsrFactoryTest {
         when(config.getOrganizationUnit()).thenReturn("ONAP");
         when(config.getState()).thenReturn("California");
 
-        assertThat(new CsrFactory(config).createEncodedCsr(keyPair)).isNotEmpty();
+        assertThat(new CsrFactory(config).createCsrInPem(keyPair)).isNotEmpty();
      }
 }
 

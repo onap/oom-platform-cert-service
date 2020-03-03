@@ -1,5 +1,4 @@
-/*
- * ============LICENSE_START=======================================================
+/*============LICENSE_START=======================================================
  * aaf-certservice-client
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
@@ -22,8 +21,8 @@ package org.onap.aaf.certservice.client.common;
 
 import org.bouncycastle.util.encoders.Base64;
 
-public class Base64Coder {
-    public static String encode(String string){
+public class Base64Encoder {
+    public String encode(String string){
         return new String(Base64.encode(string.getBytes()));
     }
 }

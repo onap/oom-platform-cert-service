@@ -19,13 +19,14 @@
 
 package org.onap.aaf.certservice.client;
 
+import java.security.KeyPair;
 import org.onap.aaf.certservice.client.api.ExitableException;
+import org.onap.aaf.certservice.client.certification.PrivateKeyToPemEncoder;
 import org.onap.aaf.certservice.client.certification.CsrFactory;
 import org.onap.aaf.certservice.client.certification.KeyPairFactory;
 import org.onap.aaf.certservice.client.certification.conversion.KeystoreTruststoreCreator;
 import org.onap.aaf.certservice.client.certification.conversion.KeystoreTruststoreCreatorFactory;
-
-import java.security.KeyPair;
+import org.onap.aaf.certservice.client.common.Base64Encoder;
 import org.onap.aaf.certservice.client.configuration.EnvsForClient;
 import org.onap.aaf.certservice.client.configuration.EnvsForCsr;
 import org.onap.aaf.certservice.client.configuration.factory.ClientConfigurationFactory;
@@ -39,7 +40,6 @@ import org.onap.aaf.certservice.client.httpclient.model.CertServiceResponse;
 import static org.onap.aaf.certservice.client.api.ExitCode.SUCCESS_EXIT_CODE;
 import static org.onap.aaf.certservice.client.certification.EncryptionAlgorithmConstants.KEY_SIZE;
 import static org.onap.aaf.certservice.client.certification.EncryptionAlgorithmConstants.RSA_ENCRYPTION_ALGORITHM;
-import static org.onap.aaf.certservice.client.common.Base64Coder.encode;
 
 public class CertServiceClient {
 
@@ -51,22 +51,23 @@ public class CertServiceClient {
 
     public void run() {
         KeyPairFactory keyPairFactory = new KeyPairFactory(RSA_ENCRYPTION_ALGORITHM, KEY_SIZE);
+        PrivateKeyToPemEncoder pkEncoder = new PrivateKeyToPemEncoder();
+        Base64Encoder base64Encoder = new Base64Encoder();
         try {
             ClientConfiguration clientConfiguration = new ClientConfigurationFactory(new EnvsForClient()).create();
             CsrConfiguration csrConfiguration = new CsrConfigurationFactory(new EnvsForCsr()).create();
             KeyPair keyPair = keyPairFactory.create();
             CsrFactory csrFactory = new CsrFactory(csrConfiguration);
-            String csr = csrFactory.createEncodedCsr(keyPair);
 
             CloseableHttpClientProvider provider = new CloseableHttpClientProvider(
                 clientConfiguration.getRequestTimeout());
             HttpClient httpClient = new HttpClient(provider, clientConfiguration.getUrlToCertService());
 
             CertServiceResponse certServiceData =
-                httpClient.retrieveCertServiceData(
-                    clientConfiguration.getCaName(),
-                    csr,
-                    encode(keyPair.getPrivate().toString()));
+                    httpClient.retrieveCertServiceData(
+                            clientConfiguration.getCaName(),
+                            base64Encoder.encode(csrFactory.createCsrInPem(keyPair)),
+                            base64Encoder.encode(pkEncoder.encodePrivateKeyToPem(keyPair.getPrivate())));
 
             KeystoreTruststoreCreator filesCreator = new KeystoreTruststoreCreatorFactory(
                 clientConfiguration.getCertsOutputPath()).create();
