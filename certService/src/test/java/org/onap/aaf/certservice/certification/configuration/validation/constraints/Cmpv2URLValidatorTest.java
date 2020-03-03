@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class Cmpv2URLValidatorTest {
 
-    private Cmpv2URLValidator validator = new Cmpv2URLValidator();
+    private final Cmpv2URLValidator validator = new Cmpv2URLValidator();
 
     @Test
     public void givenCorrectURLWhenValidatingShouldReturnTrue() {

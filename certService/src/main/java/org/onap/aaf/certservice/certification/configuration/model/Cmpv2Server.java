@@ -20,19 +20,23 @@
 
 package org.onap.aaf.certservice.certification.configuration.model;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.bouncycastle.asn1.x500.X500Name;
 import org.hibernate.validator.constraints.Length;
 import org.onap.aaf.certservice.certification.configuration.validation.constraints.Cmpv2URL;
 
-import javax.validation.Valid;
-
 public class Cmpv2Server {
 
+    @NotNull
     @Valid
     private Authentication authentication;
+    @NotNull
     private CaMode caMode;
+    @NotNull
     @Length(min = 1, max = 128)
     private String caName;
+    @NotNull
     private X500Name issuerDN;
     @Cmpv2URL
     private String url;

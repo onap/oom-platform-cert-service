@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PortNumberViolationTest {
 
-    private PortNumberViolation violation = new PortNumberViolation();
+    private final PortNumberViolation violation = new PortNumberViolation();
 
     @Test
     public void givenValidPortShouldReturnTrue() {

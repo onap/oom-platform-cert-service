@@ -20,11 +20,21 @@
 
 package org.onap.aaf.certservice.api;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import com.google.gson.Gson;
+import java.io.IOException;
+import java.util.Arrays;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.onap.aaf.certservice.certification.CertificationModelFactory;
 import org.onap.aaf.certservice.certification.CsrModelFactory;
 import org.onap.aaf.certservice.certification.CsrModelFactory.StringBase64;
@@ -36,20 +46,11 @@ import org.onap.aaf.certservice.certification.model.CsrModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.io.IOException;
-import java.util.Arrays;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+@ExtendWith(MockitoExtension.class)
+class CertificationControllerTest {
 
-
-class CertificationServiceTest {
-
-    private CertificationService certificationService;
+    private CertificationController certificationController;
 
     @Mock
     private CsrModelFactory csrModelFactory;
@@ -58,9 +59,8 @@ class CertificationServiceTest {
     private CertificationModelFactory certificationModelFactory;
 
     @BeforeEach
-    void serUp() {
-        MockitoAnnotations.initMocks(this);
-        certificationService = new CertificationService(csrModelFactory, certificationModelFactory);
+    void setUp() {
+        certificationController = new CertificationController(csrModelFactory, certificationModelFactory);
     }
 
     @Test
@@ -81,7 +81,7 @@ class CertificationServiceTest {
 
         // when
         ResponseEntity<String> testResponse =
-                certificationService.signCertificate(testCaName, "encryptedCSR", "encryptedPK");
+                certificationController.signCertificate(testCaName, "encryptedCSR", "encryptedPK");
 
         CertificationModel responseCertificationModel = new Gson().fromJson(testResponse.getBody(), CertificationModel.class);
 
@@ -101,7 +101,7 @@ class CertificationServiceTest {
 
         // when
         Exception exception = assertThrows(
-                CsrDecryptionException.class, () -> certificationService.
+                CsrDecryptionException.class, () -> certificationController.
                         signCertificate("TestCa", "encryptedCSR", "encryptedPK")
         );
 
@@ -120,7 +120,7 @@ class CertificationServiceTest {
 
         // when
         Exception exception = assertThrows(
-                KeyDecryptionException.class, () -> certificationService.
+                KeyDecryptionException.class, () -> certificationController.
                         signCertificate("TestCa", "encryptedCSR", "encryptedPK")
         );
 

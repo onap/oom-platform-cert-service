@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class RequestTypeViolationTest {
 
-    private RequestTypeViolation violation = new RequestTypeViolation();
+    private final RequestTypeViolation violation = new RequestTypeViolation();
 
     @Test
     public void givenValidRequestTypeShouldReturnTrue() {
