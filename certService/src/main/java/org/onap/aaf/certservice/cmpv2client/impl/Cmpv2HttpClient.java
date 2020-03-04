@@ -54,7 +54,7 @@ class Cmpv2HttpClient {
    * @param pkiMessage PKIMessage to send to server
    * @param urlString url for the server we're sending request
    * @param caName name of CA server
-   * @return
+   * @return PKIMessage received from CMPServer
    * @throws CmpClientException thrown if problems with connecting or parsing response to server
    */
   public byte[] postRequest(
@@ -73,7 +73,8 @@ class Cmpv2HttpClient {
       return byteArrOutputStream.toByteArray();
     } catch (IOException ioe) {
       CmpClientException cmpClientException =
-          new CmpClientException(String.format("IOException error while trying to connect CA %s",caName), ioe);
+          new CmpClientException(
+              String.format("IOException error while trying to connect CA %s", caName), ioe);
       LOG.error("IOException error {}, while trying to connect CA {}", ioe.getMessage(), caName);
       throw cmpClientException;
     }

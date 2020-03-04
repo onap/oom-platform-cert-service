@@ -55,6 +55,7 @@ class CreateCertRequest {
   private Date notBefore;
   private Date notAfter;
   private String initAuthPassword;
+  private String senderKid;
 
   private static final int ITERATIONS = createRandomInt(5000);
   private static final byte[] SALT = createRandomBytes();
@@ -88,6 +89,10 @@ class CreateCertRequest {
     this.initAuthPassword = initAuthPassword;
   }
 
+  public void setSenderKid(String senderKid) {
+    this.senderKid = senderKid;
+  }
+
   /**
    * Method to create {@link PKIMessage} from {@link CertRequest},{@link ProofOfPossession}, {@link
    * CertReqMsg}, {@link CertReqMessages}, {@link PKIHeader} and {@link PKIBody}.
@@ -118,8 +123,11 @@ class CreateCertRequest {
 
     final PKIHeader pkiHeader =
         generatePkiHeader(
-            subjectDn, issuerDn, CmpMessageHelper.protectionAlgoIdentifier(ITERATIONS, SALT));
-    final PKIBody pkiBody = new PKIBody(PKIBody.TYPE_CERT_REQ, certReqMessages);
+            subjectDn,
+            issuerDn,
+            CmpMessageHelper.protectionAlgoIdentifier(ITERATIONS, SALT),
+            senderKid);
+    final PKIBody pkiBody = new PKIBody(PKIBody.TYPE_INIT_REQ, certReqMessages);
 
     return CmpMessageHelper.protectPkiMessage(
         pkiHeader, pkiBody, initAuthPassword, ITERATIONS, SALT);
