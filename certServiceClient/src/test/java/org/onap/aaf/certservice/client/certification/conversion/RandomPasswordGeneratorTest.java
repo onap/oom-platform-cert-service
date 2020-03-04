@@ -16,25 +16,17 @@
  * limitations under the License.
  * ============LICENSE_END=========================================================
  */
-package org.onap.aaf.certservice.client.api;
 
-public enum ExitCode {
-    SUCCESS_EXIT_CODE(0),
-    CLIENT_CONFIGURATION_EXCEPTION(1),
-    CSR_CONFIGURATION_EXCEPTION(2),
-    KEY_PAIR_GENERATION_EXCEPTION(3),
-    CSR_GENERATION_EXCEPTION(4),
-    CERT_SERVICE_API_CONNECTION_EXCEPTION(5),
-    HTTP_CLIENT_EXCEPTION(6),
-    PKCS12_CONVERSION_EXCEPTION(7);
+package org.onap.aaf.certservice.client.certification.conversion;
 
-    private final int value;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
 
-    ExitCode(int value) {
-        this.value = value;
-    }
+class RandomPasswordGeneratorTest {
 
-    public int getValue() {
-        return value;
+    @Test
+    void shouldGenerateRandomPasswordOfGivenLengthMatchingThePattern() {
+        Password password = new RandomPasswordGenerator().generate(24);
+        assertTrue(password.isCorrectPasswordPattern());
     }
 }

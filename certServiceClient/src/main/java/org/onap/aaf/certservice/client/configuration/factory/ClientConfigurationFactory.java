@@ -20,13 +20,14 @@
 
 package org.onap.aaf.certservice.client.configuration.factory;
 
+
+
+import java.util.Optional;
 import org.onap.aaf.certservice.client.configuration.ClientConfigurationEnvs;
 import org.onap.aaf.certservice.client.configuration.EnvValidationUtils;
 import org.onap.aaf.certservice.client.configuration.EnvsForClient;
 import org.onap.aaf.certservice.client.configuration.exception.ClientConfigurationException;
 import org.onap.aaf.certservice.client.configuration.model.ClientConfiguration;
-
-import java.util.Optional;
 
 public class ClientConfigurationFactory implements AbstractConfigurationFactory<ClientConfiguration> {
 
