@@ -21,6 +21,8 @@ package org.onap.aaf.certservice.client.certification.conversion;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Path;
+
 import org.onap.aaf.certservice.client.certification.exception.PemToPKCS12ConverterException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,10 +41,10 @@ class PKCS12FilesCreator {
 
 
     PKCS12FilesCreator(String path) {
-        keystoreJksPath = path + KEYSTORE_JKS;
-        keystorePassPath = path + KEYSTORE_PASS;
-        truststoreJksPath = path + TRUSTSTORE_JKS;
-        truststorePassPath = path + TRUSTSTORE_PASS;
+        keystoreJksPath = Path.of(path, KEYSTORE_JKS).toString();
+        keystorePassPath = Path.of(path, KEYSTORE_PASS).toString();
+        truststoreJksPath = Path.of(path, TRUSTSTORE_JKS).toString();
+        truststorePassPath = Path.of(path, TRUSTSTORE_PASS).toString();
     }
 
     void saveKeystoreData(byte[] keystoreData, String keystorePassword) throws PemToPKCS12ConverterException {
