@@ -18,41 +18,15 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.certification.configuration.model;
+package org.onap.aaf.certservice.certification.configuration;
 
-import javax.validation.constraints.NotNull;
-import org.hibernate.validator.constraints.Length;
+public class CmpServersConfigLoadingException extends Exception {
 
-public class Authentication {
-
-    @NotNull
-    @Length(min = 1, max = 256)
-    private String iak;
-    @NotNull
-    @Length(min = 1, max = 256)
-    private String rv;
-
-    public String getIak() {
-        return iak;
+    public CmpServersConfigLoadingException(String message) {
+        super(message);
     }
 
-    public void setIak(String iak) {
-        this.iak = iak;
-    }
-
-    public String getRv() {
-        return rv;
-    }
-
-    public void setRv(String rv) {
-        this.rv = rv;
-    }
-
-    @Override
-    public String toString() {
-        return "Authentication{" +
-                "  iak=*****" +
-                ", rv=*****" +
-                '}';
+    public CmpServersConfigLoadingException(String message, Throwable cause) {
+        super(message, cause);
     }
 }

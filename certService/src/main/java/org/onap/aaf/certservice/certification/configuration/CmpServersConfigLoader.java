@@ -24,20 +24,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
 import java.security.InvalidParameterException;
-import java.util.ArrayList;
 import java.util.List;
 import org.onap.aaf.certservice.certification.configuration.model.CmpServers;
 import org.onap.aaf.certservice.certification.configuration.model.Cmpv2Server;
 import org.onap.aaf.certservice.certification.configuration.validation.Cmpv2ServerConfigurationValidator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 class CmpServersConfigLoader {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CmpServersConfigLoader.class);
+    private static final String LOADING_EXCEPTION_MESSAGE = "Exception occurred during CMP Servers configuration loading";
+    private static final String VALIDATION_EXCEPTION_MESSAGE = "Validation of CMPv2 servers configuration failed";
 
     private final Cmpv2ServerConfigurationValidator validator;
 
@@ -46,19 +44,16 @@ class CmpServersConfigLoader {
         this.validator = validator;
     }
 
-    List<Cmpv2Server> load(String path) {
-        List<Cmpv2Server> servers = new ArrayList<>();
+    List<Cmpv2Server> load(String path) throws CmpServersConfigLoadingException {
         try {
-            servers = loadConfigFromFile(path).getCmpv2Servers();
+            List<Cmpv2Server> servers = loadConfigFromFile(path).getCmpv2Servers();
             servers.forEach(validator::validate);
-            LOGGER.info("CMP Servers configuration successfully loaded from file {}", path);
+            return servers;
         } catch (IOException e) {
-            LOGGER.error("Exception occurred during CMP Servers configuration loading: ", e);
+            throw new CmpServersConfigLoadingException(LOADING_EXCEPTION_MESSAGE, e);
         } catch (InvalidParameterException e) {
-            LOGGER.error("Validation of CMPv2 servers configuration failed:", e);
+            throw new CmpServersConfigLoadingException(VALIDATION_EXCEPTION_MESSAGE, e);
         }
-
-        return servers;
     }
 
     private CmpServers loadConfigFromFile(String path) throws IOException {

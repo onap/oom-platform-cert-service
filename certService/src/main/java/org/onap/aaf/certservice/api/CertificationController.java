@@ -39,15 +39,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-public class CertificationService {
+public class CertificationController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CertificationService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CertificationController.class);
 
     private final CsrModelFactory csrModelFactory;
     private final CertificationModelFactory certificationModelFactory;
 
     @Autowired
-    CertificationService(CsrModelFactory csrModelFactory, CertificationModelFactory certificationModelFactory) {
+    CertificationController(CsrModelFactory csrModelFactory, CertificationModelFactory certificationModelFactory) {
         this.csrModelFactory = csrModelFactory;
         this.certificationModelFactory = certificationModelFactory;
     }
@@ -80,6 +80,5 @@ public class CertificationService {
         return new ResponseEntity<>(new Gson().toJson(certificationModel), HttpStatus.OK);
 
     }
-
 
 }

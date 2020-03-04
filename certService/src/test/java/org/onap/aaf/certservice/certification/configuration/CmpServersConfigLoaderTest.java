@@ -20,26 +20,26 @@
 
 package org.onap.aaf.certservice.certification.configuration;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.onap.aaf.certservice.CertServiceApplication;
 import org.onap.aaf.certservice.certification.configuration.model.Cmpv2Server;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = CertServiceApplication.class)
 class CmpServersConfigLoaderTest {
     private static final String EXISTING_CONFIG_FILENAME = "cmpServers.json";
-    private static final String NONEXISTING_CONFIG_FILENAME = "nonExisting_cmpServers.json";
+    private static final String INVALID_CONFIG_FILENAME = "invalidCmpServers.json";
+    private static final String NONEXISTENT_CONFIG_FILENAME = "nonExisting_cmpServers.json";
+
     private static final Map<String, String> EXPECTED_FIRST_CMP_SERVER = Map.of(
             "CA_NAME", "TEST",
             "URL", "http://127.0.0.1/ejbca/publicweb/cmp/cmp",
@@ -61,9 +61,9 @@ class CmpServersConfigLoaderTest {
     private CmpServersConfigLoader configLoader;
 
     @Test
-    void shouldLoadCmpServersConfigWhenFileAvailable() {
+    void shouldLoadCmpServersConfigWhenFileAvailable() throws CmpServersConfigLoadingException {
         // Given
-        String path = getClass().getClassLoader().getResource(EXISTING_CONFIG_FILENAME).getFile();
+        String path = getResourcePath(EXISTING_CONFIG_FILENAME);
 
         // When
         List<Cmpv2Server> cmpServers = configLoader.load(path);
@@ -76,13 +76,32 @@ class CmpServersConfigLoaderTest {
     }
 
     @Test
-    void shouldReturnEmptyListWhenFileMissing() {
+    void shouldThrowExceptionWhenFileMissing() {
         // When
-        List<Cmpv2Server> cmpServers = configLoader.load(NONEXISTING_CONFIG_FILENAME);
+        Exception exception = assertThrows(
+            CmpServersConfigLoadingException.class,
+            () -> configLoader.load(NONEXISTENT_CONFIG_FILENAME));
 
         // Then
-        assertThat(cmpServers).isNotNull();
-        assertThat(cmpServers).isEmpty();
+        assertThat(exception.getMessage()).contains("Exception occurred during CMP Servers configuration loading");
+    }
+
+    @Test
+    void shouldThrowExceptionWhenConfigurationIsInvalid() {
+        // Given
+        String path = getResourcePath(INVALID_CONFIG_FILENAME);
+
+        // When
+        Exception exception = assertThrows(
+            CmpServersConfigLoadingException.class,
+            () -> configLoader.load(path));
+
+        // Then
+        assertThat(exception.getMessage()).contains("Validation of CMPv2 servers configuration failed");
+    }
+
+    private String getResourcePath(String invalidConfigFilename) {
+        return getClass().getClassLoader().getResource(invalidConfigFilename).getFile();
     }
 
     private void verifyThatCmpServerEquals(Cmpv2Server cmpv2Server, Map<String, String> expected) {

@@ -20,6 +20,12 @@
 
 package org.onap.aaf.certservice.certification.configuration;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.startsWith;
+
+import java.util.List;
 import org.bouncycastle.asn1.x500.X500Name;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,19 +36,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.onap.aaf.certservice.certification.configuration.model.Authentication;
 import org.onap.aaf.certservice.certification.configuration.model.CaMode;
 import org.onap.aaf.certservice.certification.configuration.model.Cmpv2Server;
-import org.springframework.cloud.context.scope.refresh.RefreshScopeRefreshedEvent;
-
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.startsWith;
 
 @ExtendWith(MockitoExtension.class)
 class CmpServersConfigTest {
 
+    private static final String ERROR_MESSAGE = "Exception occurred during CMP Servers configuration loading";
     private static final String APP_CONFIG_PATH = "/fake/path/to/config";
-
     private static final List<Cmpv2Server> SAMPLE_CMP_SERVERS = generateTestConfiguration();
 
     @Mock
@@ -56,16 +55,19 @@ class CmpServersConfigTest {
     }
 
     @Test
-    void shouldCallLoaderWithPathFromPropertiesWhenCreated() {
-        this.cmpServersConfig.loadConfiguration();      // Manual PostConstruct call
+    void shouldCallLoaderWithPathFromPropertiesWhenCreated() throws CmpServersConfigLoadingException {
+        // When
+        this.cmpServersConfig.init();      // Manual PostConstruct call
+
+        // Then
         Mockito.verify(cmpServersConfigLoader).load(startsWith(APP_CONFIG_PATH));
     }
 
     @Test
-    void shouldReturnLoadedServersWhenGetCalled() {
+    void shouldReturnLoadedServersWhenGetCalled() throws CmpServersConfigLoadingException {
         // Given
         Mockito.when(cmpServersConfigLoader.load(any())).thenReturn(SAMPLE_CMP_SERVERS);
-        this.cmpServersConfig.loadConfiguration();      // Manual PostConstruct call
+        this.cmpServersConfig.init();      // Manual PostConstruct call
 
         // When
         List<Cmpv2Server> receivedCmpServers = this.cmpServersConfig.getCmpServers();
@@ -75,16 +77,14 @@ class CmpServersConfigTest {
     }
 
     @Test
-    void shouldReturnLoadedServersAfterRefreshWhenGetCalled() {
+    void shouldReturnLoadedServersAfterReloadWhenGetCalled() throws CmpServersConfigLoadingException {
         // Given
         Mockito.when(cmpServersConfigLoader.load(any())).thenReturn(SAMPLE_CMP_SERVERS);
-
         List<Cmpv2Server> receivedCmpServers = this.cmpServersConfig.getCmpServers();
         assertThat(receivedCmpServers).isNull();
 
-        this.cmpServersConfig.onRefreshScope(new RefreshScopeRefreshedEvent());
-
         // When
+        this.cmpServersConfig.reloadConfiguration();
         receivedCmpServers = this.cmpServersConfig.getCmpServers();
 
         // Then
@@ -92,20 +92,71 @@ class CmpServersConfigTest {
     }
 
     @Test
-    void shouldNotReturnIakAndRvWhenToStringMethodIsUsed() {
+    void shouldRethrowExceptionWhenReloaded() throws CmpServersConfigLoadingException {
+        // Given
+        Mockito.when(cmpServersConfigLoader.load(any())).thenThrow(new CmpServersConfigLoadingException(
+            ERROR_MESSAGE));
+
+        // Then
+        assertThrows(
+            CmpServersConfigLoadingException.class,
+            () -> cmpServersConfig.reloadConfiguration());
+    }
+
+    @Test
+    void shouldPassMessageToRethrownErrorWhenReloadingFails() throws CmpServersConfigLoadingException {
+        // Given
+        Mockito.when(cmpServersConfigLoader.load(any())).thenThrow(new CmpServersConfigLoadingException(ERROR_MESSAGE));
+
+        // When
+        Exception exception = assertThrows(
+            CmpServersConfigLoadingException.class,
+            () -> cmpServersConfig.reloadConfiguration());
+
+        // Then
+        assertThat(exception.getMessage()).isEqualTo(ERROR_MESSAGE);
+    }
+
+    @Test
+    void shouldNotReturnIakAndRvWhenToStringMethodIsUsed() throws CmpServersConfigLoadingException {
         // Given
         Mockito.when(cmpServersConfigLoader.load(any())).thenReturn(SAMPLE_CMP_SERVERS);
-        this.cmpServersConfig.loadConfiguration();      // Manual PostConstruct call
+        this.cmpServersConfig.init();      // Manual PostConstruct call
 
         // When
         List<Cmpv2Server> receivedCmpServers = this.cmpServersConfig.getCmpServers();
 
         // Then
-        receivedCmpServers.forEach((server)-> assertThat(server.toString())
-                .doesNotContain(
-                        server.getAuthentication().getIak(),
-                        server.getAuthentication().getRv()
-                ));
+        receivedCmpServers.forEach((server) -> assertThat(server.toString())
+            .doesNotContain(
+                server.getAuthentication().getIak(),
+                server.getAuthentication().getRv()
+            ));
+    }
+
+    @Test
+    void shouldRethrowErrorWhenLoadingFails() throws CmpServersConfigLoadingException {
+        // Given
+        Mockito.when(cmpServersConfigLoader.load(any())).thenThrow(new CmpServersConfigLoadingException(ERROR_MESSAGE));
+
+        // Then
+        assertThrows(
+            CmpServersConfigLoadingException.class,
+            () -> cmpServersConfig.loadConfiguration());
+    }
+
+    @Test
+    void shouldPassMessageToRethrownErrorWhenLoadingFails() throws CmpServersConfigLoadingException {
+        // Given
+        Mockito.when(cmpServersConfigLoader.load(any())).thenThrow(new CmpServersConfigLoadingException(ERROR_MESSAGE));
+
+        // When
+        Exception exception = assertThrows(
+            CmpServersConfigLoadingException.class,
+            () -> cmpServersConfig.loadConfiguration());
+
+        // Then
+        assertThat(exception.getMessage()).isEqualTo(ERROR_MESSAGE);
     }
 
     private static List<Cmpv2Server> generateTestConfiguration() {
