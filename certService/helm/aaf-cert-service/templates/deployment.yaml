@@ -25,13 +25,13 @@ spec:
         livenessProbe:
           httpGet:
             port: {{ .Values.containerPort }}
-            path: {{ .Values.healthcheck.path }}
+            path: {{ .Values.liveness.path }}
             initialDelaySeconds: {{ .Values.liveness.initialDelaySeconds }}
             periodSeconds: {{ .Values.liveness.periodSeconds }}
         readinessProbe:
           httpGet:
             port: {{ .Values.containerPort }}
-            path: {{ .Values.healthcheck.path }}
+            path: {{ .Values.readiness.path }}
             initialDelaySeconds: {{ .Values.readiness.initialDelaySeconds }}
             periodSeconds: {{ .Values.readiness.periodSeconds }}
         volumeMounts:

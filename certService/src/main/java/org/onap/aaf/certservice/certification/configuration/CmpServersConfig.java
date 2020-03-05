@@ -35,15 +35,16 @@ import org.springframework.context.annotation.Configuration;
 public class CmpServersConfig {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CmpServersConfig.class);
+    private static final String INIT_CONFIGURATION = "Loading initial configuration";
+    private static final String RELOADING_CONFIGURATION = "Reloading configuration";
     private static final String LOADING_SUCCESS_MESSAGE = "CMP Servers configuration successfully loaded from file {}";
     private static final String CMP_SERVERS_CONFIG_FILENAME = "cmpServers.json";
-    private static final String INIT_CONFIGURATION = "Loading initial configuration";
-    private static final String REFRESHING_CONFIGURATION = "Refreshing configuration";
 
     private final String configPath;
     private final CmpServersConfigLoader cmpServersConfigLoader;
 
     private List<Cmpv2Server> cmpServers;
+    private volatile boolean isReady;
 
     @Autowired
     public CmpServersConfig(@Value("${app.config.path}") String configPath,
@@ -54,8 +55,8 @@ public class CmpServersConfig {
 
     @PostConstruct
     void init() {
-        LOGGER.info(INIT_CONFIGURATION);
         try {
+            LOGGER.info(INIT_CONFIGURATION);
             loadConfiguration();
         } catch (CmpServersConfigLoadingException e) {
             LOGGER.error(e.getMessage(), e.getCause());
@@ -63,18 +64,24 @@ public class CmpServersConfig {
     }
 
     public void reloadConfiguration() throws CmpServersConfigLoadingException {
-        LOGGER.info(REFRESHING_CONFIGURATION);
+        LOGGER.info(RELOADING_CONFIGURATION);
         loadConfiguration();
     }
 
-    void loadConfiguration() throws CmpServersConfigLoadingException {
+
+    synchronized void loadConfiguration() throws CmpServersConfigLoadingException {
+        isReady = false;
         String configFilePath = configPath + File.separator + CMP_SERVERS_CONFIG_FILENAME;
         this.cmpServers = Collections.unmodifiableList(cmpServersConfigLoader.load(configFilePath));
         LOGGER.info(LOADING_SUCCESS_MESSAGE, configFilePath);
+        isReady = true;
     }
 
     public List<Cmpv2Server> getCmpServers() {
         return cmpServers;
     }
 
+    public boolean isReady() {
+        return isReady;
+    }
 }

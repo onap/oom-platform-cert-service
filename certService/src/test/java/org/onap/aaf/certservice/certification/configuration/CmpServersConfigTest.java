@@ -159,6 +159,55 @@ class CmpServersConfigTest {
         assertThat(exception.getMessage()).isEqualTo(ERROR_MESSAGE);
     }
 
+    @Test
+    void shouldBeNotReadyWhenCreated() {
+        assertThat(cmpServersConfig.isReady()).isFalse();
+    }
+
+    @Test
+    void shouldBeReadyWhenSuccessfullyInitialized() {
+        // When
+        this.cmpServersConfig.init();      // Manual PostConstruct call
+
+        // Then
+        assertThat(cmpServersConfig.isReady()).isTrue();
+    }
+
+    @Test
+    void shouldNotBeReadyWhenFailedToInitialize() throws CmpServersConfigLoadingException {
+        // Given
+        Mockito.when(cmpServersConfigLoader.load(any())).thenThrow(new CmpServersConfigLoadingException(ERROR_MESSAGE));
+
+        // When
+        this.cmpServersConfig.init();      // Manual PostConstruct call
+
+        // Then
+        assertThat(cmpServersConfig.isReady()).isFalse();
+    }
+
+    @Test
+    void shouldBeReadyWhenSuccessfullyReloaded() throws CmpServersConfigLoadingException {
+        // When
+        this.cmpServersConfig.reloadConfiguration();
+
+        // Then
+        assertThat(cmpServersConfig.isReady()).isTrue();
+    }
+
+    @Test
+    void shouldNotBeReadyWhenFailedToReload() throws CmpServersConfigLoadingException {
+        // Given
+        Mockito.when(cmpServersConfigLoader.load(any())).thenThrow(new CmpServersConfigLoadingException(ERROR_MESSAGE));
+
+        // When
+        assertThrows(
+            CmpServersConfigLoadingException.class,
+            () -> cmpServersConfig.loadConfiguration());
+
+        // Then
+        assertThat(cmpServersConfig.isReady()).isFalse();
+    }
+
     private static List<Cmpv2Server> generateTestConfiguration() {
         Cmpv2Server testServer1 = new Cmpv2Server();
         testServer1.setCaName("TEST_CA1");
