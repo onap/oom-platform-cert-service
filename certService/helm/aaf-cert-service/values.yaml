@@ -9,11 +9,11 @@ service:
 liveness:
   initialDelaySeconds: 60
   periodSeconds: 10
+  path: /actuator/health
 readiness:
   initialDelaySeconds: 30
   periodSeconds: 10
-healthcheck:
-  path: /actuator/health
+  path: /ready
 volume:
   name: aaf-cert-service-volume
   mountPath: /etc/onap/aaf/certservice
