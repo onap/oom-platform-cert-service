@@ -39,7 +39,6 @@ public class PemObjectFactory {
 
         try (StringReader stringReader = new StringReader(pem);
              PemReader pemReader = new PemReader(stringReader)) {
-            LOGGER.debug("Creating pem object from: {}", pem);
             return Optional.ofNullable(pemReader.readPemObject());
         } catch (DecoderException | IOException e) {
             LOGGER.error("Exception occurred during creation of PEM:", e);

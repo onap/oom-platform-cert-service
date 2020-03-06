@@ -83,7 +83,6 @@ public class CsrModelFactory {
         public Optional<String> asString() {
             try {
                 String decodedString = new String(decoder.decode(value));
-                LOGGER.debug("Decoded string: {}", decodedString);
                 return Optional.of(decodedString);
             } catch(RuntimeException e) {
                 LOGGER.error("Exception occurred during decoding:", e);
