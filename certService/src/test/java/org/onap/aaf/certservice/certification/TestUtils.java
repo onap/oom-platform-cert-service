@@ -20,12 +20,18 @@
 
 package org.onap.aaf.certservice.certification;
 
+import org.bouncycastle.util.encoders.Base64;
 import org.bouncycastle.util.io.pem.PemObject;
 import org.bouncycastle.util.io.pem.PemWriter;
+import org.onap.aaf.certservice.certification.exception.DecryptionException;
 import org.onap.aaf.certservice.certification.exception.KeyDecryptionException;
+import org.onap.aaf.certservice.certification.model.CsrModel;
 
 import java.io.IOException;
 import java.io.StringWriter;
+
+import static org.onap.aaf.certservice.certification.TestData.TEST_CSR;
+import static org.onap.aaf.certservice.certification.TestData.TEST_PK;
 
 
 public final class TestUtils {
@@ -43,5 +49,13 @@ public final class TestUtils {
         } catch (IOException e) {
             throw new KeyDecryptionException("Writing PAM Object to string failed", e);
         }
+    }
+
+    public static CsrModel createCsrModel() throws DecryptionException {
+        CsrModelFactory csrModelFactory = new CsrModelFactory();
+        String encoderCsr = new String(Base64.encode(TEST_CSR.getBytes()));
+        String encoderPK = new String(Base64.encode(TEST_PK.getBytes()));
+        return csrModelFactory
+                .createCsrModel(new CsrModelFactory.StringBase64(encoderCsr), new CsrModelFactory.StringBase64(encoderPK));
     }
 }
