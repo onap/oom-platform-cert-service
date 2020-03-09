@@ -2,9 +2,9 @@ version: "2.1"
 
 services:
   ejbca:
-    image: primekey/ejbca-ce
+    image: primekey/ejbca-ce:6.15.2.5
     hostname: cahostname
-    container_name: mycontainer
+    container_name: aafcert-ejbca
     ports:
       - "80:8080"
       - "443:8443"
@@ -26,7 +26,7 @@ services:
     image: onap/org.onap.aaf.certservice.aaf-certservice-api:latest
     volumes:
       - ./helm/aaf-cert-service/resources/cmpServers.json:/etc/onap/aaf/certservice/cmpServers.json
-    container_name: certservice
+    container_name: aafcert-service
     ports:
       - "8080:8080"
     depends_on:
