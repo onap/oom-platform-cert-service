@@ -24,7 +24,7 @@ import org.onap.aaf.certservice.client.api.ExitCode;
 import org.onap.aaf.certservice.client.api.ExitableException;
 
 public class HttpClientException extends ExitableException {
-    private final ExitCode EXIT_CODE = ExitCode.HTTP_CLIENT_EXCEPTION;
+    private static final ExitCode EXIT_CODE = ExitCode.HTTP_CLIENT_EXCEPTION;
 
     public HttpClientException(Throwable e) {
         super(e);

@@ -24,9 +24,6 @@ import java.util.Optional;
 public class EnvsForClient {
     private final EnvProvider envProvider = new EnvProvider();
 
-    public EnvsForClient() {
-    }
-
     public Optional<String> getUrlToCertService() {
         return readEnv(ClientConfigurationEnvs.REQUEST_URL);
     }

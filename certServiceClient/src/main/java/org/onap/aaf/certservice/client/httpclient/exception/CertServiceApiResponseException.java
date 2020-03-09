@@ -24,7 +24,7 @@ import org.onap.aaf.certservice.client.api.ExitCode;
 import org.onap.aaf.certservice.client.api.ExitableException;
 
 public class CertServiceApiResponseException extends ExitableException {
-    private final ExitCode EXIT_CODE = ExitCode.CERT_SERVICE_API_CONNECTION_EXCEPTION;
+    private static final ExitCode EXIT_CODE = ExitCode.CERT_SERVICE_API_CONNECTION_EXCEPTION;
 
     public CertServiceApiResponseException(String url, int responseCode, String messageFromAPI) {
 
