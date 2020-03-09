@@ -45,7 +45,7 @@ docker build --build-arg VERSION=1.0.0-SNAPSHOT -t onap/org.onap.aaf.certservice
 mvn clean install
 ```     
     
-### Building Docker image and  install the package into the local repository
+### Building Docker image and install the package into local repository
 ```
 mvn clean install -P docker
 ```   
@@ -61,7 +61,8 @@ docker run -p 8080:8080 --name aaf-certservice-api --mount type=bind,source=/<ab
 ```
 
 ### Running Docker container from docker-compose with EJBCA
-Docker-compose uses nexus image of certservice.
+Docker-compose uses a local image of certservice.
+Build a docker image locally before run docker compose command. See a section **Building Docker image and install the package into local repository**
 ```
 docker-compose up
 ```
