@@ -24,8 +24,6 @@ import java.util.Optional;
 public class EnvsForCsr {
     private final EnvProvider envProvider = new EnvProvider();
 
-    public EnvsForCsr() {}
-
     public Optional<String> getCommonName() {
         return readEnv(CsrConfigurationEnvs.COMMON_NAME);
     }
