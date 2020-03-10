@@ -20,6 +20,10 @@
 
 package org.onap.aaf.certservice.api;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.onap.aaf.certservice.certification.configuration.CmpServersConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,6 +32,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@Tag(name = "CertificationService")
 public class ReadinessController {
 
     private final CmpServersConfig cmpServersConfig;
@@ -37,7 +42,15 @@ public class ReadinessController {
         this.cmpServersConfig = cmpServersConfig;
     }
 
-    @GetMapping("/ready")
+    @GetMapping(value = "/ready", produces = "application/json; charset=utf-8")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "configuration is loaded and service is ready to use"),
+            @ApiResponse(responseCode = "503", description = "configuration loading failed and service is unavailable")
+    })
+    @Operation(
+            summary = "check is container is ready",
+            description = "Web endpoint for checking if service is ready to be used.",
+            tags = { "CertificationService" })
     public ResponseEntity<String> checkReady() {
         if (cmpServersConfig.isReady()) {
             return new ResponseEntity<>(HttpStatus.OK);

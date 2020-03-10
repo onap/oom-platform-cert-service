@@ -20,18 +20,25 @@
 
 package org.onap.aaf.certservice.api;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.onap.aaf.certservice.certification.configuration.CmpServersConfig;
 import org.onap.aaf.certservice.certification.configuration.CmpServersConfigLoadingException;
+import org.onap.aaf.certservice.certification.exception.ErrorResponseModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@Tag(name = "CertificationService")
 public class ReloadConfigController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ReloadConfigController.class);
@@ -43,16 +50,19 @@ public class ReloadConfigController {
         this.cmpServersConfig = cmpServersConfig;
     }
 
-    @GetMapping("/reload")
+    @GetMapping(value = "/reload", produces = "application/json; charset=utf-8")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "configuration has been successfully reloaded"),
+            @ApiResponse(responseCode = "500", description = "something went wrong during configuration loading",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseModel.class)))
+    })
+    @Operation(
+            summary = "reload service configuration from file",
+            description = "Web endpoint for performing configuration reload. Used to reload configuration file from file.",
+            tags = { "CertificationService" })
     public ResponseEntity<String> reloadConfiguration() throws CmpServersConfigLoadingException {
         cmpServersConfig.reloadConfiguration();
         return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @ExceptionHandler(value = CmpServersConfigLoadingException.class)
-    public ResponseEntity<String> handle(CmpServersConfigLoadingException exception) {
-        LOGGER.error(exception.getMessage(), exception.getCause());
-        return new ResponseEntity<>(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }

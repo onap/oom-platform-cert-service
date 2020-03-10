@@ -18,9 +18,9 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.certification;
+package org.onap.aaf.certservice.api.advice;
 
-import com.google.gson.Gson;
+import org.onap.aaf.certservice.api.CertificationController;
 import org.onap.aaf.certservice.certification.exception.Cmpv2ClientAdapterException;
 import org.onap.aaf.certservice.certification.exception.Cmpv2ServerNotFoundException;
 import org.onap.aaf.certservice.certification.exception.CsrDecryptionException;
@@ -31,16 +31,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@ControllerAdvice
-public class CertificationExceptionController {
+@RestControllerAdvice(assignableTypes = CertificationController.class)
+public class CertificationExceptionAdvice {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CertificationExceptionController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CertificationExceptionAdvice.class);
 
     @ExceptionHandler(value = CsrDecryptionException.class)
-    public ResponseEntity<String> handle(CsrDecryptionException exception) {
+    public ResponseEntity<ErrorResponseModel> handle(CsrDecryptionException exception) {
         LOGGER.error("Exception occurred during decoding certificate sign request:", exception);
         return getErrorResponseEntity(
                 "Wrong certificate signing request (CSR) format",
@@ -49,7 +49,7 @@ public class CertificationExceptionController {
     }
 
     @ExceptionHandler(value = KeyDecryptionException.class)
-    public ResponseEntity<String> handle(KeyDecryptionException exception) {
+    public ResponseEntity<ErrorResponseModel> handle(KeyDecryptionException exception) {
         LOGGER.error("Exception occurred during decoding key:", exception);
         return getErrorResponseEntity(
                 "Wrong key (PK) format",
@@ -58,7 +58,7 @@ public class CertificationExceptionController {
     }
 
     @ExceptionHandler(value = Cmpv2ServerNotFoundException.class)
-    public ResponseEntity<String> handle(Cmpv2ServerNotFoundException exception) {
+    public ResponseEntity<ErrorResponseModel> handle(Cmpv2ServerNotFoundException exception) {
         LOGGER.error("Exception occurred selecting CMPv2 server:", exception);
         return getErrorResponseEntity(
                 "Certification authority not found for given CAName",
@@ -66,8 +66,13 @@ public class CertificationExceptionController {
         );
     }
 
+    @ExceptionHandler(value = RuntimeException.class)
+    public ResponseEntity<ErrorResponseModel> handle(RuntimeException exception) throws CmpClientException {
+        throw new CmpClientException("Runtime exception occurred calling cmp client business logic", exception);
+    }
+
     @ExceptionHandler(value = CmpClientException.class)
-    public ResponseEntity<String> handle(CmpClientException exception) {
+    public ResponseEntity<ErrorResponseModel> handle(CmpClientException exception) {
         LOGGER.error("Exception occurred calling cmp client:", exception);
         return getErrorResponseEntity(
                 "Exception occurred during call to cmp client",
@@ -75,13 +80,8 @@ public class CertificationExceptionController {
         );
     }
 
-    @ExceptionHandler(value = RuntimeException.class)
-    public ResponseEntity<String> handle(RuntimeException exception) throws CmpClientException {
-        throw new CmpClientException("Runtime exception occurred calling cmp client business logic", exception);
-    }
-    
     @ExceptionHandler(value = Cmpv2ClientAdapterException.class)
-    public ResponseEntity<String> handle(Cmpv2ClientAdapterException exception) {
+    public ResponseEntity<ErrorResponseModel> handle(Cmpv2ClientAdapterException exception) {
         LOGGER.error("Exception occurred parsing cmp client response:", exception);
         return getErrorResponseEntity(
                 "Exception occurred parsing cmp client response",
@@ -89,10 +89,10 @@ public class CertificationExceptionController {
         );
     }
 
-    private ResponseEntity<String> getErrorResponseEntity(String errorMessage, HttpStatus status) {
+    private ResponseEntity<ErrorResponseModel> getErrorResponseEntity(String errorMessage, HttpStatus status) {
         ErrorResponseModel errorResponse = new ErrorResponseModel(errorMessage);
         return new ResponseEntity<>(
-                new Gson().toJson(errorResponse),
+               errorResponse,
                 status
         );
     }

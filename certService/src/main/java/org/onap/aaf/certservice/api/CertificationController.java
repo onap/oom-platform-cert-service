@@ -20,16 +20,18 @@
 
 package org.onap.aaf.certservice.api;
 
-import com.google.gson.Gson;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.onap.aaf.certservice.certification.CertificationModelFactory;
-import org.onap.aaf.certservice.certification.CsrModelFactory;
-import org.onap.aaf.certservice.certification.CsrModelFactory.StringBase64;
-import org.onap.aaf.certservice.certification.configuration.Cmpv2ServerProvider;
-import org.onap.aaf.certservice.certification.configuration.model.Cmpv2Server;
 import org.onap.aaf.certservice.certification.exception.Cmpv2ClientAdapterException;
 import org.onap.aaf.certservice.certification.exception.DecryptionException;
+import org.onap.aaf.certservice.certification.exception.ErrorResponseModel;
 import org.onap.aaf.certservice.certification.model.CertificationModel;
-import org.onap.aaf.certservice.certification.model.CsrModel;
 import org.onap.aaf.certservice.cmpv2client.exceptions.CmpClientException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,6 +45,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
+@Tag(name = "CertificationService")
 public class CertificationController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CertificationController.class);
@@ -64,17 +67,32 @@ public class CertificationController {
      * @return JSON containing trusted certificates and certificate chain
      */
     @GetMapping(value = "v1/certificate/{caName}", produces = "application/json; charset=utf-8")
-    public ResponseEntity<String> signCertificate(
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "certificate successfully signed"),
+            @ApiResponse(responseCode = "400", description = "given CSR or/and PK is incorrect",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseModel.class))),
+            @ApiResponse(responseCode = "404", description = "CA not found for given name",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseModel.class))),
+            @ApiResponse(responseCode = "500", description = "something went wrong during connecting to cmp client",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseModel.class)))
+    })
+    @Operation(
+            summary = "sign certificate",
+            description = "Web endpoint for requesting certificate signing. Used by system components to gain certificate signed by CA.",
+            tags = { "CertificationService" })
+    public ResponseEntity<CertificationModel> signCertificate(
+            @Parameter(description="Name of certification authority that will sign CSR.")
             @PathVariable String caName,
+            @Parameter(description="Certificate signing request in form of PEM object encoded in Base64 (with header and footer).")
             @RequestHeader("CSR") String encodedCsr,
+            @Parameter(description="Private key in form of PEM object encoded in Base64 (with header and footer).")
             @RequestHeader("PK") String encodedPrivateKey
     ) throws DecryptionException, CmpClientException, Cmpv2ClientAdapterException {
         caName = caName.replaceAll("[\n|\r|\t]", "_");
         LOGGER.info("Received certificate signing request for CA named: {}", caName);
         CertificationModel certificationModel = certificationModelFactory
                 .createCertificationModel(encodedCsr, encodedPrivateKey, caName);
-        return new ResponseEntity<>(new Gson().toJson(certificationModel), HttpStatus.OK);
-
+        return new ResponseEntity<>(certificationModel, HttpStatus.OK);
     }
 
 }

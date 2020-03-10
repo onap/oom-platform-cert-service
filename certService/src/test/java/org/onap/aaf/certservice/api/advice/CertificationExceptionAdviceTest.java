@@ -18,7 +18,7 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.certification;
+package org.onap.aaf.certservice.api.advice;
 
 import com.google.gson.Gson;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,14 +35,14 @@ import org.springframework.http.ResponseEntity;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class CertificationExceptionControllerTest {
+class CertificationExceptionAdviceTest {
 
-    private CertificationExceptionController certificationExceptionController;
+    private CertificationExceptionAdvice certificationExceptionAdvice;
 
     @BeforeEach
     void setUp() {
-        certificationExceptionController =
-                new CertificationExceptionController();
+        certificationExceptionAdvice =
+                new CertificationExceptionAdvice();
     }
 
     @Test
@@ -52,13 +52,11 @@ class CertificationExceptionControllerTest {
         CsrDecryptionException csrDecryptionException = new CsrDecryptionException("test csr exception");
 
         // When
-        ResponseEntity<String> responseEntity = certificationExceptionController.handle(csrDecryptionException);
-
-        ErrorResponseModel response = new Gson().fromJson(responseEntity.getBody(), ErrorResponseModel.class);
+        ResponseEntity<ErrorResponseModel> response = certificationExceptionAdvice.handle(csrDecryptionException);
 
         // Then
-        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
-        assertEquals(expectedMessage, response.getErrorMessage());
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals(expectedMessage, response.getBody().getErrorMessage());
     }
 
     @Test
@@ -68,13 +66,11 @@ class CertificationExceptionControllerTest {
         KeyDecryptionException csrDecryptionException = new KeyDecryptionException("test pk exception");
 
         // When
-        ResponseEntity<String> responseEntity = certificationExceptionController.handle(csrDecryptionException);
-
-        ErrorResponseModel response = new Gson().fromJson(responseEntity.getBody(), ErrorResponseModel.class);
+        ResponseEntity<ErrorResponseModel> response = certificationExceptionAdvice.handle(csrDecryptionException);
 
         // Then
-        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
-        assertEquals(expectedMessage, response.getErrorMessage());
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals(expectedMessage, response.getBody().getErrorMessage());
     }
 
     @Test
@@ -84,13 +80,11 @@ class CertificationExceptionControllerTest {
         Cmpv2ServerNotFoundException csrDecryptionException = new Cmpv2ServerNotFoundException("test Ca exception");
 
         // When
-        ResponseEntity<String> responseEntity = certificationExceptionController.handle(csrDecryptionException);
-
-        ErrorResponseModel response = new Gson().fromJson(responseEntity.getBody(), ErrorResponseModel.class);
+        ResponseEntity<ErrorResponseModel> response = certificationExceptionAdvice.handle(csrDecryptionException);
 
         // Then
-        assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
-        assertEquals(expectedMessage, response.getErrorMessage());
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertEquals(expectedMessage, response.getBody().getErrorMessage());
     }
 
     @Test
@@ -100,13 +94,11 @@ class CertificationExceptionControllerTest {
         CmpClientException cmpClientException = new CmpClientException("Calling CMPv2 client failed");
 
         // When
-        ResponseEntity<String> responseEntity = certificationExceptionController.handle(cmpClientException);
-
-        ErrorResponseModel response = new Gson().fromJson(responseEntity.getBody(), ErrorResponseModel.class);
+        ResponseEntity<ErrorResponseModel> response = certificationExceptionAdvice.handle(cmpClientException);
 
         // Then
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, responseEntity.getStatusCode());
-        assertEquals(expectedMessage, response.getErrorMessage());
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+        assertEquals(expectedMessage, response.getBody().getErrorMessage());
     }
 
     @Test
@@ -116,13 +108,11 @@ class CertificationExceptionControllerTest {
         Cmpv2ClientAdapterException cmpv2ClientAdapterException = new Cmpv2ClientAdapterException(new Throwable());
 
         // When
-        ResponseEntity<String> responseEntity = certificationExceptionController.handle(cmpv2ClientAdapterException);
-
-        ErrorResponseModel response = new Gson().fromJson(responseEntity.getBody(), ErrorResponseModel.class);
+        ResponseEntity<ErrorResponseModel> response = certificationExceptionAdvice.handle(cmpv2ClientAdapterException);
 
         // Then
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, responseEntity.getStatusCode());
-        assertEquals(expectedMessage, response.getErrorMessage());
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+        assertEquals(expectedMessage, response.getBody().getErrorMessage());
     }
 
     @Test
@@ -134,7 +124,7 @@ class CertificationExceptionControllerTest {
         // When
         Exception exception = assertThrows(
                 CmpClientException.class, () ->
-                        certificationExceptionController.handle(runtimeException)
+                        certificationExceptionAdvice.handle(runtimeException)
         );
 
         // Then

@@ -21,7 +21,6 @@
 package org.onap.aaf.certservice.api;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doThrow;
 
@@ -47,12 +46,12 @@ public class ReloadConfigControllerTest {
     public CmpServersConfig cmpServersConfig;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         this.reloadConfigController = new ReloadConfigController(cmpServersConfig);
     }
 
     @Test
-    public void shouldReturnStatusOkWhenSuccessfullyReloaded() throws CmpServersConfigLoadingException {
+    void shouldReturnStatusOkWhenSuccessfullyReloaded() throws CmpServersConfigLoadingException {
         // When
         ResponseEntity<String> response = reloadConfigController.reloadConfiguration();
 
@@ -61,7 +60,7 @@ public class ReloadConfigControllerTest {
     }
 
     @Test
-    public void shouldRethrowSameErrorWhenFailedToReload() throws CmpServersConfigLoadingException {
+    void shouldRethrowSameErrorWhenFailedToReload() throws CmpServersConfigLoadingException {
         // Given
         doThrow(new CmpServersConfigLoadingException(ERROR_MESSAGE)).when(cmpServersConfig).reloadConfiguration();
 
@@ -74,16 +73,5 @@ public class ReloadConfigControllerTest {
         Assertions.assertThat(exception.getMessage()).isEqualTo(ERROR_MESSAGE);
     }
 
-    @Test
-    void shouldReturnErrorStatusAndMessageWhenExceptionOccurred() {
-        // Given
-        CmpServersConfigLoadingException exception = new CmpServersConfigLoadingException(ERROR_MESSAGE);
 
-        // When
-        ResponseEntity<String> response = reloadConfigController.handle(exception);
-
-        // Then
-        assertEquals(ERROR_MESSAGE, response.getBody());
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
-    }
 }

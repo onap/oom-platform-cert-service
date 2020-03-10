@@ -18,10 +18,27 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.certification.exception;
+package org.onap.aaf.certservice.api.configuration;
 
-public class Cmpv2ServerNotFoundException extends RuntimeException {
-    public Cmpv2ServerNotFoundException(String message) {
-        super(message);
+import io.swagger.v3.oas.models.Components;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class OpenApiConfig {
+
+    @Bean
+    public OpenAPI customOpenAPI() {
+        return new OpenAPI()
+                .components(new Components())
+                .info(
+                        new Info()
+                                .title("CertService Documentation")
+                                .description("Certification service API documentation")
+                                .version("1.0.0")
+                );
     }
+
 }

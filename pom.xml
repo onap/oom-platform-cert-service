@@ -35,7 +35,7 @@
         <stagingNexusPath>/content/repositories/staging/</stagingNexusPath>
         <sitePath>/content/sites/site/org/onap/aaf/cert-service/${project.artifactId}/${project.version}</sitePath>
         <java.version>11</java.version>
-        <springdoc-openapi-maven-plugin.apiDocsUrl>http://localhost:8080/v3/api-docs</springdoc-openapi-maven-plugin.apiDocsUrl>
+        <springdoc-openapi-maven-plugin.apiDocsUrl>http://localhost:8080/v3/api-docs.yaml</springdoc-openapi-maven-plugin.apiDocsUrl>
 
         <!-- Dependencies -->
         <assertj-core.version>3.15.0</assertj-core.version>
@@ -94,7 +94,7 @@
                     </executions>
                     <configuration>
                         <apiDocsUrl>${springdoc-openapi-maven-plugin.apiDocsUrl}</apiDocsUrl>
-                        <outputFileName>api-docs.json</outputFileName>
+                        <outputFileName>api-docs.yaml</outputFileName>
                         <outputDir>${project.build.directory}</outputDir>
                     </configuration>
                 </plugin>

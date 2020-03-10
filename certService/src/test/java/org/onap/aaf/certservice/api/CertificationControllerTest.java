@@ -25,7 +25,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
-import com.google.gson.Gson;
 import java.util.Arrays;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -75,14 +74,12 @@ class CertificationControllerTest {
                 .thenReturn(testCertificationModel);
 
         // When
-        ResponseEntity<String> testResponse =
+        ResponseEntity<CertificationModel> responseCertificationModel =
                 certificationController.signCertificate(TEST_CA_NAME, TEST_ENCODED_CSR, TEST_ENCODED_PK);
 
-        CertificationModel responseCertificationModel = new Gson().fromJson(testResponse.getBody(), CertificationModel.class);
-
         // Then
-        assertEquals(HttpStatus.OK, testResponse.getStatusCode());
-        assertThat(responseCertificationModel
+        assertEquals(HttpStatus.OK, responseCertificationModel.getStatusCode());
+        assertThat(responseCertificationModel.getBody()
         ).isEqualToComparingFieldByField(testCertificationModel);
 
     }
