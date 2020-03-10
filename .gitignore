@@ -2,6 +2,7 @@ target/
 !**/src/main/**
 !**/src/test/**
 **/var
+certServiceClient/certs_volume
 
 ### STS ###
 .apt_generated
