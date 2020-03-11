@@ -39,6 +39,7 @@ public class ClientConfigurationFactoryTest {
     private final String TIME_OUT_VALID = "30000";
     private final String OUTPUT_PATH_VALID = "/opt/app/osaaf";
     private final String URL_TO_CERT_SERVICE_VALID = "http://cert-service:8080/v1/certificate/";
+    private final String URL_TO_CERT_SERVICE_DEFAULT = "http://aaf-cert-service-service:8080/v1/certificate/";
     private final String CA_NAME_INVALID =  "caaaftest2#$";
     private final String OUTPUT_PATH_INVALID = "/opt//app/osaaf";
 
@@ -75,7 +76,7 @@ public class ClientConfigurationFactoryTest {
         assertThat(configuration.getCaName()).isEqualTo(CA_NAME_VALID);
         assertThat(configuration.getRequestTimeout()).isEqualTo(Integer.valueOf(TIME_OUT_VALID));
         assertThat(configuration.getCertsOutputPath()).isEqualTo(OUTPUT_PATH_VALID);
-        assertThat(configuration.getUrlToCertService()).isEqualTo(URL_TO_CERT_SERVICE_VALID);
+        assertThat(configuration.getUrlToCertService()).isEqualTo(URL_TO_CERT_SERVICE_DEFAULT);
     }
 
     @Test

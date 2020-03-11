@@ -1,0 +1,59 @@
+version: "2.1"
+
+services:
+  ejbca:
+    image: primekey/ejbca-ce:6.15.2.5
+    hostname: cahostname
+    container_name: aafcert-ejbca
+    ports:
+      - "80:8080"
+      - "443:8443"
+    volumes:
+      - ../certService/src/main/resources/scripts/:/opt/primekey/scripts
+    command: bash -c "
+      ./scripts/ejbca-configuration.sh &
+      /opt/primekey/bin/start.sh
+      "
+    healthcheck:
+      test: ["CMD-SHELL", "curl -kI https://localhost:8443/ejbca/publicweb/healthcheck/ejbcahealth"]
+      interval: 20s
+      timeout: 3s
+      retries: 9
+    networks:
+      - certservice
+
+  certservice:
+    image: onap/org.onap.aaf.certservice.aaf-certservice-api:latest
+    volumes:
+      - ../certService/helm/aaf-cert-service/resources/cmpServers.json:/etc/onap/aaf/certservice/cmpServers.json
+    container_name: aafcert-service
+    ports:
+      - "8080:8080"
+    depends_on:
+      ejbca:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/actuator/health"]
+      interval: 10s
+      timeout: 3s
+      retries: 9
+    networks:
+      - certservice
+
+  certservice-client:
+    image: onap/org.onap.aaf.certservice.aaf-certservice-client:latest
+    container_name: aafcert-client
+    env_file:
+      - ./client_docker.env
+    user: root #Run as root to avoid volume permission issues
+    volumes:
+      - ./certs_volume/:/var/certs
+    depends_on:
+      certservice:
+        condition: service_healthy
+    networks:
+      - certservice
+
+networks:
+  certservice:
+    driver: bridge
