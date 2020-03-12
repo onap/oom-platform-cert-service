@@ -1,4 +1,5 @@
-/*============LICENSE_START=======================================================
+/*
+ * ============LICENSE_START=======================================================
  * aaf-certservice-client
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
@@ -16,62 +17,64 @@
  * limitations under the License.
  * ============LICENSE_END=========================================================
  */
-
-package org.onap.aaf.certservice.client.configuration;
+package org.onap.aaf.certservice.client.configuration.factory;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.Mockito;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
 
-class EnvValidationUtilsTest {
+public class AbstractConfigurationFactoryTest {
+
+    private AbstractConfigurationFactory cut = mock(AbstractConfigurationFactory.class, Mockito.CALLS_REAL_METHODS);
 
     @ParameterizedTest
     @ValueSource(strings = {"/var/log", "/", "/var/log/", "/second_var", "/second-var"})
-    public void shouldAcceptValidPath(String path){
-        assertTrue(EnvValidationUtils.isPathValid(path));
+    public void shouldAcceptValidPath(String path) {
+        assertThat(cut.isPathValid(path)).isTrue();
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"/var/log?", "", "var_", "var", "//", "/var//log"})
-    public void shouldRejectInvalidPath(String path){
-        assertFalse(EnvValidationUtils.isPathValid(path));
+    public void shouldRejectInvalidPath(String path) {
+        assertThat(cut.isPathValid(path)).isFalse();
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"PL", "DE", "PT", "US"})
-    public void shouldAcceptValidCountryCode(String countryCode){
-        assertTrue(EnvValidationUtils.isCountryValid(countryCode));
+    public void shouldAcceptValidCountryCode(String countryCode) {
+        assertThat(cut.isCountryValid(countryCode)).isTrue();
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"1P", "PLP", "P#", "&*"})
-    public void shouldRejectInvalidCountryCode(String countryCode){
-        assertFalse(EnvValidationUtils.isCountryValid(countryCode));
+    public void shouldRejectInvalidCountryCode(String countryCode) {
+        assertThat(cut.isCountryValid(countryCode)).isFalse();
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"caname", "caname1", "123caName", "ca1name"})
-    public void shouldAcceptValidAlphanumeric(String caName){
-        assertTrue(EnvValidationUtils.isAlphaNumeric(caName));
+    public void shouldAcceptValidAlphanumeric(String caName) {
+        assertThat(cut.isAlphaNumeric(caName)).isTrue();
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"44caname$", "#caname1", "1c_aname", "ca1-name"})
-    public void shouldRejectInvalidAlphanumeric(String caName){
-        assertFalse(EnvValidationUtils.isAlphaNumeric(caName));
+    public void shouldRejectInvalidAlphanumeric(String caName) {
+        assertThat(cut.isAlphaNumeric(caName)).isFalse();
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"example.com", "www.example.com"})
-    public void shouldAcceptValidCommonName(String commonName){
-        assertTrue(EnvValidationUtils.isCommonNameValid(commonName));
+    public void shouldAcceptValidCommonName(String commonName) {
+        assertThat(cut.isCommonNameValid(commonName)).isTrue();
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"https://example.com", "http://example.com", "example.com:8080", "0.0.0.0", "@#$%.com"})
-    public void shouldRejectInvalidCommonName(String commonName){
-        assertFalse(EnvValidationUtils.isCommonNameValid(commonName));
+    public void shouldRejectInvalidCommonName(String commonName) {
+        assertThat(cut.isCommonNameValid(commonName)).isFalse();
     }
 }
