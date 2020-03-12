@@ -29,8 +29,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.onap.aaf.certservice.certification.configuration.CmpServersConfig;
 import org.onap.aaf.certservice.certification.configuration.CmpServersConfigLoadingException;
 import org.onap.aaf.certservice.certification.exception.ErrorResponseModel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,8 +38,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Tag(name = "CertificationService")
 public class ReloadConfigController {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(ReloadConfigController.class);
 
     private final CmpServersConfig cmpServersConfig;
 
