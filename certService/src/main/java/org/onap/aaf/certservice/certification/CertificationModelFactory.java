@@ -23,7 +23,6 @@ package org.onap.aaf.certservice.certification;
 import org.onap.aaf.certservice.certification.configuration.Cmpv2ServerProvider;
 import org.onap.aaf.certservice.certification.configuration.model.Cmpv2Server;
 import org.onap.aaf.certservice.certification.exception.Cmpv2ClientAdapterException;
-import org.onap.aaf.certservice.certification.exception.Cmpv2ServerNotFoundException;
 import org.onap.aaf.certservice.certification.exception.DecryptionException;
 import org.onap.aaf.certservice.certification.model.CertificationModel;
 import org.onap.aaf.certservice.certification.model.CsrModel;
@@ -32,13 +31,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Arrays;
-
-import static org.onap.aaf.certservice.certification.CertificationData.CA_CERT;
-import static org.onap.aaf.certservice.certification.CertificationData.ENTITY_CERT;
-import static org.onap.aaf.certservice.certification.CertificationData.INTERMEDIATE_CERT;
-import static org.onap.aaf.certservice.certification.CertificationData.EXTRA_CA_CERT;
 
 @Service
 public class CertificationModelFactory {
