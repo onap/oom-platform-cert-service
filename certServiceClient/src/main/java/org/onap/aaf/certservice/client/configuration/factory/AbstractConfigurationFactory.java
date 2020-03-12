@@ -24,6 +24,44 @@ import org.onap.aaf.certservice.client.configuration.exception.ClientConfigurati
 import org.onap.aaf.certservice.client.configuration.exception.CsrConfigurationException;
 import org.onap.aaf.certservice.client.configuration.model.ConfigurationModel;
 
-public interface AbstractConfigurationFactory<T extends ConfigurationModel> {
-    T create() throws ClientConfigurationException, CsrConfigurationException;
+import java.util.regex.Pattern;
+
+public abstract class AbstractConfigurationFactory<T extends ConfigurationModel> {
+
+    abstract T create() throws ClientConfigurationException, CsrConfigurationException;
+
+    public boolean isPathValid(String path) {
+        return path.matches("^/|(/[a-zA-Z0-9_-]+)+/?$");
+    }
+
+    public boolean isAlphaNumeric(String caName) {
+        return caName.matches("^[a-zA-Z0-9]*$");
+    }
+
+    public boolean isCountryValid(String country) {
+        return country.matches("^([A-Z][A-Z])$");
+    }
+
+    public boolean isCommonNameValid(String commonName) {
+        return !isSpecialCharsPresent(commonName) &&
+                !isHttpProtocolsPresent(commonName) &&
+                !isIpAddressPresent(commonName) &&
+                !isPortNumberPresent(commonName);
+    }
+
+    public boolean isSpecialCharsPresent(String stringToCheck) {
+        return Pattern.compile("[~#@*$+%!()?/{}<>\\|_^]").matcher(stringToCheck).find();
+    }
+
+    private boolean isPortNumberPresent(String stringToCheck) {
+        return Pattern.compile(":[0-9]{1,5}").matcher(stringToCheck).find();
+    }
+
+    private boolean isIpAddressPresent(String stringToCheck) {
+        return Pattern.compile("[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}").matcher(stringToCheck).find();
+    }
+
+    private boolean isHttpProtocolsPresent(String stringToCheck) {
+        return Pattern.compile("[h][t][t][p][:][/][/]|[h][t][t][p][s][:][/][/]").matcher(stringToCheck).find();
+    }
 }

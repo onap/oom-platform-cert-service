@@ -20,19 +20,14 @@
 
 package org.onap.aaf.certservice.client.configuration.factory;
 
-
-
-import java.util.Optional;
 import org.onap.aaf.certservice.client.configuration.ClientConfigurationEnvs;
-import org.onap.aaf.certservice.client.configuration.EnvValidationUtils;
 import org.onap.aaf.certservice.client.configuration.EnvsForClient;
 import org.onap.aaf.certservice.client.configuration.exception.ClientConfigurationException;
 import org.onap.aaf.certservice.client.configuration.model.ClientConfiguration;
 
-public class ClientConfigurationFactory implements AbstractConfigurationFactory<ClientConfiguration> {
+public class ClientConfigurationFactory extends AbstractConfigurationFactory<ClientConfiguration> {
 
     private final EnvsForClient envsForClient;
-
 
     public ClientConfigurationFactory(EnvsForClient envsForClient) {
         this.envsForClient = envsForClient;
@@ -50,12 +45,12 @@ public class ClientConfigurationFactory implements AbstractConfigurationFactory<
                 .map(timeout -> configuration.setRequestTimeout(Integer.valueOf(timeout)));
 
         envsForClient.getOutputPath()
-                .filter(EnvValidationUtils::isPathValid)
+                .filter(this::isPathValid)
                 .map(configuration::setCertsOutputPath)
                 .orElseThrow(() -> new ClientConfigurationException(ClientConfigurationEnvs.OUTPUT_PATH + " is invalid."));
 
         envsForClient.getCaName()
-                .filter(EnvValidationUtils::isAlphaNumeric)
+                .filter(this::isAlphaNumeric)
                 .map(configuration::setCaName)
                 .orElseThrow(() -> new ClientConfigurationException(ClientConfigurationEnvs.CA_NAME + " is invalid."));
 

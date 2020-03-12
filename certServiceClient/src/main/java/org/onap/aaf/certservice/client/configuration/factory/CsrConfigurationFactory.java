@@ -21,14 +21,11 @@
 package org.onap.aaf.certservice.client.configuration.factory;
 
 import org.onap.aaf.certservice.client.configuration.CsrConfigurationEnvs;
-import org.onap.aaf.certservice.client.configuration.EnvValidationUtils;
 import org.onap.aaf.certservice.client.configuration.EnvsForCsr;
 import org.onap.aaf.certservice.client.configuration.exception.CsrConfigurationException;
 import org.onap.aaf.certservice.client.configuration.model.CsrConfiguration;
 
-import java.util.Optional;
-
-public class CsrConfigurationFactory implements AbstractConfigurationFactory<CsrConfiguration> {
+public class CsrConfigurationFactory extends AbstractConfigurationFactory<CsrConfiguration> {
 
     private final EnvsForCsr envsForCsr;
 
@@ -37,19 +34,18 @@ public class CsrConfigurationFactory implements AbstractConfigurationFactory<Csr
         this.envsForCsr = envsForCsr;
     }
 
-
     @Override
     public CsrConfiguration create() throws CsrConfigurationException {
 
         CsrConfiguration configuration = new CsrConfiguration();
 
         envsForCsr.getCommonName()
-                .filter(EnvValidationUtils::isCommonNameValid)
+                .filter(this::isCommonNameValid)
                 .map(configuration::setCommonName)
                 .orElseThrow(() -> new CsrConfigurationException(CsrConfigurationEnvs.COMMON_NAME + " is invalid."));
 
         envsForCsr.getOrganization()
-                .filter(org -> !EnvValidationUtils.isSpecialCharsPresent(org))
+                .filter(org -> !isSpecialCharsPresent(org))
                 .map(configuration::setOrganization)
                 .orElseThrow(() -> new CsrConfigurationException(CsrConfigurationEnvs.ORGANIZATION + " is invalid."));
 
@@ -58,7 +54,7 @@ public class CsrConfigurationFactory implements AbstractConfigurationFactory<Csr
                 .orElseThrow(() -> new CsrConfigurationException(CsrConfigurationEnvs.STATE + " is invalid."));
 
         envsForCsr.getCountry()
-                .filter(EnvValidationUtils::isCountryValid)
+                .filter(this::isCountryValid)
                 .map(configuration::setCountry)
                 .orElseThrow(() -> new CsrConfigurationException(CsrConfigurationEnvs.COUNTRY + " is invalid."));
 
