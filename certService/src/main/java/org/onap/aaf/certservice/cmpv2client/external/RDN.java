@@ -23,7 +23,10 @@
 package org.onap.aaf.certservice.cmpv2client.external;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
 import org.bouncycastle.asn1.x500.style.BCStyle;
 import org.bouncycastle.cert.CertException;
@@ -42,61 +45,32 @@ public class RDN {
         return aoi;
     }
 
-    public RDN(final String tagValue) throws CertException {
-        String[] tv = Split.splitTrim('=', tagValue);
-        switch (tv[0].toLowerCase()) {
-            case "cn":
-                aoi = BCStyle.CN;
-                break;
-            case "c":
-                aoi = BCStyle.C;
-                break;
-            case "st":
-                aoi = BCStyle.ST;
-                break;
-            case "l":
-                aoi = BCStyle.L;
-                break;
-            case "o":
-                aoi = BCStyle.O;
-                break;
-            case "ou":
-                aoi = BCStyle.OU;
-                break;
-            case "dc":
-                aoi = BCStyle.DC;
-                break;
-            case "gn":
-                aoi = BCStyle.GIVENNAME;
-                break;
-            case "sn":
-                aoi = BCStyle.SN;
-                break;
-            case "email":
-            case "e":
-            case "emailaddress":
-                aoi = BCStyle.EmailAddress;
-                break; // should be SAN extension
-            case "initials":
-                aoi = BCStyle.INITIALS;
-                break;
-            case "pseudonym":
-                aoi = BCStyle.PSEUDONYM;
-                break;
-            case "generationQualifier":
-                aoi = BCStyle.GENERATION;
-                break;
-            case "serialNumber":
-                aoi = BCStyle.SERIALNUMBER;
-                break;
-            default:
-                throw new CertException(
-                    "Unknown ASN1ObjectIdentifier for " + tv[0] + " in " + tagValue);
-        }
-        tag = tv[0];
-        value = tv[1];
+    public RDN(final String tag, final String value) throws CertException {
+        this.tag = tag;
+        this.value = value;
+        this.aoi = getAoi(tag);
     }
 
+    public RDN(final String tagValue) throws CertException {
+        List<String> tv = parseRDN("=", tagValue);
+        this.tag = tv.get(0);
+        this.value = tv.get(1);
+        this.aoi = getAoi(this.tag);
+    }
+
+    /**
+     * Splits RDN as string by given delimiter, then trims every part.
+     *
+     * @param splitBy Delimiter which splits value
+     * @param value Value to be splitted
+     * @return List of splitted and trimmed strings
+     */
+    public static List<String> parseRDN(String splitBy, String value) {
+        String[] splitted = value.split(splitBy);
+        return Arrays.stream(splitted)
+                .map(String::trim)
+                .collect(Collectors.toList());
+    }
     /**
      * Parse various forms of DNs into appropriate RDNs, which have the ASN1ObjectIdentifier
      *
@@ -105,6 +79,7 @@ public class RDN {
      * @return
      * @throws CertException
      */
+
     public static List<RDN> parse(final char delim, final String dnString) throws CertException {
         List<RDN> lrnd = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
@@ -139,5 +114,43 @@ public class RDN {
     @Override
     public String toString() {
         return tag + '=' + value;
+    }
+
+    ASN1ObjectIdentifier getAoi(String tag) throws CertException {
+        switch (tag.toLowerCase()) {
+            case "cn":
+                return BCStyle.CN;
+            case "c":
+                return BCStyle.C;
+            case "st":
+                return BCStyle.ST;
+            case "l":
+                return BCStyle.L;
+            case "o":
+                return BCStyle.O;
+            case "ou":
+                return BCStyle.OU;
+            case "dc":
+                return BCStyle.DC;
+            case "gn":
+                return BCStyle.GIVENNAME;
+            case "sn":
+                return BCStyle.SN;
+            case "email":
+            case "e":
+            case "emailaddress":
+                return BCStyle.EmailAddress;
+            case "initials":
+                return BCStyle.INITIALS;
+            case "pseudonym":
+                return BCStyle.PSEUDONYM;
+            case "generationqualifier":
+                return BCStyle.GENERATION;
+            case "serialnumber":
+                return BCStyle.SERIALNUMBER;
+            default:
+                throw new CertException(
+                        "Unknown ASN1ObjectIdentifier for tag " + tag);
+        }
     }
 }

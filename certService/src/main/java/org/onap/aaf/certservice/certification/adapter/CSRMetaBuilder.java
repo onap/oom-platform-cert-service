@@ -22,9 +22,10 @@ package org.onap.aaf.certservice.certification.adapter;
 
 import java.security.KeyPair;
 import java.util.Arrays;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import org.bouncycastle.asn1.x500.AttributeTypeAndValue;
 import org.bouncycastle.asn1.x500.style.BCStyle;
 import org.bouncycastle.asn1.x500.style.IETFUtils;
 import org.bouncycastle.cert.CertException;
@@ -69,19 +70,21 @@ class CSRMetaBuilder {
         csrModel.getSans().forEach(csrMeta::addSan);
     }
 
-    private String convertRDNToString(org.bouncycastle.asn1.x500.RDN rdn) {
-        return BCStyle.INSTANCE.oidToDisplayName(rdn.getFirst().getType()) + "=" + IETFUtils.valueToString(
-                rdn.getFirst().getValue());
-    }
-
     private Optional<RDN> convertFromBcRDN(org.bouncycastle.asn1.x500.RDN rdn) {
         RDN result = null;
         try {
-            result = new RDN(convertRDNToString(rdn));
+            result = convertRDN(rdn);
         } catch (CertException e) {
             LOGGER.error("Exception occurred during convert of RDN", e);
         }
         return Optional.ofNullable(result);
+    }
+
+    private RDN convertRDN(org.bouncycastle.asn1.x500.RDN rdn) throws CertException {
+        AttributeTypeAndValue rdnData = rdn.getFirst();
+        String tag = BCStyle.INSTANCE.oidToDisplayName(rdnData.getType());
+        String value = IETFUtils.valueToString(rdnData.getValue());
+        return new RDN(tag, value);
     }
 
 }
