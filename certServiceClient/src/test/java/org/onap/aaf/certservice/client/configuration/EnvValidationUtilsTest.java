@@ -38,4 +38,40 @@ class EnvValidationUtilsTest {
     public void shouldRejectInvalidPath(String path){
         assertFalse(EnvValidationUtils.isPathValid(path));
     }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"PL", "DE", "PT", "US"})
+    public void shouldAcceptValidCountryCode(String countryCode){
+        assertTrue(EnvValidationUtils.isCountryValid(countryCode));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"1P", "PLP", "P#", "&*"})
+    public void shouldRejectInvalidCountryCode(String countryCode){
+        assertFalse(EnvValidationUtils.isCountryValid(countryCode));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"caname", "caname1", "123caName", "ca1name"})
+    public void shouldAcceptValidAlphanumeric(String caName){
+        assertTrue(EnvValidationUtils.isAlphaNumeric(caName));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"44caname$", "#caname1", "1c_aname", "ca1-name"})
+    public void shouldRejectInvalidAlphanumeric(String caName){
+        assertFalse(EnvValidationUtils.isAlphaNumeric(caName));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"example.com", "www.example.com"})
+    public void shouldAcceptValidCommonName(String commonName){
+        assertTrue(EnvValidationUtils.isCommonNameValid(commonName));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"https://example.com", "http://example.com", "example.com:8080", "0.0.0.0", "@#$%.com"})
+    public void shouldRejectInvalidCommonName(String commonName){
+        assertFalse(EnvValidationUtils.isCommonNameValid(commonName));
+    }
 }
