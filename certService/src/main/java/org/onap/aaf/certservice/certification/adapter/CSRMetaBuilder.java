@@ -51,12 +51,12 @@ class CSRMetaBuilder {
     CSRMeta build(CsrModel csrModel, Cmpv2Server server) {
         CSRMeta csrMeta = createCsrMeta(csrModel);
         addSans(csrModel, csrMeta);
-        csrMeta.keyPair(new KeyPair(csrModel.getPublicKey(), csrModel.getPrivateKey()));
-        csrMeta.password(server.getAuthentication().getIak());
+        csrMeta.setKeyPair(new KeyPair(csrModel.getPublicKey(), csrModel.getPrivateKey()));
+        csrMeta.setPassword(server.getAuthentication().getIak());
         csrMeta.setIssuerName(server.getIssuerDN());
-        csrMeta.caUrl(server.getUrl());
+        csrMeta.setCaUrl(server.getUrl());
         csrMeta.setName(csrModel.getSubjectData());
-        csrMeta.senderKid(server.getAuthentication().getRv());
+        csrMeta.setSenderKid(server.getAuthentication().getRv());
         return csrMeta;
     }
 
@@ -66,7 +66,7 @@ class CSRMetaBuilder {
     }
 
     private void addSans(CsrModel csrModel, CSRMeta csrMeta) {
-        csrModel.getSans().forEach(csrMeta::san);
+        csrModel.getSans().forEach(csrMeta::addSan);
     }
 
     private String convertRDNToString(org.bouncycastle.asn1.x500.RDN rdn) {
