@@ -3,17 +3,17 @@ replicaCount: 1
 repository: nexus3.onap.org:10001
 image: onap/org.onap.aaf.certservice.aaf-certservice-api:1.0.0
 pullPolicy: Always
-containerPort: 8080
+containerPort: 8443
 service:
   type: ClusterIP
 liveness:
   initialDelaySeconds: 60
   periodSeconds: 10
-  path: /actuator/health
+  command: curl https://localhost:$HTTPS_PORT/actuator/health --cacert $ROOT_CERT --cert-type p12 --cert $KEYSTORE_P12_PATH --pass $KEYSTORE_PASSWORD
 readiness:
   initialDelaySeconds: 30
   periodSeconds: 10
-  path: /ready
+  command: curl https://localhost:$HTTPS_PORT/ready --cacert $ROOT_CERT --cert-type p12 --cert $KEYSTORE_P12_PATH --pass $KEYSTORE_PASSWORD
 volume:
   name: aaf-cert-service-volume
   mountPath: /etc/onap/aaf/certservice
@@ -28,3 +28,25 @@ resources:
 
 secret:
   name: aaf-cert-service-secret
+
+tls:
+  server:
+    secret:
+      name: aaf-cert-service-server-tls-secret
+    volume:
+      name: aaf-cert-service-server-tls-volume
+      mountPath: /etc/onap/aaf/certservice/certs/
+  client:
+    secret:
+      name: aaf-cert-service-client-tls-secret
+
+envs:
+  keystore:
+    jksName: certServiceServer-keystore.jks
+    p12Name: certServiceServer-keystore.p12
+    password: secret
+  truststore:
+    jksName: truststore.jks
+    crtName: root.crt
+    password: secret
+

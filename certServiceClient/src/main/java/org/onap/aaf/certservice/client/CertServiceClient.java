@@ -19,25 +19,29 @@
 
 package org.onap.aaf.certservice.client;
 
-import java.security.KeyPair;
 import org.onap.aaf.certservice.client.api.ExitableException;
-import org.onap.aaf.certservice.client.certification.PrivateKeyToPemEncoder;
 import org.onap.aaf.certservice.client.certification.CsrFactory;
 import org.onap.aaf.certservice.client.certification.KeyPairFactory;
+import org.onap.aaf.certservice.client.certification.PrivateKeyToPemEncoder;
 import org.onap.aaf.certservice.client.certification.conversion.KeystoreTruststoreCreator;
 import org.onap.aaf.certservice.client.certification.conversion.KeystoreTruststoreCreatorFactory;
 import org.onap.aaf.certservice.client.common.Base64Encoder;
 import org.onap.aaf.certservice.client.configuration.EnvsForClient;
 import org.onap.aaf.certservice.client.configuration.EnvsForCsr;
+import org.onap.aaf.certservice.client.configuration.EnvsForTls;
 import org.onap.aaf.certservice.client.configuration.factory.ClientConfigurationFactory;
 import org.onap.aaf.certservice.client.configuration.factory.CsrConfigurationFactory;
+import org.onap.aaf.certservice.client.configuration.factory.SslContextFactory;
 import org.onap.aaf.certservice.client.configuration.model.ClientConfiguration;
 import org.onap.aaf.certservice.client.configuration.model.CsrConfiguration;
-import org.onap.aaf.certservice.client.httpclient.CloseableHttpClientProvider;
+import org.onap.aaf.certservice.client.httpclient.CloseableHttpsClientProvider;
 import org.onap.aaf.certservice.client.httpclient.HttpClient;
 import org.onap.aaf.certservice.client.httpclient.model.CertServiceResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.net.ssl.SSLContext;
+import java.security.KeyPair;
 
 import static org.onap.aaf.certservice.client.api.ExitStatus.SUCCESS;
 import static org.onap.aaf.certservice.client.certification.EncryptionAlgorithmConstants.KEY_SIZE;
@@ -62,9 +66,10 @@ public class CertServiceClient {
             CsrConfiguration csrConfiguration = new CsrConfigurationFactory(new EnvsForCsr()).create();
             KeyPair keyPair = keyPairFactory.create();
             CsrFactory csrFactory = new CsrFactory(csrConfiguration);
+            SSLContext sslContext = new SslContextFactory(new EnvsForTls()).create();
 
-            CloseableHttpClientProvider provider = new CloseableHttpClientProvider(
-                clientConfiguration.getRequestTimeout());
+            CloseableHttpsClientProvider provider = new CloseableHttpsClientProvider(
+                    sslContext, clientConfiguration.getRequestTimeout());
             HttpClient httpClient = new HttpClient(provider, clientConfiguration.getUrlToCertService());
 
             CertServiceResponse certServiceData =
@@ -74,7 +79,7 @@ public class CertServiceClient {
                             base64Encoder.encode(pkEncoder.encodePrivateKeyToPem(keyPair.getPrivate())));
 
             KeystoreTruststoreCreator filesCreator = new KeystoreTruststoreCreatorFactory(
-                clientConfiguration.getCertsOutputPath()).create();
+                    clientConfiguration.getCertsOutputPath()).create();
             filesCreator.createKeystore(certServiceData.getCertificateChain(), keyPair.getPrivate());
             filesCreator.createTruststore(certServiceData.getTrustedCertificates());
         } catch (ExitableException e) {

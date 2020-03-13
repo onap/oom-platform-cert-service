@@ -30,6 +30,14 @@ or
 make build
 ```   
 
+### Generating certificates
+There are example certificates already generated in certs/ directory.
+In order to generate new certificates, first remove existing ones.
+Then execute following command from certs(!) directory:
+```
+ make
+```
+
 ### Running Docker containers from docker-compose with EJBCA
 Docker-compose uses a local image of certservice-api and make run-client uses a local image of certservice-client
 Build docker images locally before running docker compose command.

@@ -38,8 +38,8 @@ public class ClientConfigurationFactoryTest {
     private final String CA_NAME_VALID =  "caaaftest2";
     private final String TIME_OUT_VALID = "30000";
     private final String OUTPUT_PATH_VALID = "/opt/app/osaaf";
-    private final String URL_TO_CERT_SERVICE_VALID = "http://cert-service:8080/v1/certificate/";
-    private final String URL_TO_CERT_SERVICE_DEFAULT = "http://aaf-cert-service-service:8080/v1/certificate/";
+    private final String URL_TO_CERT_SERVICE_VALID = "https://cert-service:8443/v1/certificate/";
+    private final String URL_TO_CERT_SERVICE_DEFAULT = "https://aaf-cert-service:8443/v1/certificate/";
     private final String CA_NAME_INVALID =  "caaaftest2#$";
     private final String OUTPUT_PATH_INVALID = "/opt//app/osaaf";
 

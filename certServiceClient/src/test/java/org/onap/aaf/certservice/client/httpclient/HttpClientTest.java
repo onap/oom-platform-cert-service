@@ -66,7 +66,7 @@ class HttpClientTest {
         statusLine = mock(StatusLine.class);
         httpResponse = mock(CloseableHttpResponse.class);
 
-        CloseableHttpClientProvider httpClientProvider = mock(CloseableHttpClientProvider.class);
+        CloseableHttpsClientProvider httpClientProvider = mock(CloseableHttpsClientProvider.class);
 
         when(httpClientProvider.getClient()).thenReturn(closeableHttpClient);
         String testCertServiceAddress = "";

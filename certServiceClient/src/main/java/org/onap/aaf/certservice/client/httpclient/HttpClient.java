@@ -44,10 +44,10 @@ public class HttpClient {
     private static final String CHARSET_UTF_8 = "UTF-8";
 
     private final Gson gson = new Gson();
-    private final CloseableHttpClientProvider httpClientProvider;
+    private final CloseableHttpsClientProvider httpClientProvider;
     private final String certServiceAddress;
 
-    public HttpClient(CloseableHttpClientProvider httpClientProvider, String certServiceAddress) {
+    public HttpClient(CloseableHttpsClientProvider httpClientProvider, String certServiceAddress) {
         this.httpClientProvider = httpClientProvider;
         this.certServiceAddress = certServiceAddress;
     }

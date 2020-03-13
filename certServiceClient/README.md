@@ -43,6 +43,10 @@ LOCATION=San-Francisco
 STATE=California
 COUNTRY=US
 SANS=example.com:example2.com
+KEYSTORE_PATH=/etc/onap/aaf/certservice/certs/certServiceClient-keystore.jks
+KEYSTORE_PASSWORD=secret
+TRUSTSTORE_PATH=/etc/onap/aaf/certservice/certs/truststore.jks
+TRUSTSTORE_PASSWORD=secret
 ```
 
 ### Logs locally

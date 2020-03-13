@@ -27,11 +27,11 @@ import org.onap.aaf.certservice.client.configuration.model.CsrConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
 public class CsrConfigurationFactory extends AbstractConfigurationFactory<CsrConfiguration> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CsrConfigurationFactory.class);
     private final EnvsForCsr envsForCsr;
-
 
     public CsrConfigurationFactory(EnvsForCsr envsForCsr) {
         this.envsForCsr = envsForCsr;

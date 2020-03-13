@@ -20,7 +20,7 @@ Certification Service Client image:
 .. code-block:: 
 
   #Client envs
-  REQUEST_URL=http://aaf-cert-service-service:8080/v1/certificate/
+  REQUEST_URL=http://aaf-cert-service:8080/v1/certificate/
   REQUEST_TIMEOUT=1000
   OUTPUT_PATH=/var/certs
   CA_NAME=RA
@@ -77,7 +77,7 @@ Example deployment:
             imagePullPolicy: Always
             env:
               - name: REQUEST_URL
-                value: http://aaf-cert-service-service:8080/v1/certificate/
+                value: http://aaf-cert-service:8080/v1/certificate/
               - name: REQUEST_TIMEOUT
                 value: "1000"
               - name: OUTPUT_PATH
