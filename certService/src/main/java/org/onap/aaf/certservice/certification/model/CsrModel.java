@@ -55,8 +55,8 @@ public class CsrModel {
     private final PublicKey publicKey;
     private final List<String> sans;
 
-    CsrModel(PKCS10CertificationRequest csr, X500Name subjectData, PrivateKey privateKey, PublicKey publicKey,
-            List<String> sans) {
+    public CsrModel(PKCS10CertificationRequest csr, X500Name subjectData, PrivateKey privateKey, PublicKey publicKey,
+                    List<String> sans) {
         this.csr = csr;
         this.subjectData = subjectData;
         this.privateKey = privateKey;

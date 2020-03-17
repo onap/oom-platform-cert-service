@@ -20,6 +20,7 @@
 
 package org.onap.aaf.certservice.cmpv2client.impl;
 
+import java.security.KeyPair;
 import java.security.PublicKey;
 
 import static org.onap.aaf.certservice.cmpv2client.impl.CmpResponseHelper.checkIfCmpResponseContainsError;
@@ -47,9 +48,10 @@ import org.bouncycastle.asn1.cmp.PKIBody;
 import org.bouncycastle.asn1.cmp.PKIHeader;
 import org.bouncycastle.asn1.cmp.PKIMessage;
 import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
+import org.onap.aaf.certservice.certification.configuration.model.Cmpv2Server;
+import org.onap.aaf.certservice.certification.model.CsrModel;
 import org.onap.aaf.certservice.cmpv2client.exceptions.CmpClientException;
 import org.onap.aaf.certservice.cmpv2client.api.CmpClient;
-import org.onap.aaf.certservice.cmpv2client.external.CsrMeta;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -73,36 +75,38 @@ public class CmpClientImpl implements CmpClient {
     public List<List<X509Certificate>> createCertificate(
             String caName,
             String profile,
-            CsrMeta csrMeta,
+            CsrModel csrModel,
+            Cmpv2Server server,
             X509Certificate cert,
             Date notBefore,
             Date notAfter)
             throws CmpClientException {
-        // Validate inputs for Certificate Request
-        validate(csrMeta, cert, caName, profile, httpClient, notBefore, notAfter);
+
+        validate(csrModel, server, cert, caName, profile, httpClient, notBefore, notAfter);
+        KeyPair keyPair = new KeyPair(csrModel.getPublicKey(), csrModel.getPrivateKey());
 
         final CreateCertRequest certRequest =
                 CmpMessageBuilder.of(CreateCertRequest::new)
-                        .with(CreateCertRequest::setIssuerDn, csrMeta.getIssuerX500Name())
-                        .with(CreateCertRequest::setSubjectDn, csrMeta.getX500Name())
-                        .with(CreateCertRequest::setSansList, csrMeta.getSans())
-                        .with(CreateCertRequest::setSubjectKeyPair, csrMeta.getKeyPair())
+                        .with(CreateCertRequest::setIssuerDn, server.getIssuerDN())
+                        .with(CreateCertRequest::setSubjectDn, csrModel.getSubjectData())
+                        .with(CreateCertRequest::setSansList, csrModel.getSans())
+                        .with(CreateCertRequest::setSubjectKeyPair, keyPair)
                         .with(CreateCertRequest::setNotBefore, notBefore)
                         .with(CreateCertRequest::setNotAfter, notAfter)
-                        .with(CreateCertRequest::setInitAuthPassword, csrMeta.getPassword())
-                        .with(CreateCertRequest::setSenderKid, csrMeta.getSenderKid())
+                        .with(CreateCertRequest::setInitAuthPassword, server.getAuthentication().getIak())
+                        .with(CreateCertRequest::setSenderKid, server.getAuthentication().getRv())
                         .build();
 
         final PKIMessage pkiMessage = certRequest.generateCertReq();
         Cmpv2HttpClient cmpv2HttpClient = new Cmpv2HttpClient(httpClient);
-        return retrieveCertificates(caName, csrMeta, pkiMessage, cmpv2HttpClient);
+        return retrieveCertificates(caName, csrModel, server, pkiMessage, cmpv2HttpClient);
     }
 
     @Override
     public List<List<X509Certificate>> createCertificate(
-            String caName, String profile, CsrMeta csrMeta, X509Certificate csr)
+            String caName, String profile, CsrModel csrModel, Cmpv2Server server, X509Certificate csr)
             throws CmpClientException {
-        return createCertificate(caName, profile, csrMeta, csr, null, null);
+        return createCertificate(caName, profile, csrModel, server, csr, null, null);
     }
 
     private void checkCmpResponse(
@@ -191,14 +195,16 @@ public class CmpClientImpl implements CmpClient {
     /**
      * Validate inputs for Certificate Creation.
      *
-     * @param csrMeta         CSRMeta Object containing variables for creating a Certificate Request.
+     * @param csrModel        Certificate Signing Request model. Must not be {@code null}.
+     * @param server          CMPv2 Server. Must not be {@code null}.
      * @param cert            Certificate object needed to validate response from CA server.
      * @param incomingCaName  Date specifying certificate is not valid before this date.
      * @param incomingProfile Date specifying certificate is not valid after this date.
      * @throws IllegalArgumentException if Before Date is set after the After Date.
      */
-    private void validate(
-            final CsrMeta csrMeta,
+    private static void validate(
+            final CsrModel csrModel,
+            final Cmpv2Server server,
             final X509Certificate cert,
             final String incomingCaName,
             final String incomingProfile,
@@ -206,20 +212,19 @@ public class CmpClientImpl implements CmpClient {
             final Date notBefore,
             final Date notAfter) {
 
-        String caName;
-        String caProfile;
-        caName = CmpUtil.isNullOrEmpty(incomingCaName) ? incomingCaName : DEFAULT_CA_NAME;
-        caProfile = CmpUtil.isNullOrEmpty(incomingProfile) ? incomingProfile : DEFAULT_PROFILE;
+        String caName = CmpUtil.isNullOrEmpty(incomingCaName) ? incomingCaName : DEFAULT_CA_NAME;
+        String caProfile = CmpUtil.isNullOrEmpty(incomingProfile) ? incomingProfile : DEFAULT_PROFILE;
         LOG.info(
                 "Validate before creating Certificate Request for CA :{} in Mode {} ", caName, caProfile);
 
-        CmpUtil.notNull(csrMeta, "CSRMeta Instance");
-        CmpUtil.notNull(csrMeta.getX500Name(), "Subject DN");
-        CmpUtil.notNull(csrMeta.getIssuerX500Name(), "Issuer DN");
-        CmpUtil.notNull(csrMeta.getPassword(), "IAK/RV Password");
+        CmpUtil.notNull(csrModel, "CsrModel Instance");
+        CmpUtil.notNull(csrModel.getSubjectData(), "Subject DN");
+        CmpUtil.notNull(csrModel.getPrivateKey(), "Subject private key");
+        CmpUtil.notNull(csrModel.getPublicKey(), "Subject public key");
+        CmpUtil.notNull(server.getIssuerDN(), "Issuer DN");
+        CmpUtil.notNull(server.getUrl(), "External CA URL");
+        CmpUtil.notNull(server.getAuthentication().getIak(), "IAK/RV Password");
         CmpUtil.notNull(cert, "Certificate Signing Request (CSR)");
-        CmpUtil.notNull(csrMeta.getCaUrl(), "External CA URL");
-        CmpUtil.notNull(csrMeta.getKeyPairOrGenerateIfNull(), "Subject KeyPair");
         CmpUtil.notNull(httpClient, "Closeable Http Client");
 
         if (notBefore != null && notAfter != null && notBefore.compareTo(notAfter) > 0) {
@@ -228,14 +233,14 @@ public class CmpClientImpl implements CmpClient {
     }
 
     private List<List<X509Certificate>> retrieveCertificates(
-            String caName, CsrMeta csrMeta, PKIMessage pkiMessage, Cmpv2HttpClient cmpv2HttpClient)
+            String caName, CsrModel csrModel, Cmpv2Server server, PKIMessage pkiMessage, Cmpv2HttpClient cmpv2HttpClient)
             throws CmpClientException {
-        final byte[] respBytes = cmpv2HttpClient.postRequest(pkiMessage, csrMeta.getCaUrl(), caName);
+        final byte[] respBytes = cmpv2HttpClient.postRequest(pkiMessage, server.getUrl(), caName);
         try {
             final PKIMessage respPkiMessage = PKIMessage.getInstance(respBytes);
             LOG.info("Received response from Server");
             checkIfCmpResponseContainsError(respPkiMessage);
-            checkCmpResponse(respPkiMessage, csrMeta.getKeyPairOrGenerateIfNull().getPublic(), csrMeta.getPassword());
+            checkCmpResponse(respPkiMessage, csrModel.getPublicKey(), server.getAuthentication().getIak());
             return checkCmpCertRepMessage(respPkiMessage);
         } catch (IllegalArgumentException iae) {
             CmpClientException cmpClientException =

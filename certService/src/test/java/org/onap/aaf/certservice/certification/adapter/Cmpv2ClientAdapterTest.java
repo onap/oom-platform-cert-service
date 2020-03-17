@@ -51,7 +51,6 @@ import org.onap.aaf.certservice.certification.model.CertificationModel;
 import org.onap.aaf.certservice.certification.model.CsrModel;
 import org.onap.aaf.certservice.cmpv2client.api.CmpClient;
 import org.onap.aaf.certservice.cmpv2client.exceptions.CmpClientException;
-import org.onap.aaf.certservice.cmpv2client.external.CsrMeta;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
@@ -83,10 +82,6 @@ class Cmpv2ClientAdapterTest {
     private X509Certificate certificate;
     @Mock
     private CertificateFactoryProvider certificateFactoryProvider;
-    @Mock
-    private CsrMetaBuilder csrMetaBuilder;
-    @Mock
-    private CsrMeta csrMeta;
 
     @InjectMocks
     private Cmpv2ClientAdapter adapter;
@@ -102,7 +97,7 @@ class Cmpv2ClientAdapterTest {
         stubInternalProperties();
 
         // When
-        Mockito.when(cmpClient.createCertificate(Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any()))
+        Mockito.when(cmpClient.createCertificate(Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any()))
                 .thenThrow(new CmpClientException(TEST_MSG));
 
         // Then
@@ -117,7 +112,7 @@ class Cmpv2ClientAdapterTest {
         stubInternalProperties();
 
         // When
-        Mockito.when(cmpClient.createCertificate(Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any()))
+        Mockito.when(cmpClient.createCertificate(Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any()))
                 .thenReturn(createCorrectClientResponse());
         CertificationModel certificationModel = adapter.callCmpClient(csrModel, server);
 
@@ -144,7 +139,7 @@ class Cmpv2ClientAdapterTest {
         stubInternalProperties();
 
         // When
-        Mockito.when(cmpClient.createCertificate(Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any()))
+        Mockito.when(cmpClient.createCertificate(Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any()))
                 .thenReturn(createCorrectClientResponse());
         Mockito.when(certificateFactoryProvider.generateCertificate(Mockito.any()))
                 .thenThrow(new CertificateException(TEST_MSG));
@@ -179,7 +174,6 @@ class Cmpv2ClientAdapterTest {
         Mockito.when(holder.toASN1Structure()).thenReturn(asn1Certificate);
         Mockito.when(certificateFactoryProvider.generateCertificate(Mockito.any())).thenReturn(certificate);
         Mockito.when(holder.toASN1Structure().getEncoded()).thenReturn("".getBytes());
-        Mockito.when(csrMetaBuilder.build(csrModel, server)).thenReturn(csrMeta);
     }
 
 }
