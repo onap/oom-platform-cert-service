@@ -1,0 +1,10 @@
+distribution_type: 'container'
+container_release_tag: '0.0.1'
+project: 'aaf-certservice'
+log_dir: 'aaf-certservice-maven-docker-stage-master/39/'
+ref: 1b3f9cbabdabe43588bcf8e3b92c89bd87272ef6
+containers:
+  - name: 'org.onap.aaf.certservice.aaf-certservice-api'
+    version: '1.0.0-20200316T163953Z'
+  - name: 'org.onap.aaf.certservice.aaf-certservice-client'
+    version: '1.0.0-20200316T163953Z'
