@@ -48,6 +48,8 @@ mvn clean install
 ### Building Docker image and install the package into local repository
 ```
 mvn clean install -P docker
+or
+make build
 ```   
 
 ### Running Docker container local
@@ -62,9 +64,14 @@ docker run -p 8080:8080 --name aaf-certservice-api --mount type=bind,source=/<ab
 
 ### Running Docker container from docker-compose with EJBCA
 Docker-compose uses a local image of certservice.
-Build a docker image locally before run docker compose command. See a section **Building Docker image and install the package into local repository**
+Build a docker image locally before run docker compose command.
 ```
-docker-compose up
+1. Build local image
+make build
+2. Start Cert Service with configured EJBCA
+make start
+3. Stop containers
+make stop
 ```
     
 ### Running with Helm
