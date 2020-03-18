@@ -24,6 +24,10 @@ import org.onap.aaf.certservice.client.configuration.exception.ClientConfigurati
 import org.onap.aaf.certservice.client.configuration.exception.CsrConfigurationException;
 import org.onap.aaf.certservice.client.configuration.model.ConfigurationModel;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 public abstract class AbstractConfigurationFactory<T extends ConfigurationModel> {
@@ -36,10 +40,6 @@ public abstract class AbstractConfigurationFactory<T extends ConfigurationModel>
 
     public boolean isAlphaNumeric(String caName) {
         return caName.matches("^[a-zA-Z0-9]*$");
-    }
-
-    public boolean isCountryValid(String country) {
-        return country.matches("^([A-Z][A-Z])$");
     }
 
     public boolean isCommonNameValid(String commonName) {
@@ -63,5 +63,10 @@ public abstract class AbstractConfigurationFactory<T extends ConfigurationModel>
 
     private boolean isHttpProtocolsPresent(String stringToCheck) {
         return Pattern.compile("[h][t][t][p][:][/][/]|[h][t][t][p][s][:][/][/]").matcher(stringToCheck).find();
+    }
+
+    public boolean isCountryValid(String country) {
+        Set<String> countryNames = new HashSet<>(Arrays.asList(Locale.getISOCountries()));
+        return countryNames.contains(country);
     }
 }

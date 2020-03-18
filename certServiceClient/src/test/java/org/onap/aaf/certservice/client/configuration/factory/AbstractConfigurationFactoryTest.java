@@ -43,13 +43,13 @@ public class AbstractConfigurationFactoryTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"PL", "DE", "PT", "US"})
+    @ValueSource(strings = {"PL", "DE", "PN", "US", "IO", "CA", "KH", "CO", "DK", "EC", "CZ", "CN", "BR", "BD", "BE"})
     public void shouldAcceptValidCountryCode(String countryCode) {
         assertThat(cut.isCountryValid(countryCode)).isTrue();
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"1P", "PLP", "P#", "&*"})
+    @ValueSource(strings = {"", "QQ", "AFG", "D", "&*", "!", "ONAP", "p", "pl", "us", "afg"})
     public void shouldRejectInvalidCountryCode(String countryCode) {
         assertThat(cut.isCountryValid(countryCode)).isFalse();
     }
