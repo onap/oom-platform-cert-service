@@ -11,7 +11,6 @@ services:
     volumes:
       - ./src/main/resources/scripts/:/opt/primekey/scripts
     command: bash -c "
-      ./scripts/ejbca-configuration.sh &
       /opt/primekey/bin/start.sh
       "
     healthcheck:
