@@ -29,7 +29,7 @@ public enum CaMode {
         this.profile = profile;
     }
 
-    public String getProfile(){
+    public String getProfile() {
         return profile;
     }
 }

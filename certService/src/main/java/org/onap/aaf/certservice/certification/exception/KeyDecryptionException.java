@@ -24,6 +24,7 @@ public class KeyDecryptionException extends DecryptionException {
     public KeyDecryptionException(String message, Throwable cause) {
         super(message, cause);
     }
+
     public KeyDecryptionException(String message) {
         super(message);
     }

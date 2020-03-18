@@ -27,6 +27,7 @@ import static org.onap.aaf.certservice.cmpv2client.impl.CmpUtil.generatePkiHeade
 import java.security.KeyPair;
 import java.util.Date;
 import java.util.List;
+
 import org.bouncycastle.asn1.DERUTF8String;
 import org.bouncycastle.asn1.cmp.PKIBody;
 import org.bouncycastle.asn1.cmp.PKIHeader;
@@ -48,88 +49,88 @@ import org.onap.aaf.certservice.cmpv2client.exceptions.CmpClientException;
  */
 class CreateCertRequest {
 
-  private X500Name issuerDn;
-  private X500Name subjectDn;
-  private List<String> sansList;
-  private KeyPair subjectKeyPair;
-  private Date notBefore;
-  private Date notAfter;
-  private String initAuthPassword;
-  private String senderKid;
+    private X500Name issuerDn;
+    private X500Name subjectDn;
+    private List<String> sansList;
+    private KeyPair subjectKeyPair;
+    private Date notBefore;
+    private Date notAfter;
+    private String initAuthPassword;
+    private String senderKid;
 
-  private static final int ITERATIONS = createRandomInt(5000);
-  private static final byte[] SALT = createRandomBytes();
-  private final int certReqId = createRandomInt(Integer.MAX_VALUE);
+    private static final int ITERATIONS = createRandomInt(5000);
+    private static final byte[] SALT = createRandomBytes();
+    private final int certReqId = createRandomInt(Integer.MAX_VALUE);
 
-  public void setIssuerDn(X500Name issuerDn) {
-    this.issuerDn = issuerDn;
-  }
+    public void setIssuerDn(X500Name issuerDn) {
+        this.issuerDn = issuerDn;
+    }
 
-  public void setSubjectDn(X500Name subjectDn) {
-    this.subjectDn = subjectDn;
-  }
+    public void setSubjectDn(X500Name subjectDn) {
+        this.subjectDn = subjectDn;
+    }
 
-  public void setSansList(List<String> sansList) {
-    this.sansList = sansList;
-  }
+    public void setSansList(List<String> sansList) {
+        this.sansList = sansList;
+    }
 
-  public void setSubjectKeyPair(KeyPair subjectKeyPair) {
-    this.subjectKeyPair = subjectKeyPair;
-  }
+    public void setSubjectKeyPair(KeyPair subjectKeyPair) {
+        this.subjectKeyPair = subjectKeyPair;
+    }
 
-  public void setNotBefore(Date notBefore) {
-    this.notBefore = notBefore;
-  }
+    public void setNotBefore(Date notBefore) {
+        this.notBefore = notBefore;
+    }
 
-  public void setNotAfter(Date notAfter) {
-    this.notAfter = notAfter;
-  }
+    public void setNotAfter(Date notAfter) {
+        this.notAfter = notAfter;
+    }
 
-  public void setInitAuthPassword(String initAuthPassword) {
-    this.initAuthPassword = initAuthPassword;
-  }
+    public void setInitAuthPassword(String initAuthPassword) {
+        this.initAuthPassword = initAuthPassword;
+    }
 
-  public void setSenderKid(String senderKid) {
-    this.senderKid = senderKid;
-  }
+    public void setSenderKid(String senderKid) {
+        this.senderKid = senderKid;
+    }
 
-  /**
-   * Method to create {@link PKIMessage} from {@link CertRequest},{@link ProofOfPossession}, {@link
-   * CertReqMsg}, {@link CertReqMessages}, {@link PKIHeader} and {@link PKIBody}.
-   *
-   * @return {@link PKIMessage}
-   */
-  public PKIMessage generateCertReq() throws CmpClientException {
-    final CertTemplateBuilder certTemplateBuilder =
-        new CertTemplateBuilder()
-            .setIssuer(issuerDn)
-            .setSubject(subjectDn)
-            .setExtensions(CmpMessageHelper.generateExtension(sansList))
-            .setValidity(CmpMessageHelper.generateOptionalValidity(notBefore, notAfter))
-            .setPublicKey(
-                SubjectPublicKeyInfo.getInstance(subjectKeyPair.getPublic().getEncoded()));
+    /**
+     * Method to create {@link PKIMessage} from {@link CertRequest},{@link ProofOfPossession}, {@link
+     * CertReqMsg}, {@link CertReqMessages}, {@link PKIHeader} and {@link PKIBody}.
+     *
+     * @return {@link PKIMessage}
+     */
+    public PKIMessage generateCertReq() throws CmpClientException {
+        final CertTemplateBuilder certTemplateBuilder =
+                new CertTemplateBuilder()
+                        .setIssuer(issuerDn)
+                        .setSubject(subjectDn)
+                        .setExtensions(CmpMessageHelper.generateExtension(sansList))
+                        .setValidity(CmpMessageHelper.generateOptionalValidity(notBefore, notAfter))
+                        .setPublicKey(
+                                SubjectPublicKeyInfo.getInstance(subjectKeyPair.getPublic().getEncoded()));
 
-    final CertRequest certRequest = new CertRequest(certReqId, certTemplateBuilder.build(), null);
-    final ProofOfPossession proofOfPossession =
-        CmpMessageHelper.generateProofOfPossession(certRequest, subjectKeyPair);
+        final CertRequest certRequest = new CertRequest(certReqId, certTemplateBuilder.build(), null);
+        final ProofOfPossession proofOfPossession =
+                CmpMessageHelper.generateProofOfPossession(certRequest, subjectKeyPair);
 
-    final AttributeTypeAndValue[] attrTypeVal = {
-      new AttributeTypeAndValue(
-          CRMFObjectIdentifiers.id_regCtrl_regToken, new DERUTF8String(initAuthPassword))
-    };
+        final AttributeTypeAndValue[] attrTypeVal = {
+                new AttributeTypeAndValue(
+                        CRMFObjectIdentifiers.id_regCtrl_regToken, new DERUTF8String(initAuthPassword))
+        };
 
-    final CertReqMsg certReqMsg = new CertReqMsg(certRequest, proofOfPossession, attrTypeVal);
-    final CertReqMessages certReqMessages = new CertReqMessages(certReqMsg);
+        final CertReqMsg certReqMsg = new CertReqMsg(certRequest, proofOfPossession, attrTypeVal);
+        final CertReqMessages certReqMessages = new CertReqMessages(certReqMsg);
 
-    final PKIHeader pkiHeader =
-        generatePkiHeader(
-            subjectDn,
-            issuerDn,
-            CmpMessageHelper.protectionAlgoIdentifier(ITERATIONS, SALT),
-            senderKid);
-    final PKIBody pkiBody = new PKIBody(PKIBody.TYPE_INIT_REQ, certReqMessages);
+        final PKIHeader pkiHeader =
+                generatePkiHeader(
+                        subjectDn,
+                        issuerDn,
+                        CmpMessageHelper.protectionAlgoIdentifier(ITERATIONS, SALT),
+                        senderKid);
+        final PKIBody pkiBody = new PKIBody(PKIBody.TYPE_INIT_REQ, certReqMessages);
 
-    return CmpMessageHelper.protectPkiMessage(
-        pkiHeader, pkiBody, initAuthPassword, ITERATIONS, SALT);
-  }
+        return CmpMessageHelper.protectPkiMessage(
+                pkiHeader, pkiBody, initAuthPassword, ITERATIONS, SALT);
+    }
 }

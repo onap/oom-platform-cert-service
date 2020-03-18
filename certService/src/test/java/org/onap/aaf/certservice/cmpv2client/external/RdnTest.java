@@ -31,19 +31,20 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class RDNTest {
+class RdnTest {
 
     @Test
-    public void shouldCreateCorrectRDN() throws CertException {
+    void shouldCreateCorrectRdn() throws CertException {
+        // given
+        final String expectedValue = "ManagmentCA";
+        final ASN1ObjectIdentifier expectedAoi = BCStyle.CN;
+
         //when
-        RDN rdn1 = new RDN("CN=ManagmentCA");
-        RDN rdn2 = new RDN("CN = ManagmentCA ");
-        RDN rdn3 = new RDN("CN", "ManagmentCA");
+        Rdn rdn1 = new Rdn("CN=ManagmentCA");
+        Rdn rdn2 = new Rdn("CN = ManagmentCA ");
+        Rdn rdn3 = new Rdn("CN", "ManagmentCA");
 
         //then
-        String expectedValue = "ManagmentCA";
-        ASN1ObjectIdentifier expectedAoi = BCStyle.CN;
-
         assertEquals(expectedValue, rdn1.getValue());
         assertEquals(expectedValue, rdn2.getValue());
         assertEquals(expectedValue, rdn3.getValue());
@@ -53,7 +54,7 @@ class RDNTest {
     }
 
     @Test
-    public void shouldCorrectlySplitAndTrimString() {
+    void shouldCorrectlySplitAndTrimString() {
         //given
         String value1 = " T  =  Test";
         List<String> expected1 = Arrays.asList("T", "Test");
@@ -62,8 +63,8 @@ class RDNTest {
         List<String> expected2 = Arrays.asList("This", "is 99 tested", "string");
 
         //when
-        List<String> actual1 = RDN.parseRDN("=", value1);
-        List<String> actual2 = RDN.parseRDN("[0-9]{3,}", value2);
+        List<String> actual1 = Rdn.parseRdn("=", value1);
+        List<String> actual2 = Rdn.parseRdn("[0-9]{3,}", value2);
 
         //then
         assertEquals(expected1, actual1);
@@ -71,8 +72,8 @@ class RDNTest {
     }
 
     @Test
-    public void shouldConvertAoiStringToEnum() throws CertException {
-        RDN rdn = new RDN("CN", "ManagmentCA");
+    void shouldConvertAoiStringToEnum() throws CertException {
+        Rdn rdn = new Rdn("CN", "ManagmentCA");
 
         assertEquals(BCStyle.CN, rdn.getAoi("CN"));
         assertEquals(BCStyle.C, rdn.getAoi("C"));

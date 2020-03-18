@@ -66,8 +66,8 @@ public class ReloadConfigControllerTest {
 
         // When
         Exception exception = assertThrows(
-            CmpServersConfigLoadingException.class,
-            () -> reloadConfigController.reloadConfiguration());
+                CmpServersConfigLoadingException.class,
+                () -> reloadConfigController.reloadConfiguration());
 
         // Then
         Assertions.assertThat(exception.getMessage()).isEqualTo(ERROR_MESSAGE);

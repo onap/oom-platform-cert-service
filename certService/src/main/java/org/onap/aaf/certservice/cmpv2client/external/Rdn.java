@@ -20,6 +20,7 @@
  * ============LICENSE_END====================================================
  *
  */
+
 package org.onap.aaf.certservice.cmpv2client.external;
 
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ import org.bouncycastle.asn1.ASN1ObjectIdentifier;
 import org.bouncycastle.asn1.x500.style.BCStyle;
 import org.bouncycastle.cert.CertException;
 
-public class RDN {
+public class Rdn {
 
     private String tag;
     private String value;
@@ -41,18 +42,14 @@ public class RDN {
         return value;
     }
 
-    public ASN1ObjectIdentifier getAoi() {
-        return aoi;
-    }
-
-    public RDN(final String tag, final String value) throws CertException {
+    public Rdn(final String tag, final String value) throws CertException {
         this.tag = tag;
         this.value = value;
         this.aoi = getAoi(tag);
     }
 
-    public RDN(final String tagValue) throws CertException {
-        List<String> tv = parseRDN("=", tagValue);
+    public Rdn(final String tagValue) throws CertException {
+        List<String> tv = parseRdn("=", tagValue);
         this.tag = tv.get(0);
         this.value = tv.get(1);
         this.aoi = getAoi(this.tag);
@@ -65,7 +62,7 @@ public class RDN {
      * @param value Value to be splitted
      * @return List of splitted and trimmed strings
      */
-    public static List<String> parseRDN(String splitBy, String value) {
+    static List<String> parseRdn(String splitBy, String value) {
         String[] splitted = value.split(splitBy);
         return Arrays.stream(splitted)
                 .map(String::trim)
@@ -80,24 +77,24 @@ public class RDN {
      * @throws CertException
      */
 
-    public static List<RDN> parse(final char delim, final String dnString) throws CertException {
-        List<RDN> lrnd = new ArrayList<>();
+    public static List<Rdn> parse(final char delim, final String dnString) throws CertException {
+        List<Rdn> lrnd = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
         boolean inQuotes = false;
         for (int i = 0; i < dnString.length(); ++i) {
-            char c = dnString.charAt(i);
+            char currentCharacter = dnString.charAt(i);
             if (inQuotes) {
-                if ('"' == c) {
+                if ('"' == currentCharacter) {
                     inQuotes = false;
                 } else {
                     sb.append(dnString.charAt(i));
                 }
             } else {
-                if ('"' == c) {
+                if ('"' == currentCharacter) {
                     inQuotes = true;
-                } else if (delim == c) {
+                } else if (delim == currentCharacter) {
                     if (sb.length() > 0) {
-                        lrnd.add(new RDN(sb.toString()));
+                        lrnd.add(new Rdn(sb.toString()));
                         sb.setLength(0);
                     }
                 } else {
@@ -106,7 +103,7 @@ public class RDN {
             }
         }
         if (sb.indexOf("=") > 0) {
-            lrnd.add(new RDN(sb.toString()));
+            lrnd.add(new Rdn(sb.toString()));
         }
         return lrnd;
     }
@@ -114,6 +111,10 @@ public class RDN {
     @Override
     public String toString() {
         return tag + '=' + value;
+    }
+
+    ASN1ObjectIdentifier getAoi() {
+        return aoi;
     }
 
     ASN1ObjectIdentifier getAoi(String tag) throws CertException {

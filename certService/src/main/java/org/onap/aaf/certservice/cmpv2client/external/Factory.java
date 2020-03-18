@@ -20,6 +20,7 @@
  * ============LICENSE_END====================================================
  *
  */
+
 package org.onap.aaf.certservice.cmpv2client.external;
 
 import org.slf4j.Logger;
@@ -30,30 +31,31 @@ import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
-public class Factory {
+public final class Factory {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Factory.class);
-    private static final KeyPairGenerator keygen;
-    private static final SecureRandom random;
+    private static final KeyPairGenerator KEY_PAIR_GENERATOR;
+    private static final SecureRandom SECURE_RANDOM;
     private static final String KEY_ALGORITHM = "RSA";
     private static final int KEY_LENGTH = 2048;
 
     static {
-        random = new SecureRandom();
+        SECURE_RANDOM = new SecureRandom();
         KeyPairGenerator tempKeygen;
         try {
             tempKeygen = KeyPairGenerator.getInstance(KEY_ALGORITHM);
-            tempKeygen.initialize(KEY_LENGTH, random);
+            tempKeygen.initialize(KEY_LENGTH, SECURE_RANDOM);
         } catch (NoSuchAlgorithmException e) {
             tempKeygen = null;
             LOGGER.error("Given KEY_ALGORITHM is invalid.", e);
         }
-        keygen = tempKeygen;
+        KEY_PAIR_GENERATOR = tempKeygen;
     }
 
-    private Factory() { }
+    private Factory() {
+    }
 
     public static KeyPair generateKeyPair() {
-        return keygen.generateKeyPair();
+        return KEY_PAIR_GENERATOR.generateKeyPair();
     }
 }

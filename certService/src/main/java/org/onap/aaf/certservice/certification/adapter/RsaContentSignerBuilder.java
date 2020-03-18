@@ -17,6 +17,7 @@
  * limitations under the License.
  * ============LICENSE_END=========================================================
  */
+
 package org.onap.aaf.certservice.certification.adapter;
 
 import java.io.IOException;
@@ -31,7 +32,7 @@ import org.bouncycastle.pkcs.PKCS10CertificationRequest;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RSAContentSignerBuilder {
+public class RsaContentSignerBuilder {
 
     ContentSigner build(PKCS10CertificationRequest csr, PrivateKey privateKey)
             throws IOException, OperatorCreationException {

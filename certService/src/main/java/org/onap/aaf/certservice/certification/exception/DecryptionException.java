@@ -21,10 +21,13 @@
 package org.onap.aaf.certservice.certification.exception;
 
 public class DecryptionException extends Exception {
+
     public DecryptionException(String message, Throwable cause) {
         super(message, cause);
     }
+
     public DecryptionException(String message) {
         super(message);
     }
+
 }

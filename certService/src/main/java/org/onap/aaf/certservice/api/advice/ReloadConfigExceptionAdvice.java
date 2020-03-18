@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice(assignableTypes = ReloadConfigController.class)
-public class ReloadConfigExceptionAdvice {
+public final class ReloadConfigExceptionAdvice {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ReloadConfigExceptionAdvice.class);
 

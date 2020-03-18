@@ -17,6 +17,7 @@
  * limitations under the License.
  * ============LICENSE_END=========================================================
  */
+
 package org.onap.aaf.certservice.certification.configuration;
 
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -31,18 +32,18 @@ import org.springframework.web.context.annotation.RequestScope;
 public class CmpClientConfig {
 
     @Bean
-    CmpClient cmpClient(CloseableHttpClient closeableHttpClient){
+    CmpClient cmpClient(CloseableHttpClient closeableHttpClient) {
         return new CmpClientImpl(closeableHttpClient);
     }
 
     @Bean
     @RequestScope
-    CloseableHttpClient closeableHttpClient(HttpClientBuilder httpClientBuilder){
+    CloseableHttpClient closeableHttpClient(HttpClientBuilder httpClientBuilder) {
         return httpClientBuilder.build();
     }
 
     @Bean
-    HttpClientBuilder httpClientBuilder(){
+    HttpClientBuilder httpClientBuilder() {
         return HttpClientBuilder.create();
     }
 

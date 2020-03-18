@@ -17,6 +17,7 @@
  * limitations under the License.
  * ============LICENSE_END=========================================================
  */
+
 package org.onap.aaf.certservice.certification;
 
 import org.junit.jupiter.api.BeforeEach;

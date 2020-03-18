@@ -22,20 +22,26 @@ package org.onap.aaf.certservice.cmpv2client.exceptions;
 
 public class PkiErrorException extends Exception {
 
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-  /** Creates a new instance with detail message. */
-  public PkiErrorException(String message) {
-    super(message);
-  }
+    /**
+     * Creates a new instance with detail message.
+     */
+    public PkiErrorException(String message) {
+        super(message);
+    }
 
-  /** Creates a new instance with detail Throwable cause. */
-  public PkiErrorException(Throwable cause) {
-    super(cause);
-  }
+    /**
+     * Creates a new instance with detail Throwable cause.
+     */
+    public PkiErrorException(Throwable cause) {
+        super(cause);
+    }
 
-  /** Creates a new instance with detail message and Throwable cause. */
-  public PkiErrorException(String message, Throwable cause) {
-    super(message, cause);
-  }
+    /**
+     * Creates a new instance with detail message and Throwable cause.
+     */
+    public PkiErrorException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

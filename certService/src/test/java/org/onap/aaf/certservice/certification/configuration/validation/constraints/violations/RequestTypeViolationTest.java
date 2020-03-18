@@ -22,31 +22,33 @@ package org.onap.aaf.certservice.certification.configuration.validation.constrai
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 class RequestTypeViolationTest {
 
     private final RequestTypeViolation violation = new RequestTypeViolation();
 
     @Test
-    public void givenValidRequestTypeShouldReturnTrue() {
+    void givenValidRequestTypeShouldReturnTrue() {
         //given
-        String validURL = "http://127.0.0.1/ejbca/publicweb/cmp/cmp";
+        String validUrl = "http://127.0.0.1/ejbca/publicweb/cmp/cmp";
 
         //when
-        boolean result = violation.validate(validURL);
+        boolean result = violation.validate(validUrl);
 
         //then
         assertTrue(result);
     }
 
     @Test
-    public void givenInvalidRequestTypeShouldReturnFalse() {
+    void givenInvalidRequestTypeShouldReturnFalse() {
         //given
-        String invalidURL = "htestps://127.0.0.1/ejbca/publicweb/cmp/cmp";
+        String invalidUrl = "htestps://127.0.0.1/ejbca/publicweb/cmp/cmp";
 
         //when
-        boolean result = violation.validate(invalidURL);
+        boolean result = violation.validate(invalidUrl);
 
         //then
         assertFalse(result);

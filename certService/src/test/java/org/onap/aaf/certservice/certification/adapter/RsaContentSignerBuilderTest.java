@@ -34,13 +34,13 @@ import java.security.PrivateKey;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.onap.aaf.certservice.certification.TestUtils.createCsrModel;
 
-class RSAContentSignerBuilderTest {
+class RsaContentSignerBuilderTest {
 
-    private  RSAContentSignerBuilder rsaContentSignerBuilder;
+    private RsaContentSignerBuilder rsaContentSignerBuilder;
 
     @BeforeEach
     void setUp() {
-        rsaContentSignerBuilder = new RSAContentSignerBuilder();
+        rsaContentSignerBuilder = new RsaContentSignerBuilder();
     }
 
     @Test

@@ -22,11 +22,14 @@ package org.onap.aaf.certservice.certification.configuration.model;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+
 import org.bouncycastle.asn1.x500.X500Name;
 import org.hibernate.validator.constraints.Length;
-import org.onap.aaf.certservice.certification.configuration.validation.constraints.Cmpv2URL;
+import org.onap.aaf.certservice.certification.configuration.validation.constraints.Cmpv2Url;
 
 public class Cmpv2Server {
+
+    private static final int MAX_CA_NAME_LENGTH = 128;
 
     @NotNull
     @Valid
@@ -34,11 +37,11 @@ public class Cmpv2Server {
     @NotNull
     private CaMode caMode;
     @NotNull
-    @Length(min = 1, max = 128)
+    @Length(min = 1, max = MAX_CA_NAME_LENGTH)
     private String caName;
     @NotNull
     private X500Name issuerDN;
-    @Cmpv2URL
+    @Cmpv2Url
     private String url;
 
     public Authentication getAuthentication() {
@@ -83,13 +86,13 @@ public class Cmpv2Server {
 
     @Override
     public String toString() {
-        return "Cmpv2Server{" +
-                "authentication=" + authentication +
-                ", caMode=" + caMode +
-                ", caName='" + caName + '\'' +
-                ", issuerDN='" + issuerDN + '\'' +
-                ", url='" + url + '\'' +
-                '}';
+        return "Cmpv2Server{"
+                + "authentication=" + authentication
+                + ", caMode=" + caMode
+                + ", caName='" + caName + '\''
+                + ", issuerDN='" + issuerDN + '\''
+                + ", url='" + url + '\''
+                + '}';
     }
 
 }

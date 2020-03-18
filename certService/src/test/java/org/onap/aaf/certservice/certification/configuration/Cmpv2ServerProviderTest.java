@@ -51,7 +51,7 @@ class Cmpv2ServerProviderTest {
     @BeforeEach
     void setUp() {
         cmpv2ServerProvider =
-                new  Cmpv2ServerProvider(cmpServersConfig);
+                new Cmpv2ServerProvider(cmpServersConfig);
     }
 
     @Test

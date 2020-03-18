@@ -22,6 +22,7 @@ package org.onap.aaf.certservice.cmpv2client.impl;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ByteArrayEntity;
@@ -33,50 +34,50 @@ import org.slf4j.LoggerFactory;
 
 class Cmpv2HttpClient {
 
-  private static final Logger LOG = LoggerFactory.getLogger(Cmpv2HttpClient.class);
+    private static final Logger LOG = LoggerFactory.getLogger(Cmpv2HttpClient.class);
 
-  private static final String CONTENT_TYPE = "Content-type";
-  private static final String CMP_REQUEST_MIMETYPE = "application/pkixcmp";
-  private final CloseableHttpClient httpClient;
+    private static final String CONTENT_TYPE = "Content-type";
+    private static final String CMP_REQUEST_MIMETYPE = "application/pkixcmp";
+    private final CloseableHttpClient httpClient;
 
-  /**
-   * constructor for Cmpv2HttpClient
-   *
-   * @param httpClient CloseableHttpClient used for sending/recieve request.
-   */
-  public Cmpv2HttpClient(CloseableHttpClient httpClient) {
-    this.httpClient = httpClient;
-  }
-
-  /**
-   * Send Post Request to Server
-   *
-   * @param pkiMessage PKIMessage to send to server
-   * @param urlString url for the server we're sending request
-   * @param caName name of CA server
-   * @return PKIMessage received from CMPServer
-   * @throws CmpClientException thrown if problems with connecting or parsing response to server
-   */
-  public byte[] postRequest(
-      final PKIMessage pkiMessage, final String urlString, final String caName)
-      throws CmpClientException {
-    try (final ByteArrayOutputStream byteArrOutputStream = new ByteArrayOutputStream()) {
-      final HttpPost postRequest = new HttpPost(urlString);
-      final byte[] requestBytes = pkiMessage.getEncoded();
-
-      postRequest.setEntity(new ByteArrayEntity(requestBytes));
-      postRequest.setHeader(CONTENT_TYPE, CMP_REQUEST_MIMETYPE);
-
-      try (CloseableHttpResponse response = httpClient.execute(postRequest)) {
-        response.getEntity().writeTo(byteArrOutputStream);
-      }
-      return byteArrOutputStream.toByteArray();
-    } catch (IOException ioe) {
-      CmpClientException cmpClientException =
-          new CmpClientException(
-              String.format("IOException error while trying to connect CA %s", caName), ioe);
-      LOG.error("IOException error {}, while trying to connect CA {}", ioe.getMessage(), caName);
-      throw cmpClientException;
+    /**
+     * constructor for Cmpv2HttpClient
+     *
+     * @param httpClient CloseableHttpClient used for sending/recieve request.
+     */
+    Cmpv2HttpClient(CloseableHttpClient httpClient) {
+        this.httpClient = httpClient;
     }
-  }
+
+    /**
+     * Send Post Request to Server
+     *
+     * @param pkiMessage PKIMessage to send to server
+     * @param urlString  url for the server we're sending request
+     * @param caName     name of CA server
+     * @return PKIMessage received from CMPServer
+     * @throws CmpClientException thrown if problems with connecting or parsing response to server
+     */
+    public byte[] postRequest(
+            final PKIMessage pkiMessage, final String urlString, final String caName)
+            throws CmpClientException {
+        try (ByteArrayOutputStream byteArrOutputStream = new ByteArrayOutputStream()) {
+            final HttpPost postRequest = new HttpPost(urlString);
+            final byte[] requestBytes = pkiMessage.getEncoded();
+
+            postRequest.setEntity(new ByteArrayEntity(requestBytes));
+            postRequest.setHeader(CONTENT_TYPE, CMP_REQUEST_MIMETYPE);
+
+            try (CloseableHttpResponse response = httpClient.execute(postRequest)) {
+                response.getEntity().writeTo(byteArrOutputStream);
+            }
+            return byteArrOutputStream.toByteArray();
+        } catch (IOException ioe) {
+            CmpClientException cmpClientException =
+                    new CmpClientException(
+                            String.format("IOException error while trying to connect CA %s", caName), ioe);
+            LOG.error("IOException error {}, while trying to connect CA {}", ioe.getMessage(), caName);
+            throw cmpClientException;
+        }
+    }
 }

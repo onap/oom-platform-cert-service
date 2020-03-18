@@ -60,9 +60,8 @@ public class CertificationController {
     /**
      * Request for signing certificate by given CA.
      *
-     *
-     * @param caName the name of Certification Authority that will sign root certificate
-     * @param encodedCsr Certificate Sign Request encoded in Base64 form
+     * @param caName            the name of Certification Authority that will sign root certificate
+     * @param encodedCsr        Certificate Sign Request encoded in Base64 form
      * @param encodedPrivateKey Private key for CSR, needed for PoP, encoded in Base64 form
      * @return JSON containing trusted certificates and certificate chain
      */
@@ -79,13 +78,13 @@ public class CertificationController {
     @Operation(
             summary = "sign certificate",
             description = "Web endpoint for requesting certificate signing. Used by system components to gain certificate signed by CA.",
-            tags = { "CertificationService" })
+            tags = {"CertificationService"})
     public ResponseEntity<CertificationModel> signCertificate(
-            @Parameter(description="Name of certification authority that will sign CSR.")
+            @Parameter(description = "Name of certification authority that will sign CSR.")
             @PathVariable String caName,
-            @Parameter(description="Certificate signing request in form of PEM object encoded in Base64 (with header and footer).")
+            @Parameter(description = "Certificate signing request in form of PEM object encoded in Base64 (with header and footer).")
             @RequestHeader("CSR") String encodedCsr,
-            @Parameter(description="Private key in form of PEM object encoded in Base64 (with header and footer).")
+            @Parameter(description = "Private key in form of PEM object encoded in Base64 (with header and footer).")
             @RequestHeader("PK") String encodedPrivateKey
     ) throws DecryptionException, CmpClientException, Cmpv2ClientAdapterException {
         caName = caName.replaceAll("[\n|\r|\t]", "_");

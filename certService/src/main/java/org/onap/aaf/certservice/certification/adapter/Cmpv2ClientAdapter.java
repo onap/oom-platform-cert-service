@@ -54,15 +54,15 @@ public class Cmpv2ClientAdapter {
     private static final Logger LOGGER = LoggerFactory.getLogger(Cmpv2ClientAdapter.class);
 
     private final CmpClient cmpClient;
-    private final CSRMetaBuilder csrMetaBuilder;
-    private final RSAContentSignerBuilder rsaContentSignerBuilder;
+    private final CsrMetaBuilder csrMetaBuilder;
+    private final RsaContentSignerBuilder rsaContentSignerBuilder;
     private final X509CertificateBuilder x509CertificateBuilder;
     private final CertificateFactoryProvider certificateFactoryProvider;
 
     @Autowired
-    public Cmpv2ClientAdapter(CmpClient cmpClient, CSRMetaBuilder csrMetaBuilder,
-            RSAContentSignerBuilder rsaContentSignerBuilder, X509CertificateBuilder x509CertificateBuilder,
-            CertificateFactoryProvider certificateFactoryProvider) {
+    public Cmpv2ClientAdapter(CmpClient cmpClient, CsrMetaBuilder csrMetaBuilder,
+                              RsaContentSignerBuilder rsaContentSignerBuilder, X509CertificateBuilder x509CertificateBuilder,
+                              CertificateFactoryProvider certificateFactoryProvider) {
         this.cmpClient = cmpClient;
         this.csrMetaBuilder = csrMetaBuilder;
         this.rsaContentSignerBuilder = rsaContentSignerBuilder;
@@ -83,12 +83,12 @@ public class Cmpv2ClientAdapter {
             throws CmpClientException, Cmpv2ClientAdapterException {
         List<List<X509Certificate>> certificates = cmpClient.createCertificate(server.getCaName(),
                 server.getCaMode().getProfile(), csrMetaBuilder.build(csrModel, server),
-                convertCSRToX509Certificate(csrModel.getCsr(), csrModel.getPrivateKey()));
-        return new CertificationModel(convertFromX509CertificateListToPEMList(certificates.get(0)),
-                convertFromX509CertificateListToPEMList(certificates.get(1)));
+                convertCsrToX509Certificate(csrModel.getCsr(), csrModel.getPrivateKey()));
+        return new CertificationModel(convertFromX509CertificateListToPemList(certificates.get(0)),
+                convertFromX509CertificateListToPemList(certificates.get(1)));
     }
 
-    private String convertFromX509CertificateToPEM(X509Certificate certificate) {
+    private String convertFromX509CertificateToPem(X509Certificate certificate) {
         StringWriter sw = new StringWriter();
         try (PemWriter pw = new PemWriter(sw)) {
             PemObjectGenerator gen = new JcaMiscPEMGenerator(certificate);
@@ -99,7 +99,7 @@ public class Cmpv2ClientAdapter {
         return sw.toString();
     }
 
-    private X509Certificate convertCSRToX509Certificate(PKCS10CertificationRequest csr, PrivateKey privateKey)
+    private X509Certificate convertCsrToX509Certificate(PKCS10CertificationRequest csr, PrivateKey privateKey)
             throws Cmpv2ClientAdapterException {
         try {
             X509v3CertificateBuilder certificateGenerator = x509CertificateBuilder.build(csr);
@@ -112,8 +112,8 @@ public class Cmpv2ClientAdapter {
         }
     }
 
-    private List<String> convertFromX509CertificateListToPEMList(List<X509Certificate> certificates) {
-        return certificates.stream().map(this::convertFromX509CertificateToPEM).filter(cert -> !cert.isEmpty())
+    private List<String> convertFromX509CertificateListToPemList(List<X509Certificate> certificates) {
+        return certificates.stream().map(this::convertFromX509CertificateToPem).filter(cert -> !cert.isEmpty())
                        .collect(Collectors.toList());
     }
 

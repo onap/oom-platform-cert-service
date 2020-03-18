@@ -127,7 +127,7 @@ class CsrModelFactoryTest {
     }
 
     @Test
-    void shouldThrowKeyDecryptionExceptionWhenPKIsNotInBase64Encoding() {
+    void shouldThrowKeyDecryptionExceptionWhenPkIsNotInBase64Encoding() {
         // given
         String encoderPK = "Not Base64 Key";
         String wrongCsr = new String(Base64.encode(TEST_CSR.getBytes()));

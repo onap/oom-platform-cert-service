@@ -35,7 +35,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice(assignableTypes = CertificationController.class)
-public class CertificationExceptionAdvice {
+public final class CertificationExceptionAdvice {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CertificationExceptionAdvice.class);
 
@@ -92,7 +92,7 @@ public class CertificationExceptionAdvice {
     private ResponseEntity<ErrorResponseModel> getErrorResponseEntity(String errorMessage, HttpStatus status) {
         ErrorResponseModel errorResponse = new ErrorResponseModel(errorMessage);
         return new ResponseEntity<>(
-               errorResponse,
+                errorResponse,
                 status
         );
     }

@@ -26,6 +26,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.startsWith;
 
 import java.util.List;
+
 import org.bouncycastle.asn1.x500.X500Name;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -95,12 +96,12 @@ class CmpServersConfigTest {
     void shouldRethrowExceptionWhenReloaded() throws CmpServersConfigLoadingException {
         // Given
         Mockito.when(cmpServersConfigLoader.load(any())).thenThrow(new CmpServersConfigLoadingException(
-            ERROR_MESSAGE));
+                ERROR_MESSAGE));
 
         // Then
         assertThrows(
-            CmpServersConfigLoadingException.class,
-            () -> cmpServersConfig.reloadConfiguration());
+                CmpServersConfigLoadingException.class,
+                () -> cmpServersConfig.reloadConfiguration());
     }
 
     @Test
@@ -110,8 +111,8 @@ class CmpServersConfigTest {
 
         // When
         Exception exception = assertThrows(
-            CmpServersConfigLoadingException.class,
-            () -> cmpServersConfig.reloadConfiguration());
+                CmpServersConfigLoadingException.class,
+                () -> cmpServersConfig.reloadConfiguration());
 
         // Then
         assertThat(exception.getMessage()).isEqualTo(ERROR_MESSAGE);
@@ -128,10 +129,10 @@ class CmpServersConfigTest {
 
         // Then
         receivedCmpServers.forEach((server) -> assertThat(server.toString())
-            .doesNotContain(
-                server.getAuthentication().getIak(),
-                server.getAuthentication().getRv()
-            ));
+                .doesNotContain(
+                        server.getAuthentication().getIak(),
+                        server.getAuthentication().getRv()
+                ));
     }
 
     @Test
@@ -141,8 +142,8 @@ class CmpServersConfigTest {
 
         // Then
         assertThrows(
-            CmpServersConfigLoadingException.class,
-            () -> cmpServersConfig.loadConfiguration());
+                CmpServersConfigLoadingException.class,
+                () -> cmpServersConfig.loadConfiguration());
     }
 
     @Test
@@ -152,8 +153,8 @@ class CmpServersConfigTest {
 
         // When
         Exception exception = assertThrows(
-            CmpServersConfigLoadingException.class,
-            () -> cmpServersConfig.loadConfiguration());
+                CmpServersConfigLoadingException.class,
+                () -> cmpServersConfig.loadConfiguration());
 
         // Then
         assertThat(exception.getMessage()).isEqualTo(ERROR_MESSAGE);
@@ -201,8 +202,8 @@ class CmpServersConfigTest {
 
         // When
         assertThrows(
-            CmpServersConfigLoadingException.class,
-            () -> cmpServersConfig.loadConfiguration());
+                CmpServersConfigLoadingException.class,
+                () -> cmpServersConfig.loadConfiguration());
 
         // Then
         assertThat(cmpServersConfig.isReady()).isFalse();

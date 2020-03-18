@@ -54,13 +54,13 @@ class Cmpv2ServerConfigurationValidatorTest {
     }
 
     @Test
-    public void shouldNotThrowExceptionWhenServerConfigurationIsValid() {
+    void shouldNotThrowExceptionWhenServerConfigurationIsValid() {
         // Then
         assertDoesNotThrow(() -> validator.validate(server));
     }
 
     @Test
-    public void shouldThrowExceptionWhenWrongProtocolInURL() {
+    void shouldThrowExceptionWhenWrongProtocolInUrl() {
         // Given
         server.setUrl("https://test.test.test:60000/");
 
@@ -69,7 +69,7 @@ class Cmpv2ServerConfigurationValidatorTest {
     }
 
     @Test
-    public void shouldThrowExceptionWhenWrongPortInURL() {
+    void shouldThrowExceptionWhenWrongPortInUrl() {
         // Given
         server.setUrl("http://test.test.test:70000/");
 
@@ -78,7 +78,7 @@ class Cmpv2ServerConfigurationValidatorTest {
     }
 
     @Test
-    public void shouldThrowExceptionWhenWrongCANameLength() {
+    void shouldThrowExceptionWhenWrongCaNameLength() {
         // Given
         server.setCaName(EMPTY_STRING);
 
@@ -87,7 +87,7 @@ class Cmpv2ServerConfigurationValidatorTest {
     }
 
     @Test
-    public void shouldThrowExceptionWhenWrongRVLength() {
+    void shouldThrowExceptionWhenWrongRvLength() {
         // Given
         authentication.setRv(EMPTY_STRING);
 
@@ -97,7 +97,7 @@ class Cmpv2ServerConfigurationValidatorTest {
 
 
     @Test
-    public void shouldThrowExceptionWhenWrongIAKLength() {
+    void shouldThrowExceptionWhenWrongIakLength() {
         // Given
         authentication.setIak(EMPTY_STRING);
 
@@ -106,7 +106,7 @@ class Cmpv2ServerConfigurationValidatorTest {
     }
 
     @Test
-    public void shouldThrowExceptionWhenCaNameIsNull() {
+    void shouldThrowExceptionWhenCaNameIsNull() {
         // Given
         server.setCaName(null);
 
@@ -115,7 +115,7 @@ class Cmpv2ServerConfigurationValidatorTest {
     }
 
     @Test
-    public void shouldThrowExceptionWhenIssuerDnIsNull() {
+    void shouldThrowExceptionWhenIssuerDnIsNull() {
         // Given
         server.setIssuerDN(null);
 
@@ -124,7 +124,7 @@ class Cmpv2ServerConfigurationValidatorTest {
     }
 
     @Test
-    public void shouldThrowExceptionWhenCaModeIsNull() {
+    void shouldThrowExceptionWhenCaModeIsNull() {
         // Given
         server.setCaMode(null);
 
@@ -133,7 +133,7 @@ class Cmpv2ServerConfigurationValidatorTest {
     }
 
     @Test
-    public void shouldThrowExceptionWhenUrlIsNull() {
+    void shouldThrowExceptionWhenUrlIsNull() {
         // Given
         server.setUrl(null);
 
@@ -142,7 +142,7 @@ class Cmpv2ServerConfigurationValidatorTest {
     }
 
     @Test
-    public void shouldThrowExceptionWhenAuthenticationIsNull() {
+    void shouldThrowExceptionWhenAuthenticationIsNull() {
         // Given
         server.setAuthentication(null);
 
@@ -151,7 +151,7 @@ class Cmpv2ServerConfigurationValidatorTest {
     }
 
     @Test
-    public void shouldThrowExceptionWhenIakIsNull() {
+    void shouldThrowExceptionWhenIakIsNull() {
         // Given
         authentication.setIak(null);
 
@@ -160,7 +160,7 @@ class Cmpv2ServerConfigurationValidatorTest {
     }
 
     @Test
-    public void shouldThrowExceptionWhenRvIsNull() {
+    void shouldThrowExceptionWhenRvIsNull() {
         // Given
         authentication.setRv(null);
 

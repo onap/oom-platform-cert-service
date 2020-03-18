@@ -33,7 +33,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Tag(name = "CertificationService")
-public class ReadinessController {
+public final class ReadinessController {
 
     private final CmpServersConfig cmpServersConfig;
 
@@ -50,7 +50,7 @@ public class ReadinessController {
     @Operation(
             summary = "check is container is ready",
             description = "Web endpoint for checking if service is ready to be used.",
-            tags = { "CertificationService" })
+            tags = {"CertificationService"})
     public ResponseEntity<String> checkReady() {
         if (cmpServersConfig.isReady()) {
             return new ResponseEntity<>(HttpStatus.OK);

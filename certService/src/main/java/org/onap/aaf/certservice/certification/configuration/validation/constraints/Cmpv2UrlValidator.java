@@ -23,7 +23,7 @@ package org.onap.aaf.certservice.certification.configuration.validation.constrai
 
 import org.onap.aaf.certservice.certification.configuration.validation.constraints.violations.PortNumberViolation;
 import org.onap.aaf.certservice.certification.configuration.validation.constraints.violations.RequestTypeViolation;
-import org.onap.aaf.certservice.certification.configuration.validation.constraints.violations.URLServerViolation;
+import org.onap.aaf.certservice.certification.configuration.validation.constraints.violations.UrlServerViolation;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -31,25 +31,25 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-class Cmpv2URLValidator implements ConstraintValidator<Cmpv2URL, String> {
+class Cmpv2UrlValidator implements ConstraintValidator<Cmpv2Url, String> {
 
-   private final List<URLServerViolation> violations;
+    private final List<UrlServerViolation> violations;
 
-   public Cmpv2URLValidator() {
+    Cmpv2UrlValidator() {
       this.violations = Arrays.asList(
               new PortNumberViolation(),
               new RequestTypeViolation()
       );
    }
 
-   @Override
-   public boolean isValid(String url, ConstraintValidatorContext context) {
-      AtomicBoolean isValid = new AtomicBoolean(true);
-      violations.forEach(violation -> {
-         if (!violation.validate(url)) {
-            isValid.set(false);
-         }
-      });
-      return isValid.get();
-   }
+    @Override
+    public boolean isValid(String url, ConstraintValidatorContext context) {
+        AtomicBoolean isValid = new AtomicBoolean(true);
+        violations.forEach(violation -> {
+            if (!violation.validate(url)) {
+                isValid.set(false);
+            }
+        });
+        return isValid.get();
+    }
 }

@@ -69,9 +69,9 @@ class CertificationModelFactoryTest {
     @Mock
     private Cmpv2ServerProvider cmpv2ServerProvider;
     @Mock
-    private  CsrModelFactory csrModelFactory;
+    private CsrModelFactory csrModelFactory;
     @Mock
-    private  CertificationProvider certificationProvider;
+    private CertificationProvider certificationProvider;
 
 
     private static String getEncodedString(String testCsr) {
@@ -95,7 +95,7 @@ class CertificationModelFactoryTest {
 
         // When
         CertificationModel certificationModel =
-                certificationModelFactory.createCertificationModel(ENCODED_CSR, ENCODED_PK,TEST_CA);
+                certificationModelFactory.createCertificationModel(ENCODED_CSR, ENCODED_PK, TEST_CA);
 
         // Then
         assertEquals(2, certificationModel.getCertificateChain().size());
@@ -105,7 +105,7 @@ class CertificationModelFactoryTest {
     }
 
     @Test
-    void shouldThrowDecryptionExceptionWhenGivenWrongEncodedCSR()
+    void shouldThrowDecryptionExceptionWhenGivenWrongEncodedCsr()
             throws DecryptionException {
         // Given
         String expectedMessage = "Incorrect CSR, decryption failed";

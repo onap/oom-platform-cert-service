@@ -18,28 +18,28 @@
  * ============LICENSE_END=========================================================
  */
 
-
 package org.onap.aaf.certservice.certification.configuration.validation.constraints.violations;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class PortNumberViolationTest {
 
     private final PortNumberViolation violation = new PortNumberViolation();
 
     @Test
-    public void givenValidPortShouldReturnTrue() {
+    void givenValidPortShouldReturnTrue() {
         //given
-        String validURL1 = "http://127.0.0.1:8080/ejbca/publicweb/cmp/cmp";
-        String validURL2 = "http://127.0.0.1:1/ejbca/publicweb/cmp/cmp";
-        String validURL3 = "http://127.0.0.1:65535/ejbca/publicweb/cmp/cmp";
+        String validUrl1 = "http://127.0.0.1:8080/ejbca/publicweb/cmp/cmp";
+        String validUrl2 = "http://127.0.0.1:1/ejbca/publicweb/cmp/cmp";
+        String validUrl3 = "http://127.0.0.1:65535/ejbca/publicweb/cmp/cmp";
 
         //when
-        boolean result1 = violation.validate(validURL1);
-        boolean result2 = violation.validate(validURL2);
-        boolean result3 = violation.validate(validURL3);
+        boolean result1 = violation.validate(validUrl1);
+        boolean result2 = violation.validate(validUrl2);
+        boolean result3 = violation.validate(validUrl3);
 
         //then
         assertTrue(result1);
@@ -48,26 +48,26 @@ class PortNumberViolationTest {
     }
 
     @Test
-    public void givenEmptyPortShouldReturnTrue() {
+    void givenEmptyPortShouldReturnTrue() {
         //given
-        String validURL = "http://127.0.0.1/ejbca/publicweb/cmp/cmp";
+        String validUrl = "http://127.0.0.1/ejbca/publicweb/cmp/cmp";
 
         //when
-        boolean result = violation.validate(validURL);
+        boolean result = violation.validate(validUrl);
 
         //then
         assertTrue(result);
     }
 
     @Test
-    public void givenInvalidPortShouldReturnFalse() {
+    void givenInvalidPortShouldReturnFalse() {
         //given
-        String invalidURL1 = "http://127.0.0.1:0/ejbca/publicweb/cmp/cmp";
-        String invalidURL2 = "http://127.0.0.1:65536/ejbca/publicweb/cmp/cmp";
+        String invalidUrl1 = "http://127.0.0.1:0/ejbca/publicweb/cmp/cmp";
+        String invalidUrl2 = "http://127.0.0.1:65536/ejbca/publicweb/cmp/cmp";
 
         //when
-        boolean result1 = violation.validate(invalidURL1);
-        boolean result2 = violation.validate(invalidURL2);
+        boolean result1 = violation.validate(invalidUrl1);
+        boolean result2 = violation.validate(invalidUrl2);
 
         //then
         assertFalse(result1);

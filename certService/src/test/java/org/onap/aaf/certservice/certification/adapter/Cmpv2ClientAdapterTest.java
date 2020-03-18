@@ -22,7 +22,6 @@ package org.onap.aaf.certservice.certification.adapter;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.security.NoSuchProviderException;
 import java.security.PrivateKey;
@@ -32,6 +31,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+
 import org.apache.commons.io.IOUtils;
 import org.bouncycastle.asn1.x509.Certificate;
 import org.bouncycastle.cert.X509CertificateHolder;
@@ -51,7 +51,7 @@ import org.onap.aaf.certservice.certification.model.CertificationModel;
 import org.onap.aaf.certservice.certification.model.CsrModel;
 import org.onap.aaf.certservice.cmpv2client.api.CmpClient;
 import org.onap.aaf.certservice.cmpv2client.exceptions.CmpClientException;
-import org.onap.aaf.certservice.cmpv2client.external.CSRMeta;
+import org.onap.aaf.certservice.cmpv2client.external.CsrMeta;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
@@ -64,7 +64,7 @@ class Cmpv2ClientAdapterTest {
     @Mock
     private Cmpv2Server server;
     @Mock
-    private RSAContentSignerBuilder rsaContentSignerBuilder;
+    private RsaContentSignerBuilder rsaContentSignerBuilder;
     @Mock
     private X509CertificateBuilder x509CertificateBuilder;
     @Mock
@@ -84,9 +84,9 @@ class Cmpv2ClientAdapterTest {
     @Mock
     private CertificateFactoryProvider certificateFactoryProvider;
     @Mock
-    private CSRMetaBuilder csrMetaBuilder;
+    private CsrMetaBuilder csrMetaBuilder;
     @Mock
-    private CSRMeta csrMeta;
+    private CsrMeta csrMeta;
 
     @InjectMocks
     private Cmpv2ClientAdapter adapter;
@@ -97,7 +97,7 @@ class Cmpv2ClientAdapterTest {
     @Test
     void adapterShouldRethrowClientExceptionOnFailure()
             throws CmpClientException, IOException, OperatorCreationException, CertificateException,
-                           NoSuchProviderException {
+            NoSuchProviderException {
         // Given
         stubInternalProperties();
 
@@ -112,7 +112,7 @@ class Cmpv2ClientAdapterTest {
     @Test
     void shouldConvertToCertificationModel()
             throws OperatorCreationException, CertificateException, NoSuchProviderException, IOException,
-                           CmpClientException, Cmpv2ClientAdapterException {
+            CmpClientException, Cmpv2ClientAdapterException {
         // Given
         stubInternalProperties();
 
@@ -139,7 +139,7 @@ class Cmpv2ClientAdapterTest {
     @Test
     void adapterShouldThrowClientAdapterExceptionOnFailure()
             throws OperatorCreationException, CertificateException, NoSuchProviderException, IOException,
-                           CmpClientException {
+            CmpClientException {
         // Given
         stubInternalProperties();
 

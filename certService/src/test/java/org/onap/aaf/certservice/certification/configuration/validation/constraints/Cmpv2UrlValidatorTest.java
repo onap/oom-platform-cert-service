@@ -18,28 +18,40 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.certification;
 
-import org.bouncycastle.pkcs.PKCS10CertificationRequest;
-import org.bouncycastle.util.encoders.DecoderException;
-import org.bouncycastle.util.io.pem.PemObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+package org.onap.aaf.certservice.certification.configuration.validation.constraints;
 
-import java.io.IOException;
-import java.util.Optional;
+import org.junit.jupiter.api.Test;
 
-public class PKCS10CertificationRequestFactory {
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(PKCS10CertificationRequestFactory.class);
 
-    public Optional<PKCS10CertificationRequest>  createKCS10CertificationRequest(PemObject pemObject) {
-        try {
-            LOGGER.debug("Creating certification request from pem object");
-            return Optional.of(new PKCS10CertificationRequest(pemObject.getContent()));
-        } catch (DecoderException | IOException e) {
-            LOGGER.error("Exception occurred during creation of certification request:", e);
-            return Optional.empty();
-        }
+class Cmpv2UrlValidatorTest {
+
+    private final Cmpv2UrlValidator validator = new Cmpv2UrlValidator();
+
+    @Test
+    void givenCorrectUrlWhenValidatingShouldReturnTrue() {
+        //given
+        String url = "http://127.0.0.1/ejbca/publicweb/cmp/cmp";
+
+        //when
+        boolean result = validator.isValid(url, null);
+
+        //then
+        assertTrue(result);
+    }
+
+    @Test
+    void givenIncorrectUrlWhenValidatingShouldReturnFalse() {
+        //given
+        String url = "httttp://127.0.0.1:80000/ejbca/publicweb/cmp/cmp";
+
+        //when
+        boolean result = validator.isValid(url, null);
+
+        //then
+        assertFalse(result);
     }
 }

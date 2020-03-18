@@ -25,11 +25,13 @@ import org.hibernate.validator.constraints.Length;
 
 public class Authentication {
 
+    private static final int MAX_IAK_RV_LENGTH = 256;
+
     @NotNull
-    @Length(min = 1, max = 256)
+    @Length(min = 1, max = MAX_IAK_RV_LENGTH)
     private String iak;
     @NotNull
-    @Length(min = 1, max = 256)
+    @Length(min = 1, max = MAX_IAK_RV_LENGTH)
     private String rv;
 
     public String getIak() {
@@ -50,9 +52,9 @@ public class Authentication {
 
     @Override
     public String toString() {
-        return "Authentication{" +
-                "  iak=*****" +
-                ", rv=*****" +
-                '}';
+        return "Authentication{"
+                + "  iak=*****"
+                + ", rv=*****"
+                + '}';
     }
 }

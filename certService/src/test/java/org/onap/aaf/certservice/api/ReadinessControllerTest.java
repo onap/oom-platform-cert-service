@@ -42,7 +42,8 @@ public class ReadinessControllerTest {
         Mockito.when(cmpServersConfig.isReady()).thenReturn(true);
 
         // Then
-        assertThat(new ReadinessController(cmpServersConfig).checkReady().getStatusCode()).isEqualTo(HttpStatus.OK);;
+        assertThat(new ReadinessController(cmpServersConfig).checkReady().getStatusCode()).isEqualTo(HttpStatus.OK);
+        ;
     }
 
     @Test
@@ -51,7 +52,8 @@ public class ReadinessControllerTest {
         Mockito.when(cmpServersConfig.isReady()).thenReturn(false);
 
         // Then
-        assertThat(new ReadinessController(cmpServersConfig).checkReady().getStatusCode()).isEqualTo(HttpStatus.SERVICE_UNAVAILABLE);;
+        assertThat(new ReadinessController(cmpServersConfig).checkReady().getStatusCode()).isEqualTo(HttpStatus.SERVICE_UNAVAILABLE);
+        ;
     }
 
 }

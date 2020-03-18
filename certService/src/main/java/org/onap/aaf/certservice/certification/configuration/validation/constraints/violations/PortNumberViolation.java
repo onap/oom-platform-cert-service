@@ -23,7 +23,7 @@ package org.onap.aaf.certservice.certification.configuration.validation.constrai
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class PortNumberViolation implements URLServerViolation {
+public class PortNumberViolation implements UrlServerViolation {
 
     private static final int MIN_PORT = 1;
     private static final int MAX_PORT = 65535;

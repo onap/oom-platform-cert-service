@@ -24,6 +24,7 @@ public class CsrDecryptionException extends DecryptionException {
     public CsrDecryptionException(String message, Throwable cause) {
         super(message, cause);
     }
+
     public CsrDecryptionException(String message) {
         super(message);
     }

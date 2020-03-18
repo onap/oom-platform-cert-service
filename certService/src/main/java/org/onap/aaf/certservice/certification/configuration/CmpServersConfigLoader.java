@@ -40,7 +40,7 @@ class CmpServersConfigLoader {
     private final Cmpv2ServerConfigurationValidator validator;
 
     @Autowired
-    public CmpServersConfigLoader(Cmpv2ServerConfigurationValidator validator) {
+    CmpServersConfigLoader(Cmpv2ServerConfigurationValidator validator) {
         this.validator = validator;
     }
 

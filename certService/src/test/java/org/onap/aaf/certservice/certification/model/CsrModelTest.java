@@ -24,7 +24,7 @@ import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
 import org.bouncycastle.pkcs.PKCS10CertificationRequest;
 import org.bouncycastle.util.io.pem.PemObject;
 import org.junit.jupiter.api.Test;
-import org.onap.aaf.certservice.certification.PKCS10CertificationRequestFactory;
+import org.onap.aaf.certservice.certification.Pkcs10CertificationRequestFactory;
 import org.onap.aaf.certservice.certification.PemObjectFactory;
 import org.onap.aaf.certservice.certification.exception.CsrDecryptionException;
 import org.onap.aaf.certservice.certification.exception.DecryptionException;
@@ -44,10 +44,11 @@ import static org.onap.aaf.certservice.certification.TestData.TEST_PK;
 
 class CsrModelTest {
 
-    private final PKCS10CertificationRequestFactory certificationRequestFactory
-            = new PKCS10CertificationRequestFactory();
+    private final Pkcs10CertificationRequestFactory certificationRequestFactory
+            = new Pkcs10CertificationRequestFactory();
     private final PemObjectFactory pemObjectFactory
             = new PemObjectFactory();
+
     @Test
     void shouldByConstructedAndReturnProperFields() throws DecryptionException, IOException {
         // Given
@@ -175,7 +176,7 @@ class CsrModelTest {
     private PKCS10CertificationRequest generateTestCertificationRequest() throws DecryptionException {
         return pemObjectFactory.createPemObject(TEST_CSR)
                 .flatMap(
-                        certificationRequestFactory::createKCS10CertificationRequest
+                        certificationRequestFactory::createPkcs10CertificationRequest
                 ).orElseThrow(
                         () -> new DecryptionException("Incorrect CSR, decryption failed")
                 );

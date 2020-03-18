@@ -40,8 +40,8 @@ public class CsrModelFactory {
 
     private final PemObjectFactory pemObjectFactory
             = new PemObjectFactory();
-    private final PKCS10CertificationRequestFactory certificationRequestFactory
-            = new PKCS10CertificationRequestFactory();
+    private final Pkcs10CertificationRequestFactory certificationRequestFactory
+            = new Pkcs10CertificationRequestFactory();
 
 
     public CsrModel createCsrModel(StringBase64 csr, StringBase64 privateKey)
@@ -57,15 +57,15 @@ public class CsrModelFactory {
         return privateKey.asString()
                 .flatMap(pemObjectFactory::createPemObject)
                 .orElseThrow(
-                () -> new KeyDecryptionException("Incorrect Key, decryption failed")
-        );
+                        () -> new KeyDecryptionException("Incorrect Key, decryption failed")
+                );
     }
 
     private PKCS10CertificationRequest decodeCsr(StringBase64 csr)
             throws CsrDecryptionException {
         return csr.asString()
                 .flatMap(pemObjectFactory::createPemObject)
-                .flatMap(certificationRequestFactory::createKCS10CertificationRequest)
+                .flatMap(certificationRequestFactory::createPkcs10CertificationRequest)
                 .orElseThrow(
                         () -> new CsrDecryptionException("Incorrect CSR, decryption failed")
                 );
@@ -84,20 +84,28 @@ public class CsrModelFactory {
             try {
                 String decodedString = new String(decoder.decode(value));
                 return Optional.of(decodedString);
-            } catch(RuntimeException e) {
+            } catch (RuntimeException e) {
                 LOGGER.error("Exception occurred during decoding:", e);
                 return Optional.empty();
             }
         }
 
         @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            StringBase64 that = (StringBase64) o;
+        public boolean equals(Object otherObject) {
+            if (this == otherObject) {
+                return true;
+            }
+            if (otherObject == null || getClass() != otherObject.getClass()) {
+                return false;
+            }
+            StringBase64 that = (StringBase64) otherObject;
             return Objects.equals(value, that.value);
         }
 
+        @Override
+        public int hashCode() {
+            return value.hashCode();
+        }
     }
 
 }

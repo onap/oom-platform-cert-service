@@ -53,7 +53,7 @@ public class X509CertificateBuilderTest {
         CsrModel testCsrModel = createCsrModel();
         PKCS10CertificationRequest testCertificationRequest = testCsrModel.getCsr();
         PrivateKey testPrivateKey = testCsrModel.getPrivateKey();
-        RSAContentSignerBuilder rsaContentSignerBuilder = new RSAContentSignerBuilder();
+        RsaContentSignerBuilder rsaContentSignerBuilder = new RsaContentSignerBuilder();
         ContentSigner createdContentSigner = rsaContentSignerBuilder.build(testCertificationRequest, testPrivateKey);
 
         // When

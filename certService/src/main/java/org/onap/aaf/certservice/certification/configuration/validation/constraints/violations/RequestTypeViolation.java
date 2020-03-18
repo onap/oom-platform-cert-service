@@ -27,9 +27,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class RequestTypeViolation implements URLServerViolation {
+public class RequestTypeViolation implements UrlServerViolation {
 
-    private final static List<String> VALID_REQUESTS = Collections.singletonList("http");
+    private static final List<String> VALID_REQUESTS = Collections.singletonList("http");
 
     @Override
     public boolean validate(String serverUrl) {

@@ -25,7 +25,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.PropertySource;
 
 @SpringBootApplication
-@PropertySource(value={"classpath:application.properties"})
+@PropertySource(value = {"classpath:application.properties"})
 public class CertServiceApplication {
 
     // We are excluding this line in Sonar due to fact that

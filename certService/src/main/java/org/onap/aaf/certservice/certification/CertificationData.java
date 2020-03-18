@@ -23,7 +23,8 @@ package org.onap.aaf.certservice.certification;
 
 final class CertificationData {
 
-    private CertificationData() {}
+    private CertificationData() {
+    }
 
     private static final String BEGIN_CERTIFICATE = "-----BEGIN CERTIFICATE-----\n";
     private static final String END_CERTIFICATE = "-----END CERTIFICATE-----";

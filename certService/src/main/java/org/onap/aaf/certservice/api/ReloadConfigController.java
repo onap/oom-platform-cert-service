@@ -37,7 +37,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Tag(name = "CertificationService")
-public class ReloadConfigController {
+public final class ReloadConfigController {
 
     private final CmpServersConfig cmpServersConfig;
 
@@ -55,7 +55,7 @@ public class ReloadConfigController {
     @Operation(
             summary = "reload service configuration from file",
             description = "Web endpoint for performing configuration reload. Used to reload configuration file from file.",
-            tags = { "CertificationService" })
+            tags = {"CertificationService"})
     public ResponseEntity<String> reloadConfiguration() throws CmpServersConfigLoadingException {
         cmpServersConfig.reloadConfiguration();
         return new ResponseEntity<>(HttpStatus.OK);

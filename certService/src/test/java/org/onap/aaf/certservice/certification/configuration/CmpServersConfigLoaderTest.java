@@ -25,6 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
 import java.util.Map;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.onap.aaf.certservice.CertServiceApplication;
@@ -79,8 +80,8 @@ class CmpServersConfigLoaderTest {
     void shouldThrowExceptionWhenFileMissing() {
         // When
         Exception exception = assertThrows(
-            CmpServersConfigLoadingException.class,
-            () -> configLoader.load(NONEXISTENT_CONFIG_FILENAME));
+                CmpServersConfigLoadingException.class,
+                () -> configLoader.load(NONEXISTENT_CONFIG_FILENAME));
 
         // Then
         assertThat(exception.getMessage()).contains("Exception occurred during CMP Servers configuration loading");
@@ -93,8 +94,8 @@ class CmpServersConfigLoaderTest {
 
         // When
         Exception exception = assertThrows(
-            CmpServersConfigLoadingException.class,
-            () -> configLoader.load(path));
+                CmpServersConfigLoadingException.class,
+                () -> configLoader.load(path));
 
         // Then
         assertThat(exception.getMessage()).contains("Validation of CMPv2 servers configuration failed");

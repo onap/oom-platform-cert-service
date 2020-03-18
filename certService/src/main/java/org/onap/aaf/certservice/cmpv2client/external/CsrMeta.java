@@ -20,17 +20,19 @@
  * ============LICENSE_END====================================================
  *
  */
+
 package org.onap.aaf.certservice.cmpv2client.external;
 
 import java.security.KeyPair;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.asn1.x500.X500NameBuilder;
 import org.bouncycastle.asn1.x500.style.BCStyle;
 import org.bouncycastle.asn1.x509.Certificate;
 
-public class CSRMeta {
+public class CsrMeta {
 
     private String cn;
     private String mechID;
@@ -41,7 +43,7 @@ public class CSRMeta {
     private String issuerEmail;
     private String password;
     private String caUrl;
-    private List<RDN> rdns;
+    private List<Rdn> rdns;
     private ArrayList<String> sanList = new ArrayList<>();
     private KeyPair keyPair;
     private X500Name name;
@@ -49,7 +51,7 @@ public class CSRMeta {
     private Certificate certificate;
     private String senderKid;
 
-    public CSRMeta(List<RDN> rdns) {
+    public CsrMeta(List<Rdn> rdns) {
         this.rdns = rdns;
     }
 
@@ -65,7 +67,7 @@ public class CSRMeta {
                     nameBuilder.addRDN(BCStyle.OU, mechID + ':' + environment);
                 }
             }
-            for (RDN rdn : rdns) {
+            for (Rdn rdn : rdns) {
                 nameBuilder.addRDN(rdn.getAoi(), rdn.getValue());
             }
             name = nameBuilder.build();
@@ -85,8 +87,8 @@ public class CSRMeta {
         return issuerName;
     }
 
-    public void addSan(String v) {
-        sanList.add(v);
+    public void addSan(String san) {
+        sanList.add(san);
     }
 
     public List<String> getSans() {

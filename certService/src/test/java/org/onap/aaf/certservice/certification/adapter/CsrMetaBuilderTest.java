@@ -28,7 +28,7 @@ import org.onap.aaf.certservice.certification.configuration.model.Authentication
 import org.onap.aaf.certservice.certification.configuration.model.CaMode;
 import org.onap.aaf.certservice.certification.configuration.model.Cmpv2Server;
 import org.onap.aaf.certservice.certification.model.CsrModel;
-import org.onap.aaf.certservice.cmpv2client.external.CSRMeta;
+import org.onap.aaf.certservice.cmpv2client.external.CsrMeta;
 
 import java.security.PrivateKey;
 import java.security.PublicKey;
@@ -39,16 +39,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class CSRMetaBuilderTest {
+public class CsrMetaBuilderTest {
 
-    private CSRMetaBuilder csrMetaBuilder;
+    private CsrMetaBuilder csrMetaBuilder;
 
     private static final String TEST_CA = "testCA";
     private static final X500Name TEST_SUBJECT_DATA = new X500Name("CN=testIssuer");
 
     @BeforeEach
     void setUp() {
-        csrMetaBuilder = new CSRMetaBuilder();
+        csrMetaBuilder = new CsrMetaBuilder();
     }
 
     @Test
@@ -63,23 +63,23 @@ public class CSRMetaBuilderTest {
         when(testCsrModel.getPrivateKey()).thenReturn(mockPrivateKey);
         PublicKey mockPublicKey = mock(PublicKey.class);
         when(testCsrModel.getPublicKey()).thenReturn(mockPublicKey);
-        List<String> testSans = Arrays.asList("SAN01","SAN02");
+        List<String> testSans = Arrays.asList("SAN01", "SAN02");
         when(testCsrModel.getSans()).thenReturn(testSans);
 
         when(testCsrModel.getSubjectData()).thenReturn(TEST_SUBJECT_DATA);
 
         // When
-        CSRMeta createdCSRMeta = csrMetaBuilder.build(testCsrModel, testServer);
+        CsrMeta createdCsrMeta = csrMetaBuilder.build(testCsrModel, testServer);
 
         // Then
-        assertThat(createdCSRMeta.getPassword()).isEqualTo(testServer.getAuthentication().getIak());
-        assertThat(createdCSRMeta.getSenderKid()).isEqualTo(testServer.getAuthentication().getRv());
-        assertThat(createdCSRMeta.getCaUrl()).isEqualTo(testServer.getUrl());
-        assertThat(createdCSRMeta.getSans()).containsAll(testSans);
-        assertThat(createdCSRMeta.getKeyPair().getPrivate()).isEqualTo(mockPrivateKey);
-        assertThat(createdCSRMeta.getKeyPair().getPublic()).isEqualTo(mockPublicKey);
-        assertThat(createdCSRMeta.getX500Name()).isEqualTo(TEST_SUBJECT_DATA);
-        assertThat(createdCSRMeta.getIssuerX500Name()).isEqualTo(TEST_SUBJECT_DATA);
+        assertThat(createdCsrMeta.getPassword()).isEqualTo(testServer.getAuthentication().getIak());
+        assertThat(createdCsrMeta.getSenderKid()).isEqualTo(testServer.getAuthentication().getRv());
+        assertThat(createdCsrMeta.getCaUrl()).isEqualTo(testServer.getUrl());
+        assertThat(createdCsrMeta.getSans()).containsAll(testSans);
+        assertThat(createdCsrMeta.getKeyPair().getPrivate()).isEqualTo(mockPrivateKey);
+        assertThat(createdCsrMeta.getKeyPair().getPublic()).isEqualTo(mockPublicKey);
+        assertThat(createdCsrMeta.getX500Name()).isEqualTo(TEST_SUBJECT_DATA);
+        assertThat(createdCsrMeta.getIssuerX500Name()).isEqualTo(TEST_SUBJECT_DATA);
     }
 
     private Cmpv2Server createTestServer() {

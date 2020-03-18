@@ -26,30 +26,32 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-/** Generic Builder Class for creating CMP Message. */
-public class CmpMessageBuilder<T> {
+/**
+ * Generic Builder Class for creating CMP Message.
+ */
+public final class CmpMessageBuilder<T> {
 
-  private final Supplier<T> instantiator;
-  private final List<Consumer<T>> instanceModifiers = new ArrayList<>();
+    private final Supplier<T> instantiator;
+    private final List<Consumer<T>> instanceModifiers = new ArrayList<>();
 
-  public CmpMessageBuilder(Supplier<T> instantiator) {
-    this.instantiator = instantiator;
-  }
+    public CmpMessageBuilder(Supplier<T> instantiator) {
+        this.instantiator = instantiator;
+    }
 
-  public static <T> CmpMessageBuilder<T> of(Supplier<T> instantiator) {
-    return new CmpMessageBuilder<>(instantiator);
-  }
+    public static <T> CmpMessageBuilder<T> of(Supplier<T> instantiator) {
+        return new CmpMessageBuilder<>(instantiator);
+    }
 
-  public <U> CmpMessageBuilder<T> with(BiConsumer<T, U> consumer, U value) {
-    Consumer<T> c = instance -> consumer.accept(instance, value);
-    instanceModifiers.add(c);
-    return this;
-  }
+    public <U> CmpMessageBuilder<T> with(BiConsumer<T, U> consumer, U value) {
+        Consumer<T> valueConsumer = instance -> consumer.accept(instance, value);
+        instanceModifiers.add(valueConsumer);
+        return this;
+    }
 
-  public T build() {
-    T value = instantiator.get();
-    instanceModifiers.forEach(modifier -> modifier.accept(value));
-    instanceModifiers.clear();
-    return value;
-  }
+    public T build() {
+        T value = instantiator.get();
+        instanceModifiers.forEach(modifier -> modifier.accept(value));
+        instanceModifiers.clear();
+        return value;
+    }
 }
