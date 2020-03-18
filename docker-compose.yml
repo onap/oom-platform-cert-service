@@ -9,23 +9,20 @@ services:
       - "80:8080"
       - "443:8443"
     volumes:
-      - ./src/main/resources/scripts/:/opt/primekey/scripts
-    command: bash -c "
-      /opt/primekey/bin/start.sh
-      "
+      - ./compose-resources/ejbca-configuration.sh:/opt/primekey/scripts/ejbca-configuration.sh
     healthcheck:
       test: ["CMD-SHELL", "curl -kI https://localhost:8443/ejbca/publicweb/healthcheck/ejbcahealth"]
       interval: 10s
       timeout: 3s
-      retries: 9
+      retries: 15
     networks:
       - certservice
 
   certservice:
     image: onap/org.onap.aaf.certservice.aaf-certservice-api:latest
-    volumes:
-      - ./helm/aaf-cert-service/resources/cmpServers.json:/etc/onap/aaf/certservice/cmpServers.json
     container_name: aafcert-service
+    volumes:
+      - ./certService/helm/aaf-cert-service/resources/cmpServers.json:/etc/onap/aaf/certservice/cmpServers.json
     ports:
       - "8080:8080"
     depends_on:
