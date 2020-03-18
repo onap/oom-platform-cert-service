@@ -25,8 +25,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
-import static org.onap.aaf.certservice.client.api.ExitCode.CLIENT_CONFIGURATION_EXCEPTION;
-import static org.onap.aaf.certservice.client.api.ExitCode.SUCCESS_EXIT_CODE;
+import static org.onap.aaf.certservice.client.api.ExitStatus.CLIENT_CONFIGURATION_EXCEPTION;
+import static org.onap.aaf.certservice.client.api.ExitStatus.SUCCESS;
 
 @ExtendWith(MockitoExtension.class)
 class CertServiceClientTest {
@@ -35,13 +35,13 @@ class CertServiceClientTest {
     @Test
     public void shouldExitWithDefinedExitCode_onRunCallWhenNoEnvsPresent() {
         //  given
-        doNothing().when(appExitHandler).exit(CLIENT_CONFIGURATION_EXCEPTION.getValue());
-        doNothing().when(appExitHandler).exit(SUCCESS_EXIT_CODE.getValue());
+        doNothing().when(appExitHandler).exit(CLIENT_CONFIGURATION_EXCEPTION);
+        doNothing().when(appExitHandler).exit(SUCCESS);
         CertServiceClient certServiceClient = new CertServiceClient(appExitHandler);
         //  when
         certServiceClient.run();
         //  then
-        verify(appExitHandler).exit(CLIENT_CONFIGURATION_EXCEPTION.getValue());
-        verify(appExitHandler).exit(SUCCESS_EXIT_CODE.getValue());
+        verify(appExitHandler).exit(CLIENT_CONFIGURATION_EXCEPTION);
+        verify(appExitHandler).exit(SUCCESS);
     }
 }

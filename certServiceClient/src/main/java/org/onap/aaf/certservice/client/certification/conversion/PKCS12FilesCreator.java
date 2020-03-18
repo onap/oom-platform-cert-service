@@ -66,7 +66,7 @@ class PKCS12FilesCreator {
         try (FileOutputStream fos = new FileOutputStream(path)) {
             fos.write(data);
         } catch (IOException e) {
-            LOGGER.error("PKCS12 files creation failed", e);
+            LOGGER.error("PKCS12 files creation failed, exception message: {}", e.getMessage());
             throw new PemToPKCS12ConverterException(e);
         }
     }

@@ -69,11 +69,11 @@ docker logs aaf-certservice-client
 ```
 0	Success
 1	Invalid client configuration
-2	Invalid CSR data 
-3	Failed key pair generation
-4	Failed CSR generation
-5	API return unsuccessful response
-6	Problem with Http Client connection
-7	Failed PKCS12 conversion
-8	Failed Private Key to PEM Encoding
+2	Invalid CSR configuration 
+3	Fail in key pair generation
+4	Fail in  CSR generation
+5	CertService HTTP unsuccessful response
+6	Internal HTTP Client connection problem
+7	Fail in PKCS12 conversion
+8	Fail in Private Key to PEM Encoding
 ```

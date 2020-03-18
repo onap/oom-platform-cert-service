@@ -41,7 +41,7 @@ public class KeyPairFactory {
         try {
             return createKeyPairGenerator().generateKeyPair();
         } catch (NoSuchAlgorithmException e) {
-            LOGGER.error("Generation of KeyPair failed, exception message: " + e.getMessage());
+            LOGGER.error("Generation of KeyPair failed, exception message: {}" , e.getMessage());
             throw new KeyPairGenerationException(e);
         }
     }

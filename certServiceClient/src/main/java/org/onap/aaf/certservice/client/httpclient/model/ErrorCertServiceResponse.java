@@ -22,19 +22,14 @@ package org.onap.aaf.certservice.client.httpclient.model;
 
 public class ErrorCertServiceResponse {
 
-    private final String message;
-    private final String path;
+    private final String errorMessage;
 
-    public ErrorCertServiceResponse(String message, String path) {
-        this.message = message;
-        this.path = path;
+    public ErrorCertServiceResponse(String errorMessage) {
+        this.errorMessage = errorMessage;
     }
 
     public String getMessage() {
-        return message;
+        return errorMessage;
     }
 
-    public String getPath() {
-        return path;
-    }
 }

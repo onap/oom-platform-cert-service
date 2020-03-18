@@ -79,7 +79,7 @@ class PemToPKCS12Converter {
             ks.store(bos, password.toCharArray());
             return bos.toByteArray();
         } catch (IOException | CertificateException | NoSuchAlgorithmException | KeyStoreException e) {
-            LOGGER.error("Pem to PKCS12 converter failed", e);
+            LOGGER.error("Pem to PKCS12 converter failed, exception message: {}", e.getMessage());
             throw new PemToPKCS12ConverterException(e);
         }
     }
@@ -126,7 +126,7 @@ class PemToPKCS12Converter {
                 .setProvider(new BouncyCastleProvider())
                 .getCertificate(certHolder);
         } catch (IOException | CertificateException e) {
-            LOGGER.error("Certificates conversion failed", e);
+            LOGGER.error("Certificates conversion failed, exception message: {}", e.getMessage());
             throw new PemToPKCS12ConverterException(e);
         }
     }

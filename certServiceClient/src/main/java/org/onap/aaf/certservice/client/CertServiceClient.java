@@ -36,12 +36,16 @@ import org.onap.aaf.certservice.client.configuration.model.CsrConfiguration;
 import org.onap.aaf.certservice.client.httpclient.CloseableHttpClientProvider;
 import org.onap.aaf.certservice.client.httpclient.HttpClient;
 import org.onap.aaf.certservice.client.httpclient.model.CertServiceResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import static org.onap.aaf.certservice.client.api.ExitCode.SUCCESS_EXIT_CODE;
+import static org.onap.aaf.certservice.client.api.ExitStatus.SUCCESS;
 import static org.onap.aaf.certservice.client.certification.EncryptionAlgorithmConstants.KEY_SIZE;
 import static org.onap.aaf.certservice.client.certification.EncryptionAlgorithmConstants.RSA_ENCRYPTION_ALGORITHM;
 
 public class CertServiceClient {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(CertServiceClient.class);
 
     private AppExitHandler appExitHandler;
 
@@ -74,8 +78,9 @@ public class CertServiceClient {
             filesCreator.createKeystore(certServiceData.getCertificateChain(), keyPair.getPrivate());
             filesCreator.createTruststore(certServiceData.getTrustedCertificates());
         } catch (ExitableException e) {
-            appExitHandler.exit(e.applicationExitCode());
+            LOGGER.error("Cert Service Client fail in execution: ", e);
+            appExitHandler.exit(e.applicationExitStatus());
         }
-        appExitHandler.exit(SUCCESS_EXIT_CODE.getValue());
+        appExitHandler.exit(SUCCESS);
     }
 }

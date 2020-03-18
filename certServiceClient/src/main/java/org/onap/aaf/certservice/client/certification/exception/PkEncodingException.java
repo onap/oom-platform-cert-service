@@ -19,17 +19,17 @@
 
 package org.onap.aaf.certservice.client.certification.exception;
 
-import org.onap.aaf.certservice.client.api.ExitCode;
+import org.onap.aaf.certservice.client.api.ExitStatus;
 import org.onap.aaf.certservice.client.api.ExitableException;
 
 public class PkEncodingException extends ExitableException {
-    private static final ExitCode EXIT_CODE = ExitCode.PK_TO_PEM_ENCODING_EXCEPTION;
+    private static final ExitStatus EXIT_STATUS = ExitStatus.PK_TO_PEM_ENCODING_EXCEPTION;
 
     public PkEncodingException(Throwable e) {
         super(e);
     }
 
-    public int applicationExitCode() {
-        return EXIT_CODE.getValue();
+    public ExitStatus applicationExitStatus() {
+        return EXIT_STATUS;
     }
 }

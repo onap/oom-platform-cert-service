@@ -20,23 +20,22 @@
 
 package org.onap.aaf.certservice.client.httpclient.exception;
 
-import org.onap.aaf.certservice.client.api.ExitCode;
+import org.onap.aaf.certservice.client.api.ExitStatus;
 import org.onap.aaf.certservice.client.api.ExitableException;
 
 public class CertServiceApiResponseException extends ExitableException {
-    private static final ExitCode EXIT_CODE = ExitCode.CERT_SERVICE_API_CONNECTION_EXCEPTION;
+    private static final ExitStatus EXIT_STATUS = ExitStatus.CERT_SERVICE_API_CONNECTION_EXCEPTION;
 
-    public CertServiceApiResponseException(String url, int responseCode, String messageFromAPI) {
+    public CertServiceApiResponseException(int responseCode, String messageFromAPI) {
 
-        super(String.format("Request failed for URL '%s'. Response code: %d . Message from API: %s",
-                url,
+        super(String.format("CertService HTTP unsuccessful response. Response code: %d . Message from Service: %s",
                 responseCode,
                 messageFromAPI));
     }
 
     @Override
-    public int applicationExitCode() {
-        return EXIT_CODE.getValue();
+    public ExitStatus applicationExitStatus() {
+        return EXIT_STATUS;
     }
 
 }

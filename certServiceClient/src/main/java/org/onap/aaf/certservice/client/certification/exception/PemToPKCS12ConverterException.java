@@ -19,11 +19,11 @@
 
 package org.onap.aaf.certservice.client.certification.exception;
 
-import org.onap.aaf.certservice.client.api.ExitCode;
+import org.onap.aaf.certservice.client.api.ExitStatus;
 import org.onap.aaf.certservice.client.api.ExitableException;
 
 public class PemToPKCS12ConverterException extends ExitableException {
-    private static final ExitCode EXIT_CODE = ExitCode.PKCS12_CONVERSION_EXCEPTION;
+    private static final ExitStatus EXIT_STATUS = ExitStatus.PKCS12_CONVERSION_EXCEPTION;
 
     public PemToPKCS12ConverterException(Throwable e) {
         super(e);
@@ -33,7 +33,7 @@ public class PemToPKCS12ConverterException extends ExitableException {
     }
 
     @Override
-    public int applicationExitCode() {
-        return EXIT_CODE.getValue();
+    public ExitStatus applicationExitStatus() {
+        return EXIT_STATUS;
     }
 }

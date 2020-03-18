@@ -20,18 +20,18 @@
 
 package org.onap.aaf.certservice.client.httpclient.exception;
 
-import org.onap.aaf.certservice.client.api.ExitCode;
+import org.onap.aaf.certservice.client.api.ExitStatus;
 import org.onap.aaf.certservice.client.api.ExitableException;
 
 public class HttpClientException extends ExitableException {
-    private static final ExitCode EXIT_CODE = ExitCode.HTTP_CLIENT_EXCEPTION;
+    private static final ExitStatus EXIT_STATUS = ExitStatus.HTTP_CLIENT_EXCEPTION;
 
-    public HttpClientException(Throwable e) {
+    public HttpClientException(Throwable e){
         super(e);
     }
 
     @Override
-    public int applicationExitCode() {
-        return EXIT_CODE.getValue();
+    public ExitStatus applicationExitStatus() {
+        return EXIT_STATUS;
     }
 }

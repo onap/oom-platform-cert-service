@@ -18,17 +18,17 @@
  */
 package org.onap.aaf.certservice.client.certification.exception;
 
-import org.onap.aaf.certservice.client.api.ExitCode;
+import org.onap.aaf.certservice.client.api.ExitStatus;
 import org.onap.aaf.certservice.client.api.ExitableException;
 
 public class KeyPairGenerationException extends ExitableException {
-    private static final ExitCode EXIT_CODE = ExitCode.KEY_PAIR_GENERATION_EXCEPTION;
+    private static final ExitStatus EXIT_STATUS = ExitStatus.KEY_PAIR_GENERATION_EXCEPTION;
 
     public KeyPairGenerationException(Throwable e) {
         super(e);
     }
 
-    public int applicationExitCode() {
-        return EXIT_CODE.getValue();
+    public ExitStatus applicationExitStatus() {
+        return EXIT_STATUS;
     }
 }

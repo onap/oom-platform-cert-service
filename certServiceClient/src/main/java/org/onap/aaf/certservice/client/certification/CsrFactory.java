@@ -40,9 +40,7 @@ import org.slf4j.LoggerFactory;
 import javax.security.auth.x500.X500Principal;
 import java.io.IOException;
 import java.io.StringWriter;
-import java.nio.charset.StandardCharsets;
 import java.security.KeyPair;
-import java.util.Base64;
 import java.util.Optional;
 
 import static org.onap.aaf.certservice.client.certification.EncryptionAlgorithmConstants.COMMON_NAME;

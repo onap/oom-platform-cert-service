@@ -27,7 +27,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.onap.aaf.certservice.client.api.ExitCode;
 import org.onap.aaf.certservice.client.httpclient.exception.CertServiceApiResponseException;
 import org.onap.aaf.certservice.client.httpclient.exception.HttpClientException;
 import org.onap.aaf.certservice.client.httpclient.model.CertServiceResponse;
@@ -38,9 +37,8 @@ import java.util.List;
 
 import static java.net.HttpURLConnection.HTTP_BAD_REQUEST;
 import static java.net.HttpURLConnection.HTTP_OK;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -89,60 +87,49 @@ class HttpClientTest {
         List<String> trustedCertificate = certServiceResponse.getTrustedCertificates();
 
         // then
-        assertNotNull(certServiceResponse);
+        assertThat(certServiceResponse).isNotNull();
 
         final int expectedTwoElements = 2;
-        assertEquals(expectedTwoElements, certificateChain.size());
-        assertEquals(expectedTwoElements, trustedCertificate.size());
 
-        assertEquals(EXPECTED_FIRST_ELEMENT_OF_CERTIFICATE_CHAIN, certificateChain.get(0));
-        assertEquals(EXPECTED_FIRST_ELEMENT_OF_TRUSTED_CERTIFICATES, trustedCertificate.get(0));
+        assertThat(certificateChain).hasSize(expectedTwoElements);
+        assertThat(trustedCertificate).hasSize(expectedTwoElements);
+
+        assertThat(certificateChain.get(0)).isEqualTo(EXPECTED_FIRST_ELEMENT_OF_CERTIFICATE_CHAIN);
+        assertThat(trustedCertificate.get(0)).isEqualTo(EXPECTED_FIRST_ELEMENT_OF_TRUSTED_CERTIFICATES);
     }
 
     @Test
     void shouldThrowCertServiceApiResponseException_WhenPkHeaderIsMissing() throws Exception {
 
-        // given
+        //given
         mockServerResponse(HTTP_BAD_REQUEST, MISSING_PK_RESPONSE);
 
-        // when
-        CertServiceApiResponseException exception =
-                assertThrows(CertServiceApiResponseException.class,
-                        () -> httpClient.retrieveCertServiceData(CA_NAME, CSR, ""));
-
-        // then
-        assertEquals(ExitCode.CERT_SERVICE_API_CONNECTION_EXCEPTION.getValue(), exception.applicationExitCode());
+        //when //then
+        assertThatExceptionOfType(CertServiceApiResponseException.class)
+                .isThrownBy(()->httpClient.retrieveCertServiceData(CA_NAME, CSR, ""));
     }
 
     @Test
-    void shouldThrowHttpClientException_WhenCannotExecuteRequestToAPI() throws Exception{
+    void shouldThrowHttpClientException_WhenCannotExecuteRequestToAPI() throws Exception {
 
         //given
         when(closeableHttpClient.execute(any(HttpGet.class))).thenThrow(IOException.class);
 
-        //when
-        HttpClientException exception =
-                assertThrows(HttpClientException.class,
-                        () -> httpClient.retrieveCertServiceData(CA_NAME, CSR, ""));
-
-        //then
-        assertEquals(ExitCode.HTTP_CLIENT_EXCEPTION.getValue(), exception.applicationExitCode());
+        //when //then
+        assertThatExceptionOfType(HttpClientException.class)
+                .isThrownBy(()->httpClient.retrieveCertServiceData(CA_NAME, CSR, ""));
     }
 
     @Test
-    void shouldThrowHttpClientException_WhenCannotParseResponseToString() throws Exception{
+    void shouldThrowHttpClientException_WhenCannotParseResponseToString() throws Exception {
 
         //given
         mockServerResponse(HTTP_OK, CORRECT_RESPONSE);
         when(httpEntity.getContent()).thenThrow(IOException.class);
 
-        //when
-        HttpClientException exception =
-                assertThrows(HttpClientException.class,
-                        () -> httpClient.retrieveCertServiceData(CA_NAME, CSR, ""));
-
-        //then
-        assertEquals(ExitCode.HTTP_CLIENT_EXCEPTION.getValue(), exception.applicationExitCode());
+        //when //then
+        assertThatExceptionOfType(HttpClientException.class)
+                .isThrownBy(()->httpClient.retrieveCertServiceData(CA_NAME, CSR, ""));
     }
 
     private void mockServerResponse(int serverCodeResponse, String stringResponse)

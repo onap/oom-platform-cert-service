@@ -23,19 +23,18 @@ package org.onap.aaf.certservice.client.configuration.model;
 import org.assertj.core.api.Condition;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.onap.aaf.certservice.client.api.ExitCode;
 import org.onap.aaf.certservice.client.configuration.CsrConfigurationEnvs;
 import org.onap.aaf.certservice.client.configuration.EnvsForCsr;
 import org.onap.aaf.certservice.client.configuration.exception.CsrConfigurationException;
 import org.onap.aaf.certservice.client.configuration.factory.CsrConfigurationFactory;
 
 import java.util.Optional;
-import java.util.function.Predicate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.onap.aaf.certservice.client.api.ExitStatus.CSR_CONFIGURATION_EXCEPTION;
 
 public class CsrConfigurationFactoryTest {
 
@@ -55,7 +54,7 @@ public class CsrConfigurationFactoryTest {
     private Condition<CsrConfigurationException> expectedExitCodeCondition = new Condition<>("Correct exit code"){
         @Override
         public boolean matches(CsrConfigurationException e) {
-            return e.applicationExitCode() == ExitCode.CSR_CONFIGURATION_EXCEPTION.getValue();
+            return e.applicationExitStatus() == CSR_CONFIGURATION_EXCEPTION;
         }
     };
 

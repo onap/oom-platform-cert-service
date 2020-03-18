@@ -18,24 +18,31 @@
  */
 package org.onap.aaf.certservice.client.api;
 
-public enum ExitCode {
-    SUCCESS_EXIT_CODE(0),
-    CLIENT_CONFIGURATION_EXCEPTION(1),
-    CSR_CONFIGURATION_EXCEPTION(2),
-    KEY_PAIR_GENERATION_EXCEPTION(3),
-    CSR_GENERATION_EXCEPTION(4),
-    CERT_SERVICE_API_CONNECTION_EXCEPTION(5),
-    HTTP_CLIENT_EXCEPTION(6),
-    PKCS12_CONVERSION_EXCEPTION(7),
-    PK_TO_PEM_ENCODING_EXCEPTION(8);
+public enum ExitStatus {
+
+    SUCCESS(0, "Success"),
+    CLIENT_CONFIGURATION_EXCEPTION(1,"Invalid client configuration"),
+    CSR_CONFIGURATION_EXCEPTION(2,"Invalid CSR configuration"),
+    KEY_PAIR_GENERATION_EXCEPTION(3,"Fail in key pair generation"),
+    CSR_GENERATION_EXCEPTION(4,"Fail in CSR generation"),
+    CERT_SERVICE_API_CONNECTION_EXCEPTION(5,"CertService HTTP unsuccessful response"),
+    HTTP_CLIENT_EXCEPTION(6,"Internal HTTP Client connection problem"),
+    PKCS12_CONVERSION_EXCEPTION(7,"Fail in PKCS12 conversion"),
+    PK_TO_PEM_ENCODING_EXCEPTION(8,"Fail in Private Key to PEM Encoding");
 
     private final int value;
+    private final String message;
 
-    ExitCode(int value) {
+    ExitStatus(int value, String message) {
         this.value = value;
+        this.message = message;
     }
 
-    public int getValue() {
+    public int getExitCodeValue() {
         return value;
+    }
+
+    public String getMessage(){
+        return message;
     }
 }

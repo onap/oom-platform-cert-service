@@ -18,14 +18,16 @@
  */
 package org.onap.aaf.certservice.client;
 
+import org.onap.aaf.certservice.client.api.ExitStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class AppExitHandler {
-    public static final Logger LOGGER = LoggerFactory.getLogger(AppExitHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AppExitHandler.class);
 
-    public void exit(int exitCode) {
-        LOGGER.debug("Application exits with following exit code: {}", exitCode);
-        System.exit(exitCode);
+    public void exit(ExitStatus exitStatus) {
+        LOGGER.info(String.format("Application exits with following exit code: %s and message: %s",
+                exitStatus.getExitCodeValue(), exitStatus.getMessage()));
+        System.exit(exitStatus.getExitCodeValue());
     }
 }

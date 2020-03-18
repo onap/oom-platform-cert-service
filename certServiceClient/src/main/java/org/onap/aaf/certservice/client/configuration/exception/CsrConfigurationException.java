@@ -19,17 +19,17 @@
  */
 package org.onap.aaf.certservice.client.configuration.exception;
 
-import org.onap.aaf.certservice.client.api.ExitCode;
+import org.onap.aaf.certservice.client.api.ExitStatus;
 import org.onap.aaf.certservice.client.api.ExitableException;
 
 public class CsrConfigurationException extends ExitableException {
-    private static final ExitCode EXIT_CODE = ExitCode.CSR_CONFIGURATION_EXCEPTION;
+    private static final ExitStatus EXIT_STATUS = ExitStatus.CSR_CONFIGURATION_EXCEPTION;
 
     public CsrConfigurationException(String message) {
         super(message);
     }
 
-    public int applicationExitCode() {
-        return EXIT_CODE.getValue();
+    public ExitStatus applicationExitStatus() {
+        return EXIT_STATUS;
     }
 }
