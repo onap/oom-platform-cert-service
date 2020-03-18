@@ -46,7 +46,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.onap.aaf.certservice.certification.configuration.model.CaMode;
 import org.onap.aaf.certservice.certification.configuration.model.Cmpv2Server;
-import org.onap.aaf.certservice.certification.exception.Cmpv2ClientAdapterException;
 import org.onap.aaf.certservice.certification.model.CertificationModel;
 import org.onap.aaf.certservice.certification.model.CsrModel;
 import org.onap.aaf.certservice.cmpv2client.api.CmpClient;
@@ -97,7 +96,7 @@ class Cmpv2ClientAdapterTest {
         stubInternalProperties();
 
         // When
-        Mockito.when(cmpClient.createCertificate(Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any()))
+        Mockito.when(cmpClient.createCertificate(Mockito.any(), Mockito.any()))
                 .thenThrow(new CmpClientException(TEST_MSG));
 
         // Then
@@ -107,12 +106,12 @@ class Cmpv2ClientAdapterTest {
     @Test
     void shouldConvertToCertificationModel()
             throws OperatorCreationException, CertificateException, NoSuchProviderException, IOException,
-            CmpClientException, Cmpv2ClientAdapterException {
+            CmpClientException {
         // Given
         stubInternalProperties();
 
         // When
-        Mockito.when(cmpClient.createCertificate(Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any()))
+        Mockito.when(cmpClient.createCertificate(Mockito.any(), Mockito.any()))
                 .thenReturn(createCorrectClientResponse());
         CertificationModel certificationModel = adapter.callCmpClient(csrModel, server);
 
@@ -129,23 +128,6 @@ class Cmpv2ClientAdapterTest {
 
         Assertions.assertEquals(certificateModel, expectedCertificate);
         Assertions.assertEquals(trustedCertificateModel, expectedTrustedCertificate);
-    }
-
-    @Test
-    void adapterShouldThrowClientAdapterExceptionOnFailure()
-            throws OperatorCreationException, CertificateException, NoSuchProviderException, IOException,
-            CmpClientException {
-        // Given
-        stubInternalProperties();
-
-        // When
-        Mockito.when(cmpClient.createCertificate(Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any()))
-                .thenReturn(createCorrectClientResponse());
-        Mockito.when(certificateFactoryProvider.generateCertificate(Mockito.any()))
-                .thenThrow(new CertificateException(TEST_MSG));
-
-        // Then
-        Assertions.assertThrows(Cmpv2ClientAdapterException.class, () -> adapter.callCmpClient(csrModel, server));
     }
 
     private List<List<X509Certificate>> createCorrectClientResponse()
