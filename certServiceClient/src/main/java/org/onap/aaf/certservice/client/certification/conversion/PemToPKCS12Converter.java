@@ -41,20 +41,20 @@ import org.slf4j.LoggerFactory;
 
 class PemToPKCS12Converter {
 
-    private final static String PKCS12 = "PKCS12";
-    private final static String PASSWORD_ERROR_MSG = "Password should be min. 16 chars long and should contain only alphanumeric characters and special characters like Underscore (_), Dollar ($) and Pound (#)";
+    private static final Logger LOGGER = LoggerFactory.getLogger(PemToPKCS12Converter.class);
+    private static final String PKCS12 = "PKCS12";
+    private static final String PASSWORD_ERROR_MSG = "Password should be min. 16 chars long and should contain only alphanumeric characters and special characters like Underscore (_), Dollar ($) and Pound (#)";
     private final LoadStoreParameter EMPTY_KEYSTORE_CONFIGURATION = null;
-    private final Logger LOGGER = LoggerFactory.getLogger(PemToPKCS12Converter.class);
 
     byte[] convertKeystore(List<String> certificateChain, Password password, String alias, PrivateKey privateKey)
         throws PemToPKCS12ConverterException {
-        LOGGER.debug("Converting PEM certificates to PKCS12 keystore.");
+        LOGGER.info("Conversion of PEM certificates to PKCS12 keystore");
         return convert(certificateChain, password, certs -> getKeyStore(alias, password, certs, privateKey));
     }
 
     byte[] convertTruststore(List<String> trustAnchors, Password password, String alias)
         throws PemToPKCS12ConverterException {
-        LOGGER.debug("Converting PEM certificates to PKCS12 truststore.");
+        LOGGER.info("Conversion of PEM certificates to PKCS12 truststore");
         return convert(trustAnchors, password, certs -> getTrustStore(alias, certs));
     }
 

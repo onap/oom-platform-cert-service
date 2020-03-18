@@ -54,7 +54,7 @@ import static org.onap.aaf.certservice.client.certification.EncryptionAlgorithmC
 
 public class CsrFactory {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(CsrFactory.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CsrFactory.class);
     private static final String SANS_DELIMITER = ":";
     private final CsrConfiguration configuration;
 
@@ -65,13 +65,14 @@ public class CsrFactory {
 
 
     public String createCsrInPem(KeyPair keyPair) throws CsrGenerationException {
-        PKCS10CertificationRequest request;
+        LOGGER.info("Creation of CSR has been started with following parameters: {}", configuration.toString());
         String csrParameters = getMandatoryParameters().append(getOptionalParameters()).toString();
         X500Principal subject = new X500Principal(csrParameters);
-        request = createPKCS10Csr(subject, keyPair);
-        return convertPKC10CsrToPem(request);
-    }
+        PKCS10CertificationRequest request = createPKCS10Csr(subject, keyPair);
 
+        LOGGER.info("Creation of CSR has been completed successfully");
+        return convertPKCS10CsrToPem(request);
+    }
 
     private StringBuilder getMandatoryParameters() {
         return new StringBuilder(String.format("%s=%s, %s=%s, %s=%s, %s=%s",
@@ -114,9 +115,10 @@ public class CsrFactory {
         return contentSigner;
     }
 
-    private String convertPKC10CsrToPem(PKCS10CertificationRequest request) throws CsrGenerationException {
+    private String convertPKCS10CsrToPem(PKCS10CertificationRequest request) throws CsrGenerationException {
         final StringWriter stringWriter = new StringWriter();
         try (JcaPEMWriter pemWriter = new JcaPEMWriter(stringWriter)) {
+            LOGGER.info("Conversion of CSR to PEM has been started");
             pemWriter.writeObject(request);
         } catch (IOException e) {
             LOGGER.error("Conversion to PEM failed, exception message: {}", e.getMessage());

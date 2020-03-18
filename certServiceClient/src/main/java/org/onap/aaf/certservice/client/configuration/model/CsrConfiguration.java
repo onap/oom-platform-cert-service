@@ -21,6 +21,8 @@
 package org.onap.aaf.certservice.client.configuration.model;
 
 
+import org.onap.aaf.certservice.client.configuration.CsrConfigurationEnvs;
+
 public class CsrConfiguration implements ConfigurationModel {
 
     private String commonName;
@@ -93,5 +95,17 @@ public class CsrConfiguration implements ConfigurationModel {
     public CsrConfiguration setSubjectAlternativeNames(String subjectAlternativeNames) {
         this.sans = subjectAlternativeNames;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s: %s, %s: %s, %s: %s, %s: %s, %s: %s, %s: %s, %s: %s",
+                CsrConfigurationEnvs.COMMON_NAME, commonName,
+                CsrConfigurationEnvs.COUNTRY, country,
+                CsrConfigurationEnvs.STATE, state,
+                CsrConfigurationEnvs.ORGANIZATION, organization,
+                CsrConfigurationEnvs.ORGANIZATION_UNIT, organizationUnit,
+                CsrConfigurationEnvs.LOCATION, location,
+                CsrConfigurationEnvs.SANS, sans);
     }
 }
