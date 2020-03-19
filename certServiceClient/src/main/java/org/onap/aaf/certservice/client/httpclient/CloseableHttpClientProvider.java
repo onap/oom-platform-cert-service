@@ -34,7 +34,11 @@ public class CloseableHttpClientProvider {
 
     public CloseableHttpClient getClient() {
         RequestConfig config =
-                RequestConfig.custom().setConnectionRequestTimeout(timeout).build();
+                RequestConfig.custom()
+                        .setConnectionRequestTimeout(timeout)
+                        .setConnectTimeout(timeout)
+                        .setSocketTimeout(timeout)
+                        .build();
         return HttpClientBuilder.create().setDefaultRequestConfig(config).build();
     }
 }
