@@ -20,27 +20,58 @@
 
 package org.onap.aaf.certservice.certification;
 
-import org.onap.aaf.certservice.certification.adapter.Cmpv2ClientAdapter;
+import org.bouncycastle.openssl.jcajce.JcaMiscPEMGenerator;
+import org.bouncycastle.util.io.pem.PemObjectGenerator;
+import org.bouncycastle.util.io.pem.PemWriter;
 import org.onap.aaf.certservice.certification.configuration.model.Cmpv2Server;
 import org.onap.aaf.certservice.certification.model.CertificationModel;
 import org.onap.aaf.certservice.certification.model.CsrModel;
+import org.onap.aaf.certservice.cmpv2client.api.CmpClient;
 import org.onap.aaf.certservice.cmpv2client.exceptions.CmpClientException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.io.IOException;
+import java.io.StringWriter;
+import java.security.cert.X509Certificate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CertificationProvider {
 
-    private final Cmpv2ClientAdapter cmpv2ClientAdapter;
+    private static final Logger LOGGER = LoggerFactory.getLogger(CertificationProvider.class);
+
+    private final CmpClient cmpClient;
 
     @Autowired
-    public  CertificationProvider(Cmpv2ClientAdapter cmpv2ClientAdapter) {
-        this.cmpv2ClientAdapter = cmpv2ClientAdapter;
+    public CertificationProvider(CmpClient cmpClient) {
+        this.cmpClient = cmpClient;
     }
 
-    CertificationModel signCsr(CsrModel csrModel, Cmpv2Server server)
+    public CertificationModel signCsr(CsrModel csrModel, Cmpv2Server server)
             throws CmpClientException {
-        return cmpv2ClientAdapter.callCmpClient(csrModel, server);
+        List<List<X509Certificate>> certificates = cmpClient.createCertificate(csrModel, server);
+        return new CertificationModel(convertFromX509CertificateListToPemList(certificates.get(0)),
+                convertFromX509CertificateListToPemList(certificates.get(1)));
+    }
+
+    private static List<String> convertFromX509CertificateListToPemList(List<X509Certificate> certificates) {
+        return certificates.stream().map(CertificationProvider::convertFromX509CertificateToPem).filter(cert -> !cert.isEmpty())
+                .collect(Collectors.toList());
+    }
+
+    private static String convertFromX509CertificateToPem(X509Certificate certificate) {
+        StringWriter sw = new StringWriter();
+        try (PemWriter pw = new PemWriter(sw)) {
+            PemObjectGenerator gen = new JcaMiscPEMGenerator(certificate);
+            pw.writeObject(gen);
+        } catch (IOException e) {
+            LOGGER.error("Exception occurred during convert of X509 certificate", e);
+        }
+        return sw.toString();
     }
 
 }

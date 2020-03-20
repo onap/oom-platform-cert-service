@@ -18,7 +18,7 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.certification.adapter;
+package org.onap.aaf.certservice.certification;
 
 import org.bouncycastle.cert.X509CertificateHolder;
 import org.bouncycastle.cert.X509v3CertificateBuilder;
@@ -38,12 +38,12 @@ import static org.onap.aaf.certservice.certification.TestUtils.createCsrModel;
 
 public class X509CertificateBuilderTest {
 
-    private X509CertificateBuilder certificateBuilde;
+    private X509CertificateBuilder certificateBuilder;
 
 
     @BeforeEach
     void setUp() {
-        certificateBuilde = new X509CertificateBuilder();
+        certificateBuilder = new X509CertificateBuilder();
     }
 
     @Test
@@ -57,7 +57,7 @@ public class X509CertificateBuilderTest {
         ContentSigner createdContentSigner = rsaContentSignerBuilder.build(testCertificationRequest, testPrivateKey);
 
         // When
-        X509v3CertificateBuilder certificateBuilder = certificateBuilde.build(testCertificationRequest);
+        X509v3CertificateBuilder certificateBuilder = this.certificateBuilder.build(testCertificationRequest);
         X509CertificateHolder certificateHolder = certificateBuilder.build(createdContentSigner);
 
         // Then

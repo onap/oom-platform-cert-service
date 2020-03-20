@@ -66,6 +66,7 @@ public class CmpClientImpl implements CmpClient {
     private final CloseableHttpClient httpClient;
 
     private static final String DEFAULT_CA_NAME = "Certification Authority";
+    private static final String DEFAULT_PROFILE = CaMode.RA.getProfile();
 
     public CmpClientImpl(CloseableHttpClient httpClient) {
         this.httpClient = httpClient;
@@ -202,11 +203,10 @@ public class CmpClientImpl implements CmpClient {
             final Date notBefore,
             final Date notAfter) {
 
-
         String caName = CmpUtil.isNullOrEmpty(server.getCaName()) ? server.getCaName() : DEFAULT_CA_NAME;
-        String caProfile = server.getCaMode() != null ? String.valueOf(server.getCaMode()) : String.valueOf(CaMode.RA);
+        String profile = server.getCaMode() != null ? server.getCaMode().getProfile() : DEFAULT_PROFILE;
         LOG.info(
-                "Validate before creating Certificate Request for CA :{} in Mode {} ", caName, caProfile);
+                "Validate before creating Certificate Request for CA :{} in Mode {} ", caName, profile);
 
         CmpUtil.notNull(csrModel, "CsrModel Instance");
         CmpUtil.notNull(csrModel.getSubjectData(), "Subject DN");

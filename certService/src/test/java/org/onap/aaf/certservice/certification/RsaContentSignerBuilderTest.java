@@ -18,13 +18,14 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.certification.adapter;
+package org.onap.aaf.certservice.certification;
 
 import org.bouncycastle.operator.ContentSigner;
 import org.bouncycastle.operator.OperatorCreationException;
 import org.bouncycastle.pkcs.PKCS10CertificationRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.onap.aaf.certservice.certification.RsaContentSignerBuilder;
 import org.onap.aaf.certservice.certification.exception.DecryptionException;
 import org.onap.aaf.certservice.certification.model.CsrModel;
 

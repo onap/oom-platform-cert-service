@@ -18,25 +18,29 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.certification.adapter;
+package org.onap.aaf.certservice.certification;
 
-import java.io.InputStream;
-import java.security.NoSuchProviderException;
-import java.security.Security;
-import java.security.cert.CertificateException;
-import java.security.cert.CertificateFactory;
-import java.security.cert.X509Certificate;
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import java.io.IOException;
+import java.security.PrivateKey;
+import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
+import org.bouncycastle.crypto.util.PrivateKeyFactory;
+import org.bouncycastle.operator.ContentSigner;
+import org.bouncycastle.operator.DefaultDigestAlgorithmIdentifierFinder;
+import org.bouncycastle.operator.OperatorCreationException;
+import org.bouncycastle.operator.bc.BcRSAContentSignerBuilder;
+import org.bouncycastle.pkcs.PKCS10CertificationRequest;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CertificateFactoryProvider {
+public class RsaContentSignerBuilder {
 
-    static {
-        Security.addProvider(new BouncyCastleProvider());
+    ContentSigner build(PKCS10CertificationRequest csr, PrivateKey privateKey)
+            throws IOException, OperatorCreationException {
+        AlgorithmIdentifier sigAlgId = csr.getSignatureAlgorithm();
+        AlgorithmIdentifier digAlgId = new DefaultDigestAlgorithmIdentifierFinder().find(sigAlgId);
+
+        return new BcRSAContentSignerBuilder(sigAlgId, digAlgId)
+                       .build(PrivateKeyFactory.createKey(privateKey.getEncoded()));
     }
 
-    X509Certificate generateCertificate(InputStream inStream) throws CertificateException, NoSuchProviderException {
-        return (X509Certificate) CertificateFactory.getInstance("X.509", "BC").generateCertificate(inStream);
-    }
 }
