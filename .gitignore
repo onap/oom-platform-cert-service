@@ -2,7 +2,7 @@ target/
 !**/src/main/**
 !**/src/test/**
 **/var
-certServiceClient/certs_volume
+compose-resources/client-volume
 
 ### STS ###
 .apt_generated

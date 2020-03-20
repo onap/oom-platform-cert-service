@@ -48,8 +48,6 @@ mvn clean install
 ### Building Docker image and install the package into local repository
 ```
 mvn clean install -P docker
-or
-make build
 ```   
 
 ### Running Docker container local
@@ -61,25 +59,7 @@ docker run -p 8080:8080 --name aaf-certservice-api --mount type=bind,source=/<ab
 ```
 docker run -p 8080:8080 --name aaf-certservice-api --mount type=bind,source=/<absolute_path>/cmpServers.json,target=/etc/onap/aaf/certservice/cmpServers.json nexus3.onap.org:10001/onap/org.onap.aaf.certservice.aaf-certservice-api:1.0.0
 ```
-
-### Running Docker container from docker-compose with EJBCA
-Docker-compose uses a local image of certservice.
-Build a docker image locally before run docker compose command.
-```
-1. Build local image
-make build
-2. Start Cert Service with configured EJBCA
-make start
-3. Stop containers
-make stop
-```
     
-### Running with Helm
-1. Use environment/server with installed kubernetes and helm.
-2. Copy helm/aaf-cert-service directory to that environment.
-3. Enter that environment 
-4. Run ```helm install ./aaf-cert-service```
-
 ### Health Check
 Browser:
 ```
@@ -91,23 +71,6 @@ Curl:
 curl localhost:8080/actuator/health 
 ```   
  Should return {"status":"UP"}
-
-### AAF CertService CSITs
-#### CSIT repository
-```
-https://gerrit.onap.org/r/admin/repos/integration/csit
-```
-
-####How to run tests locally
-1. Checkout CSIT repository
-2. Configure CSIT local environment
-3. Inside CSIT directory execute
-```
-sudo ./run-csit.sh plans/aaf/certservice
-```
-
-####Jenkins build
-https://jenkins.onap.org/view/CSIT/job/aaf-master-csit-certservice/
 
 ### Logs locally
 
@@ -127,31 +90,9 @@ cd /var/log/onap/aaf/certservice
 You should see:    
 audit.log  error.log  trace.log
 
-### Sonar results
-```     
-https://sonarcloud.io/dashboard?id=onap_aaf-certservice
-```
-    
-### Maven artifacts
-All maven artifacts are deployed under nexus uri:
-```
-https://nexus.onap.org/content/repositories/snapshots/org/onap/aaf/certservice/
-```
-        
-### Docker artifacts
-All docker images are hosted under nexus3 uri:
-```
-https://nexus3.onap.org/repository/docker.snapshot/v2/onap/org.onap.aaf.certservice.aaf-certservice-api/
-```
-
 ### RestAPI
 API is described by Swagger ( OpenAPI 3.0 ) on endpoint /docs 
 ( endpoint is defined in properties as springdoc.swagger-ui.path )
 ```
 http://localchost:8080/docs
-```
-
-### Sonar results
-```     
-https://sonarcloud.io/dashboard?id=onap_aaf-certservice
 ```
