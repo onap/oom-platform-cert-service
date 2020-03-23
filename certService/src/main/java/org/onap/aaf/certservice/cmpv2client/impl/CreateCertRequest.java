@@ -28,12 +28,9 @@ import java.security.KeyPair;
 import java.util.Date;
 import java.util.List;
 
-import org.bouncycastle.asn1.DERUTF8String;
 import org.bouncycastle.asn1.cmp.PKIBody;
 import org.bouncycastle.asn1.cmp.PKIHeader;
 import org.bouncycastle.asn1.cmp.PKIMessage;
-import org.bouncycastle.asn1.crmf.AttributeTypeAndValue;
-import org.bouncycastle.asn1.crmf.CRMFObjectIdentifiers;
 import org.bouncycastle.asn1.crmf.CertReqMessages;
 import org.bouncycastle.asn1.crmf.CertReqMsg;
 import org.bouncycastle.asn1.crmf.CertRequest;
@@ -114,12 +111,7 @@ class CreateCertRequest {
         final ProofOfPossession proofOfPossession =
                 CmpMessageHelper.generateProofOfPossession(certRequest, subjectKeyPair);
 
-        final AttributeTypeAndValue[] attrTypeVal = {
-                new AttributeTypeAndValue(
-                        CRMFObjectIdentifiers.id_regCtrl_regToken, new DERUTF8String(initAuthPassword))
-        };
-
-        final CertReqMsg certReqMsg = new CertReqMsg(certRequest, proofOfPossession, attrTypeVal);
+        final CertReqMsg certReqMsg = new CertReqMsg(certRequest, proofOfPossession, null);
         final CertReqMessages certReqMessages = new CertReqMessages(certReqMsg);
 
         final PKIHeader pkiHeader =
