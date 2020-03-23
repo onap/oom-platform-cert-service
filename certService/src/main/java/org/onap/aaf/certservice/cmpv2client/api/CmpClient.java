@@ -41,13 +41,8 @@ public interface CmpClient {
    * IAK/RV, Verification of the signature (proof-of-possession) on the request is performed and an
    * Exception thrown if verification fails or issue encountered in fetching certificate from CA.
    *
-   * @param caName    Information about the External Root Certificate Authority (CA) performing the
-   *                  event CA Name. Could be {@code null}.
-   * @param profile   Profile on CA server Client/RA Mode configuration on Server. Could be {@code
-   *                  null}.
    * @param csrModel  Certificate Signing Request model. Must not be {@code null}.
    * @param server    CMPv2 Server. Must not be {@code null}.
-   * @param csr       Certificate Signing Request {.cer} file. Must not be {@code null}.
    * @param notBefore An optional validity to set in the created certificate, Certificate not valid
    *                  before this date.
    * @param notAfter  An optional validity to set in the created certificate, Certificate not valid
@@ -56,11 +51,8 @@ public interface CmpClient {
    * @throws CmpClientException if client error occurs.
    */
   List<List<X509Certificate>> createCertificate(
-      String caName,
-      String profile,
       CsrModel csrModel,
       Cmpv2Server server,
-      X509Certificate csr,
       Date notBefore,
       Date notAfter)
       throws CmpClientException;
@@ -71,21 +63,13 @@ public interface CmpClient {
    * IAK/RV, Verification of the signature (proof-of-possession) on the request is performed and an
    * Exception thrown if verification fails or issue encountered in fetching certificate from CA.
    *
-   * @param caName    Information about the External Root Certificate Authority (CA) performing the
-   *                  event CA Name. Could be {@code null}.
-   * @param profile   Profile on CA server Client/RA Mode configuration on Server. Could be {@code
-   *                  null}.
    * @param csrModel  Certificate Signing Request Model. Must not be {@code null}.
    * @param server    CMPv2 server. Must not be {@code null}.
-   * @param csr       Certificate Signing Request {.cer} file. Must not be {@code null}.
    * @return {@link X509Certificate} The newly created Certificate.
    * @throws CmpClientException if client error occurs.
    */
   List<List<X509Certificate>> createCertificate(
-      String caName,
-      String profile,
       CsrModel csrModel,
-      Cmpv2Server server,
-      X509Certificate csr)
+      Cmpv2Server server)
       throws CmpClientException;
 }

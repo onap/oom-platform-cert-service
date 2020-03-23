@@ -22,7 +22,6 @@ package org.onap.aaf.certservice.certification;
 
 import org.onap.aaf.certservice.certification.adapter.Cmpv2ClientAdapter;
 import org.onap.aaf.certservice.certification.configuration.model.Cmpv2Server;
-import org.onap.aaf.certservice.certification.exception.Cmpv2ClientAdapterException;
 import org.onap.aaf.certservice.certification.model.CertificationModel;
 import org.onap.aaf.certservice.certification.model.CsrModel;
 import org.onap.aaf.certservice.cmpv2client.exceptions.CmpClientException;
@@ -40,7 +39,7 @@ public class CertificationProvider {
     }
 
     CertificationModel signCsr(CsrModel csrModel, Cmpv2Server server)
-            throws CmpClientException, Cmpv2ClientAdapterException {
+            throws CmpClientException {
         return cmpv2ClientAdapter.callCmpClient(csrModel, server);
     }
 

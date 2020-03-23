@@ -153,7 +153,7 @@ class Cmpv2ClientTest {
         CmpClientImpl cmpClient = spy(new CmpClientImpl(httpClient));
         // when
         List<List<X509Certificate>> cmpClientResult =
-                cmpClient.createCertificate("data", "RA", csrModel, server, cert, notBefore, notAfter);
+                cmpClient.createCertificate(csrModel, server, notBefore, notAfter);
         // then
         assertNotNull(cmpClientResult);
     }
@@ -192,7 +192,7 @@ class Cmpv2ClientTest {
         // then
         Assertions.assertThrows(
                 CmpClientException.class,
-                () -> cmpClient.createCertificate("data", "RA", csrModel, server, cert, notBefore, notAfter));
+                () -> cmpClient.createCertificate(csrModel, server, notBefore, notAfter));
     }
 
     @Test
@@ -229,7 +229,7 @@ class Cmpv2ClientTest {
         // then
         Assertions.assertThrows(
                 CmpClientException.class,
-                () -> cmpClient.createCertificate("data", "RA", csrModel, server, cert, notBefore, notAfter));
+                () -> cmpClient.createCertificate(csrModel, server, notBefore, notAfter));
     }
 
     @Test
@@ -248,7 +248,7 @@ class Cmpv2ClientTest {
         // then
         Assertions.assertThrows(
                 IllegalArgumentException.class,
-                () -> cmpClient.createCertificate("data", "RA", csrModel, server, cert, notBefore, notAfter));
+                () -> cmpClient.createCertificate(csrModel, server, notBefore, notAfter));
     }
 
     @Test
@@ -268,7 +268,7 @@ class Cmpv2ClientTest {
         // then
         Assertions.assertThrows(
                 CmpClientException.class,
-                () -> cmpClient.createCertificate("data", "RA", csrModel, server, cert, notBefore, notAfter));
+                () -> cmpClient.createCertificate(csrModel, server, notBefore, notAfter));
     }
 
     private void setCsrModelAndServerValues(String iak, String rv, String externalCaUrl, Date notBefore, Date notAfter) {

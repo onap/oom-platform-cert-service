@@ -20,26 +20,16 @@
 
 package org.onap.aaf.certservice.certification.adapter;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.StringWriter;
-import java.security.NoSuchProviderException;
-import java.security.PrivateKey;
-import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.bouncycastle.cert.X509CertificateHolder;
-import org.bouncycastle.cert.X509v3CertificateBuilder;
 import org.bouncycastle.openssl.jcajce.JcaMiscPEMGenerator;
-import org.bouncycastle.operator.ContentSigner;
-import org.bouncycastle.operator.OperatorCreationException;
-import org.bouncycastle.pkcs.PKCS10CertificationRequest;
 import org.bouncycastle.util.io.pem.PemObjectGenerator;
 import org.bouncycastle.util.io.pem.PemWriter;
 import org.onap.aaf.certservice.certification.configuration.model.Cmpv2Server;
-import org.onap.aaf.certservice.certification.exception.Cmpv2ClientAdapterException;
 import org.onap.aaf.certservice.certification.model.CertificationModel;
 import org.onap.aaf.certservice.certification.model.CsrModel;
 import org.onap.aaf.certservice.cmpv2client.api.CmpClient;
@@ -55,18 +45,10 @@ public class Cmpv2ClientAdapter {
     private static final Logger LOGGER = LoggerFactory.getLogger(Cmpv2ClientAdapter.class);
 
     private final CmpClient cmpClient;
-    private final RsaContentSignerBuilder rsaContentSignerBuilder;
-    private final X509CertificateBuilder x509CertificateBuilder;
-    private final CertificateFactoryProvider certificateFactoryProvider;
 
     @Autowired
-    public Cmpv2ClientAdapter(CmpClient cmpClient, RsaContentSignerBuilder rsaContentSignerBuilder,
-                              X509CertificateBuilder x509CertificateBuilder,
-                              CertificateFactoryProvider certificateFactoryProvider) {
+    public Cmpv2ClientAdapter(CmpClient cmpClient) {
         this.cmpClient = cmpClient;
-        this.rsaContentSignerBuilder = rsaContentSignerBuilder;
-        this.x509CertificateBuilder = x509CertificateBuilder;
-        this.certificateFactoryProvider = certificateFactoryProvider;
     }
 
     /**
@@ -76,13 +58,10 @@ public class Cmpv2ClientAdapter {
      * @param server   Cmp Server configuration from cmpServers.json
      * @return container for returned certificates
      * @throws CmpClientException          Exceptions which comes from Cmp Client
-     * @throws Cmpv2ClientAdapterException Exceptions which comes from Adapter itself
      */
     public CertificationModel callCmpClient(CsrModel csrModel, Cmpv2Server server)
-            throws CmpClientException, Cmpv2ClientAdapterException {
-        List<List<X509Certificate>> certificates = cmpClient.createCertificate(server.getCaName(),
-                server.getCaMode().getProfile(), csrModel, server,
-                convertCsrToX509Certificate(csrModel.getCsr(), csrModel.getPrivateKey()));
+            throws CmpClientException {
+        List<List<X509Certificate>> certificates = cmpClient.createCertificate(csrModel, server);
         return new CertificationModel(convertFromX509CertificateListToPemList(certificates.get(0)),
                 convertFromX509CertificateListToPemList(certificates.get(1)));
     }
@@ -96,19 +75,6 @@ public class Cmpv2ClientAdapter {
             LOGGER.error("Exception occurred during convert of X509 certificate", e);
         }
         return sw.toString();
-    }
-
-    private X509Certificate convertCsrToX509Certificate(PKCS10CertificationRequest csr, PrivateKey privateKey)
-            throws Cmpv2ClientAdapterException {
-        try {
-            X509v3CertificateBuilder certificateGenerator = x509CertificateBuilder.build(csr);
-            ContentSigner signer = rsaContentSignerBuilder.build(csr, privateKey);
-            X509CertificateHolder holder = certificateGenerator.build(signer);
-            return certificateFactoryProvider
-                    .generateCertificate(new ByteArrayInputStream(holder.toASN1Structure().getEncoded()));
-        } catch (IOException | CertificateException | OperatorCreationException | NoSuchProviderException e) {
-            throw new Cmpv2ClientAdapterException(e);
-        }
     }
 
     private List<String> convertFromX509CertificateListToPemList(List<X509Certificate> certificates) {
