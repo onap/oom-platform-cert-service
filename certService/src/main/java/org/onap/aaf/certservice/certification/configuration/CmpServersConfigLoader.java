@@ -25,9 +25,10 @@ import java.io.File;
 import java.io.IOException;
 import java.security.InvalidParameterException;
 import java.util.List;
+
 import org.onap.aaf.certservice.certification.configuration.model.CmpServers;
 import org.onap.aaf.certservice.certification.configuration.model.Cmpv2Server;
-import org.onap.aaf.certservice.certification.configuration.validation.Cmpv2ServerConfigurationValidator;
+import org.onap.aaf.certservice.certification.configuration.validation.Cmpv2ServersConfigurationValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -37,17 +38,17 @@ class CmpServersConfigLoader {
     private static final String LOADING_EXCEPTION_MESSAGE = "Exception occurred during CMP Servers configuration loading";
     private static final String VALIDATION_EXCEPTION_MESSAGE = "Validation of CMPv2 servers configuration failed";
 
-    private final Cmpv2ServerConfigurationValidator validator;
+    private final Cmpv2ServersConfigurationValidator validator;
 
     @Autowired
-    CmpServersConfigLoader(Cmpv2ServerConfigurationValidator validator) {
+    CmpServersConfigLoader(Cmpv2ServersConfigurationValidator validator) {
         this.validator = validator;
     }
 
     List<Cmpv2Server> load(String path) throws CmpServersConfigLoadingException {
         try {
             List<Cmpv2Server> servers = loadConfigFromFile(path).getCmpv2Servers();
-            servers.forEach(validator::validate);
+            validator.validate(servers);
             return servers;
         } catch (IOException e) {
             throw new CmpServersConfigLoadingException(LOADING_EXCEPTION_MESSAGE, e);

@@ -39,7 +39,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 class CmpServersConfigLoaderTest {
     private static final String EXISTING_CONFIG_FILENAME = "cmpServers.json";
     private static final String INVALID_CONFIG_FILENAME = "invalidCmpServers.json";
-    private static final String NONEXISTENT_CONFIG_FILENAME = "nonExisting_cmpServers.json";
+    private static final String NONEXISTENT_CONFIG_FILENAME = "nonExistingCmpServers.json";
 
     private static final Map<String, String> EXPECTED_FIRST_CMP_SERVER = Map.of(
             "CA_NAME", "TEST",
@@ -99,10 +99,11 @@ class CmpServersConfigLoaderTest {
 
         // Then
         assertThat(exception.getMessage()).contains("Validation of CMPv2 servers configuration failed");
+        assertThat(exception.getCause().getMessage()).contains("authentication");
     }
 
-    private String getResourcePath(String invalidConfigFilename) {
-        return getClass().getClassLoader().getResource(invalidConfigFilename).getFile();
+    private String getResourcePath(String configFilename) {
+        return getClass().getClassLoader().getResource(configFilename).getFile();
     }
 
     private void verifyThatCmpServerEquals(Cmpv2Server cmpv2Server, Map<String, String> expected) {
