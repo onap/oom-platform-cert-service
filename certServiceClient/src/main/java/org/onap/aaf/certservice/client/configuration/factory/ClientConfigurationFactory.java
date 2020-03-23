@@ -24,9 +24,12 @@ import org.onap.aaf.certservice.client.configuration.ClientConfigurationEnvs;
 import org.onap.aaf.certservice.client.configuration.EnvsForClient;
 import org.onap.aaf.certservice.client.configuration.exception.ClientConfigurationException;
 import org.onap.aaf.certservice.client.configuration.model.ClientConfiguration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ClientConfigurationFactory extends AbstractConfigurationFactory<ClientConfiguration> {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(ClientConfigurationFactory.class);
     private final EnvsForClient envsForClient;
 
     public ClientConfigurationFactory(EnvsForClient envsForClient) {
@@ -53,6 +56,8 @@ public class ClientConfigurationFactory extends AbstractConfigurationFactory<Cli
                 .filter(this::isAlphaNumeric)
                 .map(configuration::setCaName)
                 .orElseThrow(() -> new ClientConfigurationException(ClientConfigurationEnvs.CA_NAME + " is invalid."));
+
+        LOGGER.info("Successful validation of Client configuration. Configuration data: {}", configuration.toString());
 
         return configuration;
     }

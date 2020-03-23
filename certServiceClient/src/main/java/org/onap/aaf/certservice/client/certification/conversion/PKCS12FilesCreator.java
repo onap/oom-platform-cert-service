@@ -29,6 +29,7 @@ import org.slf4j.LoggerFactory;
 
 class PKCS12FilesCreator {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(PKCS12FilesCreator.class);
     private static final String KEYSTORE_JKS = "keystore.jks";
     private static final String KEYSTORE_PASS = "keystore.pass";
     private static final String TRUSTSTORE_JKS = "truststore.jks";
@@ -37,7 +38,6 @@ class PKCS12FilesCreator {
     private final String keystorePassPath;
     private final String truststoreJksPath;
     private final String truststorePassPath;
-    private final Logger LOGGER = LoggerFactory.getLogger(PKCS12FilesCreator.class);
 
 
     PKCS12FilesCreator(String path) {
@@ -48,7 +48,7 @@ class PKCS12FilesCreator {
     }
 
     void saveKeystoreData(byte[] keystoreData, String keystorePassword) throws PemToPKCS12ConverterException {
-        LOGGER.debug("Creating PKCS12 keystore files and saving data. Keystore path: {}", keystoreJksPath);
+        LOGGER.debug("Attempt to create PKCS12 keystore files and saving data. Keystore path: {}", keystoreJksPath);
 
         saveDataToLocation(keystoreData, keystoreJksPath);
         saveDataToLocation(keystorePassword.getBytes(), keystorePassPath);
@@ -56,7 +56,7 @@ class PKCS12FilesCreator {
 
     void saveTruststoreData(byte[] truststoreData, String truststorePassword)
         throws PemToPKCS12ConverterException {
-        LOGGER.debug("Creating PKCS12 truststore files and saving data. Truststore path: {}", truststoreJksPath);
+        LOGGER.debug("Attempt to create PKCS12 truststore files and saving data. Truststore path: {}", truststoreJksPath);
 
         saveDataToLocation(truststoreData, truststoreJksPath);
         saveDataToLocation(truststorePassword.getBytes(), truststorePassPath);

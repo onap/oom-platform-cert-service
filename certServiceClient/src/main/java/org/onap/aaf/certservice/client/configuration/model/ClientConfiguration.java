@@ -20,6 +20,8 @@
 
 package org.onap.aaf.certservice.client.configuration.model;
 
+import org.onap.aaf.certservice.client.configuration.ClientConfigurationEnvs;
+
 public class ClientConfiguration implements ConfigurationModel {
 
     private static final Integer DEFAULT_TIMEOUT_MS = 30000;
@@ -71,5 +73,14 @@ public class ClientConfiguration implements ConfigurationModel {
     public ClientConfiguration setCaName(String caName) {
         this.caName = caName;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s: %s, %s: %s, %s: %s, %s: %s",
+                ClientConfigurationEnvs.REQUEST_URL, urlToCertService,
+                ClientConfigurationEnvs.REQUEST_TIMEOUT, requestTimeout,
+                ClientConfigurationEnvs.OUTPUT_PATH, certsOutputPath,
+                ClientConfigurationEnvs.CA_NAME, caName);
     }
 }

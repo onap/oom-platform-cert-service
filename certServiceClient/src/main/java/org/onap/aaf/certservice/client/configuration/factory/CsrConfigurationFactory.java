@@ -24,9 +24,12 @@ import org.onap.aaf.certservice.client.configuration.CsrConfigurationEnvs;
 import org.onap.aaf.certservice.client.configuration.EnvsForCsr;
 import org.onap.aaf.certservice.client.configuration.exception.CsrConfigurationException;
 import org.onap.aaf.certservice.client.configuration.model.CsrConfiguration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CsrConfigurationFactory extends AbstractConfigurationFactory<CsrConfiguration> {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(CsrConfigurationFactory.class);
     private final EnvsForCsr envsForCsr;
 
 
@@ -66,6 +69,8 @@ public class CsrConfigurationFactory extends AbstractConfigurationFactory<CsrCon
 
         envsForCsr.getSubjectAlternativesName()
                 .map(configuration::setSubjectAlternativeNames);
+
+        LOGGER.info("Successful validation of CSR configuration. Configuration data: {}", configuration.toString());
 
         return configuration;
     }

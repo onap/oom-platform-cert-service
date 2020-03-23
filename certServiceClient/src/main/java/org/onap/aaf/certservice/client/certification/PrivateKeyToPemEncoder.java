@@ -34,11 +34,11 @@ import org.slf4j.LoggerFactory;
 
 public class PrivateKeyToPemEncoder {
 
-    public static final String PEM_OBJECT_TYPE = "RSA PRIVATE KEY";
-    private final Logger LOGGER = LoggerFactory.getLogger(PrivateKeyToPemEncoder.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PrivateKeyToPemEncoder.class);
+    private static final String PEM_OBJECT_TYPE = "RSA PRIVATE KEY";
 
     public String encodePrivateKeyToPem(PrivateKey pk) throws PkEncodingException {
-        LOGGER.info("Encoding PrivateKey to PEM");
+        LOGGER.info("Attempt to encode private key to PEM");
         StringWriter stringWriter = new StringWriter();
         try (JcaPEMWriter pemWriter = new JcaPEMWriter(stringWriter)) {
             pemWriter.writeObject(new PemObject(PEM_OBJECT_TYPE, pk.getEncoded()));

@@ -38,11 +38,10 @@ import java.io.IOException;
 
 public class HttpClient {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(HttpClient.class);
     private static final String CSR_HEADER_NAME = "CSR";
     private static final String PK_HEADER_NAME = "PK";
     private static final String CHARSET_UTF_8 = "UTF-8";
-
-    private final Logger LOGGER = LoggerFactory.getLogger(HttpClient.class);
 
     private final Gson gson = new Gson();
     private final CloseableHttpClientProvider httpClientProvider;
@@ -57,7 +56,7 @@ public class HttpClient {
             throws CertServiceApiResponseException, HttpClientException {
 
         try (CloseableHttpClient httpClient = httpClientProvider.getClient()) {
-            LOGGER.info("Sending request to API. Url: {}{} ", certServiceAddress, caName);
+            LOGGER.info("Attempt to send request to API, on url: {}{} ", certServiceAddress, caName);
             HttpResponse httpResponse = httpClient.execute(createHttpRequest(caName, csr, encodedPk));
             LOGGER.info("Received response from API");
             return extractCertServiceResponse(httpResponse);
