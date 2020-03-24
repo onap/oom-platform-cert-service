@@ -23,8 +23,12 @@ import java.util.Optional;
 
 public class EnvProvider {
     public Optional<String> readEnvVariable(String envVariableName) {
-        return Optional.ofNullable(System.getenv(envVariableName))
+        return Optional.ofNullable(getSystemEnv(envVariableName))
                 .filter(EnvProvider::isEnvPresent);
+    }
+
+    String getSystemEnv(String envVariableName) {
+        return System.getenv(envVariableName);
     }
 
     private static Boolean isEnvPresent(String envValue) {
