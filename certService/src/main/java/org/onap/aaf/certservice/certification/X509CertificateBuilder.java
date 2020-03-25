@@ -38,7 +38,7 @@ public class X509CertificateBuilder {
     private static final int SECURE_NEXT_BYTES = 16;
     private static final int VALID_PERIOD_IN_DAYS = 365;
 
-    public X509v3CertificateBuilder build(PKCS10CertificationRequest csr) throws IOException {
+    X509v3CertificateBuilder build(PKCS10CertificationRequest csr) throws IOException {
         return new X509v3CertificateBuilder(csr.getSubject(), createSerial(),
                 Date.from(LocalDateTime.now().toInstant(ZoneOffset.UTC)),
                 Date.from(LocalDateTime.now().plusDays(VALID_PERIOD_IN_DAYS).toInstant(ZoneOffset.UTC)),
