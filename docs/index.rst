@@ -2,7 +2,22 @@
 .. http://creativecommons.org/licenses/by/4.0
 .. Copyright 2020 NOKIA
 
-AAF Cert Service
-------------------------------------------------
+AAF Certification Service
+=========================================
+
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
+   :caption: Contents:
+
+   sections/architecture.rst
+   sections/build.rst
+   sections/offeredapis.rst
+   sections/logging.rst
+   sections/installation.rst
+   sections/configuration.rst
+   sections/release-notes.rst
+
+Indices and tables
+==================
+
+* :ref:`search`

@@ -10,6 +10,7 @@ sphinxcontrib-needs>=0.2.3
 sphinxcontrib-nwdiag
 sphinxcontrib-seqdiag
 sphinxcontrib-swaggerdoc
+sphinxcontrib-openapi
 sphinxcontrib-plantuml
 sphinx_bootstrap_theme
 lfdocs-conf

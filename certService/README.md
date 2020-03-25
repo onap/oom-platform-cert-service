@@ -88,7 +88,7 @@ path:
 cd /var/log/onap/aaf/certservice
 ```
 You should see:    
-audit.log  error.log  trace.log
+audit.log  error.log  debug.log
 
 ### RestAPI
 API is described by Swagger ( OpenAPI 3.0 ) on endpoint /docs 
