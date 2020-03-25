@@ -20,13 +20,12 @@
 
 package org.onap.aaf.certservice.cmpv2client.api;
 
-import java.security.cert.X509Certificate;
 import java.util.Date;
-import java.util.List;
 
 import org.onap.aaf.certservice.certification.configuration.model.Cmpv2Server;
 import org.onap.aaf.certservice.certification.model.CsrModel;
 import org.onap.aaf.certservice.cmpv2client.exceptions.CmpClientException;
+import org.onap.aaf.certservice.cmpv2client.model.Cmpv2CertificationModel;
 
 /**
  * This class represent CmpV2Client Interface for obtaining X.509 Digital Certificates in a Public
@@ -47,10 +46,10 @@ public interface CmpClient {
    *                  before this date.
    * @param notAfter  An optional validity to set in the created certificate, Certificate not valid
    *                  after this date.
-   * @return {@link X509Certificate} The newly created Certificate.
+   * @return model for certification containing certificate chain and trusted certificates
    * @throws CmpClientException if client error occurs.
    */
-  List<List<X509Certificate>> createCertificate(
+  Cmpv2CertificationModel createCertificate(
       CsrModel csrModel,
       Cmpv2Server server,
       Date notBefore,
@@ -65,10 +64,10 @@ public interface CmpClient {
    *
    * @param csrModel  Certificate Signing Request Model. Must not be {@code null}.
    * @param server    CMPv2 server. Must not be {@code null}.
-   * @return {@link X509Certificate} The newly created Certificate.
+   * @return model for certification containing certificate chain and trusted certificates
    * @throws CmpClientException if client error occurs.
    */
-  List<List<X509Certificate>> createCertificate(
+  Cmpv2CertificationModel createCertificate(
       CsrModel csrModel,
       Cmpv2Server server)
       throws CmpClientException;

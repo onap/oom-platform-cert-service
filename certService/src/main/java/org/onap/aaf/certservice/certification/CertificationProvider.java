@@ -28,6 +28,7 @@ import org.onap.aaf.certservice.certification.model.CertificationModel;
 import org.onap.aaf.certservice.certification.model.CsrModel;
 import org.onap.aaf.certservice.cmpv2client.api.CmpClient;
 import org.onap.aaf.certservice.cmpv2client.exceptions.CmpClientException;
+import org.onap.aaf.certservice.cmpv2client.model.Cmpv2CertificationModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,9 +54,9 @@ public class CertificationProvider {
 
     public CertificationModel signCsr(CsrModel csrModel, Cmpv2Server server)
             throws CmpClientException {
-        List<List<X509Certificate>> certificates = cmpClient.createCertificate(csrModel, server);
-        return new CertificationModel(convertFromX509CertificateListToPemList(certificates.get(0)),
-                convertFromX509CertificateListToPemList(certificates.get(1)));
+        Cmpv2CertificationModel certificates = cmpClient.createCertificate(csrModel, server);
+        return new CertificationModel(convertFromX509CertificateListToPemList(certificates.getCertificateChain()),
+                convertFromX509CertificateListToPemList(certificates.getTrustedCertificates()));
     }
 
     private static List<String> convertFromX509CertificateListToPemList(List<X509Certificate> certificates) {
