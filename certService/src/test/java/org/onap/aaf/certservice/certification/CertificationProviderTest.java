@@ -31,6 +31,7 @@ import org.onap.aaf.certservice.certification.model.CertificationModel;
 import org.onap.aaf.certservice.certification.model.CsrModel;
 import org.onap.aaf.certservice.cmpv2client.api.CmpClient;
 import org.onap.aaf.certservice.cmpv2client.exceptions.CmpClientException;
+import org.onap.aaf.certservice.cmpv2client.model.Cmpv2CertificationModel;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -38,9 +39,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.NoSuchProviderException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 import java.util.Objects;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -115,14 +114,15 @@ class CertificationProviderTest {
         assertThat(exception.getMessage()).isEqualTo(expectedErrorMessage);
     }
 
-    private List<List<X509Certificate>> createCorrectClientResponse()
+    private Cmpv2CertificationModel createCorrectClientResponse()
             throws CertificateException, NoSuchProviderException {
         InputStream certificateChain = getClass().getClassLoader().getResourceAsStream("certificateChain.first");
         InputStream trustedCertificate = getClass().getClassLoader().getResourceAsStream("trustedCertificates.first");
         X509Certificate x509Certificate = new CertificateFactoryProvider().generateCertificate(certificateChain);
         X509Certificate x509TrustedCertificate =
                 new CertificateFactoryProvider().generateCertificate(trustedCertificate);
-        return Arrays.asList(Collections.singletonList(x509Certificate),
+        return new Cmpv2CertificationModel(
+                Collections.singletonList(x509Certificate),
                 Collections.singletonList(x509TrustedCertificate));
     }
 

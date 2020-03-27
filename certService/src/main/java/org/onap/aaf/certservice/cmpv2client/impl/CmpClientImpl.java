@@ -24,7 +24,7 @@ import java.security.KeyPair;
 import java.security.PublicKey;
 
 import static org.onap.aaf.certservice.cmpv2client.impl.CmpResponseHelper.checkIfCmpResponseContainsError;
-import static org.onap.aaf.certservice.cmpv2client.impl.CmpResponseHelper.getCertfromByteArray;
+import static org.onap.aaf.certservice.cmpv2client.impl.CmpResponseHelper.getCertFromByteArray;
 import static org.onap.aaf.certservice.cmpv2client.impl.CmpResponseHelper.verifyAndReturnCertChainAndTrustSTore;
 import static org.onap.aaf.certservice.cmpv2client.impl.CmpResponseValidationHelper.checkImplicitConfirm;
 import static org.onap.aaf.certservice.cmpv2client.impl.CmpResponseValidationHelper.verifyPasswordBasedProtection;
@@ -33,10 +33,8 @@ import static org.onap.aaf.certservice.cmpv2client.impl.CmpResponseValidationHel
 import java.io.IOException;
 import java.security.cert.CertificateParsingException;
 import java.security.cert.X509Certificate;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -53,6 +51,7 @@ import org.onap.aaf.certservice.certification.configuration.model.Cmpv2Server;
 import org.onap.aaf.certservice.certification.model.CsrModel;
 import org.onap.aaf.certservice.cmpv2client.exceptions.CmpClientException;
 import org.onap.aaf.certservice.cmpv2client.api.CmpClient;
+import org.onap.aaf.certservice.cmpv2client.model.Cmpv2CertificationModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -73,7 +72,7 @@ public class CmpClientImpl implements CmpClient {
     }
 
     @Override
-    public List<List<X509Certificate>> createCertificate(
+    public Cmpv2CertificationModel createCertificate(
             CsrModel csrModel,
             Cmpv2Server server,
             Date notBefore,
@@ -101,7 +100,7 @@ public class CmpClientImpl implements CmpClient {
     }
 
     @Override
-    public List<List<X509Certificate>> createCertificate(CsrModel csrModel, Cmpv2Server server)
+    public Cmpv2CertificationModel createCertificate(CsrModel csrModel, Cmpv2Server server)
             throws CmpClientException {
         return createCertificate(csrModel, server, null, null);
     }
@@ -145,7 +144,7 @@ public class CmpClientImpl implements CmpClient {
         }
     }
 
-    private List<List<X509Certificate>> checkCmpCertRepMessage(final PKIMessage respPkiMessage)
+    private Cmpv2CertificationModel checkCmpCertRepMessage(final PKIMessage respPkiMessage)
             throws CmpClientException {
         final PKIBody pkiBody = respPkiMessage.getBody();
         if (Objects.nonNull(pkiBody) && pkiBody.getContent() instanceof CertRepMessage) {
@@ -163,25 +162,25 @@ public class CmpClientImpl implements CmpClient {
                     throw cmpClientException;
                 }
             } else {
-                return new ArrayList<>(Collections.emptyList());
+                return new Cmpv2CertificationModel(Collections.emptyList(), Collections.emptyList());
             }
         }
-        return new ArrayList<>(Collections.emptyList());
+        return new Cmpv2CertificationModel(Collections.emptyList(), Collections.emptyList());
     }
 
-    private List<List<X509Certificate>> verifyReturnCertChainAndTrustStore(
+    private Cmpv2CertificationModel verifyReturnCertChainAndTrustStore(
             PKIMessage respPkiMessage, CertRepMessage certRepMessage, CertResponse certResponse)
             throws CertificateParsingException, CmpClientException, IOException {
         LOG.info("Verifying certificates returned as part of CertResponse.");
         final CMPCertificate cmpCertificate =
                 certResponse.getCertifiedKeyPair().getCertOrEncCert().getCertificate();
         final Optional<X509Certificate> leafCertificate =
-                getCertfromByteArray(cmpCertificate.getEncoded(), X509Certificate.class);
+                getCertFromByteArray(cmpCertificate.getEncoded(), X509Certificate.class);
         if (leafCertificate.isPresent()) {
             return verifyAndReturnCertChainAndTrustSTore(
                     respPkiMessage, certRepMessage, leafCertificate.get());
         }
-        return Collections.emptyList();
+        return new Cmpv2CertificationModel(Collections.emptyList(), Collections.emptyList());
     }
 
     private CertResponse getCertificateResponseContainingNewCertificate(
@@ -192,8 +191,8 @@ public class CmpClientImpl implements CmpClient {
     /**
      * Validate inputs for Certificate Creation.
      *
-     * @param csrModel        Certificate Signing Request model. Must not be {@code null}.
-     * @param server          CMPv2 Server. Must not be {@code null}.
+     * @param csrModel Certificate Signing Request model. Must not be {@code null}.
+     * @param server   CMPv2 Server. Must not be {@code null}.
      * @throws IllegalArgumentException if Before Date is set after the After Date.
      */
     private static void validate(
@@ -222,7 +221,7 @@ public class CmpClientImpl implements CmpClient {
         }
     }
 
-    private List<List<X509Certificate>> retrieveCertificates(
+    private Cmpv2CertificationModel retrieveCertificates(
             CsrModel csrModel, Cmpv2Server server, PKIMessage pkiMessage, Cmpv2HttpClient cmpv2HttpClient)
             throws CmpClientException {
         final byte[] respBytes = cmpv2HttpClient.postRequest(pkiMessage, server.getUrl(), server.getCaName());

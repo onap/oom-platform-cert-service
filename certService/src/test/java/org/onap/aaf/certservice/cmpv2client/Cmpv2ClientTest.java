@@ -62,6 +62,7 @@ import org.onap.aaf.certservice.certification.configuration.model.Cmpv2Server;
 import org.onap.aaf.certservice.certification.model.CsrModel;
 import org.onap.aaf.certservice.cmpv2client.exceptions.CmpClientException;
 import org.onap.aaf.certservice.cmpv2client.impl.CmpClientImpl;
+import org.onap.aaf.certservice.cmpv2client.model.Cmpv2CertificationModel;
 
 class Cmpv2ClientTest {
 
@@ -152,7 +153,7 @@ class Cmpv2ClientTest {
         }
         CmpClientImpl cmpClient = spy(new CmpClientImpl(httpClient));
         // when
-        List<List<X509Certificate>> cmpClientResult =
+        Cmpv2CertificationModel cmpClientResult =
                 cmpClient.createCertificate(csrModel, server, notBefore, notAfter);
         // then
         assertNotNull(cmpClientResult);
