@@ -8,4 +8,4 @@ Offered APIs
 AAF Cert Service Api
 --------------------
 
-.. openapi:: ../../certService/OpenAPI.yaml
+.. openapi:: resources/OpenAPI.yaml
