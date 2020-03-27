@@ -5,11 +5,6 @@
 mvn clean package
 ```
     
-### Building Docker image manually
-Go to the certServiceClient subfolder and execute following statement (1.0.0-SNAPSHOT is related to a current project.version parameter):
-```
-docker build --build-arg VERSION=1.0.0-SNAPSHOT -t onap/org.onap.aaf.certservice.aaf-certservice-client .
-```
     
 ### Install the package into the local repository
 ```
@@ -21,23 +16,18 @@ mvn clean install
 mvn clean install -P docker
 ```   
 
-### Running Docker container local
+### Nexus container image
 ```
-docker run --name aaf-certservice-client onap/org.onap.aaf.certservice.aaf-certservice-client
-```
-
-### Running Docker container from nexus
-```
-docker run --name aaf-certservice-client nexus3.onap.org:10001/onap/org.onap.aaf.certservice.aaf-certservice-client:1.0.0
+nexus3.onap.org:10001/onap/org.onap.aaf.certservice.aaf-certservice-client:latest
 ```
 
-### Running client as standalone docker container
+### Running local client application as standalone docker container
 ```
-AAFCERT_CLIENT_IMAGE=nexus3.onap.org:10001/onap/org.onap.aaf.certservice.aaf-certservice-client:latest
+AAFCERT_CLIENT_IMAGE=onap/org.onap.aaf.certservice.aaf-certservice-client
 DOCKER_ENV_FILE= <path to envfile>
 NETWORK_CERT_SERVICE= <docker network of cert service>
  
-docker run --env-file $DOCKER_ENV_FILE --network $NETWORK_CERT_SERVICE $AAFCERT_CLIENT_IMAGE
+docker run --name aaf-certservice-client --env-file $DOCKER_ENV_FILE --network $NETWORK_CERT_SERVICE $AAFCERT_CLIENT_IMAGE
 ```
 Sample Environment file:
 ```aidl
