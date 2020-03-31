@@ -24,9 +24,10 @@ import org.onap.aaf.certservice.client.api.ExitableException;
 public class KeyPairGenerationException extends ExitableException {
     private static final ExitStatus EXIT_STATUS = ExitStatus.KEY_PAIR_GENERATION_EXCEPTION;
 
-    public KeyPairGenerationException(Throwable e) {
-        super(e);
+    public KeyPairGenerationException(String errorMessage) {
+        super(errorMessage);
     }
+
 
     public ExitStatus applicationExitStatus() {
         return EXIT_STATUS;

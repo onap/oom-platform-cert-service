@@ -42,8 +42,8 @@ public class KeyPairFactory {
             LOGGER.info("KeyPair generation started with algorithm: {} and key size: {}", encryptionAlgorithm, keySize);
             return createKeyPairGenerator().generateKeyPair();
         } catch (NoSuchAlgorithmException e) {
-            LOGGER.error("Generation of KeyPair failed, exception message: {}", e.getMessage());
-            throw new KeyPairGenerationException(e);
+            String errorMessage = String.format("Generation of KeyPair failed, exception message: %s", e.getMessage());
+            throw new KeyPairGenerationException(errorMessage);
         }
     }
 
