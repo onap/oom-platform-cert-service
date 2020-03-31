@@ -53,7 +53,7 @@ public class CertificationModelFactory {
     }
 
     public CertificationModel createCertificationModel(String encodedCsr, String encodedPrivateKey, String caName)
-            throws DecryptionException, CmpClientException, Cmpv2ClientAdapterException {
+            throws DecryptionException, CmpClientException {
         CsrModel csrModel = csrModelFactory.createCsrModel(
                 new CsrModelFactory.StringBase64(encodedCsr),
                 new CsrModelFactory.StringBase64(encodedPrivateKey)
