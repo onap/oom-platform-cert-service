@@ -28,7 +28,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class KeyPairFactory {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(KeyPairFactory.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(KeyPairFactory.class);
     private final String encryptionAlgorithm;
     private final int keySize;
 
@@ -42,7 +42,7 @@ public class KeyPairFactory {
             LOGGER.info("KeyPair generation started with algorithm: {} and key size: {}", encryptionAlgorithm, keySize);
             return createKeyPairGenerator().generateKeyPair();
         } catch (NoSuchAlgorithmException e) {
-            LOGGER.error("Generation of KeyPair failed, exception message: {}" , e.getMessage());
+            LOGGER.error("Generation of KeyPair failed, exception message: {}", e.getMessage());
             throw new KeyPairGenerationException(e);
         }
     }
