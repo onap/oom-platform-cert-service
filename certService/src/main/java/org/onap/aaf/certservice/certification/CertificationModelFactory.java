@@ -22,7 +22,6 @@ package org.onap.aaf.certservice.certification;
 
 import org.onap.aaf.certservice.certification.configuration.Cmpv2ServerProvider;
 import org.onap.aaf.certservice.certification.configuration.model.Cmpv2Server;
-import org.onap.aaf.certservice.certification.exception.Cmpv2ClientAdapterException;
 import org.onap.aaf.certservice.certification.exception.DecryptionException;
 import org.onap.aaf.certservice.certification.model.CertificationModel;
 import org.onap.aaf.certservice.certification.model.CsrModel;
