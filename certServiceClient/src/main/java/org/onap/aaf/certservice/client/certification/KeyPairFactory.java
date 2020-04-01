@@ -28,7 +28,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class KeyPairFactory {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(KeyPairFactory.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(KeyPairFactory.class);
     private final String encryptionAlgorithm;
     private final int keySize;
 
