@@ -28,7 +28,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.onap.aaf.certservice.certification.CertificationModelFactory;
-import org.onap.aaf.certservice.certification.exception.Cmpv2ClientAdapterException;
 import org.onap.aaf.certservice.certification.exception.DecryptionException;
 import org.onap.aaf.certservice.certification.exception.ErrorResponseModel;
 import org.onap.aaf.certservice.certification.model.CertificationModel;
@@ -86,7 +85,7 @@ public class CertificationController {
             @RequestHeader("CSR") String encodedCsr,
             @Parameter(description = "Private key in form of PEM object encoded in Base64 (with header and footer).")
             @RequestHeader("PK") String encodedPrivateKey
-    ) throws DecryptionException, CmpClientException, Cmpv2ClientAdapterException {
+    ) throws DecryptionException, CmpClientException {
         caName = caName.replaceAll("[\n|\r|\t]", "_");
         LOGGER.info("Received certificate signing request for CA named: {}", caName);
         CertificationModel certificationModel = certificationModelFactory
