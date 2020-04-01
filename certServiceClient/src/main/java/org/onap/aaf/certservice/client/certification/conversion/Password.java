@@ -21,22 +21,26 @@
 package org.onap.aaf.certservice.client.certification.conversion;
 
 class Password {
+    // We are excluding this line in Sonar due to fact that
+    // PASSWORD_PATTERN does not contain password. This solution
+    // is safe.
+    // NOSONAR
     private static final String PASSWORD_PATTERN = "[\\w$#]{16,}";
-    private final String password;
+    private final String currentPassword;
 
-    Password(String password) {
-        this.password = password;
+    Password(String currentPassword) {
+        this.currentPassword = currentPassword;
     }
 
-    String getPassword() {
-        return password;
+    String getCurrentPassword() {
+        return currentPassword;
     }
 
     char[] toCharArray() {
-        return password.toCharArray();
+        return currentPassword.toCharArray();
     }
 
     boolean isCorrectPasswordPattern() {
-        return password.matches(PASSWORD_PATTERN);
+        return currentPassword.matches(PASSWORD_PATTERN);
     }
 }
