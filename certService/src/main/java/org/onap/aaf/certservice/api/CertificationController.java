@@ -64,14 +64,14 @@ public class CertificationController {
      * @param encodedPrivateKey Private key for CSR, needed for PoP, encoded in Base64 form
      * @return JSON containing trusted certificates and certificate chain
      */
-    @GetMapping(value = "v1/certificate/{caName}", produces = "application/json; charset=utf-8")
+    @GetMapping(value = "v1/certificate/{caName}", produces = "application/json")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "certificate successfully signed"),
-            @ApiResponse(responseCode = "400", description = "given CSR or/and PK is incorrect",
+            @ApiResponse(responseCode = "200", description = "Certificate successfully signed"),
+            @ApiResponse(responseCode = "400", description = "Given CSR or/and PK is incorrect",
                     content = @Content(schema = @Schema(implementation = ErrorResponseModel.class))),
             @ApiResponse(responseCode = "404", description = "CA not found for given name",
                     content = @Content(schema = @Schema(implementation = ErrorResponseModel.class))),
-            @ApiResponse(responseCode = "500", description = "something went wrong during connecting to cmp client",
+            @ApiResponse(responseCode = "500", description = "Something went wrong during connectiion to CMPv2 server",
                     content = @Content(schema = @Schema(implementation = ErrorResponseModel.class)))
     })
     @Operation(

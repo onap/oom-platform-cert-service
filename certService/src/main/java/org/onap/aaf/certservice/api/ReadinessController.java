@@ -42,13 +42,13 @@ public final class ReadinessController {
         this.cmpServersConfig = cmpServersConfig;
     }
 
-    @GetMapping(value = "/ready", produces = "application/json; charset=utf-8")
+    @GetMapping(value = "/ready", produces = "application/json")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "configuration is loaded and service is ready to use"),
-            @ApiResponse(responseCode = "503", description = "configuration loading failed and service is unavailable")
+            @ApiResponse(responseCode = "200", description = "Configuration is loaded and service is ready to use"),
+            @ApiResponse(responseCode = "503", description = "Configuration loading failed and service is unavailable")
     })
     @Operation(
-            summary = "check is container is ready",
+            summary = "Check if CertService application is ready",
             description = "Web endpoint for checking if service is ready to be used.",
             tags = {"CertificationService"})
     public ResponseEntity<String> checkReady() {
