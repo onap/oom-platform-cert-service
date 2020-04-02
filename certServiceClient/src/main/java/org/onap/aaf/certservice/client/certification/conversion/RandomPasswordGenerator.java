@@ -33,7 +33,11 @@ class RandomPasswordGenerator {
     private static final boolean USE_LETTERS_ONLY = false;
     private static final boolean USE_NUMBERS_ONLY = false;
 
+    // We are excluding this line in Sonar due to fact that
+    //we are using new SecureRandom which provides
+    //cryptographic security
     Password generate(int passwordLength) {
+        //NOSONAR
         return new Password(RandomStringUtils.random(
             passwordLength,
             START_POSITION_IN_ASCII_CHARS,
