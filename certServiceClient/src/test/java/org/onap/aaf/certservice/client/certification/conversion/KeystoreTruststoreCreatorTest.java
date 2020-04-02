@@ -54,7 +54,7 @@ class KeystoreTruststoreCreatorTest {
         // then
         verify(passwordGenerator, times(1)).generate(passwordLength);
         verify(converter, times(1)).convertKeystore(certificates, password, alias, privateKey);
-        verify(filesCreator, times(1)).saveKeystoreData(keystoreBytes, password.getPassword());
+        verify(filesCreator, times(1)).saveKeystoreData(keystoreBytes, password.getCurrentPassword());
     }
 
     @Test
@@ -75,6 +75,6 @@ class KeystoreTruststoreCreatorTest {
         // then
         verify(passwordGenerator, times(1)).generate(passwordLength);
         verify(converter, times(1)).convertTruststore(certificates, password, alias);
-        verify(filesCreator, times(1)).saveTruststoreData(truststoreBytes, password.getPassword());
+        verify(filesCreator, times(1)).saveTruststoreData(truststoreBytes, password.getCurrentPassword());
     }
 }

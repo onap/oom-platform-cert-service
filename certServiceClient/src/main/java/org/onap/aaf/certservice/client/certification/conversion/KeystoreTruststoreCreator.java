@@ -43,13 +43,13 @@ public class KeystoreTruststoreCreator {
         throws PemToPKCS12ConverterException {
         Password password = generator.generate(PASSWORD_LENGTH);
         creator.saveKeystoreData(converter.convertKeystore(data, password, CERTIFICATE_ALIAS, privateKey),
-            password.getPassword());
+            password.getCurrentPassword());
     }
 
     public void createTruststore(List<String> data)
         throws PemToPKCS12ConverterException {
         Password password = generator.generate(PASSWORD_LENGTH);
         creator.saveTruststoreData(converter.convertTruststore(data, password, TRUSTED_CERTIFICATE_ALIAS),
-            password.getPassword());
+            password.getCurrentPassword());
     }
 }
