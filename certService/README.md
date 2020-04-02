@@ -96,3 +96,7 @@ API is described by Swagger ( OpenAPI 3.0 ) on endpoint /docs
 ```
 http://localchost:8080/docs
 ```
+
+### OpenAPI
+during project building yaml file with openAPI 3.0 documentation is generated in target directory with name api-docs.yaml
+file OpenAPI.yaml located in certService directory must be update be hand if needed

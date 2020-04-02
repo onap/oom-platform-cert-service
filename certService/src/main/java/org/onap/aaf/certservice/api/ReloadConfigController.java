@@ -46,15 +46,15 @@ public final class ReloadConfigController {
         this.cmpServersConfig = cmpServersConfig;
     }
 
-    @GetMapping(value = "/reload", produces = "application/json; charset=utf-8")
+    @GetMapping(value = "/reload", produces = "application/json")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "configuration has been successfully reloaded"),
-            @ApiResponse(responseCode = "500", description = "something went wrong during configuration loading",
+            @ApiResponse(responseCode = "200", description = "Configuration has been successfully reloaded"),
+            @ApiResponse(responseCode = "500", description = "Something went wrong during configuration loading",
                     content = @Content(schema = @Schema(implementation = ErrorResponseModel.class)))
     })
     @Operation(
-            summary = "reload service configuration from file",
-            description = "Web endpoint for performing configuration reload. Used to reload configuration file from file.",
+            summary = "Reload CMPv2 servers configuration from configuration file",
+            description = "Web endpoint for performing configuration reload. Used to reload configuration from file.",
             tags = {"CertificationService"})
     public ResponseEntity<String> reloadConfiguration() throws CmpServersConfigLoadingException {
         cmpServersConfig.reloadConfiguration();
