@@ -20,6 +20,7 @@
 package org.onap.aaf.certservice.client.certification.conversion;
 
 import java.security.SecureRandom;
+
 import org.apache.commons.lang3.RandomStringUtils;
 
 class RandomPasswordGenerator {
@@ -37,15 +38,14 @@ class RandomPasswordGenerator {
     //we are using new SecureRandom which provides
     //cryptographic security
     Password generate(int passwordLength) {
-        //NOSONAR
         return new Password(RandomStringUtils.random(
-            passwordLength,
-            START_POSITION_IN_ASCII_CHARS,
-            END_POSITION_IN_ASCII_CHARS,
-            USE_LETTERS_ONLY,
-            USE_NUMBERS_ONLY,
-            SET_OF_CHARS,
-            new SecureRandom()));
+                passwordLength,
+                START_POSITION_IN_ASCII_CHARS,
+                END_POSITION_IN_ASCII_CHARS,
+                USE_LETTERS_ONLY,
+                USE_NUMBERS_ONLY,
+                SET_OF_CHARS,
+                new SecureRandom())); //NOSONAR
     }
 }
 
