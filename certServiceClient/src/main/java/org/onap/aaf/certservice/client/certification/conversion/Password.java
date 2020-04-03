@@ -24,8 +24,7 @@ class Password {
     // We are excluding this line in Sonar due to fact that
     // PASSWORD_PATTERN does not contain password. This solution
     // is safe.
-    // NOSONAR
-    private static final String PASSWORD_PATTERN = "[\\w$#]{16,}";
+    private static final String PASSWORD_PATTERN = "[\\w$#]{16,}"; // NOSONAR
     private final String currentPassword;
 
     Password(String currentPassword) {
