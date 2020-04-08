@@ -53,13 +53,6 @@ make stop-client
 4. Stop Cert Service and EJBCA
 make stop-backend
 ```
-    
-### Running API with Helm
-1. Use environment/server with installed kubernetes and helm.
-2. Copy certService/helm/aaf-cert-service directory to that environment.
-3. Enter that environment 
-4. Run ```helm install ./aaf-cert-service```
-
 
 ### AAF CertService CSITs
 #### CSIT repository
