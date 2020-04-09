@@ -21,7 +21,7 @@ services:
   aaf-cert-service:
     image: onap/org.onap.aaf.certservice.aaf-certservice-api:latest
     volumes:
-      - ./certService/helm/aaf-cert-service/resources/cmpServers.json:/etc/onap/aaf/certservice/cmpServers.json
+      - ./compose-resources/cmpServers.json:/etc/onap/aaf/certservice/cmpServers.json
       - ./certs/truststore.jks:/etc/onap/aaf/certservice/certs/truststore.jks
       - ./certs/root.crt:/etc/onap/aaf/certservice/certs/root.crt
       - ./certs/certServiceServer-keystore.jks:/etc/onap/aaf/certservice/certs/certServiceServer-keystore.jks
