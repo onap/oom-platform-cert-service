@@ -19,6 +19,7 @@ run-client:
 	mkdir -p `pwd`/compose-resources/client-volume/
 	@echo "##### Start Cert Service Client #####"
 	docker run \
+	    --rm \
 	    --name aafcert-client \
 	    --env-file ./compose-resources/client-configuration.env \
 	    --network certservice_certservice \
@@ -26,12 +27,6 @@ run-client:
 	    --volume `pwd`/certs/truststore.jks:/etc/onap/aaf/certservice/certs/truststore.jks \
 	    --volume `pwd`/certs/certServiceClient-keystore.jks:/etc/onap/aaf/certservice/certs/certServiceClient-keystore.jks \
 	    onap/org.onap.aaf.certservice.aaf-certservice-client:latest
-
-stop-client:
-	@echo "##### Remove Cert Service Client #####"
-	@echo "Removing aafcert-client"
-	@docker rm aafcert-client > /dev/null 2> /dev/null || true
-	@echo "##### DONE #####"
 
 stop-backend:
 	@echo "##### Stop Cert Service #####"

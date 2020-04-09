@@ -48,8 +48,6 @@ make build
 make start-backend
 3. Run Cert Service Client
 make run-client
-3. Remove client container
-make stop-client
 4. Stop Cert Service and EJBCA
 make stop-backend
 ```
