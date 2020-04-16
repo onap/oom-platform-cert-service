@@ -85,3 +85,8 @@ All docker images are hosted under nexus3 uri:
 ```
 https://nexus3.onap.org/repository/docker.snapshot/v2/onap/org.onap.aaf.certservice.aaf-certservice-api/
 ```
+
+### How to release containers
+```
+https://github.com/lfit/releng-global-jjb/blob/master/docs/jjb/lf-release-jobs.rst
+```
