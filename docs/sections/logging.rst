@@ -2,6 +2,8 @@
 .. http://creativecommons.org/licenses/by/4.0
 .. Copyright 2020 NOKIA
 
+.. _cert_logs:
+
 Logging
 =======
 
@@ -48,6 +50,7 @@ Available log files:
     - error.log - contains logs for **ERROR** logging level
 
 User cannot change logging levels.
+
 
 
 Certification Service Client

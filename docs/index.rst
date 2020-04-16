@@ -13,10 +13,12 @@ AAF Certification Service
    sections/architecture.rst
    sections/build.rst
    sections/offeredapis.rst
+   sections/usage.rst
    sections/logging.rst
    sections/installation.rst
    sections/configuration.rst
    sections/release-notes.rst
+   sections/troubleshooting.rst
 
 Indices and tables
 ==================
