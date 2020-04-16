@@ -18,10 +18,10 @@
     <parent>
         <groupId>org.onap.aaf.certservice</groupId>
         <artifactId>aaf-certservice</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>aaf-certservice-api</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.1-SNAPSHOT</version>
     <name>aaf-certservice-api</name>
     <description>AAF Certification Service Api</description>
     <packaging>jar</packaging>

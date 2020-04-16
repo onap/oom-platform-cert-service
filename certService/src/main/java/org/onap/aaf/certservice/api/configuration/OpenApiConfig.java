@@ -37,7 +37,7 @@ public class OpenApiConfig {
                         new Info()
                                 .title("CertService Documentation")
                                 .description("Certification service API documentation")
-                                .version("1.0.0")
+                                .version("1.0.1")
                 );
     }
 

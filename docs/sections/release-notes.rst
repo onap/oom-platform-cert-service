@@ -9,7 +9,7 @@ Release Notes
 Version: 1.0.0
 --------------
 
-:Release Date: 2020-03-25
+:Release Date: 2020-04-16
 
 **New Features**
 
