@@ -7,42 +7,72 @@ Logging
 
 Certification Service API 
 --------------------------
+To see console Certification Service logs use:
 
+- Docker:
 
-Certification Service logs are available in the Docker container
+.. code-block:: bash
 
-    docker exec -it aaf-certservice-api bash
+   docker logs <cert-service-container-name>
+
+- Kubernetes:
+
+.. code-block:: bash
+
+   kubectl logs <cert-service-pod-name>
+
+Console logs contain logs for logging levels from **DEBUG** to **ERROR**.
+
+Certification Service logs for different logging levels are available in the container:
+
+- Docker:
+
+.. code-block:: bash
+
+    docker exec -it <cert-service-container-name> bash
+
+- Kubernetes:
+
+.. code-block:: bash
+
+    kubectl exec -it <cert-service-pod-name> bash
 
 Path to logs:
 
     /var/log/onap/aaf/certservice
 
 Available log files:
-    * audit.log
-    * debug.log
-    * error.log
+
+    - audit.log - contains logs for **INFO** logging level
+    - debug.log - contains logs for logging levels from **DEBUG** to **ERROR**
+    - error.log - contains logs for **ERROR** logging level
+
+User cannot change logging levels.
 
 
 Certification Service Client
 ----------------------------
-To see logs use :
+To see console Certification Service Client logs use :
 
 - Docker: 
 
 .. code-block:: bash
    
-   docker logs cert-service-client
+   docker logs <cert-service-client-container-name>
 
 - Kubernetes: 
-  
+  CertService Client is used as init container in other components. In the following example:
+    - *<some-component-pod-name>* refers to the component that uses CertService Client as init container
+    - *<cert-service-client-init-container-name>* refers to name of init container used by the mentioned component. It can be found by executing *'kubectl descrine pod <some-component-pod-name>'* and looking into 'Init Containers section'
+
 .. code-block:: bash
-   
-   kubectl logs <pod-name> cert-service-client
+
+   kubectl logs <some-component-pod-name> -c <cert-service-client-init-container-name>
 
 
-Logs are stored inside container log path:
 
-  /var/logs
+| Container stops after execution, so all logs available are printed to console.
+| User cannot change logging levels.
 
 Client application exits with following exit codes:
 
@@ -67,4 +97,6 @@ Client application exits with following exit codes:
 | 7     | Fail in PKCS12 conversion                      |
 +-------+------------------------------------------------+
 | 8     | Fail in Private Key to PEM Encoding            |
++-------+------------------------------------------------+
+| 9     | Wrong TLS configuration                        |
 +-------+------------------------------------------------+
