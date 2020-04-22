@@ -175,6 +175,34 @@ Dynamic:
     curl -I https://localhost:$HTTPS_PORT/reload --cacert $ROOT_CERT --cert-type p12 --cert $KEYSTORE_P12_PATH --pass $KEYSTORE_PASSWORD
 
 
+Generating certificates for CertService and CertService Client
+--------------------------------------------------------------
+CertService and CertService client use mutual TLS for communication. Certificates are generated using Makefile.
+
+Local:
+^^^^^^
+
+Certificates are mounted to containers by docker volumes:
+
+    - CertService volumes are defined in certservice/docker-compose.yaml
+    - CertClient volumes are defined in certservice/Makefile
+
+All certificates are stored in *certservice/certs* directory. To recreate certificates go to *certservice/certs* directory and execute::
+
+    make clear all
+
+This will clear existing certs and generate new ones.
+
+OOM:
+^^^^
+
+Certificates are stored in secrets, which are mounted to pods as volumes. Both secrets are stored in *kubernetes/aaf/charts/aaf-cert-service/templates/secret.yaml*.
+Secrets take certificates from *kubernetes/aaf/charts/aaf-cert-service/resources* directory. Certificates are generated automatically during building(using Make) OOM repository.
+
+*kubernetes/aaf/charts/aaf-cert-service/Makefile* is similar to the one stored in certservice repository. It actually generates certificates.
+This Makefile is executed by *kubernetes/aaf/Makefile*, which is automatically executed during OOM build.
+
+
 Configuring EJBCA server for testing
 ------------------------------------
 
