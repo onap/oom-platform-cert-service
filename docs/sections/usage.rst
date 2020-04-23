@@ -4,50 +4,51 @@
 
 How to use functionality
 ========================
+Common information to docker and Kubernetes modes described below
 
 Basic information
 -----------------
-Certification Client needs the following configuration parameters to work properly:
+Certification Service Client needs the following configuration parameters to work properly:
 
-1. Parameters for connection to certification service API and generate trustore and keystore
+1. Parameters for connection to Certification Service API to obtain certificate and trust anchors
   
-  - REQUEST_URL *(default: https://aaf-cert-service:8443/v1/certificate/)*
-  - REQUEST_TIMEOUT *(default: 30000)*
-  - OUTPUT_PATH *(required)*
-  - CA_NAME *(required)* 
+  - REQUEST_URL *(default: https://aaf-cert-service:8443/v1/certificate/)* - URL to Certification Service API
+  - REQUEST_TIMEOUT *(default: 30000[ms])* - Timeout In miliseconds for REST API calls 
+  - OUTPUT_PATH *(required)* - Path where client will output generated certificate and trust anchor
+  - CA_NAME *(required)* - Name of CA which will enroll certificate. Must be same as configured on server side. Used in REST API calls
 
 
-2. Parameters for generate CSR file:
+2. Parameters to generate CSR file:
   
-  - COMMON_NAME *(required)*
-  - ORGANIZATION *(required)*
-  - ORGANIZATION_UNIT *(optional)*
-  - LOCATION *(optional)*
-  - STATE *(required)*
-  - COUNTRY *(required)*
-  - SANS *(optional)(SANS's should be separated by a colon)*
+  - COMMON_NAME *(required)* - Common name for which certificate from CMPv2 server should be issued
+  - ORGANIZATION *(required)* - Organization for which certificate from CMPv2 server should be issued
+  - ORGANIZATION_UNIT *(optional)* - Organization unit for which certificate from CMPv2 server should be issued
+  - LOCATION *(optional)* - Location for which certificate from CMPv2 server should be issued
+  - STATE *(required)* - State for which certificate from CMPv2 server should be issued
+  - COUNTRY *(required)* - Country for which certificate from CMPv2 server should be issued
+  - SANS *(optional)(SANS's should be separated by a colon e.g. test.onap.org:onap.com)* - Subject Alternative Names (SANs) for which certificate from CMPv2 server should be issued. 
 
-3. Parameters for secure connection: 
+3. Parameters to establish secure communication: 
 
   - KEYSTORE_PATH *(required)*
   - KEYSTORE_PASSWORD *(required)*
   - TRUSTSTORE_PATH *(required)*
   - TRUSTSTORE_PASSWORD *(required)*
 
-Certification Service Client image can be find on Nexus repository :
+Certification Service Client image can be found on Nexus repository :
 
 .. code-block:: bash
 
-  nexus3.onap.org:10001/onap/org.onap.aaf.certservice.aaf-certservice-client:latest 
+  nexus3.onap.org:10001/onap/org.onap.aaf.certservice.aaf-certservice-client:$VERSION
 
 
 As standalone docker container
 ------------------------------
-You need certification files to connect to certification service API via https. Information how to generate truststore and keystore files you can find in project repository README `Gerrit GitWeb <https://gerrit.onap.org/r/gitweb?p=aaf%2Fcertservice.git;a=summary>`__
+You need certificate and trust anchors to connect to certification service API via HTTPS. Information how to generate truststore and keystore files you can find in project repository README `Gerrit GitWeb <https://gerrit.onap.org/r/gitweb?p=aaf%2Fcertservice.git;a=summary>`__
 
-To run Certification Client as standalone docker container execute following steps: 
+To run Certification Service Client as standalone docker container execute following steps: 
 
-1. Create file with environments as in example below:
+1. Create file '*$PWD/client.env*' with environments as in example below:
 
 .. code-block:: bash
 
@@ -56,7 +57,7 @@ To run Certification Client as standalone docker container execute following ste
   REQUEST_TIMEOUT=10000
   OUTPUT_PATH=/var/certs
   CA_NAME=RA
-  #Csr config envs
+  #CSR config envs
   COMMON_NAME=onap.org
   ORGANIZATION=Linux-Foundation
   ORGANIZATION_UNIT=ONAP
@@ -64,7 +65,7 @@ To run Certification Client as standalone docker container execute following ste
   STATE=California
   COUNTRY=US
   SANS=test.onap.org:onap.com
-  #Tls config envs
+  #TLS config envs
   KEYSTORE_PATH=/etc/onap/aaf/certservice/certs/certServiceClient-keystore.jks
   KEYSTORE_PASSWORD=<password to keystore.jks>
   TRUSTSTORE_PATH=/etc/onap/aaf/certservice/certs/certServiceClient-truststore.jks
@@ -77,12 +78,12 @@ To run Certification Client as standalone docker container execute following ste
  docker run \
     --rm \
     --name aafcert-client \
-    --env-file <path to environments file> \
+    --env-file <$PWD/client.env (same as in step1)> \
     --network <docker network of cert service> \
-    --mount type=bind,src=<path to local directory>,dst=<OUTPUT_PATH> \
+    --mount type=bind,src=<path to local host directory where certificate and trust anchor will be created>,dst=<OUTPUT_PATH (same as in step 1)> \
     --volume <local path to keystore.jks>:<KEYSTORE_PATH> \
     --volume <local path to trustore.jks>:<TRUSTSTORE_PATH> \
-    nexus3.onap.org:10001/onap/org.onap.aaf.certservice.aaf-certservice-client:latest 
+    nexus3.onap.org:10001/onap/org.onap.aaf.certservice.aaf-certservice-client:$VERSION 
 
 
 
@@ -111,7 +112,7 @@ If container exits with non 0 exit code, you can find more information in logs, 
 As init container for Kubernetes
 --------------------------------
 
-To run Certification Client as init container for ONAP component, add following configuration to deploymnet:
+To run Certification Service Client as init container for ONAP component, add following configuration to deploymnet:
 
 .. code-block:: yaml
 
