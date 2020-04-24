@@ -13,7 +13,7 @@ Certification Service Client needs the following configuration parameters to wor
 1. Parameters for connection to Certification Service API to obtain certificate and trust anchors
   
   - REQUEST_URL *(default: https://aaf-cert-service:8443/v1/certificate/)* - URL to Certification Service API
-  - REQUEST_TIMEOUT *(default: 30000[ms])* - Timeout In miliseconds for REST API calls 
+  - REQUEST_TIMEOUT *(default: 30000[ms])* - Timeout In miliseconds for REST API calls
   - OUTPUT_PATH *(required)* - Path where client will output generated certificate and trust anchor
   - CA_NAME *(required)* - Name of CA which will enroll certificate. Must be same as configured on server side. Used in REST API calls
 
@@ -26,9 +26,9 @@ Certification Service Client needs the following configuration parameters to wor
   - LOCATION *(optional)* - Location for which certificate from CMPv2 server should be issued
   - STATE *(required)* - State for which certificate from CMPv2 server should be issued
   - COUNTRY *(required)* - Country for which certificate from CMPv2 server should be issued
-  - SANS *(optional)(SANS's should be separated by a colon e.g. test.onap.org:onap.com)* - Subject Alternative Names (SANs) for which certificate from CMPv2 server should be issued. 
+  - SANS *(optional)(SANS's should be separated by a colon e.g. test.onap.org:onap.com)* - Subject Alternative Names (SANs) for which certificate from CMPv2 server should be issued.
 
-3. Parameters to establish secure communication: 
+3. Parameters to establish secure communication:
 
   - KEYSTORE_PATH *(required)*
   - KEYSTORE_PASSWORD *(required)*
@@ -46,7 +46,7 @@ As standalone docker container
 ------------------------------
 You need certificate and trust anchors to connect to certification service API via HTTPS. Information how to generate truststore and keystore files you can find in project repository README `Gerrit GitWeb <https://gerrit.onap.org/r/gitweb?p=aaf%2Fcertservice.git;a=summary>`__
 
-To run Certification Service Client as standalone docker container execute following steps: 
+To run Certification Service Client as standalone docker container execute following steps:
 
 1. Create file '*$PWD/client.env*' with environments as in example below:
 
@@ -83,7 +83,7 @@ To run Certification Service Client as standalone docker container execute follo
     --mount type=bind,src=<path to local host directory where certificate and trust anchor will be created>,dst=<OUTPUT_PATH (same as in step 1)> \
     --volume <local path to keystore.jks>:<KEYSTORE_PATH> \
     --volume <local path to trustore.jks>:<TRUSTSTORE_PATH> \
-    nexus3.onap.org:10001/onap/org.onap.aaf.certservice.aaf-certservice-client:$VERSION 
+    nexus3.onap.org:10001/onap/org.onap.aaf.certservice.aaf-certservice-client:$VERSION
 
 
 
@@ -160,13 +160,26 @@ To run Certification Service Client as init container for ONAP component, add fo
                 value: US
               - name: SANS
                 value: test.onap.org:onap.com
+              - name: KEYSTORE_PATH
+                value: /etc/onap/aaf/certservice/certs/certServiceClient-keystore.jks
+              - name: KEYSTORE_PASSWORD
+                value: secret
+              - name: TRUSTSTORE_PATH
+                value: /etc/onap/aaf/certservice/certs/truststore.jks
+              - name: TRUSTSTORE_PASSWORD
+                value: secret
             volumeMounts:
               - mountPath: /var/certs
                 name: certs
+              - mountPath: /etc/onap/aaf/certservice/certs/
+                name: tls-volume
           ...
         volumes: 
-          -emptyDir: {}
-           name: certs
+        - name: certs
+          emptyDir: {}
+        - name tls-volume
+          secret:
+            secretName: aaf-cert-service-client-tls-secret  # Value of global.aaf.certService.client.secret.name
         ...
 
  
