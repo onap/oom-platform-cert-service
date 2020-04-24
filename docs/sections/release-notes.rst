@@ -18,6 +18,7 @@ The Frankfurt Release is the first release of the Certification Service.
 **Bug Fixes**
 
         - https://jira.onap.org/browse/AAF-1132
+        - https://jira.onap.org/browse/AAF-1133
 
 **Known Issues**
 
@@ -63,6 +64,7 @@ The Frankfurt Release is the first release of the Certification Service.
 **Known Issues**
 
         - https://jira.onap.org/browse/AAF-1132
+        - https://jira.onap.org/browse/AAF-1133
 
 **Security Notes**
 

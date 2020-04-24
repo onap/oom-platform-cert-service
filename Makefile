@@ -1,4 +1,4 @@
-all: build start-backend run-client stop-client stop-backend
+all: build start-backend run-client stop-backend
 start-with-client: start-backend run-client
 .PHONY: build
 
