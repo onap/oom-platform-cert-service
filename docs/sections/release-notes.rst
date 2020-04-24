@@ -6,6 +6,47 @@
 Release Notes
 =============
 
+Version: 1.0.1
+--------------
+
+:Release Date: 2020-04-24
+
+**New Features**
+
+The Frankfurt Release is the first release of the Certification Service.
+
+**Bug Fixes**
+
+        - https://jira.onap.org/browse/AAF-1132
+
+**Known Issues**
+
+        N/A
+
+**Security Notes**
+
+        N/A
+
+*Fixed Security Issues*
+
+        N/A
+
+*Known Security Issues*
+
+        N/A
+
+*Known Vulnerabilities in Used Modules*
+
+        N/A
+
+**Upgrade Notes**
+
+**Deprecation Notes**
+
+**Other**
+
+===========
+
 Version: 1.0.0
 --------------
 
@@ -21,7 +62,7 @@ The Frankfurt Release is the first release of the Certification Service.
 
 **Known Issues**
 
-        N/A
+        - https://jira.onap.org/browse/AAF-1132
 
 **Security Notes**
 

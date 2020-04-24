@@ -20,17 +20,28 @@
 
 package org.onap.aaf.certservice.client.configuration.exception;
 
+import org.junit.jupiter.api.Test;
 import org.onap.aaf.certservice.client.api.ExitStatus;
-import org.onap.aaf.certservice.client.api.ExitableException;
 
-public class TlsConfigurationException extends ExitableException {
-    private static final ExitStatus EXIT_STATUS = ExitStatus.TLS_CONFIGURATION_EXCEPTION;
+import static org.assertj.core.api.Assertions.assertThat;
 
-    public TlsConfigurationException(String message) {
-        super(message);
-    }
 
-    public ExitStatus applicationExitStatus() {
-        return EXIT_STATUS;
+public class TlsConfigurationExceptionTest {
+
+    @Test
+    public void containsProperExitStatus() {
+        // Given
+        ExitStatus exitStatus = null;
+
+        // When
+        try {
+            throw new TlsConfigurationException("Test message");
+        } catch (TlsConfigurationException e) {
+            exitStatus = e.applicationExitStatus();
+        }
+
+        // Then
+        assertThat(exitStatus).isNotNull();
+        assertThat(exitStatus).isEqualTo(ExitStatus.TLS_CONFIGURATION_EXCEPTION);
     }
 }
