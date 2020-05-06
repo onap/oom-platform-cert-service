@@ -154,7 +154,7 @@ Generating certificates for CertService and CertService Client
 CertService and CertService client use mutual TLS for communication. Certificates are generated during CertService installation.
 
 Docker mode:
-^^^^^^
+^^^^^^^^^^^^
 
 Certificates are mounted to containers by docker volumes:
 
@@ -168,7 +168,7 @@ All certificates are stored in *certservice/certs* directory. To recreate certif
 This will clear existing certs and generate new ones.
 
 ONAP OOM installation:
-^^^^
+^^^^^^^^^^^^^^^^^^^^^^
 
 Certificates are stored in secrets, which are mounted to pods as volumes. Both secrets are stored in *kubernetes/aaf/charts/aaf-cert-service/templates/secret.yaml*.
 Secrets take certificates from *kubernetes/aaf/charts/aaf-cert-service/resources* directory. Certificates are generated automatically during building (using Make) OOM repository.

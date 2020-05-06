@@ -15,6 +15,7 @@ Version: 1.0.1
 
 The Frankfurt Release is the first release of the Certification Service.
 
+
 **Bug Fixes**
 
         - `AAF-1132 <https://jira.onap.org/browse/AAF-1132>`_ - CertService Client returns exit status 5 when TLS configuration fails

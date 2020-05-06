@@ -10,6 +10,7 @@ AAF Certification Service
    :maxdepth: 2
    :caption: Contents:
 
+   sections/introduction.rst
    sections/architecture.rst
    sections/build.rst
    sections/offeredapis.rst
