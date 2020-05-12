@@ -4,7 +4,7 @@
 .. _offeredapis:
 
 Offered APIs
-============
+=============
 
 AAF Cert Service Api
 --------------------

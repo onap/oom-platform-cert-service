@@ -2,30 +2,35 @@
 .. http://creativecommons.org/licenses/by/4.0
 .. Copyright 2020 NOKIA
 
-.. _cert_logs:
 
 Logging
 =======
 
-Certification Service API 
---------------------------
-To see console Certification Service logs use:
+CertService API
+---------------
+To see CertService console logs use:
 
 - Docker:
 
 .. code-block:: bash
 
-   docker logs <cert-service-container-name>
+    docker logs <cert-service-container-name>
+
+    e.g.
+    docker logs aafcert-service
 
 - Kubernetes:
 
 .. code-block:: bash
 
-   kubectl logs <cert-service-pod-name>
+    kubectl -n onap logs <cert-service-pod-name>
 
-Console logs contain logs for logging levels from **DEBUG** to **ERROR**.
+    e.g.
+    kubectl -n onap logs $(kubectl -n onap get pods | grep cert-service | awk '{print $1}')
 
-Certification Service logs for different logging levels are available in the container:
+Console logs contains logs for logging levels from **DEBUG** to **ERROR**.
+
+CertService logs for different logging levels are available in the container:
 
 - Docker:
 
@@ -33,11 +38,17 @@ Certification Service logs for different logging levels are available in the con
 
     docker exec -it <cert-service-container-name> bash
 
+    e.g.
+    docker exec -it aafcert-service bash
+
 - Kubernetes:
 
 .. code-block:: bash
 
-    kubectl exec -it <cert-service-pod-name> bash
+    kubectl -n onap exec -it <cert-service-pod-name> bash
+
+    e.g.
+    kubectl -n onap exec -it $(kubectl -n onap get pods | grep cert-service | awk '{print $1}') bash
 
 Path to logs:
 
@@ -51,30 +62,36 @@ Available log files:
 
 User cannot change logging levels.
 
+.. _cert_logs:
 
-
-Certification Service Client
-----------------------------
-To see console Certification Service Client logs use :
+CertService client
+------------------
+To see CertService client console logs use :
 
 - Docker: 
 
 .. code-block:: bash
    
-   docker logs <cert-service-client-container-name>
+    docker logs <cert-service-client-container-name>
+
+    e.g.
+    docker logs aafcert-client
 
 - Kubernetes: 
-  CertService Client is used as init container in other components. In the following example:
-    - *<some-component-pod-name>* refers to the component that uses CertService Client as init container
-    - *<cert-service-client-init-container-name>* refers to name of init container used by the mentioned component. It can be found by executing *'kubectl descrine pod <some-component-pod-name>'* and looking into 'Init Containers section'
+  CertService client is used as init container in other components. In the following example:
+    - *<some-component-pod-name>* refers to the component that uses CertService client as init container
+    - *<cert-service-client-init-container-name>* refers to name of init container used by the mentioned component. It can be found by executing *'kubectl -n onap descrine pod <some-component-pod-name>'* and looking into 'Init Containers section'
 
 .. code-block:: bash
 
-   kubectl logs <some-component-pod-name> -c <cert-service-client-init-container-name>
+    kubectl -n onap logs <some-component-pod-name> -c <cert-service-client-init-container-name>
+
+    e.g.
+    kubectl -n onap logs <some-component-pod-name> -c cert-service-client
 
 
 
-| Container stops after execution, so all logs available are printed to console.
+| Container stops after execution, so all available logs are printed on console.
 | User cannot change logging levels.
 
 Client application exits with following exit codes:
