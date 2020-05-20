@@ -41,7 +41,7 @@ public class EnvsForTls {
         return readEnv(TlsConfigurationEnvs.TRUSTSTORE_PASSWORD);
     }
 
-    private Optional<String> readEnv(TlsConfigurationEnvs envName) {
+    Optional<String> readEnv(TlsConfigurationEnvs envName) {
         return envProvider.readEnvVariable(envName.toString());
     }
 }

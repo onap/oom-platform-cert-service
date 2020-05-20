@@ -52,7 +52,7 @@ public class EnvsForCsr {
         return readEnv(CsrConfigurationEnvs.SANS);
     }
 
-    private Optional<String> readEnv(CsrConfigurationEnvs envName) {
+    Optional<String> readEnv(CsrConfigurationEnvs envName) {
         return envProvider.readEnvVariable(envName.toString());
     }
 }
