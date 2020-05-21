@@ -4,7 +4,7 @@
 .. _master_index:
 
 AAF Certification Service
-=========================================
+==========================================
 
 .. toctree::
    :maxdepth: 2

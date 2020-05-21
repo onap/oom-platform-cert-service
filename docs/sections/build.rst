@@ -3,7 +3,7 @@
 .. Copyright 2020 NOKIA
 
 Build
-=====
+======
 
 Jenkins
 -------
@@ -37,7 +37,7 @@ How to build images?
 --------------------
 
 #. Checkout the project from https://gerrit.onap.org/r/#/admin/projects/aaf/certservice
-#. Read information's stored in README.md file
+#. Read information stored in README.md file
 #. Use a Makefile to build images::
 
     make build

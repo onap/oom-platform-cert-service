@@ -3,22 +3,22 @@
 .. Copyright 2020 NOKIA
 
 How to use functionality
-========================
+=========================
 Common information to docker and Kubernetes modes described below
 
 Basic information
 -----------------
-Certification Service Client needs the following configuration parameters to work properly:
+CertService client needs the following configuration parameters to work properly:
 
-1. Parameters for connection to Certification Service API to obtain certificate and trust anchors
+1. Parameters for connection to CertService API to obtain certificate and trust anchors
   
-  - REQUEST_URL *(default: https://aaf-cert-service:8443/v1/certificate/)* - URL to Certification Service API
-  - REQUEST_TIMEOUT *(default: 30000[ms])* - Timeout In miliseconds for REST API calls
+  - REQUEST_URL *(default: https://aaf-cert-service:8443/v1/certificate/)* - URL to CertService API
+  - REQUEST_TIMEOUT *(default: 30000[ms])* - Timeout in milliseconds for REST API calls
   - OUTPUT_PATH *(required)* - Path where client will output generated certificate and trust anchor
   - CA_NAME *(required)* - Name of CA which will enroll certificate. Must be same as configured on server side. Used in REST API calls
 
 
-2. Parameters to generate CSR file:
+2. Parameters to generate Certificate Signing Request (CSR):
   
   - COMMON_NAME *(required)* - Common name for which certificate from CMPv2 server should be issued
   - ORGANIZATION *(required)* - Organization for which certificate from CMPv2 server should be issued
@@ -28,14 +28,14 @@ Certification Service Client needs the following configuration parameters to wor
   - COUNTRY *(required)* - Country for which certificate from CMPv2 server should be issued
   - SANS *(optional)(SANS's should be separated by a colon e.g. test.onap.org:onap.com)* - Subject Alternative Names (SANs) for which certificate from CMPv2 server should be issued.
 
-3. Parameters to establish secure communication:
+3. Parameters to establish secure communication to CertService:
 
   - KEYSTORE_PATH *(required)*
   - KEYSTORE_PASSWORD *(required)*
   - TRUSTSTORE_PATH *(required)*
   - TRUSTSTORE_PASSWORD *(required)*
 
-Certification Service Client image can be found on Nexus repository :
+CertService client image can be found on Nexus repository :
 
 .. code-block:: bash
 
@@ -44,19 +44,20 @@ Certification Service Client image can be found on Nexus repository :
 
 As standalone docker container
 ------------------------------
-You need certificate and trust anchors to connect to certification service API via HTTPS. Information how to generate truststore and keystore files you can find in project repository README `Gerrit GitWeb <https://gerrit.onap.org/r/gitweb?p=aaf%2Fcertservice.git;a=summary>`__
+You need certificate and trust anchors to connect to CertService API via HTTPS. Information how to generate truststore and keystore files you can find in project repository README `Gerrit GitWeb <https://gerrit.onap.org/r/gitweb?p=aaf%2Fcertservice.git;a=summary>`__
 
-To run Certification Service Client as standalone docker container execute following steps:
+To run CertService client as standalone docker container execute following steps:
 
 1. Create file '*$PWD/client.env*' with environments as in example below:
 
 .. code-block:: bash
 
   #Client envs
-  REQUEST_URL=<url to certification service API>
+  REQUEST_URL=<URL to CertService API>
   REQUEST_TIMEOUT=10000
   OUTPUT_PATH=/var/certs
   CA_NAME=RA
+
   #CSR config envs
   COMMON_NAME=onap.org
   ORGANIZATION=Linux-Foundation
@@ -65,9 +66,10 @@ To run Certification Service Client as standalone docker container execute follo
   STATE=California
   COUNTRY=US
   SANS=test.onap.org:onap.com
+
   #TLS config envs
   KEYSTORE_PATH=/etc/onap/aaf/certservice/certs/certServiceClient-keystore.jks
-  KEYSTORE_PASSWORD=<password to keystore.jks>
+  KEYSTORE_PASSWORD=<password to certServiceClient-keystore.jks>
   TRUSTSTORE_PATH=/etc/onap/aaf/certservice/certs/certServiceClient-truststore.jks
   TRUSTSTORE_PASSWORD=<password to certServiceClient-truststore.jks>
 
@@ -81,13 +83,13 @@ To run Certification Service Client as standalone docker container execute follo
     --env-file <$PWD/client.env (same as in step1)> \
     --network <docker network of cert service> \
     --mount type=bind,src=<path to local host directory where certificate and trust anchor will be created>,dst=<OUTPUT_PATH (same as in step 1)> \
-    --volume <local path to keystore.jks>:<KEYSTORE_PATH> \
-    --volume <local path to trustore.jks>:<TRUSTSTORE_PATH> \
+    --volume <local path to keystore in JKS format>:<KEYSTORE_PATH> \
+    --volume <local path to truststore in JKS format>:<TRUSTSTORE_PATH> \
     nexus3.onap.org:10001/onap/org.onap.aaf.certservice.aaf-certservice-client:$VERSION
 
 
 
-After successful creation of certifications, container exits with exit code 0, expected logs looks like:
+After successful creation of certifications, container exits with exit code 0, expected log looks like:
 
 .. code-block:: bash
 
@@ -112,7 +114,18 @@ If container exits with non 0 exit code, you can find more information in logs, 
 As init container for Kubernetes
 --------------------------------
 
-To run Certification Service Client as init container for ONAP component, add following configuration to deploymnet:
+In order to run CertService client as init container for ONAP component you need to:
+
+    - define an init container and use CerService Client image
+    - provide client configuration through ENV variables in the init container
+    - define two volumes:
+
+        - first for generated certificates - it will be mounted in the init container and in the component container
+        - second with secret containing keys and certificates for secure communication between CertService Client and CertService - it will be mounted only in the init container
+    - mount both volumes to the init container
+    - mount first volume to the component container
+
+You can use the following deployment example as a reference:
 
 .. code-block:: yaml
 

@@ -3,7 +3,7 @@
 .. Copyright 2020 NOKIA
 
 Installation
-============
+=============
 
 .. note::
    * This section is used to describe how a software component is acquired and installed.
