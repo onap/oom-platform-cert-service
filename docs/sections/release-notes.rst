@@ -6,6 +6,47 @@
 Release Notes
 ==============
 
+Version: 1.0.2
+--------------
+
+:Release Date: 2020-xx-xx
+
+**New Features**
+
+        N/A
+
+**Bug Fixes**
+
+        N/A
+
+**Known Issues**
+
+        N/A
+
+**Security Notes**
+
+        N/A
+
+*Fixed Security Issues*
+
+        N/A
+
+*Known Security Issues*
+
+        N/A
+
+*Known Vulnerabilities in Used Modules*
+
+        N/A
+
+**Upgrade Notes**
+
+**Deprecation Notes**
+
+**Other**
+
+===========
+
 Version: 1.0.1
 --------------
 
