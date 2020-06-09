@@ -17,19 +17,19 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.client.certification.conversion;
+package org.onap.aaf.certservice.client.certification.exception;
 
-public class KeystoreTruststoreCreatorFactory {
-    private final String outputPath;
+import org.onap.aaf.certservice.client.api.ExitStatus;
+import org.onap.aaf.certservice.client.api.ExitableException;
 
-    public KeystoreTruststoreCreatorFactory(String outputPath) {
-        this.outputPath = outputPath;
+public class CertOutputTypeNotSupportedException extends ExitableException {
+    private static final ExitStatus EXIT_STATUS = ExitStatus.CERT_OUTPUT_TYPE_NOT_SUPPORTED_EXCEPTION;
+
+    public CertOutputTypeNotSupportedException(Throwable e) {
+        super(e);
     }
 
-    public KeystoreTruststoreCreator create() {
-        return new KeystoreTruststoreCreator(
-            new PKCS12FilesCreator(outputPath),
-            new RandomPasswordGenerator(),
-            new PemToPKCS12Converter());
+    public ExitStatus applicationExitStatus() {
+        return EXIT_STATUS;
     }
 }
