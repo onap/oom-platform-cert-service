@@ -40,6 +40,10 @@ public class EnvsForClient {
         return readEnv(ClientConfigurationEnvs.CA_NAME);
     }
 
+    public Optional<String> getOutputType() {
+        return readEnv(ClientConfigurationEnvs.OUTPUT_TYPE);
+    }
+
     private Optional<String> readEnv(ClientConfigurationEnvs envName) {
         return envProvider.readEnvVariable(envName.toString());
     }

@@ -26,16 +26,19 @@ public class ClientConfiguration implements ConfigurationModel {
 
     private static final Integer DEFAULT_TIMEOUT_MS = 30000;
     private static final String DEFAULT_REQUEST_URL = "https://aaf-cert-service:8443/v1/certificate/";
+    private static final String DEFAULT_OUTPUT_TYPE = "P12";
 
     private String urlToCertService;
     private Integer requestTimeout;
     private String certsOutputPath;
     private String caName;
+    private String outputType;
 
 
     public ClientConfiguration() {
         urlToCertService = DEFAULT_REQUEST_URL;
         requestTimeout = DEFAULT_TIMEOUT_MS;
+        outputType = DEFAULT_OUTPUT_TYPE;
     }
 
 
@@ -75,12 +78,22 @@ public class ClientConfiguration implements ConfigurationModel {
         return this;
     }
 
+    public String getOutputType() {
+        return outputType;
+    }
+
+    public ClientConfiguration setOutputType(String outputType) {
+        this.outputType = outputType;
+        return this;
+    }
+
     @Override
     public String toString() {
-        return String.format("%s: %s, %s: %s, %s: %s, %s: %s",
+        return String.format("%s: %s, %s: %s, %s: %s, %s: %s, %s: %s",
                 ClientConfigurationEnvs.REQUEST_URL, urlToCertService,
                 ClientConfigurationEnvs.REQUEST_TIMEOUT, requestTimeout,
                 ClientConfigurationEnvs.OUTPUT_PATH, certsOutputPath,
-                ClientConfigurationEnvs.CA_NAME, caName);
+                ClientConfigurationEnvs.CA_NAME, caName,
+                ClientConfigurationEnvs.OUTPUT_TYPE, outputType);
     }
 }

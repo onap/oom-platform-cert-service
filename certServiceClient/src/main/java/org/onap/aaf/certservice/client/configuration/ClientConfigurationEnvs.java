@@ -24,5 +24,6 @@ public enum ClientConfigurationEnvs {
     REQUEST_URL,
     REQUEST_TIMEOUT,
     OUTPUT_PATH,
-    CA_NAME
+    CA_NAME,
+    OUTPUT_TYPE
 }
