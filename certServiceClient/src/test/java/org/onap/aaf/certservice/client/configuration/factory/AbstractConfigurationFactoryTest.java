@@ -28,7 +28,7 @@ import static org.mockito.Mockito.mock;
 
 public class AbstractConfigurationFactoryTest {
 
-    private AbstractConfigurationFactory cut = mock(AbstractConfigurationFactory.class, Mockito.CALLS_REAL_METHODS);
+    private final AbstractConfigurationFactory cut = mock(AbstractConfigurationFactory.class, Mockito.CALLS_REAL_METHODS);
 
     @ParameterizedTest
     @ValueSource(strings = {"/var/log", "/", "/var/log/", "/second_var", "/second-var"})
@@ -76,5 +76,17 @@ public class AbstractConfigurationFactoryTest {
     @ValueSource(strings = {"https://example.com", "http://example.com", "example.com:8080", "0.0.0.0", "@#$%.com"})
     public void shouldRejectInvalidCommonName(String commonName) {
         assertThat(cut.isCommonNameValid(commonName)).isFalse();
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"JKS", "P12", "PEM"})
+    public void shouldAcceptValidOutputType(String outputType) {
+        assertThat(cut.isOutputTypeValid(outputType)).isTrue();
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"jks", "p12", "pem", "", "pass", "!@$#pp"})
+    public void shouldRejectInvalidOutputType(String outputType) {
+        assertThat(cut.isOutputTypeValid(outputType)).isFalse();
     }
 }

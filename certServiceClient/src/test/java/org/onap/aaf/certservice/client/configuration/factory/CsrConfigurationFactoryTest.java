@@ -18,7 +18,7 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.client.configuration.model;
+package org.onap.aaf.certservice.client.configuration.factory;
 
 import org.assertj.core.api.Condition;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,7 +26,7 @@ import org.junit.jupiter.api.Test;
 import org.onap.aaf.certservice.client.configuration.CsrConfigurationEnvs;
 import org.onap.aaf.certservice.client.configuration.EnvsForCsr;
 import org.onap.aaf.certservice.client.configuration.exception.CsrConfigurationException;
-import org.onap.aaf.certservice.client.configuration.factory.CsrConfigurationFactory;
+import org.onap.aaf.certservice.client.configuration.model.CsrConfiguration;
 
 import java.util.Optional;
 

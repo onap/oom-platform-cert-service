@@ -18,13 +18,13 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.client.configuration.model;
+package org.onap.aaf.certservice.client.configuration.factory;
 
 import org.junit.jupiter.api.Test;
 import org.onap.aaf.certservice.client.configuration.ClientConfigurationEnvs;
 import org.onap.aaf.certservice.client.configuration.EnvsForClient;
 import org.onap.aaf.certservice.client.configuration.exception.ClientConfigurationException;
-import org.onap.aaf.certservice.client.configuration.factory.ClientConfigurationFactory;
+import org.onap.aaf.certservice.client.configuration.model.ClientConfiguration;
 
 import java.util.Optional;
 
@@ -42,8 +42,11 @@ public class ClientConfigurationFactoryTest {
     private final String URL_TO_CERT_SERVICE_DEFAULT = "https://aaf-cert-service:8443/v1/certificate/";
     private final String CA_NAME_INVALID =  "caaaftest2#$";
     private final String OUTPUT_PATH_INVALID = "/opt//app/osaaf";
+    private final String OUTPUT_TYPE_VALID = "JKS";
+    private final String OUTPUT_TYPE_INVALID = "JKSS";
 
     private EnvsForClient envsForClient = mock(EnvsForClient.class);
+
 
     @Test
     void create_shouldReturnSuccessWhenAllVariablesAreSetAndValid() throws ClientConfigurationException {
@@ -52,15 +55,18 @@ public class ClientConfigurationFactoryTest {
         when(envsForClient.getOutputPath()).thenReturn(Optional.of(OUTPUT_PATH_VALID));
         when(envsForClient.getRequestTimeOut()).thenReturn(Optional.of(TIME_OUT_VALID));
         when(envsForClient.getUrlToCertService()).thenReturn(Optional.of(URL_TO_CERT_SERVICE_VALID));
+        when(envsForClient.getOutputType()).thenReturn(Optional.of(OUTPUT_TYPE_VALID));
 
         // when
         ClientConfiguration configuration = new ClientConfigurationFactory(envsForClient).create();
+        System.out.println(configuration.toString());
 
         // then
         assertThat(configuration.getCaName()).isEqualTo(CA_NAME_VALID);
         assertThat(configuration.getRequestTimeout()).isEqualTo(Integer.valueOf(TIME_OUT_VALID));
         assertThat(configuration.getCertsOutputPath()).isEqualTo(OUTPUT_PATH_VALID);
         assertThat(configuration.getUrlToCertService()).isEqualTo(URL_TO_CERT_SERVICE_VALID);
+        assertThat(configuration.getOutputType()).isEqualTo(OUTPUT_TYPE_VALID);
     }
 
     @Test
@@ -87,7 +93,7 @@ public class ClientConfigurationFactoryTest {
         // when
         ClientConfigurationFactory configurationFactory = new ClientConfigurationFactory(envsForClient);
 
-        // when/then
+        // then
         assertThatExceptionOfType(ClientConfigurationException.class)
                 .isThrownBy(configurationFactory::create)
                 .withMessageContaining(ClientConfigurationEnvs.CA_NAME + " is invalid.");
@@ -121,9 +127,27 @@ public class ClientConfigurationFactoryTest {
         // when
         ClientConfigurationFactory configurationFactory = new ClientConfigurationFactory(envsForClient);
 
-        // when/then
+        //then
         assertThatExceptionOfType(ClientConfigurationException.class)
                 .isThrownBy(configurationFactory::create)
                 .withMessageContaining(ClientConfigurationEnvs.OUTPUT_PATH + " is invalid.");
+    }
+
+    @Test
+    void create_shouldReturnClientExceptionWhenOutputTypeIsInvalid() {
+        // given
+        when(envsForClient.getCaName()).thenReturn(Optional.of(CA_NAME_VALID));
+        when(envsForClient.getOutputPath()).thenReturn(Optional.of(OUTPUT_PATH_VALID));
+        when(envsForClient.getRequestTimeOut()).thenReturn(Optional.of(TIME_OUT_VALID));
+        when(envsForClient.getUrlToCertService()).thenReturn(Optional.of(URL_TO_CERT_SERVICE_VALID));
+        when(envsForClient.getOutputType()).thenReturn(Optional.of(OUTPUT_TYPE_INVALID));
+
+        // when
+        ClientConfigurationFactory configurationFactory = new ClientConfigurationFactory(envsForClient);
+
+        //then
+        assertThatExceptionOfType(ClientConfigurationException.class)
+                .isThrownBy(configurationFactory::create)
+                .withMessageContaining(ClientConfigurationEnvs.OUTPUT_TYPE + " is invalid.");
     }
 }

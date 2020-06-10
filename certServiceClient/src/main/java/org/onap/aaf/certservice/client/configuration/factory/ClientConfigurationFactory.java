@@ -27,6 +27,8 @@ import org.onap.aaf.certservice.client.configuration.model.ClientConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Optional;
+
 public class ClientConfigurationFactory extends AbstractConfigurationFactory<ClientConfiguration> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientConfigurationFactory.class);
@@ -40,6 +42,8 @@ public class ClientConfigurationFactory extends AbstractConfigurationFactory<Cli
     public ClientConfiguration create() throws ClientConfigurationException {
 
         ClientConfiguration configuration = new ClientConfiguration();
+
+        Optional<String> outputType = envsForClient.getOutputType();
 
         envsForClient.getUrlToCertService()
                 .map(configuration::setUrlToCertService);
@@ -57,8 +61,11 @@ public class ClientConfigurationFactory extends AbstractConfigurationFactory<Cli
                 .map(configuration::setCaName)
                 .orElseThrow(() -> new ClientConfigurationException(ClientConfigurationEnvs.CA_NAME + " is invalid."));
 
-        envsForClient.getOutputType()
-                .map(configuration::setOutputType);
+        if (outputType.isPresent()) {
+            outputType.filter(this::isOutputTypeValid)
+                    .map(configuration::setOutputType)
+                    .orElseThrow(() -> new ClientConfigurationException(ClientConfigurationEnvs.OUTPUT_TYPE + " is invalid."));
+        }
 
         LOGGER.info("Successful validation of Client configuration. Configuration data: {}", configuration.toString());
 
