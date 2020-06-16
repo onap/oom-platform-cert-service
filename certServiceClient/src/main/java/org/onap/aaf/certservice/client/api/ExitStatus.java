@@ -29,9 +29,7 @@ public enum ExitStatus {
     HTTP_CLIENT_EXCEPTION(6,"Internal HTTP Client connection problem"),
     PKCS12_CONVERSION_EXCEPTION(7,"Fail in PKCS12 conversion"),
     PK_TO_PEM_ENCODING_EXCEPTION(8,"Fail in Private Key to PEM Encoding"),
-    TLS_CONFIGURATION_EXCEPTION(9, "Invalid TLS configuration"),
-    OUTPUT_TYPE_PARAMETER_VALIDATION_EXCEPTION(10, "Invalid value of the OUTPUT_TYPE parameter"),
-    CERT_OUTPUT_TYPE_NOT_SUPPORTED_EXCEPTION(11, "Certificate creation type is not supported");
+    TLS_CONFIGURATION_EXCEPTION(9, "Invalid TLS configuration");
 
     private final int value;
     private final String message;

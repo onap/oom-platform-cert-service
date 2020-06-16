@@ -20,33 +20,22 @@
 package org.onap.aaf.certservice.client.certification.conversion;
 
 import org.junit.jupiter.api.Test;
-import org.onap.aaf.certservice.client.certification.exception.CertOutputTypeNotSupportedException;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 
 class ArtifactsCreatorProviderTest {
 
     private static final String STRATEGY_P12 = "P12";
     private static final String TEST_PATH = "testPath";
-    private static final String NOT_SUPPORTED_STRATEGY = "notSupported";
 
     @Test
-    void getStrategyOfStringShouldReturnCorrectCreator() throws Exception {
+    void getStrategyOfStringShouldReturnCorrectCreator(){
 
         // when
         ArtifactsCreator artifactsCreator =
                 ArtifactsCreatorProvider.getCreator(STRATEGY_P12, TEST_PATH);
         // then
         assertThat(artifactsCreator).isInstanceOf(PKCS12ArtifactsCreator.class);
-    }
-
-    @Test
-    void notSupportedStrategyShouldThrowException() {
-        // when// then
-        assertThatExceptionOfType(CertOutputTypeNotSupportedException.class)
-                .isThrownBy(() -> ArtifactsCreatorProvider.getCreator(NOT_SUPPORTED_STRATEGY, TEST_PATH));
-
     }
 }

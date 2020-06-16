@@ -18,12 +18,6 @@
  */
 package org.onap.aaf.certservice.client.certification.conversion;
 
-import org.onap.aaf.certservice.client.certification.exception.CertOutputTypeNotSupportedException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.Arrays;
-
 public enum ArtifactsCreatorProvider {
 
     P12 {
@@ -48,18 +42,8 @@ public enum ArtifactsCreatorProvider {
         }
     };
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ArtifactsCreatorProvider.class);
-
-    public static ArtifactsCreator getCreator(String outputType, String outputPath)
-            throws CertOutputTypeNotSupportedException {
-        try {
-            LOGGER.info("Artifact creation type selected: {}", outputType);
+    public static ArtifactsCreator getCreator(String outputType, String outputPath) {
             return valueOf(outputType).create(outputPath);
-        } catch (IllegalArgumentException e) {
-            LOGGER.error("Artifact creation type: {} is not supported. Supported types: {}",
-                    outputType, Arrays.toString(values()));
-            throw new CertOutputTypeNotSupportedException(e);
-        }
     }
 
     abstract ArtifactsCreator create(String outputPath);
