@@ -16,9 +16,12 @@
  * limitations under the License.
  * ============LICENSE_END=========================================================
  */
-package org.onap.aaf.certservice.client.certification.conversion;
 
-import org.onap.aaf.certservice.client.certification.PrivateKeyToPemEncoder;
+package org.onap.aaf.certservice.client.certification;
+
+import org.onap.aaf.certservice.client.certification.conversion.ArtifactsCreator;
+import org.onap.aaf.certservice.client.certification.conversion.ConvertedArtifactsCreatorFactory;
+import org.onap.aaf.certservice.client.certification.conversion.PemArtifactsCreator;
 import org.onap.aaf.certservice.client.certification.writer.CertFileWriter;
 
 public enum ArtifactsCreatorProvider {
@@ -34,18 +37,20 @@ public enum ArtifactsCreatorProvider {
             return ConvertedArtifactsCreatorFactory.createConverter(destPath, getExtension(), getKeyStoreType());
         }
     },
-    PEM("PEM"){
+    PEM("PEM") {
         @Override
         ArtifactsCreator create(String destPath) {
             return new PemArtifactsCreator(new CertFileWriter(destPath), new PrivateKeyToPemEncoder());
         }
     };
+
     private final String keyStoreType;
+
     ArtifactsCreatorProvider(String keyStoreType) {
         this.keyStoreType = keyStoreType;
     }
 
-    public static ArtifactsCreator getCreator(String outputType, String destPath) {
+    public static ArtifactsCreator get(String outputType, String destPath) {
         return valueOf(outputType).create(destPath);
     }
 

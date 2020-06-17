@@ -19,14 +19,15 @@
 
 package org.onap.aaf.certservice.client.certification.conversion;
 
-import java.security.PrivateKey;
-import java.util.List;
 import org.onap.aaf.certservice.client.certification.PrivateKeyToPemEncoder;
 import org.onap.aaf.certservice.client.certification.exception.CertFileWriterException;
 import org.onap.aaf.certservice.client.certification.exception.PkEncodingException;
 import org.onap.aaf.certservice.client.certification.writer.CertFileWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.security.PrivateKey;
+import java.util.List;
 
 public class PemArtifactsCreator implements ArtifactsCreator {
     private static final Logger LOGGER = LoggerFactory.getLogger(PemArtifactsCreator.class);
@@ -45,7 +46,7 @@ public class PemArtifactsCreator implements ArtifactsCreator {
 
     @Override
     public void create(List<String> keystoreData, List<String> truststoreData, PrivateKey privateKey)
-        throws PkEncodingException, CertFileWriterException {
+            throws PkEncodingException, CertFileWriterException {
         LOGGER.debug("Attempt to create PEM private key file and saving data. File name: {}", KEY_PEM);
         writer.saveData(pkEncoder.encodePrivateKeyToPem(privateKey).getBytes(), KEY_PEM);
 

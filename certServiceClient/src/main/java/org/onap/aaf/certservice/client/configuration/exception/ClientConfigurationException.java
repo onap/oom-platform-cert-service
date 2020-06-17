@@ -17,6 +17,7 @@
  * limitations under the License.
  * ============LICENSE_END=========================================================
  */
+
 package org.onap.aaf.certservice.client.configuration.exception;
 
 import org.onap.aaf.certservice.client.api.ExitStatus;

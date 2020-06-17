@@ -21,16 +21,15 @@
 package org.onap.aaf.certservice.client.certification;
 
 
-
-import java.io.IOException;
-import java.io.StringWriter;
-import java.security.PrivateKey;
-
 import org.bouncycastle.openssl.jcajce.JcaPEMWriter;
 import org.bouncycastle.util.io.pem.PemObject;
 import org.onap.aaf.certservice.client.certification.exception.PkEncodingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.io.StringWriter;
+import java.security.PrivateKey;
 
 public class PrivateKeyToPemEncoder {
 

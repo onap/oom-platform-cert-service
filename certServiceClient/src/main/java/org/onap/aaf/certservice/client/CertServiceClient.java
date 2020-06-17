@@ -20,10 +20,10 @@
 package org.onap.aaf.certservice.client;
 
 import org.onap.aaf.certservice.client.api.ExitableException;
+import org.onap.aaf.certservice.client.certification.ArtifactsCreatorProvider;
 import org.onap.aaf.certservice.client.certification.CsrFactory;
 import org.onap.aaf.certservice.client.certification.KeyPairFactory;
 import org.onap.aaf.certservice.client.certification.PrivateKeyToPemEncoder;
-import org.onap.aaf.certservice.client.certification.conversion.ArtifactsCreatorProvider;
 import org.onap.aaf.certservice.client.common.Base64Encoder;
 import org.onap.aaf.certservice.client.configuration.EnvsForClient;
 import org.onap.aaf.certservice.client.configuration.EnvsForCsr;
@@ -78,7 +78,7 @@ public class CertServiceClient {
                             base64Encoder.encode(pkEncoder.encodePrivateKeyToPem(keyPair.getPrivate())));
 
             ArtifactsCreatorProvider
-                    .getCreator(clientConfiguration.getOutputType(),
+                    .get(clientConfiguration.getOutputType(),
                             clientConfiguration.getCertsOutputPath())
                     .create(certServiceData.getCertificateChain(),
                             certServiceData.getTrustedCertificates(),

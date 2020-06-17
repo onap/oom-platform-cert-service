@@ -17,6 +17,7 @@
  * limitations under the License.
  * ============LICENSE_END=========================================================
  */
+
 package org.onap.aaf.certservice.client.configuration;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -35,12 +36,12 @@ class EnvProviderTest {
     private EnvProvider envProvider;
 
     @BeforeEach
-    public void setUp(){
-         envProvider = Mockito.spy(EnvProvider.class);
+    public void setUp() {
+        envProvider = Mockito.spy(EnvProvider.class);
     }
 
     @Test
-    public void shouldReturnSystemEnvVariableWhenItWasDefined(){
+    public void shouldReturnSystemEnvVariableWhenItWasDefined() {
         // given
         when(envProvider.getSystemEnv(TEST_ENV)).thenReturn(TEST_ENV_VALUE);
 
@@ -53,7 +54,7 @@ class EnvProviderTest {
     }
 
     @Test
-    public void shouldReportThatSystemEnvVariableIsNotPresentWhenItWasNotDefined(){
+    public void shouldReportThatSystemEnvVariableIsNotPresentWhenItWasNotDefined() {
         // when
         final Optional<String> testEnv = envProvider.readEnvVariable(TEST_ENV);
 

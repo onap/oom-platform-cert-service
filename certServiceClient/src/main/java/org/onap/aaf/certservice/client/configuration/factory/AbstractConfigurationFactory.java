@@ -21,7 +21,7 @@
 package org.onap.aaf.certservice.client.configuration.factory;
 
 
-import org.onap.aaf.certservice.client.certification.conversion.ArtifactsCreatorProvider;
+import org.onap.aaf.certservice.client.certification.ArtifactsCreatorProvider;
 import org.onap.aaf.certservice.client.configuration.exception.ClientConfigurationException;
 import org.onap.aaf.certservice.client.configuration.exception.CsrConfigurationException;
 import org.onap.aaf.certservice.client.configuration.model.ConfigurationModel;
@@ -43,10 +43,10 @@ public abstract class AbstractConfigurationFactory<T extends ConfigurationModel>
     }
 
     public boolean isCommonNameValid(String commonName) {
-        return !isSpecialCharsPresent(commonName) &&
-                !isHttpProtocolsPresent(commonName) &&
-                !isIpAddressPresent(commonName) &&
-                !isPortNumberPresent(commonName);
+        return !isSpecialCharsPresent(commonName)
+                && !isHttpProtocolsPresent(commonName)
+                && !isIpAddressPresent(commonName)
+                && !isPortNumberPresent(commonName);
     }
 
     public boolean isSpecialCharsPresent(String stringToCheck) {

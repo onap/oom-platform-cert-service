@@ -16,6 +16,7 @@
  * limitations under the License.
  * ============LICENSE_END=========================================================
  */
+
 package org.onap.aaf.certservice.client.api;
 
 public abstract class ExitableException extends Exception {
@@ -26,5 +27,6 @@ public abstract class ExitableException extends Exception {
     public ExitableException(String message) {
         super(message);
     }
+
     public abstract ExitStatus applicationExitStatus();
 }

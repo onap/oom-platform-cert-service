@@ -16,6 +16,7 @@
  * limitations under the License.
  * ============LICENSE_END=========================================================
  */
+
 package org.onap.aaf.certservice.client.certification;
 
 import org.junit.jupiter.api.Test;
@@ -46,7 +47,7 @@ class KeyPairFactoryTest {
         KeyPairFactory keyPairFactory = new KeyPairFactory(NOT_EXISTING_ENCRYPTION_ALGORITHM,
                 EncryptionAlgorithmConstants.KEY_SIZE);
         //  when, then
-        assertThatThrownBy(() -> keyPairFactory.create()).isInstanceOf(KeyPairGenerationException.class);
+        assertThatThrownBy(keyPairFactory::create).isInstanceOf(KeyPairGenerationException.class);
     }
 
 }

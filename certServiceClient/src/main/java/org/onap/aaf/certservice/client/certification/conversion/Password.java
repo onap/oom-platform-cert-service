@@ -17,7 +17,6 @@
  * ============LICENSE_END=========================================================
  */
 
-
 package org.onap.aaf.certservice.client.certification.conversion;
 
 class Password {

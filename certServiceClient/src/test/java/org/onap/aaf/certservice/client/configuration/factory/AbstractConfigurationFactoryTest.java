@@ -17,6 +17,7 @@
  * limitations under the License.
  * ============LICENSE_END=========================================================
  */
+
 package org.onap.aaf.certservice.client.configuration.factory;
 
 import org.junit.jupiter.params.ParameterizedTest;

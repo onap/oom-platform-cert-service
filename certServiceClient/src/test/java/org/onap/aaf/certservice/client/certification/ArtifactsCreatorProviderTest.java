@@ -17,12 +17,15 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.client.certification.conversion;
+package org.onap.aaf.certservice.client.certification;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.onap.aaf.certservice.client.certification.conversion.ArtifactsCreator;
+import org.onap.aaf.certservice.client.certification.conversion.ConvertedArtifactsCreator;
+import org.onap.aaf.certservice.client.certification.conversion.PemArtifactsCreator;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -36,21 +39,21 @@ class ArtifactsCreatorProviderTest {
 
     @ParameterizedTest
     @ValueSource(strings = {JKS, P12})
-    void artifactsProviderShouldReturnConvertedCreator(String outputType){
+    void artifactsProviderShouldReturnConvertedCreator(String outputType) {
 
         // when
         ArtifactsCreator artifactsCreator =
-                ArtifactsCreatorProvider.getCreator(outputType, TEST_PATH);
+                ArtifactsCreatorProvider.get(outputType, TEST_PATH);
         // then
         assertThat(artifactsCreator).isInstanceOf(ConvertedArtifactsCreator.class);
     }
 
     @Test
-    void artifactsProviderShouldReturnPemCreator(){
+    void artifactsProviderShouldReturnPemCreator() {
 
         // when
         ArtifactsCreator artifactsCreator =
-            ArtifactsCreatorProvider.getCreator(PEM, TEST_PATH);
+                ArtifactsCreatorProvider.get(PEM, TEST_PATH);
         // then
         assertThat(artifactsCreator).isInstanceOf(PemArtifactsCreator.class);
     }
@@ -59,7 +62,7 @@ class ArtifactsCreatorProviderTest {
     @CsvSource({
             "JKS,       jks",
             "P12,       p12"})
-    void getExtensionShouldProvideExtensionBasedOnArtifactType(String artifactType, String expectedExtension){
+    void getExtensionShouldProvideExtensionBasedOnArtifactType(String artifactType, String expectedExtension) {
 
         //when
         String actualExtension = ArtifactsCreatorProvider.valueOf(artifactType).getExtension();

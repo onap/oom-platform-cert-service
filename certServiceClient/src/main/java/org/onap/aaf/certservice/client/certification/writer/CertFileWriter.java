@@ -19,13 +19,13 @@
 
 package org.onap.aaf.certservice.client.certification.writer;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-
-import java.nio.file.Path;
 import org.onap.aaf.certservice.client.certification.exception.CertFileWriterException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Path;
 
 public class CertFileWriter {
 
@@ -36,11 +36,11 @@ public class CertFileWriter {
         this.destPath = destPath;
     }
 
-public void saveData(byte[] data, String filename) throws CertFileWriterException {
+    public void saveData(byte[] data, String filename) throws CertFileWriterException {
         LOGGER.debug("Attempt to save file {} in path {}", filename, destPath);
         try (FileOutputStream outputStream = new FileOutputStream(Path.of(destPath, filename).toString())) {
             outputStream.write(data);
-            } catch (IOException e) {
+        } catch (IOException e) {
             LOGGER.error("File creation failed, exception message: {}", e.getMessage());
             throw new CertFileWriterException(e);
         }

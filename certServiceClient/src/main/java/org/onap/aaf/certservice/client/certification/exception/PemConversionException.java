@@ -28,6 +28,7 @@ public class PemConversionException extends ExitableException {
     public PemConversionException(Throwable e) {
         super(e);
     }
+
     public PemConversionException(String message) {
         super(message);
     }

@@ -26,11 +26,11 @@ import org.onap.aaf.certservice.client.api.ExitableException;
 public class CertServiceApiResponseException extends ExitableException {
     private static final ExitStatus EXIT_STATUS = ExitStatus.CERT_SERVICE_API_CONNECTION_EXCEPTION;
 
-    public CertServiceApiResponseException(int responseCode, String messageFromAPI) {
+    public CertServiceApiResponseException(int responseCode, String messageFromApi) {
 
         super(String.format("CertService HTTP unsuccessful response. Response code: %d . Message from Service: %s",
                 responseCode,
-                messageFromAPI));
+                messageFromApi));
     }
 
     @Override

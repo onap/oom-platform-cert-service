@@ -68,7 +68,8 @@
                                         </filter>
                                     </filters>
                                     <transformers>
-                                        <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                        <transformer
+                                                implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                             <mainClass>org.onap.aaf.certservice.client.MainApp</mainClass>
                                         </transformer>
                                     </transformers>

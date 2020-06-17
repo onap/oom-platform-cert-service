@@ -35,16 +35,16 @@ import static org.mockito.Mockito.when;
 
 public class ClientConfigurationFactoryTest {
 
-    private final String CA_NAME_VALID =  "caaaftest2";
-    private final String TIME_OUT_VALID = "30000";
-    private final String OUTPUT_PATH_VALID = "/opt/app/osaaf";
-    private final String URL_TO_CERT_SERVICE_VALID = "https://cert-service:8443/v1/certificate/";
-    private final String URL_TO_CERT_SERVICE_DEFAULT = "https://aaf-cert-service:8443/v1/certificate/";
-    private final String CA_NAME_INVALID =  "caaaftest2#$";
-    private final String OUTPUT_PATH_INVALID = "/opt//app/osaaf";
-    private final String OUTPUT_TYPE_VALID = "JKS";
-    private final String OUTPUT_TYPE_INVALID = "JKSS";
-    private final String OUTPUT_TYPE_DEFAULT = "P12";
+    private static final String CA_NAME_VALID = "caaaftest2";
+    private static final String TIME_OUT_VALID = "30000";
+    private static final String OUTPUT_PATH_VALID = "/opt/app/osaaf";
+    private static final String URL_TO_CERT_SERVICE_VALID = "https://cert-service:8443/v1/certificate/";
+    private static final String URL_TO_CERT_SERVICE_DEFAULT = "https://aaf-cert-service:8443/v1/certificate/";
+    private static final String CA_NAME_INVALID = "caaaftest2#$";
+    private static final String OUTPUT_PATH_INVALID = "/opt//app/osaaf";
+    private static final String OUTPUT_TYPE_VALID = "JKS";
+    private static final String OUTPUT_TYPE_INVALID = "JKSS";
+    private static final String OUTPUT_TYPE_DEFAULT = "P12";
 
     private EnvsForClient envsForClient = mock(EnvsForClient.class);
 
@@ -102,7 +102,7 @@ public class ClientConfigurationFactoryTest {
     }
 
     @Test
-    void create_shouldReturnClientExceptionWhenCANameContainsSpecialCharacters() {
+    void create_shouldReturnClientExceptionWhenCaNameContainsSpecialCharacters() {
         // given
         when(envsForClient.getCaName()).thenReturn(Optional.of(CA_NAME_INVALID));
         when(envsForClient.getOutputPath()).thenReturn(Optional.of(OUTPUT_PATH_VALID));

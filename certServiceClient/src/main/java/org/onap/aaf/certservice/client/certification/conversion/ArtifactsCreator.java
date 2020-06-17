@@ -16,6 +16,7 @@
  * limitations under the License.
  * ============LICENSE_END=========================================================
  */
+
 package org.onap.aaf.certservice.client.certification.conversion;
 
 import org.onap.aaf.certservice.client.api.ExitableException;
@@ -24,6 +25,6 @@ import java.security.PrivateKey;
 import java.util.List;
 
 public interface ArtifactsCreator {
-     void create(List<String> keystoreData, List<String> truststoreData, PrivateKey privateKey)
+    void create(List<String> keystoreData, List<String> truststoreData, PrivateKey privateKey)
             throws ExitableException;
 }

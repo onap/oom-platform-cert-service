@@ -26,7 +26,7 @@ import org.onap.aaf.certservice.client.api.ExitableException;
 public class HttpClientException extends ExitableException {
     private static final ExitStatus EXIT_STATUS = ExitStatus.HTTP_CLIENT_EXCEPTION;
 
-    public HttpClientException(Throwable e){
+    public HttpClientException(Throwable e) {
         super(e);
     }
 

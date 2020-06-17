@@ -19,6 +19,14 @@
 
 package org.onap.aaf.certservice.client.certification.conversion;
 
+import org.bouncycastle.cert.X509CertificateHolder;
+import org.bouncycastle.cert.jcajce.JcaX509CertificateConverter;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.bouncycastle.openssl.PEMParser;
+import org.onap.aaf.certservice.client.certification.exception.PemConversionException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.StringReader;
@@ -31,19 +39,12 @@ import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.util.List;
 import java.util.Optional;
-import org.bouncycastle.cert.X509CertificateHolder;
-import org.bouncycastle.cert.jcajce.JcaX509CertificateConverter;
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.bouncycastle.openssl.PEMParser;
-import org.onap.aaf.certservice.client.certification.exception.PemConversionException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 class PemConverter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PemConverter.class);
     private static final String PASSWORD_ERROR_MSG = "Password should be min. 16 chars long and should contain only alphanumeric characters and special characters like Underscore (_), Dollar ($) and Pound (#)";
-    private final LoadStoreParameter EMPTY_KEYSTORE_CONFIGURATION = null;
+    private static final LoadStoreParameter EMPTY_KEYSTORE_CONFIGURATION = null;
     private final String keyStoreType;
 
     public PemConverter(String keyStoreType) {
@@ -51,19 +52,19 @@ class PemConverter {
     }
 
     byte[] convertKeystore(List<String> certificateChain, Password password, String alias, PrivateKey privateKey)
-    throws PemConversionException {
+            throws PemConversionException {
         LOGGER.info("Conversion of PEM certificates to " + keyStoreType + " keystore");
         return convert(certificateChain, password, certs -> getKeyStore(alias, password, certs, privateKey));
     }
 
     byte[] convertTruststore(List<String> trustAnchors, Password password, String alias)
-    throws PemConversionException {
+            throws PemConversionException {
         LOGGER.info("Conversion of PEM certificates to " + keyStoreType + " truststore");
         return convert(trustAnchors, password, certs -> getTrustStore(alias, certs));
     }
 
     private byte[] convert(List<String> certificates, Password password, StoreEntryOperation operation)
-        throws PemConversionException {
+            throws PemConversionException {
         checkPassword(password);
         final Certificate[] X509Certificates = convertToCertificateArray(certificates);
         return getKeyStoreBytes(password, operation, X509Certificates);
@@ -77,7 +78,7 @@ class PemConverter {
     }
 
     private byte[] getKeyStoreBytes(Password password, StoreEntryOperation op, Certificate[] x509Certificates)
-        throws PemConversionException {
+            throws PemConversionException {
         try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
             KeyStore ks = op.getStore(x509Certificates);
             ks.store(bos, password.toCharArray());
@@ -89,31 +90,31 @@ class PemConverter {
     }
 
     private KeyStore getKeyStore(String alias, Password password, Certificate[] certificates, PrivateKey privateKey)
-        throws KeyStoreException, CertificateException, NoSuchAlgorithmException, IOException {
+            throws KeyStoreException, CertificateException, NoSuchAlgorithmException, IOException {
         KeyStore ks = getKeyStoreInstance();
         ks.setKeyEntry(alias, privateKey, password.toCharArray(), certificates);
         return ks;
     }
 
     private KeyStore getTrustStore(String alias, Certificate[] certificates)
-        throws KeyStoreException, CertificateException, NoSuchAlgorithmException, IOException {
+            throws KeyStoreException, CertificateException, NoSuchAlgorithmException, IOException {
         KeyStore ks = getKeyStoreInstance();
-        long i = 1L;
+        long index = 1L;
         for (Certificate c : certificates) {
-            ks.setCertificateEntry(alias + i++, c);
+            ks.setCertificateEntry(alias + index++, c);
         }
         return ks;
     }
 
     private KeyStore getKeyStoreInstance()
-        throws KeyStoreException, CertificateException, NoSuchAlgorithmException, IOException {
+            throws KeyStoreException, CertificateException, NoSuchAlgorithmException, IOException {
         KeyStore ks = KeyStore.getInstance(keyStoreType);
         ks.load(EMPTY_KEYSTORE_CONFIGURATION);
         return ks;
     }
 
     private Certificate[] convertToCertificateArray(List<String> certificates)
-        throws PemConversionException {
+            throws PemConversionException {
         Certificate[] parsedCertificates = new Certificate[certificates.size()];
         for (String certificate : certificates) {
             parsedCertificates[certificates.indexOf(certificate)] = parseCertificate(certificate);
@@ -124,11 +125,11 @@ class PemConverter {
     private Certificate parseCertificate(String certificate) throws PemConversionException {
         try (PEMParser pem = new PEMParser(new StringReader(certificate))) {
             X509CertificateHolder certHolder = Optional.ofNullable((X509CertificateHolder) pem.readObject())
-                .orElseThrow(
-                    () -> new PemConversionException("The certificate couldn't be parsed correctly. " + certificate));
+                    .orElseThrow(
+                            () -> new PemConversionException("The certificate couldn't be parsed correctly. " + certificate));
             return new JcaX509CertificateConverter()
-                .setProvider(new BouncyCastleProvider())
-                .getCertificate(certHolder);
+                    .setProvider(new BouncyCastleProvider())
+                    .getCertificate(certHolder);
         } catch (IOException | CertificateException e) {
             LOGGER.error("Certificates conversion failed, exception message: {}", e.getMessage());
             throw new PemConversionException(e);

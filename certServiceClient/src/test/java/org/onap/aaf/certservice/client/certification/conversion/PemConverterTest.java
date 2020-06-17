@@ -19,13 +19,12 @@
 
 package org.onap.aaf.certservice.client.certification.conversion;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+import org.onap.aaf.certservice.client.certification.EncryptionAlgorithmConstants;
+import org.onap.aaf.certservice.client.certification.exception.PemConversionException;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -40,12 +39,14 @@ import java.security.UnrecoverableKeyException;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.util.List;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
-import org.onap.aaf.certservice.client.certification.EncryptionAlgorithmConstants;
-import org.onap.aaf.certservice.client.certification.exception.PemConversionException;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class PemConverterTest {
 
@@ -72,7 +73,7 @@ class PemConverterTest {
     @ParameterizedTest
     @ValueSource(strings = {PKCS12, JKS})
     void convertKeystoreShouldReturnKeystoreWithGivenPrivateKeyAndCertificateChain(String conversionTarget)
-    throws IOException, CertificateException, NoSuchAlgorithmException, KeyStoreException, UnrecoverableKeyException, PemConversionException {
+            throws IOException, CertificateException, NoSuchAlgorithmException, KeyStoreException, UnrecoverableKeyException, PemConversionException {
         // given
         final String alias = "keystore-entry";
         final Password password = new Password("d9D_u8LooYaXH4G48DtN#vw0");
@@ -80,7 +81,7 @@ class PemConverterTest {
         final PemConverter converter = new PemConverter(conversionTarget);
         final KeyStore expectedKeyStore = KeyStore.getInstance(conversionTarget);
         expectedKeyStore.load(new ByteArrayInputStream(Files.readAllBytes(Path.of(EXPECTED_KEYSTORE_PATH))),
-            password.toCharArray());
+                password.toCharArray());
         final Certificate[] expectedChain = expectedKeyStore.getCertificateChain(alias);
         privateKeyMockSetup();
 
@@ -109,7 +110,7 @@ class PemConverterTest {
 
         // when
         Exception exception = assertThrows(PemConversionException.class, () ->
-            converter.convertKeystore(certificateChain, password, alias, privateKey)
+                converter.convertKeystore(certificateChain, password, alias, privateKey)
         );
 
         // then
@@ -119,7 +120,7 @@ class PemConverterTest {
     @ParameterizedTest
     @ValueSource(strings = {PKCS12, JKS})
     void convertTruststoreShouldReturnTruststoreWithGivenCertificatesArray(String conversionTarget)
-    throws IOException, KeyStoreException, CertificateException, NoSuchAlgorithmException, PemConversionException {
+            throws IOException, KeyStoreException, CertificateException, NoSuchAlgorithmException, PemConversionException {
 
         // given
         final PemConverter converter = new PemConverter(conversionTarget);
@@ -130,7 +131,7 @@ class PemConverterTest {
         final List<String> trustedCertificates = getCertificates();
         final KeyStore expectedTrustStore = KeyStore.getInstance(conversionTarget);
         expectedTrustStore.load(new ByteArrayInputStream(Files.readAllBytes(Path.of(EXPECTED_TRUSTSTORE_PATH))),
-            password.toCharArray());
+                password.toCharArray());
 
         // when
         final byte[] result = converter.convertTruststore(trustedCertificates, password, alias);
@@ -156,8 +157,8 @@ class PemConverterTest {
 
         // when then
         assertThatThrownBy(() ->
-            converter.convertTruststore(trustedCertificates, password, alias))
-            .isInstanceOf(PemConversionException.class).hasMessage(PASSWORD_ERROR_MSG);
+                converter.convertTruststore(trustedCertificates, password, alias))
+                .isInstanceOf(PemConversionException.class).hasMessage(PASSWORD_ERROR_MSG);
     }
 
     @Test
@@ -170,7 +171,7 @@ class PemConverterTest {
 
         // when then
         assertThatThrownBy(() -> converter.convertKeystore(certificateChain, password, alias, privateKey))
-            .isInstanceOf(PemConversionException.class).hasMessage(KEY_ERROR_MSG);
+                .isInstanceOf(PemConversionException.class).hasMessage(KEY_ERROR_MSG);
     }
 
     @ParameterizedTest
@@ -185,7 +186,7 @@ class PemConverterTest {
 
         // when then
         assertThatThrownBy(() -> converter.convertKeystore(certificateChain, password, alias, privateKey))
-            .isInstanceOf(PemConversionException.class).hasMessage(CERTIFICATES_ERROR_MSG);
+                .isInstanceOf(PemConversionException.class).hasMessage(CERTIFICATES_ERROR_MSG);
     }
 
     private void privateKeyMockSetup() {
@@ -196,10 +197,10 @@ class PemConverterTest {
 
     private List<String> getCertificates() throws IOException {
         return List.of(
-            Files.readString(
-                Path.of(CERT1_PATH), StandardCharsets.UTF_8),
-            Files.readString(
-                Path.of(CERT2_PATH), StandardCharsets.UTF_8)
+                Files.readString(
+                        Path.of(CERT1_PATH), StandardCharsets.UTF_8),
+                Files.readString(
+                        Path.of(CERT2_PATH), StandardCharsets.UTF_8)
         );
     }
 }

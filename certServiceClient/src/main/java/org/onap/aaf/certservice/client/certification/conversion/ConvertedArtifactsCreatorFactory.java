@@ -23,7 +23,8 @@ import org.onap.aaf.certservice.client.certification.writer.CertFileWriter;
 
 public class ConvertedArtifactsCreatorFactory {
 
-    private ConvertedArtifactsCreatorFactory() { }
+    private ConvertedArtifactsCreatorFactory() {
+    }
 
     public static ConvertedArtifactsCreator createConverter(String destPath, String fileExtension, String keyStoreType) {
         return new ConvertedArtifactsCreator(

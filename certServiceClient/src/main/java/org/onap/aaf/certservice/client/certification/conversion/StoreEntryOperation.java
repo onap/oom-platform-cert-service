@@ -30,5 +30,5 @@ import java.security.cert.CertificateException;
 public interface StoreEntryOperation {
 
     KeyStore getStore(Certificate[] certificates)
-        throws CertificateException, NoSuchAlgorithmException, KeyStoreException, IOException;
+            throws CertificateException, NoSuchAlgorithmException, KeyStoreException, IOException;
 }

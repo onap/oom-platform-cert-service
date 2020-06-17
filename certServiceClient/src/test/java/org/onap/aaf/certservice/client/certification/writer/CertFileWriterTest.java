@@ -19,18 +19,19 @@
 
 package org.onap.aaf.certservice.client.certification.writer;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.onap.aaf.certservice.client.certification.exception.CertFileWriterException;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.onap.aaf.certservice.client.certification.exception.CertFileWriterException;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class CertFileWriterTest {
 
@@ -54,7 +55,7 @@ class CertFileWriterTest {
 
     @Test
     void certFileWriterShouldCreateFilesWithDataInGivenLocation()
-        throws IOException, CertFileWriterException {
+            throws IOException, CertFileWriterException {
         // given
         final byte[] data = new byte[]{-128, 1, 2, 3, 127};
         File truststore = new File(OUTPUT_PATH + TRUSTSTORE_P12);
@@ -76,6 +77,6 @@ class CertFileWriterTest {
 
         // when then
         assertThatThrownBy(() -> certFileWriter.saveData(data, TRUSTSTORE_P12))
-            .isInstanceOf(CertFileWriterException.class).hasMessage(ERROR_MESSAGE);
+                .isInstanceOf(CertFileWriterException.class).hasMessage(ERROR_MESSAGE);
     }
 }

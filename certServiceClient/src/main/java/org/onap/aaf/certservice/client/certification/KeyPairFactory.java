@@ -16,6 +16,7 @@
  * limitations under the License.
  * ============LICENSE_END=========================================================
  */
+
 package org.onap.aaf.certservice.client.certification;
 
 import org.onap.aaf.certservice.client.certification.exception.KeyPairGenerationException;

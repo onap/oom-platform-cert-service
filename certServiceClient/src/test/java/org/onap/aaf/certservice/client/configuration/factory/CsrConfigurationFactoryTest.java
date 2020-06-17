@@ -38,20 +38,20 @@ import static org.onap.aaf.certservice.client.api.ExitStatus.CSR_CONFIGURATION_E
 
 public class CsrConfigurationFactoryTest {
 
-    private final String COMMON_NAME_VALID = "onap.org";
-    private final String SANS_VALID = "test-name";
-    private final String COUNTRY_VALID = "US";
-    private final String LOCATION_VALID = "San-Francisco";
-    private final String ORGANIZATION_VALID =  "Linux-Foundation";
-    private final String ORGANIZATION_UNIT_VALID = "ONAP";
-    private final String STATE_VALID = "California";
-    private final String COMMON_NAME_INVALID = "onap.org*&";
-    private final String COUNTRY_INVALID = "PLA";
-    private final String ORGANIZATION_INVALID = "Linux?Foundation";
+    private static final String COMMON_NAME_VALID = "onap.org";
+    private static final String SANS_VALID = "test-name";
+    private static final String COUNTRY_VALID = "US";
+    private static final String LOCATION_VALID = "San-Francisco";
+    private static final String ORGANIZATION_VALID = "Linux-Foundation";
+    private static final String ORGANIZATION_UNIT_VALID = "ONAP";
+    private static final String STATE_VALID = "California";
+    private static final String COMMON_NAME_INVALID = "onap.org*&";
+    private static final String COUNTRY_INVALID = "PLA";
+    private static final String ORGANIZATION_INVALID = "Linux?Foundation";
 
     private EnvsForCsr envsForCsr = mock(EnvsForCsr.class);
     private CsrConfigurationFactory testedFactory;
-    private Condition<CsrConfigurationException> expectedExitCodeCondition = new Condition<>("Correct exit code"){
+    private Condition<CsrConfigurationException> expectedExitCodeCondition = new Condition<>("Correct exit code") {
         @Override
         public boolean matches(CsrConfigurationException e) {
             return e.applicationExitStatus() == CSR_CONFIGURATION_EXCEPTION;

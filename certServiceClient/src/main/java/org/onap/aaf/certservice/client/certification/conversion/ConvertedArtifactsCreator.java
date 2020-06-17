@@ -19,13 +19,14 @@
 
 package org.onap.aaf.certservice.client.certification.conversion;
 
-import java.security.PrivateKey;
-import java.util.List;
 import org.onap.aaf.certservice.client.certification.exception.CertFileWriterException;
 import org.onap.aaf.certservice.client.certification.exception.PemConversionException;
 import org.onap.aaf.certservice.client.certification.writer.CertFileWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.security.PrivateKey;
+import java.util.List;
 
 public class ConvertedArtifactsCreator implements ArtifactsCreator {
 
@@ -42,8 +43,8 @@ public class ConvertedArtifactsCreator implements ArtifactsCreator {
     private final PemConverter converter;
     private final CertFileWriter fileWriter;
 
-    public ConvertedArtifactsCreator(CertFileWriter fileWriter, RandomPasswordGenerator passwordGenerator,
-                                     PemConverter converter, String fileExtension) {
+    ConvertedArtifactsCreator(CertFileWriter fileWriter, RandomPasswordGenerator passwordGenerator,
+                              PemConverter converter, String fileExtension) {
         this.passwordGenerator = passwordGenerator;
         this.converter = converter;
         this.fileWriter = fileWriter;
@@ -52,13 +53,13 @@ public class ConvertedArtifactsCreator implements ArtifactsCreator {
 
     @Override
     public void create(List<String> keystoreData, List<String> truststoreData, PrivateKey privateKey)
-        throws PemConversionException, CertFileWriterException {
-        createKeystore(keystoreData,privateKey);
+            throws PemConversionException, CertFileWriterException {
+        createKeystore(keystoreData, privateKey);
         createTruststore(truststoreData);
     }
 
     private void createKeystore(List<String> data, PrivateKey privateKey)
-        throws PemConversionException, CertFileWriterException {
+            throws PemConversionException, CertFileWriterException {
         Password password = passwordGenerator.generate(PASSWORD_LENGTH);
         String keystoreArtifactName = String.format("%s.%s", KEYSTORE, fileExtension);
         String keystorePass = String.format("%s.%s", KEYSTORE, PASS_EXT);
@@ -70,7 +71,7 @@ public class ConvertedArtifactsCreator implements ArtifactsCreator {
     }
 
     private void createTruststore(List<String> data)
-        throws PemConversionException, CertFileWriterException {
+            throws PemConversionException, CertFileWriterException {
         Password password = passwordGenerator.generate(PASSWORD_LENGTH);
         String truststoreArtifactName = String.format("%s.%s", TRUSTSTORE, fileExtension);
         String truststorePass = String.format("%s.%s", TRUSTSTORE, PASS_EXT);

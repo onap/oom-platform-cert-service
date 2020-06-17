@@ -37,7 +37,6 @@ public class CsrFactoryTest {
     CsrConfiguration config = mock(CsrConfiguration.class);
 
 
-
     @Test
     void createEncodedCsr_shouldSucceedWhenAllFieldsAreSetCorrectly() throws KeyPairGenerationException, CsrGenerationException {
 
@@ -53,6 +52,6 @@ public class CsrFactoryTest {
         when(config.getState()).thenReturn("California");
 
         assertThat(new CsrFactory(config).createCsrInPem(keyPair)).isNotEmpty();
-     }
+    }
 }
 

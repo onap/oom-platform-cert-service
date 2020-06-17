@@ -19,23 +19,24 @@
 
 package org.onap.aaf.certservice.client.certification.conversion;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.security.PrivateKey;
-import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.onap.aaf.certservice.client.api.ExitableException;
 import org.onap.aaf.certservice.client.certification.PrivateKeyToPemEncoder;
 import org.onap.aaf.certservice.client.certification.writer.CertFileWriter;
 
+import java.security.PrivateKey;
+import java.util.List;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 class PemArtifactsCreatorTest {
-    private final String KEYSTORE_PEM = "keystore.pem";
-    private final String TRUSTSTORE_PEM = "truststore.pem";
-    private final String KEY_PEM = "key.pem";
-    private final String KEY = "my private key";
+    private static final String KEYSTORE_PEM = "keystore.pem";
+    private static final String TRUSTSTORE_PEM = "truststore.pem";
+    private static final String KEY_PEM = "key.pem";
+    private static final String KEY = "my private key";
     private CertFileWriter certFileWriter = mock(CertFileWriter.class);
     private PrivateKey privateKey = mock(PrivateKey.class);
     private PrivateKeyToPemEncoder pkEncoder = mock(PrivateKeyToPemEncoder.class);

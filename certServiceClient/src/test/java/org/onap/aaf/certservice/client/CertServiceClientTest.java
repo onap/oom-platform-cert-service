@@ -16,6 +16,7 @@
  * limitations under the License.
  * ============LICENSE_END=========================================================
  */
+
 package org.onap.aaf.certservice.client;
 
 import org.junit.jupiter.api.Test;
@@ -32,6 +33,7 @@ import static org.onap.aaf.certservice.client.api.ExitStatus.SUCCESS;
 class CertServiceClientTest {
     @Spy
     AppExitHandler appExitHandler = new AppExitHandler();
+
     @Test
     public void shouldExitWithDefinedExitCode_onRunCallWhenNoEnvsPresent() {
         //  given

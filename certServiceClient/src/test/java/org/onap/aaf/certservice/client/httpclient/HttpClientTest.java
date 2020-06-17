@@ -106,18 +106,18 @@ class HttpClientTest {
 
         //when //then
         assertThatExceptionOfType(CertServiceApiResponseException.class)
-                .isThrownBy(()->httpClient.retrieveCertServiceData(CA_NAME, CSR, ""));
+                .isThrownBy(() -> httpClient.retrieveCertServiceData(CA_NAME, CSR, ""));
     }
 
     @Test
-    void shouldThrowHttpClientException_WhenCannotExecuteRequestToAPI() throws Exception {
+    void shouldThrowHttpClientException_WhenCannotExecuteRequestToApi() throws Exception {
 
         //given
         when(closeableHttpClient.execute(any(HttpGet.class))).thenThrow(IOException.class);
 
         //when //then
         assertThatExceptionOfType(HttpClientException.class)
-                .isThrownBy(()->httpClient.retrieveCertServiceData(CA_NAME, CSR, ""));
+                .isThrownBy(() -> httpClient.retrieveCertServiceData(CA_NAME, CSR, ""));
     }
 
     @Test
@@ -129,7 +129,7 @@ class HttpClientTest {
 
         //when //then
         assertThatExceptionOfType(HttpClientException.class)
-                .isThrownBy(()->httpClient.retrieveCertServiceData(CA_NAME, CSR, ""));
+                .isThrownBy(() -> httpClient.retrieveCertServiceData(CA_NAME, CSR, ""));
     }
 
     private void mockServerResponse(int serverCodeResponse, String stringResponse)

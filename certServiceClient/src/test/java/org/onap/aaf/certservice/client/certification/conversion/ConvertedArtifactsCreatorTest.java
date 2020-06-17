@@ -19,19 +19,19 @@
 
 package org.onap.aaf.certservice.client.certification.conversion;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.security.PrivateKey;
-import java.util.List;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.onap.aaf.certservice.client.certification.exception.CertFileWriterException;
 import org.onap.aaf.certservice.client.certification.exception.PemConversionException;
 import org.onap.aaf.certservice.client.certification.writer.CertFileWriter;
+
+import java.security.PrivateKey;
+import java.util.List;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 class ConvertedArtifactsCreatorTest {
 
@@ -44,7 +44,7 @@ class ConvertedArtifactsCreatorTest {
     private static final List<String> SAMPLE_TRUSTED_CERTIFICATE_CHAIN = List.of("c", "d");
     private static final byte[] SAMPLE_KEYSTORE_BYTES = "this is a keystore test".getBytes();
     private static final byte[] SAMPLE_TRUSTSTORE_BYTES = "this is a truststore test".getBytes();
-    private static final String P12_EXTENSION= "p12";
+    private static final String P12_EXTENSION = "p12";
 
     private CertFileWriter certFileWriter;
     private RandomPasswordGenerator passwordGenerator;
@@ -64,7 +64,7 @@ class ConvertedArtifactsCreatorTest {
 
     @Test
     void convertedArtifactCreatorShouldTryCreateFileWithGivenExtension()
-    throws CertFileWriterException, PemConversionException {
+            throws CertFileWriterException, PemConversionException {
         //given
         mockPasswordGeneratorAndPemConverter();
         final String keystore = "keystore";
@@ -82,7 +82,7 @@ class ConvertedArtifactsCreatorTest {
 
     @Test
     void convertedArtifactsCreatorShouldCallConverterAndFilesCreatorMethods()
-        throws PemConversionException, CertFileWriterException {
+            throws PemConversionException, CertFileWriterException {
         // given
         mockPasswordGeneratorAndPemConverter();
         final String keystoreP12 = "keystore.p12";
@@ -95,16 +95,16 @@ class ConvertedArtifactsCreatorTest {
         verify(converter, times(1))
                 .convertKeystore(SAMPLE_KEYSTORE_CERTIFICATE_CHAIN, SAMPLE_PASSWORD, CERTIFICATE_ALIAS, privateKey);
         verify(certFileWriter, times(1))
-            .saveData(SAMPLE_KEYSTORE_BYTES, keystoreP12);
+                .saveData(SAMPLE_KEYSTORE_BYTES, keystoreP12);
         verify(certFileWriter, times(1))
-            .saveData(SAMPLE_PASSWORD.getCurrentPassword().getBytes(), keystorePass);
+                .saveData(SAMPLE_PASSWORD.getCurrentPassword().getBytes(), keystorePass);
         verify(converter, times(1))
                 .convertTruststore(SAMPLE_TRUSTED_CERTIFICATE_CHAIN, SAMPLE_PASSWORD, TRUSTED_CERTIFICATE_ALIAS);
     }
 
     @Test
     void convertedArtifactsCreatorShouldCallPasswordGeneratorTwice()
-        throws PemConversionException, CertFileWriterException {
+            throws PemConversionException, CertFileWriterException {
         // given
         mockPasswordGeneratorAndPemConverter();
 

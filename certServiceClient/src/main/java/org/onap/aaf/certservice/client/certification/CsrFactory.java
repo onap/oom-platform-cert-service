@@ -31,7 +31,6 @@ import org.bouncycastle.operator.OperatorCreationException;
 import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder;
 import org.bouncycastle.pkcs.PKCS10CertificationRequest;
 import org.bouncycastle.pkcs.jcajce.JcaPKCS10CertificationRequestBuilder;
-
 import org.onap.aaf.certservice.client.certification.exception.CsrGenerationException;
 import org.onap.aaf.certservice.client.configuration.model.CsrConfiguration;
 import org.slf4j.Logger;
