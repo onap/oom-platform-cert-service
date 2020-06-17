@@ -59,7 +59,7 @@ public abstract class AbstractConfigurationFactory<T extends ConfigurationModel>
 
     public boolean isOutputTypeValid(String outputType) {
         return Arrays.stream(ArtifactsCreatorProvider.values())
-                .map(ArtifactsCreatorProvider::getName)
+                .map(ArtifactsCreatorProvider::toString)
                 .anyMatch(name -> name.equals(outputType));
     }
 

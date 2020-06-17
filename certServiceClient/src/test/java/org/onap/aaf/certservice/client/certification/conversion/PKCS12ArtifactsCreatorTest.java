@@ -29,7 +29,9 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.onap.aaf.certservice.client.certification.exception.CertFileWriterException;
 import org.onap.aaf.certservice.client.certification.exception.PemToPKCS12ConverterException;
+import org.onap.aaf.certservice.client.certification.writer.CertFileWriter;
 
 class PKCS12ArtifactsCreatorTest {
 
@@ -43,7 +45,7 @@ class PKCS12ArtifactsCreatorTest {
     private static final byte[] SAMPLE_KEYSTORE_BYTES = "this is a keystore test".getBytes();
     private static final byte[] SAMPLE_TRUSTSTORE_BYTES = "this is a truststore test".getBytes();
 
-    private PKCS12FilesCreator filesCreator;
+    private CertFileWriter certFileWriter;
     private RandomPasswordGenerator passwordGenerator;
     private PemToPKCS12Converter converter;
     private PrivateKey privateKey;
@@ -52,17 +54,20 @@ class PKCS12ArtifactsCreatorTest {
 
     @BeforeEach
     void setUp() {
-        filesCreator = mock(PKCS12FilesCreator.class);
+        certFileWriter = mock(CertFileWriter.class);
         passwordGenerator = mock(RandomPasswordGenerator.class);
         converter = mock(PemToPKCS12Converter.class);
         privateKey = mock(PrivateKey.class);
-        artifactCreator = new PKCS12ArtifactsCreator(filesCreator, passwordGenerator, converter);
+        artifactCreator = new PKCS12ArtifactsCreator(certFileWriter, passwordGenerator, converter);
     }
 
     @Test
-    void generateArtifactsShouldCallConverterAndFilesCreatorMethods() throws PemToPKCS12ConverterException {
+    void artifactsCreatorShouldCauseCallOfConvertAndDataSaveMethods()
+        throws PemToPKCS12ConverterException, CertFileWriterException {
         // given
         mockPasswordGeneratorAndPKSC12Converter();
+        final String keystoreP12 = "keystore.p12";
+        final String keystorePass = "keystore.pass";
 
         //when
         artifactCreator.create(SAMPLE_KEYSTORE_CERTIFICATE_CHAIN, SAMPLE_TRUSTED_CERTIFICATE_CHAIN, privateKey);
@@ -70,16 +75,17 @@ class PKCS12ArtifactsCreatorTest {
         // then
         verify(converter, times(1))
                 .convertKeystore(SAMPLE_KEYSTORE_CERTIFICATE_CHAIN, SAMPLE_PASSWORD, CERTIFICATE_ALIAS, privateKey);
-        verify(filesCreator, times(1))
-                .saveKeystoreData(SAMPLE_KEYSTORE_BYTES, SAMPLE_PASSWORD.getCurrentPassword());
+        verify(certFileWriter, times(1))
+            .saveData(SAMPLE_KEYSTORE_BYTES, keystoreP12);
+        verify(certFileWriter, times(1))
+            .saveData(SAMPLE_PASSWORD.getCurrentPassword().getBytes(), keystorePass);
         verify(converter, times(1))
                 .convertTruststore(SAMPLE_TRUSTED_CERTIFICATE_CHAIN, SAMPLE_PASSWORD, TRUSTED_CERTIFICATE_ALIAS);
-        verify(filesCreator, times(1))
-                .saveTruststoreData(SAMPLE_TRUSTSTORE_BYTES, SAMPLE_PASSWORD.getCurrentPassword());
     }
 
     @Test
-    void generateArtifactsMethodShouldCallPasswordGeneratorTwice() throws PemToPKCS12ConverterException {
+    void artifactsCreatorShouldCallPasswordGeneratorTwice()
+        throws PemToPKCS12ConverterException, CertFileWriterException {
         // given
         mockPasswordGeneratorAndPKSC12Converter();
 

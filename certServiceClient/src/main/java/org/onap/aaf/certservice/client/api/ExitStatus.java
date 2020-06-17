@@ -29,7 +29,8 @@ public enum ExitStatus {
     HTTP_CLIENT_EXCEPTION(6,"Internal HTTP Client connection problem"),
     PKCS12_CONVERSION_EXCEPTION(7,"Fail in PKCS12 conversion"),
     PK_TO_PEM_ENCODING_EXCEPTION(8,"Fail in Private Key to PEM Encoding"),
-    TLS_CONFIGURATION_EXCEPTION(9, "Invalid TLS configuration");
+    TLS_CONFIGURATION_EXCEPTION(9, "Invalid TLS configuration"),
+    FILE_CREATION_EXCEPTION(10, "File could not be created");
 
     private final int value;
     private final String message;

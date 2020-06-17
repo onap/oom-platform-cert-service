@@ -17,36 +17,19 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.client.certification.conversion;
+package org.onap.aaf.certservice.client.certification.exception;
 
-import org.junit.jupiter.api.Test;
+import org.onap.aaf.certservice.client.api.ExitStatus;
+import org.onap.aaf.certservice.client.api.ExitableException;
 
-import static org.assertj.core.api.Assertions.assertThat;
+public class CertFileWriterException extends ExitableException {
 
-
-class ArtifactsCreatorProviderTest {
-
-    private static final String P12 = "P12";
-    private static final String PEM = "PEM";
-    private static final String TEST_PATH = "testPath";
-
-    @Test
-    void artifactsProviderShouldReturnP12Creator(){
-
-        // when
-        ArtifactsCreator artifactsCreator =
-                ArtifactsCreatorProvider.getCreator(P12, TEST_PATH);
-        // then
-        assertThat(artifactsCreator).isInstanceOf(PKCS12ArtifactsCreator.class);
+    public CertFileWriterException(Throwable e) {
+        super(e);
     }
 
-    @Test
-    void artifactsProviderShouldReturnPemCreator(){
-
-        // when
-        ArtifactsCreator artifactsCreator =
-            ArtifactsCreatorProvider.getCreator(PEM, TEST_PATH);
-        // then
-        assertThat(artifactsCreator).isInstanceOf(PemArtifactsCreator.class);
+    @Override
+    public ExitStatus applicationExitStatus() {
+        return ExitStatus.FILE_CREATION_EXCEPTION;
     }
 }
