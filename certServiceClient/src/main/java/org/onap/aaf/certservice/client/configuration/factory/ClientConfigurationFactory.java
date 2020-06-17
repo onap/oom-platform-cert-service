@@ -43,7 +43,6 @@ public class ClientConfigurationFactory extends AbstractConfigurationFactory<Cli
 
         ClientConfiguration configuration = new ClientConfiguration();
 
-        Optional<String> outputType = envsForClient.getOutputType();
 
         envsForClient.getUrlToCertService()
                 .map(configuration::setUrlToCertService);
@@ -60,6 +59,8 @@ public class ClientConfigurationFactory extends AbstractConfigurationFactory<Cli
                 .filter(this::isAlphaNumeric)
                 .map(configuration::setCaName)
                 .orElseThrow(() -> new ClientConfigurationException(ClientConfigurationEnvs.CA_NAME + " is invalid."));
+
+        Optional<String> outputType = envsForClient.getOutputType();
 
         if (outputType.isPresent()) {
             outputType.filter(this::isOutputTypeValid)

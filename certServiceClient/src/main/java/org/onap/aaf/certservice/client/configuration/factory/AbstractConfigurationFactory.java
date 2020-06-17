@@ -59,7 +59,8 @@ public abstract class AbstractConfigurationFactory<T extends ConfigurationModel>
 
     public boolean isOutputTypeValid(String outputType) {
         return Arrays.stream(ArtifactsCreatorProvider.values())
-                .anyMatch(artifactsCreatorProvider -> artifactsCreatorProvider.toString().equals(outputType));
+                .map(ArtifactsCreatorProvider::getName)
+                .anyMatch(name -> name.equals(outputType));
     }
 
     private boolean isPortNumberPresent(String stringToCheck) {
