@@ -22,13 +22,13 @@ package org.onap.aaf.certservice.client.certification.exception;
 import org.onap.aaf.certservice.client.api.ExitStatus;
 import org.onap.aaf.certservice.client.api.ExitableException;
 
-public class PemToPKCS12ConverterException extends ExitableException {
-    private static final ExitStatus EXIT_STATUS = ExitStatus.PKCS12_CONVERSION_EXCEPTION;
+public class PemConversionException extends ExitableException {
+    private static final ExitStatus EXIT_STATUS = ExitStatus.PEM_CONVERSION_EXCEPTION;
 
-    public PemToPKCS12ConverterException(Throwable e) {
+    public PemConversionException(Throwable e) {
         super(e);
     }
-    public PemToPKCS12ConverterException(String message) {
+    public PemConversionException(String message) {
         super(message);
     }
 

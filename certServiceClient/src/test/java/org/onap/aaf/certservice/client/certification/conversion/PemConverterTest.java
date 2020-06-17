@@ -42,10 +42,12 @@ import java.security.cert.CertificateException;
 import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.onap.aaf.certservice.client.certification.EncryptionAlgorithmConstants;
-import org.onap.aaf.certservice.client.certification.exception.PemToPKCS12ConverterException;
+import org.onap.aaf.certservice.client.certification.exception.PemConversionException;
 
-class PemToPKCS12ConverterTest {
+class PemConverterTest {
 
     private static final String RESOURCES_PATH = "src/test/resources";
     private static final String CERT1_PATH = RESOURCES_PATH + "/cert1.pem";
@@ -55,6 +57,7 @@ class PemToPKCS12ConverterTest {
     private static final String EXPECTED_TRUSTSTORE_PATH = RESOURCES_PATH + "/expectedTruststore.jks";
     private static final String PKCS12 = "PKCS12";
     private static final String PKCS8 = "PKCS#8";
+    private static final String JKS = "JKS";
     private static final String KEY_ERROR_MSG = "java.security.KeyStoreException: Key protection  algorithm not found: java.lang.NullPointerException";
     private static final String CERTIFICATES_ERROR_MSG = "The certificate couldn't be parsed correctly. certificate1";
     private static final String PASSWORD_ERROR_MSG = "Password should be min. 16 chars long and should contain only alphanumeric characters and special characters like Underscore (_), Dollar ($) and Pound (#)";
@@ -66,15 +69,16 @@ class PemToPKCS12ConverterTest {
         key = Files.readAllBytes(Path.of(KEY_PATH));
     }
 
-    @Test
-    void convertKeystoreShouldReturnKeystoreWithGivenPrivateKeyAndCertificateChain()
-        throws IOException, CertificateException, NoSuchAlgorithmException, KeyStoreException, UnrecoverableKeyException, PemToPKCS12ConverterException {
+    @ParameterizedTest
+    @ValueSource(strings = {PKCS12, JKS})
+    void convertKeystoreShouldReturnKeystoreWithGivenPrivateKeyAndCertificateChain(String conversionTarget)
+    throws IOException, CertificateException, NoSuchAlgorithmException, KeyStoreException, UnrecoverableKeyException, PemConversionException {
         // given
         final String alias = "keystore-entry";
         final Password password = new Password("d9D_u8LooYaXH4G48DtN#vw0");
         final List<String> certificateChain = getCertificates();
-        final PemToPKCS12Converter converter = new PemToPKCS12Converter();
-        final KeyStore expectedKeyStore = KeyStore.getInstance(PKCS12);
+        final PemConverter converter = new PemConverter(conversionTarget);
+        final KeyStore expectedKeyStore = KeyStore.getInstance(conversionTarget);
         expectedKeyStore.load(new ByteArrayInputStream(Files.readAllBytes(Path.of(EXPECTED_KEYSTORE_PATH))),
             password.toCharArray());
         final Certificate[] expectedChain = expectedKeyStore.getCertificateChain(alias);
@@ -84,7 +88,7 @@ class PemToPKCS12ConverterTest {
         final byte[] result = converter.convertKeystore(certificateChain, password, alias, privateKey);
 
         // then
-        final KeyStore actualKeyStore = KeyStore.getInstance(PKCS12);
+        final KeyStore actualKeyStore = KeyStore.getInstance(conversionTarget);
         actualKeyStore.load(new ByteArrayInputStream(result), password.toCharArray());
         final Certificate[] actualChain = actualKeyStore.getCertificateChain(alias);
 
@@ -93,17 +97,18 @@ class PemToPKCS12ConverterTest {
         assertArrayEquals(expectedChain, actualChain);
     }
 
-    @Test
-    void convertKeystoreShouldThrowPemToPKCS12ConverterExceptionBecauseOfWrongPassword() throws IOException {
+    @ParameterizedTest
+    @ValueSource(strings = {PKCS12, JKS})
+    void convertKeystoreShouldThrowPemConverterExceptionBecauseOfWrongPassword(String conversionTarget) throws IOException {
         // given
         final String alias = "keystore-entry";
         final Password password = new Password("apple");
         final List<String> certificateChain = getCertificates();
-        final PemToPKCS12Converter converter = new PemToPKCS12Converter();
+        final PemConverter converter = new PemConverter(conversionTarget);
         privateKeyMockSetup();
 
         // when
-        Exception exception = assertThrows(PemToPKCS12ConverterException.class, () ->
+        Exception exception = assertThrows(PemConversionException.class, () ->
             converter.convertKeystore(certificateChain, password, alias, privateKey)
         );
 
@@ -111,18 +116,19 @@ class PemToPKCS12ConverterTest {
         assertEquals(PASSWORD_ERROR_MSG, exception.getMessage());
     }
 
-    @Test
-    void convertTruststoreShouldReturnTruststoreWithGivenCertificatesArray()
-        throws IOException, KeyStoreException, CertificateException, NoSuchAlgorithmException, PemToPKCS12ConverterException {
+    @ParameterizedTest
+    @ValueSource(strings = {PKCS12, JKS})
+    void convertTruststoreShouldReturnTruststoreWithGivenCertificatesArray(String conversionTarget)
+    throws IOException, KeyStoreException, CertificateException, NoSuchAlgorithmException, PemConversionException {
 
         // given
-        final PemToPKCS12Converter converter = new PemToPKCS12Converter();
+        final PemConverter converter = new PemConverter(conversionTarget);
         final String alias = "trusted-certificate-";
         final String alias1 = alias + 1;
         final String alias2 = alias + 2;
         final Password password = new Password("9z6oFx1epRSCuBWU4Er8i_0y");
         final List<String> trustedCertificates = getCertificates();
-        final KeyStore expectedTrustStore = KeyStore.getInstance(PKCS12);
+        final KeyStore expectedTrustStore = KeyStore.getInstance(conversionTarget);
         expectedTrustStore.load(new ByteArrayInputStream(Files.readAllBytes(Path.of(EXPECTED_TRUSTSTORE_PATH))),
             password.toCharArray());
 
@@ -130,7 +136,7 @@ class PemToPKCS12ConverterTest {
         final byte[] result = converter.convertTruststore(trustedCertificates, password, alias);
 
         // then
-        final KeyStore actualKeyStore = KeyStore.getInstance(PKCS12);
+        final KeyStore actualKeyStore = KeyStore.getInstance(conversionTarget);
         actualKeyStore.load(new ByteArrayInputStream(result), password.toCharArray());
 
         assertTrue(actualKeyStore.containsAlias(alias1));
@@ -139,45 +145,47 @@ class PemToPKCS12ConverterTest {
         assertEquals(expectedTrustStore.getCertificate(alias2), actualKeyStore.getCertificate(alias2));
     }
 
-    @Test
-    void convertTruststoreShouldThrowPemToPKCS12ConverterExceptionBecauseOfWrongPassword() throws IOException {
+    @ParameterizedTest
+    @ValueSource(strings = {PKCS12, JKS})
+    void convertTruststoreShouldThrowPemConverterExceptionBecauseOfWrongPassword(String conversionTarget) throws IOException {
         // given
         final String alias = "trusted-certificate-";
         final Password password = new Password("nokia");
         final List<String> trustedCertificates = getCertificates();
-        final PemToPKCS12Converter converter = new PemToPKCS12Converter();
+        final PemConverter converter = new PemConverter(conversionTarget);
 
         // when then
         assertThatThrownBy(() ->
             converter.convertTruststore(trustedCertificates, password, alias))
-            .isInstanceOf(PemToPKCS12ConverterException.class).hasMessage(PASSWORD_ERROR_MSG);
+            .isInstanceOf(PemConversionException.class).hasMessage(PASSWORD_ERROR_MSG);
     }
 
     @Test
-    void convertKeystoreShouldThrowPemToPKCS12ConverterExceptionBecauseOfWrongPrivateKey() throws IOException {
+    void convertKeystoreShouldThrowPemConverterExceptionBecauseOfWrongPrivateKey() throws IOException {
         // given
         final String alias = "keystore-entry";
         final Password password = new Password("d9D_u8LooYaXH4G48DtN#vw0");
         final List<String> certificateChain = getCertificates();
-        final PemToPKCS12Converter converter = new PemToPKCS12Converter();
+        final PemConverter converter = new PemConverter(PKCS12);
 
         // when then
         assertThatThrownBy(() -> converter.convertKeystore(certificateChain, password, alias, privateKey))
-            .isInstanceOf(PemToPKCS12ConverterException.class).hasMessage(KEY_ERROR_MSG);
+            .isInstanceOf(PemConversionException.class).hasMessage(KEY_ERROR_MSG);
     }
 
-    @Test
-    void convertKeystoreShouldThrowPemToPKCS12ConverterExceptionBecauseOfWrongCertificates() {
+    @ParameterizedTest
+    @ValueSource(strings = {PKCS12, JKS})
+    void convertKeystoreShouldThrowPemConverterExceptionBecauseOfWrongCertificates(String conversionTarget) {
         // given
         final String alias = "keystore-entry";
         final Password password = new Password("d9D_u8LooYaXH4G48DtN#vw0");
         final List<String> certificateChain = List.of("certificate1", "certificate2");
-        final PemToPKCS12Converter converter = new PemToPKCS12Converter();
+        final PemConverter converter = new PemConverter(conversionTarget);
         privateKeyMockSetup();
 
         // when then
         assertThatThrownBy(() -> converter.convertKeystore(certificateChain, password, alias, privateKey))
-            .isInstanceOf(PemToPKCS12ConverterException.class).hasMessage(CERTIFICATES_ERROR_MSG);
+            .isInstanceOf(PemConversionException.class).hasMessage(CERTIFICATES_ERROR_MSG);
     }
 
     private void privateKeyMockSetup() {
