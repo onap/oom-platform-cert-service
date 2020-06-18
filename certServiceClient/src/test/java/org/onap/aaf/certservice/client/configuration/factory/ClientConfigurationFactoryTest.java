@@ -44,6 +44,7 @@ public class ClientConfigurationFactoryTest {
     private final String OUTPUT_PATH_INVALID = "/opt//app/osaaf";
     private final String OUTPUT_TYPE_VALID = "JKS";
     private final String OUTPUT_TYPE_INVALID = "JKSS";
+    private final String OUTPUT_TYPE_DEFAULT = "P12";
 
     private EnvsForClient envsForClient = mock(EnvsForClient.class);
 
@@ -83,6 +84,7 @@ public class ClientConfigurationFactoryTest {
         assertThat(configuration.getRequestTimeout()).isEqualTo(Integer.valueOf(TIME_OUT_VALID));
         assertThat(configuration.getCertsOutputPath()).isEqualTo(OUTPUT_PATH_VALID);
         assertThat(configuration.getUrlToCertService()).isEqualTo(URL_TO_CERT_SERVICE_DEFAULT);
+        assertThat(configuration.getOutputType()).isEqualTo(OUTPUT_TYPE_DEFAULT);
     }
 
     @Test
