@@ -10,12 +10,17 @@ Basic information
 -----------------
 CertService client needs the following configuration parameters to work properly:
 
-1. Parameters for connection to CertService API to obtain certificate and trust anchors
+1. Parameters for generating certification artifacts and connecting to CertService API to obtain certificate and trust anchors
   
   - REQUEST_URL *(default: https://aaf-cert-service:8443/v1/certificate/)* - URL to CertService API
   - REQUEST_TIMEOUT *(default: 30000[ms])* - Timeout in milliseconds for REST API calls
   - OUTPUT_PATH *(required)* - Path where client will output generated certificate and trust anchor
   - CA_NAME *(required)* - Name of CA which will enroll certificate. Must be same as configured on server side. Used in REST API calls
+  - OUTPUT_TYPE *(default: P12)* - Type of certificate which will be generated. Supported types: 
+      
+      - JKS - Java KeyStore (JKS)
+      - P12 - Public Key Cryptography Standard #12 (PKCS#12)
+      - PEM - Privacy-Enhanced Mail (PEM)
 
 
 2. Parameters to generate Certificate Signing Request (CSR):
@@ -48,7 +53,7 @@ You need certificate and trust anchors to connect to CertService API via HTTPS. 
 
 To run CertService client as standalone docker container execute following steps:
 
-1. Create file '*$PWD/client.env*' with environments as in example below:
+1. Create file '*$PWD/client.env*' with environment variables as in example below:
 
 .. code-block:: bash
 
@@ -57,6 +62,7 @@ To run CertService client as standalone docker container execute following steps
   REQUEST_TIMEOUT=10000
   OUTPUT_PATH=/var/certs
   CA_NAME=RA
+  OUTPUT_TYPE=P12
 
   #CSR config envs
   COMMON_NAME=onap.org
@@ -93,20 +99,26 @@ After successful creation of certifications, container exits with exit code 0, e
 
 .. code-block:: bash
 
-  INFO 1 [           main] o.o.a.c.c.c.f.ClientConfigurationFactory : Successful validation of Client configuration. Configuration data: REQUEST_URL: https://aaf-cert-service:8443/v1/certificate/, REQUEST_TIMEOUT: 10000, OUTPUT_PATH: /var/certs, CA_NAME: RA
-  INFO 1 [           main] o.o.a.c.c.c.f.CsrConfigurationFactory    : Successful validation of CSR configuration. Configuration data: COMMON_NAME: onap.org, COUNTRY: US, STATE: California, ORGANIZATION: Linux-Foundation, ORGANIZATION_UNIT: ONAP, LOCATION: San-Francisco, SANS: test.onap.org:onap.org
-  INFO 1 [           main] o.o.a.c.c.c.KeyPairFactory               : KeyPair generation started with algorithm: RSA and key size: 2048
-  INFO 1 [           main] o.o.a.c.c.c.CsrFactory                   : Creation of CSR has been started with following parameters: COMMON_NAME: onap.org, COUNTRY: US, STATE: California, ORGANIZATION: Linux-Foundation, ORGANIZATION_UNIT: ONAP, LOCATION: San-Francisco, SANS: test.onap.org:onap.org
-  INFO 1 [           main] o.o.a.c.c.c.CsrFactory                   : Creation of CSR has been completed successfully
-  INFO 1 [           main] o.o.a.c.c.c.CsrFactory                   : Conversion of CSR to PEM has been started
-  INFO 1 [           main] o.o.a.c.c.c.PrivateKeyToPemEncoder       : Attempt to encode private key to PEM
-  INFO 1 [           main] o.o.a.c.c.h.HttpClient                   : Attempt to send request to API, on url: https://aaf-cert-service:8443/v1/certificate/RA 
-  INFO 1 [           main] o.o.a.c.c.h.HttpClient                   : Received response from API
-  INFO 1 [           main] o.o.a.c.c.c.c.PemToPKCS12Converter       : Conversion of PEM certificates to PKCS12 keystore
-  DEBUG 1 [           main] o.o.a.c.c.c.c.PKCS12FilesCreator         : Attempt to create PKCS12 keystore files and saving data. Keystore path: /var/certs/keystore.jks
-  INFO 1 [           main] o.o.a.c.c.c.c.PemToPKCS12Converter       : Conversion of PEM certificates to PKCS12 truststore
-  DEBUG 1 [           main] o.o.a.c.c.c.c.PKCS12FilesCreator         : Attempt to create PKCS12 truststore files and saving data. Truststore path: /var/certs/truststore.jks
-  INFO 1 [           main] o.o.a.c.c.AppExitHandler                 : Application exits with following exit code: 0 and message: Success
+   INFO 1 [           main] o.o.a.c.c.c.f.ClientConfigurationFactory : Successful validation of Client configuration. Configuration data: REQUEST_URL: https://aaf-cert-service:8443/v1/certificate/, REQUEST_TIMEOUT: 10000, OUTPUT_PATH: /var/certs, CA_NAME: RA, OUTPUT_TYPE: P12
+   INFO 1 [           main] o.o.a.c.c.c.f.CsrConfigurationFactory    : Successful validation of CSR configuration. Configuration data: COMMON_NAME: onap.org, COUNTRY: US, STATE: California, ORGANIZATION: Linux-Foundation, ORGANIZATION_UNIT: ONAP, LOCATION: San-Francisco, SANS: test.onap.org:onap.org
+   INFO 1 [           main] o.o.a.c.c.c.KeyPairFactory               : KeyPair generation started with algorithm: RSA and key size: 2048
+   INFO 1 [           main] o.o.a.c.c.c.CsrFactory                   : Creation of CSR has been started with following parameters: COMMON_NAME: onap.org, COUNTRY: US, STATE: California, ORGANIZATION: Linux-Foundation, ORGANIZATION_UNIT: ONAP, LOCATION: San-Francisco, SANS: test.onap.org:onap.org
+   INFO 1 [           main] o.o.a.c.c.c.CsrFactory                   : Creation of CSR has been completed successfully
+   INFO 1 [           main] o.o.a.c.c.c.CsrFactory                   : Conversion of CSR to PEM has been started
+   INFO 1 [           main] o.o.a.c.c.c.PrivateKeyToPemEncoder       : Attempt to encode private key to PEM
+   INFO 1 [           main] o.o.a.c.c.h.HttpClient                   : Attempt to send request to API, on url: https://aaf-cert-service:8443/v1/certificate/RA
+   INFO 1 [           main] o.o.a.c.c.h.HttpClient                   : Received response from API
+  DEBUG 1 [           main] o.o.a.c.c.c.c.ConvertedArtifactsCreator  : Attempt to create keystore files and saving data. File names: keystore.p12, keystore.pass
+   INFO 1 [           main] o.o.a.c.c.c.c.PemConverter               : Conversion of PEM certificates to PKCS12 keystore
+  DEBUG 1 [           main] o.o.a.c.c.c.w.CertFileWriter             : Attempt to save file keystore.p12 in path /var/certs
+  DEBUG 1 [           main] o.o.a.c.c.c.w.CertFileWriter             : Attempt to save file keystore.pass in path /var/certs
+  DEBUG 1 [           main] o.o.a.c.c.c.c.ConvertedArtifactsCreator  : Attempt to create truststore files and saving data. File names: truststore.p12, truststore.pass
+   INFO 1 [           main] o.o.a.c.c.c.c.PemConverter               : Conversion of PEM certificates to PKCS12 truststore
+  DEBUG 1 [           main] o.o.a.c.c.c.w.CertFileWriter             : Attempt to save file truststore.p12 in path /var/certs
+  DEBUG 1 [           main] o.o.a.c.c.c.w.CertFileWriter             : Attempt to save file truststore.pass in path /var/certs
+   INFO 1 [           main] o.o.a.c.c.AppExitHandler                 : Application exits with following exit code: 0 and message: Success
+
+
 
 
 If container exits with non 0 exit code, you can find more information in logs, see :ref:`cert_logs` page.
@@ -152,13 +164,15 @@ You can use the following deployment example as a reference:
             imagePullPolicy: Always
             env:
               - name: REQUEST_URL
-                value: http://aaf-cert-service:8080/v1/certificate/
+                value: https://aaf-cert-service:8443/v1/certificate/
               - name: REQUEST_TIMEOUT
                 value: "1000"
               - name: OUTPUT_PATH
                 value: /var/certs
               - name: CA_NAME
                 value: RA
+              - name: OUTPUT_TYPE
+                value: P12
               - name: COMMON_NAME
                 value: onap.org
               - name: ORGANIZATION
@@ -195,4 +209,3 @@ You can use the following deployment example as a reference:
             secretName: aaf-cert-service-client-tls-secret  # Value of global.aaf.certService.client.secret.name
         ...
 
- 
