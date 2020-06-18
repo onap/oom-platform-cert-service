@@ -6,7 +6,7 @@
 Release Notes
 ==============
 
-Version: 1.0.2
+Version: 1.1.0
 --------------
 
 :Release Date: 2020-xx-xx
