@@ -20,8 +20,8 @@
 package org.onap.aaf.certservice.client.api;
 
 public abstract class ExitableException extends Exception {
-    public ExitableException(Throwable e) {
-        super(e);
+    public ExitableException(Throwable cause) {
+        super(cause);
     }
 
     public ExitableException(String message) {

@@ -83,7 +83,7 @@ class EnvsForCsrTest {
     }
 
     @Test
-    void shouldReturnSystemEnvOUVariableWhenItWasDefined() {
+    void shouldReturnSystemEnvOuVariableWhenItWasDefined() {
         // given
         when(envsForCsr.readEnv(CsrConfigurationEnvs.ORGANIZATION_UNIT)).thenReturn(Optional.of(TEST_ENV));
 
@@ -96,7 +96,7 @@ class EnvsForCsrTest {
     }
 
     @Test
-    public void shouldReportThatSystemEnvOUVariableIsNotPresentWhenItWasNotDefined() {
+    public void shouldReportThatSystemEnvOuVariableIsNotPresentWhenItWasNotDefined() {
         // when
         final Optional<String> testEnv = envsForCsr.getOrganizationUnit();
 
@@ -171,7 +171,7 @@ class EnvsForCsrTest {
     }
 
     @Test
-    void shouldReturnSystemEnvSANSVariableWhenItWasDefined() {
+    void shouldReturnSystemEnvSansVariableWhenItWasDefined() {
         // given
         when(envsForCsr.readEnv(CsrConfigurationEnvs.SANS)).thenReturn(Optional.of(TEST_ENV));
 
@@ -184,7 +184,7 @@ class EnvsForCsrTest {
     }
 
     @Test
-    public void shouldReportThatSystemEnvSANSVariableIsNotPresentWhenItWasNotDefined() {
+    public void shouldReportThatSystemEnvSansVariableIsNotPresentWhenItWasNotDefined() {
         // when
         final Optional<String> testEnv = envsForCsr.getSubjectAlternativesName();
 

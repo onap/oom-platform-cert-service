@@ -25,8 +25,8 @@ import org.onap.aaf.certservice.client.api.ExitableException;
 public class PemConversionException extends ExitableException {
     private static final ExitStatus EXIT_STATUS = ExitStatus.PEM_CONVERSION_EXCEPTION;
 
-    public PemConversionException(Throwable e) {
-        super(e);
+    public PemConversionException(Throwable cause) {
+        super(cause);
     }
 
     public PemConversionException(String message) {

@@ -53,7 +53,7 @@ public class SslContextFactory {
         String truststorePassword = envsForTls.getTruststorePassword()
                 .orElseThrow(() -> new TlsConfigurationException(createEnvMissingMessage(TlsConfigurationEnvs.TRUSTSTORE_PASSWORD)));
 
-        return createSSLContext(keystorePath, keystorePassword, truststorePath, truststorePassword);
+        return createSslContext(keystorePath, keystorePassword, truststorePath, truststorePassword);
     }
 
     private String createEnvMissingMessage(TlsConfigurationEnvs keystorePath) {
@@ -69,7 +69,7 @@ public class SslContextFactory {
         return keyStore;
     }
 
-    private SSLContext createSSLContext(String keystorePath, String keystorePassword, String truststorePath, String truststorePassword) throws TlsConfigurationException {
+    private SSLContext createSslContext(String keystorePath, String keystorePassword, String truststorePath, String truststorePassword) throws TlsConfigurationException {
         try {
             KeyStore identityKeystore = setupKeystore(keystorePath, keystorePassword);
             KeyStore trustKeystore = setupKeystore(truststorePath, truststorePassword);

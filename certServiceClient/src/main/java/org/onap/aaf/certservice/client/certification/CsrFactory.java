@@ -67,10 +67,10 @@ public class CsrFactory {
         LOGGER.info("Creation of CSR has been started with following parameters: {}", configuration.toString());
         String csrParameters = getMandatoryParameters().append(getOptionalParameters()).toString();
         X500Principal subject = new X500Principal(csrParameters);
-        PKCS10CertificationRequest request = createPKCS10Csr(subject, keyPair);
+        PKCS10CertificationRequest request = createPkcs10Csr(subject, keyPair);
 
         LOGGER.info("Creation of CSR has been completed successfully");
-        return convertPKCS10CsrToPem(request);
+        return convertPkcs10CsrToPem(request);
     }
 
     private StringBuilder getMandatoryParameters() {
@@ -92,7 +92,7 @@ public class CsrFactory {
         return optionalParameters.toString();
     }
 
-    private PKCS10CertificationRequest createPKCS10Csr(X500Principal subject, KeyPair keyPair) throws CsrGenerationException {
+    private PKCS10CertificationRequest createPkcs10Csr(X500Principal subject, KeyPair keyPair) throws CsrGenerationException {
         JcaPKCS10CertificationRequestBuilder builder = new JcaPKCS10CertificationRequestBuilder(subject, keyPair.getPublic());
 
         if (isParameterPresent(configuration.getSans())) {
@@ -114,7 +114,7 @@ public class CsrFactory {
         return contentSigner;
     }
 
-    private String convertPKCS10CsrToPem(PKCS10CertificationRequest request) throws CsrGenerationException {
+    private String convertPkcs10CsrToPem(PKCS10CertificationRequest request) throws CsrGenerationException {
         final StringWriter stringWriter = new StringWriter();
         try (JcaPEMWriter pemWriter = new JcaPEMWriter(stringWriter)) {
             LOGGER.info("Conversion of CSR to PEM has been started");

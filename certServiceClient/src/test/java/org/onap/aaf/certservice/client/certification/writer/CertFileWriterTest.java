@@ -70,7 +70,7 @@ class CertFileWriterTest {
     }
 
     @Test
-    void certFileWriterShouldThrowPemToPKCS12ConverterExceptionWhenOutputDirectoryDoesNotExist() {
+    void certFileWriterShouldThrowCertFileWriterExceptionWhenOutputDirectoryDoesNotExist() {
         // given
         final byte[] data = new byte[]{-128, 1, 2, 3, 0};
         CertFileWriter certFileWriter = new CertFileWriter(OUTPUT_PATH + "thisPathDoesNotExist/");

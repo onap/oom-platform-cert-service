@@ -25,8 +25,8 @@ import org.onap.aaf.certservice.client.api.ExitableException;
 public class PkEncodingException extends ExitableException {
     private static final ExitStatus EXIT_STATUS = ExitStatus.PK_TO_PEM_ENCODING_EXCEPTION;
 
-    public PkEncodingException(Throwable e) {
-        super(e);
+    public PkEncodingException(Throwable cause) {
+        super(cause);
     }
 
     public ExitStatus applicationExitStatus() {

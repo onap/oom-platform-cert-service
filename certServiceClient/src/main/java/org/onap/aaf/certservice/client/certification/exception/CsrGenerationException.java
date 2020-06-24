@@ -25,8 +25,8 @@ import org.onap.aaf.certservice.client.api.ExitableException;
 public class CsrGenerationException extends ExitableException {
     private static final ExitStatus EXIT_STATUS = ExitStatus.CSR_GENERATION_EXCEPTION;
 
-    public CsrGenerationException(Throwable e) {
-        super(e);
+    public CsrGenerationException(Throwable cause) {
+        super(cause);
     }
 
     public ExitStatus applicationExitStatus() {

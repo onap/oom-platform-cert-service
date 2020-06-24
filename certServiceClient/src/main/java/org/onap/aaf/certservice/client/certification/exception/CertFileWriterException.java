@@ -24,8 +24,8 @@ import org.onap.aaf.certservice.client.api.ExitableException;
 
 public class CertFileWriterException extends ExitableException {
 
-    public CertFileWriterException(Throwable e) {
-        super(e);
+    public CertFileWriterException(Throwable cause) {
+        super(cause);
     }
 
     @Override

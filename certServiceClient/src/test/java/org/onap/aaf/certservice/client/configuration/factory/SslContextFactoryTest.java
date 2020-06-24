@@ -173,7 +173,7 @@ public class SslContextFactoryTest {
     }
 
     @Test
-    public void shouldReturnSSLContext() throws TlsConfigurationException {
+    public void shouldReturnSslContext() throws TlsConfigurationException {
         // Given
         String keystorePath = getResourcePath(VALID_KEYSTORE_NAME);
         String truststorePath = getResourcePath(VALID_TRUSTSTORE_NAME);

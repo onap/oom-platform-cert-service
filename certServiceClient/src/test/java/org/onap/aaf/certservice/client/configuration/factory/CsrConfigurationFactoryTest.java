@@ -53,8 +53,8 @@ public class CsrConfigurationFactoryTest {
     private CsrConfigurationFactory testedFactory;
     private Condition<CsrConfigurationException> expectedExitCodeCondition = new Condition<>("Correct exit code") {
         @Override
-        public boolean matches(CsrConfigurationException e) {
-            return e.applicationExitStatus() == CSR_CONFIGURATION_EXCEPTION;
+        public boolean matches(CsrConfigurationException exception) {
+            return exception.applicationExitStatus() == CSR_CONFIGURATION_EXCEPTION;
         }
     };
 
