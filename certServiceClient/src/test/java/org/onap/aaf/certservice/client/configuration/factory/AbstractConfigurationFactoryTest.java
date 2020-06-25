@@ -27,67 +27,67 @@ import org.mockito.Mockito;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
-public class AbstractConfigurationFactoryTest {
+class AbstractConfigurationFactoryTest {
 
     private final AbstractConfigurationFactory cut = mock(AbstractConfigurationFactory.class, Mockito.CALLS_REAL_METHODS);
 
     @ParameterizedTest
     @ValueSource(strings = {"/var/log", "/", "/var/log/", "/second_var", "/second-var"})
-    public void shouldAcceptValidPath(String path) {
+    void shouldAcceptValidPath(String path) {
         assertThat(cut.isPathValid(path)).isTrue();
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"/var/log?", "", "var_", "var", "//", "/var//log"})
-    public void shouldRejectInvalidPath(String path) {
+    void shouldRejectInvalidPath(String path) {
         assertThat(cut.isPathValid(path)).isFalse();
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"PL", "DE", "PN", "US", "IO", "CA", "KH", "CO", "DK", "EC", "CZ", "CN", "BR", "BD", "BE"})
-    public void shouldAcceptValidCountryCode(String countryCode) {
+    void shouldAcceptValidCountryCode(String countryCode) {
         assertThat(cut.isCountryValid(countryCode)).isTrue();
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"", "QQ", "AFG", "D", "&*", "!", "ONAP", "p", "pl", "us", "afg"})
-    public void shouldRejectInvalidCountryCode(String countryCode) {
+    void shouldRejectInvalidCountryCode(String countryCode) {
         assertThat(cut.isCountryValid(countryCode)).isFalse();
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"caname", "caname1", "123caName", "ca1name"})
-    public void shouldAcceptValidAlphanumeric(String caName) {
+    void shouldAcceptValidAlphanumeric(String caName) {
         assertThat(cut.isAlphaNumeric(caName)).isTrue();
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"44caname$", "#caname1", "1c_aname", "ca1-name"})
-    public void shouldRejectInvalidAlphanumeric(String caName) {
+    void shouldRejectInvalidAlphanumeric(String caName) {
         assertThat(cut.isAlphaNumeric(caName)).isFalse();
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"example.com", "www.example.com"})
-    public void shouldAcceptValidCommonName(String commonName) {
+    void shouldAcceptValidCommonName(String commonName) {
         assertThat(cut.isCommonNameValid(commonName)).isTrue();
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"https://example.com", "http://example.com", "example.com:8080", "0.0.0.0", "@#$%.com"})
-    public void shouldRejectInvalidCommonName(String commonName) {
+    void shouldRejectInvalidCommonName(String commonName) {
         assertThat(cut.isCommonNameValid(commonName)).isFalse();
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"JKS", "P12", "PEM"})
-    public void shouldAcceptValidOutputType(String outputType) {
+    void shouldAcceptValidOutputType(String outputType) {
         assertThat(cut.isOutputTypeValid(outputType)).isTrue();
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"jks", "p12", "pem", "", "pass", "!@$#pp"})
-    public void shouldRejectInvalidOutputType(String outputType) {
+    void shouldRejectInvalidOutputType(String outputType) {
         assertThat(cut.isOutputTypeValid(outputType)).isFalse();
     }
 }

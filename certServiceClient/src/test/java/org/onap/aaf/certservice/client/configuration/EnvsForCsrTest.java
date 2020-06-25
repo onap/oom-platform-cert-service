@@ -47,17 +47,18 @@ class EnvsForCsrTest {
         final Optional<String> testEnv = envsForCsr.getCommonName();
 
         // then
-        assertThat(testEnv.isPresent()).isTrue();
-        assertThat(testEnv.get()).isEqualTo(TEST_ENV);
+        assertThat(testEnv)
+                .isPresent()
+                .contains(TEST_ENV);
     }
 
     @Test
-    public void shouldReportThatSystemEnvCommonNameVariableIsNotPresentWhenItWasNotDefined() {
+    void shouldReportThatSystemEnvCommonNameVariableIsNotPresentWhenItWasNotDefined() {
         // when
         final Optional<String> testEnv = envsForCsr.getCommonName();
 
         // then
-        assertThat(testEnv.isPresent()).isFalse();
+        assertThat(testEnv).isNotPresent();
     }
 
     @Test
@@ -69,17 +70,18 @@ class EnvsForCsrTest {
         final Optional<String> testEnv = envsForCsr.getOrganization();
 
         // then
-        assertThat(testEnv.isPresent()).isTrue();
-        assertThat(testEnv.get()).isEqualTo(TEST_ENV);
+        assertThat(testEnv)
+                .isPresent()
+                .contains(TEST_ENV);
     }
 
     @Test
-    public void shouldReportThatSystemEnvOrganizationVariableIsNotPresentWhenItWasNotDefined() {
+    void shouldReportThatSystemEnvOrganizationVariableIsNotPresentWhenItWasNotDefined() {
         // when
         final Optional<String> testEnv = envsForCsr.getOrganization();
 
         // then
-        assertThat(testEnv.isPresent()).isFalse();
+        assertThat(testEnv).isNotPresent();
     }
 
     @Test
@@ -91,8 +93,9 @@ class EnvsForCsrTest {
         final Optional<String> testEnv = envsForCsr.getOrganizationUnit();
 
         // then
-        assertThat(testEnv.isPresent()).isTrue();
-        assertThat(testEnv.get()).isEqualTo(TEST_ENV);
+        assertThat(testEnv)
+                .isPresent()
+                .contains(TEST_ENV);
     }
 
     @Test
@@ -101,7 +104,7 @@ class EnvsForCsrTest {
         final Optional<String> testEnv = envsForCsr.getOrganizationUnit();
 
         // then
-        assertThat(testEnv.isPresent()).isFalse();
+        assertThat(testEnv).isNotPresent();
     }
 
     @Test
@@ -113,17 +116,18 @@ class EnvsForCsrTest {
         final Optional<String> testEnv = envsForCsr.getLocation();
 
         // then
-        assertThat(testEnv.isPresent()).isTrue();
-        assertThat(testEnv.get()).isEqualTo(TEST_ENV);
+        assertThat(testEnv)
+                .isPresent()
+                .contains(TEST_ENV);
     }
 
     @Test
-    public void shouldReportThatSystemEnvLocationVariableIsNotPresentWhenItWasNotDefined() {
+    void shouldReportThatSystemEnvLocationVariableIsNotPresentWhenItWasNotDefined() {
         // when
         final Optional<String> testEnv = envsForCsr.getLocation();
 
         // then
-        assertThat(testEnv.isPresent()).isFalse();
+        assertThat(testEnv).isNotPresent();
     }
 
     @Test
@@ -135,17 +139,18 @@ class EnvsForCsrTest {
         final Optional<String> testEnv = envsForCsr.getState();
 
         // then
-        assertThat(testEnv.isPresent()).isTrue();
-        assertThat(testEnv.get()).isEqualTo(TEST_ENV);
+        assertThat(testEnv)
+                .isPresent()
+                .contains(TEST_ENV);
     }
 
     @Test
-    public void shouldReportThatSystemEnvStateVariableIsNotPresentWhenItWasNotDefined() {
+    void shouldReportThatSystemEnvStateVariableIsNotPresentWhenItWasNotDefined() {
         // when
         final Optional<String> testEnv = envsForCsr.getState();
 
         // then
-        assertThat(testEnv.isPresent()).isFalse();
+        assertThat(testEnv).isNotPresent();
     }
 
     @Test
@@ -157,17 +162,18 @@ class EnvsForCsrTest {
         final Optional<String> testEnv = envsForCsr.getCountry();
 
         // then
-        assertThat(testEnv.isPresent()).isTrue();
-        assertThat(testEnv.get()).isEqualTo(TEST_ENV);
+        assertThat(testEnv)
+                .isPresent()
+                .contains(TEST_ENV);
     }
 
     @Test
-    public void shouldReportThatSystemEnvCountryVariableIsNotPresentWhenItWasNotDefined() {
+    void shouldReportThatSystemEnvCountryVariableIsNotPresentWhenItWasNotDefined() {
         // when
         final Optional<String> testEnv = envsForCsr.getCountry();
 
         // then
-        assertThat(testEnv.isPresent()).isFalse();
+        assertThat(testEnv).isNotPresent();
     }
 
     @Test
@@ -179,8 +185,9 @@ class EnvsForCsrTest {
         final Optional<String> testEnv = envsForCsr.getSubjectAlternativesName();
 
         // then
-        assertThat(testEnv.isPresent()).isTrue();
-        assertThat(testEnv.get()).isEqualTo(TEST_ENV);
+        assertThat(testEnv)
+                .isPresent()
+                .contains(TEST_ENV);
     }
 
     @Test
@@ -189,6 +196,6 @@ class EnvsForCsrTest {
         final Optional<String> testEnv = envsForCsr.getSubjectAlternativesName();
 
         // then
-        assertThat(testEnv.isPresent()).isFalse();
+        assertThat(testEnv).isNotPresent();
     }
 }

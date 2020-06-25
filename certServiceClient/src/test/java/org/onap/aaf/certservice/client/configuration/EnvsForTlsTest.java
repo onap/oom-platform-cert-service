@@ -48,17 +48,18 @@ class EnvsForTlsTest {
         final Optional<String> testEnv = envsForTls.getKeystorePath();
 
         // then
-        assertThat(testEnv.isPresent()).isTrue();
-        assertThat(testEnv.get()).isEqualTo(TEST_ENV);
+        assertThat(testEnv)
+                .isPresent()
+                .contains(TEST_ENV);
     }
 
     @Test
-    public void shouldReportThatSystemEnvKeyStorePathVariableIsNotPresentWhenItWasNotDefined() {
+    void shouldReportThatSystemEnvKeyStorePathVariableIsNotPresentWhenItWasNotDefined() {
         // when
         final Optional<String> testEnv = envsForTls.getKeystorePath();
 
         // then
-        assertThat(testEnv.isPresent()).isFalse();
+        assertThat(testEnv).isNotPresent();
     }
 
     @Test
@@ -70,17 +71,18 @@ class EnvsForTlsTest {
         final Optional<String> testEnv = envsForTls.getKeystorePassword();
 
         // then
-        assertThat(testEnv.isPresent()).isTrue();
-        assertThat(testEnv.get()).isEqualTo(TEST_ENV);
+        assertThat(testEnv)
+                .isPresent()
+                .contains(TEST_ENV);
     }
 
     @Test
-    public void shouldReportThatSystemEnvKeyStorePasswordVariableIsNotPresentWhenItWasNotDefined() {
+    void shouldReportThatSystemEnvKeyStorePasswordVariableIsNotPresentWhenItWasNotDefined() {
         // when
         final Optional<String> testEnv = envsForTls.getKeystorePassword();
 
         // then
-        assertThat(testEnv.isPresent()).isFalse();
+        assertThat(testEnv).isNotPresent();
     }
 
     @Test
@@ -92,17 +94,18 @@ class EnvsForTlsTest {
         final Optional<String> testEnv = envsForTls.getTruststorePath();
 
         // then
-        assertThat(testEnv.isPresent()).isTrue();
-        assertThat(testEnv.get()).isEqualTo(TEST_ENV);
+        assertThat(testEnv)
+                .isPresent()
+                .contains(TEST_ENV);
     }
 
     @Test
-    public void shouldReportThatSystemEnvTrustStorePathVariableIsNotPresentWhenItWasNotDefined() {
+    void shouldReportThatSystemEnvTrustStorePathVariableIsNotPresentWhenItWasNotDefined() {
         // when
         final Optional<String> testEnv = envsForTls.getTruststorePath();
 
         // then
-        assertThat(testEnv.isPresent()).isFalse();
+        assertThat(testEnv).isNotPresent();
     }
 
     @Test
@@ -114,16 +117,17 @@ class EnvsForTlsTest {
         final Optional<String> testEnv = envsForTls.getTruststorePassword();
 
         // then
-        assertThat(testEnv.isPresent()).isTrue();
-        assertThat(testEnv.get()).isEqualTo(TEST_ENV);
+        assertThat(testEnv)
+                .isPresent()
+                .contains(TEST_ENV);
     }
 
     @Test
-    public void shouldReportThatSystemEnvTrustStorePasswordVariableIsNotPresentWhenItWasNotDefined() {
+    void shouldReportThatSystemEnvTrustStorePasswordVariableIsNotPresentWhenItWasNotDefined() {
         // when
         final Optional<String> testEnv = envsForTls.getTruststorePassword();
 
         // then
-        assertThat(testEnv.isPresent()).isFalse();
+        assertThat(testEnv).isNotPresent();
     }
 }

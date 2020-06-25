@@ -35,7 +35,7 @@ class CertServiceClientTest {
     AppExitHandler appExitHandler = new AppExitHandler();
 
     @Test
-    public void shouldExitWithDefinedExitCode_onRunCallWhenNoEnvsPresent() {
+    void shouldExitWithDefinedExitCode_onRunCallWhenNoEnvsPresent() {
         //  given
         doNothing().when(appExitHandler).exit(CLIENT_CONFIGURATION_EXCEPTION);
         doNothing().when(appExitHandler).exit(SUCCESS);

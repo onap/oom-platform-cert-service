@@ -44,7 +44,7 @@ class PrivateKeyToPemEncoderTest {
     private static final String PRIVATE_KEY_PEM_PATH = RESOURCES_DIR + "rsaPrivateKeyPem";
 
     @Test
-    public void shouldReturnProperlyEncodedPrivateKey() throws InvalidKeySpecException, NoSuchAlgorithmException, PkEncodingException, IOException {
+    void shouldReturnProperlyEncodedPrivateKey() throws InvalidKeySpecException, NoSuchAlgorithmException, PkEncodingException, IOException {
         //given
         String expectedPem = Files.readString(Paths.get(PRIVATE_KEY_PEM_PATH));
         PrivateKeyToPemEncoder testedPkEncoder = new PrivateKeyToPemEncoder();

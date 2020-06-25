@@ -36,12 +36,12 @@ class EnvProviderTest {
     private EnvProvider envProvider;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         envProvider = Mockito.spy(EnvProvider.class);
     }
 
     @Test
-    public void shouldReturnSystemEnvVariableWhenItWasDefined() {
+    void shouldReturnSystemEnvVariableWhenItWasDefined() {
         // given
         when(envProvider.getSystemEnv(TEST_ENV)).thenReturn(TEST_ENV_VALUE);
 
@@ -49,16 +49,17 @@ class EnvProviderTest {
         final Optional<String> testEnv = envProvider.readEnvVariable(TEST_ENV);
 
         // then
-        assertThat(testEnv.isPresent()).isTrue();
-        assertThat(testEnv.get()).isEqualTo(TEST_ENV_VALUE);
+        assertThat(testEnv)
+                .isPresent()
+                .contains(TEST_ENV_VALUE);
     }
 
     @Test
-    public void shouldReportThatSystemEnvVariableIsNotPresentWhenItWasNotDefined() {
+    void shouldReportThatSystemEnvVariableIsNotPresentWhenItWasNotDefined() {
         // when
         final Optional<String> testEnv = envProvider.readEnvVariable(TEST_ENV);
 
         // then
-        assertThat(testEnv.isPresent()).isFalse();
+        assertThat(testEnv).isNotPresent();
     }
 }

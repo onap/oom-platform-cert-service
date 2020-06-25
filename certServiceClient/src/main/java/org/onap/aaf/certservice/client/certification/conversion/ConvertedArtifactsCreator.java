@@ -61,8 +61,8 @@ public class ConvertedArtifactsCreator implements ArtifactsCreator {
     private void createKeystore(List<String> data, PrivateKey privateKey)
             throws PemConversionException, CertFileWriterException {
         Password password = passwordGenerator.generate(PASSWORD_LENGTH);
-        String keystoreArtifactName = String.format("%s.%s", KEYSTORE, fileExtension);
-        String keystorePass = String.format("%s.%s", KEYSTORE, PASS_EXT);
+        String keystoreArtifactName = getFilenameWithExtension(KEYSTORE, fileExtension);
+        String keystorePass = getFilenameWithExtension(KEYSTORE, PASS_EXT);
 
         LOGGER.debug("Attempt to create keystore files and saving data. File names: {}, {}", keystoreArtifactName, keystorePass);
 
@@ -73,8 +73,8 @@ public class ConvertedArtifactsCreator implements ArtifactsCreator {
     private void createTruststore(List<String> data)
             throws PemConversionException, CertFileWriterException {
         Password password = passwordGenerator.generate(PASSWORD_LENGTH);
-        String truststoreArtifactName = String.format("%s.%s", TRUSTSTORE, fileExtension);
-        String truststorePass = String.format("%s.%s", TRUSTSTORE, PASS_EXT);
+        String truststoreArtifactName = getFilenameWithExtension(TRUSTSTORE, fileExtension);
+        String truststorePass = getFilenameWithExtension(TRUSTSTORE, PASS_EXT);
 
         LOGGER.debug("Attempt to create truststore files and saving data. File names: {}, {}", truststoreArtifactName, truststorePass);
 
@@ -84,5 +84,9 @@ public class ConvertedArtifactsCreator implements ArtifactsCreator {
 
     private byte[] getPasswordAsBytes(Password password) {
         return password.getCurrentPassword().getBytes();
+    }
+
+    private String getFilenameWithExtension(String filename, String extension) {
+        return String.format("%s.%s", filename, extension);
     }
 }

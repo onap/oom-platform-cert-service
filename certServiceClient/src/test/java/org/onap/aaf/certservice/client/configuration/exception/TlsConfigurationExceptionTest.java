@@ -26,10 +26,10 @@ import org.onap.aaf.certservice.client.api.ExitStatus;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-public class TlsConfigurationExceptionTest {
+class TlsConfigurationExceptionTest {
 
     @Test
-    public void containsProperExitStatus() {
+    void containsProperExitStatus() {
         // Given
         ExitStatus exitStatus = null;
 
@@ -41,7 +41,8 @@ public class TlsConfigurationExceptionTest {
         }
 
         // Then
-        assertThat(exitStatus).isNotNull();
-        assertThat(exitStatus).isEqualTo(ExitStatus.TLS_CONFIGURATION_EXCEPTION);
+        assertThat(exitStatus)
+                .isNotNull()
+                .isEqualTo(ExitStatus.TLS_CONFIGURATION_EXCEPTION);
     }
 }
