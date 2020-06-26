@@ -55,7 +55,6 @@
         <httpcomponents.version>4.5.6</httpcomponents.version>
         <commons-lang3.version>3.9</commons-lang3.version>
         <commons-io.version>2.6</commons-io.version>
-        <docker-maven-plugin.version>0.33.0</docker-maven-plugin.version>
         <junit.version>5.5.2</junit.version>
         <mockito-junit-jupiter.version>2.17.0</mockito-junit-jupiter.version>
 
@@ -67,6 +66,7 @@
         <docker-image.namespace>onap</docker-image.namespace>
         <docker-image.name>${project.groupId}.${project.artifactId}</docker-image.name>
         <docker-image.latest>${project.version}</docker-image.latest>
+        <docker-image.tag.latest>latest</docker-image.tag.latest>
         <version>${project.version}</version>
         <docker.http_proxy/>
 

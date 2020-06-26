@@ -104,7 +104,7 @@
                             <images>
                                 <image>
                                     <alias>${project.artifactId}</alias>
-                                    <name>${docker-image.namespace}/${docker-image.name}
+                                    <name>${docker-image.namespace}/${docker-image.name}:${docker-image.tag.latest}
                                     </name>
                                     <registry>${docker-image.registry}</registry>
                                     <build>
