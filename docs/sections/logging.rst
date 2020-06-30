@@ -114,9 +114,11 @@ Client application exits with following exit codes:
 +-------+------------------------------------------------+
 | 6     | Internal HTTP Client connection problem        |
 +-------+------------------------------------------------+
-| 7     | Fail in PKCS12 conversion                      |
+| 7     | Fail in PEM conversion                         |
 +-------+------------------------------------------------+
 | 8     | Fail in Private Key to PEM Encoding            |
 +-------+------------------------------------------------+
 | 9     | Wrong TLS configuration                        |
++-------+------------------------------------------------+
+| 10    | File could not be created                      |
 +-------+------------------------------------------------+

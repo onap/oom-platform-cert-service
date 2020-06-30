@@ -9,15 +9,15 @@ Release Notes
 Version: 1.1.0
 --------------
 
-:Release Date: 2020-xx-xx
+:Release Date: 2020-06-29
 
 **New Features**
 
-        N/A
+        - Added property to CertService Client to allow selection of output certificates type (One of: PEM, JKS, P12).
 
 **Bug Fixes**
 
-        N/A
+        - Resolved issue where created PKCS12 certificates had jks extension.
 
 **Known Issues**
 
@@ -63,7 +63,7 @@ The Frankfurt Release is the first release of the Certification Service.
 
 **Known Issues**
 
-        N/A
+        - PKCS12 certificates have jks extension
 
 **Security Notes**
 
@@ -105,6 +105,8 @@ The Frankfurt Release is the first release of the Certification Service.
 **Known Issues**
 
         - `AAF-1132 <https://jira.onap.org/browse/AAF-1132>`_ - CertService Client returns exit status 5 when TLS configuration fails
+
+        - PKCS12 certificates have jks extension
 
 **Security Notes**
 
