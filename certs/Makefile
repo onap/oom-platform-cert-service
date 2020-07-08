@@ -10,7 +10,7 @@ clear:
 step_1:
 	@echo "Generate root private and public keys"
 	keytool -genkeypair -v -alias root -keyalg RSA -keysize 4096 -validity 3650 -keystore root-keystore.jks \
-    -dname "CN=root.com, OU=Root Org, O=Root Company, L=Wroclaw, ST=Dolny Slask, C=PL" -keypass secret \
+    -dname "CN=onap.org, OU=ONAP, O=Linux-Foundation, L=San-Francisco, ST=California, C=US" -keypass secret \
     -storepass secret -ext BasicConstraints:critical="ca:true"
 	@echo "#####done#####"
 
@@ -29,9 +29,9 @@ step_3:
 #Generate certService's client private and public keys
 step_4:
 	@echo "Generate certService's client private and public keys"
-	keytool -genkeypair -v -alias certServiceClient -keyalg RSA -keysize 2048 -validity 730 \
+	keytool -genkeypair -v -alias certServiceClient -keyalg RSA -keysize 2048 -validity 365 \
     -keystore certServiceClient-keystore.jks -storetype JKS \
-    -dname "CN=certServiceClient.com,OU=certServiceClient company,O=certServiceClient org,L=Wroclaw,ST=Dolny Slask,C=PL" \
+    -dname "CN=onap.org,OU=ONAP,O=Linux-Foundation,L=San-Francisco,ST=California,C=US" \
     -keypass secret -storepass secret
 	@echo "####done####"
 
@@ -44,8 +44,9 @@ step_5:
 #Sign certService's client certificate by root CA
 step_6:
 	@echo "Sign certService's client certificate by root CA"
-	keytool -gencert -v -keystore root-keystore.jks -storepass secret -alias root -infile certServiceClient.csr \
-    -outfile certServiceClientByRoot.crt -rfc -ext bc=0  -ext ExtendedkeyUsage="serverAuth,clientAuth"
+	keytool -gencert -v -validity 365 -keystore root-keystore.jks -storepass secret -alias root \
+	-infile certServiceClient.csr -outfile certServiceClientByRoot.crt -rfc -ext bc=0  \
+	-ext ExtendedkeyUsage="serverAuth,clientAuth"
 	@echo "####done####"
 
 #Import root certificate into client
@@ -63,9 +64,9 @@ step_8:
 #Generate certService private and public keys
 step_9:
 	@echo "Generate certService private and public keys"
-	keytool -genkeypair -v -alias aaf-cert-service -keyalg RSA -keysize 2048 -validity 730 \
+	keytool -genkeypair -v -alias aaf-cert-service -keyalg RSA -keysize 2048 -validity 365 \
     -keystore certServiceServer-keystore.jks -storetype JKS \
-    -dname "CN=aaf-cert-service,OU=certServiceServer company,O=certServiceServer org,L=Wroclaw,ST=Dolny Slask,C=PL" \
+    -dname "CN=onap.org,OU=ONAP,O=Linux-Foundation,L=San-Francisco,ST=California,C=US" \
     -keypass secret -storepass secret -ext BasicConstraints:critical="ca:false"
 	@echo "####done####"
 
@@ -78,9 +79,9 @@ step_10:
 #Sign certService certificate by root CA
 step_11:
 	@echo "Sign certService certificate by root CA"
-	keytool -gencert -v -keystore root-keystore.jks -storepass secret -alias root -infile certServiceServer.csr \
-    -outfile certServiceServerByRoot.crt -rfc -ext bc=0  -ext ExtendedkeyUsage="serverAuth,clientAuth" \
-    -ext SubjectAlternativeName:="DNS:aaf-cert-service,DNS:localhost"
+	keytool -gencert -v -validity 365 -keystore root-keystore.jks -storepass secret -alias root \
+	-infile certServiceServer.csr -outfile certServiceServerByRoot.crt -rfc -ext bc=0 \
+	-ext ExtendedkeyUsage="serverAuth,clientAuth" -ext SubjectAlternativeName:="DNS:aaf-cert-service,DNS:localhost"
 	@echo "####done####"
 
 #Import root certificate into server
