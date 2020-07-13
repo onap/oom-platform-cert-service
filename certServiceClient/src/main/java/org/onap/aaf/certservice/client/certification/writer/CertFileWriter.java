@@ -23,6 +23,7 @@ import org.onap.aaf.certservice.client.certification.exception.CertFileWriterExc
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -32,8 +33,13 @@ public class CertFileWriter {
     private static final Logger LOGGER = LoggerFactory.getLogger(CertFileWriter.class);
     private final String destPath;
 
-    public CertFileWriter(String destPath) {
+    private CertFileWriter(String destPath) {
         this.destPath = destPath;
+    }
+
+    public static CertFileWriter createWithDir(String destPath) {
+        createDirIfNotExists(destPath);
+        return new CertFileWriter(destPath);
     }
 
     public void saveData(byte[] data, String filename) throws CertFileWriterException {
@@ -43,6 +49,14 @@ public class CertFileWriter {
         } catch (IOException e) {
             LOGGER.error("File creation failed, exception message: {}", e.getMessage());
             throw new CertFileWriterException(e);
+        }
+    }
+
+    private static void createDirIfNotExists(String destPath) {
+        File destFolderPath = new File(destPath);
+        if (!destFolderPath.exists()) {
+            LOGGER.debug("Destination path not exists, subdirectories are created");
+            destFolderPath.mkdirs();
         }
     }
 }

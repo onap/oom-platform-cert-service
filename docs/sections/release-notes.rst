@@ -6,6 +6,47 @@
 Release Notes
 ==============
 
+Version: 1.2.0
+--------------
+
+:Release Date:
+
+**New Features**
+
+        - Client creates subdirectories in given OUTPUT_PATH and place certificate into it.
+
+**Bug Fixes**
+
+        N/A
+
+**Known Issues**
+
+        N/A
+
+**Security Notes**
+
+        N/A
+
+*Fixed Security Issues*
+
+        N/A
+
+*Known Security Issues*
+
+        N/A
+
+*Known Vulnerabilities in Used Modules*
+
+        N/A
+
+**Upgrade Notes**
+
+**Deprecation Notes**
+
+**Other**
+
+===========
+
 Version: 1.1.0
 --------------
 

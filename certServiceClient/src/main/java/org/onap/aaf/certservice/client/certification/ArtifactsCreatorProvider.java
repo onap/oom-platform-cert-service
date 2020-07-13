@@ -40,7 +40,7 @@ public enum ArtifactsCreatorProvider {
     PEM("PEM") {
         @Override
         ArtifactsCreator create(String destPath) {
-            return new PemArtifactsCreator(new CertFileWriter(destPath), new PrivateKeyToPemEncoder());
+            return new PemArtifactsCreator(CertFileWriter.createWithDir(destPath), new PrivateKeyToPemEncoder());
         }
     };
 

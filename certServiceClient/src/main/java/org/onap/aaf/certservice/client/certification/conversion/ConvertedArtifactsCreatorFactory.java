@@ -28,7 +28,7 @@ public class ConvertedArtifactsCreatorFactory {
 
     public static ConvertedArtifactsCreator createConverter(String destPath, String fileExtension, String keyStoreType) {
         return new ConvertedArtifactsCreator(
-                new CertFileWriter(destPath),
+                CertFileWriter.createWithDir(destPath),
                 new RandomPasswordGenerator(),
                 new PemConverter(keyStoreType),
                 fileExtension);

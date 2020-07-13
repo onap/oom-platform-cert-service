@@ -20,8 +20,8 @@
 package org.onap.aaf.certservice.client.certification.writer;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.onap.aaf.certservice.client.certification.exception.CertFileWriterException;
 
 import java.io.File;
@@ -35,48 +35,42 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class CertFileWriterTest {
 
-    private static final String RESOURCES_PATH = "src/test/resources";
-    private static final String OUTPUT_PATH = RESOURCES_PATH + "/generatedFiles/";
+    private static final String RESOURCES_PATH = "src/test/resources/";
+    private static final String OUTPUT_PATH = RESOURCES_PATH + "generatedFiles/";
+    private static final String NOT_EXISTING_OUTPUT_PATH = OUTPUT_PATH + "directoryDoesNotExist/";
     private static final String TRUSTSTORE_P12 = "truststore.p12";
-    private static final String ERROR_MESSAGE = "java.io.FileNotFoundException: src/test/resources/generatedFiles/thisPathDoesNotExist/truststore.p12 (No such file or directory)";
-
     private File outputDirectory = new File(OUTPUT_PATH);
-
-    @BeforeEach
-    void createDirectory() {
-        outputDirectory.mkdir();
-    }
 
     @AfterEach
     void cleanUpFiles() {
-        List.of(outputDirectory.listFiles()).forEach(f -> f.delete());
-        outputDirectory.delete();
+        deleteDirectoryRecursive(outputDirectory);
     }
 
-    @Test
-    void certFileWriterShouldCreateFilesWithDataInGivenLocation()
+    @ParameterizedTest
+    @ValueSource(strings = {OUTPUT_PATH, NOT_EXISTING_OUTPUT_PATH})
+    void certFileWriterShouldCreateFilesWithDataInGivenLocation(String outputPath)
             throws IOException, CertFileWriterException {
         // given
+        File truststore = new File(outputPath + TRUSTSTORE_P12);
+        CertFileWriter certFileWriter = CertFileWriter.createWithDir(outputPath);
         final byte[] data = new byte[]{-128, 1, 2, 3, 127};
-        File truststore = new File(OUTPUT_PATH + TRUSTSTORE_P12);
-        CertFileWriter certFileWriter = new CertFileWriter(OUTPUT_PATH);
 
         // when
         certFileWriter.saveData(data, TRUSTSTORE_P12);
 
         // then
         assertThat(truststore.exists()).isTrue();
-        assertThat(Files.readAllBytes(Path.of(OUTPUT_PATH + TRUSTSTORE_P12))).isEqualTo(data);
+        assertThat(Files.readAllBytes(Path.of(outputPath + TRUSTSTORE_P12))).isEqualTo(data);
     }
 
-    @Test
-    void certFileWriterShouldThrowCertFileWriterExceptionWhenOutputDirectoryDoesNotExist() {
-        // given
-        final byte[] data = new byte[]{-128, 1, 2, 3, 0};
-        CertFileWriter certFileWriter = new CertFileWriter(OUTPUT_PATH + "thisPathDoesNotExist/");
-
-        // when then
-        assertThatThrownBy(() -> certFileWriter.saveData(data, TRUSTSTORE_P12))
-                .isInstanceOf(CertFileWriterException.class).hasMessage(ERROR_MESSAGE);
+    private void deleteDirectoryRecursive(File dirForDeletion) {
+        List.of(dirForDeletion.listFiles()).forEach(file -> {
+            if (file.isDirectory()) {
+                deleteDirectoryRecursive(file);
+            }
+            file.delete();
+        });
+        dirForDeletion.delete();
     }
+
 }
