@@ -1,39 +1,51 @@
 ---
-project: 'aaf_certservice'
-project_creation_date: '2020-01-23'
+project: 'oom/platform/cert-service'
+project_creation_date: '2020-07-20'
 lifecycle_state: 'Incubation'
 project_category: ''
-project_lead: &onap_aaf_certservice_ptl
-    name: 'Bogumil Zebek'
-    email: 'bogumil.zebek@nokia.com'
-    company: 'Nokia'
-    id: 'bogumil_zebek'
-    timezone: 'Europe/Warsaw'
-primary_contact: *onap_aaf_certservice_ptl
+project_lead: &onap_releng_ptl
+    name: 'Sylvain Desbureaux'
+    email: 'sylvain.desbureaux@orange.com'
+    id: 'sdesbure'
+    company: 'Orange'
+    timezone: 'Paris/France'
+primary_contact: *onap_releng_ptl
 issue_tracking:
     type: 'jira'
-    url: 'https://jira.onap.org/projects/AAF'
-    key: 'aaf_certservice'
+    url: 'https://jira.onap.org/projects/OOM'
+    key: 'OOM'
 mailing_list:
     type: 'groups.io'
-    url: 'technical-discuss@lists.onap.org'
-    tag: '[]'
-realtime_discussion:
-    type: 'irc'
-    server: 'freenode.net'
-    channel: '#onap'
+    url: 'lists.onap.org'
+    tag: '<[sub-project_name]>'
+realtime_discussion: ''
 meetings:
-    - type: 'gotomeeting+irc'
-      agenda: 'https://wiki.onap.org/display/'
-      url: ''
-      server: 'freenode.net'
-      channel: '#onap'
-      repeats: ''
-      time: ''
+    - type: 'zoom'
+      agenda: 'https://wiki.onap.org/pages/viewpage.action?pageId=8228913'
+      url: 'https://wiki.onap.org/pages/viewpage.action?pageId=8228913'
+      server: 'n/a'
+      channel: 'n/a'
+      repeats: 'weekly'
+      time: '14:00 UTC'
 repositories:
-    - aaf/certservice
+    - 'oom/platform/cert-service'
 committers:
-    - <<: *onap_aaf_certservice_ptl
+    - <<: *onap_releng_ptl
+    - name: 'Mike Elliott'
+      email: 'mike.elliott@amdocs.com'
+      id: 'melliott'
+      company: 'Amdocs'
+      timezone: 'Canada/Ontario'
+    - name: 'Borislav Glozman'
+      email: 'Borislav.Glozman@amdocs.com'
+      company: 'Amdocs'
+      id: 'BorislavG'
+      timezone: 'Israel/Raanana'
+    - name: 'Krzysztof Opasiak'
+      email: 'k.opasiak@samsung.com'
+      company: 'Samsung'
+      id: 'kopasiak'
+      timezone: 'Poland/Warsaw'
     - name: 'Bogumil Zebek'
       email: 'bogumil.zebek@nokia.com'
       company: 'Nokia'
@@ -45,9 +57,5 @@ committers:
       id: 'baniewsk'
       timezone: 'Europe/Warsaw'
 tsc:
-    # yamllint disable rule:line-length
-    approval: 'https://jira.onap.org/browse/ONAPARC-553'
-    changes:
-        - type: ''
-          name: ''
-          link: ''
+    approval:
+        'https://lists.onap.org/g/onap-tsc/topic/oom_ask_for_new_repo/75680079'

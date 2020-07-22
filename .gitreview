@@ -1,7 +1,7 @@
 [gerrit]
 host=gerrit.onap.org
 port=29418
-project=aaf/certservice
+project=oom/platform/cert-service
 defaultbranch=master
 asd=asdf
         
