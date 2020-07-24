@@ -22,7 +22,7 @@ run-client:
 	    --rm \
 	    --name aafcert-client \
 	    --env-file ./compose-resources/client-configuration.env \
-	    --network certservice_certservice \
+	    --network cert-service_certservice \
 	    --mount type=bind,src=`pwd`/compose-resources/client-volume/,dst=/var/certs \
 	    --volume `pwd`/certs/truststore.jks:/etc/onap/aaf/certservice/certs/truststore.jks \
 	    --volume `pwd`/certs/certServiceClient-keystore.jks:/etc/onap/aaf/certservice/certs/certServiceClient-keystore.jks \
