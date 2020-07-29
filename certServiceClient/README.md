@@ -18,7 +18,7 @@ mvn clean install -P docker
 
 ### Nexus container image
 ```
-nexus3.onap.org:10001/onap/org.onap.aaf.certservice.aaf-certservice-client:latest
+nexus3.onap.org:10001/onap/org.onap.oom.certservice.oom-certservice-client:latest
 ```
 
 ### Running local client application as standalone docker container
@@ -33,11 +33,11 @@ Information how to run you can find in CertService main README and official docu
 
 path: 
 ```
-var/log/onap/aaf/certservice-client/certservice-client.log
+var/log/onap/oom/certservice-client/certservice-client.log
 ```    
 ### Logs in Docker container
 ```
-docker logs aaf-certservice-client
+docker logs oom-certservice-client
 ```
 ###Exit codes
 ```

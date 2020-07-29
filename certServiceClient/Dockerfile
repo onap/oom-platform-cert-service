@@ -8,6 +8,6 @@ RUN chown -R certServiceClient:certServiceClient /var/log
 
 USER certServiceClient:certServiceClient
 
-COPY target/aaf-certservice-client-${VERSION}.jar ./opt/onap/aaf/certservice/aaf-certservice-client.jar
+COPY target/oom-certservice-client-${VERSION}.jar ./opt/onap/oom/certservice/oom-certservice-client.jar
 
-ENTRYPOINT ["java","-jar","./opt/onap/aaf/certservice/aaf-certservice-client.jar"]
+ENTRYPOINT ["java","-jar","./opt/onap/oom/certservice/oom-certservice-client.jar"]

@@ -11,7 +11,7 @@ start-backend:
 	@echo "##### Start Cert Service #####"
 	docker-compose up -d
 	@echo "## Configure ejbca ##"
-	docker exec aafcert-ejbca /opt/primekey/scripts/ejbca-configuration.sh
+	docker exec oomcert-ejbca /opt/primekey/scripts/ejbca-configuration.sh
 	@echo "##### DONE #####"
 
 run-client:
@@ -20,13 +20,13 @@ run-client:
 	@echo "##### Start Cert Service Client #####"
 	docker run \
 	    --rm \
-	    --name aafcert-client \
+	    --name oomcert-client \
 	    --env-file ./compose-resources/client-configuration.env \
-	    --network certservice_certservice \
+	    --network cert-service_certservice \
 	    --mount type=bind,src=`pwd`/compose-resources/client-volume/,dst=/var/certs \
-	    --volume `pwd`/certs/truststore.jks:/etc/onap/aaf/certservice/certs/truststore.jks \
-	    --volume `pwd`/certs/certServiceClient-keystore.jks:/etc/onap/aaf/certservice/certs/certServiceClient-keystore.jks \
-	    onap/org.onap.aaf.certservice.aaf-certservice-client:latest
+	    --volume `pwd`/certs/truststore.jks:/etc/onap/oom/certservice/certs/truststore.jks \
+	    --volume `pwd`/certs/certServiceClient-keystore.jks:/etc/onap/oom/certservice/certs/certServiceClient-keystore.jks \
+	    onap/org.onap.oom.certservice.oom-certservice-client:latest
 
 stop-backend:
 	@echo "##### Stop Cert Service #####"
