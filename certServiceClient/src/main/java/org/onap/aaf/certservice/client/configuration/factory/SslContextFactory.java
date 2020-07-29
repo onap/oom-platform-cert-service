@@ -1,5 +1,5 @@
 /*============LICENSE_START=======================================================
- * aaf-certservice-client
+ * oom-certservice-client
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
  * ================================================================================
@@ -17,12 +17,12 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.client.configuration.factory;
+package org.onap.oom.certservice.client.configuration.factory;
 
 import org.apache.http.ssl.SSLContexts;
-import org.onap.aaf.certservice.client.configuration.EnvsForTls;
-import org.onap.aaf.certservice.client.configuration.TlsConfigurationEnvs;
-import org.onap.aaf.certservice.client.configuration.exception.TlsConfigurationException;
+import org.onap.oom.certservice.client.configuration.EnvsForTls;
+import org.onap.oom.certservice.client.configuration.TlsConfigurationEnvs;
+import org.onap.oom.certservice.client.configuration.exception.TlsConfigurationException;
 
 import javax.net.ssl.SSLContext;
 import java.io.File;

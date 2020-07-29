@@ -1,6 +1,6 @@
 /*
  * ============LICENSE_START=======================================================
- * aaf-certservice-client
+ * oom-certservice-client
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
  * ================================================================================
@@ -18,10 +18,10 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.client.httpclient.exception;
+package org.onap.oom.certservice.client.httpclient.exception;
 
-import org.onap.aaf.certservice.client.api.ExitStatus;
-import org.onap.aaf.certservice.client.api.ExitableException;
+import org.onap.oom.certservice.client.api.ExitStatus;
+import org.onap.oom.certservice.client.api.ExitableException;
 
 public class HttpClientException extends ExitableException {
     private static final ExitStatus EXIT_STATUS = ExitStatus.HTTP_CLIENT_EXCEPTION;

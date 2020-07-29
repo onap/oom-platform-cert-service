@@ -18,10 +18,10 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.certification.configuration;
+package org.onap.oom.certservice.certification.configuration;
 
-import org.onap.aaf.certservice.certification.configuration.model.Cmpv2Server;
-import org.onap.aaf.certservice.certification.exception.Cmpv2ServerNotFoundException;
+import org.onap.oom.certservice.certification.configuration.model.Cmpv2Server;
+import org.onap.oom.certservice.certification.exception.Cmpv2ServerNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

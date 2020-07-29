@@ -18,15 +18,15 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.api.advice;
+package org.onap.oom.certservice.api.advice;
 
-import org.onap.aaf.certservice.api.CertificationController;
-import org.onap.aaf.certservice.certification.exception.Cmpv2ClientAdapterException;
-import org.onap.aaf.certservice.certification.exception.Cmpv2ServerNotFoundException;
-import org.onap.aaf.certservice.certification.exception.CsrDecryptionException;
-import org.onap.aaf.certservice.certification.exception.ErrorResponseModel;
-import org.onap.aaf.certservice.certification.exception.KeyDecryptionException;
-import org.onap.aaf.certservice.cmpv2client.exceptions.CmpClientException;
+import org.onap.oom.certservice.api.CertificationController;
+import org.onap.oom.certservice.certification.exception.Cmpv2ClientAdapterException;
+import org.onap.oom.certservice.certification.exception.Cmpv2ServerNotFoundException;
+import org.onap.oom.certservice.certification.exception.CsrDecryptionException;
+import org.onap.oom.certservice.certification.exception.ErrorResponseModel;
+import org.onap.oom.certservice.certification.exception.KeyDecryptionException;
+import org.onap.oom.certservice.cmpv2client.exceptions.CmpClientException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

@@ -1,6 +1,6 @@
 /*
  * ============LICENSE_START=======================================================
- * aaf-certservice-client
+ * oom-certservice-client
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
  * ================================================================================
@@ -18,7 +18,7 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.client.httpclient;
+package org.onap.oom.certservice.client.httpclient;
 
 import com.google.gson.Gson;
 import org.apache.http.HttpEntity;
@@ -27,10 +27,10 @@ import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
-import org.onap.aaf.certservice.client.httpclient.exception.CertServiceApiResponseException;
-import org.onap.aaf.certservice.client.httpclient.exception.HttpClientException;
-import org.onap.aaf.certservice.client.httpclient.model.CertServiceResponse;
-import org.onap.aaf.certservice.client.httpclient.model.ErrorCertServiceResponse;
+import org.onap.oom.certservice.client.httpclient.exception.CertServiceApiResponseException;
+import org.onap.oom.certservice.client.httpclient.exception.HttpClientException;
+import org.onap.oom.certservice.client.httpclient.model.CertServiceResponse;
+import org.onap.oom.certservice.client.httpclient.model.ErrorCertServiceResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

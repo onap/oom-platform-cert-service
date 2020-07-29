@@ -1,6 +1,6 @@
 /*
  * ============LICENSE_START=======================================================
- * aaf-certservice-client
+ * oom-certservice-client
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
  * ================================================================================
@@ -18,13 +18,13 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.client.configuration.factory;
+package org.onap.oom.certservice.client.configuration.factory;
 
 
-import org.onap.aaf.certservice.client.certification.ArtifactsCreatorProvider;
-import org.onap.aaf.certservice.client.configuration.exception.ClientConfigurationException;
-import org.onap.aaf.certservice.client.configuration.exception.CsrConfigurationException;
-import org.onap.aaf.certservice.client.configuration.model.ConfigurationModel;
+import org.onap.oom.certservice.client.certification.ArtifactsCreatorProvider;
+import org.onap.oom.certservice.client.configuration.exception.ClientConfigurationException;
+import org.onap.oom.certservice.client.configuration.exception.CsrConfigurationException;
+import org.onap.oom.certservice.client.configuration.model.ConfigurationModel;
 
 import java.util.Arrays;
 import java.util.Locale;

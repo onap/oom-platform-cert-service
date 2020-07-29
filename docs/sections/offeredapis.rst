@@ -6,7 +6,7 @@
 Offered APIs
 =============
 
-AAF Cert Service Api
+OOM Cert Service Api
 --------------------
 
 .. code-block:: yaml

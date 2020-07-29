@@ -18,7 +18,7 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.certification;
+package org.onap.oom.certservice.certification;
 
 import java.io.InputStream;
 import java.security.NoSuchProviderException;

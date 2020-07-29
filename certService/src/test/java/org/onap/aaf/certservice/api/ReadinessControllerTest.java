@@ -18,7 +18,7 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.api;
+package org.onap.oom.certservice.api;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -27,7 +27,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.onap.aaf.certservice.certification.configuration.CmpServersConfig;
+import org.onap.oom.certservice.certification.configuration.CmpServersConfig;
 import org.springframework.http.HttpStatus;
 
 @ExtendWith(MockitoExtension.class)

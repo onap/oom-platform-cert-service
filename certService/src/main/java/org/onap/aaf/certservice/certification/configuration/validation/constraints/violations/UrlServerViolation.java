@@ -18,7 +18,7 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.certification.configuration.validation.constraints.violations;
+package org.onap.oom.certservice.certification.configuration.validation.constraints.violations;
 
 public interface UrlServerViolation {
     boolean validate(String url);

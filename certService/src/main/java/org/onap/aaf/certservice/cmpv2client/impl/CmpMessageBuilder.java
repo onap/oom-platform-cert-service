@@ -18,7 +18,7 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.cmpv2client.impl;
+package org.onap.oom.certservice.cmpv2client.impl;
 
 import java.util.ArrayList;
 import java.util.List;

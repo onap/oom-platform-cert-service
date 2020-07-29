@@ -18,7 +18,7 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.certification.exception;
+package org.onap.oom.certservice.certification.exception;
 
 public class KeyDecryptionException extends DecryptionException {
     public KeyDecryptionException(String message, Throwable cause) {

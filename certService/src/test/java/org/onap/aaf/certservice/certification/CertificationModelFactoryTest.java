@@ -18,22 +18,22 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.certification;
+package org.onap.oom.certservice.certification;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.onap.aaf.certservice.certification.configuration.Cmpv2ServerProvider;
-import org.onap.aaf.certservice.certification.configuration.model.Cmpv2Server;
-import org.onap.aaf.certservice.certification.exception.Cmpv2ClientAdapterException;
-import org.onap.aaf.certservice.certification.exception.Cmpv2ServerNotFoundException;
-import org.onap.aaf.certservice.certification.exception.CsrDecryptionException;
-import org.onap.aaf.certservice.certification.exception.DecryptionException;
-import org.onap.aaf.certservice.certification.model.CertificationModel;
-import org.onap.aaf.certservice.certification.model.CsrModel;
-import org.onap.aaf.certservice.cmpv2client.exceptions.CmpClientException;
+import org.onap.oom.certservice.certification.configuration.Cmpv2ServerProvider;
+import org.onap.oom.certservice.certification.configuration.model.Cmpv2Server;
+import org.onap.oom.certservice.certification.exception.Cmpv2ClientAdapterException;
+import org.onap.oom.certservice.certification.exception.Cmpv2ServerNotFoundException;
+import org.onap.oom.certservice.certification.exception.CsrDecryptionException;
+import org.onap.oom.certservice.certification.exception.DecryptionException;
+import org.onap.oom.certservice.certification.model.CertificationModel;
+import org.onap.oom.certservice.certification.model.CsrModel;
+import org.onap.oom.certservice.cmpv2client.exceptions.CmpClientException;
 
 import java.util.Arrays;
 import java.util.Base64;
@@ -46,14 +46,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.onap.aaf.certservice.certification.CertificationData.CA_CERT;
-import static org.onap.aaf.certservice.certification.CertificationData.ENTITY_CERT;
-import static org.onap.aaf.certservice.certification.CertificationData.INTERMEDIATE_CERT;
-import static org.onap.aaf.certservice.certification.CertificationData.EXTRA_CA_CERT;
-import static org.onap.aaf.certservice.certification.TestData.TEST_CSR;
-import static org.onap.aaf.certservice.certification.TestData.TEST_PK;
-import static org.onap.aaf.certservice.certification.TestData.TEST_WRONG_CSR;
-import static org.onap.aaf.certservice.certification.TestData.TEST_WRONG_PEM;
+import static org.onap.oom.certservice.certification.CertificationData.CA_CERT;
+import static org.onap.oom.certservice.certification.CertificationData.ENTITY_CERT;
+import static org.onap.oom.certservice.certification.CertificationData.INTERMEDIATE_CERT;
+import static org.onap.oom.certservice.certification.CertificationData.EXTRA_CA_CERT;
+import static org.onap.oom.certservice.certification.TestData.TEST_CSR;
+import static org.onap.oom.certservice.certification.TestData.TEST_PK;
+import static org.onap.oom.certservice.certification.TestData.TEST_WRONG_CSR;
+import static org.onap.oom.certservice.certification.TestData.TEST_WRONG_PEM;
 
 @ExtendWith(MockitoExtension.class)
 class CertificationModelFactoryTest {

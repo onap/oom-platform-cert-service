@@ -18,10 +18,10 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.api.advice;
+package org.onap.oom.certservice.api.advice;
 
-import org.onap.aaf.certservice.api.ReloadConfigController;
-import org.onap.aaf.certservice.certification.configuration.CmpServersConfigLoadingException;
+import org.onap.oom.certservice.api.ReloadConfigController;
+import org.onap.oom.certservice.certification.configuration.CmpServersConfigLoadingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

@@ -18,7 +18,7 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.certification.configuration;
+package org.onap.oom.certservice.certification.configuration;
 
 import org.bouncycastle.asn1.x500.X500Name;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,10 +26,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.onap.aaf.certservice.certification.configuration.model.Authentication;
-import org.onap.aaf.certservice.certification.configuration.model.CaMode;
-import org.onap.aaf.certservice.certification.configuration.model.Cmpv2Server;
-import org.onap.aaf.certservice.certification.exception.Cmpv2ServerNotFoundException;
+import org.onap.oom.certservice.certification.configuration.model.Authentication;
+import org.onap.oom.certservice.certification.configuration.model.CaMode;
+import org.onap.oom.certservice.certification.configuration.model.Cmpv2Server;
+import org.onap.oom.certservice.certification.exception.Cmpv2ServerNotFoundException;
 
 import java.util.Collections;
 

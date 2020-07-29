@@ -18,7 +18,7 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.cmpv2client.impl;
+package org.onap.oom.certservice.cmpv2client.impl;
 
 import org.bouncycastle.asn1.cmp.CMPCertificate;
 import org.bouncycastle.asn1.cmp.CertRepMessage;
@@ -27,8 +27,8 @@ import org.bouncycastle.util.io.pem.PemObject;
 import org.bouncycastle.util.io.pem.PemReader;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.onap.aaf.certservice.cmpv2client.exceptions.CmpClientException;
-import org.onap.aaf.certservice.cmpv2client.model.Cmpv2CertificationModel;
+import org.onap.oom.certservice.cmpv2client.exceptions.CmpClientException;
+import org.onap.oom.certservice.cmpv2client.model.Cmpv2CertificationModel;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

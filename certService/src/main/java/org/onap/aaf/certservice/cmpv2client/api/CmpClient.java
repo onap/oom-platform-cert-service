@@ -18,14 +18,14 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.cmpv2client.api;
+package org.onap.oom.certservice.cmpv2client.api;
 
 import java.util.Date;
 
-import org.onap.aaf.certservice.certification.configuration.model.Cmpv2Server;
-import org.onap.aaf.certservice.certification.model.CsrModel;
-import org.onap.aaf.certservice.cmpv2client.exceptions.CmpClientException;
-import org.onap.aaf.certservice.cmpv2client.model.Cmpv2CertificationModel;
+import org.onap.oom.certservice.certification.configuration.model.Cmpv2Server;
+import org.onap.oom.certservice.certification.model.CsrModel;
+import org.onap.oom.certservice.cmpv2client.exceptions.CmpClientException;
+import org.onap.oom.certservice.cmpv2client.model.Cmpv2CertificationModel;
 
 /**
  * This class represent CmpV2Client Interface for obtaining X.509 Digital Certificates in a Public

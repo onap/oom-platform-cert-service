@@ -14,7 +14,7 @@
  * limitations under the License
  */
 
-package org.onap.aaf.certservice.cmpv2client;
+package org.onap.oom.certservice.cmpv2client;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
@@ -57,12 +57,12 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.onap.aaf.certservice.certification.configuration.model.Authentication;
-import org.onap.aaf.certservice.certification.configuration.model.Cmpv2Server;
-import org.onap.aaf.certservice.certification.model.CsrModel;
-import org.onap.aaf.certservice.cmpv2client.exceptions.CmpClientException;
-import org.onap.aaf.certservice.cmpv2client.impl.CmpClientImpl;
-import org.onap.aaf.certservice.cmpv2client.model.Cmpv2CertificationModel;
+import org.onap.oom.certservice.certification.configuration.model.Authentication;
+import org.onap.oom.certservice.certification.configuration.model.Cmpv2Server;
+import org.onap.oom.certservice.certification.model.CsrModel;
+import org.onap.oom.certservice.cmpv2client.exceptions.CmpClientException;
+import org.onap.oom.certservice.cmpv2client.impl.CmpClientImpl;
+import org.onap.oom.certservice.cmpv2client.model.Cmpv2CertificationModel;
 
 class Cmpv2ClientTest {
 

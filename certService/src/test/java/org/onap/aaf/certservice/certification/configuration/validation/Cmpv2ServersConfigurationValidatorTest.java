@@ -18,17 +18,17 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.certification.configuration.validation;
+package org.onap.oom.certservice.certification.configuration.validation;
 
 
 import org.bouncycastle.asn1.x500.X500Name;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.onap.aaf.certservice.CertServiceApplication;
-import org.onap.aaf.certservice.certification.configuration.model.Authentication;
-import org.onap.aaf.certservice.certification.configuration.model.CaMode;
-import org.onap.aaf.certservice.certification.configuration.model.Cmpv2Server;
+import org.onap.oom.certservice.CertServiceApplication;
+import org.onap.oom.certservice.certification.configuration.model.Authentication;
+import org.onap.oom.certservice.certification.configuration.model.CaMode;
+import org.onap.oom.certservice.certification.configuration.model.Cmpv2Server;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;

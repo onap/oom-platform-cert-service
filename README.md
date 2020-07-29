@@ -4,12 +4,12 @@
 
 More information about the project and all its functionalities you can find under the wiki page: 
     ```
-    https://wiki.onap.org/display/DW/AAF+Certification+Service
+    https://wiki.onap.org/display/DW/OOM+Certification+Service
     ``` 
   
 Project consists of two submodules:
-1. aaf-certservice-api
-2. aaf-certservice-client
+1. oom-certservice-api
+2. oom-certservice-client
 
 Detailed information about submodules can be found in ```README.md``` in their directories.
 
@@ -52,7 +52,7 @@ make run-client
 make stop-backend
 ```
 
-### AAF CertService CSITs
+### OOM CertService CSITs
 #### CSIT repository
 ```
 https://gerrit.onap.org/r/admin/repos/integration/csit
@@ -67,7 +67,7 @@ sudo ./run-csit.sh plans/aaf/certservice
 ```
 
 ####Jenkins build
-https://jenkins.onap.org/view/CSIT/job/aaf-master-csit-certservice/
+https://jenkins.onap.org/view/CSIT/job/oom-platform-cert-service-master-csit-certservice/
 
 ### Sonar results
 ```     
@@ -77,13 +77,13 @@ https://sonarcloud.io/dashboard?id=onap_aaf-certservice
 ### Maven artifacts
 All maven artifacts are deployed under nexus uri:
 ```
-https://nexus.onap.org/content/repositories/snapshots/org/onap/aaf/certservice/
+https://nexus.onap.org/content/repositories/snapshots/org/onap/oom/certservice/
 ```
         
 ### Docker artifacts
 All docker images are hosted under nexus3 uri:
 ```
-https://nexus3.onap.org/repository/docker.snapshot/v2/onap/org.onap.aaf.certservice.aaf-certservice-api/
+https://nexus3.onap.org/repository/docker.snapshot/v2/onap/org.onap.oom.certservice.oom-certservice-api/
 ```
 
 ### How to release containers

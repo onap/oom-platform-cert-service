@@ -18,7 +18,7 @@ Example cmpServers.json file:
       "cmpv2Servers": [
         {
           "caName": "Client",
-          "url": "http://aafcert-ejbca:8080/ejbca/publicweb/cmp/cmp",
+          "url": "http://oomcert-ejbca:8080/ejbca/publicweb/cmp/cmp",
           "issuerDN": "CN=ManagementCA",
           "caMode": "CLIENT",
           "authentication": {
@@ -28,7 +28,7 @@ Example cmpServers.json file:
         },
         {
           "caName": "RA",
-          "url": "http://aafcert-ejbca:8080/ejbca/publicweb/cmp/cmpRA",
+          "url": "http://oomcert-ejbca:8080/ejbca/publicweb/cmp/cmpRA",
           "issuerDN": "CN=ManagementCA",
           "caMode": "RA",
           "authentication": {
@@ -77,16 +77,16 @@ When application is running:
     docker exec -it <certservice-container-name> bash
 
     e.g.
-    docker exec -it aafcert-service bash
+    docker exec -it oomcert-service bash
 
 3. Edit *cmpServers.json* file::
 
-    vim /etc/onap/aaf/certservice/cmpServers.json
+    vim /etc/onap/oom/certservice/cmpServers.json
 
 4. Save the file. Note that this file is mounted as volume, so change will be persistent.
 5. Reload configuration::
 
-    curl -I https://localhost:8443/reload --cacert /etc/onap/aaf/certservice/certs/root.crt --cert-type p12 --cert /etc/onap/aaf/certservice/certs/certServiceServer-keystore.p12 --pass $KEYSTORE_PASSWORD
+    curl -I https://localhost:8443/reload --cacert /etc/onap/oom/certservice/certs/root.crt --cert-type p12 --cert /etc/onap/oom/certservice/certs/certServiceServer-keystore.p12 --pass $KEYSTORE_PASSWORD
 
 6. Exit container::
 
@@ -99,7 +99,7 @@ Configuring in OOM deployment:
 Before OOM installation:
 """"""""""""""""""""""""
 
-Note! This must be executed before calling *make all* (from OOM Installation) or needs remaking AAF charts.
+Note! This must be executed before calling *make all* (from OOM Installation) or needs remaking OOM charts.
 
 
 1. Edit *cmpServers.json* file. If OOM *global.addTestingComponents* flag is set to:
@@ -233,7 +233,7 @@ Configuring EJBCA server for testing
 
 To instantiate an EJBCA server for testing purposes with an OOM deployment, cmpv2Enabled and cmpv2Testing have to be changed to true in oom/kubernetes/aaf/values.yaml.
 
-cmpv2Enabled has to be true to enable aaf-cert-service to be instantiated and used with an external Certificate Authority to get certificates for secure communication.
+cmpv2Enabled has to be true to enable oom-cert-service to be instantiated and used with an external Certificate Authority to get certificates for secure communication.
 
 If cmpv2Testing is enabled then an EJBCA test server will be instantiated in the OOM deployment as well, and will come pre-configured with a test CA to request a certificate from.
 

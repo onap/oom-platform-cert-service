@@ -9,20 +9,20 @@ Jenkins
 -------
 #. JJB Master
 
-    https://jenkins.onap.org/view/aaf/job/aaf-certservice-master-merge-java/
+    https://jenkins.onap.org/view/oom-platform-cert-service/job/oom-certservice-master-merge-java/
 
 #. JJB Stage
 
-    https://jenkins.onap.org/view/aaf/job/aaf-certservice-maven-docker-stage-master/
+    https://jenkins.onap.org/view/oom-platform-cert-service/job/oom-certservice-maven-docker-stage-master/
 
 #. JJB Release
 
-    https://jenkins.onap.org/view/aaf/job/aaf-certservice-maven-stage-master/
-    https://jenkins.onap.org/view/aaf/job/aaf-certservice-release-merge/
+    https://jenkins.onap.org/view/oom-platform-cert-service/job/oom-certservice-maven-stage-master/
+    https://jenkins.onap.org/view/oom-platform-cert-service/job/oom-certservice-release-merge/
 
 #. JJB CSIT
 
-    https://jenkins.onap.org/view/CSIT/job/aaf-master-csit-certservice/
+    https://jenkins.onap.org/view/CSIT/job/oom-platform-cert-service-master-csit-certservice/
 
 Environment
 -----------
@@ -36,7 +36,7 @@ Environment
 How to build images?
 --------------------
 
-#. Checkout the project from https://gerrit.onap.org/r/#/admin/projects/aaf/certservice
+#. Checkout the project from https://gerrit.onap.org/r/#/admin/projects/oom/platform/cert-service
 #. Read information stored in README.md file
 #. Use a Makefile to build images::
 

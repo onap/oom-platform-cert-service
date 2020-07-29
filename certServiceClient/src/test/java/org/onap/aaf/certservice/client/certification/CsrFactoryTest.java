@@ -1,5 +1,5 @@
 /*============LICENSE_START=======================================================
- * aaf-certservice-client
+ * oom-certservice-client
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
  * ================================================================================
@@ -17,13 +17,13 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.client.certification;
+package org.onap.oom.certservice.client.certification;
 
 
 import org.junit.jupiter.api.Test;
-import org.onap.aaf.certservice.client.certification.exception.CsrGenerationException;
-import org.onap.aaf.certservice.client.certification.exception.KeyPairGenerationException;
-import org.onap.aaf.certservice.client.configuration.model.CsrConfiguration;
+import org.onap.oom.certservice.client.certification.exception.CsrGenerationException;
+import org.onap.oom.certservice.client.certification.exception.KeyPairGenerationException;
+import org.onap.oom.certservice.client.configuration.model.CsrConfiguration;
 
 import java.security.KeyPair;
 

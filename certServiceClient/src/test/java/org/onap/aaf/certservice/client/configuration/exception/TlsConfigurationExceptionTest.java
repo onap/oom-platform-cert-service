@@ -1,6 +1,6 @@
 /*
  * ============LICENSE_START=======================================================
- * aaf-certservice-client
+ * oom-certservice-client
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
  * ================================================================================
@@ -18,10 +18,10 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.client.configuration.exception;
+package org.onap.oom.certservice.client.configuration.exception;
 
 import org.junit.jupiter.api.Test;
-import org.onap.aaf.certservice.client.api.ExitStatus;
+import org.onap.oom.certservice.client.api.ExitStatus;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

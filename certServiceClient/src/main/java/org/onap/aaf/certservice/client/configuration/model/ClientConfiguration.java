@@ -1,6 +1,6 @@
 /*
  * ============LICENSE_START=======================================================
- * aaf-certservice-client
+ * oom-certservice-client
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
  * ================================================================================
@@ -18,14 +18,14 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.client.configuration.model;
+package org.onap.oom.certservice.client.configuration.model;
 
-import org.onap.aaf.certservice.client.configuration.ClientConfigurationEnvs;
+import org.onap.oom.certservice.client.configuration.ClientConfigurationEnvs;
 
 public class ClientConfiguration implements ConfigurationModel {
 
     private static final Integer DEFAULT_TIMEOUT_MS = 30000;
-    private static final String DEFAULT_REQUEST_URL = "https://aaf-cert-service:8443/v1/certificate/";
+    private static final String DEFAULT_REQUEST_URL = "https://oom-cert-service:8443/v1/certificate/";
     private static final String DEFAULT_OUTPUT_TYPE = "P12";
 
     private String urlToCertService;

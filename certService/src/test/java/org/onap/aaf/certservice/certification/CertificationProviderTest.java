@@ -1,6 +1,6 @@
 /*
  * ============LICENSE_START=======================================================
- * AAF Certification Service
+ * OOM Certification Service
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
  * ================================================================================
@@ -18,7 +18,7 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.certification;
+package org.onap.oom.certservice.certification;
 
 import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,12 +26,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.onap.aaf.certservice.certification.configuration.model.Cmpv2Server;
-import org.onap.aaf.certservice.certification.model.CertificationModel;
-import org.onap.aaf.certservice.certification.model.CsrModel;
-import org.onap.aaf.certservice.cmpv2client.api.CmpClient;
-import org.onap.aaf.certservice.cmpv2client.exceptions.CmpClientException;
-import org.onap.aaf.certservice.cmpv2client.model.Cmpv2CertificationModel;
+import org.onap.oom.certservice.certification.configuration.model.Cmpv2Server;
+import org.onap.oom.certservice.certification.model.CertificationModel;
+import org.onap.oom.certservice.certification.model.CsrModel;
+import org.onap.oom.certservice.cmpv2client.api.CmpClient;
+import org.onap.oom.certservice.cmpv2client.exceptions.CmpClientException;
+import org.onap.oom.certservice.cmpv2client.model.Cmpv2CertificationModel;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -1,6 +1,6 @@
 /*
  * ============LICENSE_START=======================================================
- * aaf-certservice-client
+ * oom-certservice-client
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
  * ================================================================================
@@ -18,15 +18,15 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.client.configuration.factory;
+package org.onap.oom.certservice.client.configuration.factory;
 
 import org.assertj.core.api.Condition;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.onap.aaf.certservice.client.configuration.CsrConfigurationEnvs;
-import org.onap.aaf.certservice.client.configuration.EnvsForCsr;
-import org.onap.aaf.certservice.client.configuration.exception.CsrConfigurationException;
-import org.onap.aaf.certservice.client.configuration.model.CsrConfiguration;
+import org.onap.oom.certservice.client.configuration.CsrConfigurationEnvs;
+import org.onap.oom.certservice.client.configuration.EnvsForCsr;
+import org.onap.oom.certservice.client.configuration.exception.CsrConfigurationException;
+import org.onap.oom.certservice.client.configuration.model.CsrConfiguration;
 
 import java.util.Optional;
 
@@ -34,7 +34,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.onap.aaf.certservice.client.api.ExitStatus.CSR_CONFIGURATION_EXCEPTION;
+import static org.onap.oom.certservice.client.api.ExitStatus.CSR_CONFIGURATION_EXCEPTION;
 
 public class CsrConfigurationFactoryTest {
 

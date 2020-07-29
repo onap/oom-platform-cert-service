@@ -18,7 +18,7 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.cmpv2client.model;
+package org.onap.oom.certservice.cmpv2client.model;
 
 import java.security.cert.X509Certificate;
 import java.util.Collections;

@@ -18,9 +18,9 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.certification.configuration.validation;
+package org.onap.oom.certservice.certification.configuration.validation;
 
-import org.onap.aaf.certservice.certification.configuration.model.Cmpv2Server;
+import org.onap.oom.certservice.certification.configuration.model.Cmpv2Server;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

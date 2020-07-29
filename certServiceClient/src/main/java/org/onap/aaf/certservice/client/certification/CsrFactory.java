@@ -1,5 +1,5 @@
 /*============LICENSE_START=======================================================
- * aaf-certservice-client
+ * oom-certservice-client
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
  * ================================================================================
@@ -17,7 +17,7 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.client.certification;
+package org.onap.oom.certservice.client.certification;
 
 import org.bouncycastle.asn1.pkcs.PKCSObjectIdentifiers;
 import org.bouncycastle.asn1.x509.Extension;
@@ -31,8 +31,8 @@ import org.bouncycastle.operator.OperatorCreationException;
 import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder;
 import org.bouncycastle.pkcs.PKCS10CertificationRequest;
 import org.bouncycastle.pkcs.jcajce.JcaPKCS10CertificationRequestBuilder;
-import org.onap.aaf.certservice.client.certification.exception.CsrGenerationException;
-import org.onap.aaf.certservice.client.configuration.model.CsrConfiguration;
+import org.onap.oom.certservice.client.certification.exception.CsrGenerationException;
+import org.onap.oom.certservice.client.configuration.model.CsrConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,13 +42,13 @@ import java.io.StringWriter;
 import java.security.KeyPair;
 import java.util.Optional;
 
-import static org.onap.aaf.certservice.client.certification.EncryptionAlgorithmConstants.COMMON_NAME;
-import static org.onap.aaf.certservice.client.certification.EncryptionAlgorithmConstants.COUNTRY;
-import static org.onap.aaf.certservice.client.certification.EncryptionAlgorithmConstants.LOCATION;
-import static org.onap.aaf.certservice.client.certification.EncryptionAlgorithmConstants.ORGANIZATION;
-import static org.onap.aaf.certservice.client.certification.EncryptionAlgorithmConstants.ORGANIZATION_UNIT;
-import static org.onap.aaf.certservice.client.certification.EncryptionAlgorithmConstants.SIGN_ALGORITHM;
-import static org.onap.aaf.certservice.client.certification.EncryptionAlgorithmConstants.STATE;
+import static org.onap.oom.certservice.client.certification.EncryptionAlgorithmConstants.COMMON_NAME;
+import static org.onap.oom.certservice.client.certification.EncryptionAlgorithmConstants.COUNTRY;
+import static org.onap.oom.certservice.client.certification.EncryptionAlgorithmConstants.LOCATION;
+import static org.onap.oom.certservice.client.certification.EncryptionAlgorithmConstants.ORGANIZATION;
+import static org.onap.oom.certservice.client.certification.EncryptionAlgorithmConstants.ORGANIZATION_UNIT;
+import static org.onap.oom.certservice.client.certification.EncryptionAlgorithmConstants.SIGN_ALGORITHM;
+import static org.onap.oom.certservice.client.certification.EncryptionAlgorithmConstants.STATE;
 
 
 public class CsrFactory {

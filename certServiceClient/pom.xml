@@ -3,16 +3,16 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>aaf-certservice</artifactId>
-        <groupId>org.onap.aaf.certservice</groupId>
+        <artifactId>oom-certservice</artifactId>
+        <groupId>org.onap.oom.certservice</groupId>
         <version>1.2.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>aaf-certservice-client</artifactId>
+    <artifactId>oom-certservice-client</artifactId>
     <version>1.2.0-SNAPSHOT</version>
-    <name>aaf-certservice-client</name>
-    <description>AAF Certification Service Api Client</description>
+    <name>oom-certservice-client</name>
+    <description>OOM Certification Service Api Client</description>
     <packaging>jar</packaging>
 
     <build>
@@ -70,7 +70,7 @@
                                     <transformers>
                                         <transformer
                                                 implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                            <mainClass>org.onap.aaf.certservice.client.MainApp</mainClass>
+                                            <mainClass>org.onap.oom.certservice.client.MainApp</mainClass>
                                         </transformer>
                                     </transformers>
                                 </configuration>
@@ -125,12 +125,12 @@
     <distributionManagement>
         <repository>
             <id>ecomp-releases</id>
-            <name>AAF Release Repository</name>
+            <name>OOM Release Repository</name>
             <url>${nexusproxy}${releaseNexusPath}</url>
         </repository>
         <snapshotRepository>
             <id>ecomp-snapshots</id>
-            <name>AAF Snapshot Repository</name>
+            <name>OOM Snapshot Repository</name>
             <url>${nexusproxy}${snapshotNexusPath}</url>
         </snapshotRepository>
         <site>

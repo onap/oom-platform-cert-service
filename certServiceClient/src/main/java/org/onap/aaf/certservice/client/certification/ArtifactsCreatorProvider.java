@@ -1,5 +1,5 @@
 /*============LICENSE_START=======================================================
- * aaf-certservice-client
+ * oom-certservice-client
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
  * ================================================================================
@@ -17,12 +17,12 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.client.certification;
+package org.onap.oom.certservice.client.certification;
 
-import org.onap.aaf.certservice.client.certification.conversion.ArtifactsCreator;
-import org.onap.aaf.certservice.client.certification.conversion.ConvertedArtifactsCreatorFactory;
-import org.onap.aaf.certservice.client.certification.conversion.PemArtifactsCreator;
-import org.onap.aaf.certservice.client.certification.writer.CertFileWriter;
+import org.onap.oom.certservice.client.certification.conversion.ArtifactsCreator;
+import org.onap.oom.certservice.client.certification.conversion.ConvertedArtifactsCreatorFactory;
+import org.onap.oom.certservice.client.certification.conversion.PemArtifactsCreator;
+import org.onap.oom.certservice.client.certification.writer.CertFileWriter;
 
 public enum ArtifactsCreatorProvider {
     P12("PKCS12") {

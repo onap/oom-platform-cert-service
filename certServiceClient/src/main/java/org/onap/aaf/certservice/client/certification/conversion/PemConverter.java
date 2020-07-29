@@ -1,5 +1,5 @@
 /*============LICENSE_START=======================================================
- * aaf-certservice-client
+ * oom-certservice-client
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
  * ================================================================================
@@ -17,13 +17,13 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.client.certification.conversion;
+package org.onap.oom.certservice.client.certification.conversion;
 
 import org.bouncycastle.cert.X509CertificateHolder;
 import org.bouncycastle.cert.jcajce.JcaX509CertificateConverter;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.openssl.PEMParser;
-import org.onap.aaf.certservice.client.certification.exception.PemConversionException;
+import org.onap.oom.certservice.client.certification.exception.PemConversionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

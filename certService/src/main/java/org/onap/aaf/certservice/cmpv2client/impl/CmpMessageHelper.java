@@ -18,9 +18,9 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.cmpv2client.impl;
+package org.onap.oom.certservice.cmpv2client.impl;
 
-import static org.onap.aaf.certservice.cmpv2client.impl.CmpUtil.generateProtectedBytes;
+import static org.onap.oom.certservice.cmpv2client.impl.CmpUtil.generateProtectedBytes;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -64,7 +64,7 @@ import org.bouncycastle.asn1.x509.GeneralNames;
 import org.bouncycastle.asn1.x509.KeyUsage;
 import org.bouncycastle.asn1.x509.Time;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.onap.aaf.certservice.cmpv2client.exceptions.CmpClientException;
+import org.onap.oom.certservice.cmpv2client.exceptions.CmpClientException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -18,11 +18,11 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.api.advice;
+package org.onap.oom.certservice.api.advice;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.onap.aaf.certservice.certification.configuration.CmpServersConfigLoadingException;
+import org.onap.oom.certservice.certification.configuration.CmpServersConfigLoadingException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 

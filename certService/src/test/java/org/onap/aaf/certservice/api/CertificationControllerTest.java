@@ -18,7 +18,7 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.api;
+package org.onap.oom.certservice.api;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -32,14 +32,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.onap.aaf.certservice.certification.CertificationModelFactory;
-import org.onap.aaf.certservice.certification.exception.Cmpv2ClientAdapterException;
-import org.onap.aaf.certservice.certification.exception.Cmpv2ServerNotFoundException;
-import org.onap.aaf.certservice.certification.exception.CsrDecryptionException;
-import org.onap.aaf.certservice.certification.exception.DecryptionException;
-import org.onap.aaf.certservice.certification.exception.KeyDecryptionException;
-import org.onap.aaf.certservice.certification.model.CertificationModel;
-import org.onap.aaf.certservice.cmpv2client.exceptions.CmpClientException;
+import org.onap.oom.certservice.certification.CertificationModelFactory;
+import org.onap.oom.certservice.certification.exception.Cmpv2ClientAdapterException;
+import org.onap.oom.certservice.certification.exception.Cmpv2ServerNotFoundException;
+import org.onap.oom.certservice.certification.exception.CsrDecryptionException;
+import org.onap.oom.certservice.certification.exception.DecryptionException;
+import org.onap.oom.certservice.certification.exception.KeyDecryptionException;
+import org.onap.oom.certservice.certification.model.CertificationModel;
+import org.onap.oom.certservice.cmpv2client.exceptions.CmpClientException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 

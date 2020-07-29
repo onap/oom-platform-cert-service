@@ -18,7 +18,7 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.certification.exception;
+package org.onap.oom.certservice.certification.exception;
 
 public class Cmpv2ServerNotFoundException extends RuntimeException {
     public Cmpv2ServerNotFoundException(String message) {

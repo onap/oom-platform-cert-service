@@ -1,6 +1,6 @@
 /*
  * ============LICENSE_START=======================================================
- * aaf-certservice-client
+ * oom-certservice-client
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
  * ================================================================================
@@ -18,10 +18,10 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.client.configuration.exception;
+package org.onap.oom.certservice.client.configuration.exception;
 
-import org.onap.aaf.certservice.client.api.ExitStatus;
-import org.onap.aaf.certservice.client.api.ExitableException;
+import org.onap.oom.certservice.client.api.ExitStatus;
+import org.onap.oom.certservice.client.api.ExitableException;
 
 public class ClientConfigurationException extends ExitableException {
     private static final ExitStatus EXIT_STATUS = ExitStatus.CLIENT_CONFIGURATION_EXCEPTION;
