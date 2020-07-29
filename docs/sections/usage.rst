@@ -12,7 +12,7 @@ CertService client needs the following configuration parameters to work properly
 
 1. Parameters for generating certification artifacts and connecting to CertService API to obtain certificate and trust anchors
   
-  - REQUEST_URL *(default: https://aaf-cert-service:8443/v1/certificate/)* - URL to CertService API
+  - REQUEST_URL *(default: https://oom-cert-service:8443/v1/certificate/)* - URL to CertService API
   - REQUEST_TIMEOUT *(default: 30000[ms])* - Timeout in milliseconds for REST API calls
   - OUTPUT_PATH *(required)* - Path where client will output generated certificate and trust anchor
   - CA_NAME *(required)* - Name of CA which will enroll certificate. Must be same as configured on server side. Used in REST API calls
@@ -44,12 +44,12 @@ CertService client image can be found on Nexus repository :
 
 .. code-block:: bash
 
-  nexus3.onap.org:10001/onap/org.onap.aaf.certservice.aaf-certservice-client:$VERSION
+  nexus3.onap.org:10001/onap/org.onap.oom.certservice.oom-certservice-client:$VERSION
 
 
 As standalone docker container
 ------------------------------
-You need certificate and trust anchors to connect to CertService API via HTTPS. Information how to generate truststore and keystore files you can find in project repository README `Gerrit GitWeb <https://gerrit.onap.org/r/gitweb?p=aaf%2Fcertservice.git;a=summary>`__
+You need certificate and trust anchors to connect to CertService API via HTTPS. Information how to generate truststore and keystore files you can find in project repository README `Gerrit GitWeb <https://gerrit.onap.org/r/gitweb?p=oom%2Fplatform%2Fcert-service.git;a=summary>`__
 
 To run CertService client as standalone docker container execute following steps:
 
@@ -74,9 +74,9 @@ To run CertService client as standalone docker container execute following steps
   SANS=test.onap.org:onap.com
 
   #TLS config envs
-  KEYSTORE_PATH=/etc/onap/aaf/certservice/certs/certServiceClient-keystore.jks
+  KEYSTORE_PATH=/etc/onap/oom/certservice/certs/certServiceClient-keystore.jks
   KEYSTORE_PASSWORD=<password to certServiceClient-keystore.jks>
-  TRUSTSTORE_PATH=/etc/onap/aaf/certservice/certs/certServiceClient-truststore.jks
+  TRUSTSTORE_PATH=/etc/onap/oom/certservice/certs/certServiceClient-truststore.jks
   TRUSTSTORE_PASSWORD=<password to certServiceClient-truststore.jks>
 
 2. Run docker container as in following example (API and client must be running in same network):
@@ -85,13 +85,13 @@ To run CertService client as standalone docker container execute following steps
 
  docker run \
     --rm \
-    --name aafcert-client \
+    --name oomcert-client \
     --env-file <$PWD/client.env (same as in step1)> \
     --network <docker network of cert service> \
     --mount type=bind,src=<path to local host directory where certificate and trust anchor will be created>,dst=<OUTPUT_PATH (same as in step 1)> \
     --volume <local path to keystore in JKS format>:<KEYSTORE_PATH> \
     --volume <local path to truststore in JKS format>:<TRUSTSTORE_PATH> \
-    nexus3.onap.org:10001/onap/org.onap.aaf.certservice.aaf-certservice-client:$VERSION
+    nexus3.onap.org:10001/onap/org.onap.oom.certservice.oom-certservice-client:$VERSION
 
 
 
@@ -99,14 +99,14 @@ After successful creation of certifications, container exits with exit code 0, e
 
 .. code-block:: bash
 
-   INFO 1 [           main] o.o.a.c.c.c.f.ClientConfigurationFactory : Successful validation of Client configuration. Configuration data: REQUEST_URL: https://aaf-cert-service:8443/v1/certificate/, REQUEST_TIMEOUT: 10000, OUTPUT_PATH: /var/certs, CA_NAME: RA, OUTPUT_TYPE: P12
+   INFO 1 [           main] o.o.a.c.c.c.f.ClientConfigurationFactory : Successful validation of Client configuration. Configuration data: REQUEST_URL: https://oom-cert-service:8443/v1/certificate/, REQUEST_TIMEOUT: 10000, OUTPUT_PATH: /var/certs, CA_NAME: RA, OUTPUT_TYPE: P12
    INFO 1 [           main] o.o.a.c.c.c.f.CsrConfigurationFactory    : Successful validation of CSR configuration. Configuration data: COMMON_NAME: onap.org, COUNTRY: US, STATE: California, ORGANIZATION: Linux-Foundation, ORGANIZATION_UNIT: ONAP, LOCATION: San-Francisco, SANS: test.onap.org:onap.org
    INFO 1 [           main] o.o.a.c.c.c.KeyPairFactory               : KeyPair generation started with algorithm: RSA and key size: 2048
    INFO 1 [           main] o.o.a.c.c.c.CsrFactory                   : Creation of CSR has been started with following parameters: COMMON_NAME: onap.org, COUNTRY: US, STATE: California, ORGANIZATION: Linux-Foundation, ORGANIZATION_UNIT: ONAP, LOCATION: San-Francisco, SANS: test.onap.org:onap.org
    INFO 1 [           main] o.o.a.c.c.c.CsrFactory                   : Creation of CSR has been completed successfully
    INFO 1 [           main] o.o.a.c.c.c.CsrFactory                   : Conversion of CSR to PEM has been started
    INFO 1 [           main] o.o.a.c.c.c.PrivateKeyToPemEncoder       : Attempt to encode private key to PEM
-   INFO 1 [           main] o.o.a.c.c.h.HttpClient                   : Attempt to send request to API, on url: https://aaf-cert-service:8443/v1/certificate/RA
+   INFO 1 [           main] o.o.a.c.c.h.HttpClient                   : Attempt to send request to API, on url: https://oom-cert-service:8443/v1/certificate/RA
    INFO 1 [           main] o.o.a.c.c.h.HttpClient                   : Received response from API
   DEBUG 1 [           main] o.o.a.c.c.c.c.ConvertedArtifactsCreator  : Attempt to create keystore files and saving data. File names: keystore.p12, keystore.pass
    INFO 1 [           main] o.o.a.c.c.c.c.PemConverter               : Conversion of PEM certificates to PKCS12 keystore
@@ -160,11 +160,11 @@ You can use the following deployment example as a reference:
             ...
         initContainers:
           - name: cert-service-client
-            image: nexus3.onap.org:10001/onap/org.onap.aaf.certservice.aaf-certservice-client:latest
+            image: nexus3.onap.org:10001/onap/org.onap.oom.certservice.oom-certservice-client:latest
             imagePullPolicy: Always
             env:
               - name: REQUEST_URL
-                value: https://aaf-cert-service:8443/v1/certificate/
+                value: https://oom-cert-service:8443/v1/certificate/
               - name: REQUEST_TIMEOUT
                 value: "1000"
               - name: OUTPUT_PATH
@@ -188,17 +188,17 @@ You can use the following deployment example as a reference:
               - name: SANS
                 value: test.onap.org:onap.com
               - name: KEYSTORE_PATH
-                value: /etc/onap/aaf/certservice/certs/certServiceClient-keystore.jks
+                value: /etc/onap/oom/certservice/certs/certServiceClient-keystore.jks
               - name: KEYSTORE_PASSWORD
                 value: secret
               - name: TRUSTSTORE_PATH
-                value: /etc/onap/aaf/certservice/certs/truststore.jks
+                value: /etc/onap/oom/certservice/certs/truststore.jks
               - name: TRUSTSTORE_PASSWORD
                 value: secret
             volumeMounts:
               - mountPath: /var/certs
                 name: certs
-              - mountPath: /etc/onap/aaf/certservice/certs/
+              - mountPath: /etc/onap/oom/certservice/certs/
                 name: tls-volume
           ...
         volumes: 
@@ -206,6 +206,6 @@ You can use the following deployment example as a reference:
           emptyDir: {}
         - name tls-volume
           secret:
-            secretName: aaf-cert-service-client-tls-secret  # Value of global.aaf.certService.client.secret.name
+            secretName: oom-cert-service-client-tls-secret  # Value of global.oom.certService.client.secret.name
         ...
 

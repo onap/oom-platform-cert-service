@@ -3,18 +3,18 @@
 ### General description
 More information about the project and all its functionalities you can find under the wiki page: 
     ```
-    https://wiki.onap.org/display/DW/AAF+Certification+Service
+    https://wiki.onap.org/display/DW/OOM+Certification+Service
     ``` 
 
 ### For developers
-    * AAF Cert Service Api is a Spring Boot application
+    * OOM Cert Service Api is a Spring Boot application
     * Code style
         Use Google code formatter in your IDE.
         For IntelliJ use [https://plugins.jetbrains.com/plugin/8527-google-java-format]
         For other IDEs use []https://github.com/google/google-java-format]
 
 ### Local project configuration
-    * Create directory on your system /etc/onap/aaf/certservice
+    * Create directory on your system /etc/onap/oom/certservice
     * Copy sample configuration test/resources/cmpServers.json to that directory
 
 ### Running Locally
@@ -37,7 +37,7 @@ mvn clean package
 ### Building Docker image manually
 Go to the certService subfolder and execute following statement (1.0.0-SNAPSHOT is related to a current project.version parameter):
 ```
-docker build --build-arg VERSION=1.0.0-SNAPSHOT -t onap/org.onap.aaf.certservice.aaf-certservice-api .
+docker build --build-arg VERSION=1.0.0-SNAPSHOT -t onap/org.onap.oom.certservice.oom-certservice-api .
 ```
     
 ### Install the package into the local repository
@@ -52,12 +52,13 @@ mvn clean install -P docker
 
 ### Running Docker container local
 ```
-docker run -p 8080:8080 --name aaf-certservice-api --mount type=bind,source=/<absolute_path>/cmpServers.json,target=/etc/onap/aaf/certservice/cmpServers.json onap/org.onap.aaf.certservice.aaf-certservice-api
+docker run -p 8080:8080 --name oom-certservice-api --mount type=bind,source=/<absolute_path>/cmpServers.json,target=/etc/onap/
+oom/certservice/cmpServers.json onap/org.onap.oom.certservice.oom-certservice-api
 ```
 
 ### Running Docker container from nexus
 ```
-docker run -p 8080:8080 --name aaf-certservice-api --mount type=bind,source=/<absolute_path>/cmpServers.json,target=/etc/onap/aaf/certservice/cmpServers.json nexus3.onap.org:10001/onap/org.onap.aaf.certservice.aaf-certservice-api:1.0.0
+docker run -p 8080:8080 --name oom-certservice-api --mount type=bind,source=/<absolute_path>/cmpServers.json,target=/etc/onap/oom/certservice/cmpServers.json nexus3.onap.org:10001/onap/org.onap.oom.certservice.oom-certservice-api:1.0.0
 ```
     
 ### Health Check
@@ -76,16 +77,16 @@ curl localhost:8080/actuator/health
 
 path: 
 ```
-var/log/onap/aaf/certservice/
+var/log/onap/oom/certservice/
 ```    
 ### Logs in Docker container
 ```
-docker exec -it aaf-certservice-api bash
+docker exec -it oom-certservice-api bash
 ```
 
 path:
 ```
-cd /var/log/onap/aaf/certservice
+cd /var/log/onap/oom/certservice
 ```
 You should see:    
 audit.log  error.log  debug.log

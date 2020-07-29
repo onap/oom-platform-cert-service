@@ -16,14 +16,14 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.onap.aaf.certservice</groupId>
-        <artifactId>aaf-certservice</artifactId>
+        <groupId>org.onap.oom.certservice</groupId>
+        <artifactId>oom-certservice</artifactId>
         <version>1.2.0-SNAPSHOT</version>
     </parent>
-    <artifactId>aaf-certservice-api</artifactId>
+    <artifactId>oom-certservice-api</artifactId>
     <version>1.2.0-SNAPSHOT</version>
-    <name>aaf-certservice-api</name>
-    <description>AAF Certification Service Api</description>
+    <name>oom-certservice-api</name>
+    <description>OOM Certification Service Api</description>
     <packaging>jar</packaging>
 
     <dependencies>
@@ -182,12 +182,12 @@
     <distributionManagement>
         <repository>
             <id>ecomp-releases</id>
-            <name>AAF Release Repository</name>
+            <name>OOM Release Repository</name>
             <url>${nexusproxy}${releaseNexusPath}</url>
         </repository>
         <snapshotRepository>
             <id>ecomp-snapshots</id>
-            <name>AAF Snapshot Repository</name>
+            <name>OOM Snapshot Repository</name>
             <url>${nexusproxy}${snapshotNexusPath}</url>
         </snapshotRepository>
         <site>

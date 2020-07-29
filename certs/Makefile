@@ -64,7 +64,7 @@ step_8:
 #Generate certService private and public keys
 step_9:
 	@echo "Generate certService private and public keys"
-	keytool -genkeypair -v -alias aaf-cert-service -keyalg RSA -keysize 2048 -validity 365 \
+	keytool -genkeypair -v -alias oom-cert-service -keyalg RSA -keysize 2048 -validity 365 \
     -keystore certServiceServer-keystore.jks -storetype JKS \
     -dname "CN=onap.org,OU=ONAP,O=Linux-Foundation,L=San-Francisco,ST=California,C=US" \
     -keypass secret -storepass secret -ext BasicConstraints:critical="ca:false"
@@ -73,7 +73,7 @@ step_9:
 #Generate certificate signing request for certService
 step_10:
 	@echo "Generate certificate signing request for certService"
-	keytool -certreq -keystore certServiceServer-keystore.jks -alias aaf-cert-service -storepass secret -file certServiceServer.csr
+	keytool -certreq -keystore certServiceServer-keystore.jks -alias oom-cert-service -storepass secret -file certServiceServer.csr
 	@echo "####done####"
 
 #Sign certService certificate by root CA
@@ -81,7 +81,7 @@ step_11:
 	@echo "Sign certService certificate by root CA"
 	keytool -gencert -v -validity 365 -keystore root-keystore.jks -storepass secret -alias root \
 	-infile certServiceServer.csr -outfile certServiceServerByRoot.crt -rfc -ext bc=0 \
-	-ext ExtendedkeyUsage="serverAuth,clientAuth" -ext SubjectAlternativeName:="DNS:aaf-cert-service,DNS:localhost"
+	-ext ExtendedkeyUsage="serverAuth,clientAuth" -ext SubjectAlternativeName:="DNS:oom-cert-service,DNS:localhost"
 	@echo "####done####"
 
 #Import root certificate into server
@@ -93,7 +93,7 @@ step_12:
 #Import signed certificate into certService
 step_13:
 	@echo "Import signed certificate into certService"
-	keytool -importcert -file certServiceServerByRoot.crt -destkeystore certServiceServer-keystore.jks -alias aaf-cert-service \
+	keytool -importcert -file certServiceServerByRoot.crt -destkeystore certServiceServer-keystore.jks -alias oom-cert-service \
     -storepass secret -noprompt
 	@echo "####done####"
 
