@@ -18,23 +18,23 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.certification;
+package org.onap.oom.certservice.certification;
 
 import org.bouncycastle.util.encoders.Base64;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.onap.aaf.certservice.certification.CsrModelFactory.StringBase64;
-import org.onap.aaf.certservice.certification.exception.CsrDecryptionException;
-import org.onap.aaf.certservice.certification.exception.DecryptionException;
-import org.onap.aaf.certservice.certification.exception.KeyDecryptionException;
-import org.onap.aaf.certservice.certification.model.CsrModel;
+import org.onap.oom.certservice.certification.CsrModelFactory.StringBase64;
+import org.onap.oom.certservice.certification.exception.CsrDecryptionException;
+import org.onap.oom.certservice.certification.exception.DecryptionException;
+import org.onap.oom.certservice.certification.exception.KeyDecryptionException;
+import org.onap.oom.certservice.certification.model.CsrModel;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.onap.aaf.certservice.certification.TestData.TEST_CSR;
-import static org.onap.aaf.certservice.certification.TestData.TEST_PK;
-import static org.onap.aaf.certservice.certification.TestData.TEST_WRONG_CSR;
-import static org.onap.aaf.certservice.certification.TestData.TEST_WRONG_PEM;
+import static org.onap.oom.certservice.certification.TestData.TEST_CSR;
+import static org.onap.oom.certservice.certification.TestData.TEST_PK;
+import static org.onap.oom.certservice.certification.TestData.TEST_WRONG_CSR;
+import static org.onap.oom.certservice.certification.TestData.TEST_WRONG_PEM;
 
 
 class CsrModelFactoryTest {

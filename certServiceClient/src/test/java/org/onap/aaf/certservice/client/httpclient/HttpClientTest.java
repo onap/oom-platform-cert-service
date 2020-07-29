@@ -1,6 +1,6 @@
 /*
  * ============LICENSE_START=======================================================
- * aaf-certservice-client
+ * oom-certservice-client
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
  * ================================================================================
@@ -18,7 +18,7 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.client.httpclient;
+package org.onap.oom.certservice.client.httpclient;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.StatusLine;
@@ -27,9 +27,9 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.onap.aaf.certservice.client.httpclient.exception.CertServiceApiResponseException;
-import org.onap.aaf.certservice.client.httpclient.exception.HttpClientException;
-import org.onap.aaf.certservice.client.httpclient.model.CertServiceResponse;
+import org.onap.oom.certservice.client.httpclient.exception.CertServiceApiResponseException;
+import org.onap.oom.certservice.client.httpclient.exception.HttpClientException;
+import org.onap.oom.certservice.client.httpclient.model.CertServiceResponse;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -42,13 +42,13 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.onap.aaf.certservice.client.CerServiceRequestTestData.CA_NAME;
-import static org.onap.aaf.certservice.client.CerServiceRequestTestData.CORRECT_RESPONSE;
-import static org.onap.aaf.certservice.client.CerServiceRequestTestData.CSR;
-import static org.onap.aaf.certservice.client.CerServiceRequestTestData.EXPECTED_FIRST_ELEMENT_OF_CERTIFICATE_CHAIN;
-import static org.onap.aaf.certservice.client.CerServiceRequestTestData.EXPECTED_FIRST_ELEMENT_OF_TRUSTED_CERTIFICATES;
-import static org.onap.aaf.certservice.client.CerServiceRequestTestData.MISSING_PK_RESPONSE;
-import static org.onap.aaf.certservice.client.CerServiceRequestTestData.PK;
+import static org.onap.oom.certservice.client.CerServiceRequestTestData.CA_NAME;
+import static org.onap.oom.certservice.client.CerServiceRequestTestData.CORRECT_RESPONSE;
+import static org.onap.oom.certservice.client.CerServiceRequestTestData.CSR;
+import static org.onap.oom.certservice.client.CerServiceRequestTestData.EXPECTED_FIRST_ELEMENT_OF_CERTIFICATE_CHAIN;
+import static org.onap.oom.certservice.client.CerServiceRequestTestData.EXPECTED_FIRST_ELEMENT_OF_TRUSTED_CERTIFICATES;
+import static org.onap.oom.certservice.client.CerServiceRequestTestData.MISSING_PK_RESPONSE;
+import static org.onap.oom.certservice.client.CerServiceRequestTestData.PK;
 
 class HttpClientTest {
 

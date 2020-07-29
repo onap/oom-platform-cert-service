@@ -18,7 +18,7 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.certification;
+package org.onap.oom.certservice.certification;
 
 import java.util.Base64;
 import java.util.Objects;
@@ -26,10 +26,10 @@ import java.util.Optional;
 
 import org.bouncycastle.pkcs.PKCS10CertificationRequest;
 import org.bouncycastle.util.io.pem.PemObject;
-import org.onap.aaf.certservice.certification.exception.CsrDecryptionException;
-import org.onap.aaf.certservice.certification.exception.DecryptionException;
-import org.onap.aaf.certservice.certification.exception.KeyDecryptionException;
-import org.onap.aaf.certservice.certification.model.CsrModel;
+import org.onap.oom.certservice.certification.exception.CsrDecryptionException;
+import org.onap.oom.certservice.certification.exception.DecryptionException;
+import org.onap.oom.certservice.certification.exception.KeyDecryptionException;
+import org.onap.oom.certservice.certification.model.CsrModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

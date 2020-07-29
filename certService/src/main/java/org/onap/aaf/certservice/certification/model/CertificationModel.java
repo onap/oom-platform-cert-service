@@ -18,7 +18,7 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.certification.model;
+package org.onap.oom.certservice.certification.model;
 
 import java.util.Collections;
 import java.util.List;

@@ -1,5 +1,5 @@
 /*============LICENSE_START=======================================================
- * aaf-certservice-client
+ * oom-certservice-client
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
  * ================================================================================
@@ -17,34 +17,34 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.client;
+package org.onap.oom.certservice.client;
 
-import org.onap.aaf.certservice.client.api.ExitableException;
-import org.onap.aaf.certservice.client.certification.ArtifactsCreatorProvider;
-import org.onap.aaf.certservice.client.certification.CsrFactory;
-import org.onap.aaf.certservice.client.certification.KeyPairFactory;
-import org.onap.aaf.certservice.client.certification.PrivateKeyToPemEncoder;
-import org.onap.aaf.certservice.client.common.Base64Encoder;
-import org.onap.aaf.certservice.client.configuration.EnvsForClient;
-import org.onap.aaf.certservice.client.configuration.EnvsForCsr;
-import org.onap.aaf.certservice.client.configuration.EnvsForTls;
-import org.onap.aaf.certservice.client.configuration.factory.ClientConfigurationFactory;
-import org.onap.aaf.certservice.client.configuration.factory.CsrConfigurationFactory;
-import org.onap.aaf.certservice.client.configuration.factory.SslContextFactory;
-import org.onap.aaf.certservice.client.configuration.model.ClientConfiguration;
-import org.onap.aaf.certservice.client.configuration.model.CsrConfiguration;
-import org.onap.aaf.certservice.client.httpclient.CloseableHttpsClientProvider;
-import org.onap.aaf.certservice.client.httpclient.HttpClient;
-import org.onap.aaf.certservice.client.httpclient.model.CertServiceResponse;
+import org.onap.oom.certservice.client.api.ExitableException;
+import org.onap.oom.certservice.client.certification.ArtifactsCreatorProvider;
+import org.onap.oom.certservice.client.certification.CsrFactory;
+import org.onap.oom.certservice.client.certification.KeyPairFactory;
+import org.onap.oom.certservice.client.certification.PrivateKeyToPemEncoder;
+import org.onap.oom.certservice.client.common.Base64Encoder;
+import org.onap.oom.certservice.client.configuration.EnvsForClient;
+import org.onap.oom.certservice.client.configuration.EnvsForCsr;
+import org.onap.oom.certservice.client.configuration.EnvsForTls;
+import org.onap.oom.certservice.client.configuration.factory.ClientConfigurationFactory;
+import org.onap.oom.certservice.client.configuration.factory.CsrConfigurationFactory;
+import org.onap.oom.certservice.client.configuration.factory.SslContextFactory;
+import org.onap.oom.certservice.client.configuration.model.ClientConfiguration;
+import org.onap.oom.certservice.client.configuration.model.CsrConfiguration;
+import org.onap.oom.certservice.client.httpclient.CloseableHttpsClientProvider;
+import org.onap.oom.certservice.client.httpclient.HttpClient;
+import org.onap.oom.certservice.client.httpclient.model.CertServiceResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.net.ssl.SSLContext;
 import java.security.KeyPair;
 
-import static org.onap.aaf.certservice.client.api.ExitStatus.SUCCESS;
-import static org.onap.aaf.certservice.client.certification.EncryptionAlgorithmConstants.KEY_SIZE;
-import static org.onap.aaf.certservice.client.certification.EncryptionAlgorithmConstants.RSA_ENCRYPTION_ALGORITHM;
+import static org.onap.oom.certservice.client.api.ExitStatus.SUCCESS;
+import static org.onap.oom.certservice.client.certification.EncryptionAlgorithmConstants.KEY_SIZE;
+import static org.onap.oom.certservice.client.certification.EncryptionAlgorithmConstants.RSA_ENCRYPTION_ALGORITHM;
 
 public class CertServiceClient {
 

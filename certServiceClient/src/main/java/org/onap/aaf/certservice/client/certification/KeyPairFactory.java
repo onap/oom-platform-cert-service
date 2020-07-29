@@ -1,5 +1,5 @@
 /*============LICENSE_START=======================================================
- * aaf-certservice-client
+ * oom-certservice-client
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
  * ================================================================================
@@ -17,9 +17,9 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.client.certification;
+package org.onap.oom.certservice.client.certification;
 
-import org.onap.aaf.certservice.client.certification.exception.KeyPairGenerationException;
+import org.onap.oom.certservice.client.certification.exception.KeyPairGenerationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -18,12 +18,12 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.certification.configuration;
+package org.onap.oom.certservice.certification.configuration;
 
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.onap.aaf.certservice.cmpv2client.api.CmpClient;
-import org.onap.aaf.certservice.cmpv2client.impl.CmpClientImpl;
+import org.onap.oom.certservice.cmpv2client.api.CmpClient;
+import org.onap.oom.certservice.cmpv2client.impl.CmpClientImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.context.annotation.RequestScope;

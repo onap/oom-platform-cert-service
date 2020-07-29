@@ -18,7 +18,7 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.certification.model;
+package org.onap.oom.certservice.certification.model;
 
 import java.io.IOException;
 import java.security.KeyFactory;
@@ -42,9 +42,9 @@ import org.bouncycastle.asn1.x509.GeneralNames;
 import org.bouncycastle.pkcs.PKCS10CertificationRequest;
 import org.bouncycastle.util.io.pem.PemObject;
 
-import org.onap.aaf.certservice.certification.exception.CsrDecryptionException;
-import org.onap.aaf.certservice.certification.exception.DecryptionException;
-import org.onap.aaf.certservice.certification.exception.KeyDecryptionException;
+import org.onap.oom.certservice.certification.exception.CsrDecryptionException;
+import org.onap.oom.certservice.certification.exception.DecryptionException;
+import org.onap.oom.certservice.certification.exception.KeyDecryptionException;
 
 
 public class CsrModel {

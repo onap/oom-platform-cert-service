@@ -18,7 +18,7 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.certification.configuration;
+package org.onap.oom.certservice.certification.configuration;
 
 public class CmpServersConfigLoadingException extends Exception {
 

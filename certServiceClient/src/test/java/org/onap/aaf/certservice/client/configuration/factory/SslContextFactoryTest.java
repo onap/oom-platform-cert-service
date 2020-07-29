@@ -1,6 +1,6 @@
 /*
  * ============LICENSE_START=======================================================
- * aaf-certservice-client
+ * oom-certservice-client
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
  * ================================================================================
@@ -18,14 +18,14 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.client.configuration.factory;
+package org.onap.oom.certservice.client.configuration.factory;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.onap.aaf.certservice.client.configuration.EnvsForTls;
-import org.onap.aaf.certservice.client.configuration.exception.TlsConfigurationException;
+import org.onap.oom.certservice.client.configuration.EnvsForTls;
+import org.onap.oom.certservice.client.configuration.exception.TlsConfigurationException;
 
 import javax.net.ssl.SSLContext;
 import java.util.Optional;

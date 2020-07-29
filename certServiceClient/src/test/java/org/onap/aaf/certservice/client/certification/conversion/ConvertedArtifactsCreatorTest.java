@@ -1,5 +1,5 @@
 /*============LICENSE_START=======================================================
- * aaf-certservice-client
+ * oom-certservice-client
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
  * ================================================================================
@@ -17,13 +17,13 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.client.certification.conversion;
+package org.onap.oom.certservice.client.certification.conversion;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.onap.aaf.certservice.client.certification.exception.CertFileWriterException;
-import org.onap.aaf.certservice.client.certification.exception.PemConversionException;
-import org.onap.aaf.certservice.client.certification.writer.CertFileWriter;
+import org.onap.oom.certservice.client.certification.exception.CertFileWriterException;
+import org.onap.oom.certservice.client.certification.exception.PemConversionException;
+import org.onap.oom.certservice.client.certification.writer.CertFileWriter;
 
 import java.security.PrivateKey;
 import java.util.List;

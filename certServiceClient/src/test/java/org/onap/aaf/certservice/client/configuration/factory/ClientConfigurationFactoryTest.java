@@ -1,6 +1,6 @@
 /*
  * ============LICENSE_START=======================================================
- * aaf-certservice-client
+ * oom-certservice-client
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
  * ================================================================================
@@ -18,13 +18,13 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.client.configuration.factory;
+package org.onap.oom.certservice.client.configuration.factory;
 
 import org.junit.jupiter.api.Test;
-import org.onap.aaf.certservice.client.configuration.ClientConfigurationEnvs;
-import org.onap.aaf.certservice.client.configuration.EnvsForClient;
-import org.onap.aaf.certservice.client.configuration.exception.ClientConfigurationException;
-import org.onap.aaf.certservice.client.configuration.model.ClientConfiguration;
+import org.onap.oom.certservice.client.configuration.ClientConfigurationEnvs;
+import org.onap.oom.certservice.client.configuration.EnvsForClient;
+import org.onap.oom.certservice.client.configuration.exception.ClientConfigurationException;
+import org.onap.oom.certservice.client.configuration.model.ClientConfiguration;
 
 import java.util.Optional;
 
@@ -35,13 +35,13 @@ import static org.mockito.Mockito.when;
 
 public class ClientConfigurationFactoryTest {
 
-    private static final String CA_NAME_VALID = "caaaftest2";
+    private static final String CA_NAME_VALID = "catest2";
     private static final String TIME_OUT_VALID = "30000";
-    private static final String OUTPUT_PATH_VALID = "/opt/app/osaaf";
+    private static final String OUTPUT_PATH_VALID = "/opt/app/oom";
     private static final String URL_TO_CERT_SERVICE_VALID = "https://cert-service:8443/v1/certificate/";
-    private static final String URL_TO_CERT_SERVICE_DEFAULT = "https://aaf-cert-service:8443/v1/certificate/";
-    private static final String CA_NAME_INVALID = "caaaftest2#$";
-    private static final String OUTPUT_PATH_INVALID = "/opt//app/osaaf";
+    private static final String URL_TO_CERT_SERVICE_DEFAULT = "https://oom-cert-service:8443/v1/certificate/";
+    private static final String CA_NAME_INVALID = "catest2#$";
+    private static final String OUTPUT_PATH_INVALID = "/opt//app/oom";
     private static final String OUTPUT_TYPE_VALID = "JKS";
     private static final String OUTPUT_TYPE_INVALID = "JKSS";
     private static final String OUTPUT_TYPE_DEFAULT = "P12";

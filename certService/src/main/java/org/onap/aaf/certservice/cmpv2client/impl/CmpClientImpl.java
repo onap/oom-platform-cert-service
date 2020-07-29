@@ -18,17 +18,17 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.cmpv2client.impl;
+package org.onap.oom.certservice.cmpv2client.impl;
 
 import java.security.KeyPair;
 import java.security.PublicKey;
 
-import static org.onap.aaf.certservice.cmpv2client.impl.CmpResponseHelper.checkIfCmpResponseContainsError;
-import static org.onap.aaf.certservice.cmpv2client.impl.CmpResponseHelper.getCertFromByteArray;
-import static org.onap.aaf.certservice.cmpv2client.impl.CmpResponseHelper.verifyAndReturnCertChainAndTrustSTore;
-import static org.onap.aaf.certservice.cmpv2client.impl.CmpResponseValidationHelper.checkImplicitConfirm;
-import static org.onap.aaf.certservice.cmpv2client.impl.CmpResponseValidationHelper.verifyPasswordBasedProtection;
-import static org.onap.aaf.certservice.cmpv2client.impl.CmpResponseValidationHelper.verifySignature;
+import static org.onap.oom.certservice.cmpv2client.impl.CmpResponseHelper.checkIfCmpResponseContainsError;
+import static org.onap.oom.certservice.cmpv2client.impl.CmpResponseHelper.getCertFromByteArray;
+import static org.onap.oom.certservice.cmpv2client.impl.CmpResponseHelper.verifyAndReturnCertChainAndTrustSTore;
+import static org.onap.oom.certservice.cmpv2client.impl.CmpResponseValidationHelper.checkImplicitConfirm;
+import static org.onap.oom.certservice.cmpv2client.impl.CmpResponseValidationHelper.verifyPasswordBasedProtection;
+import static org.onap.oom.certservice.cmpv2client.impl.CmpResponseValidationHelper.verifySignature;
 
 import java.io.IOException;
 import java.security.cert.CertificateParsingException;
@@ -46,12 +46,12 @@ import org.bouncycastle.asn1.cmp.PKIBody;
 import org.bouncycastle.asn1.cmp.PKIHeader;
 import org.bouncycastle.asn1.cmp.PKIMessage;
 import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
-import org.onap.aaf.certservice.certification.configuration.model.CaMode;
-import org.onap.aaf.certservice.certification.configuration.model.Cmpv2Server;
-import org.onap.aaf.certservice.certification.model.CsrModel;
-import org.onap.aaf.certservice.cmpv2client.exceptions.CmpClientException;
-import org.onap.aaf.certservice.cmpv2client.api.CmpClient;
-import org.onap.aaf.certservice.cmpv2client.model.Cmpv2CertificationModel;
+import org.onap.oom.certservice.certification.configuration.model.CaMode;
+import org.onap.oom.certservice.certification.configuration.model.Cmpv2Server;
+import org.onap.oom.certservice.certification.model.CsrModel;
+import org.onap.oom.certservice.cmpv2client.exceptions.CmpClientException;
+import org.onap.oom.certservice.cmpv2client.api.CmpClient;
+import org.onap.oom.certservice.cmpv2client.model.Cmpv2CertificationModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

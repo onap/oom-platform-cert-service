@@ -18,7 +18,7 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.cmpv2client.exceptions;
+package org.onap.oom.certservice.cmpv2client.exceptions;
 
 /**
  * The CmpClientException wraps all exceptions occur internally to Cmpv2Client Api code.

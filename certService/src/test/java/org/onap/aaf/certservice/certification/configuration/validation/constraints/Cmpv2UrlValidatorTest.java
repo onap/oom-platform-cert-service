@@ -19,7 +19,7 @@
  */
 
 
-package org.onap.aaf.certservice.certification.configuration.validation.constraints;
+package org.onap.oom.certservice.certification.configuration.validation.constraints;
 
 import org.junit.jupiter.api.Test;
 

@@ -1,6 +1,6 @@
 /*
  * ============LICENSE_START=======================================================
- * aaf-certservice-client
+ * oom-certservice-client
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
  * ================================================================================
@@ -18,12 +18,12 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.client.configuration.factory;
+package org.onap.oom.certservice.client.configuration.factory;
 
-import org.onap.aaf.certservice.client.configuration.ClientConfigurationEnvs;
-import org.onap.aaf.certservice.client.configuration.EnvsForClient;
-import org.onap.aaf.certservice.client.configuration.exception.ClientConfigurationException;
-import org.onap.aaf.certservice.client.configuration.model.ClientConfiguration;
+import org.onap.oom.certservice.client.configuration.ClientConfigurationEnvs;
+import org.onap.oom.certservice.client.configuration.EnvsForClient;
+import org.onap.oom.certservice.client.configuration.exception.ClientConfigurationException;
+import org.onap.oom.certservice.client.configuration.model.ClientConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

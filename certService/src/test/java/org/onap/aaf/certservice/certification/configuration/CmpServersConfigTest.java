@@ -18,7 +18,7 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.certification.configuration;
+package org.onap.oom.certservice.certification.configuration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -34,9 +34,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.onap.aaf.certservice.certification.configuration.model.Authentication;
-import org.onap.aaf.certservice.certification.configuration.model.CaMode;
-import org.onap.aaf.certservice.certification.configuration.model.Cmpv2Server;
+import org.onap.oom.certservice.certification.configuration.model.Authentication;
+import org.onap.oom.certservice.certification.configuration.model.CaMode;
+import org.onap.oom.certservice.certification.configuration.model.Cmpv2Server;
 
 @ExtendWith(MockitoExtension.class)
 class CmpServersConfigTest {

@@ -18,20 +18,20 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.certification;
+package org.onap.oom.certservice.certification;
 
 import org.bouncycastle.util.encoders.Base64;
 import org.bouncycastle.util.io.pem.PemObject;
 import org.bouncycastle.util.io.pem.PemWriter;
-import org.onap.aaf.certservice.certification.exception.DecryptionException;
-import org.onap.aaf.certservice.certification.exception.KeyDecryptionException;
-import org.onap.aaf.certservice.certification.model.CsrModel;
+import org.onap.oom.certservice.certification.exception.DecryptionException;
+import org.onap.oom.certservice.certification.exception.KeyDecryptionException;
+import org.onap.oom.certservice.certification.model.CsrModel;
 
 import java.io.IOException;
 import java.io.StringWriter;
 
-import static org.onap.aaf.certservice.certification.TestData.TEST_CSR;
-import static org.onap.aaf.certservice.certification.TestData.TEST_PK;
+import static org.onap.oom.certservice.certification.TestData.TEST_CSR;
+import static org.onap.oom.certservice.certification.TestData.TEST_PK;
 
 
 public final class TestUtils {

@@ -1,6 +1,6 @@
 /*
  * ============LICENSE_START=======================================================
- * aaf-certservice-client
+ * oom-certservice-client
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
  * ================================================================================
@@ -18,10 +18,10 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.client.configuration.model;
+package org.onap.oom.certservice.client.configuration.model;
 
 
-import org.onap.aaf.certservice.client.configuration.CsrConfigurationEnvs;
+import org.onap.oom.certservice.client.configuration.CsrConfigurationEnvs;
 
 public class CsrConfiguration implements ConfigurationModel {
 

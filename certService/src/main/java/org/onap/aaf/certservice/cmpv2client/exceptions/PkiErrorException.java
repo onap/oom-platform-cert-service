@@ -18,7 +18,7 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.cmpv2client.exceptions;
+package org.onap.oom.certservice.cmpv2client.exceptions;
 
 public class PkiErrorException extends Exception {
 

@@ -18,7 +18,7 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.certification.configuration.model;
+package org.onap.oom.certservice.certification.configuration.model;
 
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;

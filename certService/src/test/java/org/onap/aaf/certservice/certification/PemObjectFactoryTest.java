@@ -18,19 +18,19 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.certification;
+package org.onap.oom.certservice.certification;
 
 import org.bouncycastle.util.io.pem.PemObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.onap.aaf.certservice.certification.exception.DecryptionException;
+import org.onap.oom.certservice.certification.exception.DecryptionException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.onap.aaf.certservice.certification.TestData.TEST_PEM;
-import static org.onap.aaf.certservice.certification.TestData.TEST_WRONG_PEM;
-import static org.onap.aaf.certservice.certification.TestUtils.pemObjectToString;
+import static org.onap.oom.certservice.certification.TestData.TEST_PEM;
+import static org.onap.oom.certservice.certification.TestData.TEST_WRONG_PEM;
+import static org.onap.oom.certservice.certification.TestUtils.pemObjectToString;
 
 
 class PemObjectFactoryTest {

@@ -19,11 +19,11 @@
  */
 
 
-package org.onap.aaf.certservice.certification.configuration.validation.constraints;
+package org.onap.oom.certservice.certification.configuration.validation.constraints;
 
-import org.onap.aaf.certservice.certification.configuration.validation.constraints.violations.PortNumberViolation;
-import org.onap.aaf.certservice.certification.configuration.validation.constraints.violations.RequestTypeViolation;
-import org.onap.aaf.certservice.certification.configuration.validation.constraints.violations.UrlServerViolation;
+import org.onap.oom.certservice.certification.configuration.validation.constraints.violations.PortNumberViolation;
+import org.onap.oom.certservice.certification.configuration.validation.constraints.violations.RequestTypeViolation;
+import org.onap.oom.certservice.certification.configuration.validation.constraints.violations.UrlServerViolation;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

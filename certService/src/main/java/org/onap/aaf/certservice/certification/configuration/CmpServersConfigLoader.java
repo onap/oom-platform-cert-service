@@ -18,7 +18,7 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.certification.configuration;
+package org.onap.oom.certservice.certification.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
@@ -26,9 +26,9 @@ import java.io.IOException;
 import java.security.InvalidParameterException;
 import java.util.List;
 
-import org.onap.aaf.certservice.certification.configuration.model.CmpServers;
-import org.onap.aaf.certservice.certification.configuration.model.Cmpv2Server;
-import org.onap.aaf.certservice.certification.configuration.validation.Cmpv2ServersConfigurationValidator;
+import org.onap.oom.certservice.certification.configuration.model.CmpServers;
+import org.onap.oom.certservice.certification.configuration.model.Cmpv2Server;
+import org.onap.oom.certservice.certification.configuration.validation.Cmpv2ServersConfigurationValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

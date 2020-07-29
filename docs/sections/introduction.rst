@@ -12,6 +12,8 @@ Overview
 
 In Frankfurt release AAF was enhanced by Certificate Management Protocol ver. 2 (CMPv2) support. Such support is handled by new AAF's microservice called CertService. CertService provides certificates signed by external CMPv2 server - further on such certificates are called operators certificates. Operators certificates are meant to secure external ONAP traffic - traffic between network functions (xNFs) and ONAP.
 
+In Guilin release CertService was moved from AAF repository to OOM repository.
+
 
 Context View
 ------------

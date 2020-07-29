@@ -1,5 +1,5 @@
 /*============LICENSE_START=======================================================
- * aaf-certservice-client
+ * oom-certservice-client
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
  * ================================================================================
@@ -17,15 +17,15 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.client.certification;
+package org.onap.oom.certservice.client.certification;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.onap.aaf.certservice.client.certification.conversion.ArtifactsCreator;
-import org.onap.aaf.certservice.client.certification.conversion.ConvertedArtifactsCreator;
-import org.onap.aaf.certservice.client.certification.conversion.PemArtifactsCreator;
+import org.onap.oom.certservice.client.certification.conversion.ArtifactsCreator;
+import org.onap.oom.certservice.client.certification.conversion.ConvertedArtifactsCreator;
+import org.onap.oom.certservice.client.certification.conversion.PemArtifactsCreator;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

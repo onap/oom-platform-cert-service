@@ -18,7 +18,7 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.api;
+package org.onap.oom.certservice.api;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -30,8 +30,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.onap.aaf.certservice.certification.configuration.CmpServersConfig;
-import org.onap.aaf.certservice.certification.configuration.CmpServersConfigLoadingException;
+import org.onap.oom.certservice.certification.configuration.CmpServersConfig;
+import org.onap.oom.certservice.certification.configuration.CmpServersConfigLoadingException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 

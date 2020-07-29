@@ -18,7 +18,7 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.certification.configuration.model;
+package org.onap.oom.certservice.certification.configuration.model;
 
 public enum CaMode {
     RA("RA"), CLIENT("Client");

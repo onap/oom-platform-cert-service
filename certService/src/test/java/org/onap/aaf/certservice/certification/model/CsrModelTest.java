@@ -18,17 +18,17 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.certification.model;
+package org.onap.oom.certservice.certification.model;
 
 import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
 import org.bouncycastle.pkcs.PKCS10CertificationRequest;
 import org.bouncycastle.util.io.pem.PemObject;
 import org.junit.jupiter.api.Test;
-import org.onap.aaf.certservice.certification.Pkcs10CertificationRequestFactory;
-import org.onap.aaf.certservice.certification.PemObjectFactory;
-import org.onap.aaf.certservice.certification.exception.CsrDecryptionException;
-import org.onap.aaf.certservice.certification.exception.DecryptionException;
-import org.onap.aaf.certservice.certification.exception.KeyDecryptionException;
+import org.onap.oom.certservice.certification.Pkcs10CertificationRequestFactory;
+import org.onap.oom.certservice.certification.PemObjectFactory;
+import org.onap.oom.certservice.certification.exception.CsrDecryptionException;
+import org.onap.oom.certservice.certification.exception.DecryptionException;
+import org.onap.oom.certservice.certification.exception.KeyDecryptionException;
 
 import java.io.IOException;
 
@@ -37,9 +37,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.onap.aaf.certservice.certification.TestData.TEST_CSR;
-import static org.onap.aaf.certservice.certification.TestData.TEST_PEM;
-import static org.onap.aaf.certservice.certification.TestData.TEST_PK;
+import static org.onap.oom.certservice.certification.TestData.TEST_CSR;
+import static org.onap.oom.certservice.certification.TestData.TEST_PEM;
+import static org.onap.oom.certservice.certification.TestData.TEST_PK;
 
 
 class CsrModelTest {

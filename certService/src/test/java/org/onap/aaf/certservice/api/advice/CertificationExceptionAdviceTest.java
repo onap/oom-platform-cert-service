@@ -18,17 +18,17 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.api.advice;
+package org.onap.oom.certservice.api.advice;
 
 import com.google.gson.Gson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.onap.aaf.certservice.certification.exception.Cmpv2ClientAdapterException;
-import org.onap.aaf.certservice.certification.exception.Cmpv2ServerNotFoundException;
-import org.onap.aaf.certservice.certification.exception.CsrDecryptionException;
-import org.onap.aaf.certservice.certification.exception.ErrorResponseModel;
-import org.onap.aaf.certservice.certification.exception.KeyDecryptionException;
-import org.onap.aaf.certservice.cmpv2client.exceptions.CmpClientException;
+import org.onap.oom.certservice.certification.exception.Cmpv2ClientAdapterException;
+import org.onap.oom.certservice.certification.exception.Cmpv2ServerNotFoundException;
+import org.onap.oom.certservice.certification.exception.CsrDecryptionException;
+import org.onap.oom.certservice.certification.exception.ErrorResponseModel;
+import org.onap.oom.certservice.certification.exception.KeyDecryptionException;
+import org.onap.oom.certservice.cmpv2client.exceptions.CmpClientException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 

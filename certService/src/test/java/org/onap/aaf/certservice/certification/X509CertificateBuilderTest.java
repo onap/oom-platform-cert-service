@@ -18,7 +18,7 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.aaf.certservice.certification;
+package org.onap.oom.certservice.certification;
 
 import org.bouncycastle.cert.X509CertificateHolder;
 import org.bouncycastle.cert.X509v3CertificateBuilder;
@@ -27,14 +27,14 @@ import org.bouncycastle.operator.OperatorCreationException;
 import org.bouncycastle.pkcs.PKCS10CertificationRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.onap.aaf.certservice.certification.exception.DecryptionException;
-import org.onap.aaf.certservice.certification.model.CsrModel;
+import org.onap.oom.certservice.certification.exception.DecryptionException;
+import org.onap.oom.certservice.certification.model.CsrModel;
 
 import java.io.IOException;
 import java.security.PrivateKey;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.onap.aaf.certservice.certification.TestUtils.createCsrModel;
+import static org.onap.oom.certservice.certification.TestUtils.createCsrModel;
 
 public class X509CertificateBuilderTest {
 
