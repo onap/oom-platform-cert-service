@@ -17,7 +17,7 @@ To see CertService console logs use:
     docker logs <cert-service-container-name>
 
     e.g.
-    docker logs aafcert-service
+    docker logs oomcert-service
 
 - Kubernetes:
 
@@ -39,7 +39,7 @@ CertService logs for different logging levels are available in the container:
     docker exec -it <cert-service-container-name> bash
 
     e.g.
-    docker exec -it aafcert-service bash
+    docker exec -it oomcert-service bash
 
 - Kubernetes:
 
@@ -52,7 +52,7 @@ CertService logs for different logging levels are available in the container:
 
 Path to logs:
 
-    /var/log/onap/aaf/certservice
+    /var/log/onap/oom/certservice
 
 Available log files:
 
@@ -75,7 +75,7 @@ To see CertService client console logs use :
     docker logs <cert-service-client-container-name>
 
     e.g.
-    docker logs aafcert-client
+    docker logs oomcert-client
 
 - Kubernetes: 
   CertService client is used as init container in other components. In the following example:
