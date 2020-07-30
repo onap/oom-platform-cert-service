@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3e185e6_dd418960",
+        "filename": "Makefile",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-07-30T11:57:09Z",
+      "side": 0,
+      "message": "did you check the application after package renaming and code refactore?\n\nDid you execute this makefile goals to confirm that application works properly?\nand\nDid you run csits for these changes?",
+      "revId": "fc31c9e47b3e08f8914dcd1f0c5b6d18aa625567",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "079334e6_c2840acc",
+        "filename": "certService/src/main/java/org/onap/aaf/certservice/cmpv2client/external/Factory.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-07-30T11:57:09Z",
+      "side": 0,
+      "message": "why this file was deleted?",
+      "revId": "fc31c9e47b3e08f8914dcd1f0c5b6d18aa625567",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
