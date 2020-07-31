@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9115a5aa_dacab070",
+        "filename": "Makefile",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-07-31T11:03:08Z",
+      "side": 0,
+      "message": "No :)\nMy goal was simple - make changes and check if publishing artifacts after merge works.",
+      "parentUuid": "f3e185e6_dd418960",
+      "revId": "fc31c9e47b3e08f8914dcd1f0c5b6d18aa625567",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "079334e6_c2840acc",
         "filename": "certService/src/main/java/org/onap/aaf/certservice/cmpv2client/external/Factory.java",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2020-07-30T11:57:09Z",
       "side": 0,
       "message": "why this file was deleted?",
+      "revId": "fc31c9e47b3e08f8914dcd1f0c5b6d18aa625567",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41a49643_7cccae56",
+        "filename": "certService/src/main/java/org/onap/aaf/certservice/cmpv2client/external/Factory.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-07-31T11:03:08Z",
+      "side": 0,
+      "message": "These two files should be deleted after we removed Proxy between CertService (Nokia part) and CMPv2 client (E/// part).",
+      "parentUuid": "079334e6_c2840acc",
       "revId": "fc31c9e47b3e08f8914dcd1f0c5b6d18aa625567",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
