@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "e628f707_9989e602",
+        "filename": "truststoreMerger/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-08-04T07:57:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1c5ce0c_2391e81b",
+      "revId": "3d1d98f699659edabc779bc58cbde97e076361d3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6926c56_0e8d8060",
         "filename": "truststoreMerger/pom.xml",
         "patchSetId": 1
@@ -50,6 +68,24 @@
       "revId": "3d1d98f699659edabc779bc58cbde97e076361d3",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c77228e0_df94867f",
+        "filename": "truststoreMerger/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-08-04T07:57:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6926c56_0e8d8060",
+      "revId": "3d1d98f699659edabc779bc58cbde97e076361d3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "b5758d92_a87e3b76",
+        "filename": "truststoreMerger/src/main/java/org/onap/oom/truststoremerger/AppExitHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-08-04T07:57:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d941470_a16dba49",
+      "revId": "3d1d98f699659edabc779bc58cbde97e076361d3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "083652ec_a0d8c9bf",
         "filename": "truststoreMerger/src/main/java/org/onap/oom/truststoremerger/TruststoreMerger.java",
         "patchSetId": 1
@@ -84,6 +138,24 @@
       "revId": "3d1d98f699659edabc779bc58cbde97e076361d3",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0a5e7fd_b7582098",
+        "filename": "truststoreMerger/src/main/java/org/onap/oom/truststoremerger/TruststoreMerger.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-08-04T07:57:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "083652ec_a0d8c9bf",
+      "revId": "3d1d98f699659edabc779bc58cbde97e076361d3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "c214a87f_ca9ceec8",
+        "filename": "truststoreMerger/src/main/java/org/onap/oom/truststoremerger/api/ExitStatus.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-08-04T07:57:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7de6cca_8dc49476",
+      "revId": "3d1d98f699659edabc779bc58cbde97e076361d3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4989a81_63fb10b8",
         "filename": "truststoreMerger/src/main/java/org/onap/oom/truststoremerger/api/ExitableException.java",
         "patchSetId": 1
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "ec542886_b534f593",
+        "filename": "truststoreMerger/src/main/java/org/onap/oom/truststoremerger/api/ExitableException.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-08-04T07:57:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4989a81_63fb10b8",
+      "revId": "3d1d98f699659edabc779bc58cbde97e076361d3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8846a3fb_27961d57",
         "filename": "truststoreMerger/src/main/java/org/onap/oom/truststoremerger/api/ExitableException.java",
         "patchSetId": 1
@@ -132,6 +240,24 @@
       "writtenOn": "2020-08-04T07:33:11Z",
       "side": 1,
       "message": "Prefer composition over inheritance. Remove abstract marker and abstract method. Pass ExitStatus value by constructor.",
+      "revId": "3d1d98f699659edabc779bc58cbde97e076361d3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af386cbb_2949e8a8",
+        "filename": "truststoreMerger/src/main/java/org/onap/oom/truststoremerger/api/ExitableException.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-08-04T07:57:15Z",
+      "side": 1,
+      "message": "The idea is to create specific exceptions that extend ExitableException so they have a specific exit code, while from the main app (which will handle exceptions and exiting application similarly to certservice-client) perspective it only matters that ExitableException was thrown. Don\u0027t see a way to achieve that without inheritance.",
+      "parentUuid": "8846a3fb_27961d57",
       "revId": "3d1d98f699659edabc779bc58cbde97e076361d3",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
