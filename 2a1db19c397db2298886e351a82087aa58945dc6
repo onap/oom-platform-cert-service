@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "374f3031_7709f937",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/api/ExitableException.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-08-04T10:30:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a971bd8b_7ac2a251",
+      "revId": "2a1db19c397db2298886e351a82087aa58945dc6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1a8e433_ca3e73ce",
         "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/api/ExitableException.java",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "2a1db19c397db2298886e351a82087aa58945dc6",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35b34c7e_3224fc84",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/api/ExitableException.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-08-04T10:30:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1a8e433_ca3e73ce",
+      "revId": "2a1db19c397db2298886e351a82087aa58945dc6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
