@@ -75,6 +75,7 @@
     <modules>
         <module>certService</module>
         <module>certServiceClient</module>
+        <module>trustStoreMerger</module>
     </modules>
 
     <build>
