@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "707bfdc7_013c2877",
+        "filename": "pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-08-04T07:33:11Z",
+      "side": 1,
+      "message": "trustStoreMerger",
+      "revId": "3d1d98f699659edabc779bc58cbde97e076361d3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1c5ce0c_2391e81b",
+        "filename": "truststoreMerger/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-08-04T07:33:11Z",
+      "side": 1,
+      "message": "aaf??",
+      "revId": "3d1d98f699659edabc779bc58cbde97e076361d3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6926c56_0e8d8060",
+        "filename": "truststoreMerger/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-08-04T07:33:11Z",
+      "side": 1,
+      "message": "aaf??",
+      "revId": "3d1d98f699659edabc779bc58cbde97e076361d3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d941470_a16dba49",
+        "filename": "truststoreMerger/src/main/java/org/onap/oom/truststoremerger/AppExitHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-08-04T07:33:11Z",
+      "side": 1,
+      "message": "commented code??",
+      "revId": "3d1d98f699659edabc779bc58cbde97e076361d3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "083652ec_a0d8c9bf",
+        "filename": "truststoreMerger/src/main/java/org/onap/oom/truststoremerger/TruststoreMerger.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-08-04T07:33:11Z",
+      "side": 1,
+      "message": "final",
+      "revId": "3d1d98f699659edabc779bc58cbde97e076361d3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7de6cca_8dc49476",
+        "filename": "truststoreMerger/src/main/java/org/onap/oom/truststoremerger/api/ExitStatus.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-08-04T07:33:11Z",
+      "side": 1,
+      "message": "??",
+      "revId": "3d1d98f699659edabc779bc58cbde97e076361d3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4989a81_63fb10b8",
+        "filename": "truststoreMerger/src/main/java/org/onap/oom/truststoremerger/api/ExitableException.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-08-04T07:33:11Z",
+      "side": 1,
+      "message": "??",
+      "revId": "3d1d98f699659edabc779bc58cbde97e076361d3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8846a3fb_27961d57",
+        "filename": "truststoreMerger/src/main/java/org/onap/oom/truststoremerger/api/ExitableException.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-08-04T07:33:11Z",
+      "side": 1,
+      "message": "Prefer composition over inheritance. Remove abstract marker and abstract method. Pass ExitStatus value by constructor.",
+      "revId": "3d1d98f699659edabc779bc58cbde97e076361d3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
