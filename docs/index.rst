@@ -3,7 +3,7 @@
 .. Copyright 2020 NOKIA
 .. _master_index:
 
-AAF Certification Service
+OOM Certification Service
 ==========================================
 
 .. toctree::
