@@ -34,9 +34,9 @@ class TrustStoreMergerTest {
     AppExitHandler appExitHandler;
 
     @Test
-    void shouldExitWithSuccess() {
+    void shouldExitWithMergeConfigurationExceptionDueToMissingEnvs() {
         new TrustStoreMerger(appExitHandler).run();
 
-        verify(appExitHandler).exit(ExitStatus.SUCCESS);
+        verify(appExitHandler).exit(ExitStatus.MERGER_CONFIGURATION_EXCEPTION);
     }
 }

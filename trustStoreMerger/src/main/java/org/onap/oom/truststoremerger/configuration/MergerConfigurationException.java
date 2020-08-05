@@ -17,26 +17,14 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.api;
+package org.onap.oom.truststoremerger.configuration;
 
-public enum ExitStatus {
+import org.onap.oom.truststoremerger.api.ExitStatus;
+import org.onap.oom.truststoremerger.api.ExitableException;
 
-    SUCCESS(0, "Success"),
-    MERGER_CONFIGURATION_EXCEPTION(1, "Invalid merger configuration");
+public class MergerConfigurationException extends ExitableException {
 
-    private final int value;
-    private final String message;
-
-    ExitStatus(int value, String message) {
-        this.value = value;
-        this.message = message;
-    }
-
-    public int getExitCodeValue() {
-        return value;
-    }
-
-    public String getMessage() {
-        return message;
+    MergerConfigurationException(String message) {
+        super(message, ExitStatus.MERGER_CONFIGURATION_EXCEPTION);
     }
 }

@@ -17,26 +17,27 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.api;
+package org.onap.oom.truststoremerger.configuration;
 
-public enum ExitStatus {
+import java.util.List;
 
-    SUCCESS(0, "Success"),
-    MERGER_CONFIGURATION_EXCEPTION(1, "Invalid merger configuration");
+public class MergerConfiguration {
+    private final List<String> truststoreFilePaths;
+    private final List<String> truststoreFilePasswordPaths;
 
-    private final int value;
-    private final String message;
-
-    ExitStatus(int value, String message) {
-        this.value = value;
-        this.message = message;
+    public MergerConfiguration(List<String> truststoreFilePaths,
+                               List<String> truststoreFilePasswordPaths) {
+        this.truststoreFilePaths = truststoreFilePaths;
+        this.truststoreFilePasswordPaths = truststoreFilePasswordPaths;
     }
 
-    public int getExitCodeValue() {
-        return value;
+    public List<String> getTruststoreFilePaths() {
+        return truststoreFilePaths;
     }
 
-    public String getMessage() {
-        return message;
+
+    public List<String> getTruststoreFilePasswordPaths() {
+        return truststoreFilePasswordPaths;
     }
+
 }

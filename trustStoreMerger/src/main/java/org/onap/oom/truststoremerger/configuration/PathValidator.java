@@ -17,26 +17,22 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.api;
+package org.onap.oom.truststoremerger.configuration;
 
-public enum ExitStatus {
+public class PathValidator {
 
-    SUCCESS(0, "Success"),
-    MERGER_CONFIGURATION_EXCEPTION(1, "Invalid merger configuration");
+    private static final String TRUSTSTORE_PATH_REGEX = "^(/[a-zA-Z0-9_-]+)+\\.(pem|jks|p12)";
+    private static final String TRUSTSTORE_PASSWORD_PATH_REGEX = "^(/[a-zA-Z0-9_-]+)+\\.pass";
 
-    private final int value;
-    private final String message;
-
-    ExitStatus(int value, String message) {
-        this.value = value;
-        this.message = message;
+    public boolean isTruststorePathValid(String truststorePath) {
+        return isPathValid(truststorePath, TRUSTSTORE_PATH_REGEX);
     }
 
-    public int getExitCodeValue() {
-        return value;
+    public boolean isTruststorePasswordPathValid(String truststorePasswordPath) {
+        return truststorePasswordPath.isEmpty() || isPathValid(truststorePasswordPath, TRUSTSTORE_PASSWORD_PATH_REGEX);
     }
 
-    public String getMessage() {
-        return message;
+    private boolean isPathValid(String path, String regex) {
+        return path.matches(regex);
     }
 }
