@@ -2,6 +2,91 @@
   "comments": [
     {
       "key": {
+        "uuid": "92bbc1ed_533bd33b",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/TrustStoreMerger.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-08-05T10:42:20Z",
+      "side": 1,
+      "message": "pls do not use *",
+      "revId": "535480069c8d2a50f851710fbc81f66f90b8b0b4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d49c757_f23efa85",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/MergerConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-08-05T10:42:20Z",
+      "side": 1,
+      "message": "make a copy of input lists. It will prevent from potential collection modification outside the class",
+      "revId": "535480069c8d2a50f851710fbc81f66f90b8b0b4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7e315d0_cbc28420",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/MergerConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-08-05T10:42:20Z",
+      "side": 1,
+      "message": "always returns unmodified copies of collections. It will secure internal collections.",
+      "revId": "535480069c8d2a50f851710fbc81f66f90b8b0b4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45eda9a4_59c2278b",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/MergerConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-08-05T10:42:20Z",
+      "side": 1,
+      "message": "as above",
+      "revId": "535480069c8d2a50f851710fbc81f66f90b8b0b4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee986d9d_f493df60",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/MergerConfigurationFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-08-05T10:42:20Z",
+      "side": 1,
+      "message": "this class has two responsibilities:\n1. It creates MergerConfiguration\n2. It creates truststores\n\npls move getTruststores and getTruststoresPassword to separate class for example TruststoreProvider",
+      "revId": "535480069c8d2a50f851710fbc81f66f90b8b0b4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0b89f3f0_7a631438",
         "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/MergerConfigurationFactory.java",
         "patchSetId": 1
