@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b89f3f0_7a631438",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/MergerConfigurationFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-08-05T10:30:43Z",
+      "side": 1,
+      "message": "Add brackets for better readability.",
+      "range": {
+        "startLine": 43,
+        "startChar": 12,
+        "endLine": 43,
+        "endChar": 141
+      },
+      "revId": "535480069c8d2a50f851710fbc81f66f90b8b0b4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9c5a603_c8dd4c4d",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/MergerConfigurationFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-08-05T10:30:43Z",
+      "side": 1,
+      "message": "It could be inline.",
+      "range": {
+        "startLine": 47,
+        "startChar": 8,
+        "endLine": 47,
+        "endChar": 29
+      },
+      "revId": "535480069c8d2a50f851710fbc81f66f90b8b0b4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04f14b34_34275cd1",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/MergerConfigurationFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-08-05T10:30:43Z",
+      "side": 1,
+      "message": "Consider, change to .filter(Predicate.not(String::isEmpty))",
+      "range": {
+        "startLine": 52,
+        "startChar": 16,
+        "endLine": 52,
+        "endChar": 42
+      },
+      "revId": "535480069c8d2a50f851710fbc81f66f90b8b0b4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fc4f146_c84d8053",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/MergerConfigurationFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-08-05T10:30:43Z",
+      "side": 1,
+      "message": "Consider, move to new line for better readability",
+      "range": {
+        "startLine": 66,
+        "startChar": 35,
+        "endLine": 66,
+        "endChar": 36
+      },
+      "revId": "535480069c8d2a50f851710fbc81f66f90b8b0b4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8ccb51b_ade90ee3",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/MergerConfigurationFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-08-05T10:30:43Z",
+      "side": 1,
+      "message": "As above",
+      "range": {
+        "startLine": 70,
+        "startChar": 44,
+        "endLine": 70,
+        "endChar": 45
+      },
+      "revId": "535480069c8d2a50f851710fbc81f66f90b8b0b4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a57cb05_d6bff46b",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/MergerConfigurationFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-08-05T10:30:43Z",
+      "side": 1,
+      "message": "Magic number. E.g MINUS_ONE, LIMIT_MINUS_ONE, NEGATIVE_LIMIT",
+      "range": {
+        "startLine": 74,
+        "startChar": 61,
+        "endLine": 74,
+        "endChar": 62
+      },
+      "revId": "535480069c8d2a50f851710fbc81f66f90b8b0b4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "143713a6_c5749e6e",
+        "filename": "trustStoreMerger/src/test/java/org/onap/oom/truststoremerger/configuration/MergerConfigurationFactoryTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-08-05T10:30:43Z",
+      "side": 1,
+      "message": "Unused import",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 39
+      },
+      "revId": "535480069c8d2a50f851710fbc81f66f90b8b0b4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edac7ff4_1a2419a9",
+        "filename": "trustStoreMerger/src/test/java/org/onap/oom/truststoremerger/configuration/MergerConfigurationFactoryTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-08-05T10:30:43Z",
+      "side": 1,
+      "message": "private",
+      "range": {
+        "startLine": 48,
+        "startChar": 5,
+        "endLine": 48,
+        "endChar": 14
+      },
+      "revId": "535480069c8d2a50f851710fbc81f66f90b8b0b4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
