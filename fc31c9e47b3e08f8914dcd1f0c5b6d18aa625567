@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "8c4cfa8e_23443085",
+        "filename": "Makefile",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 3771
+      },
+      "writtenOn": "2020-08-05T09:46:00Z",
+      "side": 0,
+      "message": "XD",
+      "parentUuid": "9115a5aa_dacab070",
+      "revId": "fc31c9e47b3e08f8914dcd1f0c5b6d18aa625567",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "079334e6_c2840acc",
         "filename": "certService/src/main/java/org/onap/aaf/certservice/cmpv2client/external/Factory.java",
         "patchSetId": 4
