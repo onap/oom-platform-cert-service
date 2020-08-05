@@ -17,26 +17,14 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger;
+package org.onap.oom.truststoremerger.configuration;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.onap.oom.truststoremerger.api.ExitStatus;
+import org.onap.oom.truststoremerger.api.ExitableException;
 
-import static org.mockito.Mockito.verify;
+public class MergerConfigurationException extends ExitableException {
 
-@ExtendWith(MockitoExtension.class)
-class TrustStoreMergerTest {
-
-    @Mock
-    AppExitHandler appExitHandler;
-
-    @Test
-    void shouldExitWithMergeConfigurationExceptionDueToMissingEnvs() {
-        new TrustStoreMerger(appExitHandler).run();
-
-        verify(appExitHandler).exit(ExitStatus.MERGER_CONFIGURATION_EXCEPTION);
+    MergerConfigurationException(String message) {
+        super(message, ExitStatus.MERGER_CONFIGURATION_EXCEPTION);
     }
 }

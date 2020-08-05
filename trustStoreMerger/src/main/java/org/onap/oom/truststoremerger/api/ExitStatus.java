@@ -21,7 +21,9 @@ package org.onap.oom.truststoremerger.api;
 
 public enum ExitStatus {
 
-    SUCCESS(0, "Success");
+    SUCCESS(0, "Success"),
+    TRUSTSTORES_PATHS_PROVIDER_EXCEPTION(1, "Invalid paths in environment variables"),
+    MERGER_CONFIGURATION_EXCEPTION(2, "Invalid merger configuration");
 
     private final int value;
     private final String message;
