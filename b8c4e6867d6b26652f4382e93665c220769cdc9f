@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d0c3dd7_b2ae5a9b",
+        "filename": "pom.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 3213
+      },
+      "writtenOn": "2020-08-05T14:18:02Z",
+      "side": 1,
+      "message": "I think you moved from aaf/certservice to oom/platform/cert-service.\nthis says \"oom/cert-service\", the \"platform\" is missing. is this coorect?",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 115
+      },
+      "revId": "b8c4e6867d6b26652f4382e93665c220769cdc9f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
