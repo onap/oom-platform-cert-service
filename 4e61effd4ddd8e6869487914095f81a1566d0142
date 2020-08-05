@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd1efb1d_f1009c93",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/TrustStoreMerger.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-08-05T12:12:54Z",
+      "side": 1,
+      "message": "Unused import",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 80
+      },
+      "revId": "4e61effd4ddd8e6869487914095f81a1566d0142",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "205a9f92_d71cc9dc",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/TruststoresPathsProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-08-05T12:12:54Z",
+      "side": 1,
+      "message": "It could be private. Usage only in this class and test class.",
+      "range": {
+        "startLine": 28,
+        "startChar": 4,
+        "endLine": 28,
+        "endChar": 10
+      },
+      "revId": "4e61effd4ddd8e6869487914095f81a1566d0142",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "843bce8a_e2e8391c",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/TruststoresPathsProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-08-05T12:12:54Z",
+      "side": 1,
+      "message": "As above",
+      "range": {
+        "startLine": 29,
+        "startChar": 4,
+        "endLine": 29,
+        "endChar": 10
+      },
+      "revId": "4e61effd4ddd8e6869487914095f81a1566d0142",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
