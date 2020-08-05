@@ -17,26 +17,28 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger;
+package org.onap.oom.truststoremerger.configuration;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.onap.oom.truststoremerger.api.ExitStatus;
+import java.util.Collections;
+import java.util.List;
 
-import static org.mockito.Mockito.verify;
+public class MergerConfiguration {
+    private final List<String> truststoreFilePaths;
+    private final List<String> truststoreFilePasswordPaths;
 
-@ExtendWith(MockitoExtension.class)
-class TrustStoreMergerTest {
-
-    @Mock
-    AppExitHandler appExitHandler;
-
-    @Test
-    void shouldExitWithMergeConfigurationExceptionDueToMissingEnvs() {
-        new TrustStoreMerger(appExitHandler).run();
-
-        verify(appExitHandler).exit(ExitStatus.MERGER_CONFIGURATION_EXCEPTION);
+    public MergerConfiguration(List<String> truststoreFilePaths,
+                               List<String> truststoreFilePasswordPaths) {
+        this.truststoreFilePaths = List.copyOf(truststoreFilePaths);
+        this.truststoreFilePasswordPaths = List.copyOf(truststoreFilePasswordPaths);
     }
+
+    public List<String> getTruststoreFilePaths() {
+        return Collections.unmodifiableList(truststoreFilePaths);
+    }
+
+
+    public List<String> getTruststoreFilePasswordPaths() {
+        return Collections.unmodifiableList(truststoreFilePasswordPaths);
+    }
+
 }

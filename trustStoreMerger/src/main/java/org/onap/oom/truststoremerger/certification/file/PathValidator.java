@@ -17,26 +17,22 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger;
+package org.onap.oom.truststoremerger.certification.file;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.onap.oom.truststoremerger.api.ExitStatus;
+public class PathValidator {
 
-import static org.mockito.Mockito.verify;
+    private static final String TRUSTSTORE_PATH_REGEX = "^(/[a-zA-Z0-9_-]+)+\\.(pem|jks|p12)";
+    private static final String TRUSTSTORE_PASSWORD_PATH_REGEX = "^(/[a-zA-Z0-9_-]+)+\\.pass";
 
-@ExtendWith(MockitoExtension.class)
-class TrustStoreMergerTest {
+    public boolean isTruststorePathValid(String truststorePath) {
+        return isPathValid(truststorePath, TRUSTSTORE_PATH_REGEX);
+    }
 
-    @Mock
-    AppExitHandler appExitHandler;
+    public boolean isTruststorePasswordPathValid(String truststorePasswordPath) {
+        return truststorePasswordPath.isEmpty() || isPathValid(truststorePasswordPath, TRUSTSTORE_PASSWORD_PATH_REGEX);
+    }
 
-    @Test
-    void shouldExitWithMergeConfigurationExceptionDueToMissingEnvs() {
-        new TrustStoreMerger(appExitHandler).run();
-
-        verify(appExitHandler).exit(ExitStatus.MERGER_CONFIGURATION_EXCEPTION);
+    private boolean isPathValid(String path, String regex) {
+        return path.matches(regex);
     }
 }

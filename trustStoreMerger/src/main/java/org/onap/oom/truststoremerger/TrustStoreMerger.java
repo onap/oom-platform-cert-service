@@ -20,6 +20,13 @@
 package org.onap.oom.truststoremerger;
 
 import org.onap.oom.truststoremerger.api.ExitStatus;
+import org.onap.oom.truststoremerger.api.ExitableException;
+import org.onap.oom.truststoremerger.certification.file.EnvProvider;
+import org.onap.oom.truststoremerger.certification.file.TruststoresPathsProvider;
+import org.onap.oom.truststoremerger.configuration.MergerConfiguration;
+import org.onap.oom.truststoremerger.configuration.MergerConfigurationException;
+import org.onap.oom.truststoremerger.configuration.MergerConfigurationFactory;
+import org.onap.oom.truststoremerger.certification.file.PathValidator;
 
 class TrustStoreMerger {
 
@@ -30,6 +37,21 @@ class TrustStoreMerger {
     }
 
     void run() {
-        appExitHandler.exit(ExitStatus.SUCCESS);
+        try {
+            mergeTruststores();
+            appExitHandler.exit(ExitStatus.SUCCESS);
+        } catch (ExitableException e) {
+            appExitHandler.exit(e.applicationExitStatus());
+        }
+    }
+
+    private void mergeTruststores() throws ExitableException {
+        MergerConfiguration configuration = loadConfiguration();
+    }
+
+    private MergerConfiguration loadConfiguration() throws ExitableException {
+        TruststoresPathsProvider truststoresPathsProvider = new TruststoresPathsProvider(new EnvProvider(), new PathValidator());
+        MergerConfigurationFactory factory = new MergerConfigurationFactory(truststoresPathsProvider);
+        return factory.createConfiguration();
     }
 }
