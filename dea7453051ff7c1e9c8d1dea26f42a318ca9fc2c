@@ -1,0 +1,13 @@
+Code-Review+1: Pawel Kasperkiewicz <pawel.kasperkiewicz@nokia.com>
+Code-Review+1: Maciej Malewski <maciej.malewski@nokia.com>
+Code-Review+1: Joanna Jeremicz <joanna.jeremicz@nokia.com>
+Code-Review+1: Edyta Krukowska <edyta.krukowska@nokia.com>
+Code-Review+1: Michał Bańka <michal.banka@nokia.com>
+Code-Review+1: Piotr Marcinkiewicz <piotr.marcinkiewicz@nokia.com>
+Code-Review+2: Paweł Baniewski <pawel.baniewski@nokia.com>
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Submitted-by: Paweł Baniewski <pawel.baniewski@nokia.com>
+Submitted-at: Thu, 06 Aug 2020 13:40:42 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/oom/platform/cert-service/+/110979
+Project: oom/platform/cert-service
+Branch: refs/heads/master
