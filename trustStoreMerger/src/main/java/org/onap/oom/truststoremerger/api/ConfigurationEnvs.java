@@ -17,26 +17,10 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger;
+package org.onap.oom.truststoremerger.api;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.onap.oom.truststoremerger.api.ExitStatus;
+public class ConfigurationEnvs {
 
-import static org.mockito.Mockito.verify;
-
-@ExtendWith(MockitoExtension.class)
-class TrustStoreMergerTest {
-
-    @Mock
-    AppExitHandler appExitHandler;
-
-    @Test
-    void shouldExitWithTruststoresPathsProviderExceptionDueToMissingTrustoresPathEnvs() {
-        new TrustStoreMerger(appExitHandler).run();
-
-        verify(appExitHandler).exit(ExitStatus.TRUSTSTORES_PATHS_PROVIDER_EXCEPTION);
-    }
+    public static final String TRUSTSTORES_ENV = "TRUSTSTORES";
+    public static final String TRUSTSTORES_PASSWORDS_ENV = "TRUSTSTORES_PASSWORDS";
 }
