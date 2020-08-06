@@ -68,6 +68,57 @@
       "revId": "4e61effd4ddd8e6869487914095f81a1566d0142",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e78bbc43_bb58bd20",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/TruststoresPathsProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-08-06T08:27:25Z",
+      "side": 1,
+      "message": "Use variable (and extract it to one global class, e.g. EnvProvider) instead of hardcode it",
+      "revId": "4e61effd4ddd8e6869487914095f81a1566d0142",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa02ee38_60c33497",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/TruststoresPathsProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-08-06T08:27:25Z",
+      "side": 1,
+      "message": "Use variable instead of hardcode it",
+      "revId": "4e61effd4ddd8e6869487914095f81a1566d0142",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70387fc0_4ec1b6bd",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/MergerConfigurationFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-08-06T08:27:25Z",
+      "side": 1,
+      "message": "Use variables instead of hardcode them",
+      "revId": "4e61effd4ddd8e6869487914095f81a1566d0142",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
