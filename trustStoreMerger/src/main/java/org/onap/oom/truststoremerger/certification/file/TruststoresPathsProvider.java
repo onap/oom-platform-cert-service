@@ -19,14 +19,15 @@
 
 package org.onap.oom.truststoremerger.certification.file;
 
+import static org.onap.oom.truststoremerger.api.ConfigurationEnvs.TRUSTSTORES_ENV;
+import static org.onap.oom.truststoremerger.api.ConfigurationEnvs.TRUSTSTORES_PASSWORDS_ENV;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
 
 public class TruststoresPathsProvider {
 
-    static final String TRUSTSTORES_ENV = "TRUSTSTORES";
-    static final String TRUSTSTORES_PASSWORDS_ENV = "TRUSTSTORES_PASSWORDS";
     private static final String DELIMITER = ":";
     private static final int NEGATIVE_SPLIT_LIMIT = -1;
 
@@ -40,27 +41,29 @@ public class TruststoresPathsProvider {
 
     public List<String> getTruststores() throws TruststoresPathsProviderException {
         return envProvider.getEnv(TRUSTSTORES_ENV)
-                .filter(Predicate.not(String::isEmpty))
-                .map(this::splitToList)
-                .filter(this::validateTruststores)
-                .orElseThrow(() -> new TruststoresPathsProviderException("TRUSTSTORES environment variable does not contain valid truststores paths"));
+            .filter(Predicate.not(String::isEmpty))
+            .map(this::splitToList)
+            .filter(this::validateTruststores)
+            .orElseThrow(() -> new TruststoresPathsProviderException(
+                TRUSTSTORES_ENV + " environment variable does not contain valid truststores paths"));
     }
 
     public List<String> getTruststoresPasswords() throws TruststoresPathsProviderException {
         return envProvider.getEnv(TRUSTSTORES_PASSWORDS_ENV)
-                .map(this::splitToList)
-                .filter(this::validateTruststoresPasswords)
-                .orElseThrow(() -> new TruststoresPathsProviderException("TRUSTSTORES_PASSWORDS environment variable does not contain valid passwords paths"));
+            .map(this::splitToList)
+            .filter(this::validateTruststoresPasswords)
+            .orElseThrow(() -> new TruststoresPathsProviderException(
+                TRUSTSTORES_PASSWORDS_ENV + " environment variable does not contain valid passwords paths"));
     }
 
     private boolean validateTruststores(List<String> truststores) {
         return truststores.stream()
-                .allMatch(pathValidator::isTruststorePathValid);
+            .allMatch(pathValidator::isTruststorePathValid);
     }
 
     private boolean validateTruststoresPasswords(List<String> truststoresPasswords) {
         return truststoresPasswords.stream()
-                .allMatch(pathValidator::isTruststorePasswordPathValid);
+            .allMatch(pathValidator::isTruststorePasswordPathValid);
     }
 
     private List<String> splitToList(String stringToSplit) {
