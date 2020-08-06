@@ -24,7 +24,6 @@ import org.onap.oom.truststoremerger.api.ExitableException;
 import org.onap.oom.truststoremerger.certification.file.EnvProvider;
 import org.onap.oom.truststoremerger.certification.file.TruststoresPathsProvider;
 import org.onap.oom.truststoremerger.configuration.MergerConfiguration;
-import org.onap.oom.truststoremerger.configuration.MergerConfigurationException;
 import org.onap.oom.truststoremerger.configuration.MergerConfigurationFactory;
 import org.onap.oom.truststoremerger.certification.file.PathValidator;
 

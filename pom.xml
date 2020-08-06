@@ -33,7 +33,7 @@
         <snapshotNexusPath>/content/repositories/snapshots/</snapshotNexusPath>
         <releaseNexusPath>/content/repositories/releases/</releaseNexusPath>
         <stagingNexusPath>/content/repositories/staging/</stagingNexusPath>
-        <sitePath>/content/sites/site/org/onap/oom/cert-service/${project.artifactId}/${project.version}</sitePath>
+        <sitePath>/content/sites/site/org/onap/oom/platform/cert-service/${project.artifactId}/${project.version}</sitePath>
         <java.version>11</java.version>
         <springdoc-openapi-maven-plugin.apiDocsUrl>http://localhost:8080/v3/api-docs.yaml</springdoc-openapi-maven-plugin.apiDocsUrl>
 
