@@ -17,29 +17,21 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.api;
+package org.onap.oom.truststoremerger.certification.file;
 
-public enum ExitStatus {
+import java.io.File;
+import java.security.cert.Certificate;
+import java.util.Collections;
+import java.util.List;
 
-    SUCCESS(0, "Success"),
-    TRUSTSTORES_PATHS_PROVIDER_EXCEPTION(1, "Invalid paths in environment variables"),
-    MERGER_CONFIGURATION_EXCEPTION(2, "Invalid merger configuration"),
-    TRUSTSTORE_FILE_FACTORY_EXCEPTION(3, "Invalid truststore file-password pair"),
-    PASSWORD_READER_EXCEPTION(4, "Cannot read password from file");
+public class PemTruststore extends TruststoreFile {
 
-    private final int value;
-    private final String message;
-
-    ExitStatus(int value, String message) {
-        this.value = value;
-        this.message = message;
+    public PemTruststore(File truststoreFile) {
+        super(truststoreFile);
     }
 
-    public int getExitCodeValue() {
-        return value;
-    }
-
-    public String getMessage() {
-        return message;
+    @Override
+    public List<Certificate> getCertificates() {
+        return Collections.emptyList();
     }
 }
