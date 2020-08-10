@@ -17,22 +17,20 @@
  * ============LICENSE_END=========================================================
  */
 
+
 package org.onap.oom.truststoremerger.certification.file;
 
-public class PathValidator {
+import java.io.File;
 
-    private static final String TRUSTSTORE_PATH_REGEX = "^(/[a-zA-Z0-9_-]+)+\\.(pem|jks|p12)";
-    private static final String TRUSTSTORE_PASSWORD_PATH_REGEX = "^(/[a-zA-Z0-9_-]+)+\\.pass";
+public abstract class TruststoreFileWithPassword extends TruststoreFile {
+    private String password;
 
-    public boolean isTruststorePathValid(String truststorePath) {
-        return isPathValid(truststorePath, TRUSTSTORE_PATH_REGEX);
+    TruststoreFileWithPassword(File truststoreFile, String password) {
+        super(truststoreFile);
+        this.password = password;
     }
 
-    public boolean isTruststorePasswordPathValid(String truststorePasswordPath) {
-        return truststorePasswordPath.isEmpty() || isPathValid(truststorePasswordPath, TRUSTSTORE_PASSWORD_PATH_REGEX);
-    }
-
-    private boolean isPathValid(String path, String regex) {
-        return path.matches(regex);
-    }
+    public String getPassword(){
+        return password;
+    };
 }
