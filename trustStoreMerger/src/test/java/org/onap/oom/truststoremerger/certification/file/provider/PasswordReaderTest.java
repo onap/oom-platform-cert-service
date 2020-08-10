@@ -17,29 +17,28 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.api;
+package org.onap.oom.truststoremerger.certification.file.provider;
 
-public enum ExitStatus {
+import org.junit.jupiter.api.Test;
 
-    SUCCESS(0, "Success"),
-    TRUSTSTORES_PATHS_PROVIDER_EXCEPTION(1, "Invalid paths in environment variables"),
-    MERGER_CONFIGURATION_EXCEPTION(2, "Invalid merger configuration"),
-    TRUSTSTORE_FILE_FACTORY_EXCEPTION(3, "Invalid truststore file-password pair"),
-    PASSWORD_READER_EXCEPTION(4, "Cannot read password from file");
+import java.io.File;
 
-    private final int value;
-    private final String message;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-    ExitStatus(int value, String message) {
-        this.value = value;
-        this.message = message;
+class PasswordReaderTest {
+
+    @Test
+    void shouldReturnCorrectPasswordFromFile() throws PasswordReaderException {
+        PasswordReader passwordReader = new PasswordReader();
+        String fileData = passwordReader.readPassword(new File("src/test/resources/truststore-jks.pass"));
+        assertThat(fileData).isEqualTo("EOyuFbuYDyq_EhpboM72RHua");
     }
 
-    public int getExitCodeValue() {
-        return value;
-    }
-
-    public String getMessage() {
-        return message;
+    @Test
+    void shouldThrowExceptionForNonExistingFile() {
+        PasswordReader passwordReader = new PasswordReader();
+        assertThatExceptionOfType(PasswordReaderException.class)
+                .isThrownBy(() -> passwordReader.readPassword(new File("src/test/resources/non-esisting-file.pass")));
     }
 }
