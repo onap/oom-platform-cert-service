@@ -17,29 +17,30 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.api;
 
-public enum ExitStatus {
+package org.onap.oom.truststoremerger.certification.file.provider;
 
-    SUCCESS(0, "Success"),
-    TRUSTSTORES_PATHS_PROVIDER_EXCEPTION(1, "Invalid paths in environment variables"),
-    MERGER_CONFIGURATION_EXCEPTION(2, "Invalid merger configuration"),
-    TRUSTSTORE_FILE_FACTORY_EXCEPTION(3, "Invalid truststore file-password pair"),
-    PASSWORD_READER_EXCEPTION(4, "Cannot read password from file");
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
-    private final int value;
-    private final String message;
+import java.io.File;
 
-    ExitStatus(int value, String message) {
-        this.value = value;
-        this.message = message;
+import static org.assertj.core.api.Assertions.assertThat;
+
+class FileManagerTest {
+
+    private FileManager fileManager = new FileManager();
+
+    @ParameterizedTest
+    @CsvSource(value = {
+            "opt/app/truststore.jks:.jks",
+            "opt/app/truststore.p12:.p12",
+            "opt/app/truststore.pem:.pem",
+            "opt/app/truststore:''",
+    }, delimiter = ':')
+    void shouldReturnCorrectExtension(String filePath, String expectedExtension){
+        String extension = fileManager.getExtension(new File(filePath));
+        assertThat(extension).isEqualTo(expectedExtension);
     }
 
-    public int getExitCodeValue() {
-        return value;
-    }
-
-    public String getMessage() {
-        return message;
-    }
 }

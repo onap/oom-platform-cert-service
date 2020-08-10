@@ -17,13 +17,13 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.certification.file;
+package org.onap.oom.truststoremerger.certification.file.provider;
 
-import java.util.Optional;
+import org.onap.oom.truststoremerger.api.ExitStatus;
+import org.onap.oom.truststoremerger.api.ExitableException;
 
-public class EnvProvider {
-
-    Optional<String> getEnv(String name) {
-        return Optional.ofNullable(System.getenv(name));
+class PasswordReaderException extends ExitableException {
+    PasswordReaderException(String message) {
+        super(message, ExitStatus.PASSWORD_READER_EXCEPTION);
     }
 }
