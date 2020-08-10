@@ -58,7 +58,7 @@ oom/certservice/cmpServers.json onap/org.onap.oom.certservice.oom-certservice-ap
 
 ### Running Docker container from nexus
 ```
-docker run -p 8080:8080 --name oom-certservice-api --mount type=bind,source=/<absolute_path>/cmpServers.json,target=/etc/onap/oom/certservice/cmpServers.json nexus3.onap.org:10001/onap/org.onap.oom.certservice.oom-certservice-api:1.0.0
+docker run -p 8080:8080 --name oom-certservice-api --mount type=bind,source=/<absolute_path>/cmpServers.json,target=/etc/onap/oom/certservice/cmpServers.json nexus3.onap.org:10001/onap/org.onap.oom.platform.cert-service.oom-certservice-api:1.0.0
 ```
     
 ### Health Check

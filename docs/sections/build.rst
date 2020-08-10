@@ -17,8 +17,8 @@ Jenkins
 
 #. JJB Release
 
-    https://jenkins.onap.org/view/oom-platform-cert-service/job//oom-platform-cert-service-maven-stage-master/
-    https://jenkins.onap.org/view/oom-platform-cert-service/job//oom-platform-cert-service-release-merge/
+    https://jenkins.onap.org/view/oom-platform-cert-service/job/oom-platform-cert-service-maven-stage-master/
+    https://jenkins.onap.org/view/oom-platform-cert-service/job/oom-platform-cert-service-release-merge/
 
 #. JJB CSIT
 

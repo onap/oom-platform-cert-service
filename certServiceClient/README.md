@@ -18,7 +18,7 @@ mvn clean install -P docker
 
 ### Nexus container image
 ```
-nexus3.onap.org:10001/onap/org.onap.oom.certservice.oom-certservice-client:latest
+nexus3.onap.org:10001/onap/org.onap.oom.platform.cert-service.oom-certservice-client:latest
 ```
 
 ### Running local client application as standalone docker container

@@ -44,7 +44,7 @@ CertService client image can be found on Nexus repository :
 
 .. code-block:: bash
 
-  nexus3.onap.org:10001/onap/org.onap.oom.certservice.oom-certservice-client:$VERSION
+  nexus3.onap.org:10001/onap/org.onap.oom.platform.cert-service.oom-certservice-client:$VERSION
 
 
 As standalone docker container
@@ -91,7 +91,7 @@ To run CertService client as standalone docker container execute following steps
     --mount type=bind,src=<path to local host directory where certificate and trust anchor will be created>,dst=<OUTPUT_PATH (same as in step 1)> \
     --volume <local path to keystore in JKS format>:<KEYSTORE_PATH> \
     --volume <local path to truststore in JKS format>:<TRUSTSTORE_PATH> \
-    nexus3.onap.org:10001/onap/org.onap.oom.certservice.oom-certservice-client:$VERSION
+    nexus3.onap.org:10001/onap/org.onap.oom.platform.cert-service.oom-certservice-client:$VERSION
 
 
 
@@ -160,7 +160,7 @@ You can use the following deployment example as a reference:
             ...
         initContainers:
           - name: cert-service-client
-            image: nexus3.onap.org:10001/onap/org.onap.oom.certservice.oom-certservice-client:latest
+            image: nexus3.onap.org:10001/onap/org.onap.oom.platform.cert-service.oom-certservice-client:latest
             imagePullPolicy: Always
             env:
               - name: REQUEST_URL
