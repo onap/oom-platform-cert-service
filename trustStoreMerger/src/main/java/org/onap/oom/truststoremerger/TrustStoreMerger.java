@@ -21,11 +21,18 @@ package org.onap.oom.truststoremerger;
 
 import org.onap.oom.truststoremerger.api.ExitStatus;
 import org.onap.oom.truststoremerger.api.ExitableException;
-import org.onap.oom.truststoremerger.certification.file.EnvProvider;
-import org.onap.oom.truststoremerger.certification.file.TruststoresPathsProvider;
+import org.onap.oom.truststoremerger.certification.file.TruststoreFile;
+import org.onap.oom.truststoremerger.certification.file.provider.FileManager;
+import org.onap.oom.truststoremerger.certification.file.provider.PasswordReader;
+import org.onap.oom.truststoremerger.certification.file.provider.TruststoreFileFactory;
+import org.onap.oom.truststoremerger.certification.file.provider.TruststoreFilesListProvider;
+import org.onap.oom.truststoremerger.certification.path.EnvProvider;
+import org.onap.oom.truststoremerger.certification.path.TruststoresPathsProvider;
 import org.onap.oom.truststoremerger.configuration.MergerConfiguration;
 import org.onap.oom.truststoremerger.configuration.MergerConfigurationFactory;
-import org.onap.oom.truststoremerger.certification.file.PathValidator;
+import org.onap.oom.truststoremerger.certification.path.PathValidator;
+
+import java.util.List;
 
 class TrustStoreMerger {
 
@@ -46,11 +53,22 @@ class TrustStoreMerger {
 
     private void mergeTruststores() throws ExitableException {
         MergerConfiguration configuration = loadConfiguration();
+        List<TruststoreFile> truststoreFilesList = getTruststoreFilesList(configuration);
     }
 
     private MergerConfiguration loadConfiguration() throws ExitableException {
         TruststoresPathsProvider truststoresPathsProvider = new TruststoresPathsProvider(new EnvProvider(), new PathValidator());
         MergerConfigurationFactory factory = new MergerConfigurationFactory(truststoresPathsProvider);
         return factory.createConfiguration();
+    }
+
+    private List<TruststoreFile> getTruststoreFilesList(MergerConfiguration configuration) throws ExitableException {
+        TruststoreFileFactory truststoreFileFactory = new TruststoreFileFactory(new FileManager(), new PasswordReader());
+        TruststoreFilesListProvider truststoreFilesListProvider = new TruststoreFilesListProvider(truststoreFileFactory);
+        return truststoreFilesListProvider
+                .getTruststoreFilesList(
+                        configuration.getTruststoreFilePaths(),
+                        configuration.getTruststoreFilePasswordPaths()
+                );
     }
 }

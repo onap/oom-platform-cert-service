@@ -24,8 +24,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.onap.oom.truststoremerger.certification.file.TruststoresPathsProvider;
-import org.onap.oom.truststoremerger.certification.file.TruststoresPathsProviderException;
+import org.onap.oom.truststoremerger.certification.path.TruststoresPathsProvider;
+import org.onap.oom.truststoremerger.certification.path.TruststoresPathsProviderException;
 
 import java.util.ArrayList;
 import java.util.List;
