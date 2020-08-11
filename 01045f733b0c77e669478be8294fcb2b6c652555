@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a879128_acfad4f7",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/provider/TruststoreFileFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-08-11T06:17:29Z",
+      "side": 1,
+      "message": "extract switch to separate method",
+      "revId": "01045f733b0c77e669478be8294fcb2b6c652555",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
