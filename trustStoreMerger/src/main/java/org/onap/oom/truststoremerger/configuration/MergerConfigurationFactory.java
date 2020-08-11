@@ -19,8 +19,8 @@
 
 package org.onap.oom.truststoremerger.configuration;
 
-import org.onap.oom.truststoremerger.certification.file.TruststoresPathsProvider;
-import org.onap.oom.truststoremerger.certification.file.TruststoresPathsProviderException;
+import org.onap.oom.truststoremerger.certification.path.TruststoresPathsProvider;
+import org.onap.oom.truststoremerger.certification.path.TruststoresPathsProviderException;
 
 import static org.onap.oom.truststoremerger.api.ConfigurationEnvs.TRUSTSTORES_ENV;
 import static org.onap.oom.truststoremerger.api.ConfigurationEnvs.TRUSTSTORES_PASSWORDS_ENV;

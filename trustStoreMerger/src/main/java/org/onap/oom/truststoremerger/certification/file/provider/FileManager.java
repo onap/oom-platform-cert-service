@@ -17,29 +17,23 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.api;
+package org.onap.oom.truststoremerger.certification.file.provider;
 
-public enum ExitStatus {
+import java.io.File;
 
-    SUCCESS(0, "Success"),
-    TRUSTSTORES_PATHS_PROVIDER_EXCEPTION(1, "Invalid paths in environment variables"),
-    MERGER_CONFIGURATION_EXCEPTION(2, "Invalid merger configuration"),
-    TRUSTSTORE_FILE_FACTORY_EXCEPTION(3, "Invalid truststore file-password pair"),
-    PASSWORD_READER_EXCEPTION(4, "Cannot read password from file");
+public class FileManager {
+    private static final int NOT_FOUND_INDEX=-1;
 
-    private final int value;
-    private final String message;
-
-    ExitStatus(int value, String message) {
-        this.value = value;
-        this.message = message;
+    String getExtension(File file) {
+        int extStartIndex = file.getName().lastIndexOf(".");
+        if (extStartIndex == NOT_FOUND_INDEX) {
+            return "";
+        }
+        return file.getName().substring(extStartIndex);
     }
 
-    public int getExitCodeValue() {
-        return value;
+    boolean checkIfFileExists(File file){
+        return file.exists();
     }
 
-    public String getMessage() {
-        return message;
-    }
 }
