@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "e51e2906_2517d10b",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/provider/TruststoreFileFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-08-11T06:31:12Z",
+      "side": 1,
+      "message": "Move to new line (formatting)",
+      "range": {
+        "startLine": 45,
+        "startChar": 84,
+        "endLine": 45,
+        "endChar": 147
+      },
+      "revId": "01045f733b0c77e669478be8294fcb2b6c652555",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9a879128_acfad4f7",
         "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/provider/TruststoreFileFactory.java",
         "patchSetId": 3
@@ -34,6 +57,52 @@
       "revId": "01045f733b0c77e669478be8294fcb2b6c652555",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "393f0f7f_61d11dcc",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/provider/TruststoreFilesListProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-08-11T06:31:12Z",
+      "side": 1,
+      "message": "Move to new line (formatting)",
+      "range": {
+        "startLine": 36,
+        "startChar": 131,
+        "endLine": 36,
+        "endChar": 193
+      },
+      "revId": "01045f733b0c77e669478be8294fcb2b6c652555",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5efbf4af_439511ba",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/provider/TruststoreFilesListProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-08-11T06:31:12Z",
+      "side": 1,
+      "message": "I think for loop will be better. We checked size of list in previous step of flow and here both iterator always has next(list has same size) (If not it should be Exception). Consider it.  \n\n for (int i \u003d 0; i \u003c truststoreFilePaths.size(); i++) {\n            truststoreFilesList\n                .add(truststoreFileFactory.create(truststoreFilePaths.get(i), truststoreFilePasswordPaths.get(i)));\n        }",
+      "range": {
+        "startLine": 41,
+        "startChar": 7,
+        "endLine": 41,
+        "endChar": 84
+      },
+      "revId": "01045f733b0c77e669478be8294fcb2b6c652555",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
