@@ -22,17 +22,18 @@ package org.onap.oom.truststoremerger.certification.file.provider;
 import java.io.File;
 
 public class FileManager {
-    private static final int NOT_FOUND_INDEX=-1;
 
-    String getExtension(File file) {
+    private static final int NOT_FOUND_INDEX = -1;
+
+    public String getExtension(File file) {
         int extStartIndex = file.getName().lastIndexOf(".");
         if (extStartIndex == NOT_FOUND_INDEX) {
             return "";
         }
-        return file.getName().substring(extStartIndex);
+        return file.getName().substring(extStartIndex).toLowerCase();
     }
 
-    boolean checkIfFileExists(File file){
+    public boolean checkIfFileExists(File file) {
         return file.exists();
     }
 

@@ -17,14 +17,25 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.certification.file.provider;
+package org.onap.oom.truststoremerger.certification.entry;
 
-import org.onap.oom.truststoremerger.api.ExitStatus;
-import org.onap.oom.truststoremerger.api.ExitableException;
+import java.security.cert.Certificate;
 
-class TruststoreFileFactoryException extends ExitableException {
-    TruststoreFileFactoryException(String message) {
-        super(message, ExitStatus.TRUSTSTORE_FILE_FACTORY_EXCEPTION);
+public class CertificateWithAlias {
+
+    private final Certificate certificate;
+    private final String alias;
+
+    public CertificateWithAlias(Certificate certificate, String alias) {
+        this.certificate = certificate;
+        this.alias = alias;
     }
 
+    public String getAlias() {
+        return this.alias;
+    }
+
+    public Certificate getCertificate() {
+        return this.certificate;
+    }
 }

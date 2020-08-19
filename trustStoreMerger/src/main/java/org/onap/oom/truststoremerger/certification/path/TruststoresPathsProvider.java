@@ -19,8 +19,8 @@
 
 package org.onap.oom.truststoremerger.certification.path;
 
-import static org.onap.oom.truststoremerger.api.ConfigurationEnvs.TRUSTSTORES_ENV;
-import static org.onap.oom.truststoremerger.api.ConfigurationEnvs.TRUSTSTORES_PASSWORDS_ENV;
+import static org.onap.oom.truststoremerger.api.ConfigurationEnvs.TRUSTSTORES_PATHS_ENV;
+import static org.onap.oom.truststoremerger.api.ConfigurationEnvs.TRUSTSTORES_PASSWORDS_PATHS_ENV;
 
 import java.util.Arrays;
 import java.util.List;
@@ -40,20 +40,20 @@ public class TruststoresPathsProvider {
     }
 
     public List<String> getTruststores() throws TruststoresPathsProviderException {
-        return envProvider.getEnv(TRUSTSTORES_ENV)
+        return envProvider.getEnv(TRUSTSTORES_PATHS_ENV)
             .filter(Predicate.not(String::isEmpty))
             .map(this::splitToList)
             .filter(this::validateTruststores)
             .orElseThrow(() -> new TruststoresPathsProviderException(
-                TRUSTSTORES_ENV + " environment variable does not contain valid truststores paths"));
+                TRUSTSTORES_PATHS_ENV + " environment variable does not contain valid truststores paths"));
     }
 
     public List<String> getTruststoresPasswords() throws TruststoresPathsProviderException {
-        return envProvider.getEnv(TRUSTSTORES_PASSWORDS_ENV)
+        return envProvider.getEnv(TRUSTSTORES_PASSWORDS_PATHS_ENV)
             .map(this::splitToList)
             .filter(this::validateTruststoresPasswords)
             .orElseThrow(() -> new TruststoresPathsProviderException(
-                TRUSTSTORES_PASSWORDS_ENV + " environment variable does not contain valid passwords paths"));
+                TRUSTSTORES_PASSWORDS_PATHS_ENV + " environment variable does not contain valid passwords paths"));
     }
 
     private boolean validateTruststores(List<String> truststores) {

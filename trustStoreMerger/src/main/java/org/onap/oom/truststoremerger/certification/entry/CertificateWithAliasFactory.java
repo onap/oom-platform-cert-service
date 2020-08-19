@@ -17,21 +17,17 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.certification.file;
+package org.onap.oom.truststoremerger.certification.entry;
 
-import java.io.File;
 import java.security.cert.Certificate;
-import java.util.Collections;
-import java.util.List;
 
-public class JksTruststore extends TruststoreFileWithPassword {
+public class CertificateWithAliasFactory {
 
-    public JksTruststore(File truststoreFile, String password) {
-        super(truststoreFile, password);
+    public CertificateWithAlias createCertificateWithAlias(Certificate certificate, String alias) {
+        return new CertificateWithAlias(certificate, alias);
     }
 
-    @Override
-    public List<Certificate> getCertificates() {
-        return Collections.emptyList();
+    public CertificateWithAlias createPemCertificate(Certificate certificate) {
+        return new CertificateWithAlias(certificate, PemAliasGenerator.getInstance().getAlias());
     }
 }
