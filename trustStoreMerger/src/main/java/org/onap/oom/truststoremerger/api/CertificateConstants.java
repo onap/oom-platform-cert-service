@@ -17,22 +17,13 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.certification.file;
+package org.onap.oom.truststoremerger.api;
 
-import java.io.File;
-import java.security.cert.Certificate;
-import java.util.Collections;
-import java.util.List;
+public class CertificateConstants {
 
-public class P12Truststore extends TruststoreFileWithPassword {
-
-    public P12Truststore(File truststoreFile, String password) {
-        super(truststoreFile, password);
-    }
-
-    @Override
-    public List<Certificate> getCertificates() {
-        return Collections.emptyList();
-    }
+    public static final String JKS_INSTANCE = "JKS";
+    public static final String PKCS12_INSTANCE = "PKCS12";
+    public static final String X_509_CERTIFICATE = "X.509";
+    public static final String BOUNCY_CASTLE_PROVIDER = "BC";
 
 }

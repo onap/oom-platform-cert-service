@@ -17,13 +17,17 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.certification.file.provider;
+package org.onap.oom.truststoremerger.certification.file.provider.entry;
 
-import org.onap.oom.truststoremerger.api.ExitStatus;
-import org.onap.oom.truststoremerger.api.ExitableException;
+import java.security.cert.Certificate;
 
-class PasswordReaderException extends ExitableException {
-    PasswordReaderException(String message) {
-        super(message, ExitStatus.PASSWORD_READER_EXCEPTION);
+public class CertificateWithAliasFactory {
+
+    public CertificateWithAlias createCertificateWithAlias(Certificate certificate, String alias) {
+        return new CertificateWithAlias(certificate, alias);
+    }
+
+    public CertificateWithAlias createPemCertificate(Certificate certificate) {
+        return new CertificateWithAlias(certificate, PemAliasGenerator.getInstance().getAlias());
     }
 }

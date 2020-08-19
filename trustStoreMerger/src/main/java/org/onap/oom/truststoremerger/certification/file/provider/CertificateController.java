@@ -19,22 +19,15 @@
 
 package org.onap.oom.truststoremerger.certification.file.provider;
 
-import java.io.File;
+import java.util.List;
+import org.onap.oom.truststoremerger.api.ExitableException;
+import org.onap.oom.truststoremerger.certification.file.provider.entry.CertificateWithAlias;
 
-public class FileManager {
+public interface CertificateController {
 
-    private static final int INDEX_NOT_FOUND = -1;
+    List<CertificateWithAlias> getNotEmptyCertificateList() throws ExitableException;
 
-    public String getExtension(File file) {
-        int extStartIndex = file.getName().lastIndexOf(".");
-        if (extStartIndex == INDEX_NOT_FOUND) {
-            return "";
-        }
-        return file.getName().substring(extStartIndex).toLowerCase();
-    }
+    void addCertificates(List<CertificateWithAlias> certificates) throws ExitableException;
 
-    public boolean checkIfFileExists(File file) {
-        return file.exists();
-    }
-
+    void saveFile() throws ExitableException;
 }

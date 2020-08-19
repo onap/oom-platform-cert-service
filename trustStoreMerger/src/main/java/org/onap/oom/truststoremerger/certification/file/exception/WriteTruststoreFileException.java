@@ -17,21 +17,15 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.certification.file;
 
-import java.io.File;
-import java.security.cert.Certificate;
-import java.util.Collections;
-import java.util.List;
+package org.onap.oom.truststoremerger.certification.file.exception;
 
-public class PemTruststore extends TruststoreFile {
+import org.onap.oom.truststoremerger.api.ExitStatus;
+import org.onap.oom.truststoremerger.api.ExitableException;
 
-    public PemTruststore(File truststoreFile) {
-        super(truststoreFile);
-    }
+public class WriteTruststoreFileException extends ExitableException {
 
-    @Override
-    public List<Certificate> getCertificates() {
-        return Collections.emptyList();
+    public WriteTruststoreFileException(Exception e) {
+        super(e, ExitStatus.WRITE_TRUSTSTORE_FILE_EXCEPTION);
     }
 }
