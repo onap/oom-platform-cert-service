@@ -26,7 +26,7 @@ CertService API and client must be running in same network.
 
 You need certificate and trust anchors (in JKS format) to connect to CertService API via HTTPS. Information how to generate truststore and keystore files you can find in CertService main README.
 
-Information how to run you can find in CertService main README and official documentation, see [Read The Docs](https://docs.onap.org/projects/onap-aaf-certservice/en/latest/sections/usage.html)
+Information how to run you can find in CertService main README and official documentation, see [Read The Docs](https://docs.onap.org/projects/onap-oom-platform-cert-service/en/latest/sections/usage.html)
 
 
 ### Logs locally

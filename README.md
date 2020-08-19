@@ -63,7 +63,7 @@ https://gerrit.onap.org/r/admin/repos/integration/csit
 2. Configure CSIT local environment
 3. Inside CSIT directory execute
 ```
-sudo ./run-csit.sh plans/aaf/certservice
+sudo ./run-csit.sh plans/oom-platform-cert-service/certservice
 ```
 
 ####Jenkins build
