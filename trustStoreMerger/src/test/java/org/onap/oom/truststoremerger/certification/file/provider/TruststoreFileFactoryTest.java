@@ -24,12 +24,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.onap.oom.truststoremerger.certification.file.JksTruststore;
-import org.onap.oom.truststoremerger.certification.file.P12Truststore;
+import org.onap.oom.truststoremerger.certification.file.JavaTruststore;
 import org.onap.oom.truststoremerger.certification.file.PemTruststore;
 import org.onap.oom.truststoremerger.certification.file.TruststoreFile;
+import org.onap.oom.truststoremerger.certification.file.exception.KeystoreInstanceException;
+import org.onap.oom.truststoremerger.certification.file.exception.LoadTruststoreException;
 
 import java.io.File;
+import org.onap.oom.truststoremerger.certification.file.exception.PasswordReaderException;
+import org.onap.oom.truststoremerger.certification.file.exception.TruststoreFileFactoryException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -56,27 +59,30 @@ class TruststoreFileFactoryTest {
     }
 
     @Test
-    void shouldReturnCorrectJksTruststoreForJksFile() throws TruststoreFileFactoryException, PasswordReaderException {
+    void shouldReturnCorrectJksTruststoreForJksFile()
+        throws LoadTruststoreException, PasswordReaderException, TruststoreFileFactoryException, KeystoreInstanceException {
         TruststoreFile truststore = truststoreFileFactory
                 .create(TRUSTSTORE_JKS_PATH, TRUSTSTORE_JKS_PASS_PATH);
-        assertThat(truststore).isInstanceOf(JksTruststore.class);
-        JksTruststore jksTruststore = (JksTruststore) truststore;
+        assertThat(truststore).isInstanceOf(JavaTruststore.class);
+        JavaTruststore jksTruststore = (JavaTruststore) truststore;
         assertThat(jksTruststore.getPassword()).isEqualTo(TRUSTSTORE_JKS_PASS);
         assertThat(jksTruststore.getTruststoreFile()).isEqualTo(new File(TRUSTSTORE_JKS_PATH));
     }
 
     @Test
-    void shouldReturnCorrectP12TruststoreForP12File() throws TruststoreFileFactoryException, PasswordReaderException {
+    void shouldReturnCorrectP12TruststoreForP12File()
+        throws LoadTruststoreException, PasswordReaderException, TruststoreFileFactoryException, KeystoreInstanceException {
         TruststoreFile truststore = truststoreFileFactory
                 .create(TRUSTSTORE_P12_PATH,
                         TRUSTSTORE_P12_PASS_PATH);
-        assertThat(truststore).isInstanceOf(P12Truststore.class);
-        P12Truststore jksTruststore = (P12Truststore) truststore;
+        assertThat(truststore).isInstanceOf(JavaTruststore.class);
+        JavaTruststore jksTruststore = (JavaTruststore) truststore;
         assertThat(jksTruststore.getPassword()).isEqualTo(TRUSTSTORE_P12_PASS);
     }
 
     @Test
-    void shouldReturnCorrectPemTruststoreForPemFile() throws TruststoreFileFactoryException, PasswordReaderException {
+    void shouldReturnCorrectPemTruststoreForPemFile()
+        throws LoadTruststoreException, PasswordReaderException, TruststoreFileFactoryException, KeystoreInstanceException {
         TruststoreFile truststore = truststoreFileFactory
                 .create(TRUSTSTORE_PEM_PATH,
                         EMPTY_PASS_PATH);

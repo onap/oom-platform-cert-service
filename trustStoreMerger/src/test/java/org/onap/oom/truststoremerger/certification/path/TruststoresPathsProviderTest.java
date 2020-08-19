@@ -30,8 +30,8 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.Mockito.when;
-import static org.onap.oom.truststoremerger.api.ConfigurationEnvs.TRUSTSTORES_ENV;
-import static org.onap.oom.truststoremerger.api.ConfigurationEnvs.TRUSTSTORES_PASSWORDS_ENV;
+import static org.onap.oom.truststoremerger.api.ConfigurationEnvs.TRUSTSTORES_PATHS_ENV;
+import static org.onap.oom.truststoremerger.api.ConfigurationEnvs.TRUSTSTORES_PASSWORDS_PATHS_ENV;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -94,11 +94,11 @@ class TruststoresPathsProviderTest {
     }
 
     private void mockTruststoresEnv(String truststores) {
-        mockEnv(truststores, TRUSTSTORES_ENV);
+        mockEnv(truststores, TRUSTSTORES_PATHS_ENV);
     }
 
     private void mockTruststoresPasswordsEnv(String truststoresPasswords) {
-        mockEnv(truststoresPasswords, TRUSTSTORES_PASSWORDS_ENV);
+        mockEnv(truststoresPasswords, TRUSTSTORES_PASSWORDS_PATHS_ENV);
     }
 
     private void mockEnv(String envValue, String envName) {

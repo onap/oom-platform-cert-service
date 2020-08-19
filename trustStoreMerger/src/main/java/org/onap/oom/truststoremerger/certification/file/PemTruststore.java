@@ -20,18 +20,67 @@
 package org.onap.oom.truststoremerger.certification.file;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.security.cert.Certificate;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import org.onap.oom.truststoremerger.api.ExitableException;
+import org.onap.oom.truststoremerger.certification.entry.CertificateWithAlias;
+import org.onap.oom.truststoremerger.certification.file.exception.MissingTruststoreException;
+import org.onap.oom.truststoremerger.certification.file.exception.WriteTruststoreFileException;
+import org.onap.oom.truststoremerger.certification.file.provider.PemManipulator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class PemTruststore extends TruststoreFile {
 
-    public PemTruststore(File truststoreFile) {
+    private static final boolean APPEND_TO_FILE = true;
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(PemTruststore.class);
+    private final PemManipulator pemManipulator;
+    private List<CertificateWithAlias> certificatesToBeSaved = new ArrayList<>();
+
+    public PemTruststore(File truststoreFile, PemManipulator pemManipulator) {
         super(truststoreFile);
+        this.pemManipulator = pemManipulator;
     }
 
     @Override
-    public List<Certificate> getCertificates() {
-        return Collections.emptyList();
+    public List<CertificateWithAlias> getCertificates() throws ExitableException {
+        LOGGER.debug("Reading certificates from file: {}", this.getTruststoreFile().getPath());
+        return pemManipulator.getNotEmptyCertificateList(this.getTruststoreFile());
     }
+
+    @Override
+    public void addCertificate(List<CertificateWithAlias> certificates) throws ExitableException {
+        LOGGER.debug("Adding certificates to file: {}", this.getTruststoreFile().getPath());
+        if (pemManipulator.isFileWithoutPemCertificate(this.getTruststoreFile())) {
+            LOGGER.error("File does not contain any certificate. File path: {} ", this.getTruststoreFile().getPath());
+            throw new MissingTruststoreException("PEM file does not contain any certificate");
+        }
+        certificatesToBeSaved.addAll(certificates);
+    }
+
+    @Override
+    public void saveFile() throws ExitableException {
+        LOGGER.debug("Saving file: {} ", this.getTruststoreFile().getPath());
+        List<Certificate> certificates = certificatesToBeSaved.stream()
+            .map(CertificateWithAlias::getCertificate)
+            .collect(Collectors.toList());
+        String certificatesAsString = pemManipulator.transformToStringInPemFormat(certificates);
+        appendToFile(certificatesAsString);
+    }
+
+    private void appendToFile(String certificatesAsString) throws WriteTruststoreFileException {
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream(this.getTruststoreFile(), APPEND_TO_FILE);
+            fileOutputStream.write(certificatesAsString.getBytes());
+        } catch (Exception e) {
+            LOGGER.error("Cannot write certificates to file");
+            throw new WriteTruststoreFileException(e);
+        }
+    }
+
+
 }

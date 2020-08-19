@@ -22,8 +22,11 @@ package org.onap.oom.truststoremerger.certification.file.provider;
 import org.onap.oom.truststoremerger.certification.file.TruststoreFile;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import org.onap.oom.truststoremerger.certification.file.exception.KeystoreInstanceException;
+import org.onap.oom.truststoremerger.certification.file.exception.LoadTruststoreException;
+import org.onap.oom.truststoremerger.certification.file.exception.PasswordReaderException;
+import org.onap.oom.truststoremerger.certification.file.exception.TruststoreFileFactoryException;
 
 public class TruststoreFilesListProvider {
 
@@ -34,8 +37,8 @@ public class TruststoreFilesListProvider {
     }
 
     public List<TruststoreFile> getTruststoreFilesList(List<String> truststoreFilePaths,
-                                                       List<String> truststoreFilePasswordPaths)
-            throws PasswordReaderException, TruststoreFileFactoryException {
+        List<String> truststoreFilePasswordPaths)
+        throws LoadTruststoreException, PasswordReaderException, TruststoreFileFactoryException, KeystoreInstanceException {
         List<TruststoreFile> truststoreFilesList = new ArrayList<>();
         for (int i = 0; i < truststoreFilePaths.size(); i++) {
             String truststorePath = truststoreFilePaths.get(i);

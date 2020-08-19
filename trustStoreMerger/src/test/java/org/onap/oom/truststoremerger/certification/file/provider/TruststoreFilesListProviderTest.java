@@ -22,15 +22,17 @@ package org.onap.oom.truststoremerger.certification.file.provider;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.onap.oom.truststoremerger.certification.file.JksTruststore;
-import org.onap.oom.truststoremerger.certification.file.P12Truststore;
+import org.onap.oom.truststoremerger.certification.file.JavaTruststore;
 import org.onap.oom.truststoremerger.certification.file.PemTruststore;
 import org.onap.oom.truststoremerger.certification.file.TruststoreFile;
-import org.onap.oom.truststoremerger.certification.file.TruststoreFileWithPassword;
+import org.onap.oom.truststoremerger.certification.file.exception.KeystoreInstanceException;
+import org.onap.oom.truststoremerger.certification.file.exception.LoadTruststoreException;
 
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
+import org.onap.oom.truststoremerger.certification.file.exception.PasswordReaderException;
+import org.onap.oom.truststoremerger.certification.file.exception.TruststoreFileFactoryException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -54,7 +56,8 @@ class TruststoreFilesListProviderTest {
     }
 
     @Test
-    void shouldReturnTruststoreFilesList() throws PasswordReaderException, TruststoreFileFactoryException {
+    void shouldReturnTruststoreFilesList()
+        throws TruststoreFileFactoryException, PasswordReaderException, LoadTruststoreException, KeystoreInstanceException {
         List<String> truststorePaths = Arrays.asList(TRUSTSTORE_JKS_PATH, TRUSTSTORE_P12_PATH, TRUSTSTORE_PEM_PATH);
         List<String> truststorePasswordPaths = Arrays.asList(TRUSTSTORE_JKS_PASS_PATH, TRUSTSTORE_P12_PASS_PATH, EMPTY_PASS_PATH);
         List<TruststoreFile> truststoreFilesList = truststoreFilesListProvider.getTruststoreFilesList(truststorePaths, truststorePasswordPaths);
@@ -65,12 +68,12 @@ class TruststoreFilesListProviderTest {
     }
 
     private void assertCorrectJksTruststore(TruststoreFile truststoreFile, String truststorePath, String truststorePass) {
-        assertCorrectTypeAndTruststorePath(truststoreFile, truststorePath, JksTruststore.class);
+        assertCorrectTypeAndTruststorePath(truststoreFile, truststorePath, JavaTruststore.class);
         assertContainsCorrectPassword(truststoreFile, truststorePass);
     }
 
     private void assertCorrectP12Truststore(TruststoreFile truststoreFile, String truststorePath, String truststorePass) {
-        assertCorrectTypeAndTruststorePath(truststoreFile, truststorePath, P12Truststore.class);
+        assertCorrectTypeAndTruststorePath(truststoreFile, truststorePath, JavaTruststore.class);
         assertContainsCorrectPassword(truststoreFile, truststorePass);
     }
 
@@ -84,7 +87,7 @@ class TruststoreFilesListProviderTest {
     }
 
     private void assertContainsCorrectPassword(TruststoreFile truststoreFile, String truststorePass) {
-        TruststoreFileWithPassword truststoreFileWithPassword = (TruststoreFileWithPassword) truststoreFile;
-        assertThat(truststoreFileWithPassword.getPassword()).isEqualTo(truststorePass);
+        JavaTruststore javaTruststore = (JavaTruststore) truststoreFile;
+        assertThat(javaTruststore.getPassword()).isEqualTo(truststorePass);
     }
 }
