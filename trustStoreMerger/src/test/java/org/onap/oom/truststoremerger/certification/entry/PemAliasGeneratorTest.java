@@ -17,24 +17,32 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.api;
+package org.onap.oom.truststoremerger.certification.entry;
 
-public class ExitableException extends Exception {
+import static org.assertj.core.api.Assertions.assertThat;
 
-    private final ExitStatus exitStatus;
+import org.junit.jupiter.api.Test;
 
-    public ExitableException(Throwable cause, ExitStatus exitStatus) {
-        super(cause);
-        this.exitStatus = exitStatus;
+class PemAliasGeneratorTest {
+    private final static String PREFIX_ALIAS_NAME = "pem-trusted-certificate-";
+
+    @Test
+    void aliasHasPemPrefix() {
+        PemAliasGenerator pemAliasGenerator = PemAliasGenerator.getInstance();
+
+        String alias = pemAliasGenerator.getAlias();
+        System.out.println(alias);
+        assertThat(alias.contains(PREFIX_ALIAS_NAME)).isTrue();
     }
 
-    public ExitableException(String message, ExitStatus exitStatus) {
-        super(message);
-        this.exitStatus = exitStatus;
-    }
+    @Test
+    void generatedAliasesHaveUniqNames() {
+        PemAliasGenerator pemAliasGenerator = PemAliasGenerator.getInstance();
 
-    public ExitStatus applicationExitStatus() {
-        return exitStatus;
+        String firstAlias = pemAliasGenerator.getAlias();
+        String secondAlias = pemAliasGenerator.getAlias();
+        System.out.println(firstAlias);
+        System.out.println(secondAlias);
+        assertThat(firstAlias.equals(secondAlias)).isFalse();
     }
-
 }

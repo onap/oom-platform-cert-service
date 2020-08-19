@@ -17,24 +17,14 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.api;
+package org.onap.oom.truststoremerger.certification.file.exception;
 
-public class ExitableException extends Exception {
+import org.onap.oom.truststoremerger.api.ExitStatus;
+import org.onap.oom.truststoremerger.api.ExitableException;
 
-    private final ExitStatus exitStatus;
+public class CreateBackupException extends ExitableException {
 
-    public ExitableException(Throwable cause, ExitStatus exitStatus) {
-        super(cause);
-        this.exitStatus = exitStatus;
+    public CreateBackupException(Exception e) {
+        super(e, ExitStatus.CREATE_BACKUP_EXCEPTION);
     }
-
-    public ExitableException(String message, ExitStatus exitStatus) {
-        super(message);
-        this.exitStatus = exitStatus;
-    }
-
-    public ExitStatus applicationExitStatus() {
-        return exitStatus;
-    }
-
 }
