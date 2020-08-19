@@ -20,19 +20,44 @@
 package org.onap.oom.truststoremerger.certification.file;
 
 import java.io.File;
-import java.security.cert.Certificate;
+import java.io.FileOutputStream;
+import java.nio.file.Files;
 import java.util.List;
+import org.onap.oom.truststoremerger.api.ExitableException;
+import org.onap.oom.truststoremerger.certification.entry.CertificateWithAlias;
+import org.onap.oom.truststoremerger.certification.file.exception.CreateBackupException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class TruststoreFile {
+
+    private static final String BACKUP_EXTENSION = ".bak";
+    private static final Logger LOGGER = LoggerFactory.getLogger(P12Truststore.class);
     private File truststoreFile;
 
     TruststoreFile(File truststoreFile) {
         this.truststoreFile = truststoreFile;
     }
 
-    public abstract List<Certificate> getCertificates();
+    public abstract List<CertificateWithAlias> getCertificates() throws ExitableException;
+
+    public abstract void addCertificate(List<CertificateWithAlias> certificates) throws ExitableException;
+
+    public abstract void saveFile () throws ExitableException;
 
     public File getTruststoreFile() {
         return truststoreFile;
-    };
+    }
+
+    public void createBackup() throws CreateBackupException {
+        LOGGER.debug("Creating backup of file: {}", truststoreFile.getPath());
+        try {
+            String backupFilePath = truststoreFile.getAbsolutePath() + BACKUP_EXTENSION;
+            FileOutputStream fileOutputStream = new FileOutputStream(backupFilePath);
+            Files.copy(truststoreFile.toPath(), fileOutputStream);
+        } catch (Exception e) {
+            LOGGER.error("Cannot create backup of file: {} ", getTruststoreFile().getPath());
+            throw new CreateBackupException(e);
+        }
+    }
 }

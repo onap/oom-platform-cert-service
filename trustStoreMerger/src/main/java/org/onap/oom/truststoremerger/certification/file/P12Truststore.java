@@ -20,19 +20,53 @@
 package org.onap.oom.truststoremerger.certification.file;
 
 import java.io.File;
-import java.security.cert.Certificate;
-import java.util.Collections;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
 import java.util.List;
+import org.onap.oom.truststoremerger.api.ExitableException;
+import org.onap.oom.truststoremerger.certification.entry.CertificateWithAlias;
+import org.onap.oom.truststoremerger.certification.file.exception.KeystoreInstanceException;
+import org.onap.oom.truststoremerger.certification.file.exception.LoadTruststoreException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class P12Truststore extends TruststoreFileWithPassword {
 
-    public P12Truststore(File truststoreFile, String password) {
+    private static final Logger LOGGER = LoggerFactory.getLogger(P12Truststore.class);
+    private static final String KEYSTORE_INSTANCE_P12 = "PKCS12";
+
+    private final ExitableKeystoreInstance keystoreInstance;
+
+    public P12Truststore(File truststoreFile, String password) throws LoadTruststoreException, KeystoreInstanceException {
         super(truststoreFile, password);
+        keystoreInstance = getExitableKeyStoreInstance();
     }
 
     @Override
-    public List<Certificate> getCertificates() {
-        return Collections.emptyList();
+    public List<CertificateWithAlias> getCertificates() throws ExitableException {
+        LOGGER.debug("Reading certificates from file: {} ", this.getTruststoreFile().getPath());
+        return keystoreInstance.getTruststoreCertificates();
+    }
+
+    @Override
+    public void addCertificate(List<CertificateWithAlias> certificates) throws ExitableException {
+        keystoreInstance.addCertificates(certificates);
+    }
+
+    @Override
+    public void saveFile() throws ExitableException {
+        keystoreInstance.saveFile(this.getTruststoreFile(), this.getPassword());
+    }
+
+    private ExitableKeystoreInstance getExitableKeyStoreInstance()
+        throws KeystoreInstanceException, LoadTruststoreException {
+        try {
+            return new ExitableKeystoreInstance(KeyStore.getInstance(KEYSTORE_INSTANCE_P12), this.getTruststoreFile(),
+                this.getPassword());
+        } catch (KeyStoreException e) {
+            LOGGER.error("Cannot initialize Keystore instance");
+            throw new KeystoreInstanceException(e);
+        }
     }
 
 }

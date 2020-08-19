@@ -27,6 +27,8 @@ import org.onap.oom.truststoremerger.certification.file.P12Truststore;
 import org.onap.oom.truststoremerger.certification.file.PemTruststore;
 import org.onap.oom.truststoremerger.certification.file.TruststoreFile;
 import org.onap.oom.truststoremerger.certification.file.TruststoreFileWithPassword;
+import org.onap.oom.truststoremerger.certification.file.exception.KeystoreInstanceException;
+import org.onap.oom.truststoremerger.certification.file.exception.LoadTruststoreException;
 
 import java.io.File;
 import java.util.Arrays;
@@ -54,7 +56,8 @@ class TruststoreFilesListProviderTest {
     }
 
     @Test
-    void shouldReturnTruststoreFilesList() throws PasswordReaderException, TruststoreFileFactoryException {
+    void shouldReturnTruststoreFilesList()
+        throws TruststoreFileFactoryException, PasswordReaderException, LoadTruststoreException, KeystoreInstanceException {
         List<String> truststorePaths = Arrays.asList(TRUSTSTORE_JKS_PATH, TRUSTSTORE_P12_PATH, TRUSTSTORE_PEM_PATH);
         List<String> truststorePasswordPaths = Arrays.asList(TRUSTSTORE_JKS_PASS_PATH, TRUSTSTORE_P12_PASS_PATH, EMPTY_PASS_PATH);
         List<TruststoreFile> truststoreFilesList = truststoreFilesListProvider.getTruststoreFilesList(truststorePaths, truststorePasswordPaths);

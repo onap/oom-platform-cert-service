@@ -19,12 +19,15 @@
 
 package org.onap.oom.truststoremerger.certification.file.provider;
 
+import org.onap.oom.truststoremerger.api.ExitableException;
 import org.onap.oom.truststoremerger.certification.file.JksTruststore;
 import org.onap.oom.truststoremerger.certification.file.P12Truststore;
 import org.onap.oom.truststoremerger.certification.file.PemTruststore;
 import org.onap.oom.truststoremerger.certification.file.TruststoreFile;
 
 import java.io.File;
+import org.onap.oom.truststoremerger.certification.file.exception.KeystoreInstanceException;
+import org.onap.oom.truststoremerger.certification.file.exception.LoadTruststoreException;
 
 public class TruststoreFileFactory {
 
@@ -43,7 +46,7 @@ public class TruststoreFileFactory {
     }
 
     TruststoreFile create(String truststoreFilePath, String truststorePasswordPath)
-            throws TruststoreFileFactoryException, PasswordReaderException {
+        throws TruststoreFileFactoryException, PasswordReaderException, KeystoreInstanceException, LoadTruststoreException {
         File truststoreFile = new File(truststoreFilePath);
         if (!fileManager.checkIfFileExists(truststoreFile)) {
             throw new TruststoreFileFactoryException(String.format(FILE_DOES_NOT_EXIST_MSG_TEMPLATE, truststoreFile));
@@ -52,7 +55,7 @@ public class TruststoreFileFactory {
     }
 
     private TruststoreFile createTypedTruststore(File truststoreFile, String truststorePasswordPath)
-            throws PasswordReaderException, TruststoreFileFactoryException {
+        throws KeystoreInstanceException, PasswordReaderException, LoadTruststoreException, TruststoreFileFactoryException {
         String extension = fileManager.getExtension(truststoreFile);
         switch (extension) {
             case JKS_EXTENSION:
@@ -67,13 +70,13 @@ public class TruststoreFileFactory {
     }
 
     private JksTruststore createJksTruststore(File truststoreFile, String truststorePasswordPath)
-            throws PasswordReaderException {
+        throws PasswordReaderException, LoadTruststoreException, KeystoreInstanceException {
         String password = passwordReader.readPassword(new File(truststorePasswordPath));
         return new JksTruststore(truststoreFile, password);
     }
 
     private P12Truststore createP12Truststore(File truststoreFile, String truststorePasswordPath)
-            throws PasswordReaderException {
+        throws LoadTruststoreException, KeystoreInstanceException, PasswordReaderException {
         String password = passwordReader.readPassword(new File(truststorePasswordPath));
         return new P12Truststore(truststoreFile, password);
     }
