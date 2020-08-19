@@ -17,24 +17,23 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.api;
+package org.onap.oom.truststoremerger.certification.entry;
 
-public class ExitableException extends Exception {
 
-    private final ExitStatus exitStatus;
+public class PemAliasGenerator {
 
-    public ExitableException(Throwable cause, ExitStatus exitStatus) {
-        super(cause);
-        this.exitStatus = exitStatus;
+    private final static String PREFIX_ALIAS_NAME = "pem-trusted-certificate-";
+    private final static PemAliasGenerator INSTANCE = new PemAliasGenerator();
+    private static int counter = 0;
+
+    private PemAliasGenerator() {
     }
 
-    public ExitableException(String message, ExitStatus exitStatus) {
-        super(message);
-        this.exitStatus = exitStatus;
+    public static PemAliasGenerator getInstance() {
+        return INSTANCE;
     }
 
-    public ExitStatus applicationExitStatus() {
-        return exitStatus;
+    public String getAlias() {
+        return PREFIX_ALIAS_NAME + counter++;
     }
-
 }

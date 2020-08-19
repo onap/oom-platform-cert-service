@@ -33,6 +33,8 @@ public class TruststoreFileFactory {
     private static final String PEM_EXTENSION = ".pem";
     private static final String FILE_DOES_NOT_EXIST_MSG_TEMPLATE = "File: %s does not exist";
     private static final String UNKNOWN_TRUSTSTORE_TYPE_MSG_TEMPLATE = "Unknown truststore extension type: %s";
+    private static final String KEYSTORE_INSTANCE_P12 = "PKCS12";
+    private static final String KEYSTORE_INSTANCE_JKS = "JKS";
 
     private final FileManager fileManager;
     private final PasswordReader passwordReader;
@@ -69,13 +71,13 @@ public class TruststoreFileFactory {
     private JksTruststore createJksTruststore(File truststoreFile, String truststorePasswordPath)
             throws PasswordReaderException {
         String password = passwordReader.readPassword(new File(truststorePasswordPath));
-        return new JksTruststore(truststoreFile, password);
+        return new JksTruststore(truststoreFile, password, KEYSTORE_INSTANCE_JKS);
     }
 
     private P12Truststore createP12Truststore(File truststoreFile, String truststorePasswordPath)
             throws PasswordReaderException {
         String password = passwordReader.readPassword(new File(truststorePasswordPath));
-        return new P12Truststore(truststoreFile, password);
+        return new P12Truststore(truststoreFile, password, KEYSTORE_INSTANCE_P12);
     }
 
     private PemTruststore createPemTruststore(File truststoreFile) {
