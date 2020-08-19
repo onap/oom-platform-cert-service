@@ -20,19 +20,44 @@
 package org.onap.oom.truststoremerger.certification.file;
 
 import java.io.File;
-import java.security.cert.Certificate;
-import java.util.Collections;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
 import java.util.List;
+import org.onap.oom.truststoremerger.api.ExitableException;
+import org.onap.oom.truststoremerger.certification.entry.CertificateWrapper;
+import org.onap.oom.truststoremerger.certification.file.exception.KeystoreInstanceException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class P12Truststore extends TruststoreFileWithPassword {
 
-    public P12Truststore(File truststoreFile, String password) {
+    private static final Logger LOGGER = LoggerFactory.getLogger(P12Truststore.class);
+    private final String keystoreInstanceType;
+
+    public P12Truststore(File truststoreFile, String password, String keystoreInstanceType) {
         super(truststoreFile, password);
+        this.keystoreInstanceType = keystoreInstanceType;
     }
 
     @Override
-    public List<Certificate> getCertificates() {
-        return Collections.emptyList();
+    public List<CertificateWrapper> getCertificates() throws ExitableException {
+        ExitableKeystoreInstance keyStore = getExitableKeyStoreInstance();
+        return keyStore.getTruststoreCertificates(this.getTruststoreFile(), this.getPassword());
+    }
+
+    @Override
+    public void addCertificate(List<CertificateWrapper> certificates) throws ExitableException {
+        ExitableKeystoreInstance keyStore = getExitableKeyStoreInstance();
+        keyStore.addCertificates(certificates, this.getTruststoreFile(), this.getPassword());
+    }
+
+    private ExitableKeystoreInstance getExitableKeyStoreInstance() throws KeystoreInstanceException {
+        try {
+            return new ExitableKeystoreInstance(KeyStore.getInstance(keystoreInstanceType));
+        } catch (KeyStoreException e) {
+            LOGGER.error("Cannot initialize Keystore instance");
+            throw new KeystoreInstanceException(e);
+        }
     }
 
 }

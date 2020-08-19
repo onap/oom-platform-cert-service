@@ -17,24 +17,41 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.api;
+package org.onap.oom.truststoremerger.certification.file;
 
-public class ExitableException extends Exception {
+import static org.junit.jupiter.api.Assertions.*;
 
-    private final ExitStatus exitStatus;
+import org.junit.jupiter.api.Test;
 
-    public ExitableException(Throwable cause, ExitStatus exitStatus) {
-        super(cause);
-        this.exitStatus = exitStatus;
+class PemTruststoreTest {
+
+    @Test
+    void pemTruststoreShouldReadCertificatesFromFile() {
     }
 
-    public ExitableException(String message, ExitStatus exitStatus) {
-        super(message);
-        this.exitStatus = exitStatus;
+    @Test
+    void pemTruststoreShouldAddDifferentCertificates() {
+
     }
 
-    public ExitStatus applicationExitStatus() {
-        return exitStatus;
+    @Test
+    void shouldThrowExceptionWhenCannotSaveFile() {
+
+    }
+
+    @Test
+    void shouldThrowExceptionWhenFileNotContainsCertificate() {
+
+    }
+
+    @Test
+    void shouldThrowExceptionWhenCannotReadFile() {
+
+    }
+
+    @Test
+    void shouldThrowExceptionWhenCannotConvertCertificateToPem() {
+
     }
 
 }
