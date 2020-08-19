@@ -17,24 +17,33 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.certification.file.provider;
+package org.onap.oom.truststoremerger.certification.entry;
 
-import java.io.File;
+import static org.assertj.core.api.Assertions.assertThat;
 
-public class FileManager {
+import org.junit.jupiter.api.Test;
 
-    private static final int NOT_FOUND_INDEX = -1;
+class PemAliasGeneratorTest {
+    private final static String PREFIX_ALIAS_NAME = "pem-trusted-certificate-";
 
-    String getExtension(File file) {
-        int extStartIndex = file.getName().lastIndexOf(".");
-        if (extStartIndex == NOT_FOUND_INDEX) {
-            return "";
-        }
-        return file.getName().substring(extStartIndex);
+    @Test
+    void aliasHasPemPrefix() {
+        //given
+        PemAliasGenerator pemAliasGenerator = PemAliasGenerator.getInstance();
+        //when
+        String alias = pemAliasGenerator.getAlias();
+        //then
+        assertThat(alias.contains(PREFIX_ALIAS_NAME)).isTrue();
     }
 
-    boolean checkIfFileExists(File file) {
-        return file.exists();
+    @Test
+    void generatedAliasesHaveUniqNames() {
+        //given
+        PemAliasGenerator pemAliasGenerator = PemAliasGenerator.getInstance();
+        //when
+        String firstAlias = pemAliasGenerator.getAlias();
+        String secondAlias = pemAliasGenerator.getAlias();
+        //then
+        assertThat(firstAlias.equals(secondAlias)).isFalse();
     }
-
 }

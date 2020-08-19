@@ -20,18 +20,47 @@
 package org.onap.oom.truststoremerger.certification.file;
 
 import java.io.File;
-import java.security.cert.Certificate;
-import java.util.Collections;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
 import java.util.List;
+import org.onap.oom.truststoremerger.api.ExitableException;
+import org.onap.oom.truststoremerger.certification.entry.CertificateWithAlias;
+import org.onap.oom.truststoremerger.certification.file.exception.KeystoreInstanceException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class JksTruststore extends TruststoreFileWithPassword {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(JksTruststore.class);
+    private static final String KEYSTORE_INSTANCE_JKS = "JKS";
 
     public JksTruststore(File truststoreFile, String password) {
         super(truststoreFile, password);
     }
 
     @Override
-    public List<Certificate> getCertificates() {
-        return Collections.emptyList();
+    public List<CertificateWithAlias> getCertificates() throws ExitableException {
+
+        ExitableKeystoreInstance keyStore = getExitableKeyStoreInstance();
+        return keyStore.getTruststoreCertificates(this.getTruststoreFile(), this.getPassword());
+
     }
+
+    @Override
+    public void addCertificate(List<CertificateWithAlias> certificates) throws ExitableException {
+
+        ExitableKeystoreInstance keyStore = getExitableKeyStoreInstance();
+        keyStore.addCertificates(certificates, this.getTruststoreFile(), this.getPassword());
+
+    }
+
+    private ExitableKeystoreInstance getExitableKeyStoreInstance() throws KeystoreInstanceException {
+        try {
+            return new ExitableKeystoreInstance(KeyStore.getInstance(KEYSTORE_INSTANCE_JKS));
+        } catch (KeyStoreException e) {
+            LOGGER.error("Cannot initialize Keystore instance");
+            throw new KeystoreInstanceException(e);
+        }
+    }
+
 }

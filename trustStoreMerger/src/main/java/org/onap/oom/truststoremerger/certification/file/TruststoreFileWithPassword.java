@@ -22,6 +22,7 @@ package org.onap.oom.truststoremerger.certification.file;
 import java.io.File;
 
 public abstract class TruststoreFileWithPassword extends TruststoreFile {
+
     private String password;
 
     TruststoreFileWithPassword(File truststoreFile, String password) {
@@ -29,7 +30,9 @@ public abstract class TruststoreFileWithPassword extends TruststoreFile {
         this.password = password;
     }
 
-    public String getPassword(){
+    public String getPassword() {
         return password;
-    };
+    }
+
+    ;
 }
