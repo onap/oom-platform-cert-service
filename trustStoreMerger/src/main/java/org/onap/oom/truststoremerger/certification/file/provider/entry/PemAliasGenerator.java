@@ -17,19 +17,26 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.certification.file;
+package org.onap.oom.truststoremerger.certification.file.provider.entry;
 
-import java.io.File;
 
-public abstract class TruststoreFileWithPassword extends TruststoreFile {
-    private String password;
+import java.util.concurrent.atomic.AtomicInteger;
 
-    TruststoreFileWithPassword(File truststoreFile, String password) {
-        super(truststoreFile);
-        this.password = password;
+public class PemAliasGenerator {
+
+    private static final String PREFIX_ALIAS_NAME = "pem-trusted-certificate-";
+    private static final PemAliasGenerator INSTANCE = new PemAliasGenerator();
+    private static AtomicInteger counter = new AtomicInteger(0);
+
+    private PemAliasGenerator() {
     }
 
-    public String getPassword(){
-        return password;
-    };
+    public static PemAliasGenerator getInstance() {
+        return INSTANCE;
+    }
+
+    public String getAlias() {
+
+        return PREFIX_ALIAS_NAME + counter.getAndIncrement();
+    }
 }

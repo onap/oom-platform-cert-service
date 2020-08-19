@@ -35,5 +35,6 @@ public class ExitableException extends Exception {
 
     public ExitStatus applicationExitStatus() {
         return exitStatus;
-    };
+    }
+
 }
