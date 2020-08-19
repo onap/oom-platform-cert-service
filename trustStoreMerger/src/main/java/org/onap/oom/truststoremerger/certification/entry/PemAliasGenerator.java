@@ -17,24 +17,23 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.certification.file.provider;
+package org.onap.oom.truststoremerger.certification.entry;
 
-import java.io.File;
 
-public class FileManager {
+public class PemAliasGenerator {
 
-    private static final int NOT_FOUND_INDEX = -1;
+    private final static String PREFIX_ALIAS_NAME = "pem-trusted-certificate-";
+    private final static PemAliasGenerator INSTANCE = new PemAliasGenerator();
+    private static int counter = 0;
 
-    String getExtension(File file) {
-        int extStartIndex = file.getName().lastIndexOf(".");
-        if (extStartIndex == NOT_FOUND_INDEX) {
-            return "";
-        }
-        return file.getName().substring(extStartIndex);
+    private PemAliasGenerator() {
     }
 
-    boolean checkIfFileExists(File file) {
-        return file.exists();
+    public static PemAliasGenerator getInstance() {
+        return INSTANCE;
     }
 
+    public String getAlias() {
+        return PREFIX_ALIAS_NAME + counter++;
+    }
 }

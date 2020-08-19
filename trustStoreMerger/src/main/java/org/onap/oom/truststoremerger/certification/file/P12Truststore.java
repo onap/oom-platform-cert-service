@@ -20,19 +20,38 @@
 package org.onap.oom.truststoremerger.certification.file;
 
 import java.io.File;
-import java.security.cert.Certificate;
-import java.util.Collections;
 import java.util.List;
+import org.onap.oom.truststoremerger.api.ExitableException;
+import org.onap.oom.truststoremerger.certification.entry.CertificateWithAlias;
+import org.onap.oom.truststoremerger.certification.file.provider.CertificateStoreController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class P12Truststore extends TruststoreFileWithPassword {
 
-    public P12Truststore(File truststoreFile, String password) {
+    private static final Logger LOGGER = LoggerFactory.getLogger(P12Truststore.class);
+
+    private final CertificateStoreController storeController;
+
+    public P12Truststore(File truststoreFile, String password, CertificateStoreController storeController) {
         super(truststoreFile, password);
+        this.storeController = storeController;
     }
 
     @Override
-    public List<Certificate> getCertificates() {
-        return Collections.emptyList();
+    public List<CertificateWithAlias> getCertificates() throws ExitableException {
+        LOGGER.debug("Reading certificates from file: {} ", this.getTruststoreFile().getPath());
+        return storeController.getTruststoreCertificates();
+    }
+
+    @Override
+    public void addCertificate(List<CertificateWithAlias> certificates) throws ExitableException {
+        storeController.addCertificates(certificates);
+    }
+
+    @Override
+    public void saveFile() throws ExitableException {
+        storeController.saveFile(this.getTruststoreFile(), this.getPassword());
     }
 
 }
