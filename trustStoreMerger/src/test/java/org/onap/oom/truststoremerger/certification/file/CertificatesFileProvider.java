@@ -17,24 +17,26 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.api;
+package org.onap.oom.truststoremerger.certification.file;
 
-public class ExitableException extends Exception {
+import java.io.File;
 
-    private final ExitStatus exitStatus;
+public class CertificatesFileProvider {
 
-    public ExitableException(Throwable cause, ExitStatus exitStatus) {
-        super(cause);
-        this.exitStatus = exitStatus;
+    public static final String TRUSTSTORE_P12_FILE_PATH = "src/test/resources/truststore-p12.p12";
+    public static final String TRUSTSTORE_P12_PASSWORD = "88y9v5D8H3SG6bZWRVHDfOAo";
+    public static final String KEYSTORE_INSTANCE_P12 = "PKCS12";
+    private static final String TRUSTSTORE_P12_TEMPORARY_FILE_PATH = "src/test/resources/truststore-new-p12.p12";
+
+    public static P12Truststore getSampleP12Truststore(){
+        return new P12Truststore(getSampleP12File(), TRUSTSTORE_P12_PASSWORD, KEYSTORE_INSTANCE_P12);
     }
 
-    public ExitableException(String message, ExitStatus exitStatus) {
-        super(message);
-        this.exitStatus = exitStatus;
+    public static P12Truststore getTemporaryP12Truststore(){
+        return new P12Truststore(new File(TRUSTSTORE_P12_TEMPORARY_FILE_PATH), TRUSTSTORE_P12_PASSWORD, KEYSTORE_INSTANCE_P12);
     }
 
-    public ExitStatus applicationExitStatus() {
-        return exitStatus;
+    public static File getSampleP12File(){
+        return new File(TRUSTSTORE_P12_FILE_PATH);
     }
-
 }

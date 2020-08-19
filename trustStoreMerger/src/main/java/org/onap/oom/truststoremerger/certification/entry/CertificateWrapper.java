@@ -17,24 +17,13 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.api;
+package org.onap.oom.truststoremerger.certification.entry;
 
-public class ExitableException extends Exception {
+import java.security.cert.Certificate;
 
-    private final ExitStatus exitStatus;
+public interface CertificateWrapper {
 
-    public ExitableException(Throwable cause, ExitStatus exitStatus) {
-        super(cause);
-        this.exitStatus = exitStatus;
-    }
+    String getAlias();
 
-    public ExitableException(String message, ExitStatus exitStatus) {
-        super(message);
-        this.exitStatus = exitStatus;
-    }
-
-    public ExitStatus applicationExitStatus() {
-        return exitStatus;
-    }
-
+    Certificate getCertificate();
 }
