@@ -22,8 +22,8 @@ package org.onap.oom.truststoremerger.configuration;
 import org.onap.oom.truststoremerger.certification.path.TruststoresPathsProvider;
 import org.onap.oom.truststoremerger.certification.path.TruststoresPathsProviderException;
 
-import static org.onap.oom.truststoremerger.api.ConfigurationEnvs.TRUSTSTORES_ENV;
-import static org.onap.oom.truststoremerger.api.ConfigurationEnvs.TRUSTSTORES_PASSWORDS_ENV;
+import static org.onap.oom.truststoremerger.api.ConfigurationEnvs.TRUSTSTORES_PATHS_ENV;
+import static org.onap.oom.truststoremerger.api.ConfigurationEnvs.TRUSTSTORES_PASSWORDS_PATHS_ENV;
 
 import java.util.List;
 
@@ -42,8 +42,8 @@ public class MergerConfigurationFactory {
 
         if (truststores.size() != truststoresPasswords.size()) {
             throw new MergerConfigurationException(
-                "Size of " + TRUSTSTORES_ENV
-                    + " does not match size of " + TRUSTSTORES_PASSWORDS_ENV + " environment variables");
+                "Size of " + TRUSTSTORES_PATHS_ENV
+                    + " does not match size of " + TRUSTSTORES_PASSWORDS_PATHS_ENV + " environment variables");
         }
 
         return new MergerConfiguration(truststores, truststoresPasswords);

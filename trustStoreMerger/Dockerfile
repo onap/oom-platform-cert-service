@@ -10,4 +10,6 @@ USER truststoreMerger:onap
 
 COPY target/oom-truststore-merger-${VERSION}.jar ./opt/onap/oom/truststoremerger/oom-truststore-merger.jar
 
+USER root
+
 ENTRYPOINT ["java","-jar","./opt/onap/oom/truststoremerger/oom-truststore-merger.jar"]

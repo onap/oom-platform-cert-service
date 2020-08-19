@@ -17,13 +17,14 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.certification.file.provider;
+package org.onap.oom.truststoremerger.certification.file.exception;
 
 import org.onap.oom.truststoremerger.api.ExitStatus;
 import org.onap.oom.truststoremerger.api.ExitableException;
 
-class PasswordReaderException extends ExitableException {
-    PasswordReaderException(String message) {
-        super(message, ExitStatus.PASSWORD_READER_EXCEPTION);
+public class TruststoreFileFactoryException extends ExitableException {
+    public TruststoreFileFactoryException(String message) {
+        super(message, ExitStatus.TRUSTSTORE_FILE_FACTORY_EXCEPTION);
     }
+
 }

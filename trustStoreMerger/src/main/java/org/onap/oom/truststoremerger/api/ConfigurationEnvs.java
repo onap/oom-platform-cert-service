@@ -21,6 +21,6 @@ package org.onap.oom.truststoremerger.api;
 
 public class ConfigurationEnvs {
 
-    public static final String TRUSTSTORES_ENV = "TRUSTSTORES";
-    public static final String TRUSTSTORES_PASSWORDS_ENV = "TRUSTSTORES_PASSWORDS";
+    public static final String TRUSTSTORES_PATHS_ENV = "TRUSTSTORES_PATHS";
+    public static final String TRUSTSTORES_PASSWORDS_PATHS_ENV = "TRUSTSTORES_PASSWORDS_PATHS";
 }

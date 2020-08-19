@@ -33,12 +33,13 @@ class FileManagerTest {
 
     @ParameterizedTest
     @CsvSource(value = {
-            "opt/app/truststore.jks:.jks",
-            "opt/app/truststore.p12:.p12",
-            "opt/app/truststore.pem:.pem",
-            "opt/app/truststore:''",
+        "opt/app/truststore.jks:.jks",
+        "opt/app/truststore.p12:.p12",
+        "opt/app/truststore.pem:.pem",
+        "opt/app/truststore.PEM:.pem",
+        "opt/app/truststore:''",
     }, delimiter = ':')
-    void shouldReturnCorrectExtension(String filePath, String expectedExtension){
+    void shouldReturnCorrectExtension(String filePath, String expectedExtension) {
         String extension = fileManager.getExtension(new File(filePath));
         assertThat(extension).isEqualTo(expectedExtension);
     }
