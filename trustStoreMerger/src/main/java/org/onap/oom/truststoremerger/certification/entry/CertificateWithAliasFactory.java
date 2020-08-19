@@ -17,21 +17,17 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.certification.file.provider;
+package org.onap.oom.truststoremerger.certification.entry;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import org.onap.oom.truststoremerger.certification.file.exception.PasswordReaderException;
+import java.security.cert.Certificate;
 
-public class PasswordReader {
-    private static final String COULD_NOT_READ_PASSWORD_FROM_FILE_MSG_TEMPLATE = "Could not read password from file: %s";
+public class CertificateWithAliasFactory {
 
-    String readPassword(File file) throws PasswordReaderException {
-        try {
-            return Files.readString(file.toPath());
-        } catch (IOException e) {
-            throw new PasswordReaderException(String.format(COULD_NOT_READ_PASSWORD_FROM_FILE_MSG_TEMPLATE, file));
-        }
+    public CertificateWithAlias createCertificateWithAlias(Certificate certificate, String alias) {
+        return new CertificateWithAlias(certificate, alias);
+    }
+
+    public CertificateWithAlias createPemCertificate(Certificate certificate) {
+        return new CertificateWithAlias(certificate, PemAliasGenerator.getInstance().getAlias());
     }
 }

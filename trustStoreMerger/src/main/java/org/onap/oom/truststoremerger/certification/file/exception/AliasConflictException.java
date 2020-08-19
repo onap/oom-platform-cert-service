@@ -17,22 +17,15 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.certification.file;
+package org.onap.oom.truststoremerger.certification.file.exception;
 
-import java.io.File;
-import java.security.cert.Certificate;
-import java.util.Collections;
-import java.util.List;
+import org.onap.oom.truststoremerger.api.ExitStatus;
+import org.onap.oom.truststoremerger.api.ExitableException;
 
-public class P12Truststore extends TruststoreFileWithPassword {
+public class AliasConflictException extends ExitableException {
 
-    public P12Truststore(File truststoreFile, String password) {
-        super(truststoreFile, password);
-    }
-
-    @Override
-    public List<Certificate> getCertificates() {
-        return Collections.emptyList();
+    public AliasConflictException(String message) {
+        super(message, ExitStatus.ALIAS_CONFLICT_EXCEPTION);
     }
 
 }

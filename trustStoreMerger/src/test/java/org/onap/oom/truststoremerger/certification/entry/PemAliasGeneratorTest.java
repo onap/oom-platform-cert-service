@@ -17,29 +17,33 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.certification.file.provider;
+package org.onap.oom.truststoremerger.certification.entry;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-import org.onap.oom.truststoremerger.certification.file.exception.PasswordReaderException;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-
-class PasswordReaderTest {
+class PemAliasGeneratorTest {
+    private final static String PREFIX_ALIAS_NAME = "pem-trusted-certificate-";
 
     @Test
-    void shouldReturnCorrectPasswordFromFile() throws PasswordReaderException {
-        PasswordReader passwordReader = new PasswordReader();
-        String fileData = passwordReader.readPassword(new File("src/test/resources/truststore-jks.pass"));
-        assertThat(fileData).isEqualTo("EOyuFbuYDyq_EhpboM72RHua");
+    void aliasHasPemPrefix() {
+        //given
+        PemAliasGenerator pemAliasGenerator = PemAliasGenerator.getInstance();
+        //when
+        String alias = pemAliasGenerator.getAlias();
+        //then
+        assertThat(alias.contains(PREFIX_ALIAS_NAME)).isTrue();
     }
 
     @Test
-    void shouldThrowExceptionForNonExistingFile() {
-        PasswordReader passwordReader = new PasswordReader();
-        assertThatExceptionOfType(PasswordReaderException.class)
-                .isThrownBy(() -> passwordReader.readPassword(new File("src/test/resources/non-esisting-file.pass")));
+    void generatedAliasesHaveUniqNames() {
+        //given
+        PemAliasGenerator pemAliasGenerator = PemAliasGenerator.getInstance();
+        //when
+        String firstAlias = pemAliasGenerator.getAlias();
+        String secondAlias = pemAliasGenerator.getAlias();
+        //then
+        assertThat(firstAlias.equals(secondAlias)).isFalse();
     }
 }
