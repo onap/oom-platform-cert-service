@@ -17,19 +17,14 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.certification.file;
+package org.onap.oom.truststoremerger.certification.file.exception;
 
-import java.io.File;
+import org.onap.oom.truststoremerger.api.ExitStatus;
+import org.onap.oom.truststoremerger.api.ExitableException;
 
-public abstract class TruststoreFileWithPassword extends TruststoreFile {
-    private String password;
+public class CreateBackupException extends ExitableException {
 
-    TruststoreFileWithPassword(File truststoreFile, String password) {
-        super(truststoreFile);
-        this.password = password;
+    public CreateBackupException(Exception e) {
+        super(e, ExitStatus.CREATE_BACKUP_EXCEPTION);
     }
-
-    public String getPassword(){
-        return password;
-    };
 }

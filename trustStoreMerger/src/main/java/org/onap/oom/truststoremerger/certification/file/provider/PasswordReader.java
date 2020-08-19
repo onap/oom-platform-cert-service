@@ -22,11 +22,12 @@ package org.onap.oom.truststoremerger.certification.file.provider;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import org.onap.oom.truststoremerger.certification.file.exception.PasswordReaderException;
 
 public class PasswordReader {
     private static final String COULD_NOT_READ_PASSWORD_FROM_FILE_MSG_TEMPLATE = "Could not read password from file: %s";
 
-    String readPassword(File file) throws PasswordReaderException {
+    public String readPassword(File file) throws PasswordReaderException {
         try {
             return Files.readString(file.toPath());
         } catch (IOException e) {
