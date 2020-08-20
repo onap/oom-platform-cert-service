@@ -22,6 +22,30 @@
       "revId": "f7359b386272d8a57fa39654c60b1114f29e248c",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9ce68b7_adbd11a1",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/entry/CertificateWithAlias.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-08-20T11:45:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69325da9_b78cdd71",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 3
+      },
+      "revId": "f7359b386272d8a57fa39654c60b1114f29e248c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
