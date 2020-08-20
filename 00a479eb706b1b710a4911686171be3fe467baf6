@@ -131,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "18796dac_3f03e8aa",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/ExitableKeystoreInstance.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-08-20T09:54:56Z",
+      "side": 1,
+      "message": "Alias conflict doesn\u0027t happen during saving, so there is no difference for that. You would be calling addCertificates for each file and then saving it.\n\nFor me keystore should be initialized once in the begining, and loadFile should happen earlier - maybe in constructor.\nThen all files should be appended, and then the base file should be saved.",
+      "parentUuid": "6182f320_d692b11a",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 1
+      },
+      "revId": "00a479eb706b1b710a4911686171be3fe467baf6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "83efd1f8_9e2bbec6",
         "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/ExitableKeystoreInstance.java",
         "patchSetId": 3
