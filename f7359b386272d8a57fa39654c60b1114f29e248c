@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69325da9_b78cdd71",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/entry/CertificateWithAlias.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-08-20T09:56:15Z",
+      "side": 1,
+      "message": "Move this to factory, and keep only one constructor for CertificateWithAlias",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 3
+      },
+      "revId": "f7359b386272d8a57fa39654c60b1114f29e248c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
