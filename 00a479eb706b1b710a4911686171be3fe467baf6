@@ -111,6 +111,30 @@
     },
     {
       "key": {
+        "uuid": "94604401_ae62a32c",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/JksTruststore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-08-20T08:09:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "998da465_df27af25",
+      "range": {
+        "startLine": 38,
+        "startChar": 63,
+        "endLine": 38,
+        "endChar": 83
+      },
+      "revId": "00a479eb706b1b710a4911686171be3fe467baf6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7767aa04_9ec0dc36",
         "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/P12Truststore.java",
         "patchSetId": 3
@@ -134,6 +158,30 @@
     },
     {
       "key": {
+        "uuid": "4ace359e_cbc38c7e",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/P12Truststore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-08-20T08:09:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7767aa04_9ec0dc36",
+      "range": {
+        "startLine": 37,
+        "startChar": 63,
+        "endLine": 37,
+        "endChar": 91
+      },
+      "revId": "00a479eb706b1b710a4911686171be3fe467baf6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47609490_c32aab7b",
         "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/PemTruststore.java",
         "patchSetId": 3
@@ -154,6 +202,30 @@
       "revId": "00a479eb706b1b710a4911686171be3fe467baf6",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4850e3d_79f54cba",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/PemTruststore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-08-20T08:09:54Z",
+      "side": 1,
+      "message": "Ok, that\u0027s how it should work.",
+      "parentUuid": "47609490_c32aab7b",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 85,
+        "endChar": 5
+      },
+      "revId": "00a479eb706b1b710a4911686171be3fe467baf6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
