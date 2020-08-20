@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6fd6baa1_5635f8e5",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/entry/AliasCertificateWrapper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-08-20T09:38:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "129c7e99_3b30e078",
+      "revId": "00a479eb706b1b710a4911686171be3fe467baf6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efbdbf78_fb026ef9",
         "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/ExitableKeystoreInstance.java",
         "patchSetId": 3
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "83e8b036_197805e9",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/ExitableKeystoreInstance.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-08-20T09:38:18Z",
+      "side": 1,
+      "message": "I will prefer to, but I am afraid that Keystore instance not allow on it https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/security/KeyStore.html#load(java.io.InputStream,char%5B%5D).Documentation: \"Note that if this keystore has already been loaded, it is reinitialized and loaded again from the given input stream.\" I think there is a risk of incorrect files loaded.",
+      "parentUuid": "efbdbf78_fb026ef9",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 1
+      },
+      "revId": "00a479eb706b1b710a4911686171be3fe467baf6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "83946fc3_a72f2768",
         "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/ExitableKeystoreInstance.java",
         "patchSetId": 3
@@ -53,6 +95,30 @@
       "writtenOn": "2020-08-20T07:14:31Z",
       "side": 1,
       "message": "Would prefer if file was saved once.",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 1
+      },
+      "revId": "00a479eb706b1b710a4911686171be3fe467baf6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6182f320_d692b11a",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/ExitableKeystoreInstance.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-08-20T09:38:18Z",
+      "side": 1,
+      "message": "If we collect certificates from all file and try to save, and our logic detect alias conflict we haven\u0027t knowledge about which file contains conflicted alias. I think about situation if we have e.g. 10 files with 10 alias each. If we saving step by step and detect alias conflict we can see in logs which file contains conflicted alias.",
+      "parentUuid": "83946fc3_a72f2768",
       "range": {
         "startLine": 64,
         "startChar": 0,
