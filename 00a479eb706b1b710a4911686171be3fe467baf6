@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "129c7e99_3b30e078",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/entry/AliasCertificateWrapper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-08-20T07:14:31Z",
+      "side": 1,
+      "message": "Wierd inheritance for certificateWrappers.\nOverally classes are the same - same implementation, only different constructors.\nFor me better way would be having two classes: CertificateWithAlias and CertificateWithAliasFactory having two methods - createPemCertificateWithAlias(Certificate certificate) and createCertificateWithAlias(Certificate certificate, String alias).",
+      "revId": "00a479eb706b1b710a4911686171be3fe467baf6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efbdbf78_fb026ef9",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/ExitableKeystoreInstance.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-08-20T07:14:31Z",
+      "side": 1,
+      "message": "Would prefer if file was loaded once.",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 1
+      },
+      "revId": "00a479eb706b1b710a4911686171be3fe467baf6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83946fc3_a72f2768",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/ExitableKeystoreInstance.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-08-20T07:14:31Z",
+      "side": 1,
+      "message": "Would prefer if file was saved once.",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 1
+      },
+      "revId": "00a479eb706b1b710a4911686171be3fe467baf6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83efd1f8_9e2bbec6",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/ExitableKeystoreInstance.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-08-20T07:14:31Z",
+      "side": 1,
+      "message": "Wrapped",
+      "range": {
+        "startLine": 110,
+        "startChar": 40,
+        "endLine": 110,
+        "endChar": 49
+      },
+      "revId": "00a479eb706b1b710a4911686171be3fe467baf6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "998da465_df27af25",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/JksTruststore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-08-20T07:14:31Z",
+      "side": 1,
+      "message": "Don\u0027t see a reason to provide keystoreType as constructor parameter. Can JksTruststore have different keystore types?",
+      "range": {
+        "startLine": 38,
+        "startChar": 63,
+        "endLine": 38,
+        "endChar": 83
+      },
+      "revId": "00a479eb706b1b710a4911686171be3fe467baf6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7767aa04_9ec0dc36",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/P12Truststore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-08-20T07:14:31Z",
+      "side": 1,
+      "message": "Same as JksTruststore",
+      "range": {
+        "startLine": 37,
+        "startChar": 63,
+        "endLine": 37,
+        "endChar": 91
+      },
+      "revId": "00a479eb706b1b710a4911686171be3fe467baf6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47609490_c32aab7b",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/PemTruststore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-08-20T07:14:31Z",
+      "side": 1,
+      "message": "Not sure if this is correct implementation of adding certificates to pem file. As far as I know the file looks like:\n\n -----BEGIN CERTIFICATE-----\n DATA BYTES\n -----END CERTIFICATE-----\n\nwouldn\u0027t it just append certificates below the -----END CERTIFICATE-----?",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 85,
+        "endChar": 5
+      },
+      "revId": "00a479eb706b1b710a4911686171be3fe467baf6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
