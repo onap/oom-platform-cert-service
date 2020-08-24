@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e319db95_c5502bbe",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/provider/TruststoreFileFactory.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-08-24T13:41:37Z",
+      "side": 1,
+      "message": "I think we dont need it. I would just log here with proper level that provided file extension is not supported.\nWe will have a bit shorter exceptions list here. \nOr second idea is to remain exception but change create  to trow \"ExitableException\"\n@pbaniewski, others What do you think?",
+      "range": {
+        "startLine": 69,
+        "startChar": 15,
+        "endLine": 70,
+        "endChar": 84
+      },
+      "revId": "baee0429c37b2df5923bc1aa6948b98eb799c6c6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
