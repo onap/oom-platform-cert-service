@@ -36,6 +36,46 @@
     },
     {
       "key": {
+        "uuid": "3fef3f12_ae47ca8b",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/PemTruststore.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-08-25T10:46:28Z",
+      "side": 1,
+      "message": "Tomasz you are repeating same code which leads to spaghetti code. Please look at getRawCertificates(File file) function and find common elements. Extract proper method and reuse just one.",
+      "range": {
+        "startLine": 108,
+        "startChar": 0,
+        "endLine": 112,
+        "endChar": 5
+      },
+      "revId": "389ce069f47cb26a306b4b78777556ba8efa09af",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fda7364e_3d43a331",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/exception/AliasConflictException.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-08-25T10:46:28Z",
+      "side": 1,
+      "message": "We have created package for exceptions but not all of them are there. Why?",
+      "revId": "389ce069f47cb26a306b4b78777556ba8efa09af",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "62ba1506_a62ed185",
         "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/provider/TruststoreFileFactory.java",
         "patchSetId": 9
@@ -47,6 +87,29 @@
       "writtenOn": "2020-08-25T10:01:40Z",
       "side": 1,
       "message": "Switch doesn\u0027t ignore case so file with .JKS won\u0027t be recognized. Needs to be implemented in FileManager.",
+      "revId": "389ce069f47cb26a306b4b78777556ba8efa09af",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6239f975_56cfd6ac",
+        "filename": "trustStoreMerger/src/test/java/org/onap/oom/truststoremerger/certification/file/CertificatesTestFileManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-08-25T10:46:28Z",
+      "side": 1,
+      "message": "Would not be better TestCertificatesProvider",
+      "range": {
+        "startLine": 32,
+        "startChar": 13,
+        "endLine": 32,
+        "endChar": 40
+      },
       "revId": "389ce069f47cb26a306b4b78777556ba8efa09af",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
