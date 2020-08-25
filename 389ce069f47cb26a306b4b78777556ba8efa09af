@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42134fc8_d504f7b0",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/P12Truststore.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-08-25T10:01:40Z",
+      "side": 1,
+      "message": "The same methods as in JksTruststore (\u003d\u003d code duplication). I suggest to extract them to base class (e.g. JavaTruststore) and use it in both JKS and P12 :)",
+      "revId": "389ce069f47cb26a306b4b78777556ba8efa09af",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e53ee655_8f2b99d1",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/PemTruststore.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-08-25T10:01:40Z",
+      "side": 1,
+      "message": "I don\u0027t see a logic which filters out private keys. Is this within BC implementation?",
+      "revId": "389ce069f47cb26a306b4b78777556ba8efa09af",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62ba1506_a62ed185",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/provider/TruststoreFileFactory.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-08-25T10:01:40Z",
+      "side": 1,
+      "message": "Switch doesn\u0027t ignore case so file with .JKS won\u0027t be recognized. Needs to be implemented in FileManager.",
+      "revId": "389ce069f47cb26a306b4b78777556ba8efa09af",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
