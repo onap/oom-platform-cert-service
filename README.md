@@ -7,9 +7,10 @@ More information about the project and all its functionalities you can find unde
     https://wiki.onap.org/display/DW/OOM+Certification+Service
     ``` 
   
-Project consists of two submodules:
+Project consists of three submodules:
 1. oom-certservice-api
 2. oom-certservice-client
+3. oom-truststore-merger
 
 Detailed information about submodules can be found in ```README.md``` in their directories.
 
