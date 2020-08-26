@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "242341e0_7e0a919d",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/P12Truststore.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-08-26T06:53:54Z",
+      "side": 1,
+      "message": "I moved all methods to common JavaTruststore",
+      "parentUuid": "42134fc8_d504f7b0",
+      "revId": "389ce069f47cb26a306b4b78777556ba8efa09af",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e53ee655_8f2b99d1",
         "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/PemTruststore.java",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2020-08-25T10:01:40Z",
       "side": 1,
       "message": "I don\u0027t see a logic which filters out private keys. Is this within BC implementation?",
+      "revId": "389ce069f47cb26a306b4b78777556ba8efa09af",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37693758_cd34cf56",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/PemTruststore.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-08-26T06:53:54Z",
+      "side": 1,
+      "message": "It is provided by Bouncy Castle Provider. I checked it and PRIVATE KEY is omit.",
+      "parentUuid": "e53ee655_8f2b99d1",
       "revId": "389ce069f47cb26a306b4b78777556ba8efa09af",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "ba2ea8b3_d2aa3895",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/PemTruststore.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-08-26T06:53:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fef3f12_ae47ca8b",
+      "range": {
+        "startLine": 108,
+        "startChar": 0,
+        "endLine": 112,
+        "endChar": 5
+      },
+      "revId": "389ce069f47cb26a306b4b78777556ba8efa09af",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fda7364e_3d43a331",
         "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/exception/AliasConflictException.java",
         "patchSetId": 9
@@ -70,6 +130,24 @@
       "writtenOn": "2020-08-25T10:46:28Z",
       "side": 1,
       "message": "We have created package for exceptions but not all of them are there. Why?",
+      "revId": "389ce069f47cb26a306b4b78777556ba8efa09af",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47e4cac3_7d2d42ea",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/exception/AliasConflictException.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-08-26T06:53:54Z",
+      "side": 1,
+      "message": "It is created by this MR. I moved all necessary exceptions to this package.",
+      "parentUuid": "fda7364e_3d43a331",
       "revId": "389ce069f47cb26a306b4b78777556ba8efa09af",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "154ac3aa_d4a2e26e",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/provider/TruststoreFileFactory.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-08-26T06:53:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62ba1506_a62ed185",
+      "revId": "389ce069f47cb26a306b4b78777556ba8efa09af",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6239f975_56cfd6ac",
         "filename": "trustStoreMerger/src/test/java/org/onap/oom/truststoremerger/certification/file/CertificatesTestFileManager.java",
         "patchSetId": 9
@@ -113,6 +209,30 @@
       "revId": "389ce069f47cb26a306b4b78777556ba8efa09af",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95a6bfea_505193cb",
+        "filename": "trustStoreMerger/src/test/java/org/onap/oom/truststoremerger/certification/file/CertificatesTestFileManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-08-26T06:53:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6239f975_56cfd6ac",
+      "range": {
+        "startLine": 32,
+        "startChar": 13,
+        "endLine": 32,
+        "endChar": 40
+      },
+      "revId": "389ce069f47cb26a306b4b78777556ba8efa09af",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
