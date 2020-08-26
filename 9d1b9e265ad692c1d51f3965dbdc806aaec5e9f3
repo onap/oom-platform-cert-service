@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a025422a_7aae6933",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/PemTruststore.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-08-26T08:04:49Z",
+      "side": 1,
+      "message": "Consider moving wrap logic (with CertificateWithAliasFactory) to PemManipulator.\n\nThis way PemTruststore will be more similar to JavaTruststore when it comes to responsibility and dependencies, same with PemManipulator and KeystoreController.",
+      "revId": "9d1b9e265ad692c1d51f3965dbdc806aaec5e9f3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5458d2fb_8d6caa9d",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/PemTruststore.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-08-26T08:04:49Z",
+      "side": 1,
+      "message": "File does not contain",
+      "range": {
+        "startLine": 62,
+        "startChar": 26,
+        "endLine": 62,
+        "endChar": 43
+      },
+      "revId": "9d1b9e265ad692c1d51f3965dbdc806aaec5e9f3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ea4c250_8f6f410a",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/PemTruststore.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-08-26T08:04:49Z",
+      "side": 1,
+      "message": "PEM file does not contain",
+      "range": {
+        "startLine": 63,
+        "startChar": 50,
+        "endLine": 63,
+        "endChar": 71
+      },
+      "revId": "9d1b9e265ad692c1d51f3965dbdc806aaec5e9f3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39f55008_994ea994",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/provider/CertificateStoreController.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-08-26T08:04:49Z",
+      "side": 1,
+      "message": "inspect/check",
+      "range": {
+        "startLine": 101,
+        "startChar": 33,
+        "endLine": 101,
+        "endChar": 44
+      },
+      "revId": "9d1b9e265ad692c1d51f3965dbdc806aaec5e9f3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a73c9ab9_60149dfd",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/provider/CertificateStoreController.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-08-26T08:04:49Z",
+      "side": 1,
+      "message": "Why not just - Collections.list(keyStore.aliases())?",
+      "range": {
+        "startLine": 130,
+        "startChar": 35,
+        "endLine": 130,
+        "endChar": 88
+      },
+      "revId": "9d1b9e265ad692c1d51f3965dbdc806aaec5e9f3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "750bea2e_6ef5097c",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/provider/PemManipulator.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-08-26T08:04:49Z",
+      "side": 1,
+      "message": "does not contain",
+      "range": {
+        "startLine": 51,
+        "startChar": 59,
+        "endLine": 51,
+        "endChar": 71
+      },
+      "revId": "9d1b9e265ad692c1d51f3965dbdc806aaec5e9f3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4bac5a8_41a61653",
+        "filename": "trustStoreMerger/src/test/java/org/onap/oom/truststoremerger/certification/file/PemTruststoreTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-08-26T08:04:49Z",
+      "side": 1,
+      "message": "Consider adding test case showing that when PEM contains key it is skipped in getCertificates()",
+      "revId": "9d1b9e265ad692c1d51f3965dbdc806aaec5e9f3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
