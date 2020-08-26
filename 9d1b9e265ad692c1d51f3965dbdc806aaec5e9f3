@@ -531,6 +531,30 @@
     },
     {
       "key": {
+        "uuid": "4b1b14bf_bd6761ad",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/TruststoreFile.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-08-26T13:33:11Z",
+      "side": 1,
+      "message": "Check now.",
+      "parentUuid": "2e9646a7_57f5cbce",
+      "range": {
+        "startLine": 48,
+        "startChar": 16,
+        "endLine": 48,
+        "endChar": 33
+      },
+      "revId": "9d1b9e265ad692c1d51f3965dbdc806aaec5e9f3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39f55008_994ea994",
         "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/provider/CertificateStoreController.java",
         "patchSetId": 10
