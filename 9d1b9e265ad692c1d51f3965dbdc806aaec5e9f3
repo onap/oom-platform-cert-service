@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "8d5b27d6_75eabb39",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/entry/PemAliasGenerator.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-08-26T09:44:12Z",
+      "side": 1,
+      "message": "wrong modifier order it should be static final, not final static.",
+      "revId": "9d1b9e265ad692c1d51f3965dbdc806aaec5e9f3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c3f120c_76da4980",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/entry/PemAliasGenerator.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-08-26T09:44:12Z",
+      "side": 1,
+      "message": "potential error case. What will happen if more than one thread will invoke this method?\nMethod should be marked as synchronized or you should use AtomicInteger",
+      "revId": "9d1b9e265ad692c1d51f3965dbdc806aaec5e9f3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a025422a_7aae6933",
         "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/PemTruststore.java",
         "patchSetId": 10
@@ -128,6 +162,23 @@
         "endLine": 51,
         "endChar": 71
       },
+      "revId": "9d1b9e265ad692c1d51f3965dbdc806aaec5e9f3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b46bce9_60bc7c7b",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/provider/PemManipulator.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-08-26T09:44:12Z",
+      "side": 1,
+      "message": "wrong method name. Method which returns boolean should start from is,are or has",
       "revId": "9d1b9e265ad692c1d51f3965dbdc806aaec5e9f3",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
