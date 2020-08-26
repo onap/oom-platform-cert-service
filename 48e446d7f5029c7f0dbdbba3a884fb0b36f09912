@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37a09fa4_02f0bfa0",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/provider/JavaCertificateStoreController.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-08-26T13:17:16Z",
+      "side": 1,
+      "message": "Instance variables should be at the bottom.",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 36
+      },
+      "revId": "48e446d7f5029c7f0dbdbba3a884fb0b36f09912",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d663e7e_8d3798fb",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/provider/PemCertificateController.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-08-26T13:17:16Z",
+      "side": 1,
+      "message": "move to the top (next line after class declaration)",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 60
+      },
+      "revId": "48e446d7f5029c7f0dbdbba3a884fb0b36f09912",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9ebf0c0_720f5147",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/provider/PemCertificateController.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-08-26T13:17:16Z",
+      "side": 1,
+      "message": "instance variables should be at the bottom of the list.\nSome general rules: https://www.oracle.com/java/technologies/javase/codeconventions-fileorganization.html",
+      "range": {
+        "startLine": 54,
+        "startChar": 4,
+        "endLine": 54,
+        "endChar": 28
+      },
+      "revId": "48e446d7f5029c7f0dbdbba3a884fb0b36f09912",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dca8ef6d_f311e7df",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/provider/PemCertificateController.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-08-26T13:17:16Z",
+      "side": 1,
+      "message": "Allign with definded ordering rules:\nhttps://www.oracle.com/java/technologies/javase/codeconventions-fileorganization.html",
+      "range": {
+        "startLine": 128,
+        "startChar": 3,
+        "endLine": 143,
+        "endChar": 5
+      },
+      "revId": "48e446d7f5029c7f0dbdbba3a884fb0b36f09912",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
