@@ -22,6 +22,30 @@
       "revId": "e142d0e8e1b72d824d31922a1e03a6ec2c6138df",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b6d4830_48fe4eed",
+        "filename": "trustStoreMerger/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2020-08-26T10:41:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5be9fbf_a48d0576",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 11
+      },
+      "revId": "e142d0e8e1b72d824d31922a1e03a6ec2c6138df",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
