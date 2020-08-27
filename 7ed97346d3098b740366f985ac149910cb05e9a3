@@ -48,6 +48,121 @@
     },
     {
       "key": {
+        "uuid": "57cefbe6_8e36a2e4",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/model/PemTruststore.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 2807
+      },
+      "writtenOn": "2020-08-27T09:24:50Z",
+      "side": 1,
+      "message": "Get rid of those empty lines.",
+      "range": {
+        "startLine": 56,
+        "startChar": 5,
+        "endLine": 60,
+        "endChar": 0
+      },
+      "revId": "7ed97346d3098b740366f985ac149910cb05e9a3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c412d021_0c7e1e16",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/model/Truststore.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 2807
+      },
+      "writtenOn": "2020-08-27T09:24:50Z",
+      "side": 1,
+      "message": "Consider to make it final.",
+      "range": {
+        "startLine": 36,
+        "startChar": 12,
+        "endLine": 36,
+        "endChar": 16
+      },
+      "revId": "7ed97346d3098b740366f985ac149910cb05e9a3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18594de9_890e0f59",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/provider/CertificateStoreControllerFactory.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 2807
+      },
+      "writtenOn": "2020-08-27T09:24:50Z",
+      "side": 1,
+      "message": "Consider exporting these constants into the class or enum with public access modifier to use them in entire TrustStoreMerger project.",
+      "range": {
+        "startLine": 32,
+        "startChar": 4,
+        "endLine": 33,
+        "endChar": 59
+      },
+      "revId": "7ed97346d3098b740366f985ac149910cb05e9a3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "478529c8_10b284e0",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/provider/CertificateStoreControllerFactory.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 2807
+      },
+      "writtenOn": "2020-08-27T09:24:50Z",
+      "side": 1,
+      "message": "Consider to place it on top.",
+      "range": {
+        "startLine": 34,
+        "startChar": 4,
+        "endLine": 34,
+        "endChar": 106
+      },
+      "revId": "7ed97346d3098b740366f985ac149910cb05e9a3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "232be82f_bbac9278",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/provider/FileManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 2807
+      },
+      "writtenOn": "2020-08-27T09:24:50Z",
+      "side": 1,
+      "message": "INDEX_NOT_FOUND - sounds better?",
+      "range": {
+        "startLine": 26,
+        "startChar": 29,
+        "endLine": 26,
+        "endChar": 44
+      },
+      "revId": "7ed97346d3098b740366f985ac149910cb05e9a3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "73bc83b8_d7d401e7",
         "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/provider/JavaCertificateStoreController.java",
         "patchSetId": 14
@@ -94,6 +209,75 @@
     },
     {
       "key": {
+        "uuid": "6a4c8eb8_9a31ac3d",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/provider/PemCertificateController.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 2807
+      },
+      "writtenOn": "2020-08-27T09:24:50Z",
+      "side": 1,
+      "message": "This string constant occurs many times in the project, consider putting it in one place.",
+      "range": {
+        "startLine": 49,
+        "startChar": 49,
+        "endLine": 49,
+        "endChar": 56
+      },
+      "revId": "7ed97346d3098b740366f985ac149910cb05e9a3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c171a0b1_a3820bab",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/provider/PemCertificateController.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 2807
+      },
+      "writtenOn": "2020-08-27T09:24:50Z",
+      "side": 1,
+      "message": "The same like above.",
+      "range": {
+        "startLine": 50,
+        "startChar": 58,
+        "endLine": 50,
+        "endChar": 60
+      },
+      "revId": "7ed97346d3098b740366f985ac149910cb05e9a3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7da070f7_a44b6082",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/provider/PemCertificateController.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 2807
+      },
+      "writtenOn": "2020-08-27T09:24:50Z",
+      "side": 1,
+      "message": "Consider to make it final",
+      "range": {
+        "startLine": 54,
+        "startChar": 39,
+        "endLine": 54,
+        "endChar": 60
+      },
+      "revId": "7ed97346d3098b740366f985ac149910cb05e9a3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca211209_620bb3f9",
         "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/provider/PemCertificateController.java",
         "patchSetId": 14
@@ -110,6 +294,29 @@
         "startChar": 16,
         "endLine": 90,
         "endChar": 30
+      },
+      "revId": "7ed97346d3098b740366f985ac149910cb05e9a3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e72b63a_ac27a7f4",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/path/TruststoresPathsProvider.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 2807
+      },
+      "writtenOn": "2020-08-27T09:24:50Z",
+      "side": 1,
+      "message": "Consider to make them final.",
+      "range": {
+        "startLine": 34,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 40
       },
       "revId": "7ed97346d3098b740366f985ac149910cb05e9a3",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
