@@ -321,6 +321,23 @@
       "revId": "7ed97346d3098b740366f985ac149910cb05e9a3",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89c949b2_80194383",
+        "filename": "trustStoreMerger/src/test/java/org/onap/oom/truststoremerger/certification/entry/PemAliasGeneratorTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-08-27T09:41:30Z",
+      "side": 1,
+      "message": "consider following:\n\nint n \u003d 1000; // suitable high number\nSet\u003cString\u003e aliases;\n\nfor(int i; i\u003cn; i++) {\n   aliases.add(generator.generateAlias());\n}\n\nassertThat(aliases).hasSize(n);",
+      "revId": "7ed97346d3098b740366f985ac149910cb05e9a3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
