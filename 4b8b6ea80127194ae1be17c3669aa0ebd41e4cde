@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c66de33f_9f204cd3",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/provider/PemCertificateController.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-08-27T12:17:55Z",
+      "side": 1,
+      "message": "make package private",
+      "range": {
+        "startLine": 88,
+        "startChar": 2,
+        "endLine": 105,
+        "endChar": 5
+      },
+      "revId": "4b8b6ea80127194ae1be17c3669aa0ebd41e4cde",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
