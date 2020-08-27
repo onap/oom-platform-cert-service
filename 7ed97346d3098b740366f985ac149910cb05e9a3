@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00114202_0a547d72",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/model/JavaTruststore.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-08-27T08:01:00Z",
+      "side": 1,
+      "message": "Missing logging in methods, check PemTruststore.java for them.",
+      "range": {
+        "startLine": 54,
+        "startChar": 4,
+        "endLine": 61,
+        "endChar": 5
+      },
+      "revId": "7ed97346d3098b740366f985ac149910cb05e9a3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "445dfc85_f4bb0bb3",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/model/PemTruststore.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-08-27T08:01:00Z",
+      "side": 1,
+      "message": "It not true. I would say: \"Adding certificates for saving to file\" or something similar.",
+      "range": {
+        "startLine": 48,
+        "startChar": 22,
+        "endLine": 48,
+        "endChar": 49
+      },
+      "revId": "7ed97346d3098b740366f985ac149910cb05e9a3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73bc83b8_d7d401e7",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/provider/JavaCertificateStoreController.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-08-27T08:01:00Z",
+      "side": 1,
+      "message": "Extract common interface with PemCertificateStoreController.java.\nsaveFile, getNotEmptyCertList ..., addCertificates",
+      "range": {
+        "startLine": 41,
+        "startChar": 13,
+        "endLine": 41,
+        "endChar": 43
+      },
+      "revId": "7ed97346d3098b740366f985ac149910cb05e9a3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6411314_cf425621",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/provider/JavaCertificateStoreController.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-08-27T08:01:00Z",
+      "side": 1,
+      "message": "Add proper Exception as is depicted in graph: https://wiki.onap.org/display/DW/DCAE+CertService+integration#DCAECertServiceintegration-Option1(DCAEextrainitcontainer(akatrustmerger))\nMake common naming with PemCertificateStoreController.java.",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 92
+      },
+      "revId": "7ed97346d3098b740366f985ac149910cb05e9a3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca211209_620bb3f9",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/provider/PemCertificateController.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-08-27T08:01:00Z",
+      "side": 1,
+      "message": "rename it to addCertificates\nWe have similar method in JavaCertificateStoreController:\npublic List\u003cCertificateWithAlias\u003e getCertificates() throws ExitableException {",
+      "range": {
+        "startLine": 90,
+        "startChar": 16,
+        "endLine": 90,
+        "endChar": 30
+      },
+      "revId": "7ed97346d3098b740366f985ac149910cb05e9a3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
