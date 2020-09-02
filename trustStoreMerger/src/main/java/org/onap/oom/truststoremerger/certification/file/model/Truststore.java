@@ -24,29 +24,38 @@ import java.io.FileOutputStream;
 import java.nio.file.Files;
 import java.util.List;
 import org.onap.oom.truststoremerger.api.ExitableException;
-import org.onap.oom.truststoremerger.certification.file.provider.entry.CertificateWithAlias;
 import org.onap.oom.truststoremerger.certification.file.exception.CreateBackupException;
+import org.onap.oom.truststoremerger.certification.file.provider.CertificateController;
+import org.onap.oom.truststoremerger.certification.file.provider.entry.CertificateWithAlias;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class Truststore {
+public class Truststore {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Truststore.class);
     private static final String BACKUP_EXTENSION = ".bak";
-    private final File file;
 
-    Truststore(File file) {
+    private final File file;
+    private final CertificateController certController;
+
+    public Truststore(File file, CertificateController certController) {
         this.file = file;
+        this.certController = certController;
     }
 
-    public abstract List<CertificateWithAlias> getCertificates() throws ExitableException;
+    public List<CertificateWithAlias> getCertificates() throws ExitableException {
+        LOGGER.debug("Attempt ro read certificates from file: {}", file.getPath());
+        return certController.getNotEmptyCertificateList();
+    }
 
-    public abstract void addCertificate(List<CertificateWithAlias> certificates) throws ExitableException;
+    public void addCertificate(List<CertificateWithAlias> certificates) throws ExitableException {
+        LOGGER.debug("Attempt to add certificates for saving to file");
+        certController.addCertificates(certificates);
+    }
 
-    public abstract void saveFile() throws ExitableException;
-
-    public File getFile() {
-        return file;
+    public void saveFile() throws ExitableException {
+        LOGGER.debug("Attempt to save file: {}", file.getPath());
+        certController.saveFile();
     }
 
     public void createBackup() throws CreateBackupException {
@@ -55,8 +64,12 @@ public abstract class Truststore {
         try (FileOutputStream fileOutputStream = new FileOutputStream(backupFilePath)) {
             Files.copy(file.toPath(), fileOutputStream);
         } catch (Exception e) {
-            LOGGER.error("Cannot create backup of file: {} ", getFile().getPath());
+            LOGGER.error("Cannot create backup of file: {} ", file.getPath());
             throw new CreateBackupException(e);
         }
+    }
+
+    File getFile() {
+        return file;
     }
 }

@@ -28,19 +28,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import org.onap.oom.truststoremerger.api.ExitableException;
-import org.onap.oom.truststoremerger.certification.file.provider.entry.CertificateWithAlias;
-import org.onap.oom.truststoremerger.certification.file.provider.entry.CertificateWithAliasFactory;
 import org.onap.oom.truststoremerger.certification.file.exception.AliasConflictException;
-import org.onap.oom.truststoremerger.certification.file.exception.TruststoreDataOperationException;
 import org.onap.oom.truststoremerger.certification.file.exception.LoadTruststoreException;
 import org.onap.oom.truststoremerger.certification.file.exception.MissingTruststoreException;
+import org.onap.oom.truststoremerger.certification.file.exception.TruststoreDataOperationException;
 import org.onap.oom.truststoremerger.certification.file.exception.WriteTruststoreFileException;
+import org.onap.oom.truststoremerger.certification.file.provider.entry.CertificateWithAlias;
+import org.onap.oom.truststoremerger.certification.file.provider.entry.CertificateWithAliasFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class JavaCertificateStoreController implements CertificateController {
+public class JavaCertificateController implements CertificateController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(JavaCertificateStoreController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(JavaCertificateController.class);
 
     private final CertificateWithAliasFactory factory = new CertificateWithAliasFactory();
     private final KeyStore keyStore;
@@ -48,7 +48,7 @@ public class JavaCertificateStoreController implements CertificateController {
     private final String password;
 
 
-    public JavaCertificateStoreController(KeyStore keyStore, File storeFile, String password) {
+    public JavaCertificateController(KeyStore keyStore, File storeFile, String password) {
         this.keyStore = keyStore;
         this.storeFile = storeFile;
         this.password = password;
@@ -64,7 +64,7 @@ public class JavaCertificateStoreController implements CertificateController {
 
     public void addCertificates(List<CertificateWithAlias> certificatesWithAliases)
         throws ExitableException {
-        if (getTruststoreAliasesList().isEmpty()){
+        if (getTruststoreAliasesList().isEmpty()) {
             throw new MissingTruststoreException("Missing certificate aliases in file: " + storeFile.getPath());
         }
         for (CertificateWithAlias certificate : certificatesWithAliases) {
