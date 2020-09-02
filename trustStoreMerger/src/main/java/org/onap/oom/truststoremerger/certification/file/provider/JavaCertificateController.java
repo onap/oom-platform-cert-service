@@ -38,9 +38,9 @@ import org.onap.oom.truststoremerger.certification.file.provider.entry.Certifica
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class JavaCertificateStoreController implements CertificateController {
+public class JavaCertificateController implements CertificateController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(JavaCertificateStoreController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(JavaCertificateController.class);
 
     private final CertificateWithAliasFactory factory = new CertificateWithAliasFactory();
     private final KeyStore keyStore;
@@ -48,13 +48,20 @@ public class JavaCertificateStoreController implements CertificateController {
     private final String password;
 
 
-    public JavaCertificateStoreController(KeyStore keyStore, File storeFile, String password) {
+    private JavaCertificateController(KeyStore keyStore, File storeFile, String password) {
         this.keyStore = keyStore;
         this.storeFile = storeFile;
         this.password = password;
     }
 
-    public List<CertificateWithAlias> getNotEmptyCertificateList() throws ExitableException {
+    public static JavaCertificateController createWithLoadingFile(KeyStore keyStore, File storeFile, String password)
+        throws LoadTruststoreException {
+        JavaCertificateController javaCertController = new JavaCertificateController(keyStore, storeFile, password);
+        javaCertController.loadFile();
+        return javaCertController;
+    }
+
+    public List<CertificateWithAlias> getCertificates() throws ExitableException {
         List<String> aliases = getTruststoreAliases();
         if (aliases.isEmpty()) {
             throw new MissingTruststoreException("Missing certificate aliases in file: " + storeFile.getPath());
@@ -81,7 +88,7 @@ public class JavaCertificateStoreController implements CertificateController {
         }
     }
 
-    public void loadFile() throws LoadTruststoreException {
+    private void loadFile() throws LoadTruststoreException {
         try {
             keyStore.load(new FileInputStream(this.storeFile), this.password.toCharArray());
         } catch (Exception e) {

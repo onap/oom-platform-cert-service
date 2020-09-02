@@ -25,7 +25,7 @@ import org.onap.oom.truststoremerger.certification.file.provider.entry.Certifica
 
 public interface CertificateController {
 
-    List<CertificateWithAlias> getNotEmptyCertificateList() throws ExitableException;
+    List<CertificateWithAlias> getCertificates() throws ExitableException;
 
     void addCertificates(List<CertificateWithAlias> certificates) throws ExitableException;
 

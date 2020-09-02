@@ -37,11 +37,11 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.openssl.jcajce.JcaMiscPEMGenerator;
 import org.bouncycastle.util.io.pem.PemObjectGenerator;
 import org.bouncycastle.util.io.pem.PemWriter;
-import org.onap.oom.truststoremerger.certification.file.provider.entry.CertificateWithAlias;
-import org.onap.oom.truststoremerger.certification.file.provider.entry.CertificateWithAliasFactory;
 import org.onap.oom.truststoremerger.certification.file.exception.MissingTruststoreException;
 import org.onap.oom.truststoremerger.certification.file.exception.TruststoreDataOperationException;
 import org.onap.oom.truststoremerger.certification.file.exception.WriteTruststoreFileException;
+import org.onap.oom.truststoremerger.certification.file.provider.entry.CertificateWithAlias;
+import org.onap.oom.truststoremerger.certification.file.provider.entry.CertificateWithAliasFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -59,7 +59,7 @@ public class PemCertificateController implements CertificateController {
         this.file = file;
     }
 
-    public List<CertificateWithAlias> getNotEmptyCertificateList()
+    public List<CertificateWithAlias> getCertificates()
         throws TruststoreDataOperationException, MissingTruststoreException {
         if (isFileWithoutPemCertificate()) {
             throw new MissingTruststoreException("File does not contain any certificate");
