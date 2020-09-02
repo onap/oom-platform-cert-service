@@ -17,13 +17,27 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.api;
+package org.onap.oom.truststoremerger.common;
 
-public class CertificateConstants {
+import org.junit.jupiter.api.Test;
 
-    public static final String JKS_TYPE = "JKS";
-    public static final String PKCS12_TYPE = "PKCS12";
-    public static final String X_509_CERTIFICATE = "X.509";
-    public static final String BOUNCY_CASTLE_PROVIDER = "BC";
+import java.io.File;
+import org.onap.oom.truststoremerger.merger.exception.PasswordReaderException;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+
+class PasswordReaderTest {
+
+    @Test
+    void shouldReturnCorrectPasswordFromFile() throws PasswordReaderException {
+        String fileData = PasswordReader.readPassword(new File("src/test/resources/truststore-jks.pass"));
+        assertThat(fileData).isEqualTo("EOyuFbuYDyq_EhpboM72RHua");
+    }
+
+    @Test
+    void shouldThrowExceptionForNonExistingFile() {
+        assertThatExceptionOfType(PasswordReaderException.class)
+                .isThrownBy(() -> PasswordReader.readPassword(new File("src/test/resources/non-esisting-file.pass")));
+    }
 }

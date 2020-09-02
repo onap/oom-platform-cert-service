@@ -17,13 +17,13 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.api;
+package org.onap.oom.truststoremerger.merger.exception;
 
-public class CertificateConstants {
+import org.onap.oom.truststoremerger.api.ExitStatus;
+import org.onap.oom.truststoremerger.api.ExitableException;
 
-    public static final String JKS_TYPE = "JKS";
-    public static final String PKCS12_TYPE = "PKCS12";
-    public static final String X_509_CERTIFICATE = "X.509";
-    public static final String BOUNCY_CASTLE_PROVIDER = "BC";
-
+public class PasswordReaderException extends ExitableException {
+    public PasswordReaderException(String message) {
+        super(message, ExitStatus.PASSWORD_READER_EXCEPTION);
+    }
 }

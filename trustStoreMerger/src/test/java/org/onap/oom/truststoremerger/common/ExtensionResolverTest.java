@@ -17,13 +17,29 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.api;
 
-public class CertificateConstants {
+package org.onap.oom.truststoremerger.common;
 
-    public static final String JKS_TYPE = "JKS";
-    public static final String PKCS12_TYPE = "PKCS12";
-    public static final String X_509_CERTIFICATE = "X.509";
-    public static final String BOUNCY_CASTLE_PROVIDER = "BC";
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+
+import java.io.File;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+class ExtensionResolverTest {
+
+    @ParameterizedTest
+    @CsvSource(value = {
+        "opt/app/truststore.jks:.jks",
+        "opt/app/truststore.p12:.p12",
+        "opt/app/truststore.pem:.pem",
+        "opt/app/truststore.PEM:.pem",
+        "opt/app/truststore:''",
+    }, delimiter = ':')
+    void shouldReturnCorrectExtension(String filePath, String expectedExtension) {
+        String extension = ExtensionResolver.get(new File(filePath));
+        assertThat(extension).isEqualTo(expectedExtension);
+    }
 
 }

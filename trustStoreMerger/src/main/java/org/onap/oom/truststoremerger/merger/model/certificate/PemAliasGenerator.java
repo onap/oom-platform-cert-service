@@ -17,13 +17,26 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.api;
+package org.onap.oom.truststoremerger.merger.model.certificate;
 
-public class CertificateConstants {
 
-    public static final String JKS_TYPE = "JKS";
-    public static final String PKCS12_TYPE = "PKCS12";
-    public static final String X_509_CERTIFICATE = "X.509";
-    public static final String BOUNCY_CASTLE_PROVIDER = "BC";
+import java.util.concurrent.atomic.AtomicInteger;
 
+public class PemAliasGenerator {
+
+    private static final String PREFIX_ALIAS_NAME = "pem-trusted-certificate-";
+    private static final PemAliasGenerator INSTANCE = new PemAliasGenerator();
+    private static AtomicInteger counter = new AtomicInteger(0);
+
+    private PemAliasGenerator() {
+    }
+
+    public static PemAliasGenerator getInstance() {
+        return INSTANCE;
+    }
+
+    public String getAlias() {
+
+        return PREFIX_ALIAS_NAME + counter.getAndIncrement();
+    }
 }

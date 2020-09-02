@@ -17,13 +17,25 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.api;
+package org.onap.oom.truststoremerger.merger.model.certificate;
 
-public class CertificateConstants {
+import java.security.cert.Certificate;
 
-    public static final String JKS_TYPE = "JKS";
-    public static final String PKCS12_TYPE = "PKCS12";
-    public static final String X_509_CERTIFICATE = "X.509";
-    public static final String BOUNCY_CASTLE_PROVIDER = "BC";
+public class CertificateWithAlias {
 
+    private final Certificate certificate;
+    private final String alias;
+
+    public CertificateWithAlias(Certificate certificate, String alias) {
+        this.certificate = certificate;
+        this.alias = alias;
+    }
+
+    public String getAlias() {
+        return this.alias;
+    }
+
+    public Certificate getCertificate() {
+        return this.certificate;
+    }
 }

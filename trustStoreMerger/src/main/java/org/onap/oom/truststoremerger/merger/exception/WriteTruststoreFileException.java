@@ -17,13 +17,15 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.api;
 
-public class CertificateConstants {
+package org.onap.oom.truststoremerger.merger.exception;
 
-    public static final String JKS_TYPE = "JKS";
-    public static final String PKCS12_TYPE = "PKCS12";
-    public static final String X_509_CERTIFICATE = "X.509";
-    public static final String BOUNCY_CASTLE_PROVIDER = "BC";
+import org.onap.oom.truststoremerger.api.ExitStatus;
+import org.onap.oom.truststoremerger.api.ExitableException;
 
+public class WriteTruststoreFileException extends ExitableException {
+
+    public WriteTruststoreFileException(Exception cause) {
+        super(cause, ExitStatus.WRITE_TRUSTSTORE_FILE_EXCEPTION);
+    }
 }

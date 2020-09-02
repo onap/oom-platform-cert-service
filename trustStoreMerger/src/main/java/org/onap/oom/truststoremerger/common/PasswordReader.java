@@ -17,13 +17,23 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.api;
+package org.onap.oom.truststoremerger.common;
 
-public class CertificateConstants {
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import org.onap.oom.truststoremerger.merger.exception.PasswordReaderException;
 
-    public static final String JKS_TYPE = "JKS";
-    public static final String PKCS12_TYPE = "PKCS12";
-    public static final String X_509_CERTIFICATE = "X.509";
-    public static final String BOUNCY_CASTLE_PROVIDER = "BC";
+public class PasswordReader {
+    private static final String COULD_NOT_READ_PASSWORD_FROM_FILE_MSG_TEMPLATE = "Could not read password from file: %s";
 
+    private PasswordReader() {}
+
+    public static String readPassword(File file) throws PasswordReaderException {
+        try {
+            return Files.readString(file.toPath());
+        } catch (IOException e) {
+            throw new PasswordReaderException(String.format(COULD_NOT_READ_PASSWORD_FROM_FILE_MSG_TEMPLATE, file));
+        }
+    }
 }

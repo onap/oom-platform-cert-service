@@ -17,13 +17,30 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.api;
+package org.onap.oom.truststoremerger.merger.model;
 
-public class CertificateConstants {
+import java.io.File;
+import java.util.List;
+import org.onap.oom.truststoremerger.api.ExitableException;
+import org.onap.oom.truststoremerger.merger.exception.CreateBackupException;
+import org.onap.oom.truststoremerger.merger.model.certificate.CertificateWithAlias;
+import org.onap.oom.truststoremerger.common.BackupCreator;
 
-    public static final String JKS_TYPE = "JKS";
-    public static final String PKCS12_TYPE = "PKCS12";
-    public static final String X_509_CERTIFICATE = "X.509";
-    public static final String BOUNCY_CASTLE_PROVIDER = "BC";
+public abstract class Truststore {
 
+    protected final File storeFile;
+
+    public Truststore(File storeFile) {
+        this.storeFile = storeFile;
+    }
+
+    public void createBackup() throws CreateBackupException {
+        BackupCreator.createBackup(storeFile);
+    }
+
+    public abstract List<CertificateWithAlias> getCertificates() throws ExitableException;
+
+    public abstract void addCertificates(List<CertificateWithAlias> certificates) throws ExitableException;
+
+    public abstract void saveFile() throws ExitableException;
 }

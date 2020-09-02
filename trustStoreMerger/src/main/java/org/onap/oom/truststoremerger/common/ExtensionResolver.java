@@ -17,13 +17,26 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.api;
+package org.onap.oom.truststoremerger.common;
 
-public class CertificateConstants {
+import java.io.File;
 
-    public static final String JKS_TYPE = "JKS";
-    public static final String PKCS12_TYPE = "PKCS12";
-    public static final String X_509_CERTIFICATE = "X.509";
-    public static final String BOUNCY_CASTLE_PROVIDER = "BC";
+public class ExtensionResolver {
+
+    private static final int INDEX_NOT_FOUND = -1;
+
+    private ExtensionResolver() {}
+
+    public static String get(File file) {
+        int extStartIndex = file.getName().lastIndexOf(".");
+        if (extStartIndex == INDEX_NOT_FOUND) {
+            return "";
+        }
+        return file.getName().substring(extStartIndex).toLowerCase();
+    }
+
+    public static boolean checkIfFileExists(File file) {
+        return file.exists();
+    }
 
 }
