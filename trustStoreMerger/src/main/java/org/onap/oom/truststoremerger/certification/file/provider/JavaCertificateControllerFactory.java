@@ -19,9 +19,6 @@
 
 package org.onap.oom.truststoremerger.certification.file.provider;
 
-import static org.onap.oom.truststoremerger.api.CertificateConstants.JKS_INSTANCE;
-import static org.onap.oom.truststoremerger.api.CertificateConstants.PKCS12_INSTANCE;
-
 import java.io.File;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
@@ -30,28 +27,21 @@ import org.onap.oom.truststoremerger.certification.file.exception.LoadTruststore
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class CertificateStoreControllerFactory {
+public class JavaCertificateControllerFactory {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CertificateStoreControllerFactory.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(JavaCertificateControllerFactory.class);
 
-    public JavaCertificateStoreController createLoadedJksCertificateStoreController(File certFile, String certPassword)
-        throws LoadTruststoreException, KeystoreInstanceException {
-        return createLoadedCertificateStoreController(certFile, certPassword, JKS_INSTANCE);
+    private JavaCertificateControllerFactory() {
     }
 
-    public JavaCertificateStoreController createLoadedPkcs12CertificateStoreController(File certFile, String certPassword)
-        throws KeystoreInstanceException, LoadTruststoreException {
-        return createLoadedCertificateStoreController(certFile, certPassword, PKCS12_INSTANCE);
-    }
-
-    private JavaCertificateStoreController createLoadedCertificateStoreController(File certFile, String certPassword,
+    public static CertificateController create(File certFile, String certPassword,
         String instanceType)
         throws LoadTruststoreException, KeystoreInstanceException {
         try {
-            JavaCertificateStoreController javaCertificateStoreController = new JavaCertificateStoreController(
+            JavaCertificateController javaCertificateController = new JavaCertificateController(
                 KeyStore.getInstance(instanceType), certFile, certPassword);
-            javaCertificateStoreController.loadFile();
-            return javaCertificateStoreController;
+            javaCertificateController.loadFile();
+            return javaCertificateController;
         } catch (KeyStoreException e) {
             LOGGER.error("Cannot initialize Java Keystore instance");
             throw new KeystoreInstanceException(e);
