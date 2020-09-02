@@ -38,9 +38,9 @@ import org.onap.oom.truststoremerger.certification.file.provider.entry.Certifica
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class JavaCertificateStoreController implements CertificateController {
+public class JavaCertificateController implements CertificateController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(JavaCertificateStoreController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(JavaCertificateController.class);
 
     private final CertificateWithAliasFactory factory = new CertificateWithAliasFactory();
     private final KeyStore keyStore;
@@ -48,7 +48,7 @@ public class JavaCertificateStoreController implements CertificateController {
     private final String password;
 
 
-    public JavaCertificateStoreController(KeyStore keyStore, File storeFile, String password) {
+    public JavaCertificateController(KeyStore keyStore, File storeFile, String password) {
         this.keyStore = keyStore;
         this.storeFile = storeFile;
         this.password = password;
