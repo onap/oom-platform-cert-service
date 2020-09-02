@@ -22,9 +22,9 @@ package org.onap.oom.truststoremerger;
 import java.util.List;
 import org.onap.oom.truststoremerger.api.ExitStatus;
 import org.onap.oom.truststoremerger.api.ExitableException;
-import org.onap.oom.truststoremerger.certification.file.TruststoreFileFactory;
 import org.onap.oom.truststoremerger.certification.file.TruststoreFilesListProvider;
 import org.onap.oom.truststoremerger.certification.file.model.Truststore;
+import org.onap.oom.truststoremerger.certification.file.model.TruststoreFactory;
 import org.onap.oom.truststoremerger.certification.file.provider.FileManager;
 import org.onap.oom.truststoremerger.certification.file.provider.PasswordReader;
 import org.onap.oom.truststoremerger.certification.file.provider.entry.CertificateWithAlias;
@@ -69,7 +69,8 @@ class TrustStoreMerger {
         baseFile.createBackup();
 
         for (int i = SECOND_TRUSTSTORE_INDEX; i < truststoreFilesList.size(); i++) {
-            List<CertificateWithAlias> certificateWrappers = truststoreFilesList.get(i).getCertificates();
+            Truststore truststores = truststoreFilesList.get(i);
+            List<CertificateWithAlias> certificateWrappers = truststores.getCertificates();
             baseFile.addCertificate(certificateWrappers);
         }
 
@@ -88,7 +89,7 @@ class TrustStoreMerger {
     }
 
     private List<Truststore> getTruststoreFiles(MergerConfiguration configuration) throws ExitableException {
-        TruststoreFileFactory truststoreFileFactory = new TruststoreFileFactory(new FileManager(),
+        TruststoreFactory truststoreFileFactory = new TruststoreFactory(new FileManager(),
             new PasswordReader());
         TruststoreFilesListProvider truststoreFilesListProvider = new TruststoreFilesListProvider(
             truststoreFileFactory);
