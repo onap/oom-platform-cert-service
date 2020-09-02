@@ -19,19 +19,20 @@
 
 package org.onap.oom.truststoremerger.configuration;
 
-import org.onap.oom.truststoremerger.certification.path.TruststoresPathsProvider;
-import org.onap.oom.truststoremerger.certification.path.TruststoresPathsProviderException;
-
 import static org.onap.oom.truststoremerger.api.ConfigurationEnvs.TRUSTSTORES_PATHS_ENV;
 import static org.onap.oom.truststoremerger.api.ConfigurationEnvs.TRUSTSTORES_PASSWORDS_PATHS_ENV;
 
 import java.util.List;
+import org.onap.oom.truststoremerger.configuration.exception.MergerConfigurationException;
+import org.onap.oom.truststoremerger.configuration.exception.TruststoresPathsProviderException;
+import org.onap.oom.truststoremerger.configuration.model.MergerConfiguration;
+import org.onap.oom.truststoremerger.configuration.path.TruststoresPathsProvider;
 
-public class MergerConfigurationFactory {
+public class MergerConfigurationProvider {
 
     private final TruststoresPathsProvider pathsProvider;
 
-    public MergerConfigurationFactory(TruststoresPathsProvider pathsProvider) {
+    public MergerConfigurationProvider(TruststoresPathsProvider pathsProvider) {
         this.pathsProvider = pathsProvider;
     }
 

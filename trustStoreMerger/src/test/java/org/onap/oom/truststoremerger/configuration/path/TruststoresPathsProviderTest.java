@@ -17,21 +17,21 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.certification.path;
+package org.onap.oom.truststoremerger.configuration.path;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.mockito.Mockito.when;
+import static org.onap.oom.truststoremerger.api.ConfigurationEnvs.TRUSTSTORES_PASSWORDS_PATHS_ENV;
+import static org.onap.oom.truststoremerger.api.ConfigurationEnvs.TRUSTSTORES_PATHS_ENV;
+
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-import static org.mockito.Mockito.when;
-import static org.onap.oom.truststoremerger.api.ConfigurationEnvs.TRUSTSTORES_PATHS_ENV;
-import static org.onap.oom.truststoremerger.api.ConfigurationEnvs.TRUSTSTORES_PASSWORDS_PATHS_ENV;
+import org.onap.oom.truststoremerger.configuration.exception.TruststoresPathsProviderException;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -39,6 +39,7 @@ class TruststoresPathsProviderTest {
 
     private static final String VALID_TRUSTSTORES = "/opt/app/certificates/truststore.jks:/opt/app/certificates/truststore.pem";
     private static final String VALID_TRUSTSTORES_PASSWORDS = "/opt/app/certificates/truststore.pass:";
+    private static final String VALID_TRUSTSTORES_PASSWORDS_WITH_EMPTY_IN_THE_MIDDLE = "/opt/app/certificates/truststore.pass::/etc/truststore.pass";
     private static final String INVALID_TRUSTSTORES = "/opt/app/certificates/truststore.jks:/opt/app/certificates/truststore.invalid";
     private static final String INVALID_TRUSTSTORES_PASSWORDS = "/opt/app/certificates/truststore.pass:/.pass";
 
@@ -56,8 +57,8 @@ class TruststoresPathsProviderTest {
         mockTruststoresEnv(VALID_TRUSTSTORES);
 
         assertThat(truststoresPathsProvider.getTruststores())
-                .contains("/opt/app/certificates/truststore.jks",
-                        "/opt/app/certificates/truststore.pem");
+            .containsSequence("/opt/app/certificates/truststore.jks",
+                "/opt/app/certificates/truststore.pem");
     }
 
     @Test
@@ -65,8 +66,19 @@ class TruststoresPathsProviderTest {
         mockTruststoresPasswordsEnv(VALID_TRUSTSTORES_PASSWORDS);
 
         assertThat(truststoresPathsProvider.getTruststoresPasswords())
-                .contains("/opt/app/certificates/truststore.pass",
-                        "");
+            .containsSequence("/opt/app/certificates/truststore.pass", "");
+    }
+
+    @Test
+    void shouldReturnCorrectListWhenTruststoresPasswordsContainsEmptyPathsInTheMiddle()
+        throws TruststoresPathsProviderException {
+        mockTruststoresPasswordsEnv(VALID_TRUSTSTORES_PASSWORDS_WITH_EMPTY_IN_THE_MIDDLE);
+
+        assertThat(truststoresPathsProvider.getTruststoresPasswords()).containsSequence(
+            "/opt/app/certificates/truststore.pass",
+            "",
+            "/etc/truststore.pass"
+        );
     }
 
     @Test
@@ -74,7 +86,7 @@ class TruststoresPathsProviderTest {
         mockTruststoresEnv("");
 
         assertThatExceptionOfType(TruststoresPathsProviderException.class)
-                .isThrownBy(truststoresPathsProvider::getTruststores);
+            .isThrownBy(truststoresPathsProvider::getTruststores);
     }
 
     @Test
@@ -82,7 +94,7 @@ class TruststoresPathsProviderTest {
         mockTruststoresEnv(INVALID_TRUSTSTORES);
 
         assertThatExceptionOfType(TruststoresPathsProviderException.class)
-                .isThrownBy(truststoresPathsProvider::getTruststores);
+            .isThrownBy(truststoresPathsProvider::getTruststores);
     }
 
     @Test
@@ -90,7 +102,7 @@ class TruststoresPathsProviderTest {
         mockTruststoresPasswordsEnv(INVALID_TRUSTSTORES_PASSWORDS);
 
         assertThatExceptionOfType(TruststoresPathsProviderException.class)
-                .isThrownBy(truststoresPathsProvider::getTruststoresPasswords);
+            .isThrownBy(truststoresPathsProvider::getTruststoresPasswords);
     }
 
     private void mockTruststoresEnv(String truststores) {
@@ -102,7 +114,6 @@ class TruststoresPathsProviderTest {
     }
 
     private void mockEnv(String envValue, String envName) {
-        when(envProvider.getEnv(envName))
-                .thenReturn(Optional.of(envValue));
+        when(envProvider.getEnv(envName)).thenReturn(Optional.of(envValue));
     }
 }

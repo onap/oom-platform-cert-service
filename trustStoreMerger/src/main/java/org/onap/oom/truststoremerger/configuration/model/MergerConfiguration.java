@@ -17,14 +17,28 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.certification.path;
+package org.onap.oom.truststoremerger.configuration.model;
 
-import org.onap.oom.truststoremerger.api.ExitStatus;
-import org.onap.oom.truststoremerger.api.ExitableException;
+import java.util.Collections;
+import java.util.List;
 
-public class TruststoresPathsProviderException extends ExitableException {
+public final class MergerConfiguration {
+    private final List<String> truststoreFilePaths;
+    private final List<String> truststoreFilePasswordPaths;
 
-    TruststoresPathsProviderException(String message) {
-        super(message, ExitStatus.TRUSTSTORES_PATHS_PROVIDER_EXCEPTION);
+    public MergerConfiguration(List<String> truststoreFilePaths,
+                               List<String> truststoreFilePasswordPaths) {
+        this.truststoreFilePaths = List.copyOf(truststoreFilePaths);
+        this.truststoreFilePasswordPaths = List.copyOf(truststoreFilePasswordPaths);
     }
+
+    public List<String> getTruststoreFilePaths() {
+        return Collections.unmodifiableList(truststoreFilePaths);
+    }
+
+
+    public List<String> getTruststoreFilePasswordPaths() {
+        return Collections.unmodifiableList(truststoreFilePasswordPaths);
+    }
+
 }

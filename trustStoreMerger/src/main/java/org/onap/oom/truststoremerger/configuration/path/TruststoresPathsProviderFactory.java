@@ -17,22 +17,14 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.certification.path;
+package org.onap.oom.truststoremerger.configuration.path;
 
-public class PathValidator {
+public class TruststoresPathsProviderFactory {
 
-    private static final String TRUSTSTORE_PATH_REGEX = "^(/[a-zA-Z0-9_-]+)+\\.(pem|jks|p12)";
-    private static final String TRUSTSTORE_PASSWORD_PATH_REGEX = "^(/[a-zA-Z0-9_-]+)+\\.pass";
-
-    public boolean isTruststorePathValid(String truststorePath) {
-        return isPathValid(truststorePath, TRUSTSTORE_PATH_REGEX);
+    private TruststoresPathsProviderFactory() {
     }
 
-    public boolean isTruststorePasswordPathValid(String truststorePasswordPath) {
-        return truststorePasswordPath.isEmpty() || isPathValid(truststorePasswordPath, TRUSTSTORE_PASSWORD_PATH_REGEX);
-    }
-
-    private boolean isPathValid(String path, String regex) {
-        return path.matches(regex);
+    public static TruststoresPathsProvider create() {
+        return new TruststoresPathsProvider(new EnvProvider(), new PathValidator());
     }
 }

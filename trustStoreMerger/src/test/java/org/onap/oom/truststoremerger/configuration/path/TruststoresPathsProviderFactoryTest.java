@@ -17,20 +17,19 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.certification.path;
+package org.onap.oom.truststoremerger.configuration.path;
 
-import java.util.Optional;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.junit.jupiter.api.Test;
 
-public class EnvProvider {
+class TruststoresPathsProviderFactoryTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(EnvProvider.class);
-
-    Optional<String> getEnv(String name) {
-        String value = System.getenv(name);
-        LOGGER.info("Read variable: {} , value: {}", name, value);
-        return Optional.ofNullable(System.getenv(name));
+    @Test
+    void shouldReturnCorrectObject() {
+        // given, when, then
+        assertThat(TruststoresPathsProviderFactory.create()).isInstanceOf(TruststoresPathsProvider.class);
     }
+
 }
