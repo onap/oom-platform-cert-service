@@ -23,7 +23,7 @@ import java.util.List;
 import org.onap.oom.truststoremerger.api.ExitableException;
 import org.onap.oom.truststoremerger.certification.file.provider.entry.CertificateWithAlias;
 
-public interface CertificateController {
+public interface CertificateManipulator {
 
     List<CertificateWithAlias> getNotEmptyCertificateList() throws ExitableException;
 
