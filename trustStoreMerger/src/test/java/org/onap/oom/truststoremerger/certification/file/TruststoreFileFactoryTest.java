@@ -18,28 +18,27 @@
  */
 
 
-package org.onap.oom.truststoremerger.certification.file.provider;
+package org.onap.oom.truststoremerger.certification.file;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.onap.oom.truststoremerger.certification.file.TruststoreFileFactory;
-import org.onap.oom.truststoremerger.certification.file.model.JavaTruststore;
-import org.onap.oom.truststoremerger.certification.file.model.PemTruststore;
-import org.onap.oom.truststoremerger.certification.file.model.Truststore;
 import org.onap.oom.truststoremerger.certification.file.exception.KeystoreInstanceException;
 import org.onap.oom.truststoremerger.certification.file.exception.LoadTruststoreException;
-
-import java.io.File;
 import org.onap.oom.truststoremerger.certification.file.exception.PasswordReaderException;
 import org.onap.oom.truststoremerger.certification.file.exception.TruststoreFileFactoryException;
+import org.onap.oom.truststoremerger.certification.file.model.Truststore;
+import org.onap.oom.truststoremerger.certification.file.provider.FileManager;
+import org.onap.oom.truststoremerger.certification.file.provider.PasswordReader;
+
+import java.io.File;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @ExtendWith(MockitoExtension.class)
-class TruststoreFactoryTest {
+class TruststoreFileFactoryTest {
 
     private static final String TRUSTSTORE_JKS_PATH = "src/test/resources/truststore-jks.jks";
     private static final String TRUSTSTORE_JKS_PASS_PATH = "src/test/resources/truststore-jks.pass";
@@ -60,29 +59,37 @@ class TruststoreFactoryTest {
     @Test
     void shouldReturnCorrectJksTruststoreForJksFile()
         throws LoadTruststoreException, PasswordReaderException, TruststoreFileFactoryException, KeystoreInstanceException {
+        //given, when
         Truststore truststore = truststoreFileFactory
                 .create(TRUSTSTORE_JKS_PATH, TRUSTSTORE_JKS_PASS_PATH);
-        assertThat(truststore).isInstanceOf(JavaTruststore.class);
-        JavaTruststore jksTruststore = (JavaTruststore) truststore;
-        assertThat(jksTruststore.getFile()).isEqualTo(new File(TRUSTSTORE_JKS_PATH));
+
+        //then
+        assertThat(truststore).isInstanceOf(Truststore.class);
+        assertThat(truststore.getFile()).isEqualTo(new File(TRUSTSTORE_JKS_PATH));
     }
 
     @Test
     void shouldReturnCorrectP12TruststoreForP12File()
         throws LoadTruststoreException, PasswordReaderException, TruststoreFileFactoryException, KeystoreInstanceException {
+        //given, when
         Truststore truststore = truststoreFileFactory
                 .create(TRUSTSTORE_P12_PATH,
                         TRUSTSTORE_P12_PASS_PATH);
-        assertThat(truststore).isInstanceOf(JavaTruststore.class);
+
+        //then
+        assertThat(truststore).isInstanceOf(Truststore.class);
     }
 
     @Test
     void shouldReturnCorrectPemTruststoreForPemFile()
         throws LoadTruststoreException, PasswordReaderException, TruststoreFileFactoryException, KeystoreInstanceException {
+        //given, when
         Truststore truststore = truststoreFileFactory
                 .create(TRUSTSTORE_PEM_PATH,
                         EMPTY_PASS_PATH);
-        assertThat(truststore).isInstanceOf(PemTruststore.class);
+
+        //then
+        assertThat(truststore).isInstanceOf(Truststore.class);
     }
 
     @Test

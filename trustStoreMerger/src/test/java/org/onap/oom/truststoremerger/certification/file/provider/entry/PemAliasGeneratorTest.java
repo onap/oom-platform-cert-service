@@ -19,11 +19,12 @@
 
 package org.onap.oom.truststoremerger.certification.file.provider.entry;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
 import java.util.Set;
-import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class PemAliasGeneratorTest {
 
