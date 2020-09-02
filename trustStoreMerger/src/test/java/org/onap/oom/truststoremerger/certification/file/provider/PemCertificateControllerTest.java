@@ -29,18 +29,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
 import org.onap.oom.truststoremerger.api.ExitableException;
-import org.onap.oom.truststoremerger.certification.file.provider.entry.CertificateWithAlias;
-import org.onap.oom.truststoremerger.certification.file.TestCertificateProvider;
 import org.onap.oom.truststoremerger.certification.file.exception.MissingTruststoreException;
 import org.onap.oom.truststoremerger.certification.file.exception.TruststoreDataOperationException;
-import org.onap.oom.truststoremerger.certification.file.model.PemTruststore;
+import org.onap.oom.truststoremerger.certification.file.model.Truststore;
+import org.onap.oom.truststoremerger.certification.file.provider.entry.CertificateWithAlias;
 
 class PemCertificateControllerTest {
+
+    private static final int EXPECTED_ONE = 1;
 
     @Test
     void getNotEmptyCertificateListShouldThrowExceptionWhenFileNotContainsCertificate() {
         //given
-        File emptyPemFile = TestCertificateProvider.getEmptyPemTruststoreFile().getFile();
+        File emptyPemFile = TestCertificateProvider.getEmptyPemFile();
         PemCertificateController pemCertificateController = new PemCertificateController(emptyPemFile);
         //when//then
         assertThatExceptionOfType(MissingTruststoreException.class)
@@ -50,17 +51,17 @@ class PemCertificateControllerTest {
     @Test
     void transformToStringInPemFormatShouldCorrectlyTransform() throws ExitableException, IOException {
         //given
-        PemTruststore pemTruststore = TestCertificateProvider.getSamplePemTruststoreFile();
-        List<CertificateWithAlias> wrappedCertificates = pemTruststore.getCertificates();
-        File notEmptyPemFile = pemTruststore.getFile();
+        Truststore pemTruststore = TestCertificateProvider.getSamplePemTruststoreFile();
+        List<CertificateWithAlias> wrappedCertificates = pemTruststore.getNotEmptyCertificates();
         List<Certificate> certificateList = unWrapCertificate(wrappedCertificates);
+        File notEmptyPemFile = TestCertificateProvider.getNotEmptyPemFile();
         PemCertificateController pemCertificateController = new PemCertificateController(notEmptyPemFile);
-        String expected = TestCertificateProvider.getExpectedPemCertificateAsString();
 
         //when
         String certificateTransformed = pemCertificateController.transformToStringInPemFormat(certificateList);
 
         //then
+        String expected = TestCertificateProvider.getExpectedPemCertificateAsString();
         assertThat(certificateTransformed).isEqualTo(expected);
     }
 
@@ -68,7 +69,7 @@ class PemCertificateControllerTest {
     void fileNotContainsPemCertificateShouldReturnTrueIfFileNotContainsCertificate()
         throws TruststoreDataOperationException {
         //given
-        File emptyPemFile = TestCertificateProvider.getEmptyPemTruststoreFile().getFile();
+        File emptyPemFile = TestCertificateProvider.getEmptyPemFile();
         PemCertificateController pemCertificateController = new PemCertificateController(emptyPemFile);
         //when//then
         assertThat(pemCertificateController.isFileWithoutPemCertificate()).isTrue();
@@ -78,11 +79,24 @@ class PemCertificateControllerTest {
     void fileNotContainsPemCertificateShouldReturnFalseIfFileContainsCertificate()
         throws TruststoreDataOperationException {
         //given
-        File notEmptyPemFile = TestCertificateProvider.getSamplePemTruststoreFile().getFile();
+        File notEmptyPemFile = TestCertificateProvider.getNotEmptyPemFile();
         PemCertificateController pemCertificateController = new PemCertificateController(notEmptyPemFile);
 
         //when//then
         assertThat(pemCertificateController.isFileWithoutPemCertificate()).isFalse();
+    }
+
+    @Test
+    void privateKeyIsSkippedWhileReadingCertificates() throws ExitableException {
+        //given
+        File pemTruststoreFile = TestCertificateProvider.getPemWithPrivateKeyFile();
+        PemCertificateController pemCertificateController = new PemCertificateController(pemTruststoreFile);
+
+        //when
+        List<CertificateWithAlias> certificate = pemCertificateController.getNotEmptyCertificateList();
+
+        //then
+        assertThat(certificate).hasSize(EXPECTED_ONE);
     }
 
     private List<Certificate> unWrapCertificate(List<CertificateWithAlias> certificateWithAliases) {
