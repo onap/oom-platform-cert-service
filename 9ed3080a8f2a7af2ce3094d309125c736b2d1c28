@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8b79c75_1b130a15",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/path/PathValidator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-09-02T12:31:39Z",
+      "side": 1,
+      "message": "It could be private - only used in PathValidator class",
+      "range": {
+        "startLine": 35,
+        "startChar": 12,
+        "endLine": 35,
+        "endChar": 23
+      },
+      "revId": "9ed3080a8f2a7af2ce3094d309125c736b2d1c28",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5316a587_9b0160e6",
+        "filename": "trustStoreMerger/src/test/java/org/onap/oom/truststoremerger/configuration/path/PathValidatorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-09-02T12:31:39Z",
+      "side": 1,
+      "message": "Unnecessary import",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 70
+      },
+      "revId": "9ed3080a8f2a7af2ce3094d309125c736b2d1c28",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3660afed_27aad246",
+        "filename": "trustStoreMerger/src/test/java/org/onap/oom/truststoremerger/configuration/path/TruststoresPathsProviderFactoryTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-09-02T12:31:39Z",
+      "side": 1,
+      "message": "Unused import",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 49
+      },
+      "revId": "9ed3080a8f2a7af2ce3094d309125c736b2d1c28",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
