@@ -17,14 +17,15 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.configuration.exception;
+package org.onap.oom.truststoremerger.merger.exception;
 
 import org.onap.oom.truststoremerger.api.ExitStatus;
 import org.onap.oom.truststoremerger.api.ExitableException;
 
-public class MergerConfigurationException extends ExitableException {
+public class AliasConflictException extends ExitableException {
 
-    public MergerConfigurationException(String errorMessage) {
-        super(errorMessage, ExitStatus.MERGER_CONFIGURATION_EXCEPTION);
+    public AliasConflictException(String errorMessage) {
+        super(errorMessage, ExitStatus.ALIAS_CONFLICT_EXCEPTION);
     }
+
 }

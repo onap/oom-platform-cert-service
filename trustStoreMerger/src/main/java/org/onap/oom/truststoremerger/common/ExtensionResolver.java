@@ -17,14 +17,26 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.configuration.exception;
+package org.onap.oom.truststoremerger.common;
 
-import org.onap.oom.truststoremerger.api.ExitStatus;
-import org.onap.oom.truststoremerger.api.ExitableException;
+import java.io.File;
 
-public class MergerConfigurationException extends ExitableException {
+public final class ExtensionResolver {
 
-    public MergerConfigurationException(String errorMessage) {
-        super(errorMessage, ExitStatus.MERGER_CONFIGURATION_EXCEPTION);
+    private static final int INDEX_NOT_FOUND = -1;
+
+    private ExtensionResolver() {}
+
+    public static String get(File file) {
+        int extStartIndex = file.getName().lastIndexOf(".");
+        if (extStartIndex == INDEX_NOT_FOUND) {
+            return "";
+        }
+        return file.getName().substring(extStartIndex).toLowerCase();
     }
+
+    public static boolean checkIfFileExists(File file) {
+        return file.exists();
+    }
+
 }

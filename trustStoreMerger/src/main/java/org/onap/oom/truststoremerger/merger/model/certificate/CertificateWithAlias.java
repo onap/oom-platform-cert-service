@@ -17,14 +17,25 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.configuration.exception;
+package org.onap.oom.truststoremerger.merger.model.certificate;
 
-import org.onap.oom.truststoremerger.api.ExitStatus;
-import org.onap.oom.truststoremerger.api.ExitableException;
+import java.security.cert.Certificate;
 
-public class MergerConfigurationException extends ExitableException {
+public class CertificateWithAlias {
 
-    public MergerConfigurationException(String errorMessage) {
-        super(errorMessage, ExitStatus.MERGER_CONFIGURATION_EXCEPTION);
+    private final Certificate certificate;
+    private final String alias;
+
+    public CertificateWithAlias(Certificate certificate, String alias) {
+        this.certificate = certificate;
+        this.alias = alias;
+    }
+
+    public String getAlias() {
+        return this.alias;
+    }
+
+    public Certificate getCertificate() {
+        return this.certificate;
     }
 }

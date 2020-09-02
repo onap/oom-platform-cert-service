@@ -17,14 +17,27 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.configuration.exception;
+package org.onap.oom.truststoremerger.common;
 
-import org.onap.oom.truststoremerger.api.ExitStatus;
-import org.onap.oom.truststoremerger.api.ExitableException;
+import org.junit.jupiter.api.Test;
 
-public class MergerConfigurationException extends ExitableException {
+import java.io.File;
+import org.onap.oom.truststoremerger.merger.exception.PasswordReaderException;
 
-    public MergerConfigurationException(String errorMessage) {
-        super(errorMessage, ExitStatus.MERGER_CONFIGURATION_EXCEPTION);
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+
+class PasswordReaderTest {
+
+    @Test
+    void shouldReturnCorrectPasswordFromFile() throws PasswordReaderException {
+        String fileData = PasswordReader.readPassword(new File("src/test/resources/truststore-jks.pass"));
+        assertThat(fileData).isEqualTo("EOyuFbuYDyq_EhpboM72RHua");
+    }
+
+    @Test
+    void shouldThrowExceptionForNonExistingFile() {
+        assertThatExceptionOfType(PasswordReaderException.class)
+                .isThrownBy(() -> PasswordReader.readPassword(new File("src/test/resources/non-esisting-file.pass")));
     }
 }

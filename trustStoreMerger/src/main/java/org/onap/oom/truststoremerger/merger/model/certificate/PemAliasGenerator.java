@@ -17,14 +17,26 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.configuration.exception;
+package org.onap.oom.truststoremerger.merger.model.certificate;
 
-import org.onap.oom.truststoremerger.api.ExitStatus;
-import org.onap.oom.truststoremerger.api.ExitableException;
 
-public class MergerConfigurationException extends ExitableException {
+import java.util.concurrent.atomic.AtomicInteger;
 
-    public MergerConfigurationException(String errorMessage) {
-        super(errorMessage, ExitStatus.MERGER_CONFIGURATION_EXCEPTION);
+public class PemAliasGenerator {
+
+    private static final String PREFIX_ALIAS_NAME = "pem-trusted-certificate-";
+    private static final PemAliasGenerator INSTANCE = new PemAliasGenerator();
+    private static AtomicInteger counter = new AtomicInteger(0);
+
+    private PemAliasGenerator() {
+    }
+
+    public static PemAliasGenerator getInstance() {
+        return INSTANCE;
+    }
+
+    public String getAlias() {
+
+        return PREFIX_ALIAS_NAME + counter.getAndIncrement();
     }
 }

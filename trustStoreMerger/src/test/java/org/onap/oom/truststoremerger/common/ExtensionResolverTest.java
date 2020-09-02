@@ -17,14 +17,29 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.configuration.exception;
 
-import org.onap.oom.truststoremerger.api.ExitStatus;
-import org.onap.oom.truststoremerger.api.ExitableException;
+package org.onap.oom.truststoremerger.common;
 
-public class MergerConfigurationException extends ExitableException {
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
-    public MergerConfigurationException(String errorMessage) {
-        super(errorMessage, ExitStatus.MERGER_CONFIGURATION_EXCEPTION);
+import java.io.File;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+class ExtensionResolverTest {
+
+    @ParameterizedTest
+    @CsvSource(value = {
+        "opt/app/truststore.jks:.jks",
+        "opt/app/truststore.p12:.p12",
+        "opt/app/truststore.pem:.pem",
+        "opt/app/truststore.PEM:.pem",
+        "opt/app/truststore:''",
+    }, delimiter = ':')
+    void shouldReturnCorrectExtension(String filePath, String expectedExtension) {
+        String extension = ExtensionResolver.get(new File(filePath));
+        assertThat(extension).isEqualTo(expectedExtension);
     }
+
 }
