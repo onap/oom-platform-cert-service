@@ -19,9 +19,6 @@
 
 package org.onap.oom.truststoremerger.certification.file.provider;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.util.ArrayList;
@@ -29,35 +26,33 @@ import java.util.Collections;
 import java.util.List;
 import org.onap.oom.truststoremerger.api.ExitableException;
 import org.onap.oom.truststoremerger.certification.file.exception.AliasConflictException;
-import org.onap.oom.truststoremerger.certification.file.exception.LoadTruststoreException;
 import org.onap.oom.truststoremerger.certification.file.exception.MissingTruststoreException;
 import org.onap.oom.truststoremerger.certification.file.exception.TruststoreDataOperationException;
-import org.onap.oom.truststoremerger.certification.file.exception.WriteTruststoreFileException;
 import org.onap.oom.truststoremerger.certification.file.provider.entry.CertificateWithAlias;
 import org.onap.oom.truststoremerger.certification.file.provider.entry.CertificateWithAliasFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class JavaCertificateStoreController implements CertificateController {
+public class JavaCertificateManipulator implements CertificateManipulator {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(JavaCertificateStoreController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(JavaCertificateManipulator.class);
 
     private final CertificateWithAliasFactory factory = new CertificateWithAliasFactory();
+    private final String storeFilePath;
+    private final JavaStorageManager javaStorageManager;
     private final KeyStore keyStore;
-    private final File storeFile;
-    private final String password;
 
 
-    public JavaCertificateStoreController(KeyStore keyStore, File storeFile, String password) {
-        this.keyStore = keyStore;
-        this.storeFile = storeFile;
-        this.password = password;
+    public JavaCertificateManipulator(JavaStorageManager javaStorageManager) {
+        this.javaStorageManager = javaStorageManager;
+        this.storeFilePath = javaStorageManager.getFilePath();
+        this.keyStore = javaStorageManager.getKeyStore();
     }
 
     public List<CertificateWithAlias> getNotEmptyCertificateList() throws ExitableException {
         List<String> aliases = getTruststoreAliases();
         if (aliases.isEmpty()) {
-            throw new MissingTruststoreException("Missing certificate aliases in file: " + storeFile.getPath());
+            throw new MissingTruststoreException("Missing certificate aliases in file: " + storeFilePath);
         }
         return getWrappedCertificates(aliases);
     }
@@ -65,29 +60,15 @@ public class JavaCertificateStoreController implements CertificateController {
     public void addCertificates(List<CertificateWithAlias> certificatesWithAliases)
         throws ExitableException {
         if (getTruststoreAliases().isEmpty()) {
-            throw new MissingTruststoreException("Missing certificate aliases in file: " + storeFile.getPath());
+            throw new MissingTruststoreException("Missing certificate aliases in file: " + storeFilePath);
         }
         for (CertificateWithAlias certificate : certificatesWithAliases) {
             addCertificate(certificate);
         }
     }
 
-    public void saveFile() throws WriteTruststoreFileException {
-        try (FileOutputStream outputStream = new FileOutputStream(this.storeFile)) {
-            keyStore.store(outputStream, this.password.toCharArray());
-        } catch (Exception e) {
-            LOGGER.error("Cannot write truststore file");
-            throw new WriteTruststoreFileException(e);
-        }
-    }
-
-    public void loadFile() throws LoadTruststoreException {
-        try {
-            keyStore.load(new FileInputStream(this.storeFile), this.password.toCharArray());
-        } catch (Exception e) {
-            LOGGER.error("Cannot load file: {}", this.storeFile.getPath());
-            throw new LoadTruststoreException(e);
-        }
+    public void saveFile() throws ExitableException {
+        javaStorageManager.saveFile();
     }
 
     private void addCertificate(CertificateWithAlias certificate)

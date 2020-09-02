@@ -17,24 +17,23 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.certification.file;
+package org.onap.oom.truststoremerger.certification.file.model;
 
-import org.onap.oom.truststoremerger.certification.file.model.JavaTruststore;
-import org.onap.oom.truststoremerger.certification.file.model.PemTruststore;
-import org.onap.oom.truststoremerger.certification.file.model.Truststore;
+import static org.onap.oom.truststoremerger.api.CertificateConstants.JKS_TYPE;
+import static org.onap.oom.truststoremerger.api.CertificateConstants.PKCS12_TYPE;
 
 import java.io.File;
 import org.onap.oom.truststoremerger.certification.file.exception.KeystoreInstanceException;
 import org.onap.oom.truststoremerger.certification.file.exception.LoadTruststoreException;
 import org.onap.oom.truststoremerger.certification.file.exception.PasswordReaderException;
 import org.onap.oom.truststoremerger.certification.file.exception.TruststoreFileFactoryException;
-import org.onap.oom.truststoremerger.certification.file.provider.CertificateStoreControllerFactory;
+import org.onap.oom.truststoremerger.certification.file.provider.CertificateManipulator;
 import org.onap.oom.truststoremerger.certification.file.provider.FileManager;
-import org.onap.oom.truststoremerger.certification.file.provider.JavaCertificateStoreController;
+import org.onap.oom.truststoremerger.certification.file.provider.JavaCertificateControllerFactory;
 import org.onap.oom.truststoremerger.certification.file.provider.PasswordReader;
-import org.onap.oom.truststoremerger.certification.file.provider.PemCertificateController;
+import org.onap.oom.truststoremerger.certification.file.provider.PemCertificateManipulator;
 
-public class TruststoreFileFactory {
+public class TruststoreFactory {
 
     private static final String JKS_EXTENSION = ".jks";
     private static final String P12_EXTENSION = ".p12";
@@ -44,10 +43,8 @@ public class TruststoreFileFactory {
 
     private final FileManager fileManager;
     private final PasswordReader passwordReader;
-    private final CertificateStoreControllerFactory certificateStoreControllerFactory =
-        new CertificateStoreControllerFactory();
 
-    public TruststoreFileFactory(FileManager fileManager, PasswordReader passwordReader) {
+    public TruststoreFactory(FileManager fileManager, PasswordReader passwordReader) {
         this.fileManager = fileManager;
         this.passwordReader = passwordReader;
     }
@@ -66,9 +63,9 @@ public class TruststoreFileFactory {
         String extension = fileManager.getExtension(truststoreFile);
         switch (extension) {
             case JKS_EXTENSION:
-                return createJksTruststore(truststoreFile, truststorePasswordPath);
+                return createJavaTruststore(truststoreFile, truststorePasswordPath, JKS_TYPE);
             case P12_EXTENSION:
-                return createP12Truststore(truststoreFile, truststorePasswordPath);
+                return createJavaTruststore(truststoreFile, truststorePasswordPath, PKCS12_TYPE);
             case PEM_EXTENSION:
                 return createPemTruststore(truststoreFile);
             default:
@@ -77,23 +74,15 @@ public class TruststoreFileFactory {
         }
     }
 
-    private JavaTruststore createJksTruststore(File truststoreFile, String truststorePasswordPath)
+    private Truststore createJavaTruststore(File truststoreFile, String truststorePasswordPath, String keystoreType)
         throws PasswordReaderException, LoadTruststoreException, KeystoreInstanceException {
         String password = passwordReader.readPassword(new File(truststorePasswordPath));
-        JavaCertificateStoreController storeController = certificateStoreControllerFactory
-            .createLoadedJksCertificateStoreController(truststoreFile, password);
-        return new JavaTruststore(truststoreFile, storeController);
+        CertificateManipulator javaCertController = JavaCertificateControllerFactory
+            .create(truststoreFile, password, keystoreType);
+        return new Truststore(truststoreFile, javaCertController);
     }
 
-    private JavaTruststore createP12Truststore(File truststoreFile, String truststorePasswordPath)
-        throws LoadTruststoreException, KeystoreInstanceException, PasswordReaderException {
-        String password = passwordReader.readPassword(new File(truststorePasswordPath));
-        JavaCertificateStoreController storeController = certificateStoreControllerFactory
-            .createLoadedPkcs12CertificateStoreController(truststoreFile, password);
-        return new JavaTruststore(truststoreFile, storeController);
-    }
-
-    private PemTruststore createPemTruststore(File truststoreFile) {
-        return new PemTruststore(truststoreFile, new PemCertificateController(truststoreFile));
+    private Truststore createPemTruststore(File truststoreFile) {
+        return new Truststore(truststoreFile, new PemCertificateManipulator(truststoreFile));
     }
 }

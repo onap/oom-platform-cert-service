@@ -45,9 +45,9 @@ import org.onap.oom.truststoremerger.certification.file.exception.WriteTruststor
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class PemCertificateController implements CertificateController {
+public class PemCertificateManipulator implements CertificateManipulator {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(PemCertificateController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PemCertificateManipulator.class);
 
     private static final boolean APPEND_TO_FILE = true;
 
@@ -55,7 +55,7 @@ public class PemCertificateController implements CertificateController {
     private final List<CertificateWithAlias> certificatesToBeSaved = new ArrayList<>();
     private final File file;
 
-    public PemCertificateController(File file) {
+    public PemCertificateManipulator(File file) {
         this.file = file;
     }
 

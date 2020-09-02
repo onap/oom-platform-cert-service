@@ -21,8 +21,8 @@ package org.onap.oom.truststoremerger.api;
 
 public class CertificateConstants {
 
-    public static final String JKS_INSTANCE = "JKS";
-    public static final String PKCS12_INSTANCE = "PKCS12";
+    public static final String JKS_TYPE = "JKS";
+    public static final String PKCS12_TYPE = "PKCS12";
     public static final String X_509_CERTIFICATE = "X.509";
     public static final String BOUNCY_CASTLE_PROVIDER = "BC";
 
