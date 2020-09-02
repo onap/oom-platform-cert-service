@@ -17,12 +17,12 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.certification.path;
+package org.onap.oom.truststoremerger.configuration.path;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class PathValidatorTest {
 
@@ -30,15 +30,15 @@ class PathValidatorTest {
 
     @ParameterizedTest()
     @ValueSource(strings = {"/opt/app/truststore.pem", "/opt/app/truststore.jks",
-            "/opt/app/truststore.p12", "/truststore.pem"})
+        "/opt/app/truststore.p12", "/truststore.pem"})
     void shouldAcceptValidTruststorePaths(String path) {
         assertThat(validator.isTruststorePathValid(path)).isTrue();
     }
 
     @ParameterizedTest()
     @ValueSource(strings = {"/opt/app/truststore.pass", "/opt/app/truststore.invalid", "/",
-            "truststore", "opt/app/truststore.p12", "/?.pem", "/.pem"})
-    void shouldRejectInValidTruststorePaths(String path) {
+        "truststore", "opt/app/truststore.p12", "/?.pem", "/.pem"})
+    void shouldRejectInvalidTruststorePaths(String path) {
         assertThat(validator.isTruststorePathValid(path)).isFalse();
     }
 
@@ -50,8 +50,8 @@ class PathValidatorTest {
 
     @ParameterizedTest()
     @ValueSource(strings = {"/opt/app/truststore.pem", "/opt/app/truststore.jks",
-            "/opt/app/truststore.p12", "/", "truststore", "opt/app/truststore.p12", "/?.pass", "/.pass"})
-    void shouldRejectInValidTruststorePasswordPaths(String path) {
+        "/opt/app/truststore.p12", "/", "truststore", "opt/app/truststore.p12", "/?.pass", "/.pass"})
+    void shouldRejectInvalidTruststorePasswordPaths(String path) {
         assertThat(validator.isTruststorePasswordPathValid(path)).isFalse();
     }
 

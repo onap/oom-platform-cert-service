@@ -17,7 +17,7 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.certification.path;
+package org.onap.oom.truststoremerger.configuration.path;
 
 import static org.onap.oom.truststoremerger.api.ConfigurationEnvs.TRUSTSTORES_PATHS_ENV;
 import static org.onap.oom.truststoremerger.api.ConfigurationEnvs.TRUSTSTORES_PASSWORDS_PATHS_ENV;
@@ -25,6 +25,7 @@ import static org.onap.oom.truststoremerger.api.ConfigurationEnvs.TRUSTSTORES_PA
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
+import org.onap.oom.truststoremerger.configuration.exception.TruststoresPathsProviderException;
 
 public class TruststoresPathsProvider {
 
@@ -34,7 +35,7 @@ public class TruststoresPathsProvider {
     private final EnvProvider envProvider;
     private final PathValidator pathValidator;
 
-    public TruststoresPathsProvider(EnvProvider envProvider, PathValidator pathValidator) {
+    TruststoresPathsProvider(EnvProvider envProvider, PathValidator pathValidator) {
         this.envProvider = envProvider;
         this.pathValidator = pathValidator;
     }

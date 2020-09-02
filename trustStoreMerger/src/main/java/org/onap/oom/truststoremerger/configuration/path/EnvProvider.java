@@ -17,28 +17,20 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.configuration;
+package org.onap.oom.truststoremerger.configuration.path;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.Optional;
 
-public class MergerConfiguration {
-    private final List<String> truststoreFilePaths;
-    private final List<String> truststoreFilePasswordPaths;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-    public MergerConfiguration(List<String> truststoreFilePaths,
-                               List<String> truststoreFilePasswordPaths) {
-        this.truststoreFilePaths = List.copyOf(truststoreFilePaths);
-        this.truststoreFilePasswordPaths = List.copyOf(truststoreFilePasswordPaths);
+class EnvProvider {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(EnvProvider.class);
+
+    Optional<String> getEnv(String name) {
+        String value = System.getenv(name);
+        LOGGER.info("Read variable: {} , value: {}", name, value);
+        return Optional.ofNullable(System.getenv(name));
     }
-
-    public List<String> getTruststoreFilePaths() {
-        return Collections.unmodifiableList(truststoreFilePaths);
-    }
-
-
-    public List<String> getTruststoreFilePasswordPaths() {
-        return Collections.unmodifiableList(truststoreFilePasswordPaths);
-    }
-
 }

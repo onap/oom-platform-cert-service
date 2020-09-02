@@ -17,14 +17,14 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.configuration;
+package org.onap.oom.truststoremerger.configuration.path;
 
-import org.onap.oom.truststoremerger.api.ExitStatus;
-import org.onap.oom.truststoremerger.api.ExitableException;
+public class TruststoresPathsProviderFactory {
 
-public class MergerConfigurationException extends ExitableException {
+    private TruststoresPathsProviderFactory() {
+    }
 
-    MergerConfigurationException(String message) {
-        super(message, ExitStatus.MERGER_CONFIGURATION_EXCEPTION);
+    public static TruststoresPathsProvider create() {
+        return new TruststoresPathsProvider(new EnvProvider(), new PathValidator());
     }
 }

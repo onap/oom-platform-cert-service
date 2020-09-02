@@ -24,18 +24,20 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.onap.oom.truststoremerger.certification.path.TruststoresPathsProvider;
-import org.onap.oom.truststoremerger.certification.path.TruststoresPathsProviderException;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.onap.oom.truststoremerger.configuration.exception.MergerConfigurationException;
+import org.onap.oom.truststoremerger.configuration.exception.TruststoresPathsProviderException;
+import org.onap.oom.truststoremerger.configuration.model.MergerConfiguration;
+import org.onap.oom.truststoremerger.configuration.path.TruststoresPathsProvider;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class MergerConfigurationFactoryTest {
+class MergerConfigurationProviderTest {
 
     private static final String BASE_TRUSTSTORE_PATH = "/opt/app/truststore_";
     private static final String TRUSTSTORE_EXTENSION = ".jks";
@@ -43,11 +45,11 @@ class MergerConfigurationFactoryTest {
 
     @Mock
     private TruststoresPathsProvider pathsProvider;
-    private MergerConfigurationFactory factory;
+    private MergerConfigurationProvider factory;
 
     @BeforeEach
     void setUp() {
-        factory = new MergerConfigurationFactory(pathsProvider);
+        factory = new MergerConfigurationProvider(pathsProvider);
     }
 
     @Test
