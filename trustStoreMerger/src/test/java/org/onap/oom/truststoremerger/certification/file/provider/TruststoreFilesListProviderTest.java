@@ -24,17 +24,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.onap.oom.truststoremerger.certification.file.TruststoreFileFactory;
 import org.onap.oom.truststoremerger.certification.file.TruststoreFilesListProvider;
-import org.onap.oom.truststoremerger.certification.file.model.JavaTruststore;
-import org.onap.oom.truststoremerger.certification.file.model.PemTruststore;
-import org.onap.oom.truststoremerger.certification.file.model.Truststore;
 import org.onap.oom.truststoremerger.certification.file.exception.KeystoreInstanceException;
 import org.onap.oom.truststoremerger.certification.file.exception.LoadTruststoreException;
+import org.onap.oom.truststoremerger.certification.file.exception.PasswordReaderException;
+import org.onap.oom.truststoremerger.certification.file.exception.TruststoreFileFactoryException;
+import org.onap.oom.truststoremerger.certification.file.model.Truststore;
 
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
-import org.onap.oom.truststoremerger.certification.file.exception.PasswordReaderException;
-import org.onap.oom.truststoremerger.certification.file.exception.TruststoreFileFactoryException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -68,15 +66,15 @@ class TruststoreFilesListProviderTest {
     }
 
     private void assertCorrectJksTruststore(Truststore truststore, String truststorePath) {
-        assertCorrectTypeAndTruststorePath(truststore, truststorePath, JavaTruststore.class);
+        assertCorrectTypeAndTruststorePath(truststore, truststorePath, Truststore.class);
     }
 
     private void assertCorrectP12Truststore(Truststore truststore, String truststorePath) {
-        assertCorrectTypeAndTruststorePath(truststore, truststorePath, JavaTruststore.class);
+        assertCorrectTypeAndTruststorePath(truststore, truststorePath, Truststore.class);
     }
 
     private void assertCorrectPemTruststore(Truststore truststore, String truststorePath) {
-        assertCorrectTypeAndTruststorePath(truststore, truststorePath, PemTruststore.class);
+        assertCorrectTypeAndTruststorePath(truststore, truststorePath, Truststore.class);
     }
 
     private void assertCorrectTypeAndTruststorePath(Truststore truststore, String truststorePath, Class<?> truststoreType) {

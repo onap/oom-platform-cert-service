@@ -19,17 +19,17 @@
 
 package org.onap.oom.truststoremerger.certification.file.provider;
 
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-import static org.onap.oom.truststoremerger.certification.file.TestCertificateProvider.getSampleJksTruststoreFile;
-
-import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.onap.oom.truststoremerger.api.ExitableException;
-import org.onap.oom.truststoremerger.certification.file.provider.entry.CertificateWithAlias;
-import org.onap.oom.truststoremerger.certification.file.TestCertificateProvider;
 import org.onap.oom.truststoremerger.certification.file.exception.AliasConflictException;
 import org.onap.oom.truststoremerger.certification.file.exception.MissingTruststoreException;
-import org.onap.oom.truststoremerger.certification.file.model.JavaTruststore;
+import org.onap.oom.truststoremerger.certification.file.model.Truststore;
+import org.onap.oom.truststoremerger.certification.file.provider.entry.CertificateWithAlias;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.onap.oom.truststoremerger.certification.file.provider.TestCertificateProvider.*;
 
 class JavaCertificateStoreControllerTest {
 
@@ -37,7 +37,7 @@ class JavaCertificateStoreControllerTest {
     @Test
     void throwExceptionWhenAliasConflictDetected() throws Exception {
         //given
-        JavaTruststore p12Truststore = TestCertificateProvider.getSampleP12Truststore();
+        Truststore p12Truststore = getSampleP12Truststore();
         List<CertificateWithAlias> jksTruststoreCertificates = getSampleJksTruststoreFile().getCertificates();
 
         //when //then
@@ -49,7 +49,7 @@ class JavaCertificateStoreControllerTest {
     @Test
     void throwExceptionWhenFileNotContainsTruststoreEntry() throws ExitableException {
         //given
-        JavaTruststore p12Truststore = TestCertificateProvider.getSampleP12Keystore();
+        Truststore p12Truststore = getSampleP12Keystore();
 
         //when//then
         assertThatExceptionOfType(MissingTruststoreException.class)

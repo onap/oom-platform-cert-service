@@ -25,15 +25,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.onap.oom.truststoremerger.certification.file.TruststoreFileFactory;
-import org.onap.oom.truststoremerger.certification.file.model.JavaTruststore;
-import org.onap.oom.truststoremerger.certification.file.model.PemTruststore;
-import org.onap.oom.truststoremerger.certification.file.model.Truststore;
 import org.onap.oom.truststoremerger.certification.file.exception.KeystoreInstanceException;
 import org.onap.oom.truststoremerger.certification.file.exception.LoadTruststoreException;
-
-import java.io.File;
 import org.onap.oom.truststoremerger.certification.file.exception.PasswordReaderException;
 import org.onap.oom.truststoremerger.certification.file.exception.TruststoreFileFactoryException;
+import org.onap.oom.truststoremerger.certification.file.model.Truststore;
+
+import java.io.File;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -60,11 +58,14 @@ class TruststoreFactoryTest {
     @Test
     void shouldReturnCorrectJksTruststoreForJksFile()
         throws LoadTruststoreException, PasswordReaderException, TruststoreFileFactoryException, KeystoreInstanceException {
+
+        //when
         Truststore truststore = truststoreFileFactory
                 .create(TRUSTSTORE_JKS_PATH, TRUSTSTORE_JKS_PASS_PATH);
-        assertThat(truststore).isInstanceOf(JavaTruststore.class);
-        JavaTruststore jksTruststore = (JavaTruststore) truststore;
-        assertThat(jksTruststore.getFile()).isEqualTo(new File(TRUSTSTORE_JKS_PATH));
+
+        //then
+        assertThat(truststore).isInstanceOf(Truststore.class);
+        assertThat(truststore.getFile()).isEqualTo(new File(TRUSTSTORE_JKS_PATH));
     }
 
     @Test
@@ -73,7 +74,7 @@ class TruststoreFactoryTest {
         Truststore truststore = truststoreFileFactory
                 .create(TRUSTSTORE_P12_PATH,
                         TRUSTSTORE_P12_PASS_PATH);
-        assertThat(truststore).isInstanceOf(JavaTruststore.class);
+        assertThat(truststore).isInstanceOf(Truststore.class);
     }
 
     @Test
@@ -82,7 +83,7 @@ class TruststoreFactoryTest {
         Truststore truststore = truststoreFileFactory
                 .create(TRUSTSTORE_PEM_PATH,
                         EMPTY_PASS_PATH);
-        assertThat(truststore).isInstanceOf(PemTruststore.class);
+        assertThat(truststore).isInstanceOf(Truststore.class);
     }
 
     @Test

@@ -34,17 +34,17 @@ public class CertificateStoreControllerFactory {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CertificateStoreControllerFactory.class);
 
-    public JavaCertificateStoreController createLoadedJksCertificateStoreController(File certFile, String certPassword)
+    public CertificateController createLoadedJksCertificateStoreController(File certFile, String certPassword)
         throws LoadTruststoreException, KeystoreInstanceException {
         return createLoadedCertificateStoreController(certFile, certPassword, JKS_INSTANCE);
     }
 
-    public JavaCertificateStoreController createLoadedPkcs12CertificateStoreController(File certFile, String certPassword)
+    public CertificateController createLoadedPkcs12CertificateStoreController(File certFile, String certPassword)
         throws KeystoreInstanceException, LoadTruststoreException {
         return createLoadedCertificateStoreController(certFile, certPassword, PKCS12_INSTANCE);
     }
 
-    private JavaCertificateStoreController createLoadedCertificateStoreController(File certFile, String certPassword,
+    private CertificateController createLoadedCertificateStoreController(File certFile, String certPassword,
         String instanceType)
         throws LoadTruststoreException, KeystoreInstanceException {
         try {

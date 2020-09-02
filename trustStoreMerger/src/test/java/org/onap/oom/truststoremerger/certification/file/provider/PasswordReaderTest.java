@@ -20,9 +20,9 @@
 package org.onap.oom.truststoremerger.certification.file.provider;
 
 import org.junit.jupiter.api.Test;
+import org.onap.oom.truststoremerger.certification.file.exception.PasswordReaderException;
 
 import java.io.File;
-import org.onap.oom.truststoremerger.certification.file.exception.PasswordReaderException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
