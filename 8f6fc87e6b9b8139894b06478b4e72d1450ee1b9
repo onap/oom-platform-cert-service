@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c0e65504_1ba9b2f2",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/model/Truststore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2020-09-03T12:39:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "845650a0_5f890c8e",
+      "range": {
+        "startLine": 47,
+        "startChar": 67,
+        "endLine": 47,
+        "endChar": 81
+      },
+      "revId": "8f6fc87e6b9b8139894b06478b4e72d1450ee1b9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fe7705c_39f353c9",
         "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/model/Truststore.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "8f6fc87e6b9b8139894b06478b4e72d1450ee1b9",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "490bf71c_95bd8eb7",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/model/Truststore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2020-09-03T12:39:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fe7705c_39f353c9",
+      "range": {
+        "startLine": 57,
+        "startChar": 49,
+        "endLine": 57,
+        "endChar": 63
+      },
+      "revId": "8f6fc87e6b9b8139894b06478b4e72d1450ee1b9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e4e3f857_6fe77d5c",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/model/Truststore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2020-09-03T12:39:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6faf950_7dbb66b5",
+      "range": {
+        "startLine": 67,
+        "startChar": 62,
+        "endLine": 67,
+        "endChar": 71
+      },
+      "revId": "8f6fc87e6b9b8139894b06478b4e72d1450ee1b9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a9c93ab_7ae6c2eb",
         "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/model/Truststore.java",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2020-09-03T07:27:39Z",
       "side": 1,
       "message": "If you introduce above changes, this method will be only used in test cases, Consider to refactor tests and remove it.",
+      "range": {
+        "startLine": 72,
+        "startChar": 4,
+        "endLine": 72,
+        "endChar": 27
+      },
+      "revId": "8f6fc87e6b9b8139894b06478b4e72d1450ee1b9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74fbf971_55c48433",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/model/Truststore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2020-09-03T12:39:03Z",
+      "side": 1,
+      "message": "Partially done. I reorganized tests and now we can make it package private. Please check if it is sufficient.",
+      "parentUuid": "3a9c93ab_7ae6c2eb",
       "range": {
         "startLine": 72,
         "startChar": 4,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "4e78b0a2_e69e262e",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/provider/JavaCertificateControllerFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2020-09-03T12:39:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fec52bc7_2136da62",
+      "range": {
+        "startLine": 38,
+        "startChar": 8,
+        "endLine": 38,
+        "endChar": 28
+      },
+      "revId": "8f6fc87e6b9b8139894b06478b4e72d1450ee1b9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b45c5a0d_0749b8f6",
         "filename": "trustStoreMerger/src/test/java/org/onap/oom/truststoremerger/certification/file/model/TruststoreTest.java",
         "patchSetId": 3
@@ -137,6 +257,30 @@
       "revId": "8f6fc87e6b9b8139894b06478b4e72d1450ee1b9",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41afa345_cd672ec1",
+        "filename": "trustStoreMerger/src/test/java/org/onap/oom/truststoremerger/certification/file/model/TruststoreTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2020-09-03T12:39:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b45c5a0d_0749b8f6",
+      "range": {
+        "startLine": 194,
+        "startChar": 9,
+        "endLine": 194,
+        "endChar": 25
+      },
+      "revId": "8f6fc87e6b9b8139894b06478b4e72d1450ee1b9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "e10ea3c1_05f3ebc3",
+        "filename": "trustStoreMerger/src/test/java/org/onap/oom/truststoremerger/certification/file/model/TruststoreTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2020-09-03T12:39:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b50e93e_041db95f",
+      "range": {
+        "startLine": 196,
+        "startChar": 8,
+        "endLine": 196,
+        "endChar": 62
+      },
+      "revId": "8f6fc87e6b9b8139894b06478b4e72d1450ee1b9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f6ee6ce_b0b2862d",
         "filename": "trustStoreMerger/src/test/java/org/onap/oom/truststoremerger/certification/file/provider/TestCertificateProvider.java",
         "patchSetId": 3
@@ -183,6 +351,30 @@
       "revId": "8f6fc87e6b9b8139894b06478b4e72d1450ee1b9",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aad8acd_84b12ebd",
+        "filename": "trustStoreMerger/src/test/java/org/onap/oom/truststoremerger/certification/file/provider/TestCertificateProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2020-09-03T12:39:03Z",
+      "side": 1,
+      "message": "It is used in TruststoreTest",
+      "parentUuid": "2f6ee6ce_b0b2862d",
+      "range": {
+        "startLine": 76,
+        "startChar": 29,
+        "endLine": 76,
+        "endChar": 60
+      },
+      "revId": "8f6fc87e6b9b8139894b06478b4e72d1450ee1b9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "17ec1997_6935b1d0",
+        "filename": "trustStoreMerger/src/test/java/org/onap/oom/truststoremerger/certification/file/provider/TestCertificateProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2020-09-03T12:39:03Z",
+      "side": 1,
+      "message": "It is used in TruststoreTest",
+      "parentUuid": "0f885b5b_8c0d63c8",
+      "range": {
+        "startLine": 81,
+        "startChar": 29,
+        "endLine": 81,
+        "endChar": 55
+      },
+      "revId": "8f6fc87e6b9b8139894b06478b4e72d1450ee1b9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4aed0892_bf8f17a4",
         "filename": "trustStoreMerger/src/test/java/org/onap/oom/truststoremerger/certification/file/provider/TestCertificateProvider.java",
         "patchSetId": 3
@@ -229,6 +445,30 @@
       "revId": "8f6fc87e6b9b8139894b06478b4e72d1450ee1b9",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a11963f5_56b49eaf",
+        "filename": "trustStoreMerger/src/test/java/org/onap/oom/truststoremerger/certification/file/provider/TestCertificateProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2020-09-03T12:39:03Z",
+      "side": 1,
+      "message": "It is used in TruststoreTest",
+      "parentUuid": "4aed0892_bf8f17a4",
+      "range": {
+        "startLine": 100,
+        "startChar": 29,
+        "endLine": 100,
+        "endChar": 70
+      },
+      "revId": "8f6fc87e6b9b8139894b06478b4e72d1450ee1b9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "4901ba92_236cabb2",
+        "filename": "trustStoreMerger/src/test/java/org/onap/oom/truststoremerger/certification/file/provider/TestCertificateProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2020-09-03T12:39:03Z",
+      "side": 1,
+      "message": "It is used in TruststoreTest",
+      "parentUuid": "dc7ac4de_616a0b94",
+      "range": {
+        "startLine": 106,
+        "startChar": 29,
+        "endLine": 106,
+        "endChar": 68
+      },
+      "revId": "8f6fc87e6b9b8139894b06478b4e72d1450ee1b9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69188bc1_36a17d46",
         "filename": "trustStoreMerger/src/test/java/org/onap/oom/truststoremerger/certification/file/provider/TestCertificateProvider.java",
         "patchSetId": 3
@@ -275,6 +539,30 @@
       "revId": "8f6fc87e6b9b8139894b06478b4e72d1450ee1b9",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5457a25a_efb3a4e4",
+        "filename": "trustStoreMerger/src/test/java/org/onap/oom/truststoremerger/certification/file/provider/TestCertificateProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2020-09-03T12:39:03Z",
+      "side": 1,
+      "message": "It is used in TruststoreTest",
+      "parentUuid": "69188bc1_36a17d46",
+      "range": {
+        "startLine": 112,
+        "startChar": 23,
+        "endLine": 112,
+        "endChar": 43
+      },
+      "revId": "8f6fc87e6b9b8139894b06478b4e72d1450ee1b9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
