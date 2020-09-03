@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5376bfe8_cbf17363",
+        "filename": "releases/2.0.0-container.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-09-03T17:17:28Z",
+      "side": 1,
+      "message": "Needs to be removed",
+      "range": {
+        "startLine": 9,
+        "startChar": 11,
+        "endLine": 9,
+        "endChar": 16
+      },
+      "revId": "418184ea42b6dd6cf359b749cfca1837d44d8eb7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34fa74ff_0e602412",
+        "filename": "releases/2.0.0-container.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-09-03T17:17:28Z",
+      "side": 1,
+      "message": "Same as above",
+      "range": {
+        "startLine": 11,
+        "startChar": 11,
+        "endLine": 11,
+        "endChar": 16
+      },
+      "revId": "418184ea42b6dd6cf359b749cfca1837d44d8eb7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
