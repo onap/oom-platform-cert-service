@@ -1,0 +1,12 @@
+distribution_type: 'container'
+container_release_tag: '2.0.0'
+container_pull_registry: nexus3.onap.org:10003
+container_push_registry: nexus3.onap.org:10002
+project: 'oom-platform-cert-service'
+log_dir: 'oom-platform-cert-service-maven-docker-stage-master/39'
+ref: d0e9d1fb9422effe0fe2408c8de2553e2ac20702
+containers:
+  - name: 'onap/org.onap.oom.platform.cert-service.oom-certservice-api'
+    version: '1.2.0-20200902T201554Z'
+  - name: 'onap/org.onap.oom.platform.cert-service.oom-certservice-client'
+    version: '1.2.0-20200902T201554Z'
