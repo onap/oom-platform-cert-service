@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "845650a0_5f890c8e",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/model/Truststore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-09-03T07:27:39Z",
+      "side": 1,
+      "message": "Now you can use file.getPath().",
+      "range": {
+        "startLine": 47,
+        "startChar": 67,
+        "endLine": 47,
+        "endChar": 81
+      },
+      "revId": "8f6fc87e6b9b8139894b06478b4e72d1450ee1b9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fe7705c_39f353c9",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/model/Truststore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-09-03T07:27:39Z",
+      "side": 1,
+      "message": "As above",
+      "range": {
+        "startLine": 57,
+        "startChar": 49,
+        "endLine": 57,
+        "endChar": 63
+      },
+      "revId": "8f6fc87e6b9b8139894b06478b4e72d1450ee1b9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6faf950_7dbb66b5",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/model/Truststore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-09-03T07:27:39Z",
+      "side": 1,
+      "message": "As above",
+      "range": {
+        "startLine": 67,
+        "startChar": 62,
+        "endLine": 67,
+        "endChar": 71
+      },
+      "revId": "8f6fc87e6b9b8139894b06478b4e72d1450ee1b9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a9c93ab_7ae6c2eb",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/model/Truststore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-09-03T07:27:39Z",
+      "side": 1,
+      "message": "If you introduce above changes, this method will be only used in test cases, Consider to refactor tests and remove it.",
+      "range": {
+        "startLine": 72,
+        "startChar": 4,
+        "endLine": 72,
+        "endChar": 27
+      },
+      "revId": "8f6fc87e6b9b8139894b06478b4e72d1450ee1b9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b45c5a0d_0749b8f6",
+        "filename": "trustStoreMerger/src/test/java/org/onap/oom/truststoremerger/certification/file/model/TruststoreTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-09-03T07:27:39Z",
+      "side": 1,
+      "message": "Rename to \u0027remove temporary files\u0027",
+      "range": {
+        "startLine": 194,
+        "startChar": 9,
+        "endLine": 194,
+        "endChar": 25
+      },
+      "revId": "8f6fc87e6b9b8139894b06478b4e72d1450ee1b9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b50e93e_041db95f",
+        "filename": "trustStoreMerger/src/test/java/org/onap/oom/truststoremerger/certification/file/model/TruststoreTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-09-03T07:27:39Z",
+      "side": 1,
+      "message": "Consider to move it to TestCertificateProvider",
+      "range": {
+        "startLine": 196,
+        "startChar": 8,
+        "endLine": 196,
+        "endChar": 62
+      },
+      "revId": "8f6fc87e6b9b8139894b06478b4e72d1450ee1b9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
