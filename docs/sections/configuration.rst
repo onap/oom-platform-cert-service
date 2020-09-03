@@ -104,8 +104,8 @@ Note! This must be executed before calling *make all* (from OOM Installation) or
 
 1. Edit *cmpServers.json* file. If OOM *global.addTestingComponents* flag is set to:
 
-    - *true* - edit *kubernetes/aaf/charts/aaf-cert-service/resources/test/cmpServers.json*
-    - *false* - edit *kubernetes/aaf/charts/aaf-cert-service/resources/default/cmpServers.json*
+    - *true* - edit *kubernetes/oom/components/oom-cert-service/resources/test/cmpServers.json*
+    - *false* - edit *kubernetes/oom/components/oom-cert-service/resources/default/cmpServers.json
 
 2. Build and start OOM deployment
 
@@ -123,7 +123,7 @@ When CertService is deployed:
     kubectl -n onap edit secret <cmp-servers-secret-name>
 
     e.g.
-    kubectl -n onap edit secret aaf-cert-service-secret
+    kubectl -n onap edit secret oom-cert-service-secret
 
 4. Replace value for *cmpServers.json* with your base64 encoded configuration. For example:
 
@@ -135,10 +135,10 @@ When CertService is deployed:
         kind: Secret
         metadata:
           creationTimestamp: "2020-04-21T16:30:29Z"
-          name: aaf-cert-service-secret
+          name: oom-cert-service-secret
           namespace: default
           resourceVersion: "33892990"
-          selfLink: /api/v1/namespaces/default/secrets/aaf-cert-service-secret
+          selfLink: /api/v1/namespaces/default/secrets/oom-cert-service-secret
           uid: 6a037526-83ed-11ea-b731-fa163e2144f6
         type: Opaque
 
@@ -181,19 +181,19 @@ This will clear existing certs and generate new ones.
 ONAP OOM installation:
 ^^^^^^^^^^^^^^^^^^^^^^
 
-Certificates are stored in secrets, which are mounted to pods as volumes. Both secrets are stored in *kubernetes/aaf/charts/aaf-cert-service/templates/secret.yaml*.
-Secrets take certificates from *kubernetes/aaf/charts/aaf-cert-service/resources* directory. Certificates are generated automatically during building (using Make) OOM repository.
+Certificates are stored in secrets, which are mounted to pods as volumes. Both secrets are stored in *kubernetes/oom/components/oom-cert-service/templates/secret.yaml*.
+Secrets take certificates from *kubernetes/oom/components/oom-cert-service/resources* directory. Certificates are generated automatically during building (using Make) OOM repository.
 
-*kubernetes/aaf/charts/aaf-cert-service/Makefile* is similar to the one stored in certservice repository. It actually generates certificates.
-This Makefile is executed by *kubernetes/aaf/Makefile*, which is automatically executed during OOM build.
+*kubernetes/oom/components/oom-cert-service/Makefile* is similar to the one stored in certservice repository. It actually generates certificates.
+This Makefile is executed by *kubernetes/oom/Makefile*, which is automatically executed during OOM build.
 
 
 Using external certificates for CertService and CertService Client
 ------------------------------------------------------------------
 
 This section describes how to use custom, external certificates for CertService and CertService Client communication in OOM installation.
-
-1. Set *tls.certificateExternalSecret* flag to true in *kubernetes/aaf/charts/aaf-cert-service/values.yaml*
+*kubernetes/oom/components/oom-cert-service/values.yaml*
+1. Set *tls.certificateExternalSecret* flag to true in *kubernetes/oom/components/oom-cert-service/values.yaml*
 2. Prepare secret for CertService. It must be provided before OOM installation. It must contain four files:
 
     - *certServiceServer-keystore.jks*  - keystore in JKS format. Signed by some Root CA
@@ -201,18 +201,18 @@ This section describes how to use custom, external certificates for CertService 
     - *truststore.jks* - truststore in JKS format, containing certificates of the Root CA that signed CertService Client certificate
     - *root.crt* - certificate of the RootCA that signed Client certificate in CRT format
 
-3. Name the secret properly - the name should match *tls.server.secret.name* value from *kubernetes/aaf/charts/aaf-cert-service/values.yaml* file
+3. Name the secret properly - the name should match *tls.server.secret.name* value from *kubernetes/oom/components/oom-cert-service/values.yaml* file
 
 4. Prepare secret for CertService Client. It must be provided before OOM installation. It must contain two files:
 
     - *certServiceClient-keystore.jks*  - keystore in JKS format. Signed by some Root CA
     - *truststore.jks* - truststore in JKS format, containing certificates of the RootCA that signed CertService certificate
 
-5. Name the secret properly - the name should match *global.aaf.certService.client.secret.name* value from *kubernetes/onap/values.yaml* file
+5. Name the secret properly - the name should match *global.oom.certService.client.secret.name* value from *kubernetes/onap/values.yaml* file
 
 6. Provide keystore and truststore passwords for CertService. It can be done in two ways:
 
-    - by inlining them into *kubernetes/aaf/charts/aaf-cert-service/values.yaml*:
+    - by inlining them into *kubernetes/oom/components/oom-cert-service/values.yaml*:
 
         - override *credentials.tls.keystorePassword* value with keystore password
         - override *credentials.tls.truststorePassword* value with truststore password
@@ -224,14 +224,14 @@ This section describes how to use custom, external certificates for CertService 
 
 7. Override default keystore and truststore passwords for CertService Client in *kubernetes/onap/values.yaml* file:
 
-    - override *global.aaf.certServiceClient.envVariables.keystorePassword* value with keystore password
-    - override *global.aaf.certServiceClient.envVariables.truststorePassword* value with truststore password
+    - override *global.oom.certServiceClient.envVariables.keystorePassword* value with keystore password
+    - override *global.oom.certServiceClient.envVariables.truststorePassword* value with truststore password
 
 
 Configuring EJBCA server for testing
 ------------------------------------
 
-To instantiate an EJBCA server for testing purposes with an OOM deployment, cmpv2Enabled and cmpv2Testing have to be changed to true in oom/kubernetes/aaf/values.yaml.
+To instantiate an EJBCA server for testing purposes with an OOM deployment, cmpv2Enabled and cmpv2Testing have to be changed to true in oom/kubernetes/oom/values.yaml.
 
 cmpv2Enabled has to be true to enable oom-cert-service to be instantiated and used with an external Certificate Authority to get certificates for secure communication.
 
@@ -245,7 +245,7 @@ Default Values:
 +---------------------+---------------------------------------------------------------------------------------------------------------------------------+
 |  Name               | Value                                                                                                                           |
 +=====================+=================================================================================================================================+
-| Request URL         | http://aaf-ejbca:8080/ejbca/publicweb/cmp/cmpRA                                                                                 |
+| Request URL         | http://ejbca:8080/ejbca/publicweb/cmp/cmpRA                                                                                 |
 +---------------------+---------------------------------------------------------------------------------------------------------------------------------+
 | Response Type       | PKI Response                                                                                                                    |
 +---------------------+---------------------------------------------------------------------------------------------------------------------------------+

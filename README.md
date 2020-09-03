@@ -72,7 +72,7 @@ https://jenkins.onap.org/view/CSIT/job/oom-platform-cert-service-master-csit-cer
 
 ### Sonar results
 ```     
-https://sonarcloud.io/dashboard?id=onap_aaf-certservice
+https://sonarcloud.io/dashboard?id=onap_oom-platform-cert-service
 ```
     
 ### Maven artifacts
