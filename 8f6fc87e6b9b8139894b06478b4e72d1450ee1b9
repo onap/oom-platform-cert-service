@@ -94,6 +94,29 @@
     },
     {
       "key": {
+        "uuid": "fec52bc7_2136da62",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/provider/JavaCertificateControllerFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 2807
+      },
+      "writtenOn": "2020-09-03T09:25:39Z",
+      "side": 1,
+      "message": "There is no reason to break the line.\n\npublic static CertificateController create(File certFile, String certPassword, String instanceType)",
+      "range": {
+        "startLine": 38,
+        "startChar": 8,
+        "endLine": 38,
+        "endChar": 28
+      },
+      "revId": "8f6fc87e6b9b8139894b06478b4e72d1450ee1b9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b45c5a0d_0749b8f6",
         "filename": "trustStoreMerger/src/test/java/org/onap/oom/truststoremerger/certification/file/model/TruststoreTest.java",
         "patchSetId": 3
@@ -133,6 +156,121 @@
         "startChar": 8,
         "endLine": 196,
         "endChar": 62
+      },
+      "revId": "8f6fc87e6b9b8139894b06478b4e72d1450ee1b9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f6ee6ce_b0b2862d",
+        "filename": "trustStoreMerger/src/test/java/org/onap/oom/truststoremerger/certification/file/provider/TestCertificateProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 2807
+      },
+      "writtenOn": "2020-09-03T09:25:39Z",
+      "side": 1,
+      "message": "unused?",
+      "range": {
+        "startLine": 76,
+        "startChar": 29,
+        "endLine": 76,
+        "endChar": 60
+      },
+      "revId": "8f6fc87e6b9b8139894b06478b4e72d1450ee1b9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f885b5b_8c0d63c8",
+        "filename": "trustStoreMerger/src/test/java/org/onap/oom/truststoremerger/certification/file/provider/TestCertificateProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 2807
+      },
+      "writtenOn": "2020-09-03T09:25:39Z",
+      "side": 1,
+      "message": "unused?",
+      "range": {
+        "startLine": 81,
+        "startChar": 29,
+        "endLine": 81,
+        "endChar": 55
+      },
+      "revId": "8f6fc87e6b9b8139894b06478b4e72d1450ee1b9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aed0892_bf8f17a4",
+        "filename": "trustStoreMerger/src/test/java/org/onap/oom/truststoremerger/certification/file/provider/TestCertificateProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 2807
+      },
+      "writtenOn": "2020-09-03T09:25:39Z",
+      "side": 1,
+      "message": "unused?",
+      "range": {
+        "startLine": 100,
+        "startChar": 29,
+        "endLine": 100,
+        "endChar": 70
+      },
+      "revId": "8f6fc87e6b9b8139894b06478b4e72d1450ee1b9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc7ac4de_616a0b94",
+        "filename": "trustStoreMerger/src/test/java/org/onap/oom/truststoremerger/certification/file/provider/TestCertificateProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 2807
+      },
+      "writtenOn": "2020-09-03T09:25:39Z",
+      "side": 1,
+      "message": "unusded?",
+      "range": {
+        "startLine": 106,
+        "startChar": 29,
+        "endLine": 106,
+        "endChar": 68
+      },
+      "revId": "8f6fc87e6b9b8139894b06478b4e72d1450ee1b9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69188bc1_36a17d46",
+        "filename": "trustStoreMerger/src/test/java/org/onap/oom/truststoremerger/certification/file/provider/TestCertificateProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 2807
+      },
+      "writtenOn": "2020-09-03T09:25:39Z",
+      "side": 1,
+      "message": "unused?",
+      "range": {
+        "startLine": 112,
+        "startChar": 23,
+        "endLine": 112,
+        "endChar": 43
       },
       "revId": "8f6fc87e6b9b8139894b06478b4e72d1450ee1b9",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
