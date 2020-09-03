@@ -1,0 +1,11 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Tomasz Wróbel <tomasz.wrobel@nokia.com>
+Code-Review+1: Piotr Wielebski <piotr.wielebski@nokia.com>
+Code-Review+1: Remigiusz Janeczek <remigiusz.janeczek@nokia.com>
+Code-Review+1: Piotr Marcinkiewicz <piotr.marcinkiewicz@nokia.com>
+Code-Review+2: Paweł Baniewski <pawel.baniewski@nokia.com>
+Submitted-by: Paweł Baniewski <pawel.baniewski@nokia.com>
+Submitted-at: Thu, 03 Sep 2020 10:16:00 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/oom/platform/cert-service/+/112037
+Project: oom/platform/cert-service
+Branch: refs/heads/master
