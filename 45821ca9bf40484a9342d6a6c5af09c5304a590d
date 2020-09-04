@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17a487ff_21e060fe",
+        "filename": "releases/2.0.0-container.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-09-04T06:41:51Z",
+      "side": 1,
+      "message": "wrong images. Pls use from: https://jenkins.onap.org/view/oom-platform-cert-service/job/oom-platform-cert-service-maven-docker-stage-master/40/",
+      "revId": "45821ca9bf40484a9342d6a6c5af09c5304a590d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bb9c864_6d8f1e49",
+        "filename": "releases/2.0.0-container.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-09-04T06:41:51Z",
+      "side": 1,
+      "message": "the same problem",
+      "revId": "45821ca9bf40484a9342d6a6c5af09c5304a590d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
