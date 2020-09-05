@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "0ecd19fe_71e32d1a",
+        "filename": "trustStoreMerger/pom.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2020-09-05T21:22:50Z",
+      "side": 1,
+      "message": "shouldn\u0027t the version be bumped?",
+      "revId": "979b632f2668403508043856dc25d326d881b62d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee6246d8_964a5030",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/entry/CertificateWithAlias.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2020-09-05T21:22:50Z",
+      "side": 1,
+      "message": "please add javadocs on all new classes and public methods\n\n(and if possible, improve javadocs on methods that are modified)",
+      "revId": "979b632f2668403508043856dc25d326d881b62d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "53c62265_c9dba230",
         "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/ExitableKeystoreInstance.java",
         "patchSetId": 6
