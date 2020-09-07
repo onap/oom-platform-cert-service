@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "751f1b27_4a72b682",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/MergerConfigurationProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-09-07T12:41:20Z",
+      "side": 1,
+      "message": "Extract common functionality to internal method and use it in both cases (here and keystores).",
+      "revId": "9e30c258d57e16ca8bdd9a603551d1a5ebd275e8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
