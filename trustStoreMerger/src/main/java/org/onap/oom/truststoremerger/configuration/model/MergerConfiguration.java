@@ -25,20 +25,32 @@ import java.util.List;
 public final class MergerConfiguration {
     private final List<String> truststoreFilePaths;
     private final List<String> truststoreFilePasswordPaths;
+    private final List<String> sourceKeystorePaths;
+    private final List<String> destinationKeystorePaths;
 
     public MergerConfiguration(List<String> truststoreFilePaths,
-                               List<String> truststoreFilePasswordPaths) {
+        List<String> truststoreFilePasswordPaths, List<String> sourceKeystorePaths,
+        List<String> destinationKeystorePaths) {
         this.truststoreFilePaths = List.copyOf(truststoreFilePaths);
         this.truststoreFilePasswordPaths = List.copyOf(truststoreFilePasswordPaths);
+        this.sourceKeystorePaths = List.copyOf(sourceKeystorePaths);
+        this.destinationKeystorePaths = List.copyOf(destinationKeystorePaths);
     }
 
     public List<String> getTruststoreFilePaths() {
         return Collections.unmodifiableList(truststoreFilePaths);
     }
 
-
     public List<String> getTruststoreFilePasswordPaths() {
         return Collections.unmodifiableList(truststoreFilePasswordPaths);
     }
 
+
+    public List<String> getDestinationKeystorePaths() {
+        return Collections.unmodifiableList(destinationKeystorePaths);
+    }
+
+    public List<String> getSourceKeystorePaths() {
+        return Collections.unmodifiableList(sourceKeystorePaths);
+    }
 }

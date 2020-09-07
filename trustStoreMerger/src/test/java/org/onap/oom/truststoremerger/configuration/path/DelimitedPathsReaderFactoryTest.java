@@ -19,12 +19,18 @@
 
 package org.onap.oom.truststoremerger.configuration.path;
 
-public class TruststoresPathsProviderFactory {
+import static org.assertj.core.api.Assertions.assertThat;
 
-    private TruststoresPathsProviderFactory() {
+import org.junit.jupiter.api.Test;
+
+class DelimitedPathsReaderFactoryTest {
+
+    @Test
+    void shouldReturnCorrectObject() {
+        // given, when, then
+        assertThat(DelimitedPathsReaderFactory.createPasswordPathsReader()).isInstanceOf(DelimitedPathsReader.class);
+        assertThat(DelimitedPathsReaderFactory.createCertificatePathsReader()).isInstanceOf(DelimitedPathsReader.class);
+        assertThat(DelimitedPathsReaderFactory.createKeystoreCopierPathsReader()).isInstanceOf(DelimitedPathsReader.class);
     }
 
-    public static TruststoresPathsProvider create() {
-        return new TruststoresPathsProvider(new EnvProvider(), new PathValidator());
-    }
 }

@@ -17,20 +17,17 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.configuration.path;
+package org.onap.oom.truststoremerger.configuration;
 
-import java.util.Optional;
+public final class ConfigurationEnvs {
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+    private ConfigurationEnvs() {
 
-class EnvProvider {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(EnvProvider.class);
-
-    Optional<String> getEnv(String name) {
-        String value = System.getenv(name);
-        LOGGER.info("Read variable: {} , value: {}", name, value);
-        return Optional.ofNullable(System.getenv(name));
     }
+
+    public static final String TRUSTSTORES_PATHS_ENV = "TRUSTSTORES_PATHS";
+    public static final String TRUSTSTORES_PASSWORDS_PATHS_ENV = "TRUSTSTORES_PASSWORDS_PATHS";
+    public static final String KEYSTORE_SOURCE_PATHS_ENV = "KEYSTORE_SOURCE_PATHS";
+    public static final String KEYSTORE_DESTINATION_PATHS_ENV = "KEYSTORE_DESTINATION_PATHS";
+
 }
