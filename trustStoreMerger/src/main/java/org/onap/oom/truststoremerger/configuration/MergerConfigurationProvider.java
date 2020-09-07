@@ -19,34 +19,59 @@
 
 package org.onap.oom.truststoremerger.configuration;
 
-import static org.onap.oom.truststoremerger.api.ConfigurationEnvs.TRUSTSTORES_PATHS_ENV;
-import static org.onap.oom.truststoremerger.api.ConfigurationEnvs.TRUSTSTORES_PASSWORDS_PATHS_ENV;
+import static org.onap.oom.truststoremerger.configuration.ConfigurationEnvs.KEYSTORE_DESTINATION_PATHS_ENV;
+import static org.onap.oom.truststoremerger.configuration.ConfigurationEnvs.KEYSTORE_SOURCE_PATHS_ENV;
+import static org.onap.oom.truststoremerger.configuration.ConfigurationEnvs.TRUSTSTORES_PATHS_ENV;
+import static org.onap.oom.truststoremerger.configuration.ConfigurationEnvs.TRUSTSTORES_PASSWORDS_PATHS_ENV;
 
 import java.util.List;
 import org.onap.oom.truststoremerger.configuration.exception.MergerConfigurationException;
 import org.onap.oom.truststoremerger.configuration.exception.TruststoresPathsProviderException;
 import org.onap.oom.truststoremerger.configuration.model.MergerConfiguration;
-import org.onap.oom.truststoremerger.configuration.path.TruststoresPathsProvider;
+import org.onap.oom.truststoremerger.configuration.path.DelimitedPathsReader;
 
 public class MergerConfigurationProvider {
 
-    private final TruststoresPathsProvider pathsProvider;
+    private final DelimitedPathsReader truststoresPathsReader;
+    private final DelimitedPathsReader truststoresPasswordsPathsReader;
+    private final DelimitedPathsReader copierPathsReader;
 
-    public MergerConfigurationProvider(TruststoresPathsProvider pathsProvider) {
-        this.pathsProvider = pathsProvider;
+    public MergerConfigurationProvider(DelimitedPathsReader truststoresPathsReader,
+        DelimitedPathsReader truststoresPasswordsPathsReader, DelimitedPathsReader copierPathsReader) {
+        this.truststoresPathsReader = truststoresPathsReader;
+        this.truststoresPasswordsPathsReader = truststoresPasswordsPathsReader;
+        this.copierPathsReader = copierPathsReader;
     }
 
     public MergerConfiguration createConfiguration()
         throws MergerConfigurationException, TruststoresPathsProviderException {
-        List<String> truststores = pathsProvider.getTruststores();
-        List<String> truststoresPasswords = pathsProvider.getTruststoresPasswords();
+        List<String> truststoresPaths = truststoresPathsReader.get(TRUSTSTORES_PATHS_ENV);
+        List<String> truststoresPasswordsPaths = truststoresPasswordsPathsReader.get(TRUSTSTORES_PASSWORDS_PATHS_ENV);
+        List<String> sourceKeystorePaths = copierPathsReader.get(KEYSTORE_SOURCE_PATHS_ENV);
+        List<String> destinationKeystorePaths = copierPathsReader.get(KEYSTORE_DESTINATION_PATHS_ENV);
 
-        if (truststores.size() != truststoresPasswords.size()) {
+        doTruststorePathsHaveSameSize(truststoresPaths, truststoresPasswordsPaths);
+        doCopierPathsHaveSameSize(sourceKeystorePaths, destinationKeystorePaths);
+
+        return new MergerConfiguration(truststoresPaths, truststoresPasswordsPaths, sourceKeystorePaths,
+            destinationKeystorePaths);
+    }
+
+    private void doTruststorePathsHaveSameSize(List<String> truststoresPaths, List<String> truststoresPasswordsPaths)
+        throws MergerConfigurationException {
+        if (truststoresPaths.size() != truststoresPasswordsPaths.size()) {
             throw new MergerConfigurationException(
                 "Size of " + TRUSTSTORES_PATHS_ENV
                     + " does not match size of " + TRUSTSTORES_PASSWORDS_PATHS_ENV + " environment variables");
         }
+    }
 
-        return new MergerConfiguration(truststores, truststoresPasswords);
+    private void doCopierPathsHaveSameSize(List<String> sourceKeystorePaths, List<String> destinationKeystorePaths)
+        throws MergerConfigurationException {
+        if (sourceKeystorePaths.size() != destinationKeystorePaths.size()) {
+            throw new MergerConfigurationException(
+                "Size of " + KEYSTORE_SOURCE_PATHS_ENV
+                    + " does not match size of " + KEYSTORE_DESTINATION_PATHS_ENV + " environment variables");
+        }
     }
 }

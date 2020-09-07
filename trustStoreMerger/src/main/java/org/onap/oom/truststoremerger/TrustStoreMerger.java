@@ -27,8 +27,8 @@ import org.onap.oom.truststoremerger.certification.file.provider.FileManager;
 import org.onap.oom.truststoremerger.certification.file.provider.PasswordReader;
 import org.onap.oom.truststoremerger.certification.file.TruststoreFileFactory;
 import org.onap.oom.truststoremerger.certification.file.TruststoreFilesListProvider;
-import org.onap.oom.truststoremerger.configuration.path.TruststoresPathsProviderFactory;
-import org.onap.oom.truststoremerger.configuration.path.TruststoresPathsProvider;
+import org.onap.oom.truststoremerger.configuration.path.DelimitedPathsReaderFactory;
+import org.onap.oom.truststoremerger.configuration.path.DelimitedPathsReader;
 import org.onap.oom.truststoremerger.configuration.model.MergerConfiguration;
 import org.onap.oom.truststoremerger.configuration.MergerConfigurationProvider;
 
@@ -74,8 +74,11 @@ class TrustStoreMerger {
     }
 
     private MergerConfiguration loadConfiguration() throws ExitableException {
-        TruststoresPathsProvider truststoresPathsProvider = TruststoresPathsProviderFactory.create();
-        MergerConfigurationProvider factory = new MergerConfigurationProvider(truststoresPathsProvider);
+        DelimitedPathsReader certificatesPathsReader= DelimitedPathsReaderFactory.createCertificatePathsReader();
+        DelimitedPathsReader passwordsPathsReader = DelimitedPathsReaderFactory.createPasswordPathsReader();
+        DelimitedPathsReader copierPathsReader = DelimitedPathsReaderFactory.createKeystoreCopierPathsReader();
+        MergerConfigurationProvider factory = new MergerConfigurationProvider(certificatesPathsReader, passwordsPathsReader,
+            copierPathsReader);
         return factory.createConfiguration();
     }
 
