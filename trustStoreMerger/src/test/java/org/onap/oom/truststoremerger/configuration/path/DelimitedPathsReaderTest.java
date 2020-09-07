@@ -22,20 +22,21 @@ package org.onap.oom.truststoremerger.configuration.path;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.Mockito.when;
-import static org.onap.oom.truststoremerger.api.ConfigurationEnvs.TRUSTSTORES_PASSWORDS_PATHS_ENV;
-import static org.onap.oom.truststoremerger.api.ConfigurationEnvs.TRUSTSTORES_PATHS_ENV;
+import static org.onap.oom.truststoremerger.configuration.ConfigurationEnvs.TRUSTSTORES_PASSWORDS_PATHS_ENV;
+import static org.onap.oom.truststoremerger.configuration.ConfigurationEnvs.TRUSTSTORES_PATHS_ENV;
+import static org.onap.oom.truststoremerger.configuration.path.validation.ValidationFunctions.doesItContainValidCertificatesPaths;
+import static org.onap.oom.truststoremerger.configuration.path.validation.ValidationFunctions.doesItContainValidPasswordPaths;
 
 import java.util.Optional;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.onap.oom.truststoremerger.configuration.exception.TruststoresPathsProviderException;
-
+import org.onap.oom.truststoremerger.configuration.path.env.EnvProvider;
 
 @ExtendWith(MockitoExtension.class)
-class TruststoresPathsProviderTest {
+class DelimitedPathsReaderTest {
 
     private static final String VALID_TRUSTSTORES = "/opt/app/certificates/truststore.jks:/opt/app/certificates/truststore.pem";
     private static final String VALID_TRUSTSTORES_PASSWORDS = "/opt/app/certificates/truststore.pass:";
@@ -45,36 +46,62 @@ class TruststoresPathsProviderTest {
 
     @Mock
     private EnvProvider envProvider;
-    private TruststoresPathsProvider truststoresPathsProvider;
-
-    @BeforeEach
-    void setUp() {
-        truststoresPathsProvider = new TruststoresPathsProvider(envProvider, new PathValidator());
-    }
+    private DelimitedPathsReader delimitedPathsReader;
 
     @Test
     void shouldReturnCorrectListWhenTruststoresValid() throws TruststoresPathsProviderException {
+        // given
+        delimitedPathsReader = new DelimitedPathsReader(envProvider, doesItContainValidCertificatesPaths());
         mockTruststoresEnv(VALID_TRUSTSTORES);
 
-        assertThat(truststoresPathsProvider.getTruststores())
+        // when, then
+        assertThat(delimitedPathsReader.get(TRUSTSTORES_PATHS_ENV))
             .containsSequence("/opt/app/certificates/truststore.jks",
                 "/opt/app/certificates/truststore.pem");
     }
 
     @Test
+    void shouldThrowExceptionWhenTruststoresPathsEnvIsEmpty() throws TruststoresPathsProviderException {
+        // given
+        delimitedPathsReader = new DelimitedPathsReader(envProvider, doesItContainValidCertificatesPaths());
+        mockTruststoresEnv("");
+
+        // when, then
+        assertThatExceptionOfType(TruststoresPathsProviderException.class)
+            .isThrownBy(() -> delimitedPathsReader.get(TRUSTSTORES_PATHS_ENV));
+    }
+
+    @Test
+    void shouldThrowExceptionWhenOneOfTruststoresPathsInvalid() {
+        // given
+        delimitedPathsReader = new DelimitedPathsReader(envProvider, doesItContainValidCertificatesPaths());
+        mockTruststoresEnv(INVALID_TRUSTSTORES);
+
+        // when, then
+        assertThatExceptionOfType(TruststoresPathsProviderException.class)
+            .isThrownBy(() -> delimitedPathsReader.get(TRUSTSTORES_PATHS_ENV));
+    }
+
+    @Test
     void shouldReturnCorrectListWhenTruststoresPasswordsValid() throws TruststoresPathsProviderException {
+        // given
+        delimitedPathsReader = new DelimitedPathsReader(envProvider, doesItContainValidPasswordPaths());
         mockTruststoresPasswordsEnv(VALID_TRUSTSTORES_PASSWORDS);
 
-        assertThat(truststoresPathsProvider.getTruststoresPasswords())
+        // when, then
+        assertThat(delimitedPathsReader.get(TRUSTSTORES_PASSWORDS_PATHS_ENV))
             .containsSequence("/opt/app/certificates/truststore.pass", "");
     }
 
     @Test
     void shouldReturnCorrectListWhenTruststoresPasswordsContainsEmptyPathsInTheMiddle()
         throws TruststoresPathsProviderException {
+        // given
+        delimitedPathsReader = new DelimitedPathsReader(envProvider, doesItContainValidPasswordPaths());
         mockTruststoresPasswordsEnv(VALID_TRUSTSTORES_PASSWORDS_WITH_EMPTY_IN_THE_MIDDLE);
 
-        assertThat(truststoresPathsProvider.getTruststoresPasswords()).containsSequence(
+        // when, then
+        assertThat(delimitedPathsReader.get(TRUSTSTORES_PASSWORDS_PATHS_ENV)).containsSequence(
             "/opt/app/certificates/truststore.pass",
             "",
             "/etc/truststore.pass"
@@ -82,38 +109,36 @@ class TruststoresPathsProviderTest {
     }
 
     @Test
-    void shouldThrowExceptionWhenTruststoresEmpty() {
-        mockTruststoresEnv("");
+    void shouldThrowExceptionWhenTruststoresPasswordsPathEnvIsEmpty() {
+        // given
+        delimitedPathsReader = new DelimitedPathsReader(envProvider, doesItContainValidPasswordPaths());
+        mockTruststoresPasswordsEnv("");
 
+        // when, then
         assertThatExceptionOfType(TruststoresPathsProviderException.class)
-            .isThrownBy(truststoresPathsProvider::getTruststores);
-    }
-
-    @Test
-    void shouldThrowExceptionWhenOneOfTruststoresPathsInvalid() {
-        mockTruststoresEnv(INVALID_TRUSTSTORES);
-
-        assertThatExceptionOfType(TruststoresPathsProviderException.class)
-            .isThrownBy(truststoresPathsProvider::getTruststores);
+            .isThrownBy(() -> delimitedPathsReader.get(TRUSTSTORES_PASSWORDS_PATHS_ENV));
     }
 
     @Test
     void shouldThrowExceptionWhenOneOfTruststorePasswordPathsInvalid() {
+        // given
+        delimitedPathsReader = new DelimitedPathsReader(envProvider, doesItContainValidPasswordPaths());
         mockTruststoresPasswordsEnv(INVALID_TRUSTSTORES_PASSWORDS);
 
+        // when, then
         assertThatExceptionOfType(TruststoresPathsProviderException.class)
-            .isThrownBy(truststoresPathsProvider::getTruststoresPasswords);
+            .isThrownBy(() -> delimitedPathsReader.get(TRUSTSTORES_PASSWORDS_PATHS_ENV));
     }
 
     private void mockTruststoresEnv(String truststores) {
-        mockEnv(truststores, TRUSTSTORES_PATHS_ENV);
+        mockEnv(TRUSTSTORES_PATHS_ENV, truststores);
     }
 
     private void mockTruststoresPasswordsEnv(String truststoresPasswords) {
-        mockEnv(truststoresPasswords, TRUSTSTORES_PASSWORDS_PATHS_ENV);
+        mockEnv(TRUSTSTORES_PASSWORDS_PATHS_ENV, truststoresPasswords);
     }
 
-    private void mockEnv(String envValue, String envName) {
-        when(envProvider.getEnv(envName)).thenReturn(Optional.of(envValue));
+    private void mockEnv(String envName, String truststores) {
+        when(envProvider.getEnv(envName)).thenReturn(Optional.of(truststores));
     }
 }
