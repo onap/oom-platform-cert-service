@@ -113,19 +113,19 @@ public class TestCertificateProvider {
 
     public static JavaTruststore getSampleJksTruststoreFile()
         throws LoadTruststoreException, KeystoreInstanceException {
-        return createJKSTruststoreInstance(SAMPLE_JKS_TRUSTSTORE_FILE_PATH, SAMPLE_JKS_TRUSTSTORE_PASSWORD);
+        return createJksTruststoreInstance(SAMPLE_JKS_TRUSTSTORE_FILE_PATH, SAMPLE_JKS_TRUSTSTORE_PASSWORD);
     }
 
     public static JavaTruststore getSampleJksTruststoreFileWithUniqueAlias()
         throws LoadTruststoreException, KeystoreInstanceException {
-        return createJKSTruststoreInstance(SAMPLE_JKS_TRUSTSTORE_UNIQUE_ALIAS_FILE_PATH,
+        return createJksTruststoreInstance(SAMPLE_JKS_TRUSTSTORE_UNIQUE_ALIAS_FILE_PATH,
             SAMPLE_JKS_TRUSTSTORE_PASSWORD);
     }
 
     public static JavaTruststore createTmpJksTruststoreFileWithUniqAlias()
         throws IOException, LoadTruststoreException, KeystoreInstanceException {
         copyFile(SAMPLE_JKS_TRUSTSTORE_UNIQUE_ALIAS_FILE_PATH, TMP_JKS_TRUSTSTORE_FILE_PATH);
-        return createJKSTruststoreInstance(TMP_JKS_TRUSTSTORE_FILE_PATH, SAMPLE_JKS_TRUSTSTORE_PASSWORD);
+        return createJksTruststoreInstance(TMP_JKS_TRUSTSTORE_FILE_PATH, SAMPLE_JKS_TRUSTSTORE_PASSWORD);
     }
 
     public static void removeTemporaryFiles() throws IOException {
@@ -134,7 +134,7 @@ public class TestCertificateProvider {
         Files.deleteIfExists(Paths.get(TMP_P12_TRUSTSTORE_FILE_PATH));
     }
 
-    private static JavaTruststore createJKSTruststoreInstance(String filePath, String password)
+    private static JavaTruststore createJksTruststoreInstance(String filePath, String password)
         throws LoadTruststoreException, KeystoreInstanceException {
         File certFile = getFile(filePath);
         JavaCertificateStoreController storeController = certificateStoreControllerFactory

@@ -19,20 +19,20 @@
 
 package org.onap.oom.truststoremerger;
 
+import java.util.List;
 import org.onap.oom.truststoremerger.api.ExitStatus;
 import org.onap.oom.truststoremerger.api.ExitableException;
-import org.onap.oom.truststoremerger.certification.file.provider.entry.CertificateWithAlias;
+import org.onap.oom.truststoremerger.certification.file.TruststoreFileFactory;
+import org.onap.oom.truststoremerger.certification.file.TruststoreFilesListProvider;
 import org.onap.oom.truststoremerger.certification.file.model.Truststore;
 import org.onap.oom.truststoremerger.certification.file.provider.FileManager;
 import org.onap.oom.truststoremerger.certification.file.provider.PasswordReader;
-import org.onap.oom.truststoremerger.certification.file.TruststoreFileFactory;
-import org.onap.oom.truststoremerger.certification.file.TruststoreFilesListProvider;
-import org.onap.oom.truststoremerger.configuration.path.TruststoresPathsProviderFactory;
-import org.onap.oom.truststoremerger.configuration.path.TruststoresPathsProvider;
-import org.onap.oom.truststoremerger.configuration.model.MergerConfiguration;
+import org.onap.oom.truststoremerger.certification.file.provider.entry.CertificateWithAlias;
 import org.onap.oom.truststoremerger.configuration.MergerConfigurationProvider;
-
-import java.util.List;
+import org.onap.oom.truststoremerger.configuration.model.MergerConfiguration;
+import org.onap.oom.truststoremerger.configuration.path.DelimitedPathsReader;
+import org.onap.oom.truststoremerger.configuration.path.DelimitedPathsReaderFactory;
+import org.onap.oom.truststoremerger.configuration.path.env.EnvProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,7 +60,7 @@ class TrustStoreMerger {
 
     private void mergeTruststores() throws ExitableException {
         MergerConfiguration configuration = loadConfiguration();
-        List<Truststore> truststoreFilesList = getTruststoreFilesList(configuration);
+        List<Truststore> truststoreFilesList = getTruststoreFiles(configuration);
 
         Truststore baseFile = truststoreFilesList.get(FIRST_TRUSTSTORE_INDEX);
         baseFile.createBackup();
@@ -74,12 +74,17 @@ class TrustStoreMerger {
     }
 
     private MergerConfiguration loadConfiguration() throws ExitableException {
-        TruststoresPathsProvider truststoresPathsProvider = TruststoresPathsProviderFactory.create();
-        MergerConfigurationProvider factory = new MergerConfigurationProvider(truststoresPathsProvider);
+        DelimitedPathsReaderFactory readerFactory = new DelimitedPathsReaderFactory(new EnvProvider());
+        DelimitedPathsReader certificatesPathsReader = readerFactory.createCertificatePathsReader();
+        DelimitedPathsReader passwordsPathsReader = readerFactory.createPasswordPathsReader();
+        DelimitedPathsReader copierPathsReader = readerFactory.createKeystoreCopierPathsReader();
+        MergerConfigurationProvider factory = new MergerConfigurationProvider(certificatesPathsReader,
+            passwordsPathsReader,
+            copierPathsReader);
         return factory.createConfiguration();
     }
 
-    private List<Truststore> getTruststoreFilesList(MergerConfiguration configuration) throws ExitableException {
+    private List<Truststore> getTruststoreFiles(MergerConfiguration configuration) throws ExitableException {
         TruststoreFileFactory truststoreFileFactory = new TruststoreFileFactory(new FileManager(),
             new PasswordReader());
         TruststoreFilesListProvider truststoreFilesListProvider = new TruststoreFilesListProvider(

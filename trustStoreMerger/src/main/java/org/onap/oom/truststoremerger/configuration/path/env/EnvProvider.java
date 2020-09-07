@@ -17,22 +17,20 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.configuration.path;
+package org.onap.oom.truststoremerger.configuration.path.env;
 
-class PathValidator {
+import java.util.Optional;
 
-    private static final String TRUSTSTORE_PATH_REGEX = "^(/[a-zA-Z0-9_-]+)+\\.(pem|jks|p12)";
-    private static final String TRUSTSTORE_PASSWORD_PATH_REGEX = "^(/[a-zA-Z0-9_-]+)+\\.pass";
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-    boolean isTruststorePathValid(String truststorePath) {
-        return isPathValid(truststorePath, TRUSTSTORE_PATH_REGEX);
-    }
+public class EnvProvider {
 
-    boolean isTruststorePasswordPathValid(String truststorePasswordPath) {
-        return truststorePasswordPath.isEmpty() || isPathValid(truststorePasswordPath, TRUSTSTORE_PASSWORD_PATH_REGEX);
-    }
+    private static final Logger LOGGER = LoggerFactory.getLogger(EnvProvider.class);
 
-    private boolean isPathValid(String path, String regex) {
-        return path.matches(regex);
+    public Optional<String> getEnv(String name) {
+        String value = System.getenv(name);
+        LOGGER.info("Read variable: {} , value: {}", name, value);
+        return Optional.ofNullable(System.getenv(name));
     }
 }
