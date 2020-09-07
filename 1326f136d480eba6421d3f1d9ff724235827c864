@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffd96be0_756bdeae",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/MergerConfigurationProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-09-07T14:03:12Z",
+      "side": 1,
+      "message": "I would keep previous specific methods and extract only common part but up to you.",
+      "revId": "1326f136d480eba6421d3f1d9ff724235827c864",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
