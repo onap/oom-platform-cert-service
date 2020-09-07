@@ -27,7 +27,7 @@ import org.junit.jupiter.api.Test;
 
 class PemAliasGeneratorTest {
 
-    private final static String PREFIX_ALIAS_NAME = "pem-trusted-certificate-";
+    private static final String PREFIX_ALIAS_NAME = "pem-trusted-certificate-";
     static final int GENERATED_ALIASES_NUMBER = 100;
 
     @Test

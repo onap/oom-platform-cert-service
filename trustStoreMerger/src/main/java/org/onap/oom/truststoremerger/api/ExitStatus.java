@@ -32,7 +32,8 @@ public enum ExitStatus {
     TRUSTSTORE_DATA_OPERATION_EXCEPTION(8, "Cannot operate on truststore data"),
     MISSING_TRUSTSTORE_EXCEPTION(9, "Missing truststore certificates in provided file"),
     ALIAS_CONFLICT_EXCEPTION(10, "Alias conflict detected"),
-    WRITE_TRUSTSTORE_FILE_EXCEPTION(11, "Cannot save truststore file");
+    WRITE_TRUSTSTORE_FILE_EXCEPTION(11, "Cannot save truststore file"),
+    UNEXPECTED_EXCEPTION(99, "Application exited abnormally");
 
 
     private final int value;
