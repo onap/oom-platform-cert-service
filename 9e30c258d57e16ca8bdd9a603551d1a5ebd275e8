@@ -33,6 +33,24 @@
       "revId": "9e30c258d57e16ca8bdd9a603551d1a5ebd275e8",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e373a40d_86822662",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/path/validation/ValidationFunctions.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-07T12:58:27Z",
+      "side": 1,
+      "message": "All right we will not be in need of copy empty path and to empty path. I will remove it.",
+      "parentUuid": "9b7022eb_79781311",
+      "revId": "9e30c258d57e16ca8bdd9a603551d1a5ebd275e8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
