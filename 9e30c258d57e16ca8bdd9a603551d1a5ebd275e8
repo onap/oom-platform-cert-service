@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9fff54e6_f7148673",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/MergerConfigurationProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-07T13:37:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "751f1b27_4a72b682",
+      "revId": "9e30c258d57e16ca8bdd9a603551d1a5ebd275e8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b7022eb_79781311",
         "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/path/validation/ValidationFunctions.java",
         "patchSetId": 1
