@@ -16,6 +16,144 @@
       "revId": "1326f136d480eba6421d3f1d9ff724235827c864",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43ba625a_8ce533cf",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/MergerConfigurationProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-09-08T06:32:04Z",
+      "side": 1,
+      "message": "Consider, change to shorter name \u0027areListsOfSameSize\u0027 and parameters : firstList, secondList.",
+      "range": {
+        "startLine": 62,
+        "startChar": 17,
+        "endLine": 62,
+        "endChar": 40
+      },
+      "revId": "1326f136d480eba6421d3f1d9ff724235827c864",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55d2e996_caf0733e",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/path/DelimitedPathsReader.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-09-08T06:32:04Z",
+      "side": 1,
+      "message": "Why you change ready solution from Java API to custom function? I mean Predicate.not to \u0027doesItContainValue\u0027",
+      "range": {
+        "startLine": 43,
+        "startChar": 20,
+        "endLine": 43,
+        "endChar": 44
+      },
+      "revId": "1326f136d480eba6421d3f1d9ff724235827c864",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a8efe20_b84c408b",
+        "filename": "trustStoreMerger/src/test/java/org/onap/oom/truststoremerger/configuration/MergerConfigurationProviderTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-09-08T06:32:04Z",
+      "side": 1,
+      "message": "Consider, extract variable from all methods to constants.",
+      "range": {
+        "startLine": 109,
+        "startChar": 12,
+        "endLine": 109,
+        "endChar": 32
+      },
+      "revId": "1326f136d480eba6421d3f1d9ff724235827c864",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4cf6825_b85431a5",
+        "filename": "trustStoreMerger/src/test/java/org/onap/oom/truststoremerger/configuration/MergerConfigurationProviderTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-09-08T06:32:04Z",
+      "side": 1,
+      "message": "Consider, change to simple for loop.",
+      "range": {
+        "startLine": 165,
+        "startChar": 8,
+        "endLine": 165,
+        "endChar": 35
+      },
+      "revId": "1326f136d480eba6421d3f1d9ff724235827c864",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f779bad0_53a5685e",
+        "filename": "trustStoreMerger/src/test/java/org/onap/oom/truststoremerger/configuration/MergerConfigurationProviderTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-09-08T06:32:04Z",
+      "side": 1,
+      "message": "It is not necessary",
+      "range": {
+        "startLine": 167,
+        "startChar": 22,
+        "endLine": 167,
+        "endChar": 54
+      },
+      "revId": "1326f136d480eba6421d3f1d9ff724235827c864",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68daea29_253a7327",
+        "filename": "trustStoreMerger/src/test/java/org/onap/oom/truststoremerger/configuration/path/DelimitedPathsReaderTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-09-08T06:32:04Z",
+      "side": 1,
+      "message": "Exception never thrown",
+      "range": {
+        "startLine": 64,
+        "startChar": 69,
+        "endLine": 64,
+        "endChar": 102
+      },
+      "revId": "1326f136d480eba6421d3f1d9ff724235827c864",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
