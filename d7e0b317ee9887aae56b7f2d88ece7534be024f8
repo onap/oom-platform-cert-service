@@ -104,6 +104,24 @@
       "revId": "d7e0b317ee9887aae56b7f2d88ece7534be024f8",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d1bfffe_1f346461",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/provider/JavaCertificateControllerFactory.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-08T13:15:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20d1b0a4_36bbd87a",
+      "revId": "d7e0b317ee9887aae56b7f2d88ece7534be024f8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
