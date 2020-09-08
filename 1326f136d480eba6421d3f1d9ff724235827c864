@@ -42,6 +42,48 @@
     },
     {
       "key": {
+        "uuid": "4884f317_a6c80905",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/MergerConfigurationProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-08T10:32:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ffd96be0_756bdeae",
+      "revId": "1326f136d480eba6421d3f1d9ff724235827c864",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fe57f43e_ba134ae9",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/MergerConfigurationProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-08T10:32:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "43ba625a_8ce533cf",
+      "range": {
+        "startLine": 62,
+        "startChar": 17,
+        "endLine": 62,
+        "endChar": 40
+      },
+      "revId": "1326f136d480eba6421d3f1d9ff724235827c864",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55d2e996_caf0733e",
         "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/path/DelimitedPathsReader.java",
         "patchSetId": 2
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "74c0348e_ab21357d",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/path/DelimitedPathsReader.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-08T10:32:17Z",
+      "side": 1,
+      "message": "To keep as clean as possible processing \"thread\". You have explicit declaration what is done in this method. No need to extra think how Predicate.not works etc.",
+      "parentUuid": "55d2e996_caf0733e",
+      "range": {
+        "startLine": 43,
+        "startChar": 20,
+        "endLine": 43,
+        "endChar": 44
+      },
+      "revId": "1326f136d480eba6421d3f1d9ff724235827c864",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a8efe20_b84c408b",
         "filename": "trustStoreMerger/src/test/java/org/onap/oom/truststoremerger/configuration/MergerConfigurationProviderTest.java",
         "patchSetId": 2
@@ -76,6 +142,30 @@
       "writtenOn": "2020-09-08T06:32:04Z",
       "side": 1,
       "message": "Consider, extract variable from all methods to constants.",
+      "range": {
+        "startLine": 109,
+        "startChar": 12,
+        "endLine": 109,
+        "endChar": 32
+      },
+      "revId": "1326f136d480eba6421d3f1d9ff724235827c864",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23542890_9fc97b76",
+        "filename": "trustStoreMerger/src/test/java/org/onap/oom/truststoremerger/configuration/MergerConfigurationProviderTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-08T10:32:17Z",
+      "side": 1,
+      "message": "I would keep them in place because they are strictly related to intention of test cases.",
+      "parentUuid": "9a8efe20_b84c408b",
       "range": {
         "startLine": 109,
         "startChar": 12,
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "c2da885a_3fe24922",
+        "filename": "trustStoreMerger/src/test/java/org/onap/oom/truststoremerger/configuration/MergerConfigurationProviderTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-08T10:32:17Z",
+      "side": 1,
+      "message": "i will remain as it is. it is a bit shorter.",
+      "parentUuid": "b4cf6825_b85431a5",
+      "range": {
+        "startLine": 165,
+        "startChar": 8,
+        "endLine": 165,
+        "endChar": 35
+      },
+      "revId": "1326f136d480eba6421d3f1d9ff724235827c864",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f779bad0_53a5685e",
         "filename": "trustStoreMerger/src/test/java/org/onap/oom/truststoremerger/configuration/MergerConfigurationProviderTest.java",
         "patchSetId": 2
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "1972dcef_08501109",
+        "filename": "trustStoreMerger/src/test/java/org/onap/oom/truststoremerger/configuration/MergerConfigurationProviderTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-08T10:32:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f779bad0_53a5685e",
+      "range": {
+        "startLine": 167,
+        "startChar": 22,
+        "endLine": 167,
+        "endChar": 54
+      },
+      "revId": "1326f136d480eba6421d3f1d9ff724235827c864",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68daea29_253a7327",
         "filename": "trustStoreMerger/src/test/java/org/onap/oom/truststoremerger/configuration/path/DelimitedPathsReaderTest.java",
         "patchSetId": 2
@@ -154,6 +292,30 @@
       "revId": "1326f136d480eba6421d3f1d9ff724235827c864",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7b7a978_a2a48a85",
+        "filename": "trustStoreMerger/src/test/java/org/onap/oom/truststoremerger/configuration/path/DelimitedPathsReaderTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-08T10:32:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68daea29_253a7327",
+      "range": {
+        "startLine": 64,
+        "startChar": 69,
+        "endLine": 64,
+        "endChar": 102
+      },
+      "revId": "1326f136d480eba6421d3f1d9ff724235827c864",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
