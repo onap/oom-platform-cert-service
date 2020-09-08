@@ -28,13 +28,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import org.onap.oom.truststoremerger.api.ExitableException;
-import org.onap.oom.truststoremerger.certification.file.provider.entry.CertificateWithAlias;
-import org.onap.oom.truststoremerger.certification.file.provider.entry.CertificateWithAliasFactory;
 import org.onap.oom.truststoremerger.certification.file.exception.AliasConflictException;
-import org.onap.oom.truststoremerger.certification.file.exception.TruststoreDataOperationException;
 import org.onap.oom.truststoremerger.certification.file.exception.LoadTruststoreException;
 import org.onap.oom.truststoremerger.certification.file.exception.MissingTruststoreException;
+import org.onap.oom.truststoremerger.certification.file.exception.TruststoreDataOperationException;
 import org.onap.oom.truststoremerger.certification.file.exception.WriteTruststoreFileException;
+import org.onap.oom.truststoremerger.certification.file.provider.entry.CertificateWithAlias;
+import org.onap.oom.truststoremerger.certification.file.provider.entry.CertificateWithAliasFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,7 +55,7 @@ public class JavaCertificateStoreController implements CertificateController {
     }
 
     public List<CertificateWithAlias> getNotEmptyCertificateList() throws ExitableException {
-        List<String> aliases = getTruststoreAliasesList();
+        List<String> aliases = getTruststoreAliases();
         if (aliases.isEmpty()) {
             throw new MissingTruststoreException("Missing certificate aliases in file: " + storeFile.getPath());
         }
@@ -64,7 +64,7 @@ public class JavaCertificateStoreController implements CertificateController {
 
     public void addCertificates(List<CertificateWithAlias> certificatesWithAliases)
         throws ExitableException {
-        if (getTruststoreAliasesList().isEmpty()){
+        if (getTruststoreAliases().isEmpty()) {
             throw new MissingTruststoreException("Missing certificate aliases in file: " + storeFile.getPath());
         }
         for (CertificateWithAlias certificate : certificatesWithAliases) {
@@ -133,7 +133,7 @@ public class JavaCertificateStoreController implements CertificateController {
         }
     }
 
-    private List<String> getTruststoreAliasesList() throws TruststoreDataOperationException {
+    private List<String> getTruststoreAliases() throws TruststoreDataOperationException {
         try {
             List<String> aliases = Collections.list(keyStore.aliases());
             return getFilteredAlias(aliases);
