@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7517dc53_dea6f6a1",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/TrustStoreMerger.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-08T12:37:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d125518_fd70aaa6",
+      "revId": "72bd8fa59c34892ffc78fdf742203809cc458401",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aed01f8f_f8fb9500",
         "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/provider/JavaCertificateStoreController.java",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "3ad987de_7df7bea5",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/provider/JavaCertificateStoreController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-08T12:37:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aed01f8f_f8fb9500",
+      "revId": "72bd8fa59c34892ffc78fdf742203809cc458401",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d280d1c_d7da6868",
         "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/MergerConfigurationProvider.java",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2020-09-08T11:25:33Z",
       "side": 1,
       "message": "Consider making all custom exceptions \"unchecked\" (i.e. inherit from RuntimeException) and removing exceptions from method signature.",
+      "revId": "72bd8fa59c34892ffc78fdf742203809cc458401",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09a25aa6_532b9ce3",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/MergerConfigurationProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-08T12:37:28Z",
+      "side": 1,
+      "message": "We used Exception because programmers ommitted to handle exceptions. Just they overlooked that somewhere deep we throw exception - It was possible with Exception.class. Since handling of exception and mapping them to Exit Code is crucial for this app I would remain as it is.",
+      "parentUuid": "7d280d1c_d7da6868",
       "revId": "72bd8fa59c34892ffc78fdf742203809cc458401",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "5dd07ac3_bc279b90",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/MergerConfigurationProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-08T12:37:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70a30e69_3efe3c10",
+      "revId": "72bd8fa59c34892ffc78fdf742203809cc458401",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38eecfd0_5b63944f",
         "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/MergerConfigurationProvider.java",
         "patchSetId": 3
@@ -81,6 +153,24 @@
       "writtenOn": "2020-09-08T11:25:33Z",
       "side": 1,
       "message": "I would use content of lists in the message.\nEnvironment variables are always logged on application start.",
+      "revId": "72bd8fa59c34892ffc78fdf742203809cc458401",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9d57276_8ba6c805",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/MergerConfigurationProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-08T12:37:28Z",
+      "side": 1,
+      "message": "At what level are we logging envs? app/cloudify?",
+      "parentUuid": "38eecfd0_5b63944f",
       "revId": "72bd8fa59c34892ffc78fdf742203809cc458401",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "8b1acf1c_47c907e9",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/path/DelimitedPathsReader.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-08T12:37:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75451363_b6f25460",
+      "revId": "72bd8fa59c34892ffc78fdf742203809cc458401",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "860b0904_50b0bf0c",
         "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/path/DelimitedPathsReaderFactory.java",
         "patchSetId": 3
@@ -118,6 +226,24 @@
       "revId": "72bd8fa59c34892ffc78fdf742203809cc458401",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "440726d0_b3a2d7a0",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/path/DelimitedPathsReaderFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-08T12:37:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "860b0904_50b0bf0c",
+      "revId": "72bd8fa59c34892ffc78fdf742203809cc458401",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "7497d8b1_f777570e",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/path/DelimitedPathsReaderFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-08T12:37:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b143dea8_3e988395",
+      "revId": "72bd8fa59c34892ffc78fdf742203809cc458401",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f09e362f_cd7a9f07",
         "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/path/validation/ValidationFunctions.java",
         "patchSetId": 3
@@ -152,6 +296,24 @@
       "revId": "72bd8fa59c34892ffc78fdf742203809cc458401",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fcfefb5_2e7131f9",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/path/validation/ValidationFunctions.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-08T12:37:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f09e362f_cd7a9f07",
+      "revId": "72bd8fa59c34892ffc78fdf742203809cc458401",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
