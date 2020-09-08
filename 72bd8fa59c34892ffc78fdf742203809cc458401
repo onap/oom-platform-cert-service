@@ -2,6 +2,108 @@
   "comments": [
     {
       "key": {
+        "uuid": "2d125518_fd70aaa6",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/TrustStoreMerger.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-09-08T11:25:33Z",
+      "side": 1,
+      "message": "Remove \u0027List\u0027 suffix from method name.",
+      "revId": "72bd8fa59c34892ffc78fdf742203809cc458401",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aed01f8f_f8fb9500",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/provider/JavaCertificateStoreController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-09-08T11:25:33Z",
+      "side": 1,
+      "message": "I would rename it to: getTruststoreAliases() (following clean code rules)",
+      "revId": "72bd8fa59c34892ffc78fdf742203809cc458401",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d280d1c_d7da6868",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/MergerConfigurationProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-09-08T11:25:33Z",
+      "side": 1,
+      "message": "Consider making all custom exceptions \"unchecked\" (i.e. inherit from RuntimeException) and removing exceptions from method signature.",
+      "revId": "72bd8fa59c34892ffc78fdf742203809cc458401",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70a30e69_3efe3c10",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/MergerConfigurationProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-09-08T11:25:33Z",
+      "side": 1,
+      "message": "Consider name: ensureSameSize(...)",
+      "revId": "72bd8fa59c34892ffc78fdf742203809cc458401",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38eecfd0_5b63944f",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/MergerConfigurationProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-09-08T11:25:33Z",
+      "side": 1,
+      "message": "I would use content of lists in the message.\nEnvironment variables are always logged on application start.",
+      "revId": "72bd8fa59c34892ffc78fdf742203809cc458401",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75451363_b6f25460",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/path/DelimitedPathsReader.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-09-08T11:25:33Z",
+      "side": 1,
+      "message": "Maybe: hasValue(...)?",
+      "revId": "72bd8fa59c34892ffc78fdf742203809cc458401",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "860b0904_50b0bf0c",
         "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/path/DelimitedPathsReaderFactory.java",
         "patchSetId": 3
