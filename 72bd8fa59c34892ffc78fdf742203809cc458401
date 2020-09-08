@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "45d1e31d_96598675",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/MergerConfigurationProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-09-08T13:01:59Z",
+      "side": 1,
+      "message": "As discussed will be done in separate commit.",
+      "parentUuid": "09a25aa6_532b9ce3",
+      "revId": "72bd8fa59c34892ffc78fdf742203809cc458401",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70a30e69_3efe3c10",
         "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/MergerConfigurationProvider.java",
         "patchSetId": 3
@@ -174,6 +192,24 @@
       "revId": "72bd8fa59c34892ffc78fdf742203809cc458401",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e3ec402_966218a1",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/MergerConfigurationProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-09-08T13:01:59Z",
+      "side": 1,
+      "message": "As discussed, this log is OK.",
+      "parentUuid": "e9d57276_8ba6c805",
+      "revId": "72bd8fa59c34892ffc78fdf742203809cc458401",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
