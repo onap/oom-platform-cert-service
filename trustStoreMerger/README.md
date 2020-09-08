@@ -26,11 +26,17 @@ Exemplary config.env file with necessary envs
 ```
 TRUSTSTORES_PATHS=/var/certs/truststore.jks:/var/certs/truststore.pem
 TRUSTSTORES_PASSWORDS_PATHS=/var/certs/truststoreJks.pass:
+KEYSTORE_SOURCE_PATHS=/var/certs/external/keystore.jks:/var/certs/external/keystore.pass
+KEYSTORE_DESTINATION_PATHS=/var/certs/cert.jks:/var/certs/jks.pass
 ```
 TRUSTSTORES_PATHS env indicates paths (separated by ":") where truststores files are located.
 
 TRUSTSTORES_PASSWORDS_PATHS env indicates paths (separated by ":") where files with passwords to truststores are located.
 PEM is not protected by password so its value should be empty
+
+KEYSTORE_SOURCE_PATHS env (optional) indicates paths (separated by ":") where files to copy are located.
+
+KEYSTORE_DESTINATION_PATHS env (optional) indicates paths (separated by ":") to files which should be replaced. Replaced files will get .bak extension.
 
 Execute below command in order to run app as docker container
 ```
@@ -42,9 +48,10 @@ onap/org.onap.oom.platform.cert-service.oom-truststore-merger:latest
 ```
 Before run replace <src_path> with absolute path where you located truststores to merge (eg. /certs/resources/)
 
-Output from merger (when pointed more than one truststore to merge in TRUSTSTORES_PATHS env) success execution should be:
+Output from merger (when pointed more than one truststore to merge in TRUSTSTORES_PATHS env and provided optional envs) success execution should be:
 1. Created backup file (with .bak ext) of first truststore pointed in TRUSTSTORES_PATHS env
 2. First truststore pointed in TRUSTSTORES_PATHS env contains merged certificates from all truststores mentioned in TRUSTSTORES_PATHS env
+3. Keystores pointed in KEYSTORE_SOURCE_PATHS are in locations provided in KEYSTORE_DESTINATION_PATHS. Files located in KEYSTORE_DESTINATION_PATHS before application ran, still exist with appended .bak extension.
 
 Remove docker container:
 ```
@@ -75,3 +82,4 @@ docker logs oom-merger
 9   Missing truststore certificates in provided file
 10  Alias conflict detected
 11  Cannot save truststore file
+99  Application exited abnormally
