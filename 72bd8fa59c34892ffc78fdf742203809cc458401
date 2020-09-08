@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "860b0904_50b0bf0c",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/path/DelimitedPathsReaderFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-09-08T11:18:18Z",
+      "side": 1,
+      "message": "final",
+      "revId": "72bd8fa59c34892ffc78fdf742203809cc458401",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b143dea8_3e988395",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/path/DelimitedPathsReaderFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-09-08T11:18:18Z",
+      "side": 1,
+      "message": "it will be better to move new EnvProvider to class field and reuse it in methods",
+      "revId": "72bd8fa59c34892ffc78fdf742203809cc458401",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f09e362f_cd7a9f07",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/path/validation/ValidationFunctions.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-09-08T11:18:18Z",
+      "side": 1,
+      "message": "add private constructor?",
+      "revId": "72bd8fa59c34892ffc78fdf742203809cc458401",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
