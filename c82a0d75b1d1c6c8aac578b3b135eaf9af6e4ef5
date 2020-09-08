@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b9893a4_7ce6ce09",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/model/TruststoreFactory.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-08T10:02:44Z",
+      "side": 1,
+      "message": "\"INSTANCE\" suggests that we have instance of JKS under this constant. Rename it to e.g.:\n-JKS_TYPE,\n-JKS_KEYSTORE.\nDo same thing for PKCS12... respectively",
+      "range": {
+        "startLine": 66,
+        "startChar": 84,
+        "endLine": 66,
+        "endChar": 96
+      },
+      "revId": "c82a0d75b1d1c6c8aac578b3b135eaf9af6e4ef5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d65cdc20_00ccf08c",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/model/TruststoreFactory.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-08T10:02:44Z",
+      "side": 1,
+      "message": "rename here and in more places it to keystoreType",
+      "range": {
+        "startLine": 77,
+        "startChar": 103,
+        "endLine": 77,
+        "endChar": 115
+      },
+      "revId": "c82a0d75b1d1c6c8aac578b3b135eaf9af6e4ef5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0a820f9_041e72ec",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/provider/JavaCertificateController.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-08T10:02:44Z",
+      "side": 1,
+      "message": "hmmm I think that CertificateController classes does not control job. Basing on interface I would tend to think that they manipulate on certificates.\nMaybe CertificateManipulator would be better?\nMaybe you could propose something else?",
+      "range": {
+        "startLine": 41,
+        "startChar": 28,
+        "endLine": 41,
+        "endChar": 38
+      },
+      "revId": "c82a0d75b1d1c6c8aac578b3b135eaf9af6e4ef5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b36952c_8084292e",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/provider/JavaCertificateControllerFactory.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-08T10:02:44Z",
+      "side": 1,
+      "message": "as suggested before,\nCould be keystoreType",
+      "range": {
+        "startLine": 37,
+        "startChar": 90,
+        "endLine": 37,
+        "endChar": 102
+      },
+      "revId": "c82a0d75b1d1c6c8aac578b3b135eaf9af6e4ef5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "397ca493_f839dacf",
+        "filename": "trustStoreMerger/src/test/java/org/onap/oom/truststoremerger/certification/file/model/TruststoreTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-08T10:02:44Z",
+      "side": 1,
+      "message": "I would add more meaningful name here. You could name it: certificateFromP12",
+      "range": {
+        "startLine": 94,
+        "startChar": 35,
+        "endLine": 94,
+        "endChar": 50
+      },
+      "revId": "c82a0d75b1d1c6c8aac578b3b135eaf9af6e4ef5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57ec6b76_bdd443a5",
+        "filename": "trustStoreMerger/src/test/java/org/onap/oom/truststoremerger/certification/file/model/TruststoreTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-08T10:02:44Z",
+      "side": 1,
+      "message": "certificateFromPem",
+      "range": {
+        "startLine": 96,
+        "startChar": 35,
+        "endLine": 96,
+        "endChar": 50
+      },
+      "revId": "c82a0d75b1d1c6c8aac578b3b135eaf9af6e4ef5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84760e72_cf48282d",
+        "filename": "trustStoreMerger/src/test/java/org/onap/oom/truststoremerger/certification/file/model/TruststoreTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-08T10:02:44Z",
+      "side": 1,
+      "message": "like above",
+      "range": {
+        "startLine": 112,
+        "startChar": 0,
+        "endLine": 116,
+        "endChar": 31
+      },
+      "revId": "c82a0d75b1d1c6c8aac578b3b135eaf9af6e4ef5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
