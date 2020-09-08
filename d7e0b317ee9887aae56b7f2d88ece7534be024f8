@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "748a0753_a1311ffd",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/model/Truststore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-09-08T11:42:34Z",
+      "side": 1,
+      "message": "getNotEmptyCerficates()",
+      "revId": "d7e0b317ee9887aae56b7f2d88ece7534be024f8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31f6cc55_f00a93fa",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/model/Truststore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-09-08T11:42:34Z",
+      "side": 1,
+      "message": "we could log.debug message that backup was successfully crated in file: backupFilePath",
+      "revId": "d7e0b317ee9887aae56b7f2d88ece7534be024f8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2c0e311_9f3333d0",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/provider/JavaCertificateControllerFactory.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-09-08T11:42:34Z",
+      "side": 1,
+      "message": "I assume that the stacktrace of the error would be printed in some global exception handler, am i right?",
+      "revId": "d7e0b317ee9887aae56b7f2d88ece7534be024f8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
