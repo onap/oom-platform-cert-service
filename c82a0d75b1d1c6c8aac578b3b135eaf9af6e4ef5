@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "27fa99d8_32cbb200",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/provider/JavaCertificateController.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-08T10:45:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1ea2b146_1dcce499",
+      "range": {
+        "startLine": 41,
+        "startChar": 28,
+        "endLine": 41,
+        "endChar": 38
+      },
+      "revId": "c82a0d75b1d1c6c8aac578b3b135eaf9af6e4ef5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b36952c_8084292e",
         "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/provider/JavaCertificateControllerFactory.java",
         "patchSetId": 5
