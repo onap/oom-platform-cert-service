@@ -16,6 +16,24 @@
       "revId": "4014c7482b233bba9e344b9b3fbe6b7641ebdcfd",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5cb5166_16e2d1eb",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/provider/JavaCertificateController.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2020-09-08T19:59:30Z",
+      "side": 0,
+      "message": "Method moved to JavaStorageManager and it is now private and called during creation JavaStorageManager.",
+      "parentUuid": "91b166a2_39e4dbb1",
+      "revId": "4014c7482b233bba9e344b9b3fbe6b7641ebdcfd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "961f5b57_d67368dd",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/TrustStoreMerger.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2020-09-08T19:59:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8187f9dc_770a66c0",
+      "revId": "b01650c86ab5d67c0227c3f1570609fd49d62bc8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4764b521_11fc9463",
         "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/model/Truststore.java",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "b01650c86ab5d67c0227c3f1570609fd49d62bc8",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cd6276e_e239c0bf",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/model/Truststore.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2020-09-08T19:59:30Z",
+      "side": 1,
+      "message": "renamed to getCertificates",
+      "parentUuid": "4764b521_11fc9463",
+      "revId": "b01650c86ab5d67c0227c3f1570609fd49d62bc8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0261ac5b_11c7c89f",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/model/Truststore.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2020-09-08T19:59:30Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "b592ec40_2d573cab",
+      "revId": "b01650c86ab5d67c0227c3f1570609fd49d62bc8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ab71c4d_06c8f4ef",
         "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/provider/JavaCertificateController.java",
         "patchSetId": 9
@@ -67,6 +121,24 @@
       "revId": "b01650c86ab5d67c0227c3f1570609fd49d62bc8",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "093fadc6_44211bd8",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/provider/JavaCertificateController.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2020-09-08T19:59:30Z",
+      "side": 1,
+      "message": "Renamed from Controller to Manipulator.\nI extracted methods which operates on file to class JavaStorageManager.",
+      "parentUuid": "7ab71c4d_06c8f4ef",
+      "revId": "b01650c86ab5d67c0227c3f1570609fd49d62bc8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "58787034_bd5fd6fb",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/provider/JavaCertificateControllerFactory.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2020-09-08T19:59:30Z",
+      "side": 1,
+      "message": "I made static factory method which calls loadFile during creation object JavaStorageManager.",
+      "parentUuid": "159a06bc_ec031ba8",
+      "revId": "b01650c86ab5d67c0227c3f1570609fd49d62bc8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2c23726_c303c128",
         "filename": "trustStoreMerger/src/test/java/org/onap/oom/truststoremerger/certification/file/provider/TestCertificateProvider.java",
         "patchSetId": 9
@@ -101,6 +191,24 @@
       "revId": "b01650c86ab5d67c0227c3f1570609fd49d62bc8",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f707af8_8838cbe6",
+        "filename": "trustStoreMerger/src/test/java/org/onap/oom/truststoremerger/certification/file/provider/TestCertificateProvider.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2020-09-08T19:59:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2c23726_c303c128",
+      "revId": "b01650c86ab5d67c0227c3f1570609fd49d62bc8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
