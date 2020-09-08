@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8187f9dc_770a66c0",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/TrustStoreMerger.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-09-08T14:56:48Z",
+      "side": 1,
+      "message": "pls don\u0027t use train invocation. It is really hard to debug.\nUse:\nvar certificateWithAlias \u003d truststoreFilesList.get(i);\ncertificateWithAlias.get...()",
+      "revId": "b01650c86ab5d67c0227c3f1570609fd49d62bc8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4764b521_11fc9463",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/model/Truststore.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-09-08T14:56:48Z",
+      "side": 1,
+      "message": "what does notempty mean in this context?",
+      "revId": "b01650c86ab5d67c0227c3f1570609fd49d62bc8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b592ec40_2d573cab",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/model/Truststore.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-09-08T14:56:48Z",
+      "side": 1,
+      "message": "why do we need such method?",
+      "revId": "b01650c86ab5d67c0227c3f1570609fd49d62bc8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ab71c4d_06c8f4ef",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/provider/JavaCertificateController.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-09-08T14:56:48Z",
+      "side": 1,
+      "message": "I have some doubts to name of this class and used interface. Why controller? \n\nAdditionally there is too much responsibilities here.\n\n1. class is responsible for managing certificates\n2. for loading and storing data in file. \u003c- this should be extracted to separate class.",
+      "revId": "b01650c86ab5d67c0227c3f1570609fd49d62bc8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "159a06bc_ec031ba8",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/provider/JavaCertificateControllerFactory.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-09-08T14:56:48Z",
+      "side": 1,
+      "message": "something is not ok here. What will happen when some other developer will use JavaCertificateController class in other part of code and invoke other class methods, without loadFile()?",
+      "revId": "b01650c86ab5d67c0227c3f1570609fd49d62bc8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2c23726_c303c128",
+        "filename": "trustStoreMerger/src/test/java/org/onap/oom/truststoremerger/certification/file/provider/TestCertificateProvider.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-09-08T14:56:48Z",
+      "side": 1,
+      "message": "add private constructor and mark class as final.",
+      "revId": "b01650c86ab5d67c0227c3f1570609fd49d62bc8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}

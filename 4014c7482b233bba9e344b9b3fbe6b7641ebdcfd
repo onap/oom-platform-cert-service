@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91b166a2_39e4dbb1",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/provider/JavaCertificateController.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-09-08T14:56:48Z",
+      "side": 0,
+      "message": "what will happen when this method will not be executed and we call, for example: addCertificates?\n\nwhat is the reason to have such method?",
+      "revId": "4014c7482b233bba9e344b9b3fbe6b7641ebdcfd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
