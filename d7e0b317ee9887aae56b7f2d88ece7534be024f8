@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "983a13ec_5c05a5b7",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/model/Truststore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2020-09-08T13:03:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "748a0753_a1311ffd",
+      "revId": "d7e0b317ee9887aae56b7f2d88ece7534be024f8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31f6cc55_f00a93fa",
         "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/model/Truststore.java",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "dd1f63db_7d56bc55",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/model/Truststore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2020-09-08T13:03:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31f6cc55_f00a93fa",
+      "revId": "d7e0b317ee9887aae56b7f2d88ece7534be024f8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2c0e311_9f3333d0",
         "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/provider/JavaCertificateControllerFactory.java",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2020-09-08T11:42:34Z",
       "side": 1,
       "message": "I assume that the stacktrace of the error would be printed in some global exception handler, am i right?",
+      "revId": "d7e0b317ee9887aae56b7f2d88ece7534be024f8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20d1b0a4_36bbd87a",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/provider/JavaCertificateControllerFactory.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2020-09-08T13:03:51Z",
+      "side": 1,
+      "message": "I think in TrustStoreMerger in run() there will be printed cause exception (KeyStoreException) with message but without full stacktrace",
+      "parentUuid": "d2c0e311_9f3333d0",
       "revId": "d7e0b317ee9887aae56b7f2d88ece7534be024f8",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
