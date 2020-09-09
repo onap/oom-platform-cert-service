@@ -69,6 +69,30 @@
       "revId": "291c7b5fd2925d0b8dd232eeec2cb391ad7d9774",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2d08ffc2_8c7d2dfa",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/AppExecutor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-09T13:05:39Z",
+      "side": 1,
+      "message": "We have info that something will be executed from name of class no need to write it second time in method name.",
+      "parentUuid": "36cacb17_dc4902e5",
+      "range": {
+        "startLine": 31,
+        "startChar": 23,
+        "endLine": 31,
+        "endChar": 30
+      },
+      "revId": "291c7b5fd2925d0b8dd232eeec2cb391ad7d9774",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
