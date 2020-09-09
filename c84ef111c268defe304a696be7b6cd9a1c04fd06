@@ -22,6 +22,30 @@
       "revId": "c84ef111c268defe304a696be7b6cd9a1c04fd06",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c85f2583_4cadc7d0",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/AppExecutor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-09-09T13:12:23Z",
+      "side": 1,
+      "message": "Yes, i agree, but this is convenience mehtod, meant to be used in \"all\" applications.\nIt would be worse if ever application has to create this object.\nExist handler is generic enough to be common to all applications (e.g. cert-service-client)",
+      "parentUuid": "96fe6449_baacae12",
+      "range": {
+        "startLine": 32,
+        "startChar": 8,
+        "endLine": 32,
+        "endChar": 64
+      },
+      "revId": "c84ef111c268defe304a696be7b6cd9a1c04fd06",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
