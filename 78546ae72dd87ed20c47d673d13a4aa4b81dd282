@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a77bab62_37315119",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/model/Truststore.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-09T07:58:37Z",
+      "side": 1,
+      "message": "unused, please remove it",
+      "range": {
+        "startLine": 35,
+        "startChar": 3,
+        "endLine": 35,
+        "endChar": 58
+      },
+      "revId": "78546ae72dd87ed20c47d673d13a4aa4b81dd282",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efdebab7_7d364995",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/model/Truststore.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-09T07:58:37Z",
+      "side": 1,
+      "message": "As we talked change this to something like Manipulator ... or better",
+      "range": {
+        "startLine": 38,
+        "startChar": 29,
+        "endLine": 38,
+        "endChar": 39
+      },
+      "revId": "78546ae72dd87ed20c47d673d13a4aa4b81dd282",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
