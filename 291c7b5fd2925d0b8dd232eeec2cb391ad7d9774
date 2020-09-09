@@ -141,6 +141,30 @@
       "revId": "291c7b5fd2925d0b8dd232eeec2cb391ad7d9774",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7ae663f3_72332a6c",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/AppExecutor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-09T13:19:41Z",
+      "side": 1,
+      "message": "To be precise: Name is not big deal. Tests missing",
+      "parentUuid": "2d08ffc2_8c7d2dfa",
+      "range": {
+        "startLine": 31,
+        "startChar": 23,
+        "endLine": 31,
+        "endChar": 30
+      },
+      "revId": "291c7b5fd2925d0b8dd232eeec2cb391ad7d9774",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
