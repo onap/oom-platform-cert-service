@@ -16,6 +16,24 @@
       "revId": "346596059455b3408d1f130a5cbbab448ea2cbe4",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d29445e_65db9abb",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/AppExecutor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-09-09T12:54:55Z",
+      "side": 1,
+      "message": "Are you happy now? ;)",
+      "parentUuid": "ac6b9961_b6850aa6",
+      "revId": "346596059455b3408d1f130a5cbbab448ea2cbe4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
