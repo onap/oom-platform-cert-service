@@ -22,7 +22,6 @@ package org.onap.oom.truststoremerger;
 public class MainApp {
 
     public static void main(String[] args) {
-        TrustStoreMerger trustStoreMerger = new TrustStoreMerger(new AppExitHandler());
-        trustStoreMerger.run();
+        AppExecutor.execute(new CertificatePostProcessor());
     }
 }

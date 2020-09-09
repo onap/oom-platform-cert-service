@@ -19,7 +19,7 @@
 
 package org.onap.oom.truststoremerger.api;
 
-public class ExitableException extends Exception {
+public class ExitableException extends RuntimeException {
 
     private final ExitStatus exitStatus;
 
