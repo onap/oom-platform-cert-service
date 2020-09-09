@@ -45,6 +45,30 @@
       "revId": "291c7b5fd2925d0b8dd232eeec2cb391ad7d9774",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36cacb17_dc4902e5",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/AppExecutor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-09-09T13:01:21Z",
+      "side": 1,
+      "message": "I think \u0027execute\u0027 and \u0027start\u0027 are quite close synonyms.",
+      "parentUuid": "e5ae434c_ff0398df",
+      "range": {
+        "startLine": 31,
+        "startChar": 23,
+        "endLine": 31,
+        "endChar": 30
+      },
+      "revId": "291c7b5fd2925d0b8dd232eeec2cb391ad7d9774",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
