@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96fe6449_baacae12",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/AppExecutor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-09-09T13:03:05Z",
+      "side": 1,
+      "message": "It is a \"weird\" dependency. Testing this class would be very hard now, because it is not possible to easily mock exitHandler methods.\n\nPassing exitHandler through constructor would be way better I think.",
+      "range": {
+        "startLine": 32,
+        "startChar": 8,
+        "endLine": 32,
+        "endChar": 64
+      },
+      "revId": "c84ef111c268defe304a696be7b6cd9a1c04fd06",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
