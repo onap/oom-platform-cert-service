@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40ec4f68_b2293a77",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/model/Truststore.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-09-09T06:10:47Z",
+      "side": 1,
+      "message": "do we really need this class?\n\nall methods (without single one) is responsible only for delegating method invocation to CertificateManipulator class. Maybe it will be better to remove this class and rename CertificateManipulator to Truststore?",
+      "revId": "9f44a4796bd83ef0f66a9af389acde1537c99a57",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a1dba1d_28054e1c",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/certification/file/provider/JavaCertificateManipulator.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-09-09T06:10:47Z",
+      "side": 1,
+      "message": "still I don\u0027t understand why NotEmpty is in the method name?",
+      "revId": "9f44a4796bd83ef0f66a9af389acde1537c99a57",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
