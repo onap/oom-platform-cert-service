@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f5c99178_3258e405",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/AppExecutor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-09-09T13:13:06Z",
+      "side": 1,
+      "message": "it\u0027s not possible because system exists and test is interrupted.",
+      "parentUuid": "839a2c33_1f2a5e0d",
+      "range": {
+        "startLine": 27,
+        "startChar": 13,
+        "endLine": 27,
+        "endChar": 24
+      },
+      "revId": "291c7b5fd2925d0b8dd232eeec2cb391ad7d9774",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5ae434c_ff0398df",
         "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/AppExecutor.java",
         "patchSetId": 1
