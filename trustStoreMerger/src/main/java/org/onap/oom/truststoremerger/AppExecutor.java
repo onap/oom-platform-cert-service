@@ -19,24 +19,26 @@
 
 package org.onap.oom.truststoremerger;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.onap.oom.truststoremerger.api.ExitStatus;
+import org.onap.oom.truststoremerger.api.ExitableException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import static org.mockito.Mockito.verify;
+public class AppExecutor {
 
-@ExtendWith(MockitoExtension.class)
-class TrustStoreMergerTest {
+    private static final Logger LOGGER = LoggerFactory.getLogger(AppExecutor.class);
 
-    @Mock
-    AppExitHandler appExitHandler;
-
-    @Test
-    void shouldExitWithTruststoresPathsProviderExceptionDueToMissingTrustoresPathEnvs() {
-        new TrustStoreMerger(appExitHandler).run();
-
-        verify(appExitHandler).exit(ExitStatus.TRUSTSTORES_PATHS_PROVIDER_EXCEPTION);
+    public void execute(Runnable logic) {
+        final AppExitHandler exitHandler = new AppExitHandler();
+        try {
+            logic.run();
+            exitHandler.exit(ExitStatus.SUCCESS);
+        } catch (ExitableException e) {
+            LOGGER.error("Application failed: ", e);
+            exitHandler.exit(e.applicationExitStatus());
+        } catch (Exception e) {
+            LOGGER.error("Application failed (unexpected error): ", e);
+            exitHandler.exit(ExitStatus.UNEXPECTED_EXCEPTION);
+        }
     }
 }

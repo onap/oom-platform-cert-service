@@ -20,42 +20,23 @@
 package org.onap.oom.truststoremerger;
 
 import java.util.List;
-import org.onap.oom.truststoremerger.api.ExitStatus;
 import org.onap.oom.truststoremerger.api.ExitableException;
-import org.onap.oom.truststoremerger.merger.TruststoreFilesProvider;
-import org.onap.oom.truststoremerger.merger.model.Truststore;
-import org.onap.oom.truststoremerger.merger.model.certificate.CertificateWithAlias;
 import org.onap.oom.truststoremerger.configuration.MergerConfigurationProvider;
 import org.onap.oom.truststoremerger.configuration.model.MergerConfiguration;
 import org.onap.oom.truststoremerger.configuration.path.DelimitedPathsReader;
 import org.onap.oom.truststoremerger.configuration.path.DelimitedPathsReaderFactory;
 import org.onap.oom.truststoremerger.configuration.path.env.EnvProvider;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.onap.oom.truststoremerger.merger.TruststoreFilesProvider;
+import org.onap.oom.truststoremerger.merger.model.Truststore;
+import org.onap.oom.truststoremerger.merger.model.certificate.CertificateWithAlias;
 
-class TrustStoreMerger {
+class CertificatePostProcessor implements Runnable {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(TrustStoreMerger.class);
     private static final int FIRST_TRUSTSTORE_INDEX = 0;
     private static final int SECOND_TRUSTSTORE_INDEX = 1;
 
-    private final AppExitHandler appExitHandler;
-
-    TrustStoreMerger(AppExitHandler appExitHandler) {
-        this.appExitHandler = appExitHandler;
-    }
-
-    void run() {
-        try {
-            mergeTruststores();
-            appExitHandler.exit(ExitStatus.SUCCESS);
-        } catch (ExitableException e) {
-            LOGGER.error("Truststore Merger fails in execution: ", e);
-            appExitHandler.exit(e.applicationExitStatus());
-        } catch (Exception e) {
-            LOGGER.error("Truststore Merger fails in execution: ", e);
-            appExitHandler.exit(ExitStatus.UNEXPECTED_EXCEPTION);
-        }
+    public void run() throws ExitableException {
+        mergeTruststores();
     }
 
     private void mergeTruststores() throws ExitableException {
