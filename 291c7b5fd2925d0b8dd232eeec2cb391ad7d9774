@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "839a2c33_1f2a5e0d",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/AppExecutor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-09T12:57:48Z",
+      "side": 1,
+      "message": "@Bogumil Zebek: Do you think that we could omit testing this class? It could be valuable to mark here intention.",
+      "range": {
+        "startLine": 27,
+        "startChar": 13,
+        "endLine": 27,
+        "endChar": 24
+      },
+      "revId": "291c7b5fd2925d0b8dd232eeec2cb391ad7d9774",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5ae434c_ff0398df",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/AppExecutor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-09T12:57:48Z",
+      "side": 1,
+      "message": "Rename to something different e.g. start",
+      "range": {
+        "startLine": 31,
+        "startChar": 23,
+        "endLine": 31,
+        "endChar": 30
+      },
+      "revId": "291c7b5fd2925d0b8dd232eeec2cb391ad7d9774",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
