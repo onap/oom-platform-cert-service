@@ -22,20 +22,23 @@ package org.onap.oom.truststoremerger.merger.model;
 import java.io.File;
 import java.util.List;
 import org.onap.oom.truststoremerger.api.ExitableException;
+import org.onap.oom.truststoremerger.common.FileTools;
 import org.onap.oom.truststoremerger.merger.exception.CreateBackupException;
 import org.onap.oom.truststoremerger.merger.model.certificate.CertificateWithAlias;
-import org.onap.oom.truststoremerger.common.BackupCreator;
 
 public abstract class Truststore {
 
     final File storeFile;
 
-    public Truststore(File storeFile) {
+    final FileTools backupCreator;
+
+    public Truststore(File storeFile, FileTools backupCreator) {
         this.storeFile = storeFile;
+        this.backupCreator = backupCreator;
     }
 
     public void createBackup() throws CreateBackupException {
-        BackupCreator.createBackup(storeFile);
+        backupCreator.createBackup(storeFile);
     }
 
     public abstract List<CertificateWithAlias> getCertificates() throws ExitableException;

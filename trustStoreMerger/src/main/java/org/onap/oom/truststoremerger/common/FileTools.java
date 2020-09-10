@@ -21,28 +21,37 @@ package org.onap.oom.truststoremerger.common;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.file.Files;
+import org.apache.commons.io.FileUtils;
 import org.onap.oom.truststoremerger.merger.exception.CreateBackupException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public final class BackupCreator {
+public final class FileTools {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(BackupCreator.class);
+    private static final Logger LOG = LoggerFactory.getLogger(FileTools.class);
     private static final String BACKUP_EXTENSION = ".bak";
 
-    private BackupCreator() {
+    public FileTools() {
     }
 
-    public static void createBackup(File file) throws CreateBackupException {
-        LOGGER.debug("Create backup of file: {}", file.getPath());
+    public void createBackup(File file) throws CreateBackupException {
+        LOG.debug("Create backup of file: {}", file.getPath());
         String backupFilePath = file.getAbsolutePath() + BACKUP_EXTENSION;
         try (FileOutputStream fileOutputStream = new FileOutputStream(backupFilePath)) {
             Files.copy(file.toPath(), fileOutputStream);
         } catch (Exception e) {
-            LOGGER.error("Cannot create backup of file: {} ", file.getPath());
+            LOG.error("Cannot create backup of file: {} ", file.getPath());
             throw new CreateBackupException(e);
         }
-        LOGGER.debug("Backup was successfully created in: {}", backupFilePath);
+        LOG.debug("Backup was successfully created in: {}", backupFilePath);
+    }
+
+    public void copy(File source, File destination) throws IOException  {
+        LOG.debug("Try to copy from '{}' to '{}'.", source.getAbsolutePath(), destination.getAbsolutePath());
+        FileUtils.copyFile(source, destination);
+        LOG.debug("File copied from '{}' to '{}'.", source.getAbsolutePath(),
+            destination.getAbsolutePath());
     }
 }
