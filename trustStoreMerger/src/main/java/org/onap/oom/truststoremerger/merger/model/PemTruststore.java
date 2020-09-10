@@ -37,6 +37,7 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.openssl.jcajce.JcaMiscPEMGenerator;
 import org.bouncycastle.util.io.pem.PemObjectGenerator;
 import org.bouncycastle.util.io.pem.PemWriter;
+import org.onap.oom.truststoremerger.common.FileTools;
 import org.onap.oom.truststoremerger.merger.exception.MissingTruststoreException;
 import org.onap.oom.truststoremerger.merger.exception.TruststoreDataOperationException;
 import org.onap.oom.truststoremerger.merger.exception.WriteTruststoreFileException;
@@ -55,7 +56,7 @@ public class PemTruststore extends Truststore {
     private final List<CertificateWithAlias> certificatesToBeSaved = new ArrayList<>();
 
     public PemTruststore(File storeFile) {
-        super(storeFile);
+        super(storeFile, new FileTools());
     }
 
     public List<CertificateWithAlias> getCertificates()
