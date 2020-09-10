@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "dbd2b76a_6a50e948",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/AppExitHandler.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-09-10T12:08:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb22e361_0d2d1b35",
+      "range": {
+        "startLine": 27,
+        "startChar": 32,
+        "endLine": 27,
+        "endChar": 35
+      },
+      "revId": "aba688f22094f32492afd5566675a67df0ca3180",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f8331cda_f10406cd",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/AppExitHandler.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-09-10T12:08:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f50958a_af140d44",
+      "range": {
+        "startLine": 27,
+        "startChar": 32,
+        "endLine": 27,
+        "endChar": 35
+      },
+      "revId": "aba688f22094f32492afd5566675a67df0ca3180",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec81110d_b46c5431",
         "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/CertificatePostProcessor.java",
         "patchSetId": 10
@@ -68,6 +116,30 @@
       "revId": "aba688f22094f32492afd5566675a67df0ca3180",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a3f3023_a1afb4b1",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/CertificatePostProcessor.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-09-10T12:08:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec81110d_b46c5431",
+      "range": {
+        "startLine": 33,
+        "startChar": 32,
+        "endLine": 33,
+        "endChar": 35
+      },
+      "revId": "aba688f22094f32492afd5566675a67df0ca3180",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -494,6 +566,30 @@
     },
     {
       "key": {
+        "uuid": "e37b3694_6f2d9499",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/merger/TruststoreMerger.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-09-10T12:08:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0c4c2f3_33869b16",
+      "range": {
+        "startLine": 48,
+        "startChar": 12,
+        "endLine": 48,
+        "endChar": 18
+      },
+      "revId": "aba688f22094f32492afd5566675a67df0ca3180",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a0f8fca_0deee0dd",
         "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/merger/model/Truststore.java",
         "patchSetId": 10
@@ -514,6 +610,30 @@
       "revId": "aba688f22094f32492afd5566675a67df0ca3180",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e61f28ac_6c1a275e",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/merger/model/Truststore.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-09-10T12:08:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a0f8fca_0deee0dd",
+      "range": {
+        "startLine": 33,
+        "startChar": 20,
+        "endLine": 33,
+        "endChar": 32
+      },
+      "revId": "aba688f22094f32492afd5566675a67df0ca3180",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
