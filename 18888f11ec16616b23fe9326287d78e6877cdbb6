@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d92c474_f1ef1a7c",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/copier/KeystoreCopier.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-10T12:36:45Z",
+      "side": 1,
+      "message": "I think what Remigiusz suggested in PS10 about flattening ifs here was perfectly fine. Why dont you used it?",
+      "range": {
+        "startLine": 44,
+        "startChar": 16,
+        "endLine": 44,
+        "endChar": 57
+      },
+      "revId": "18888f11ec16616b23fe9326287d78e6877cdbb6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3ef2030_5aeb52f5",
+        "filename": "trustStoreMerger/src/test/java/org/onap/oom/truststoremerger/copier/KeystoreCopierTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-10T12:36:45Z",
+      "side": 1,
+      "message": "mark private",
+      "range": {
+        "startLine": 39,
+        "startChar": 3,
+        "endLine": 40,
+        "endChar": 75
+      },
+      "revId": "18888f11ec16616b23fe9326287d78e6877cdbb6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
