@@ -17,30 +17,35 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.configuration.path;
+package org.onap.oom.truststoremerger.configuration.model;
 
 import static org.onap.oom.truststoremerger.configuration.path.validation.ValidationFunctions.doesItContainValidCertificatesPaths;
 import static org.onap.oom.truststoremerger.configuration.path.validation.ValidationFunctions.doesItContainValidPasswordPaths;
 import static org.onap.oom.truststoremerger.configuration.path.validation.ValidationFunctions.doesItContainValidPathsToCopy;
 
-import org.onap.oom.truststoremerger.configuration.path.env.EnvProvider;
+import java.util.List;
+import java.util.function.Predicate;
 
-public final class DelimitedPathsReaderFactory {
-    private final EnvProvider envProvider;
+public enum EnvVariable {
+    TRUSTSTORES_PATHS_ENV(true, doesItContainValidCertificatesPaths()),
+    TRUSTSTORES_PASSWORDS_PATHS_ENV(true, doesItContainValidPasswordPaths()),
+    KEYSTORE_SOURCE_PATHS_ENV(false, doesItContainValidPathsToCopy()),
+    KEYSTORE_DESTINATION_PATHS_ENV(false, doesItContainValidPathsToCopy());
 
-    public DelimitedPathsReaderFactory(EnvProvider envProvider) {
-        this.envProvider = envProvider;
+    boolean isMandatory;
+
+    Predicate<List<String>> validationFunction;
+
+    EnvVariable(boolean isMandatory, Predicate<List<String>> validationFunction) {
+        this.isMandatory = isMandatory;
+        this.validationFunction = validationFunction;
     }
 
-    public DelimitedPathsReader createPasswordPathsReader() {
-        return new DelimitedPathsReader(envProvider, doesItContainValidPasswordPaths());
+    public boolean isMandatory() {
+        return isMandatory;
     }
 
-    public DelimitedPathsReader createCertificatePathsReader() {
-        return new DelimitedPathsReader(envProvider, doesItContainValidCertificatesPaths());
-    }
-
-    public DelimitedPathsReader createKeystoreCopierPathsReader() {
-        return new DelimitedPathsReader(envProvider, doesItContainValidPathsToCopy());
+    public Predicate<List<String>> getValidationFunction() {
+        return validationFunction;
     }
 }

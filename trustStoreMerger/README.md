@@ -75,3 +75,6 @@ docker logs oom-merger
 9   Missing truststore certificates in provided file
 10  Alias conflict detected
 11  Cannot save truststore file
+12  Cannot copy keystore file
+13  Keystore file does not exist
+99  Application exited abnormally

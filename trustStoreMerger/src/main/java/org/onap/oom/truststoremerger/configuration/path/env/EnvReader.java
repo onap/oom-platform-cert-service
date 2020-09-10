@@ -17,14 +17,23 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.configuration.exception;
+package org.onap.oom.truststoremerger.configuration.path.env;
 
-import org.onap.oom.truststoremerger.api.ExitStatus;
-import org.onap.oom.truststoremerger.api.ExitableException;
+import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class MergerConfigurationException extends ExitableException {
+public class EnvReader {
 
-    public MergerConfigurationException(String errorMessage) {
-        super(errorMessage, ExitStatus.MERGER_CONFIGURATION_EXCEPTION);
+    private static final Logger LOGGER = LoggerFactory.getLogger(EnvReader.class);
+
+    public Optional<String> getEnv(String name) {
+        return getSystemEnv(name);
+    }
+
+    Optional<String> getSystemEnv(String name) {
+        String value = System.getenv(name);
+        LOGGER.info("Read variable: {} , value: {}", name, value);
+        return Optional.ofNullable(value);
     }
 }
