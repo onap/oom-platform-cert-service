@@ -23,29 +23,52 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.onap.oom.truststoremerger.merger.exception.CreateBackupException;
 import org.onap.oom.truststoremerger.merger.model.TestCertificateProvider;
 
-public class BackupCreatorTest {
+public class FileToolsTest {
 
     public static final String BAK_EXTENSION = ".bak";
 
+    @TempDir
+    File dir;
+
     @Test
-    void shouldCreateBackupProvidedFile() throws CreateBackupException {
+    void shouldCreateBackupProvidedFile() throws Exception {
         //given
-        File fileToBackup = new File(TestCertificateProvider.PEM_FILE_PATH);
+        File fileToBackup = createFile("truststore.pem", "arbitrary content");
         String backupFilePath = fileToBackup.getPath() + BAK_EXTENSION;
         //when
-        BackupCreator.createBackup(fileToBackup);
+        new FileTools().createBackup(fileToBackup);
         //then
         assertThat(fileToBackup.equals(new File(backupFilePath)));
     }
 
-    @AfterEach
-    void removeTemporaryFiles() throws IOException {
-        TestCertificateProvider.removeTemporaryFiles();
+    @Test
+    void shouldCopyFile() throws IOException {
+        //given
+        File sourceFile = new File(TestCertificateProvider.PEM_FILE_PATH);
+        File destinationFile = new File(TestCertificateProvider.PEM_FILE_PATH + ".new");
+        //when
+        new FileTools().copy(sourceFile, destinationFile);
+        //then
+        assertThat(sourceFile.equals(destinationFile));
+    }
+
+
+    private File createFile(String name, String content) throws IOException {
+        File file = new File(dir.getAbsolutePath() + File.pathSeparator + name);
+        if (file.createNewFile()) {
+            FileUtils.write(file, content, Charset.defaultCharset());
+        } else {
+            throw new IllegalStateException("File could not be created: " + file.getAbsolutePath());
+        }
+        return file;
     }
 
 }

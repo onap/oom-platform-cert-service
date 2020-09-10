@@ -33,6 +33,8 @@ public enum ExitStatus {
     MISSING_TRUSTSTORE_EXCEPTION(9, "Missing truststore certificates in provided file"),
     ALIAS_CONFLICT_EXCEPTION(10, "Alias conflict detected"),
     WRITE_TRUSTSTORE_FILE_EXCEPTION(11, "Cannot save truststore file"),
+    KEYSTORE_FILE_COPY_EXCEPTION(12, "Cannot copy keystore file"),
+    KEYSTORE_NOT_EXIST_EXCEPTION(13, "Keystore file does not exist"),
     UNEXPECTED_EXCEPTION(99, "Application exited abnormally");
 
 
