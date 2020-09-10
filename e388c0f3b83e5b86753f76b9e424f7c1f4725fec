@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fa0e108e_35ac053d",
+        "filename": "trustStoreMerger/README.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2020-09-10T10:25:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "147d4a2b_64924e03",
+      "range": {
+        "startLine": 39,
+        "startChar": 132,
+        "endLine": 39,
+        "endChar": 135
+      },
+      "revId": "e388c0f3b83e5b86753f76b9e424f7c1f4725fec",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6f18209_eb460645",
         "filename": "trustStoreMerger/README.md",
         "patchSetId": 4
@@ -132,6 +156,96 @@
       "revId": "e388c0f3b83e5b86753f76b9e424f7c1f4725fec",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7402738_c6a8d7ad",
+        "filename": "trustStoreMerger/README.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2020-09-10T10:25:16Z",
+      "side": 1,
+      "message": "Your sentence is more clear. I used it.",
+      "parentUuid": "7c06cd64_792b86d6",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 101
+      },
+      "revId": "e388c0f3b83e5b86753f76b9e424f7c1f4725fec",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7cd7029_2618045d",
+        "filename": "trustStoreMerger/README.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2020-09-10T10:25:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de33653c_844d7f5a",
+      "range": {
+        "startLine": 54,
+        "startChar": 109,
+        "endLine": 54,
+        "endChar": 116
+      },
+      "revId": "e388c0f3b83e5b86753f76b9e424f7c1f4725fec",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6a6661f5_a484e85b",
+        "filename": "trustStoreMerger/README.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2020-09-10T10:25:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6f18209_eb460645",
+      "revId": "e388c0f3b83e5b86753f76b9e424f7c1f4725fec",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4eca3d2d_f971ed52",
+        "filename": "trustStoreMerger/README.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2020-09-10T10:25:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "314a2971_676c2549",
+      "range": {
+        "startLine": 54,
+        "startChar": 166,
+        "endLine": 54,
+        "endChar": 169
+      },
+      "revId": "e388c0f3b83e5b86753f76b9e424f7c1f4725fec",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
