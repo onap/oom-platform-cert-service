@@ -140,6 +140,29 @@
     },
     {
       "key": {
+        "uuid": "483ef20f_1fc99f75",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/copier/KeystoreCopier.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-09-10T10:54:34Z",
+      "side": 1,
+      "message": "Unused",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 9
+      },
+      "revId": "aba688f22094f32492afd5566675a67df0ca3180",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9cd11a1c_1d2c91f6",
         "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/copier/KeystoreCopier.java",
         "patchSetId": 10
@@ -202,6 +225,29 @@
         "startChar": 8,
         "endLine": 63,
         "endChar": 13
+      },
+      "revId": "aba688f22094f32492afd5566675a67df0ca3180",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e53e274_24a9ba49",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/copier/KeystoreCopier.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-09-10T10:54:34Z",
+      "side": 1,
+      "message": "Try to flatten the logic.\nConsider this solution:\nprivate void copy(String sourcePath, String destinationPath){\n    try {\n        final File source ...\n        final File destination ...\n        copyFile(source, destination)\n    } catch (IOException e) {\n        ...\n    }\n}\n\n\nprivate void copyFile(File source, File destination) throws ... {\n    if (!source.exists()) {\n        throw new ...\n    }\n    if (destination.exists()) {\n        fileTools.createBackup(desitnation);\n    }\n    fileTools.copy(source, destination);\n}",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 9
       },
       "revId": "aba688f22094f32492afd5566675a67df0ca3180",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
