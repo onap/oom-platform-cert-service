@@ -27,23 +27,23 @@ import static org.onap.oom.truststoremerger.configuration.ConfigurationEnvs.TRUS
 import java.util.List;
 import org.onap.oom.truststoremerger.configuration.exception.MergerConfigurationException;
 import org.onap.oom.truststoremerger.configuration.exception.TruststoresPathsProviderException;
-import org.onap.oom.truststoremerger.configuration.model.MergerConfiguration;
+import org.onap.oom.truststoremerger.configuration.model.AppConfiguration;
 import org.onap.oom.truststoremerger.configuration.path.DelimitedPathsReader;
 
-public class MergerConfigurationProvider {
+public class AppConfigurationProvider {
 
     private final DelimitedPathsReader truststoresPathsReader;
     private final DelimitedPathsReader truststoresPasswordsPathsReader;
     private final DelimitedPathsReader copierPathsReader;
 
-    public MergerConfigurationProvider(DelimitedPathsReader truststoresPathsReader,
+    public AppConfigurationProvider(DelimitedPathsReader truststoresPathsReader,
         DelimitedPathsReader truststoresPasswordsPathsReader, DelimitedPathsReader copierPathsReader) {
         this.truststoresPathsReader = truststoresPathsReader;
         this.truststoresPasswordsPathsReader = truststoresPasswordsPathsReader;
         this.copierPathsReader = copierPathsReader;
     }
 
-    public MergerConfiguration createConfiguration()
+    public AppConfiguration createConfiguration()
         throws MergerConfigurationException, TruststoresPathsProviderException {
         List<String> truststoresPaths = truststoresPathsReader.get(TRUSTSTORES_PATHS_ENV);
         List<String> truststoresPasswordsPaths = truststoresPasswordsPathsReader.get(TRUSTSTORES_PASSWORDS_PATHS_ENV);
@@ -55,7 +55,7 @@ public class MergerConfigurationProvider {
         ensureSameSize(sourceKeystorePaths, destinationKeystorePaths, KEYSTORE_SOURCE_PATHS_ENV,
             KEYSTORE_DESTINATION_PATHS_ENV);
 
-        return new MergerConfiguration(truststoresPaths, truststoresPasswordsPaths, sourceKeystorePaths,
+        return new AppConfiguration(truststoresPaths, truststoresPasswordsPaths, sourceKeystorePaths,
             destinationKeystorePaths);
     }
 
