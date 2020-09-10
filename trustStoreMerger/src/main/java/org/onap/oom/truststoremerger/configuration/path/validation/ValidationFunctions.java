@@ -25,7 +25,7 @@ import java.util.function.Predicate;
 public final class ValidationFunctions {
 
     private static final String CERTIFICATE_PATH_REGEX = "^(/[a-zA-Z0-9_-]+)+\\.(pem|jks|p12)";
-    private static final String TRUSTSTORE_PASSWORD_PATH_REGEX = "^(/[a-zA-Z0-9_-]+)+\\.pass";
+    private static final String CERTIFICATE_PASSWORD_PATH_REGEX = "^(/[a-zA-Z0-9_-]+)+\\.pass";
 
     private ValidationFunctions() {
     }
@@ -40,7 +40,7 @@ public final class ValidationFunctions {
 
     public static Predicate<List<String>> doesItContainValidPathsToCopy() {
         return paths -> paths.stream().allMatch(path ->
-            doesMatch(path, TRUSTSTORE_PASSWORD_PATH_REGEX) || isCertificatePathValid(path));
+            doesMatch(path, CERTIFICATE_PASSWORD_PATH_REGEX) || isCertificatePathValid(path));
     }
 
     private static boolean isCertificatePathValid(String path) {
@@ -48,7 +48,7 @@ public final class ValidationFunctions {
     }
 
     private static boolean isCertificatePasswordPathValid(String path) {
-        return path.isEmpty() || doesMatch(path, TRUSTSTORE_PASSWORD_PATH_REGEX);
+        return path.isEmpty() || doesMatch(path, CERTIFICATE_PASSWORD_PATH_REGEX);
     }
 
     private static boolean doesMatch(String path, String regex) {
