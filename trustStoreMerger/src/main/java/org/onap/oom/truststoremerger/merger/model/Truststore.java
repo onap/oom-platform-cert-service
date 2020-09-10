@@ -30,12 +30,15 @@ public abstract class Truststore {
 
     final File storeFile;
 
-    public Truststore(File storeFile) {
+    final BackupCreator backupCreator;
+
+    public Truststore(File storeFile, BackupCreator backupCreator) {
         this.storeFile = storeFile;
+        this.backupCreator = backupCreator;
     }
 
     public void createBackup() throws CreateBackupException {
-        BackupCreator.createBackup(storeFile);
+        backupCreator.createBackup(storeFile);
     }
 
     public abstract List<CertificateWithAlias> getCertificates() throws ExitableException;

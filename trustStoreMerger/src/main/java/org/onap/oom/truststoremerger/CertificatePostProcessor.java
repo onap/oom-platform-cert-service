@@ -19,43 +19,34 @@
 
 package org.onap.oom.truststoremerger;
 
-import java.util.List;
 import org.onap.oom.truststoremerger.api.ExitableException;
+import org.onap.oom.truststoremerger.common.BackupCreator;
 import org.onap.oom.truststoremerger.configuration.MergerConfigurationProvider;
-import org.onap.oom.truststoremerger.configuration.model.MergerConfiguration;
+import org.onap.oom.truststoremerger.configuration.model.AppConfiguration;
 import org.onap.oom.truststoremerger.configuration.path.DelimitedPathsReader;
 import org.onap.oom.truststoremerger.configuration.path.DelimitedPathsReaderFactory;
 import org.onap.oom.truststoremerger.configuration.path.env.EnvProvider;
-import org.onap.oom.truststoremerger.merger.TruststoreFilesProvider;
-import org.onap.oom.truststoremerger.merger.model.Truststore;
-import org.onap.oom.truststoremerger.merger.model.certificate.CertificateWithAlias;
+import org.onap.oom.truststoremerger.copier.KeystoreCopier;
+import org.onap.oom.truststoremerger.merger.TruststoreMerger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 class CertificatePostProcessor implements Runnable {
+    private static final Logger LOG = LoggerFactory.getLogger(CertificatePostProcessor.class);
 
-    private static final int FIRST_TRUSTSTORE_INDEX = 0;
-    private static final int SECOND_TRUSTSTORE_INDEX = 1;
+    private TruststoreMerger merger = new TruststoreMerger();
+    private KeystoreCopier copier = new KeystoreCopier(new BackupCreator());
 
     public void run() throws ExitableException {
-        mergeTruststores();
+        AppConfiguration configuration = loadConfiguration();
+        LOG.debug("Starting TruststoreMerger...");
+        merger.mergeTruststores(configuration);
+        LOG.debug("Starting KeystoreCopier...");
+        copier.copyKeystores(configuration);
+        LOG.debug("Certificate post processing finished successfully.");
     }
 
-    private void mergeTruststores() throws ExitableException {
-        MergerConfiguration configuration = loadConfiguration();
-        List<Truststore> truststoreFilesList = getTruststoreFiles(configuration);
-
-        Truststore baseFile = truststoreFilesList.get(FIRST_TRUSTSTORE_INDEX);
-        baseFile.createBackup();
-
-        for (int i = SECOND_TRUSTSTORE_INDEX; i < truststoreFilesList.size(); i++) {
-            Truststore truststore = truststoreFilesList.get(i);
-            List<CertificateWithAlias> certificateWrappers = truststore.getCertificates();
-            baseFile.addCertificates(certificateWrappers);
-        }
-
-        baseFile.saveFile();
-    }
-
-    private MergerConfiguration loadConfiguration() throws ExitableException {
+    private AppConfiguration loadConfiguration() throws ExitableException {
         DelimitedPathsReaderFactory readerFactory = new DelimitedPathsReaderFactory(new EnvProvider());
         DelimitedPathsReader certificatesPathsReader = readerFactory.createCertificatePathsReader();
         DelimitedPathsReader passwordsPathsReader = readerFactory.createPasswordPathsReader();
@@ -66,11 +57,4 @@ class CertificatePostProcessor implements Runnable {
         return factory.createConfiguration();
     }
 
-    private static List<Truststore> getTruststoreFiles(MergerConfiguration configuration) throws ExitableException {
-        return TruststoreFilesProvider
-            .getTruststoreFiles(
-                configuration.getTruststoreFilePaths(),
-                configuration.getTruststoreFilePasswordPaths()
-            );
-    }
 }
