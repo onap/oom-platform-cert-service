@@ -22,8 +22,8 @@ package org.onap.oom.truststoremerger.api;
 public enum ExitStatus {
 
     SUCCESS(0, "Success"),
-    TRUSTSTORES_PATHS_PROVIDER_EXCEPTION(1, "Invalid paths in environment variables"),
-    MERGER_CONFIGURATION_EXCEPTION(2, "Invalid merger configuration"),
+    CERTIFICATES_PATHS_VALIDATION_EXCEPTION(1, "Invalid paths in environment variables"),
+    CONFIGURATION_EXCEPTION(2, "Invalid merger configuration"),
     TRUSTSTORE_FILE_FACTORY_EXCEPTION(3, "Invalid truststore file-password pair"),
     PASSWORD_READER_EXCEPTION(4, "Cannot read password from file"),
     CREATE_BACKUP_EXCEPTION(5, "Cannot create backup file"),

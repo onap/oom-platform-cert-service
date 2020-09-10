@@ -21,20 +21,14 @@ package org.onap.oom.truststoremerger.configuration;
 
 import org.onap.oom.truststoremerger.api.ExitableException;
 import org.onap.oom.truststoremerger.configuration.model.AppConfiguration;
-import org.onap.oom.truststoremerger.configuration.path.DelimitedPathsReader;
-import org.onap.oom.truststoremerger.configuration.path.DelimitedPathsReaderFactory;
-import org.onap.oom.truststoremerger.configuration.path.env.EnvProvider;
+import org.onap.oom.truststoremerger.configuration.path.DelimitedPathsSplitter;
+import org.onap.oom.truststoremerger.configuration.path.env.EnvReader;
 
 public class AppConfigurationLoader {
 
     public AppConfiguration loadConfiguration() throws ExitableException {
-        DelimitedPathsReaderFactory readerFactory = new DelimitedPathsReaderFactory(new EnvProvider());
-        DelimitedPathsReader certificatesPathsReader = readerFactory.createCertificatePathsReader();
-        DelimitedPathsReader passwordsPathsReader = readerFactory.createPasswordPathsReader();
-        DelimitedPathsReader copierPathsReader = readerFactory.createKeystoreCopierPathsReader();
-        AppConfigurationProvider factory = new AppConfigurationProvider(certificatesPathsReader,
-            passwordsPathsReader,
-            copierPathsReader);
+        DelimitedPathsSplitter pathsReader = new DelimitedPathsSplitter();
+        AppConfigurationProvider factory = new AppConfigurationProvider(pathsReader, new EnvReader());
         return factory.createConfiguration();
     }
 
