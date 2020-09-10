@@ -17,33 +17,15 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.merger.model;
+package org.onap.oom.truststoremerger.copier.exception;
 
-import java.io.File;
-import java.util.List;
+import org.onap.oom.truststoremerger.api.ExitStatus;
 import org.onap.oom.truststoremerger.api.ExitableException;
-import org.onap.oom.truststoremerger.common.FileTools;
-import org.onap.oom.truststoremerger.merger.exception.CreateBackupException;
-import org.onap.oom.truststoremerger.merger.model.certificate.CertificateWithAlias;
 
-public abstract class Truststore {
+public class KeystoreFileCopyException extends ExitableException {
 
-    final File storeFile;
-
-    final FileTools backupCreator;
-
-    public Truststore(File storeFile, FileTools backupCreator) {
-        this.storeFile = storeFile;
-        this.backupCreator = backupCreator;
+    public KeystoreFileCopyException(Exception e) {
+        super(e, ExitStatus.KEYSTORE_FILE_COPY_EXCEPTION);
     }
 
-    public void createBackup() throws CreateBackupException {
-        backupCreator.createBackup(storeFile);
-    }
-
-    public abstract List<CertificateWithAlias> getCertificates() throws ExitableException;
-
-    public abstract void addCertificates(List<CertificateWithAlias> certificates) throws ExitableException;
-
-    public abstract void saveFile() throws ExitableException;
 }
