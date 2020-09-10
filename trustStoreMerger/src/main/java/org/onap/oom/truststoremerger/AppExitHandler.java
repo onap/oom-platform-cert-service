@@ -27,7 +27,7 @@ public class AppExitHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(AppExitHandler.class);
 
     public void exit(ExitStatus exitStatus) {
-        LOGGER.info("Application exits with following exit code: {} and message: {}",
+        LOGGER.info("Application exits with code [{}] and message: {}",
                 exitStatus.getExitCodeValue(), exitStatus.getMessage());
         System.exit(exitStatus.getExitCodeValue());
     }
