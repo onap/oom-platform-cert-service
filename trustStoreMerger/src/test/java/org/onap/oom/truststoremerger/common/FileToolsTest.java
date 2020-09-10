@@ -28,7 +28,7 @@ import org.junit.jupiter.api.Test;
 import org.onap.oom.truststoremerger.merger.exception.CreateBackupException;
 import org.onap.oom.truststoremerger.merger.model.TestCertificateProvider;
 
-public class BackupCreatorTest {
+public class FileToolsTest {
 
     public static final String BAK_EXTENSION = ".bak";
 
@@ -38,10 +38,22 @@ public class BackupCreatorTest {
         File fileToBackup = new File(TestCertificateProvider.PEM_FILE_PATH);
         String backupFilePath = fileToBackup.getPath() + BAK_EXTENSION;
         //when
-        BackupCreator.createBackup(fileToBackup);
+        new FileTools().createBackup(fileToBackup);
         //then
         assertThat(fileToBackup.equals(new File(backupFilePath)));
     }
+
+    @Test
+    void shouldCopyFile() throws IOException {
+        //given
+        File sourceFile = new File(TestCertificateProvider.PEM_FILE_PATH);
+        File destinationFile = new File(TestCertificateProvider.PEM_FILE_PATH + ".new");
+        //when
+        new FileTools().copy(sourceFile, destinationFile);
+        //then
+        assertThat(sourceFile.equals(destinationFile));
+    }
+
 
     @AfterEach
     void removeTemporaryFiles() throws IOException {
