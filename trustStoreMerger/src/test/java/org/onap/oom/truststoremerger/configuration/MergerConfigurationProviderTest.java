@@ -36,7 +36,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.onap.oom.truststoremerger.configuration.exception.MergerConfigurationException;
 import org.onap.oom.truststoremerger.configuration.exception.TruststoresPathsProviderException;
-import org.onap.oom.truststoremerger.configuration.model.MergerConfiguration;
+import org.onap.oom.truststoremerger.configuration.model.AppConfiguration;
 import org.onap.oom.truststoremerger.configuration.path.DelimitedPathsReader;
 
 @ExtendWith(MockitoExtension.class)
@@ -76,7 +76,7 @@ class MergerConfigurationProviderTest {
             numberOfPaths, PEM_EXTENSION);
         mockKeystorePaths(sourceKeystoresPairPaths, destKeystoresPairPaths);
 
-        MergerConfiguration configuration = factory.createConfiguration();
+        AppConfiguration configuration = factory.createConfiguration();
 
         assertThat(configuration.getTruststoreFilePaths()).containsAll(truststoresPaths);
         assertThat(configuration.getTruststoreFilePasswordPaths()).containsAll(truststorePasswordPaths);

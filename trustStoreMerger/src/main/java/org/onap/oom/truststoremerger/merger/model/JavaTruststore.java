@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import org.onap.oom.truststoremerger.api.ExitableException;
+import org.onap.oom.truststoremerger.common.BackupCreator;
 import org.onap.oom.truststoremerger.merger.exception.AliasConflictException;
 import org.onap.oom.truststoremerger.merger.exception.LoadTruststoreException;
 import org.onap.oom.truststoremerger.merger.exception.MissingTruststoreException;
@@ -48,7 +49,7 @@ public final class JavaTruststore extends Truststore {
 
 
     private JavaTruststore(KeyStore keyStore, File storeFile, String password) {
-        super(storeFile);
+        super(storeFile, new BackupCreator());
         this.keyStore = keyStore;
         this.password = password;
     }

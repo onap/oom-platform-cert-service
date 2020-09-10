@@ -17,18 +17,15 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger;
+package org.onap.oom.truststoremerger.copier.exception;
 
 import org.onap.oom.truststoremerger.api.ExitStatus;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.onap.oom.truststoremerger.api.ExitableException;
 
-public class AppExitHandler {
-    private static final Logger LOG = LoggerFactory.getLogger(AppExitHandler.class);
+public class KeystoreNotExistException extends ExitableException {
 
-    public void exit(ExitStatus exitStatus) {
-        LOG.info("Application exits with code [{}] and message: {}",
-                exitStatus.getExitCodeValue(), exitStatus.getMessage());
-        System.exit(exitStatus.getExitCodeValue());
+    public KeystoreNotExistException(Exception e) {
+        super(e, ExitStatus.KEYSTORE_FILE_COPY_EXCEPTION);
     }
+
 }

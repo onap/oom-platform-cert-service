@@ -38,7 +38,7 @@ public class BackupCreatorTest {
         File fileToBackup = new File(TestCertificateProvider.PEM_FILE_PATH);
         String backupFilePath = fileToBackup.getPath() + BAK_EXTENSION;
         //when
-        BackupCreator.createBackup(fileToBackup);
+        new BackupCreator().createBackup(fileToBackup);
         //then
         assertThat(fileToBackup.equals(new File(backupFilePath)));
     }

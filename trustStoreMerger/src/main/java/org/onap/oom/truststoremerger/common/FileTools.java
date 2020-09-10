@@ -31,10 +31,10 @@ public final class BackupCreator {
     private static final Logger LOGGER = LoggerFactory.getLogger(BackupCreator.class);
     private static final String BACKUP_EXTENSION = ".bak";
 
-    private BackupCreator() {
+    public BackupCreator() {
     }
 
-    public static void createBackup(File file) throws CreateBackupException {
+    public void createBackup(File file) throws CreateBackupException {
         LOGGER.debug("Create backup of file: {}", file.getPath());
         String backupFilePath = file.getAbsolutePath() + BACKUP_EXTENSION;
         try (FileOutputStream fileOutputStream = new FileOutputStream(backupFilePath)) {
