@@ -17,28 +17,21 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.common;
+package org.onap.oom.truststoremerger.configuration.model;
 
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+public enum EnvVariable {
+    TRUSTSTORES_PATHS_ENV(true),
+    TRUSTSTORES_PASSWORDS_PATHS_ENV(true),
+    KEYSTORE_SOURCE_PATHS_ENV(false),
+    KEYSTORE_DESTINATION_PATHS_ENV(false);
 
-import java.io.File;
+    boolean mandatory;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-class ExtensionResolverTest {
-
-    @ParameterizedTest
-    @CsvSource(value = {
-        "opt/app/truststore.jks:.jks",
-        "opt/app/truststore.p12:.p12",
-        "opt/app/truststore.pem:.pem",
-        "opt/app/truststore.PEM:.pem",
-        "opt/app/truststore:''",
-    }, delimiter = ':')
-    void shouldReturnCorrectExtension(String filePath, String expectedExtension) {
-        String extension = ExtensionResolver.get(new File(filePath));
-        assertThat(extension).isEqualTo(expectedExtension);
+    EnvVariable(boolean mandatory) {
+        this.mandatory = mandatory;
     }
 
+    public boolean isMandatory() {
+        return mandatory;
+    }
 }

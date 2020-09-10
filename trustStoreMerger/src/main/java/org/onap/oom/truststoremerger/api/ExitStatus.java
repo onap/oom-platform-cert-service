@@ -22,19 +22,20 @@ package org.onap.oom.truststoremerger.api;
 public enum ExitStatus {
 
     SUCCESS(0, "Success"),
-    TRUSTSTORES_PATHS_PROVIDER_EXCEPTION(1, "Invalid paths in environment variables"),
-    MERGER_CONFIGURATION_EXCEPTION(2, "Invalid merger configuration"),
-    TRUSTSTORE_FILE_FACTORY_EXCEPTION(3, "Invalid truststore file-password pair"),
-    PASSWORD_READER_EXCEPTION(4, "Cannot read password from file"),
-    CREATE_BACKUP_EXCEPTION(5, "Cannot create backup file"),
-    KEYSTORE_INSTANCE_EXCEPTION(6, "Cannot initialize keystore instance"),
-    TRUSTSTORE_LOAD_FILE_EXCEPTION(7, "Cannot load truststore file"),
-    TRUSTSTORE_DATA_OPERATION_EXCEPTION(8, "Cannot operate on truststore data"),
-    MISSING_TRUSTSTORE_EXCEPTION(9, "Missing truststore certificates in provided file"),
-    ALIAS_CONFLICT_EXCEPTION(10, "Alias conflict detected"),
-    WRITE_TRUSTSTORE_FILE_EXCEPTION(11, "Cannot save truststore file"),
-    KEYSTORE_FILE_COPY_EXCEPTION(12, "Cannot copy keystore file"),
-    KEYSTORE_NOT_EXIST_EXCEPTION(13, "Keystore file does not exist"),
+    MANDATORY_ENV_MISSING_EXCEPTION(1, "Mandatory environment variable is missing"),
+    CERTIFICATES_PATHS_PROVIDER_EXCEPTION(2, "Invalid paths in environment variables"),
+    MERGER_CONFIGURATION_EXCEPTION(3, "Invalid merger configuration"),
+    TRUSTSTORE_FILE_FACTORY_EXCEPTION(4, "Invalid truststore file-password pair"),
+    PASSWORD_READER_EXCEPTION(5, "Cannot read password from file"),
+    CREATE_BACKUP_EXCEPTION(6, "Cannot create backup file"),
+    KEYSTORE_INSTANCE_EXCEPTION(7, "Cannot initialize keystore instance"),
+    TRUSTSTORE_LOAD_FILE_EXCEPTION(8, "Cannot load truststore file"),
+    TRUSTSTORE_DATA_OPERATION_EXCEPTION(9, "Cannot operate on truststore data"),
+    MISSING_TRUSTSTORE_EXCEPTION(10, "Missing truststore certificates in provided file"),
+    ALIAS_CONFLICT_EXCEPTION(11, "Alias conflict detected"),
+    WRITE_TRUSTSTORE_FILE_EXCEPTION(12, "Cannot save truststore file"),
+    KEYSTORE_FILE_COPY_EXCEPTION(13, "Cannot copy keystore file"),
+    KEYSTORE_NOT_EXIST_EXCEPTION(14, "Keystore file does not exist"),
     UNEXPECTED_EXCEPTION(99, "Application exited abnormally");
 
 

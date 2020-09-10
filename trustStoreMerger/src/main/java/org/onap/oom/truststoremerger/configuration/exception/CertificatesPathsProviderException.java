@@ -22,9 +22,9 @@ package org.onap.oom.truststoremerger.configuration.exception;
 import org.onap.oom.truststoremerger.api.ExitStatus;
 import org.onap.oom.truststoremerger.api.ExitableException;
 
-public class TruststoresPathsProviderException extends ExitableException {
+public class CertificatesPathsProviderException extends ExitableException {
 
-    public TruststoresPathsProviderException(String errorMessage) {
-        super(errorMessage, ExitStatus.TRUSTSTORES_PATHS_PROVIDER_EXCEPTION);
+    public CertificatesPathsProviderException(String errorMessage) {
+        super(errorMessage, ExitStatus.CERTIFICATES_PATHS_PROVIDER_EXCEPTION);
     }
 }

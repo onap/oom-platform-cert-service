@@ -17,17 +17,14 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.configuration;
+package org.onap.oom.truststoremerger.configuration.exception;
 
-public final class ConfigurationEnvs {
+import org.onap.oom.truststoremerger.api.ExitStatus;
+import org.onap.oom.truststoremerger.api.ExitableException;
 
-    private ConfigurationEnvs() {
+public class MandatoryEnvMissingException extends ExitableException {
 
+    public MandatoryEnvMissingException(String errorMessage) {
+        super(errorMessage, ExitStatus.MANDATORY_ENV_MISSING_EXCEPTION);
     }
-
-    public static final String TRUSTSTORES_PATHS_ENV = "TRUSTSTORES_PATHS";
-    public static final String TRUSTSTORES_PASSWORDS_PATHS_ENV = "TRUSTSTORES_PASSWORDS_PATHS";
-    public static final String KEYSTORE_SOURCE_PATHS_ENV = "KEYSTORE_SOURCE_PATHS";
-    public static final String KEYSTORE_DESTINATION_PATHS_ENV = "KEYSTORE_DESTINATION_PATHS";
-
 }

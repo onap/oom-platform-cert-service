@@ -21,18 +21,25 @@ package org.onap.oom.truststoremerger.configuration.path;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.assertj.core.api.InstanceOfAssertFactories.LIST;
 import static org.mockito.Mockito.when;
-import static org.onap.oom.truststoremerger.configuration.ConfigurationEnvs.TRUSTSTORES_PASSWORDS_PATHS_ENV;
-import static org.onap.oom.truststoremerger.configuration.ConfigurationEnvs.TRUSTSTORES_PATHS_ENV;
+import static org.onap.oom.truststoremerger.configuration.model.EnvVariable.KEYSTORE_DESTINATION_PATHS_ENV;
+import static org.onap.oom.truststoremerger.configuration.model.EnvVariable.KEYSTORE_SOURCE_PATHS_ENV;
+import static org.onap.oom.truststoremerger.configuration.model.EnvVariable.TRUSTSTORES_PASSWORDS_PATHS_ENV;
+import static org.onap.oom.truststoremerger.configuration.model.EnvVariable.TRUSTSTORES_PATHS_ENV;
 import static org.onap.oom.truststoremerger.configuration.path.validation.ValidationFunctions.doesItContainValidCertificatesPaths;
 import static org.onap.oom.truststoremerger.configuration.path.validation.ValidationFunctions.doesItContainValidPasswordPaths;
+import static org.onap.oom.truststoremerger.configuration.path.validation.ValidationFunctions.doesItContainValidPathsToCopy;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.onap.oom.truststoremerger.configuration.exception.TruststoresPathsProviderException;
+import org.onap.oom.truststoremerger.configuration.exception.CertificatesPathsProviderException;
+import org.onap.oom.truststoremerger.configuration.model.EnvVariable;
 import org.onap.oom.truststoremerger.configuration.path.env.EnvProvider;
 
 @ExtendWith(MockitoExtension.class)
@@ -49,7 +56,7 @@ class DelimitedPathsReaderTest {
     private DelimitedPathsReader delimitedPathsReader;
 
     @Test
-    void shouldReturnCorrectListWhenTruststoresValid() throws TruststoresPathsProviderException {
+    void shouldReturnCorrectListWhenTruststoresValid() throws CertificatesPathsProviderException {
         // given
         delimitedPathsReader = new DelimitedPathsReader(envProvider, doesItContainValidCertificatesPaths());
         mockTruststoresEnv(VALID_TRUSTSTORES);
@@ -67,7 +74,7 @@ class DelimitedPathsReaderTest {
         mockTruststoresEnv("");
 
         // when, then
-        assertThatExceptionOfType(TruststoresPathsProviderException.class)
+        assertThatExceptionOfType(CertificatesPathsProviderException.class)
             .isThrownBy(() -> delimitedPathsReader.get(TRUSTSTORES_PATHS_ENV));
     }
 
@@ -78,12 +85,12 @@ class DelimitedPathsReaderTest {
         mockTruststoresEnv(INVALID_TRUSTSTORES);
 
         // when, then
-        assertThatExceptionOfType(TruststoresPathsProviderException.class)
+        assertThatExceptionOfType(CertificatesPathsProviderException.class)
             .isThrownBy(() -> delimitedPathsReader.get(TRUSTSTORES_PATHS_ENV));
     }
 
     @Test
-    void shouldReturnCorrectListWhenTruststoresPasswordsValid() throws TruststoresPathsProviderException {
+    void shouldReturnCorrectListWhenTruststoresPasswordsValid() throws CertificatesPathsProviderException {
         // given
         delimitedPathsReader = new DelimitedPathsReader(envProvider, doesItContainValidPasswordPaths());
         mockTruststoresPasswordsEnv(VALID_TRUSTSTORES_PASSWORDS);
@@ -95,7 +102,7 @@ class DelimitedPathsReaderTest {
 
     @Test
     void shouldReturnCorrectListWhenTruststoresPasswordsContainsEmptyPathsInTheMiddle()
-        throws TruststoresPathsProviderException {
+        throws CertificatesPathsProviderException {
         // given
         delimitedPathsReader = new DelimitedPathsReader(envProvider, doesItContainValidPasswordPaths());
         mockTruststoresPasswordsEnv(VALID_TRUSTSTORES_PASSWORDS_WITH_EMPTY_IN_THE_MIDDLE);
@@ -115,7 +122,7 @@ class DelimitedPathsReaderTest {
         mockTruststoresPasswordsEnv("");
 
         // when, then
-        assertThatExceptionOfType(TruststoresPathsProviderException.class)
+        assertThatExceptionOfType(CertificatesPathsProviderException.class)
             .isThrownBy(() -> delimitedPathsReader.get(TRUSTSTORES_PASSWORDS_PATHS_ENV));
     }
 
@@ -126,8 +133,30 @@ class DelimitedPathsReaderTest {
         mockTruststoresPasswordsEnv(INVALID_TRUSTSTORES_PASSWORDS);
 
         // when, then
-        assertThatExceptionOfType(TruststoresPathsProviderException.class)
+        assertThatExceptionOfType(CertificatesPathsProviderException.class)
             .isThrownBy(() -> delimitedPathsReader.get(TRUSTSTORES_PASSWORDS_PATHS_ENV));
+    }
+
+    @Test
+    void shouldReturnEmptyListWhenKeystoreSourceIsNull() {
+        // given
+        delimitedPathsReader = new DelimitedPathsReader(envProvider, doesItContainValidPathsToCopy());
+        mockKeystoreSourcePathsEnv(null);
+        // when
+        List<String> result = delimitedPathsReader.get(KEYSTORE_SOURCE_PATHS_ENV);
+        // then
+        assertThat(result).isEqualTo(Collections.emptyList());
+    }
+
+    @Test
+    void shouldReturnEmptyListWhenKeystoreDestinationIsNull() {
+        // given
+        delimitedPathsReader = new DelimitedPathsReader(envProvider, doesItContainValidPathsToCopy());
+        mockKeystoreDestinationPathsEnv(null);
+        // when
+        List<String> result = delimitedPathsReader.get(KEYSTORE_DESTINATION_PATHS_ENV);
+        // then
+        assertThat(result).isEqualTo(Collections.emptyList());
     }
 
     private void mockTruststoresEnv(String truststores) {
@@ -138,7 +167,15 @@ class DelimitedPathsReaderTest {
         mockEnv(TRUSTSTORES_PASSWORDS_PATHS_ENV, truststoresPasswords);
     }
 
-    private void mockEnv(String envName, String truststores) {
-        when(envProvider.getEnv(envName)).thenReturn(Optional.of(truststores));
+    private void mockKeystoreSourcePathsEnv(String keystorePaths) {
+        mockEnv(KEYSTORE_SOURCE_PATHS_ENV, keystorePaths);
+    }
+
+    private void mockKeystoreDestinationPathsEnv(String keystorePaths) {
+        mockEnv(KEYSTORE_DESTINATION_PATHS_ENV, keystorePaths);
+    }
+
+    private void mockEnv(EnvVariable envVariable, String envValue) {
+        when(envProvider.readEnv(envVariable)).thenReturn(Optional.ofNullable(envValue));
     }
 }
