@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ff816ae_8895a99a",
+        "filename": "trustStoreMerger/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-10T11:37:08Z",
+      "side": 1,
+      "message": "We have doubled replaced. Maybe start it with \"Before keystore files override, destination files will be copied with addition of .bak extension.\nWhat do you think?",
+      "range": {
+        "startLine": 39,
+        "startChar": 112,
+        "endLine": 39,
+        "endChar": 126
+      },
+      "revId": "7f6d4cc3dda4716ac6a41e9d884012926a5c4642",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a68c36b_38d258fe",
+        "filename": "trustStoreMerger/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-10T11:37:08Z",
+      "side": 1,
+      "message": "taken from",
+      "range": {
+        "startLine": 54,
+        "startChar": 75,
+        "endLine": 54,
+        "endChar": 77
+      },
+      "revId": "7f6d4cc3dda4716ac6a41e9d884012926a5c4642",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
