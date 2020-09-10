@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f50958a_af140d44",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/AppExitHandler.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-09-10T10:49:55Z",
+      "side": 1,
+      "message": "Please change to LOGGER.",
+      "range": {
+        "startLine": 27,
+        "startChar": 32,
+        "endLine": 27,
+        "endChar": 35
+      },
+      "revId": "aba688f22094f32492afd5566675a67df0ca3180",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec81110d_b46c5431",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/CertificatePostProcessor.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-09-10T10:49:55Z",
+      "side": 1,
+      "message": "Please change to LOGGER",
+      "range": {
+        "startLine": 33,
+        "startChar": 32,
+        "endLine": 33,
+        "endChar": 35
+      },
+      "revId": "aba688f22094f32492afd5566675a67df0ca3180",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4504fc4a_d811620e",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/common/FileTools.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-09-10T10:49:55Z",
+      "side": 1,
+      "message": "In all application part we used to LOGGER as Logger. Please change it.",
+      "range": {
+        "startLine": 33,
+        "startChar": 32,
+        "endLine": 33,
+        "endChar": 35
+      },
+      "revId": "aba688f22094f32492afd5566675a67df0ca3180",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd5a7b22_05ba8e96",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/copier/KeystoreCopier.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-09-10T10:49:55Z",
+      "side": 1,
+      "message": "Unused logger",
+      "range": {
+        "startLine": 34,
+        "startChar": 32,
+        "endLine": 34,
+        "endChar": 35
+      },
+      "revId": "aba688f22094f32492afd5566675a67df0ca3180",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cd11a1c_1d2c91f6",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/copier/KeystoreCopier.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-09-10T10:49:55Z",
+      "side": 1,
+      "message": "It could be final",
+      "range": {
+        "startLine": 36,
+        "startChar": 3,
+        "endLine": 36,
+        "endChar": 32
+      },
+      "revId": "aba688f22094f32492afd5566675a67df0ca3180",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1e8db1d_7d8e23f9",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/copier/KeystoreCopier.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-09-10T10:49:55Z",
+      "side": 1,
+      "message": "try -\u003e if -\u003e if ... Please refactor it.",
+      "range": {
+        "startLine": 53,
+        "startChar": 8,
+        "endLine": 63,
+        "endChar": 13
+      },
+      "revId": "aba688f22094f32492afd5566675a67df0ca3180",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a0f8fca_0deee0dd",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/merger/model/Truststore.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-09-10T10:49:55Z",
+      "side": 1,
+      "message": "Could be private. Rename fileTool",
+      "range": {
+        "startLine": 33,
+        "startChar": 20,
+        "endLine": 33,
+        "endChar": 32
+      },
+      "revId": "aba688f22094f32492afd5566675a67df0ca3180",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab8f6fda_b3dc79d2",
+        "filename": "trustStoreMerger/src/test/java/org/onap/oom/truststoremerger/copier/KeystoreCopierTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-09-10T10:49:55Z",
+      "side": 1,
+      "message": "Please use single import (change * to assertThat)",
+      "range": {
+        "startLine": 35,
+        "startChar": 46,
+        "endLine": 35,
+        "endChar": 47
+      },
+      "revId": "aba688f22094f32492afd5566675a67df0ca3180",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "600e0b3a_4ffa63c0",
+        "filename": "trustStoreMerger/src/test/java/org/onap/oom/truststoremerger/copier/KeystoreCopierTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-09-10T10:49:55Z",
+      "side": 1,
+      "message": "Exception never thrown",
+      "range": {
+        "startLine": 114,
+        "startChar": 42,
+        "endLine": 114,
+        "endChar": 60
+      },
+      "revId": "aba688f22094f32492afd5566675a67df0ca3180",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
