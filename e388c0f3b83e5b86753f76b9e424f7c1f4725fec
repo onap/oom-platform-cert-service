@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "147d4a2b_64924e03",
+        "filename": "trustStoreMerger/README.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-10T09:46:22Z",
+      "side": 1,
+      "message": "receive",
+      "range": {
+        "startLine": 39,
+        "startChar": 132,
+        "endLine": 39,
+        "endChar": 135
+      },
+      "revId": "e388c0f3b83e5b86753f76b9e424f7c1f4725fec",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6f18209_eb460645",
+        "filename": "trustStoreMerger/README.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-10T09:46:22Z",
+      "side": 1,
+      "message": "same here add \"env\"",
+      "revId": "e388c0f3b83e5b86753f76b9e424f7c1f4725fec",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c06cd64_792b86d6",
+        "filename": "trustStoreMerger/README.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-10T09:46:22Z",
+      "side": 1,
+      "message": "Would not be it more clear?:\n\"Keystores files listed in KEYSTORE_SOURCE_PATHS overrides corresponding to them files defined in KEYSTORE_DESTINATION_PATHS.\"",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 101
+      },
+      "revId": "e388c0f3b83e5b86753f76b9e424f7c1f4725fec",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ea44f5a_ce4b5522",
+        "filename": "trustStoreMerger/README.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-10T09:46:22Z",
+      "side": 1,
+      "message": "Just asking: Do we need past simple here?",
+      "range": {
+        "startLine": 54,
+        "startChar": 166,
+        "endLine": 54,
+        "endChar": 169
+      },
+      "revId": "e388c0f3b83e5b86753f76b9e424f7c1f4725fec",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de33653c_844d7f5a",
+        "filename": "trustStoreMerger/README.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-10T09:46:22Z",
+      "side": 1,
+      "message": "listed",
+      "range": {
+        "startLine": 54,
+        "startChar": 109,
+        "endLine": 54,
+        "endChar": 116
+      },
+      "revId": "e388c0f3b83e5b86753f76b9e424f7c1f4725fec",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
