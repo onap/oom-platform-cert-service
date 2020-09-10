@@ -22,10 +22,10 @@ package org.onap.oom.truststoremerger.configuration;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.Mockito.when;
-import static org.onap.oom.truststoremerger.configuration.ConfigurationEnvs.KEYSTORE_DESTINATION_PATHS_ENV;
-import static org.onap.oom.truststoremerger.configuration.ConfigurationEnvs.KEYSTORE_SOURCE_PATHS_ENV;
-import static org.onap.oom.truststoremerger.configuration.ConfigurationEnvs.TRUSTSTORES_PASSWORDS_PATHS_ENV;
-import static org.onap.oom.truststoremerger.configuration.ConfigurationEnvs.TRUSTSTORES_PATHS_ENV;
+import static org.onap.oom.truststoremerger.configuration.model.EnvVariable.KEYSTORE_DESTINATION_PATHS_ENV;
+import static org.onap.oom.truststoremerger.configuration.model.EnvVariable.KEYSTORE_SOURCE_PATHS_ENV;
+import static org.onap.oom.truststoremerger.configuration.model.EnvVariable.TRUSTSTORES_PASSWORDS_PATHS_ENV;
+import static org.onap.oom.truststoremerger.configuration.model.EnvVariable.TRUSTSTORES_PATHS_ENV;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,8 +34,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.onap.oom.truststoremerger.configuration.exception.CertificatesPathsProviderException;
 import org.onap.oom.truststoremerger.configuration.exception.MergerConfigurationException;
-import org.onap.oom.truststoremerger.configuration.exception.TruststoresPathsProviderException;
 import org.onap.oom.truststoremerger.configuration.model.AppConfiguration;
 import org.onap.oom.truststoremerger.configuration.path.DelimitedPathsReader;
 
@@ -64,7 +64,7 @@ class MergerConfigurationProviderTest {
 
     @Test
     void shouldReturnConfigurationWithCorrectPaths()
-        throws TruststoresPathsProviderException, MergerConfigurationException {
+        throws CertificatesPathsProviderException, MergerConfigurationException {
         int numberOfPaths = 5;
         List<String> truststoresPaths = createListOfPathsWithExtension(numberOfPaths, JKS_EXTENSION);
         List<String> truststorePasswordPaths = createListOfPathsWithExtension(numberOfPaths, PASS_EXTENSION);
@@ -86,11 +86,12 @@ class MergerConfigurationProviderTest {
 
     @Test
     void shouldThrowExceptionWhenTruststoresLengthDifferentThanTruststoresPasswordsLength()
-        throws TruststoresPathsProviderException {
+        throws CertificatesPathsProviderException {
         int numberOfCertificates = 5;
         int numberOfTruststoresPasswords = 4;
         List<String> truststoresPaths = createListOfPathsWithExtension(numberOfCertificates, JKS_EXTENSION);
-        List<String> truststorePasswordPaths = createListOfPathsWithExtension(numberOfTruststoresPasswords, PASS_EXTENSION);
+        List<String> truststorePasswordPaths = createListOfPathsWithExtension(numberOfTruststoresPasswords,
+            PASS_EXTENSION);
         mockTruststorePaths(truststoresPaths, truststorePasswordPaths);
 
         List<String> sourceKeystoresPairPaths = createListOfKeystorePairsPathsWithExtension(KEYSTORE_PATH,
@@ -105,7 +106,7 @@ class MergerConfigurationProviderTest {
 
     @Test
     void shouldThrowExceptionWhenSourceLengthDifferentThanDestinationLength()
-        throws TruststoresPathsProviderException {
+        throws CertificatesPathsProviderException {
         int numberOfCertificates = 5;
         int anotherNumberOfCertificates = 1;
         List<String> truststoresPaths = createListOfPathsWithExtension(numberOfCertificates, JKS_EXTENSION);
@@ -123,30 +124,30 @@ class MergerConfigurationProviderTest {
     }
 
     private void mockTruststorePaths(List<String> truststores, List<String> truststoresPasswords)
-        throws TruststoresPathsProviderException {
+        throws CertificatesPathsProviderException {
         mockTruststores(truststores);
         mockTruststoresPasswords(truststoresPasswords);
     }
 
     private void mockKeystorePaths(List<String> sourceKeystoresPairPaths, List<String> destKeystoresPairPaths)
-        throws TruststoresPathsProviderException {
+        throws CertificatesPathsProviderException {
         mockKeystoreCopierSourcePaths(sourceKeystoresPairPaths);
         mockKeystoreCopierDestinationPaths(destKeystoresPairPaths);
     }
 
-    private void mockTruststores(List<String> truststores) throws TruststoresPathsProviderException {
+    private void mockTruststores(List<String> truststores) throws CertificatesPathsProviderException {
         when(certificatesPathsProvider.get(TRUSTSTORES_PATHS_ENV)).thenReturn(truststores);
     }
 
-    private void mockTruststoresPasswords(List<String> truststoresPasswords) throws TruststoresPathsProviderException {
+    private void mockTruststoresPasswords(List<String> truststoresPasswords) throws CertificatesPathsProviderException {
         when(passwordsPathsProvider.get(TRUSTSTORES_PASSWORDS_PATHS_ENV)).thenReturn(truststoresPasswords);
     }
 
-    private void mockKeystoreCopierSourcePaths(List<String> paths) throws TruststoresPathsProviderException {
+    private void mockKeystoreCopierSourcePaths(List<String> paths) throws CertificatesPathsProviderException {
         when(copierPathsReader.get(KEYSTORE_SOURCE_PATHS_ENV)).thenReturn(paths);
     }
 
-    private void mockKeystoreCopierDestinationPaths(List<String> paths) throws TruststoresPathsProviderException {
+    private void mockKeystoreCopierDestinationPaths(List<String> paths) throws CertificatesPathsProviderException {
         when(copierPathsReader.get(KEYSTORE_DESTINATION_PATHS_ENV)).thenReturn(paths);
     }
 

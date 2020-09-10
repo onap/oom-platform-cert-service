@@ -20,9 +20,12 @@
 package org.onap.oom.truststoremerger.configuration.path;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
-import org.onap.oom.truststoremerger.configuration.exception.TruststoresPathsProviderException;
+import org.onap.oom.truststoremerger.configuration.exception.CertificatesPathsProviderException;
+import org.onap.oom.truststoremerger.configuration.model.EnvVariable;
 import org.onap.oom.truststoremerger.configuration.path.env.EnvProvider;
 
 public class DelimitedPathsReader {
@@ -38,12 +41,17 @@ public class DelimitedPathsReader {
         this.pathsValidator = pathsValidator;
     }
 
-    public List<String> get(String envName) throws TruststoresPathsProviderException {
-        return envProvider.getEnv(envName)
-            .filter(this::hasValue)
+    public List<String> get(EnvVariable envVariable) throws CertificatesPathsProviderException {
+        Optional<String> envValue = envProvider.readEnv(envVariable);
+        return envValue.isPresent() ? provideValidatedPaths(envVariable.name(), envValue) : Collections.emptyList();
+    }
+
+    private List<String> provideValidatedPaths(String envName, Optional<String> envValue)
+        throws CertificatesPathsProviderException {
+        return envValue.filter(this::hasValue)
             .map(this::splitToList)
             .filter(pathsValidator)
-            .orElseThrow(() -> new TruststoresPathsProviderException(
+            .orElseThrow(() -> new CertificatesPathsProviderException(
                 envName + " environment variable does not contain valid paths"));
     }
 

@@ -19,14 +19,15 @@
 
 package org.onap.oom.truststoremerger.configuration;
 
-import static org.onap.oom.truststoremerger.configuration.ConfigurationEnvs.KEYSTORE_DESTINATION_PATHS_ENV;
-import static org.onap.oom.truststoremerger.configuration.ConfigurationEnvs.KEYSTORE_SOURCE_PATHS_ENV;
-import static org.onap.oom.truststoremerger.configuration.ConfigurationEnvs.TRUSTSTORES_PATHS_ENV;
-import static org.onap.oom.truststoremerger.configuration.ConfigurationEnvs.TRUSTSTORES_PASSWORDS_PATHS_ENV;
+
+import static org.onap.oom.truststoremerger.configuration.model.EnvVariable.KEYSTORE_DESTINATION_PATHS_ENV;
+import static org.onap.oom.truststoremerger.configuration.model.EnvVariable.KEYSTORE_SOURCE_PATHS_ENV;
+import static org.onap.oom.truststoremerger.configuration.model.EnvVariable.TRUSTSTORES_PASSWORDS_PATHS_ENV;
+import static org.onap.oom.truststoremerger.configuration.model.EnvVariable.TRUSTSTORES_PATHS_ENV;
 
 import java.util.List;
 import org.onap.oom.truststoremerger.configuration.exception.MergerConfigurationException;
-import org.onap.oom.truststoremerger.configuration.exception.TruststoresPathsProviderException;
+import org.onap.oom.truststoremerger.configuration.exception.CertificatesPathsProviderException;
 import org.onap.oom.truststoremerger.configuration.model.AppConfiguration;
 import org.onap.oom.truststoremerger.configuration.path.DelimitedPathsReader;
 
@@ -44,16 +45,16 @@ public class AppConfigurationProvider {
     }
 
     public AppConfiguration createConfiguration()
-        throws MergerConfigurationException, TruststoresPathsProviderException {
+        throws MergerConfigurationException, CertificatesPathsProviderException {
         List<String> truststoresPaths = truststoresPathsReader.get(TRUSTSTORES_PATHS_ENV);
         List<String> truststoresPasswordsPaths = truststoresPasswordsPathsReader.get(TRUSTSTORES_PASSWORDS_PATHS_ENV);
         List<String> sourceKeystorePaths = copierPathsReader.get(KEYSTORE_SOURCE_PATHS_ENV);
         List<String> destinationKeystorePaths = copierPathsReader.get(KEYSTORE_DESTINATION_PATHS_ENV);
 
-        ensureSameSize(truststoresPaths, truststoresPasswordsPaths, TRUSTSTORES_PATHS_ENV,
-            TRUSTSTORES_PASSWORDS_PATHS_ENV);
-        ensureSameSize(sourceKeystorePaths, destinationKeystorePaths, KEYSTORE_SOURCE_PATHS_ENV,
-            KEYSTORE_DESTINATION_PATHS_ENV);
+        ensureSameSize(truststoresPaths, truststoresPasswordsPaths, TRUSTSTORES_PATHS_ENV.name(),
+            TRUSTSTORES_PASSWORDS_PATHS_ENV.name());
+        ensureSameSize(sourceKeystorePaths, destinationKeystorePaths, KEYSTORE_SOURCE_PATHS_ENV.name(),
+            KEYSTORE_DESTINATION_PATHS_ENV.name());
 
         return new AppConfiguration(truststoresPaths, truststoresPasswordsPaths, sourceKeystorePaths,
             destinationKeystorePaths);
