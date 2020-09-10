@@ -209,6 +209,30 @@
     },
     {
       "key": {
+        "uuid": "51b2d43a_76006b31",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/copier/KeystoreCopier.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-10T10:57:52Z",
+      "side": 1,
+      "message": "It was just my note 😊. No issue here",
+      "parentUuid": "d571baf1_c05e06f5",
+      "range": {
+        "startLine": 60,
+        "startChar": 16,
+        "endLine": 60,
+        "endChar": 52
+      },
+      "revId": "aba688f22094f32492afd5566675a67df0ca3180",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1e8db1d_7d8e23f9",
         "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/copier/KeystoreCopier.java",
         "patchSetId": 10
