@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c2c95ae4_1d0414c9",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/api/ExitStatus.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-11T12:36:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1376b65_2fd2e578",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 2
+      },
+      "revId": "71449fc02d3cc522f15894190be92b8b8b571adf",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ea5bdc5_a4789040",
         "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/AppConfigurationProvider.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2020-09-11T06:07:01Z",
       "side": 1,
       "message": "Just a comment - not required / for future.\nI think that the variables passed to truststoresPathReader etc. are predefined during creation of DelimitedPathsReader objects. passing it as parameter creates possibility for mistake. Maybe it would be better to create classes using delimitedPathReader \"under the hood\" and calling methods like getTruststoresPaths() (without arguments).",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 102
+      },
+      "revId": "71449fc02d3cc522f15894190be92b8b8b571adf",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "526b591c_1a9ecdc8",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/AppConfigurationProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-11T12:36:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ea5bdc5_a4789040",
       "range": {
         "startLine": 49,
         "startChar": 0,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "c8e2f2ac_fa56bf46",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/path/env/EnvProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-11T12:36:11Z",
+      "side": 1,
+      "message": "Validation removed from reader.",
+      "parentUuid": "9951bf68_4d557669",
+      "revId": "71449fc02d3cc522f15894190be92b8b8b571adf",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6138727f_0cc8cf96",
         "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/path/env/EnvProvider.java",
         "patchSetId": 1
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "d98c5e3a_6c57346b",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/path/env/EnvProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-11T12:36:11Z",
+      "side": 1,
+      "message": "Does not exist anymore.",
+      "parentUuid": "6138727f_0cc8cf96",
+      "range": {
+        "startLine": 42,
+        "startChar": 38,
+        "endLine": 42,
+        "endChar": 55
+      },
+      "revId": "71449fc02d3cc522f15894190be92b8b8b571adf",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aedfa928_8e169231",
         "filename": "trustStoreMerger/src/test/java/org/onap/oom/truststoremerger/configuration/MergerConfigurationProviderTest.java",
         "patchSetId": 1
@@ -108,6 +198,30 @@
       "revId": "71449fc02d3cc522f15894190be92b8b8b571adf",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c77365e_69bd2a43",
+        "filename": "trustStoreMerger/src/test/java/org/onap/oom/truststoremerger/configuration/MergerConfigurationProviderTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-11T12:36:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aedfa928_8e169231",
+      "range": {
+        "startLine": 43,
+        "startChar": 6,
+        "endLine": 43,
+        "endChar": 37
+      },
+      "revId": "71449fc02d3cc522f15894190be92b8b8b571adf",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
