@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9951bf68_4d557669",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/path/env/EnvProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-09-11T05:52:32Z",
+      "side": 1,
+      "message": "Intuition tells me that \"provider\" should only read the value and validation should be done in separate \"validator\" class.\nIdeally i would like to see code like this:\n\n...\n   ProgramParams params \u003d provider.readParamas();\n   validator.validate(params);\n...",
+      "revId": "71449fc02d3cc522f15894190be92b8b8b571adf",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
