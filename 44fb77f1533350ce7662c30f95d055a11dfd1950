@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "3bf783aa_c55b803c",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/model/EnvVariable.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-09-11T13:06:03Z",
+      "side": 1,
+      "message": "Sometimes i prefer also variables names without prefix.\nFor me name \u0027mandatory\u0027 is ok. \nYou will always use it via method so later in code you will have, e.g:\n  if (x.isMandatory())",
+      "parentUuid": "2aa946b8_2edd5c9d",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 22
+      },
+      "revId": "44fb77f1533350ce7662c30f95d055a11dfd1950",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "848012ec_6de09559",
         "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/path/env/EnvProvider.java",
         "patchSetId": 2
