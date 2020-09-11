@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0aa50cf2_d4b7663b",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/model/EnvVariable.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-11T12:38:18Z",
+      "side": 1,
+      "message": "all instance variable in Enum by default are private. \nDo you propose rename?",
+      "parentUuid": "7a05e3d0_dd5abf0a",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 22
+      },
+      "revId": "44fb77f1533350ce7662c30f95d055a11dfd1950",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "848012ec_6de09559",
         "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/path/env/EnvProvider.java",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2505f3ef_14fc1a92",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/path/env/EnvProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-11T12:38:18Z",
+      "side": 1,
+      "message": "code reworked",
+      "parentUuid": "848012ec_6de09559",
+      "range": {
+        "startLine": 34,
+        "startChar": 12,
+        "endLine": 34,
+        "endChar": 105
+      },
+      "revId": "44fb77f1533350ce7662c30f95d055a11dfd1950",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "192aba79_cadffdc9",
         "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/path/env/EnvProvider.java",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "44fb77f1533350ce7662c30f95d055a11dfd1950",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37061b50_63519739",
+        "filename": "trustStoreMerger/src/main/java/org/onap/oom/truststoremerger/configuration/path/env/EnvProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-11T12:38:18Z",
+      "side": 1,
+      "message": "reworked",
+      "parentUuid": "192aba79_cadffdc9",
+      "range": {
+        "startLine": 39,
+        "startChar": 4,
+        "endLine": 39,
+        "endChar": 33
+      },
+      "revId": "44fb77f1533350ce7662c30f95d055a11dfd1950",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
