@@ -17,7 +17,6 @@
  * ============LICENSE_END=========================================================
  */
 
-
 package org.onap.oom.truststoremerger.common;
 
 import org.junit.jupiter.params.ParameterizedTest;

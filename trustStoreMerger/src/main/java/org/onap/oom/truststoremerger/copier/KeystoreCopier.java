@@ -26,25 +26,34 @@ import org.onap.oom.truststoremerger.common.FileTools;
 import org.onap.oom.truststoremerger.configuration.model.AppConfiguration;
 import org.onap.oom.truststoremerger.copier.exception.KeystoreFileCopyException;
 import org.onap.oom.truststoremerger.copier.exception.KeystoreNotExistException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class KeystoreCopier {
 
-    final private FileTools fileTools;
+    private static final Logger LOGGER = LoggerFactory.getLogger(KeystoreCopier.class);
+    private final FileTools fileTools;
 
     public KeystoreCopier(FileTools fileTools) {
         this.fileTools = fileTools;
     }
 
     public void copyKeystores(AppConfiguration configuration) {
+        final List<String> sources = configuration.getSourceKeystorePaths();
+        final List<String> destinations = configuration.getDestinationKeystorePaths();
+        containsPaths(sources);
         try {
-            final List<String> sources = configuration.getSourceKeystorePaths();
-            final List<String> destinations = configuration.getDestinationKeystorePaths();
-
             for (int i = 0; i < sources.size(); i++) {
                 copy(sources.get(i), destinations.get(i));
             }
         } catch (IOException e) {
             throw new KeystoreFileCopyException(e);
+        }
+    }
+
+    private void containsPaths(List<String> sources) {
+        if (sources.size() == 0) {
+            LOGGER.info("No Keystore files to copy");
         }
     }
 

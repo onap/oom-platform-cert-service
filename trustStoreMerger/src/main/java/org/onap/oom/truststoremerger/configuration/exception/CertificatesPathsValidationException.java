@@ -17,20 +17,14 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.configuration.path.env;
+package org.onap.oom.truststoremerger.configuration.exception;
 
-import java.util.Optional;
+import org.onap.oom.truststoremerger.api.ExitStatus;
+import org.onap.oom.truststoremerger.api.ExitableException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+public class CertificatesPathsValidationException extends ExitableException {
 
-public class EnvProvider {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(EnvProvider.class);
-
-    public Optional<String> getEnv(String name) {
-        String value = System.getenv(name);
-        LOGGER.info("Read variable: {} , value: {}", name, value);
-        return Optional.ofNullable(System.getenv(name));
+    public CertificatesPathsValidationException(String errorMessage) {
+        super(errorMessage, ExitStatus.CERTIFICATES_PATHS_VALIDATION_EXCEPTION);
     }
 }

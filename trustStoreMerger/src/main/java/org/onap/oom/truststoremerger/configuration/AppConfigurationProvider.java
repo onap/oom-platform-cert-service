@@ -19,51 +19,65 @@
 
 package org.onap.oom.truststoremerger.configuration;
 
-import static org.onap.oom.truststoremerger.configuration.ConfigurationEnvs.KEYSTORE_DESTINATION_PATHS_ENV;
-import static org.onap.oom.truststoremerger.configuration.ConfigurationEnvs.KEYSTORE_SOURCE_PATHS_ENV;
-import static org.onap.oom.truststoremerger.configuration.ConfigurationEnvs.TRUSTSTORES_PATHS_ENV;
-import static org.onap.oom.truststoremerger.configuration.ConfigurationEnvs.TRUSTSTORES_PASSWORDS_PATHS_ENV;
 
+import static org.onap.oom.truststoremerger.configuration.model.EnvVariable.KEYSTORE_DESTINATION_PATHS_ENV;
+import static org.onap.oom.truststoremerger.configuration.model.EnvVariable.KEYSTORE_SOURCE_PATHS_ENV;
+import static org.onap.oom.truststoremerger.configuration.model.EnvVariable.TRUSTSTORES_PASSWORDS_PATHS_ENV;
+import static org.onap.oom.truststoremerger.configuration.model.EnvVariable.TRUSTSTORES_PATHS_ENV;
+
+import java.util.Collections;
 import java.util.List;
-import org.onap.oom.truststoremerger.configuration.exception.MergerConfigurationException;
-import org.onap.oom.truststoremerger.configuration.exception.TruststoresPathsProviderException;
+import java.util.Optional;
+import org.onap.oom.truststoremerger.configuration.exception.CertificatesPathsValidationException;
+import org.onap.oom.truststoremerger.configuration.exception.ConfigurationException;
 import org.onap.oom.truststoremerger.configuration.model.AppConfiguration;
-import org.onap.oom.truststoremerger.configuration.path.DelimitedPathsReader;
+import org.onap.oom.truststoremerger.configuration.model.EnvVariable;
+import org.onap.oom.truststoremerger.configuration.path.DelimitedPathsSplitter;
+import org.onap.oom.truststoremerger.configuration.path.env.EnvReader;
 
 public class AppConfigurationProvider {
 
-    private final DelimitedPathsReader truststoresPathsReader;
-    private final DelimitedPathsReader truststoresPasswordsPathsReader;
-    private final DelimitedPathsReader copierPathsReader;
+    private final EnvReader envReader;
+    private final DelimitedPathsSplitter pathsSplitter;
 
-    public AppConfigurationProvider(DelimitedPathsReader truststoresPathsReader,
-        DelimitedPathsReader truststoresPasswordsPathsReader, DelimitedPathsReader copierPathsReader) {
-        this.truststoresPathsReader = truststoresPathsReader;
-        this.truststoresPasswordsPathsReader = truststoresPasswordsPathsReader;
-        this.copierPathsReader = copierPathsReader;
+    public AppConfigurationProvider(DelimitedPathsSplitter pathsSplitter, EnvReader envReader) {
+        this.envReader = envReader;
+        this.pathsSplitter = pathsSplitter;
     }
 
     public AppConfiguration createConfiguration()
-        throws MergerConfigurationException, TruststoresPathsProviderException {
-        List<String> truststoresPaths = truststoresPathsReader.get(TRUSTSTORES_PATHS_ENV);
-        List<String> truststoresPasswordsPaths = truststoresPasswordsPathsReader.get(TRUSTSTORES_PASSWORDS_PATHS_ENV);
-        List<String> sourceKeystorePaths = copierPathsReader.get(KEYSTORE_SOURCE_PATHS_ENV);
-        List<String> destinationKeystorePaths = copierPathsReader.get(KEYSTORE_DESTINATION_PATHS_ENV);
+        throws ConfigurationException, CertificatesPathsValidationException {
 
-        ensureSameSize(truststoresPaths, truststoresPasswordsPaths, TRUSTSTORES_PATHS_ENV,
-            TRUSTSTORES_PASSWORDS_PATHS_ENV);
-        ensureSameSize(sourceKeystorePaths, destinationKeystorePaths, KEYSTORE_SOURCE_PATHS_ENV,
-            KEYSTORE_DESTINATION_PATHS_ENV);
+        List<String> truststoresPaths = getPaths(TRUSTSTORES_PATHS_ENV);
+        List<String> truststoresPasswordsPaths = getPaths(TRUSTSTORES_PASSWORDS_PATHS_ENV);
+        List<String> sourceKeystorePaths = getPaths(KEYSTORE_SOURCE_PATHS_ENV);
+        List<String> destinationKeystorePaths = getPaths(KEYSTORE_DESTINATION_PATHS_ENV);
+
+        ensureSameSize(truststoresPaths, truststoresPasswordsPaths, TRUSTSTORES_PATHS_ENV.name(),
+            TRUSTSTORES_PASSWORDS_PATHS_ENV.name());
+        ensureSameSize(sourceKeystorePaths, destinationKeystorePaths, KEYSTORE_SOURCE_PATHS_ENV.name(),
+            KEYSTORE_DESTINATION_PATHS_ENV.name());
 
         return new AppConfiguration(truststoresPaths, truststoresPasswordsPaths, sourceKeystorePaths,
             destinationKeystorePaths);
     }
 
+    private List<String> getPaths(EnvVariable envVariable) throws ConfigurationException {
+        Optional<String> envValue = envReader.getEnv(envVariable.name());
+        isMandatoryEnvPresent(envVariable, envValue);
+        return envValue.isPresent() ? pathsSplitter.getValidatedPaths(envVariable, envValue) : Collections.emptyList();
+    }
+
+    private void isMandatoryEnvPresent(EnvVariable envVariable, Optional<String> envValue) {
+        if (envVariable.isMandatory() && envValue.isEmpty()) {
+            throw new ConfigurationException(envVariable + " mandatory environment variable is not defined");
+        }
+    }
+
     private void ensureSameSize(List<String> firstList, List<String> secondList, String firstListEnvName,
-        String secondListEnvName)
-        throws MergerConfigurationException {
+        String secondListEnvName) throws ConfigurationException {
         if (firstList.size() != secondList.size()) {
-            throw new MergerConfigurationException(
+            throw new ConfigurationException(
                 "Size of " + firstListEnvName
                     + " does not match size of " + secondListEnvName + " environment variables");
         }

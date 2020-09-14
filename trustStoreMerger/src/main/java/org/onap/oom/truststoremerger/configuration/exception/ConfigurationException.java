@@ -17,23 +17,14 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.truststoremerger.configuration.path;
+package org.onap.oom.truststoremerger.configuration.exception;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.onap.oom.truststoremerger.api.ExitStatus;
+import org.onap.oom.truststoremerger.api.ExitableException;
 
-import org.junit.jupiter.api.Test;
-import org.onap.oom.truststoremerger.configuration.path.env.EnvProvider;
+public class ConfigurationException extends ExitableException {
 
-class DelimitedPathsReaderFactoryTest {
-
-    @Test
-    void shouldReturnObjectOfDelimitedPathsReaderType() {
-        // given
-        DelimitedPathsReaderFactory readerFactory = new DelimitedPathsReaderFactory(new EnvProvider());
-        //when, then
-        assertThat(readerFactory.createPasswordPathsReader()).isInstanceOf(DelimitedPathsReader.class);
-        assertThat(readerFactory.createCertificatePathsReader()).isInstanceOf(DelimitedPathsReader.class);
-        assertThat(readerFactory.createKeystoreCopierPathsReader()).isInstanceOf(DelimitedPathsReader.class);
+    public ConfigurationException(String errorMessage) {
+        super(errorMessage, ExitStatus.CONFIGURATION_EXCEPTION);
     }
-
 }
