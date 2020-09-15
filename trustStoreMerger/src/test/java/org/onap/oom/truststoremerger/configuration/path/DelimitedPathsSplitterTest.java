@@ -21,8 +21,8 @@ package org.onap.oom.truststoremerger.configuration.path;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-import static org.onap.oom.truststoremerger.configuration.model.EnvVariable.TRUSTSTORES_PASSWORDS_PATHS_ENV;
-import static org.onap.oom.truststoremerger.configuration.model.EnvVariable.TRUSTSTORES_PATHS_ENV;
+import static org.onap.oom.truststoremerger.configuration.model.EnvVariable.TRUSTSTORES_PASSWORDS_PATHS;
+import static org.onap.oom.truststoremerger.configuration.model.EnvVariable.TRUSTSTORES_PATHS;
 
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
@@ -50,7 +50,7 @@ class DelimitedPathsSplitterTest {
     @Test
     void shouldReturnCorrectListWhenTruststoresValid() {
         // when, then
-        assertThat(delimitedPathsSplitter.getValidatedPaths(TRUSTSTORES_PATHS_ENV, Optional.of(VALID_TRUSTSTORES)))
+        assertThat(delimitedPathsSplitter.getValidatedPaths(TRUSTSTORES_PATHS, Optional.of(VALID_TRUSTSTORES)))
             .containsSequence("/opt/app/certificates/truststore.jks",
                 "/opt/app/certificates/truststore.pem");
     }
@@ -59,7 +59,7 @@ class DelimitedPathsSplitterTest {
     void shouldThrowExceptionWhenTruststoresPathsEnvIsEmpty() {
         // when, then
         assertThatExceptionOfType(CertificatesPathsValidationException.class)
-            .isThrownBy(() -> delimitedPathsSplitter.getValidatedPaths(TRUSTSTORES_PATHS_ENV, Optional.of("")));
+            .isThrownBy(() -> delimitedPathsSplitter.getValidatedPaths(TRUSTSTORES_PATHS, Optional.of("")));
     }
 
     @Test
@@ -67,21 +67,21 @@ class DelimitedPathsSplitterTest {
         // when, then
         assertThatExceptionOfType(CertificatesPathsValidationException.class)
             .isThrownBy(() -> delimitedPathsSplitter
-                .getValidatedPaths(TRUSTSTORES_PATHS_ENV, Optional.of(INVALID_TRUSTSTORES)));
+                .getValidatedPaths(TRUSTSTORES_PATHS, Optional.of(INVALID_TRUSTSTORES)));
     }
 
     @Test
     void shouldReturnCorrectListWhenTruststoresPasswordsValid() {
         // when, then
         assertThat(delimitedPathsSplitter
-            .getValidatedPaths(TRUSTSTORES_PASSWORDS_PATHS_ENV, Optional.of(VALID_TRUSTSTORES_PASSWORDS)))
+            .getValidatedPaths(TRUSTSTORES_PASSWORDS_PATHS, Optional.of(VALID_TRUSTSTORES_PASSWORDS)))
             .containsSequence("/opt/app/certificates/truststore.pass", "");
     }
 
     @Test
     void shouldReturnCorrectListWhenTruststoresPasswordsContainsEmptyPathsInTheMiddle() {
         // when, then
-        assertThat(delimitedPathsSplitter.getValidatedPaths(TRUSTSTORES_PASSWORDS_PATHS_ENV,
+        assertThat(delimitedPathsSplitter.getValidatedPaths(TRUSTSTORES_PASSWORDS_PATHS,
             Optional.of(VALID_TRUSTSTORES_PASSWORDS_WITH_EMPTY_IN_THE_MIDDLE))).containsSequence(
             "/opt/app/certificates/truststore.pass",
             "",
@@ -94,7 +94,7 @@ class DelimitedPathsSplitterTest {
         // when, then
         assertThatExceptionOfType(CertificatesPathsValidationException.class)
             .isThrownBy(
-                () -> delimitedPathsSplitter.getValidatedPaths(TRUSTSTORES_PASSWORDS_PATHS_ENV, Optional.of("")));
+                () -> delimitedPathsSplitter.getValidatedPaths(TRUSTSTORES_PASSWORDS_PATHS, Optional.of("")));
     }
 
     @Test
@@ -102,6 +102,6 @@ class DelimitedPathsSplitterTest {
         // when, then
         assertThatExceptionOfType(CertificatesPathsValidationException.class)
             .isThrownBy(() -> delimitedPathsSplitter
-                .getValidatedPaths(TRUSTSTORES_PASSWORDS_PATHS_ENV, Optional.of(INVALID_TRUSTSTORES_PASSWORDS)));
+                .getValidatedPaths(TRUSTSTORES_PASSWORDS_PATHS, Optional.of(INVALID_TRUSTSTORES_PASSWORDS)));
     }
 }

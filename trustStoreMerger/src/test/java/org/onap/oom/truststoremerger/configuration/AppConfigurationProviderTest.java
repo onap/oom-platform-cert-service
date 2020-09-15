@@ -22,10 +22,8 @@ package org.onap.oom.truststoremerger.configuration;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.Mockito.when;
-import static org.onap.oom.truststoremerger.configuration.model.EnvVariable.KEYSTORE_DESTINATION_PATHS_ENV;
-import static org.onap.oom.truststoremerger.configuration.model.EnvVariable.KEYSTORE_SOURCE_PATHS_ENV;
-import static org.onap.oom.truststoremerger.configuration.model.EnvVariable.TRUSTSTORES_PASSWORDS_PATHS_ENV;
-import static org.onap.oom.truststoremerger.configuration.model.EnvVariable.TRUSTSTORES_PATHS_ENV;
+import static org.onap.oom.truststoremerger.configuration.model.EnvVariable.KEYSTORE_DESTINATION_PATHS;
+import static org.onap.oom.truststoremerger.configuration.model.EnvVariable.KEYSTORE_SOURCE_PATHS;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +36,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.onap.oom.truststoremerger.configuration.exception.CertificatesPathsValidationException;
 import org.onap.oom.truststoremerger.configuration.exception.ConfigurationException;
 import org.onap.oom.truststoremerger.configuration.model.AppConfiguration;
+import org.onap.oom.truststoremerger.configuration.model.EnvVariable;
 import org.onap.oom.truststoremerger.configuration.path.DelimitedPathsSplitter;
 import org.onap.oom.truststoremerger.configuration.path.env.EnvReader;
 
@@ -64,10 +63,10 @@ class AppConfigurationProviderTest {
     @Test
     void shouldThrowExceptionWhenMandatoryEnvNotPresent() {
         // given
-        when(envReader.getEnv(TRUSTSTORES_PATHS_ENV.name())).thenReturn(Optional.empty());
+        when(envReader.getEnv(EnvVariable.TRUSTSTORES_PATHS.name())).thenReturn(Optional.empty());
         // when, then
         assertThatExceptionOfType(ConfigurationException.class).isThrownBy(() -> provider.createConfiguration())
-            .withMessageContaining(TRUSTSTORES_PATHS_ENV + " mandatory environment variable is not defined");
+            .withMessageContaining(EnvVariable.TRUSTSTORES_PATHS + " mandatory environment variable is not defined");
     }
 
     @Test
@@ -80,8 +79,8 @@ class AppConfigurationProviderTest {
         // when
         assertThatExceptionOfType(ConfigurationException.class)
             .isThrownBy(() -> provider.createConfiguration())
-            .withMessageContaining("Size of " + TRUSTSTORES_PATHS_ENV
-                + " does not match size of " + TRUSTSTORES_PASSWORDS_PATHS_ENV + " environment variables");
+            .withMessageContaining("Size of " + EnvVariable.TRUSTSTORES_PATHS
+                + " does not match size of " + EnvVariable.TRUSTSTORES_PASSWORDS_PATHS + " environment variables");
     }
 
     @Test
@@ -109,25 +108,25 @@ class AppConfigurationProviderTest {
     }
 
     private void mockTruststores(List<String> truststores) throws CertificatesPathsValidationException {
-        when(envReader.getEnv(TRUSTSTORES_PATHS_ENV.name())).thenReturn(Optional.of(TRUSTSTORES_PATHS));
-        when(pathsSplitter.getValidatedPaths(TRUSTSTORES_PATHS_ENV, Optional.of(TRUSTSTORES_PATHS)))
+        when(envReader.getEnv(EnvVariable.TRUSTSTORES_PATHS.name())).thenReturn(Optional.of(TRUSTSTORES_PATHS));
+        when(pathsSplitter.getValidatedPaths(EnvVariable.TRUSTSTORES_PATHS, Optional.of(TRUSTSTORES_PATHS)))
             .thenReturn(truststores);
     }
 
     private void mockTruststoresPasswords(List<String> truststoresPasswords)
         throws CertificatesPathsValidationException {
         Optional<String> passwordsPaths = Optional.of(TRUSTSTORES_PASSWORDS_PATHS);
-        when(envReader.getEnv(TRUSTSTORES_PASSWORDS_PATHS_ENV.name())).thenReturn(passwordsPaths);
-        when(pathsSplitter.getValidatedPaths(TRUSTSTORES_PASSWORDS_PATHS_ENV, passwordsPaths))
+        when(envReader.getEnv(EnvVariable.TRUSTSTORES_PASSWORDS_PATHS.name())).thenReturn(passwordsPaths);
+        when(pathsSplitter.getValidatedPaths(EnvVariable.TRUSTSTORES_PASSWORDS_PATHS, passwordsPaths))
             .thenReturn(truststoresPasswords);
     }
 
     private void mockKeystoreCopierSourcePaths(Optional<String> paths) {
-        when(envReader.getEnv(KEYSTORE_SOURCE_PATHS_ENV.name())).thenReturn(paths);
+        when(envReader.getEnv(KEYSTORE_SOURCE_PATHS.name())).thenReturn(paths);
     }
 
     private void mockKeystoreCopierDestinationPaths(Optional<String> paths) {
-        when(envReader.getEnv(KEYSTORE_DESTINATION_PATHS_ENV.name())).thenReturn(paths);
+        when(envReader.getEnv(KEYSTORE_DESTINATION_PATHS.name())).thenReturn(paths);
     }
 
     private List<String> createListOfPathsWithExtension(int numberOfPaths, String passwordExtension) {

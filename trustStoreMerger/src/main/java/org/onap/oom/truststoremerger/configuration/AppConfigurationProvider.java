@@ -20,10 +20,10 @@
 package org.onap.oom.truststoremerger.configuration;
 
 
-import static org.onap.oom.truststoremerger.configuration.model.EnvVariable.KEYSTORE_DESTINATION_PATHS_ENV;
-import static org.onap.oom.truststoremerger.configuration.model.EnvVariable.KEYSTORE_SOURCE_PATHS_ENV;
-import static org.onap.oom.truststoremerger.configuration.model.EnvVariable.TRUSTSTORES_PASSWORDS_PATHS_ENV;
-import static org.onap.oom.truststoremerger.configuration.model.EnvVariable.TRUSTSTORES_PATHS_ENV;
+import static org.onap.oom.truststoremerger.configuration.model.EnvVariable.KEYSTORE_DESTINATION_PATHS;
+import static org.onap.oom.truststoremerger.configuration.model.EnvVariable.KEYSTORE_SOURCE_PATHS;
+import static org.onap.oom.truststoremerger.configuration.model.EnvVariable.TRUSTSTORES_PASSWORDS_PATHS;
+import static org.onap.oom.truststoremerger.configuration.model.EnvVariable.TRUSTSTORES_PATHS;
 
 import java.util.Collections;
 import java.util.List;
@@ -48,15 +48,15 @@ public class AppConfigurationProvider {
     public AppConfiguration createConfiguration()
         throws ConfigurationException, CertificatesPathsValidationException {
 
-        List<String> truststoresPaths = getPaths(TRUSTSTORES_PATHS_ENV);
-        List<String> truststoresPasswordsPaths = getPaths(TRUSTSTORES_PASSWORDS_PATHS_ENV);
-        List<String> sourceKeystorePaths = getPaths(KEYSTORE_SOURCE_PATHS_ENV);
-        List<String> destinationKeystorePaths = getPaths(KEYSTORE_DESTINATION_PATHS_ENV);
+        List<String> truststoresPaths = getPaths(TRUSTSTORES_PATHS);
+        List<String> truststoresPasswordsPaths = getPaths(TRUSTSTORES_PASSWORDS_PATHS);
+        List<String> sourceKeystorePaths = getPaths(KEYSTORE_SOURCE_PATHS);
+        List<String> destinationKeystorePaths = getPaths(KEYSTORE_DESTINATION_PATHS);
 
-        ensureSameSize(truststoresPaths, truststoresPasswordsPaths, TRUSTSTORES_PATHS_ENV.name(),
-            TRUSTSTORES_PASSWORDS_PATHS_ENV.name());
-        ensureSameSize(sourceKeystorePaths, destinationKeystorePaths, KEYSTORE_SOURCE_PATHS_ENV.name(),
-            KEYSTORE_DESTINATION_PATHS_ENV.name());
+        ensureSameSize(truststoresPaths, truststoresPasswordsPaths, TRUSTSTORES_PATHS.name(),
+            TRUSTSTORES_PASSWORDS_PATHS.name());
+        ensureSameSize(sourceKeystorePaths, destinationKeystorePaths, KEYSTORE_SOURCE_PATHS.name(),
+            KEYSTORE_DESTINATION_PATHS.name());
 
         return new AppConfiguration(truststoresPaths, truststoresPasswordsPaths, sourceKeystorePaths,
             destinationKeystorePaths);
