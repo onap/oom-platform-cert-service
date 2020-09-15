@@ -19,10 +19,11 @@
 
 package org.onap.oom.truststoremerger.common;
 
+import org.onap.oom.truststoremerger.merger.exception.PasswordReaderException;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import org.onap.oom.truststoremerger.merger.exception.PasswordReaderException;
 
 public final class PasswordReader {
 
@@ -31,7 +32,7 @@ public final class PasswordReader {
     private PasswordReader() {
     }
 
-    public static String readPassword(File file) throws PasswordReaderException {
+    public static String readPassword(File file) {
         try {
             return Files.readString(file.toPath());
         } catch (IOException e) {
