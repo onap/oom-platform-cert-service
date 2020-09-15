@@ -19,7 +19,6 @@
 
 package org.onap.oom.certservice.postprocessor;
 
-import org.onap.oom.certservice.postprocessor.api.ExitableException;
 import org.onap.oom.certservice.postprocessor.common.FileTools;
 import org.onap.oom.certservice.postprocessor.configuration.AppConfigurationLoader;
 import org.onap.oom.certservice.postprocessor.configuration.model.AppConfiguration;
@@ -36,7 +35,7 @@ class CertificatePostProcessor implements Runnable {
     private TruststoreMerger merger = new TruststoreMerger();
     private KeystoreCopier copier = new KeystoreCopier(new FileTools());
 
-    public void run() throws ExitableException {
+    public void run() {
         LOGGER.debug("Loading configuration...");
         AppConfiguration configuration = config.loadConfiguration();
         LOGGER.debug("Starting TruststoreMerger...");
