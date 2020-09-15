@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db11a401_ad054945",
+        "filename": "trustStoreMerger/src/test/java/org/onap/oom/truststoremerger/configuration/AppConfigurationProviderTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-09-15T07:27:27Z",
+      "side": 1,
+      "message": "Use the same convention. In other files all vars are imported statically. Why in this file two are imported statically and two not?",
+      "revId": "646bc787670df229b0a86a15f9c21c3ecaba3534",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
