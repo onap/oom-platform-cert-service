@@ -22,7 +22,7 @@ package org.onap.oom.truststoremerger.configuration.path.env;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
-import static org.onap.oom.truststoremerger.configuration.model.EnvVariable.TRUSTSTORES_PASSWORDS_PATHS_ENV;
+import static org.onap.oom.truststoremerger.configuration.model.EnvVariable.TRUSTSTORES_PASSWORDS_PATHS;
 
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
@@ -42,7 +42,7 @@ class EnvReaderTest {
     @Test
     void shouldReturnOptionalWithEnv() {
         // given
-        String envName = TRUSTSTORES_PASSWORDS_PATHS_ENV.name();
+        String envName = TRUSTSTORES_PASSWORDS_PATHS.name();
         when(provider.getSystemEnv(envName)).thenReturn(Optional.of(SAMPLE_PASS_PATH));
         // when
         Optional<String> result = provider.getEnv(envName);
@@ -53,7 +53,7 @@ class EnvReaderTest {
     @Test
     void shouldReturnEmptyOptional() {
         // given
-        String envName = TRUSTSTORES_PASSWORDS_PATHS_ENV.name();
+        String envName = TRUSTSTORES_PASSWORDS_PATHS.name();
         // when
         Optional<String> result = provider.getEnv(envName);
         // then

@@ -27,10 +27,10 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public enum EnvVariable {
-    TRUSTSTORES_PATHS_ENV(true, doesItContainValidCertificatesPaths()),
-    TRUSTSTORES_PASSWORDS_PATHS_ENV(true, doesItContainValidPasswordPaths()),
-    KEYSTORE_SOURCE_PATHS_ENV(false, doesItContainValidPathsToCopy()),
-    KEYSTORE_DESTINATION_PATHS_ENV(false, doesItContainValidPathsToCopy());
+    TRUSTSTORES_PATHS(true, doesItContainValidCertificatesPaths()),
+    TRUSTSTORES_PASSWORDS_PATHS(true, doesItContainValidPasswordPaths()),
+    KEYSTORE_SOURCE_PATHS(false, doesItContainValidPathsToCopy()),
+    KEYSTORE_DESTINATION_PATHS(false, doesItContainValidPathsToCopy());
 
     boolean isMandatory;
 
