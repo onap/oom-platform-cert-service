@@ -20,7 +20,6 @@
 package org.onap.oom.certservice.postprocessor.merger;
 
 import java.util.List;
-import org.onap.oom.certservice.postprocessor.api.ExitableException;
 import org.onap.oom.certservice.postprocessor.configuration.model.AppConfiguration;
 import org.onap.oom.certservice.postprocessor.merger.model.Truststore;
 import org.onap.oom.certservice.postprocessor.merger.model.certificate.CertificateWithAlias;
@@ -30,7 +29,7 @@ public class TruststoreMerger {
     private static final int FIRST_TRUSTSTORE_INDEX = 0;
     private static final int SECOND_TRUSTSTORE_INDEX = 1;
 
-    public void mergeTruststores(AppConfiguration configuration) throws ExitableException {
+    public void mergeTruststores(AppConfiguration configuration) {
         List<Truststore> truststoreFilesList = getTruststoreFiles(configuration);
 
         Truststore baseFile = truststoreFilesList.get(FIRST_TRUSTSTORE_INDEX);
@@ -45,7 +44,7 @@ public class TruststoreMerger {
         baseFile.saveFile();
     }
 
-    private List<Truststore> getTruststoreFiles(AppConfiguration configuration) throws ExitableException {
+    private List<Truststore> getTruststoreFiles(AppConfiguration configuration) {
         return TruststoreFilesProvider
             .getTruststoreFiles(
                 configuration.getTruststoreFilePaths(),
