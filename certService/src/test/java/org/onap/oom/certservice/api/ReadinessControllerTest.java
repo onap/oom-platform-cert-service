@@ -31,29 +31,27 @@ import org.onap.oom.certservice.certification.configuration.CmpServersConfig;
 import org.springframework.http.HttpStatus;
 
 @ExtendWith(MockitoExtension.class)
-public class ReadinessControllerTest {
+class ReadinessControllerTest {
 
     @Mock
     private CmpServersConfig cmpServersConfig;
 
     @Test
-    public void shouldReturnStatusOkWhenConfigIsReady() {
+    void shouldReturnStatusOkWhenConfigIsReady() {
         // Given
         Mockito.when(cmpServersConfig.isReady()).thenReturn(true);
 
         // Then
         assertThat(new ReadinessController(cmpServersConfig).checkReady().getStatusCode()).isEqualTo(HttpStatus.OK);
-        ;
     }
 
     @Test
-    public void shouldReturnStatusServiceUnavailableWhenConfigIsNotReady() {
+    void shouldReturnStatusServiceUnavailableWhenConfigIsNotReady() {
         // Given
         Mockito.when(cmpServersConfig.isReady()).thenReturn(false);
 
         // Then
         assertThat(new ReadinessController(cmpServersConfig).checkReady().getStatusCode()).isEqualTo(HttpStatus.SERVICE_UNAVAILABLE);
-        ;
     }
 
 }
