@@ -37,7 +37,7 @@ class PemAliasGeneratorTest {
         //when
         String alias = pemAliasGenerator.getAlias();
         //then
-        assertThat(alias.contains(PREFIX_ALIAS_NAME)).isTrue();
+        assertThat(alias).contains(PREFIX_ALIAS_NAME);
     }
 
     @Test
