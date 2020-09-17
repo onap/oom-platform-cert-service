@@ -31,7 +31,7 @@ public final class PasswordReader {
     private PasswordReader() {
     }
 
-    public static String readPassword(File file) throws PasswordReaderException {
+    public static String readPassword(File file) {
         try {
             return Files.readString(file.toPath());
         } catch (IOException e) {
