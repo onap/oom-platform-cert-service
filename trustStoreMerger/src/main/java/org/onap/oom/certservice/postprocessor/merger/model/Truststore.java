@@ -21,8 +21,6 @@ package org.onap.oom.certservice.postprocessor.merger.model;
 
 import java.io.File;
 import java.util.List;
-import org.onap.oom.certservice.postprocessor.merger.exception.CreateBackupException;
-import org.onap.oom.certservice.postprocessor.api.ExitableException;
 import org.onap.oom.certservice.postprocessor.common.FileTools;
 import org.onap.oom.certservice.postprocessor.merger.model.certificate.CertificateWithAlias;
 
@@ -37,13 +35,13 @@ public abstract class Truststore {
         this.fileTools = fileTools;
     }
 
-    public void createBackup() throws CreateBackupException {
+    public void createBackup() {
         fileTools.createBackup(storeFile);
     }
 
-    public abstract List<CertificateWithAlias> getCertificates() throws ExitableException;
+    public abstract List<CertificateWithAlias> getCertificates();
 
-    public abstract void addCertificates(List<CertificateWithAlias> certificates) throws ExitableException;
+    public abstract void addCertificates(List<CertificateWithAlias> certificates);
 
-    public abstract void saveFile() throws ExitableException;
+    public abstract void saveFile();
 }
