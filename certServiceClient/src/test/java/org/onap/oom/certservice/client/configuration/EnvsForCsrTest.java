@@ -99,7 +99,7 @@ class EnvsForCsrTest {
     }
 
     @Test
-    public void shouldReportThatSystemEnvOuVariableIsNotPresentWhenItWasNotDefined() {
+    void shouldReportThatSystemEnvOuVariableIsNotPresentWhenItWasNotDefined() {
         // when
         final Optional<String> testEnv = envsForCsr.getOrganizationUnit();
 
@@ -191,7 +191,7 @@ class EnvsForCsrTest {
     }
 
     @Test
-    public void shouldReportThatSystemEnvSansVariableIsNotPresentWhenItWasNotDefined() {
+    void shouldReportThatSystemEnvSansVariableIsNotPresentWhenItWasNotDefined() {
         // when
         final Optional<String> testEnv = envsForCsr.getSubjectAlternativesName();
 
