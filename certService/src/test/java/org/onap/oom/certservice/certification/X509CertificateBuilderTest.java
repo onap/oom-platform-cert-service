@@ -36,7 +36,7 @@ import java.security.PrivateKey;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.onap.oom.certservice.certification.TestUtils.createCsrModel;
 
-public class X509CertificateBuilderTest {
+class X509CertificateBuilderTest {
 
     private X509CertificateBuilder certificateBuilder;
 
