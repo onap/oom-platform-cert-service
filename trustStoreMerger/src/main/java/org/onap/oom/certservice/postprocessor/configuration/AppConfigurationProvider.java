@@ -29,7 +29,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import org.onap.oom.certservice.postprocessor.configuration.path.env.EnvReader;
-import org.onap.oom.certservice.postprocessor.configuration.exception.CertificatesPathsValidationException;
 import org.onap.oom.certservice.postprocessor.configuration.exception.ConfigurationException;
 import org.onap.oom.certservice.postprocessor.configuration.model.AppConfiguration;
 import org.onap.oom.certservice.postprocessor.configuration.model.EnvVariable;
@@ -45,9 +44,7 @@ public class AppConfigurationProvider {
         this.pathsSplitter = pathsSplitter;
     }
 
-    public AppConfiguration createConfiguration()
-        throws ConfigurationException, CertificatesPathsValidationException {
-
+    public AppConfiguration createConfiguration() {
         List<String> truststoresPaths = getPaths(TRUSTSTORES_PATHS);
         List<String> truststoresPasswordsPaths = getPaths(TRUSTSTORES_PASSWORDS_PATHS);
         List<String> sourceKeystorePaths = getPaths(KEYSTORE_SOURCE_PATHS);
@@ -62,7 +59,7 @@ public class AppConfigurationProvider {
             destinationKeystorePaths);
     }
 
-    private List<String> getPaths(EnvVariable envVariable) throws ConfigurationException {
+    private List<String> getPaths(EnvVariable envVariable) {
         Optional<String> envValue = envReader.getEnv(envVariable.name());
         isMandatoryEnvPresent(envVariable, envValue);
         return envValue.isPresent() ? pathsSplitter.getValidatedPaths(envVariable, envValue) : Collections.emptyList();
@@ -75,7 +72,7 @@ public class AppConfigurationProvider {
     }
 
     private void ensureSameSize(List<String> firstList, List<String> secondList, String firstListEnvName,
-        String secondListEnvName) throws ConfigurationException {
+                                String secondListEnvName) {
         if (firstList.size() != secondList.size()) {
             throw new ConfigurationException(
                 "Size of " + firstListEnvName
