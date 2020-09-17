@@ -35,7 +35,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.onap.oom.certservice.postprocessor.merger.exception.AliasConflictException;
 
 @ExtendWith(MockitoExtension.class)
-public class AppExecutorTest {
+class AppExecutorTest {
 
     @Mock
     Runnable logic;
