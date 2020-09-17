@@ -28,7 +28,7 @@ import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-public class FileToolsTest {
+class FileToolsTest {
 
     public static final String BAK_EXTENSION = ".bak";
 
