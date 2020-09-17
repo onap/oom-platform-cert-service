@@ -52,7 +52,7 @@ public class KeystoreCopier {
     }
 
     private void containsPaths(List<String> sources) {
-        if (sources.size() == 0) {
+        if (sources.isEmpty()) {
             LOGGER.info("No Keystore files to copy");
         }
     }
