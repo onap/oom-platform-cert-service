@@ -25,7 +25,6 @@ import static org.onap.oom.certservice.postprocessor.configuration.path.validati
 
 import java.util.List;
 import java.util.function.Predicate;
-import org.onap.oom.certservice.postprocessor.configuration.path.validation.ValidationFunctions;
 
 public enum EnvVariable {
     TRUSTSTORES_PATHS(true, doesItContainValidCertificatesPaths()),
