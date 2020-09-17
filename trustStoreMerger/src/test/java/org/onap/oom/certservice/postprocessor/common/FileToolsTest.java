@@ -43,7 +43,7 @@ class FileToolsTest {
         //when
         new FileTools().createBackup(fileToBackup);
         //then
-        assertThat(fileToBackup.equals(new File(backupFilePath)));
+        assertThat(fileToBackup).hasSameBinaryContentAs(new File(backupFilePath));
     }
 
     @Test
@@ -54,7 +54,7 @@ class FileToolsTest {
         //when
         new FileTools().copy(sourceFile, destinationFile);
         //then
-        assertThat(sourceFile.equals(destinationFile));
+        assertThat(sourceFile).hasSameBinaryContentAs(destinationFile);
     }
 
 
