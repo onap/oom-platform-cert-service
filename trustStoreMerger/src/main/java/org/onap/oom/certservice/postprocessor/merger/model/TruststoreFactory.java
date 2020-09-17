@@ -23,9 +23,6 @@ import static org.onap.oom.certservice.postprocessor.api.CertificateConstants.JK
 import static org.onap.oom.certservice.postprocessor.api.CertificateConstants.PKCS12_TYPE;
 
 import java.io.File;
-import org.onap.oom.certservice.postprocessor.merger.exception.KeystoreInstanceException;
-import org.onap.oom.certservice.postprocessor.merger.exception.LoadTruststoreException;
-import org.onap.oom.certservice.postprocessor.merger.exception.PasswordReaderException;
 import org.onap.oom.certservice.postprocessor.common.ExtensionResolver;
 import org.onap.oom.certservice.postprocessor.merger.exception.TruststoreFileFactoryException;
 
@@ -41,8 +38,7 @@ public class TruststoreFactory {
     private TruststoreFactory() {
     }
 
-    public static Truststore create(String truststoreFilePath, String truststorePasswordPath)
-        throws TruststoreFileFactoryException, PasswordReaderException, KeystoreInstanceException, LoadTruststoreException {
+    public static Truststore create(String truststoreFilePath, String truststorePasswordPath) {
         File truststoreFile = new File(truststoreFilePath);
         if (!ExtensionResolver.checkIfFileExists(truststoreFile)) {
             throw new TruststoreFileFactoryException(String.format(FILE_DOES_NOT_EXIST_MSG_TEMPLATE, truststoreFile));
@@ -50,8 +46,7 @@ public class TruststoreFactory {
         return createTypedTruststore(truststoreFile, truststorePasswordPath);
     }
 
-    private static Truststore createTypedTruststore(File truststoreFile, String truststorePasswordPath)
-        throws KeystoreInstanceException, PasswordReaderException, LoadTruststoreException, TruststoreFileFactoryException {
+    private static Truststore createTypedTruststore(File truststoreFile, String truststorePasswordPath) {
         String extension = ExtensionResolver.get(truststoreFile);
         switch (extension) {
             case JKS_EXTENSION:
