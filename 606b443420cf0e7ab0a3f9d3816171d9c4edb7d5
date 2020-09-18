@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f3f7815_c342faee",
+        "filename": "certServicePostProcessor/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-18T12:45:20Z",
+      "side": 1,
+      "message": "Either rename back to camel case or align two remaining Dockerfiles to lower case.",
+      "range": {
+        "startLine": 5,
+        "startChar": 37,
+        "endLine": 5,
+        "endChar": 54
+      },
+      "revId": "606b443420cf0e7ab0a3f9d3816171d9c4edb7d5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d433ef6c_9ef0e38a",
+        "filename": "certServicePostProcessor/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-18T12:45:20Z",
+      "side": 1,
+      "message": "Consider making this path one level shorter (e.g. omit post-processor subfolder).",
+      "range": {
+        "startLine": 11,
+        "startChar": 72,
+        "endLine": 11,
+        "endChar": 84
+      },
+      "revId": "606b443420cf0e7ab0a3f9d3816171d9c4edb7d5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d15f3126_1dd10fca",
+        "filename": "certServicePostProcessor/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-18T12:45:20Z",
+      "side": 1,
+      "message": "Right now its written that this app can do one of this things. However just copying is not possible.\nWord \"or\" could be replaced with comma.",
+      "range": {
+        "startLine": 15,
+        "startChar": 81,
+        "endLine": 15,
+        "endChar": 121
+      },
+      "revId": "606b443420cf0e7ab0a3f9d3816171d9c4edb7d5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4c49958_6f6d0ac6",
+        "filename": "certServicePostProcessor/src/main/resources/log4j2.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-18T12:45:20Z",
+      "side": 1,
+      "message": "same here, shorter path faster checks of logs in future. ;)",
+      "range": {
+        "startLine": 11,
+        "startChar": 48,
+        "endLine": 11,
+        "endChar": 76
+      },
+      "revId": "606b443420cf0e7ab0a3f9d3816171d9c4edb7d5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
