@@ -10,7 +10,7 @@ More information about the project and all its functionalities you can find unde
 Project consists of three submodules:
 1. oom-certservice-api
 2. oom-certservice-client
-3. oom-truststore-merger
+3. oom-certservice-post-processor
 
 Detailed information about submodules can be found in ```README.md``` in their directories.
 
