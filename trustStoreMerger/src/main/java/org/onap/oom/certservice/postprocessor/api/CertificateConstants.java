@@ -21,6 +21,8 @@ package org.onap.oom.certservice.postprocessor.api;
 
 public class CertificateConstants {
 
+    private CertificateConstants() { }
+
     public static final String JKS_TYPE = "JKS";
     public static final String PKCS12_TYPE = "PKCS12";
     public static final String X_509_CERTIFICATE = "X.509";
