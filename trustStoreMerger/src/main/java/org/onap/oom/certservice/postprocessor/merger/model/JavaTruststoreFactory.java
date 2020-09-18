@@ -23,8 +23,6 @@ import java.io.File;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import org.onap.oom.certservice.postprocessor.merger.exception.KeystoreInstanceException;
-import org.onap.oom.certservice.postprocessor.merger.exception.LoadTruststoreException;
-import org.onap.oom.certservice.postprocessor.merger.exception.PasswordReaderException;
 import org.onap.oom.certservice.postprocessor.common.PasswordReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,8 +34,7 @@ public class JavaTruststoreFactory {
     private JavaTruststoreFactory() {
     }
 
-    public static Truststore create(File certFile, String truststorePasswordPath, String keystoreType)
-        throws LoadTruststoreException, KeystoreInstanceException, PasswordReaderException {
+    public static Truststore create(File certFile, String truststorePasswordPath, String keystoreType) {
         String password = PasswordReader.readPassword(new File(truststorePasswordPath));
         try {
             return JavaTruststore
