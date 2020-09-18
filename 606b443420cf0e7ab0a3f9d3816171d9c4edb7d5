@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "420e1b82_a37305d6",
+        "filename": "certServicePostProcessor/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-09-18T13:06:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f3f7815_c342faee",
+      "range": {
+        "startLine": 5,
+        "startChar": 37,
+        "endLine": 5,
+        "endChar": 54
+      },
+      "revId": "606b443420cf0e7ab0a3f9d3816171d9c4edb7d5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d433ef6c_9ef0e38a",
         "filename": "certServicePostProcessor/Dockerfile",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "606b443420cf0e7ab0a3f9d3816171d9c4edb7d5",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71c742dd_94b777d4",
+        "filename": "certServicePostProcessor/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-09-18T13:06:22Z",
+      "side": 1,
+      "message": "as discussed will stay as it is",
+      "parentUuid": "d433ef6c_9ef0e38a",
+      "range": {
+        "startLine": 11,
+        "startChar": 72,
+        "endLine": 11,
+        "endChar": 84
+      },
+      "revId": "606b443420cf0e7ab0a3f9d3816171d9c4edb7d5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "41f4b931_61df2564",
+        "filename": "certServicePostProcessor/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-09-18T13:06:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d15f3126_1dd10fca",
+      "range": {
+        "startLine": 15,
+        "startChar": 81,
+        "endLine": 15,
+        "endChar": 121
+      },
+      "revId": "606b443420cf0e7ab0a3f9d3816171d9c4edb7d5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4c49958_6f6d0ac6",
         "filename": "certServicePostProcessor/src/main/resources/log4j2.xml",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "606b443420cf0e7ab0a3f9d3816171d9c4edb7d5",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc56a18e_61b3a510",
+        "filename": "certServicePostProcessor/src/main/resources/log4j2.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-09-18T13:06:22Z",
+      "side": 1,
+      "message": "as discussed will stay as it is",
+      "parentUuid": "b4c49958_6f6d0ac6",
+      "range": {
+        "startLine": 11,
+        "startChar": 48,
+        "endLine": 11,
+        "endChar": 76
+      },
+      "revId": "606b443420cf0e7ab0a3f9d3816171d9c4edb7d5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
