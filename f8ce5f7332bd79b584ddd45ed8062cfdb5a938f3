@@ -1,0 +1,7 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+2: Paweł Baniewski <pawel.baniewski@nokia.com>
+Submitted-by: Paweł Baniewski <pawel.baniewski@nokia.com>
+Submitted-at: Fri, 18 Sep 2020 09:09:41 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/oom/platform/cert-service/+/112873
+Project: oom/platform/cert-service
+Branch: refs/heads/master
