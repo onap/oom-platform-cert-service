@@ -1,4 +1,4 @@
-# Truststore merger
+# Certificate Post Processor
 
 ### Project building
 ```
@@ -17,7 +17,7 @@ mvn clean install -P docker
 
 ### Nexus container image
 ```
-nexus3.onap.org:10001/onap/org.onap.oom.platform.cert-service.oom-truststore-merger:latest
+nexus3.onap.org:10001/onap/org.onap.oom.platform.cert-service.oom-certservice-post-processor:latest
 ```
 
 ### Running application as standalone docker container
@@ -41,10 +41,10 @@ KEYSTORE_DESTINATION_PATHS env (optional) indicates paths (separated by ":") to 
 Execute below command in order to run app as docker container
 ```
 docker run \
-    --name oom-truststore-merger \
+    --name oom-certservice-post-processor \
     --env-file ./config.env \
     --mount type=bind,src=<src_path>,dst=/var/certs \
-onap/org.onap.oom.platform.cert-service.oom-truststore-merger:latest
+onap/org.onap.oom.platform.cert-service.oom-certservice-post-processor:latest
 ```
 Before run replace <src_path> with absolute path where you located truststores to merge (eg. /certs/resources/)
 
@@ -55,18 +55,18 @@ Output from merger (when pointed more than one truststore to merge in TRUSTSTORE
 
 Remove docker container:
 ```
-docker rm oom-truststore-merger
+docker rm oom-certservice-post-processor
 ```
 
 ### Logs locally
 
 path:
 ```
-var/log/onap/oom/truststore-merger/truststore-merger.log
+var/log/onap/oom/cert-service/post-processor/application.log
 ```
 ### Logs in Docker container
 ```
-docker logs oom-merger
+docker logs om-certservice-post-processor
 ```
 ###Exit codes
 ```

@@ -8,8 +8,8 @@
                     pattern="%d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd HH:mm:ss.SSS}} %highlight{${LOG_LEVEL_PATTERN:-%5p}}{FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=green, DEBUG=green bold, TRACE=blue} %style{%pid}{magenta} [%15.15t] %style{%-40.40C{1.}}{cyan} : %m%n%throwable"/>
         </Console>
 
-        <RollingFile fileName="var/log/onap/oom/truststore-merger/truststore-merger.log"
-                     filePattern="logs/truststore-merger-%d{yyyy-MM-dd}-%i.log" name="ROLLING_FILE">
+        <RollingFile fileName="var/log/onap/oom/cert-service/post-processor/application.log"
+                     filePattern="logs/application-%d{yyyy-MM-dd}-%i.log" name="ROLLING_FILE">
             <PatternLayout pattern="[%d{ISO8601}][%-5p][%-5c] %m%n"/>
             <Policies>
                 <SizeBasedTriggeringPolicy size="64 MB"/>
