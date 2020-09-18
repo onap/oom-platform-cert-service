@@ -19,14 +19,13 @@
 
 package org.onap.oom.certservice.postprocessor.configuration;
 
-import org.onap.oom.certservice.postprocessor.api.ExitableException;
 import org.onap.oom.certservice.postprocessor.configuration.model.AppConfiguration;
 import org.onap.oom.certservice.postprocessor.configuration.path.DelimitedPathsSplitter;
 import org.onap.oom.certservice.postprocessor.configuration.path.env.EnvReader;
 
 public class AppConfigurationLoader {
 
-    public AppConfiguration loadConfiguration() throws ExitableException {
+    public AppConfiguration loadConfiguration() {
         DelimitedPathsSplitter pathsSplitter = new DelimitedPathsSplitter();
         AppConfigurationProvider factory = new AppConfigurationProvider(pathsSplitter, new EnvReader());
         return factory.createConfiguration();
