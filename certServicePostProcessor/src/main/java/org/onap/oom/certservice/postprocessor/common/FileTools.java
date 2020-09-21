@@ -31,7 +31,7 @@ public final class FileTools {
     private static final Logger LOGGER = LoggerFactory.getLogger(FileTools.class);
     private static final String BACKUP_EXTENSION = ".bak";
 
-    public void createBackup(File file) throws CreateBackupException {
+    public void createBackup(File file) {
         LOGGER.debug("Try to create a backup of the file: {}", file.getPath());
         File backupFile = new File(file.getAbsolutePath() + BACKUP_EXTENSION);
         try  {
