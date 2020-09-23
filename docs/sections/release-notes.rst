@@ -4,6 +4,51 @@
 
 
 Release Notes
+
+==============
+
+Version: 2.1.0
+--------------
+
+:Release Date:
+
+**New Features**
+
+* Added module **oom-certservice-post-processor** with following functionality:
+
+  * appending CMPv2 certificates to CertMan truststore
+  * replacing CertMan keystore with CMPv2 keystore
+
+**Bug Fixes**
+
+        N/A
+
+**Known Issues**
+
+        N/A
+
+**Security Notes**
+
+        N/A
+
+*Fixed Security Issues*
+
+        N/A
+
+*Known Security Issues*
+
+        N/A
+
+*Known Vulnerabilities in Used Modules*
+
+        N/A
+
+**Upgrade Notes**
+
+**Deprecation Notes**
+
+**Other**
+
 ==============
 
 Version: 2.0.0
