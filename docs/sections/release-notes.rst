@@ -1,9 +1,52 @@
-.. This work is licensed under a Creative Commons Attribution 4.0 International License.
 .. http://creativecommons.org/licenses/by/4.0
 .. Copyright 2020 NOKIA
 
 
 Release Notes
+
+==============
+
+Version: 2.1.0
+--------------
+
+:Release Date:
+
+**New Features**
+
+        - Added module oom-certservice-post-processor for merging truststores and copying keystores
+        - Added functionality for appending CMPv2 certificates to CertMan truststore
+        - Added functionality for replacing CertMan keystore with CMPv2 keystore
+
+**Bug Fixes**
+
+        N/A
+
+**Known Issues**
+
+        N/A
+
+**Security Notes**
+
+        N/A
+
+*Fixed Security Issues*
+
+        N/A
+
+*Known Security Issues*
+
+        N/A
+
+*Known Vulnerabilities in Used Modules*
+
+        N/A
+
+**Upgrade Notes**
+
+**Deprecation Notes**
+
+**Other**
+
 ==============
 
 Version: 2.0.0
