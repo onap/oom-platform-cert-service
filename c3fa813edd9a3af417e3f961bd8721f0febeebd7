@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c6f9d85_30d4a6ba",
+        "filename": "certServiceK8sExternalProvider/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-09-30T09:57:10Z",
+      "side": 1,
+      "message": "try optimalize, maybe it is possible to copy files in single layer",
+      "revId": "c3fa813edd9a3af417e3f961bd8721f0febeebd7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69bb3777_d76be9ec",
+        "filename": "certServiceK8sExternalProvider/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-09-30T09:57:10Z",
+      "side": 1,
+      "message": "rename app to oom-service-k8s-external-provider",
+      "revId": "c3fa813edd9a3af417e3f961bd8721f0febeebd7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b54dc07_3202f916",
+        "filename": "certServiceK8sExternalProvider/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-09-30T09:57:10Z",
+      "side": 1,
+      "message": "use above name of application",
+      "revId": "c3fa813edd9a3af417e3f961bd8721f0febeebd7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11b7b568_e3bf608f",
+        "filename": "certServiceK8sExternalProvider/Makefile",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-09-30T09:57:10Z",
+      "side": 1,
+      "message": "build-docker-image",
+      "revId": "c3fa813edd9a3af417e3f961bd8721f0febeebd7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "637aa7ab_351949ce",
+        "filename": "certServiceK8sExternalProvider/go.mod",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-09-30T09:57:10Z",
+      "side": 1,
+      "message": "check license: it should be Apache 2.0 or MIT",
+      "revId": "c3fa813edd9a3af417e3f961bd8721f0febeebd7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e943bf1_5e73a30d",
+        "filename": "certServiceK8sExternalProvider/main.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-09-30T09:57:10Z",
+      "side": 1,
+      "message": "add dummy test for this file",
+      "revId": "c3fa813edd9a3af417e3f961bd8721f0febeebd7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9f64c48_d8d24470",
+        "filename": "certServiceK8sExternalProvider/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-09-30T09:57:10Z",
+      "side": 1,
+      "message": "extract to properties",
+      "revId": "c3fa813edd9a3af417e3f961bd8721f0febeebd7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4032f719_cf54c800",
+        "filename": "pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-09-30T09:57:10Z",
+      "side": 1,
+      "message": "certServiceK8sExternalProvider",
+      "revId": "c3fa813edd9a3af417e3f961bd8721f0febeebd7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
