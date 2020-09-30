@@ -76,6 +76,7 @@
         <module>certService</module>
         <module>certServiceClient</module>
         <module>certServicePostProcessor</module>
+        <module>oom-certservice-k8s-external-provider</module>
     </modules>
 
     <build>

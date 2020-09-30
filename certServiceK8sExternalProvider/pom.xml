@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <parent>
+    <artifactId>oom-certservice</artifactId>
+    <groupId>org.onap.oom.platform.cert-service</groupId>
+    <version>2.1.1-SNAPSHOT</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+
+  <artifactId>oom-certservice-k8s-external-provider</artifactId>
+  <packaging>mvn-golang</packaging>
+
+  <build>
+    <!--Changing standard Maven project source structure to make it Go compatible-->
+    <sourceDirectory>${basedir}</sourceDirectory>
+    <directory>${basedir}${file.separator}bin</directory>
+
+    <defaultGoal>clean package</defaultGoal>
+
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-clean-plugin</artifactId>
+        <version>3.1.0</version>
+        <configuration>
+          <followSymLinks>false</followSymLinks>
+          <excludeDefaultDirectories>true</excludeDefaultDirectories>
+          <filesets>
+            <fileset>
+              <directory>${basedir}${file.separator}bin</directory>
+            </fileset>
+          </filesets>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>com.igormaznitsa</groupId>
+        <artifactId>mvn-golang-wrapper</artifactId>
+        <version>2.3.5</version>
+        <extensions>true</extensions>
+        <executions>
+          <execution>
+            <id>run</id>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <packages>
+                <package>oom-certservice/k8s-external-provider</package>
+              </packages>
+            </configuration>
+          </execution>
+          <execution>
+            <id>install</id>
+            <goals>
+              <goal>install</goal>
+            </goals>
+            <configuration>
+              <packages>
+                <package>oom-certservice/k8s-external-provider</package>
+              </packages>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <profiles>
+
+    <profile>
+      <id>docker-staging</id>
+      <properties>
+        <docker.tag>${project.version}-STAGING-${maven.build.timestamp}</docker.tag>
+        <docker.latest.tag>${project.version}-STAGING-latest</docker.latest.tag>
+      </properties>
+    </profile>
+
+    <profile>
+      <id>docker</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <os.detected.name>linux</os.detected.name>
+        <os.detected.arch>x86_64</os.detected.arch>
+        <os.detected.classifier>${os.detected.name}-${os.detected.arch}</os.detected.classifier>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>io.fabric8</groupId>
+            <artifactId>docker-maven-plugin</artifactId>
+            <version>${docker-maven-plugin.version}</version>
+            <executions>
+              <execution>
+                <id>docker-build-image</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>build</goal>
+                </goals>
+              </execution>
+              <execution>
+                <id>docker-push-image</id>
+                <phase>deploy</phase>
+                <goals>
+                  <goal>push</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <skipPush>${skipDockerPush}</skipPush>
+              <verbose>true</verbose>
+              <imagePullPolicy>IfNotPresent</imagePullPolicy>
+              <images>
+                <image>
+                  <alias>${project.artifactId}</alias>
+                  <name>${docker-image.namespace}/${docker-image.name}:${docker-image.tag.latest}
+                  </name>
+                  <registry>${docker-image.registry}</registry>
+                  <build>
+                    <dockerFileDir>${project.basedir}</dockerFileDir>
+                    <tags>
+                      <tag>${project.version}-${maven.build.timestamp}Z</tag>
+                    </tags>
+                  </build>
+                </image>
+              </images>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
+
+</project>
