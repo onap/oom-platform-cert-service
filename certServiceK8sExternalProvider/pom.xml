@@ -53,6 +53,8 @@
             <configuration>
               <packages>
                 <package>onap.org/oom-certservice/k8s-external-provider</package>
+                <package>onap.org/oom-certservice/k8s-external-provider/main</package>
+                <package>onap.org/oom-certservice/k8s-external-provider/certservice-provisioner</package>
               </packages>
             </configuration>
           </execution>
