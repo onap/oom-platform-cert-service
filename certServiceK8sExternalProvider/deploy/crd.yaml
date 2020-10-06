@@ -1,0 +1,116 @@
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.2.5
+  creationTimestamp: null
+  name: certserviceissuers.certmanager.onap.org
+spec:
+  group: certmanager.onap.org
+  names:
+    kind: CertServiceIssuer
+    listKind: CertServiceIssuerList
+    plural: certserviceissuers
+    singular: certserviceissuer
+  scope: Namespaced
+  subresources:
+    status: {}
+  validation:
+    openAPIV3Schema:
+      description: CertServiceIssuer is the Schema for the certserviceissuers API
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          type: object
+        spec:
+          description: CertServiceIssuerSpec defines the desired state of CertServiceIssuer
+          properties:
+            url:
+              description: URL is the base URL for the certservice certificates instance.
+              type: string
+            passwordRef:
+             description: PasswordRef is a reference to a Secret containing the
+               provisioner password used to decrypt the provisioner private key.
+             properties:
+               key:
+                 description: The key of the secret to select from. Must be a
+                   valid secret key.
+                 type: string
+               name:
+                 description: The name of the secret in the pod's namespace to
+                   select from.
+                 type: string
+             required:
+               - name
+               - key
+             type: object
+          required:
+            - url
+            - keyRef
+          type: object
+        status:
+          description: CertServiceIssuerStatus defines the observed state of CertServiceIssuer
+          properties:
+            conditions:
+              items:
+                description: CertServiceIssuerCondition contains condition information for
+                  the certservice issuer.
+                properties:
+                  lastTransitionTime:
+                    description: LastTransitionTime is the timestamp corresponding
+                      to the last status change of this condition.
+                    format: date-time
+                    type: string
+                  message:
+                    description: Message is a human readable description of the details
+                      of the last transition, complementing reason.
+                    type: string
+                  reason:
+                    description: Reason is a brief machine readable explanation for
+                      the condition's last transition.
+                    type: string
+                  status:
+                    allOf:
+                      - enum:
+                          - "True"
+                          - "False"
+                          - Unknown
+                      - enum:
+                          - "True"
+                          - "False"
+                          - Unknown
+                    description: Status of the condition, one of ('True', 'False',
+                      'Unknown').
+                    type: string
+                  type:
+                    description: Type of the condition, currently ('Ready').
+                    enum:
+                      - Ready
+                    type: string
+                required:
+                  - status
+                  - type
+                type: object
+              type: array
+          type: object
+      type: object
+  version: v1beta1
+  versions:
+    - name: v1beta1
+      served: true
+      storage: true
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []
