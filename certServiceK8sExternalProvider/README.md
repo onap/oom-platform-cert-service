@@ -1,9 +1,24 @@
-## Project seed for applications written in go lang
+## Cert Service k8s external cert signing provider
 
 ### Build project
 
-Just run **mvn** command without any parameters (which is by default equal to **mvn clean package**).
+There are two methods for building the project:
+    
+ - mvn clean install
+ - make
 
-The output executable file will be present in bin directory with name: **onap-golang-helloworld-1.0.0-SNAPSHOT**
+### Installation
 
-To run the program just type: **bin/onap-golang-helloworld-1.0.0-SNAPSHOT**
+Apply k8s files from 'deploy' directory in following order:
+ 
+ - crd.yaml
+ - roles.yaml
+ - deployment.yaml
+ - configuration.yaml
+
+
+### Usage
+
+To issue a certificate adjust and apply following k8s file:
+ 
+ - certificate_example.yaml
