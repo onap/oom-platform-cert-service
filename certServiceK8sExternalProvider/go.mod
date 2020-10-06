@@ -1,9 +1,32 @@
+// ============LICENSE_START=======================================================
+// oom-certservice-k8s-external-provider
+// ================================================================================
+// Copyright (C) 2020 Nokia. All rights reserved.
+// ================================================================================
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// ============LICENSE_END=========================================================
+//
+
 module onap.org/oom-certservice/k8s-external-provider
 
 go 1.15
 
 require (
-	// Apache 2.0 license: https://github.com/levigross/grequests/blob/master/LICENSE
-	github.com/levigross/grequests v0.0.0-20190908174114-253788527a1a
-	golang.org/x/net v0.0.0-20200927032502-5d4f70055728 // indirect
+	github.com/go-logr/logr v0.1.0
+	github.com/jetstack/cert-manager v0.13.1
+	k8s.io/api v0.17.0
+	k8s.io/apimachinery v0.17.0
+	k8s.io/client-go v0.17.0
+	k8s.io/utils v0.0.0-20191114184206-e782cd3c129f
+	sigs.k8s.io/controller-runtime v0.4.0
 )
