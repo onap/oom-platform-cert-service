@@ -4,6 +4,11 @@
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
  * ================================================================================
+ * This source code was copied from the following git repository:
+ * https://github.com/smallstep/step-issuer
+ * At the time the repository was published under the Apache License, Version 2.0
+ * The source code was modified / adjusted to the need of the ONAP project.
+ * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -18,13 +23,20 @@
  * ============LICENSE_END=========================================================
  */
 
-package certservice_provisioner
+package api
 
 import (
-	"testing"
+	"k8s.io/apimachinery/pkg/runtime/schema"
+	"sigs.k8s.io/controller-runtime/pkg/scheme"
 )
 
-func TestSignCertificate(t *testing.T) {
+var (
+	// GroupVersion is group version used to register these objects
+	GroupVersion = schema.GroupVersion{Group: "certmanager.onap.org", Version: "v1beta1"}
 
-	t.Logf("Dummy GO test --> Everything is OK <--.")
-}
+	// SchemeBuilder is used to add go types to the GroupVersionKind scheme
+	SchemeBuilder = &scheme.Builder{GroupVersion: GroupVersion}
+
+	// AddToScheme adds the types in this group-version to the given scheme.
+	AddToScheme = SchemeBuilder.AddToScheme
+)
