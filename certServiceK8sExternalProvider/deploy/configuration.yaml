@@ -1,0 +1,10 @@
+apiVersion: certmanager.onap.org/v1beta1
+kind: CertServiceIssuer
+metadata:
+  name: certservice-issuer
+  namespace: onap
+spec:
+  url: https://step-certificates.default.svc.cluster.local
+  keyRef:
+    name: certservice-key
+    key: key

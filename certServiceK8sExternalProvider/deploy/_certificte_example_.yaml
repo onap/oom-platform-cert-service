@@ -1,0 +1,26 @@
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  name: _sample_cert_name_
+  namespace: onap
+spec:
+  # The secret name to store the signed certificate
+  secretName: _sample_secret_name_
+  # Common Name
+  commonName: certissuer.onap.org
+  # DNS SAN
+  dnsNames:
+    - localhost
+    - certissuer.onap.org
+  # IP Address SAN
+  ipAddresses:
+    - "127.0.0.1"
+  # Duration of the certificate
+  duration: 24h
+  # Renew 8 hours before the certificate expiration
+  renewBefore: 8h
+  # The reference to the step issuer
+  issuerRef:
+    group: certmanager.onap.org
+    kind: CertificateRequest
+    name: certservice-issuer
