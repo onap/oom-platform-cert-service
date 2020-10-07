@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "c1c6a6c6_0299d837",
+        "filename": "certServiceK8sExternalProvider/main.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-10-07T13:14:53Z",
+      "side": 1,
+      "message": "Code will be refactored in future releases.",
+      "parentUuid": "d0f24c5c_8b5c74f6",
+      "revId": "ee656c7ce5683ecc866a3c59699d689e21a3c948",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd0fe0a7_bb13f88f",
         "filename": "certServiceK8sExternalProvider/src/certservice-controller/certificaterequest_reconciler.go",
         "patchSetId": 5
@@ -59,6 +77,24 @@
     },
     {
       "key": {
+        "uuid": "d33de0bd_76d2d1c0",
+        "filename": "certServiceK8sExternalProvider/src/certservice-controller/certificaterequest_reconciler.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-10-07T13:14:53Z",
+      "side": 1,
+      "message": "Code will be refactored in future releases.",
+      "parentUuid": "bd0fe0a7_bb13f88f",
+      "revId": "ee656c7ce5683ecc866a3c59699d689e21a3c948",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "990e5b76_30a1a7ba",
         "filename": "certServiceK8sExternalProvider/src/certservice-controller/certservice_issuer_reconciler.go",
         "patchSetId": 5
@@ -73,6 +109,24 @@
       "revId": "ee656c7ce5683ecc866a3c59699d689e21a3c948",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "024593f4_43f760fd",
+        "filename": "certServiceK8sExternalProvider/src/certservice-controller/certservice_issuer_reconciler.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-10-07T13:14:53Z",
+      "side": 1,
+      "message": "Code will be refactored in future releases.",
+      "parentUuid": "990e5b76_30a1a7ba",
+      "revId": "ee656c7ce5683ecc866a3c59699d689e21a3c948",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }

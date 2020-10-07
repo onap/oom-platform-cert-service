@@ -16,6 +16,24 @@
       "revId": "b1ec7f0d28bcd699c9dc5aaf23e902f04145863c",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaac2ac1_f4882ecc",
+        "filename": "certServiceK8sExternalProvider/Dockerfile",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-10-07T13:14:53Z",
+      "side": 0,
+      "message": "It seems that \u0027lastest\u0027 is the only reasonable tag to be used, see following link:\nhttps://console.cloud.google.com/gcr/images/distroless/GLOBAL/static?gcrImageListsize\u003d30",
+      "parentUuid": "878a3239_2b8808c8",
+      "revId": "b1ec7f0d28bcd699c9dc5aaf23e902f04145863c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
