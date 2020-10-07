@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ab67052_9a64982b",
+        "filename": "certServiceK8sExternalProvider/Dockerfile",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-10-07T11:07:47Z",
+      "side": 1,
+      "message": "For future (marking as resolved as this is not related to current review).\nCurrently when using \u0027mvn clean install -P docker\u0027 executable is built twice, once by docker builder and once by maven go plugin. Maybe the builder could be skipped or second dockerfile added for maven.",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 117
+      },
+      "revId": "ee656c7ce5683ecc866a3c59699d689e21a3c948",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
