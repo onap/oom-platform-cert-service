@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5d585d1_caa1ba20",
+        "filename": "certServiceK8sExternalProvider/deploy/_certificte_example_.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-10-07T07:23:47Z",
+      "side": 1,
+      "message": "Please add license information, see sample VES Collector files : \nhttps://gerrit.onap.org/r/gitweb?p\u003ddcaegen2/collectors/ves.git;a\u003dblob;f\u003dswagger_vescollector.yaml;h\u003d7e27fad66ba36d6b1f86dbf5f57f9cdc6d232ba9;hb\u003dHEAD\n\nhttps://gerrit.onap.org/r/gitweb?p\u003ddcaegen2/collectors/ves.git;a\u003dblob;f\u003dswagger_vescollector_1.5.4.yaml;h\u003d1fc2aa569f29497278548aaa2b1c09fd7424b5d7;hb\u003dHEAD",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 36
+      },
+      "revId": "aac14a0cafad9a067a93977d9e139c546499f977",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c41a9266_6efc3a75",
+        "filename": "certServiceK8sExternalProvider/src/api/cerservice_issuer_crd_deepcopy.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-10-07T07:23:47Z",
+      "side": 1,
+      "message": "I think it should be project name e.g. oom-certservice-k8s-external-provider or oom-certservice-external-provider.",
+      "range": {
+        "startLine": 3,
+        "startChar": 3,
+        "endLine": 3,
+        "endChar": 10
+      },
+      "revId": "aac14a0cafad9a067a93977d9e139c546499f977",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed43a64e_87f7112a",
+        "filename": "certServiceK8sExternalProvider/src/certservice-provisioner/certservice-provisioner.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-10-07T07:23:47Z",
+      "side": 1,
+      "message": "This function is unused, it will be helpful in future?",
+      "range": {
+        "startLine": 144,
+        "startChar": 5,
+        "endLine": 144,
+        "endChar": 20
+      },
+      "revId": "aac14a0cafad9a067a93977d9e139c546499f977",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aeee64a8_62e23a77",
+        "filename": "certServiceK8sExternalProvider/src/certservice-provisioner/certservice-provisioner.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-10-07T07:23:47Z",
+      "side": 1,
+      "message": "As above",
+      "range": {
+        "startLine": 156,
+        "startChar": 5,
+        "endLine": 156,
+        "endChar": 11
+      },
+      "revId": "aac14a0cafad9a067a93977d9e139c546499f977",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
