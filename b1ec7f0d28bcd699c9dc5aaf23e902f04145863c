@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "878a3239_2b8808c8",
+        "filename": "certServiceK8sExternalProvider/Dockerfile",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-10-07T12:13:13Z",
+      "side": 0,
+      "message": "do not use latest tag. Pls use concrete version of an image",
+      "revId": "b1ec7f0d28bcd699c9dc5aaf23e902f04145863c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}

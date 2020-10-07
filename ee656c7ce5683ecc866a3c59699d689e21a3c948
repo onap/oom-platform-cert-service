@@ -22,6 +22,57 @@
       "revId": "ee656c7ce5683ecc866a3c59699d689e21a3c948",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d0f24c5c_8b5c74f6",
+        "filename": "certServiceK8sExternalProvider/main.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-10-07T12:13:13Z",
+      "side": 1,
+      "message": "code duplication\nmaybe it is possible to extract duplicated code to methods and reuse it",
+      "revId": "ee656c7ce5683ecc866a3c59699d689e21a3c948",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd0fe0a7_bb13f88f",
+        "filename": "certServiceK8sExternalProvider/src/certservice-controller/certificaterequest_reconciler.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-10-07T12:13:13Z",
+      "side": 1,
+      "message": "for me is to high complexity pls split on functions and reuse it",
+      "revId": "ee656c7ce5683ecc866a3c59699d689e21a3c948",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "990e5b76_30a1a7ba",
+        "filename": "certServiceK8sExternalProvider/src/certservice-controller/certservice_issuer_reconciler.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-10-07T12:13:13Z",
+      "side": 1,
+      "message": "to high complexity",
+      "revId": "ee656c7ce5683ecc866a3c59699d689e21a3c948",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
