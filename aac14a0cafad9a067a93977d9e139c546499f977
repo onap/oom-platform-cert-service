@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "41d2661d_3ae2dbcd",
+        "filename": "certServiceK8sExternalProvider/deploy/_certificte_example_.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-10-07T07:44:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5d585d1_caa1ba20",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 36
+      },
+      "revId": "aac14a0cafad9a067a93977d9e139c546499f977",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c41a9266_6efc3a75",
         "filename": "certServiceK8sExternalProvider/src/api/cerservice_issuer_crd_deepcopy.go",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "aac14a0cafad9a067a93977d9e139c546499f977",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9ed13d3_ec848daf",
+        "filename": "certServiceK8sExternalProvider/src/api/cerservice_issuer_crd_deepcopy.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-10-07T07:44:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c41a9266_6efc3a75",
+      "range": {
+        "startLine": 3,
+        "startChar": 3,
+        "endLine": 3,
+        "endChar": 10
+      },
+      "revId": "aac14a0cafad9a067a93977d9e139c546499f977",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0afb7f22_e2b14463",
+        "filename": "certServiceK8sExternalProvider/src/certservice-provisioner/certservice-provisioner.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-10-07T07:44:28Z",
+      "side": 1,
+      "message": "Appropiate info is already present above in the source code.",
+      "parentUuid": "ed43a64e_87f7112a",
+      "range": {
+        "startLine": 144,
+        "startChar": 5,
+        "endLine": 144,
+        "endChar": 20
+      },
+      "revId": "aac14a0cafad9a067a93977d9e139c546499f977",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aeee64a8_62e23a77",
         "filename": "certServiceK8sExternalProvider/src/certservice-provisioner/certservice-provisioner.go",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "aac14a0cafad9a067a93977d9e139c546499f977",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5784849a_5f43f425",
+        "filename": "certServiceK8sExternalProvider/src/certservice-provisioner/certservice-provisioner.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-10-07T07:44:28Z",
+      "side": 1,
+      "message": "Appropiate info is already present above in the source code.",
+      "parentUuid": "aeee64a8_62e23a77",
+      "range": {
+        "startLine": 156,
+        "startChar": 5,
+        "endLine": 156,
+        "endChar": 11
+      },
+      "revId": "aac14a0cafad9a067a93977d9e139c546499f977",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
