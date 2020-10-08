@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3adb27e9_ae5b6091",
+        "filename": "certServiceK8sExternalProvider/deploy/_certificte_example_.yaml",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-10-08T16:08:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e46a82a_6bffc04c",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 74
+      },
+      "revId": "b3625d155ebd84f8e615dd508768764a89afca56",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad44e63c_764d1416",
         "filename": "certServiceK8sExternalProvider/deploy/crd.yaml",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "b3625d155ebd84f8e615dd508768764a89afca56",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d1eceaf_a861a35e",
+        "filename": "certServiceK8sExternalProvider/deploy/crd.yaml",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-10-08T16:08:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad44e63c_764d1416",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 74
+      },
+      "revId": "b3625d155ebd84f8e615dd508768764a89afca56",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "2ba70e1a_4563c760",
+        "filename": "certServiceK8sExternalProvider/deploy/deployment.yaml",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-10-08T16:08:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "867f342c_9f630f87",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 74
+      },
+      "revId": "b3625d155ebd84f8e615dd508768764a89afca56",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c503738_18df4643",
         "filename": "certServiceK8sExternalProvider/deploy/roles.yaml",
         "patchSetId": 7
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "c006b9c8_b09dad1e",
+        "filename": "certServiceK8sExternalProvider/deploy/roles.yaml",
+        "patchSetId": 7
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-10-08T16:08:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c503738_18df4643",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 56
+      },
+      "revId": "b3625d155ebd84f8e615dd508768764a89afca56",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ff9617f_cba873b8",
         "filename": "certServiceK8sExternalProvider/deploy/roles.yaml",
         "patchSetId": 7
@@ -114,6 +210,30 @@
       "revId": "b3625d155ebd84f8e615dd508768764a89afca56",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5202a53_a406399f",
+        "filename": "certServiceK8sExternalProvider/deploy/roles.yaml",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-10-08T16:08:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ff9617f_cba873b8",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 74
+      },
+      "revId": "b3625d155ebd84f8e615dd508768764a89afca56",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
