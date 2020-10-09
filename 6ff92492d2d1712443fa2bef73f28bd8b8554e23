@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "236205f8_66c6a42e",
+        "filename": "certServiceK8sExternalProvider/deploy/_certificte_example_.yaml",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-10-09T07:41:58Z",
+      "side": 1,
+      "message": "Why we are using CertificateRequest here, not our own kind of issuer?",
+      "revId": "6ff92492d2d1712443fa2bef73f28bd8b8554e23",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e55fb36_5b0c74e3",
+        "filename": "certServiceK8sExternalProvider/deploy/configuration.yaml",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-10-09T07:41:58Z",
+      "side": 1,
+      "message": "Is spec already adjusted to data that we need to successfully connect to CertService?",
+      "revId": "6ff92492d2d1712443fa2bef73f28bd8b8554e23",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e49c5cbe_20c9853e",
+        "filename": "certServiceK8sExternalProvider/deploy/crd.yaml",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-10-09T07:41:58Z",
+      "side": 1,
+      "message": "I would call it CMPv2Issuer",
+      "revId": "6ff92492d2d1712443fa2bef73f28bd8b8554e23",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c77c241_44bab930",
+        "filename": "certServiceK8sExternalProvider/deploy/crd.yaml",
+        "patchSetId": 9
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-10-09T07:41:58Z",
+      "side": 1,
+      "message": "Is this our version or copy pasted?",
+      "revId": "6ff92492d2d1712443fa2bef73f28bd8b8554e23",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5145ddae_36d1dcc3",
+        "filename": "certServiceK8sExternalProvider/deploy/deployment.yaml",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-10-09T07:41:58Z",
+      "side": 1,
+      "message": "I think we should deploy CMPv2Issuer using helm, not K8s resources",
+      "revId": "6ff92492d2d1712443fa2bef73f28bd8b8554e23",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef89b40b_e9b91553",
+        "filename": "certServiceK8sExternalProvider/deploy/roles.yaml",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-10-09T07:41:58Z",
+      "side": 1,
+      "message": "I wonder why we have the same CRD defined twice - here and in crd.yaml",
+      "revId": "6ff92492d2d1712443fa2bef73f28bd8b8554e23",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "110cac64_0ee83004",
+        "filename": "certServiceK8sExternalProvider/go.mod",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-10-09T07:41:58Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we use v1.0.2?",
+      "revId": "6ff92492d2d1712443fa2bef73f28bd8b8554e23",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78cea805_7d511934",
+        "filename": "certServiceK8sExternalProvider/main.go",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-10-09T07:41:58Z",
+      "side": 1,
+      "message": "Why v1alpha2?",
+      "revId": "6ff92492d2d1712443fa2bef73f28bd8b8554e23",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9eaaf1ab_5f28fca4",
+        "filename": "certServiceK8sExternalProvider/src/api/groupversion_info.go",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-10-09T07:41:58Z",
+      "side": 1,
+      "message": "Same",
+      "revId": "6ff92492d2d1712443fa2bef73f28bd8b8554e23",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e17714d_13ba3c04",
+        "filename": "certServiceK8sExternalProvider/src/certservice-controller/certificaterequest_reconciler.go",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-10-09T07:41:58Z",
+      "side": 1,
+      "message": "Same",
+      "revId": "6ff92492d2d1712443fa2bef73f28bd8b8554e23",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "917e19e5_6fcd28b4",
+        "filename": "certServiceK8sExternalProvider/src/certservice-controller/certificaterequest_reconciler.go",
+        "patchSetId": 9
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-10-09T07:41:58Z",
+      "side": 1,
+      "message": "Only Issuer group is checked, while kind not. For me this is a bug in Step issuer and also CMPv2 Issuer",
+      "revId": "6ff92492d2d1712443fa2bef73f28bd8b8554e23",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b2ff777_947727c0",
+        "filename": "certServiceK8sExternalProvider/src/certservice-provisioner/certservice-provisioner.go",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-10-09T07:41:58Z",
+      "side": 1,
+      "message": "Same",
+      "revId": "6ff92492d2d1712443fa2bef73f28bd8b8554e23",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
