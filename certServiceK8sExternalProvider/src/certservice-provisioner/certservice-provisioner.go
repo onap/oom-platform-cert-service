@@ -47,11 +47,11 @@ type CertServiceCA struct {
 	key  []byte
 }
 
-func New(iss *api.CertServiceIssuer, key []byte) (*CertServiceCA, error) {
+func New(certServiceIssuer *api.CertServiceIssuer, key []byte) (*CertServiceCA, error) {
 
 	ca := CertServiceCA{}
-	ca.name = iss.Name
-	ca.url = iss.Spec.URL
+	ca.name = certServiceIssuer.Name
+	ca.url = certServiceIssuer.Spec.URL
 	ca.key = key
 
 	log := ctrl.Log.WithName("certservice-provisioner")
@@ -61,26 +61,26 @@ func New(iss *api.CertServiceIssuer, key []byte) (*CertServiceCA, error) {
 }
 
 func Load(namespacedName types.NamespacedName) (*CertServiceCA, bool) {
-	v, ok := collection.Load(namespacedName)
+	provisioner, ok := collection.Load(namespacedName)
 	if !ok {
 		return nil, ok
 	}
-	p, ok := v.(*CertServiceCA)
-	return p, ok
+	certServiceCAprovisioner, ok := provisioner.(*CertServiceCA)
+	return certServiceCAprovisioner, ok
 }
 
 func Store(namespacedName types.NamespacedName, provisioner *CertServiceCA) {
 	collection.Store(namespacedName, provisioner)
 }
 
-func (ca *CertServiceCA) Sign(ctx context.Context, cr *certmanager.CertificateRequest) ([]byte, []byte, error) {
+func (ca *CertServiceCA) Sign(ctx context.Context, certificateRequest *certmanager.CertificateRequest) ([]byte, []byte, error) {
 	log := ctrl.Log.WithName("certservice-provisioner")
-	log.Info("Signing certificate: ", "cert-name", cr.Name)
+	log.Info("Signing certificate: ", "cert-name", certificateRequest.Name)
 
 	key, _ := base64.RawStdEncoding.DecodeString(string(ca.key))
 	log.Info("CA: ", "name", ca.name, "url", ca.url, "key", key)
 
-	crPEM := cr.Spec.CSRPEM
+	crPEM := certificateRequest.Spec.CSRPEM
 	csrBase64 := crPEM
 	log.Info("Csr PEM: ", "bytes", csrBase64)
 
@@ -104,7 +104,7 @@ func (ca *CertServiceCA) Sign(ctx context.Context, cr *certmanager.CertificateRe
 	signedPEM := encodedPEM
 	trustedCA := encodedPEM
 
-	log.Info("Successfully signed: ", "cert-name", cr.Name)
+	log.Info("Successfully signed: ", "cert-name", certificateRequest.Name)
 	log.Info("Signed cert PEM: ", "bytes", signedPEM)
 	log.Info("Trusted CA  PEM: ", "bytes", trustedCA)
 

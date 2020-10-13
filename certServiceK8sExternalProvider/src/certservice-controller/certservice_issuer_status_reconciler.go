@@ -23,7 +23,6 @@
  * ============LICENSE_END=========================================================
  */
 
-
 package certservice_controller
 
 import (
@@ -41,31 +40,31 @@ type certServiceIssuerStatusReconciler struct {
 	logger logr.Logger
 }
 
-func newStatusReconciler(r *CertServiceIssuerReconciler, iss *api.CertServiceIssuer, log logr.Logger) *certServiceIssuerStatusReconciler {
+func newStatusReconciler(reconciler *CertServiceIssuerReconciler, issuer *api.CertServiceIssuer, log logr.Logger) *certServiceIssuerStatusReconciler {
 	return &certServiceIssuerStatusReconciler{
-		CertServiceIssuerReconciler: r,
-		issuer:                      iss,
+		CertServiceIssuerReconciler: reconciler,
+		issuer:                      issuer,
 		logger:                      log,
 	}
 }
 
-func (r *certServiceIssuerStatusReconciler) Update(ctx context.Context, status api.ConditionStatus, reason, message string, args ...interface{}) error {
+func (reconciler *certServiceIssuerStatusReconciler) Update(ctx context.Context, status api.ConditionStatus, reason, message string, args ...interface{}) error {
 	completeMessage := fmt.Sprintf(message, args...)
-	r.setCondition(status, reason, completeMessage)
+	reconciler.setCondition(status, reason, completeMessage)
 
 	// Fire an Event to additionally inform users of the change
 	eventType := core.EventTypeNormal
 	if status == api.ConditionFalse {
 		eventType = core.EventTypeWarning
 	}
-	r.Recorder.Event(r.issuer, eventType, reason, completeMessage)
+	reconciler.Recorder.Event(reconciler.issuer, eventType, reason, completeMessage)
 
-	return r.Client.Status().Update(ctx, r.issuer)
+	return reconciler.Client.Status().Update(ctx, reconciler.issuer)
 }
 
-func (r *certServiceIssuerStatusReconciler) UpdateNoError(ctx context.Context, status api.ConditionStatus, reason, message string, args ...interface{}) {
-	if err := r.Update(ctx, status, reason, message, args...); err != nil {
-		r.logger.Error(err, "failed to update", "status", status, "reason", reason)
+func (reconciler *certServiceIssuerStatusReconciler) UpdateNoError(ctx context.Context, status api.ConditionStatus, reason, message string, args ...interface{}) {
+	if err := reconciler.Update(ctx, status, reason, message, args...); err != nil {
+		reconciler.logger.Error(err, "failed to update", "status", status, "reason", reason)
 	}
 }
 
@@ -78,9 +77,9 @@ func (r *certServiceIssuerStatusReconciler) UpdateNoError(ctx context.Context, s
 // - If a condition of the same type and different state already exists, the
 //   condition will be updated and the LastTransitionTime set to the current
 //   time.
-func (r *certServiceIssuerStatusReconciler) setCondition(status api.ConditionStatus, reason, message string) {
-	now := meta.NewTime(r.Clock.Now())
-	c := api.CertServiceIssuerCondition{
+func (reconciler *certServiceIssuerStatusReconciler) setCondition(status api.ConditionStatus, reason, message string) {
+	now := meta.NewTime(reconciler.Clock.Now())
+	issuerCondition := api.CertServiceIssuerCondition{
 		Type:               api.ConditionReady,
 		Status:             status,
 		Reason:             reason,
@@ -89,27 +88,27 @@ func (r *certServiceIssuerStatusReconciler) setCondition(status api.ConditionSta
 	}
 
 	// Search through existing conditions
-	for idx, cond := range r.issuer.Status.Conditions {
+	for i, condition := range reconciler.issuer.Status.Conditions {
 		// Skip unrelated conditions
-		if cond.Type != api.ConditionReady {
+		if condition.Type != api.ConditionReady {
 			continue
 		}
 
 		// If this update doesn't contain a state transition, we don't update
 		// the conditions LastTransitionTime to Now()
-		if cond.Status == status {
-			c.LastTransitionTime = cond.LastTransitionTime
+		if condition.Status == status {
+			issuerCondition.LastTransitionTime = condition.LastTransitionTime
 		} else {
-			r.logger.Info("found status change for CertServiceIssuer condition; setting lastTransitionTime", "condition", cond.Type, "old_status", cond.Status, "new_status", status, "time", now.Time)
+			reconciler.logger.Info("found status change for CertServiceIssuer condition; setting lastTransitionTime", "condition", condition.Type, "old_status", condition.Status, "new_status", status, "time", now.Time)
 		}
 
 		// Overwrite the existing condition
-		r.issuer.Status.Conditions[idx] = c
+		reconciler.issuer.Status.Conditions[i] = issuerCondition
 		return
 	}
 
 	// If we've not found an existing condition of this type, we simply insert
 	// the new condition into the slice.
-	r.issuer.Status.Conditions = append(r.issuer.Status.Conditions, c)
-	r.logger.Info("setting lastTransitionTime for CertServiceIssuer condition", "condition", api.ConditionReady, "time", now.Time)
+	reconciler.issuer.Status.Conditions = append(reconciler.issuer.Status.Conditions, issuerCondition)
+	reconciler.logger.Info("setting lastTransitionTime for CertServiceIssuer condition", "condition", api.ConditionReady, "time", now.Time)
 }

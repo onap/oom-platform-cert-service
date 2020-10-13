@@ -53,14 +53,14 @@ type CertificateRequestReconciler struct {
 // Reconcile will read and validate a CertServiceIssuer resource associated to the
 // CertificateRequest resource, and it will sign the CertificateRequest with the
 // provisioner in the CertServiceIssuer.
-func (r *CertificateRequestReconciler) Reconcile(req ctrl.Request) (ctrl.Result, error) {
+func (reconciler *CertificateRequestReconciler) Reconcile(req ctrl.Request) (ctrl.Result, error) {
 	ctx := context.Background()
-	log := r.Log.WithValues("certificaterequest", req.NamespacedName)
+	log := reconciler.Log.WithValues("certificaterequest", req.NamespacedName)
 
 	// Fetch the CertificateRequest resource being reconciled.
 	// Just ignore the request if the certificate request has been deleted.
-	cr := new(cmapi.CertificateRequest)
-	if err := r.Client.Get(ctx, req.NamespacedName, cr); err != nil {
+	certificateRequest := new(cmapi.CertificateRequest)
+	if err := reconciler.Client.Get(ctx, req.NamespacedName, certificateRequest); err != nil {
 		if apierrors.IsNotFound(err) {
 			return ctrl.Result{}, nil
 		}
@@ -71,65 +71,65 @@ func (r *CertificateRequestReconciler) Reconcile(req ctrl.Request) (ctrl.Result,
 
 	// Check the CertificateRequest's issuerRef and if it does not match the api
 	// group name, log a message at a debug level and stop processing.
-	if cr.Spec.IssuerRef.Group != "" && cr.Spec.IssuerRef.Group != api.GroupVersion.Group {
-		log.V(4).Info("resource does not specify an issuerRef group name that we are responsible for", "group", cr.Spec.IssuerRef.Group)
+	if certificateRequest.Spec.IssuerRef.Group != "" && certificateRequest.Spec.IssuerRef.Group != api.GroupVersion.Group {
+		log.V(4).Info("resource does not specify an issuerRef group name that we are responsible for", "group", certificateRequest.Spec.IssuerRef.Group)
 		return ctrl.Result{}, nil
 	}
 
 	// If the certificate data is already set then we skip this request as it
 	// has already been completed in the past.
-	if len(cr.Status.Certificate) > 0 {
+	if len(certificateRequest.Status.Certificate) > 0 {
 		log.V(4).Info("existing certificate data found in status, skipping already completed CertificateRequest")
 		return ctrl.Result{}, nil
 	}
 
 	// Fetch the CertServiceIssuer resource
-	iss := api.CertServiceIssuer{}
-	issNamespaceName := types.NamespacedName{
+	issuer := api.CertServiceIssuer{}
+	issuerNamespaceName := types.NamespacedName{
 		Namespace: req.Namespace,
-		Name:      cr.Spec.IssuerRef.Name,
+		Name:      certificateRequest.Spec.IssuerRef.Name,
 	}
-	if err := r.Client.Get(ctx, issNamespaceName, &iss); err != nil {
-		log.Error(err, "failed to retrieve CertServiceIssuer resource", "namespace", req.Namespace, "name", cr.Spec.IssuerRef.Name)
-		_ = r.setStatus(ctx, cr, cmmeta.ConditionFalse, cmapi.CertificateRequestReasonPending, "Failed to retrieve CertServiceIssuer resource %s: %v", issNamespaceName, err)
+	if err := reconciler.Client.Get(ctx, issuerNamespaceName, &issuer); err != nil {
+		log.Error(err, "failed to retrieve CertServiceIssuer resource", "namespace", req.Namespace, "name", certificateRequest.Spec.IssuerRef.Name)
+		_ = reconciler.setStatus(ctx, certificateRequest, cmmeta.ConditionFalse, cmapi.CertificateRequestReasonPending, "Failed to retrieve CertServiceIssuer resource %s: %v", issuerNamespaceName, err)
 		return ctrl.Result{}, err
 	}
 
 	// Check if the CertServiceIssuer resource has been marked Ready
-	if !certServiceIssuerHasCondition(iss, api.CertServiceIssuerCondition{Type: api.ConditionReady, Status: api.ConditionTrue}) {
-		err := fmt.Errorf("resource %s is not ready", issNamespaceName)
-		log.Error(err, "failed to retrieve CertServiceIssuer resource", "namespace", req.Namespace, "name", cr.Spec.IssuerRef.Name)
-		_ = r.setStatus(ctx, cr, cmmeta.ConditionFalse, cmapi.CertificateRequestReasonPending, "CertServiceIssuer resource %s is not Ready", issNamespaceName)
+	if !certServiceIssuerHasCondition(issuer, api.CertServiceIssuerCondition{Type: api.ConditionReady, Status: api.ConditionTrue}) {
+		err := fmt.Errorf("resource %s is not ready", issuerNamespaceName)
+		log.Error(err, "failed to retrieve CertServiceIssuer resource", "namespace", req.Namespace, "name", certificateRequest.Spec.IssuerRef.Name)
+		_ = reconciler.setStatus(ctx, certificateRequest, cmmeta.ConditionFalse, cmapi.CertificateRequestReasonPending, "CertServiceIssuer resource %s is not Ready", issuerNamespaceName)
 		return ctrl.Result{}, err
 	}
 
 	// Load the provisioner that will sign the CertificateRequest
-	provisioner, ok := provisioners.Load(issNamespaceName)
+	provisioner, ok := provisioners.Load(issuerNamespaceName)
 	if !ok {
-		err := fmt.Errorf("provisioner %s not found", issNamespaceName)
+		err := fmt.Errorf("provisioner %s not found", issuerNamespaceName)
 		log.Error(err, "failed to provisioner for CertServiceIssuer resource")
-		_ = r.setStatus(ctx, cr, cmmeta.ConditionFalse, cmapi.CertificateRequestReasonPending, "Failed to load provisioner for CertServiceIssuer resource %s", issNamespaceName)
+		_ = reconciler.setStatus(ctx, certificateRequest, cmmeta.ConditionFalse, cmapi.CertificateRequestReasonPending, "Failed to load provisioner for CertServiceIssuer resource %s", issuerNamespaceName)
 		return ctrl.Result{}, err
 	}
 
 	// Sign CertificateRequest
-	signedPEM, trustedCAs, err := provisioner.Sign(ctx, cr)
+	signedPEM, trustedCAs, err := provisioner.Sign(ctx, certificateRequest)
 	if err != nil {
 		log.Error(err, "failed to sign certificate request")
-		return ctrl.Result{}, r.setStatus(ctx, cr, cmmeta.ConditionFalse, cmapi.CertificateRequestReasonFailed, "Failed to sign certificate request: %v", err)
+		return ctrl.Result{}, reconciler.setStatus(ctx, certificateRequest, cmmeta.ConditionFalse, cmapi.CertificateRequestReasonFailed, "Failed to sign certificate request: %v", err)
 	}
-	cr.Status.Certificate = signedPEM
-	cr.Status.CA = trustedCAs
+	certificateRequest.Status.Certificate = signedPEM
+	certificateRequest.Status.CA = trustedCAs
 
-	return ctrl.Result{}, r.setStatus(ctx, cr, cmmeta.ConditionTrue, cmapi.CertificateRequestReasonIssued, "Certificate issued")
+	return ctrl.Result{}, reconciler.setStatus(ctx, certificateRequest, cmmeta.ConditionTrue, cmapi.CertificateRequestReasonIssued, "Certificate issued")
 }
 
 // SetupWithManager initializes the CertificateRequest controller into the
 // controller runtime.
-func (r *CertificateRequestReconciler) SetupWithManager(mgr ctrl.Manager) error {
-	return ctrl.NewControllerManagedBy(mgr).
+func (reconciler *CertificateRequestReconciler) SetupWithManager(manager ctrl.Manager) error {
+	return ctrl.NewControllerManagedBy(manager).
 		For(&cmapi.CertificateRequest{}).
-		Complete(r)
+		Complete(reconciler)
 }
 
 // certServiceIssuerHasCondition will return true if the given CertServiceIssuer resource has
@@ -137,26 +137,26 @@ func (r *CertificateRequestReconciler) SetupWithManager(mgr ctrl.Manager) error 
 // Status field will be used in the comparison, meaning that this function will
 // return 'true' even if the Reason, Message and LastTransitionTime fields do
 // not match.
-func certServiceIssuerHasCondition(iss api.CertServiceIssuer, c api.CertServiceIssuerCondition) bool {
-	existingConditions := iss.Status.Conditions
+func certServiceIssuerHasCondition(issuer api.CertServiceIssuer, condition api.CertServiceIssuerCondition) bool {
+	existingConditions := issuer.Status.Conditions
 	for _, cond := range existingConditions {
-		if c.Type == cond.Type && c.Status == cond.Status {
+		if condition.Type == cond.Type && condition.Status == cond.Status {
 			return true
 		}
 	}
 	return false
 }
 
-func (r *CertificateRequestReconciler) setStatus(ctx context.Context, cr *cmapi.CertificateRequest, status cmmeta.ConditionStatus, reason, message string, args ...interface{}) error {
+func (reconciler *CertificateRequestReconciler) setStatus(ctx context.Context, certificateRequest *cmapi.CertificateRequest, status cmmeta.ConditionStatus, reason, message string, args ...interface{}) error {
 	completeMessage := fmt.Sprintf(message, args...)
-	apiutil.SetCertificateRequestCondition(cr, cmapi.CertificateRequestConditionReady, status, reason, completeMessage)
+	apiutil.SetCertificateRequestCondition(certificateRequest, cmapi.CertificateRequestConditionReady, status, reason, completeMessage)
 
 	// Fire an Event to additionally inform users of the change
 	eventType := core.EventTypeNormal
 	if status == cmmeta.ConditionFalse {
 		eventType = core.EventTypeWarning
 	}
-	r.Recorder.Event(cr, eventType, reason, completeMessage)
+	reconciler.Recorder.Event(certificateRequest, eventType, reason, completeMessage)
 
-	return r.Client.Status().Update(ctx, cr)
+	return reconciler.Client.Status().Update(ctx, certificateRequest)
 }

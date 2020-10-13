@@ -23,7 +23,6 @@
  * ============LICENSE_END=========================================================
  */
 
-
 package main
 
 import (
@@ -68,7 +67,7 @@ func main() {
 	ctrl.SetLogger(zap.New(zap.UseDevMode(true)))
 
 	setupLog.Info("Creating k8s Manager...")
-	mgr, err := ctrl.NewManager(ctrl.GetConfigOrDie(), ctrl.Options{
+	manager, err := ctrl.NewManager(ctrl.GetConfigOrDie(), ctrl.Options{
 		Scheme:             scheme,
 		MetricsBindAddress: metricsAddr,
 		LeaderElection:     enableLeaderElection,
@@ -80,27 +79,27 @@ func main() {
 
 	setupLog.Info("Registering CertServiceIssuerReconciler...")
 	if err = (&controllers.CertServiceIssuerReconciler{
-		Client:   mgr.GetClient(),
+		Client:   manager.GetClient(),
 		Log:      ctrl.Log.WithName("controllers").WithName("CertServiceIssuer"),
 		Clock:    clock.RealClock{},
-		Recorder: mgr.GetEventRecorderFor("certservice-issuer-controller"),
-	}).SetupWithManager(mgr); err != nil {
+		Recorder: manager.GetEventRecorderFor("certservice-issuer-controller"),
+	}).SetupWithManager(manager); err != nil {
 		setupLog.Error(err, "unable to create controller", "controller", "CertServiceIssuer")
 		os.Exit(1)
 	}
 
 	setupLog.Info("Registering CertificateRequestReconciler...")
 	if err = (&controllers.CertificateRequestReconciler{
-		Client:   mgr.GetClient(),
+		Client:   manager.GetClient(),
 		Log:      ctrl.Log.WithName("controllers").WithName("CertificateRequest"),
-		Recorder: mgr.GetEventRecorderFor("certificaterequests-controller"),
-	}).SetupWithManager(mgr); err != nil {
+		Recorder: manager.GetEventRecorderFor("certificaterequests-controller"),
+	}).SetupWithManager(manager); err != nil {
 		setupLog.Error(err, "unable to create controller", "controller", "CertificateRequest")
 		os.Exit(1)
 	}
 
 	setupLog.Info("Starting k8s manager...")
-	if err := mgr.Start(ctrl.SetupSignalHandler()); err != nil {
+	if err := manager.Start(ctrl.SetupSignalHandler()); err != nil {
 		setupLog.Error(err, "problem running manager")
 		os.Exit(1)
 	}

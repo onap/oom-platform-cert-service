@@ -23,7 +23,6 @@
  * ============LICENSE_END=========================================================
  */
 
-
 package certservice_controller
 
 import (
@@ -51,18 +50,18 @@ type CertServiceIssuerReconciler struct {
 
 // Reconcile will read and validate the CertServiceIssuer resources, it will set the
 // status condition ready to true if everything is right.
-func (r *CertServiceIssuerReconciler) Reconcile(req ctrl.Request) (ctrl.Result, error) {
+func (reconciler *CertServiceIssuerReconciler) Reconcile(req ctrl.Request) (ctrl.Result, error) {
 	ctx := context.Background()
-	log := r.Log.WithValues("certservice-issuer-controller", req.NamespacedName)
+	log := reconciler.Log.WithValues("certservice-issuer-controller", req.NamespacedName)
 
-	iss := new(api.CertServiceIssuer)
-	if err := r.Client.Get(ctx, req.NamespacedName, iss); err != nil {
+	issuer := new(api.CertServiceIssuer)
+	if err := reconciler.Client.Get(ctx, req.NamespacedName, issuer); err != nil {
 		log.Error(err, "failed to retrieve CertServiceIssuer resource")
 		return ctrl.Result{}, client.IgnoreNotFound(err)
 	}
 
-	statusReconciler := newStatusReconciler(r, iss, log)
-	if err := validateCertServiceIssuerSpec(iss.Spec); err != nil {
+	statusReconciler := newStatusReconciler(reconciler, issuer, log)
+	if err := validateCertServiceIssuerSpec(issuer.Spec); err != nil {
 		log.Error(err, "failed to validate CertServiceIssuer resource")
 		statusReconciler.UpdateNoError(ctx, api.ConditionFalse, "Validation", "Failed to validate resource: %v", err)
 		return ctrl.Result{}, err
@@ -72,9 +71,9 @@ func (r *CertServiceIssuerReconciler) Reconcile(req ctrl.Request) (ctrl.Result, 
 	var secret core.Secret
 	secretNamespaceName := types.NamespacedName{
 		Namespace: req.Namespace,
-		Name:      iss.Spec.KeyRef.Name,
+		Name:      issuer.Spec.KeyRef.Name,
 	}
-	if err := r.Client.Get(ctx, secretNamespaceName, &secret); err != nil {
+	if err := reconciler.Client.Get(ctx, secretNamespaceName, &secret); err != nil {
 		log.Error(err, "failed to retrieve CertServiceIssuer provisioner secret", "namespace", secretNamespaceName.Namespace, "name", secretNamespaceName.Name)
 		if apierrors.IsNotFound(err) {
 			statusReconciler.UpdateNoError(ctx, api.ConditionFalse, "NotFound", "Failed to retrieve provisioner secret: %v", err)
@@ -83,41 +82,41 @@ func (r *CertServiceIssuerReconciler) Reconcile(req ctrl.Request) (ctrl.Result, 
 		}
 		return ctrl.Result{}, err
 	}
-	password, ok := secret.Data[iss.Spec.KeyRef.Key]
+	password, ok := secret.Data[issuer.Spec.KeyRef.Key]
 	if !ok {
-		err := fmt.Errorf("secret %s does not contain key %s", secret.Name, iss.Spec.KeyRef.Key)
+		err := fmt.Errorf("secret %s does not contain key %s", secret.Name, issuer.Spec.KeyRef.Key)
 		log.Error(err, "failed to retrieve CertServiceIssuer provisioner secret", "namespace", secretNamespaceName.Namespace, "name", secretNamespaceName.Name)
 		statusReconciler.UpdateNoError(ctx, api.ConditionFalse, "NotFound", "Failed to retrieve provisioner secret: %v", err)
 		return ctrl.Result{}, err
 	}
 
 	// Initialize and store the provisioner
-	p, err := provisioners.New(iss, password)
+	provisioner, err := provisioners.New(issuer, password)
 	if err != nil {
 		log.Error(err, "failed to initialize provisioner")
 		statusReconciler.UpdateNoError(ctx, api.ConditionFalse, "Error", "failed initialize provisioner")
 		return ctrl.Result{}, err
 	}
-	provisioners.Store(req.NamespacedName, p)
+	provisioners.Store(req.NamespacedName, provisioner)
 
 	return ctrl.Result{}, statusReconciler.Update(ctx, api.ConditionTrue, "Verified", "CertServiceIssuer verified and ready to sign certificates")
 }
 
 // SetupWithManager initializes the CertServiceIssuer controller into the controller
 // runtime.
-func (r *CertServiceIssuerReconciler) SetupWithManager(mgr ctrl.Manager) error {
-	return ctrl.NewControllerManagedBy(mgr).
+func (reconciler *CertServiceIssuerReconciler) SetupWithManager(manager ctrl.Manager) error {
+	return ctrl.NewControllerManagedBy(manager).
 		For(&api.CertServiceIssuer{}).
-		Complete(r)
+		Complete(reconciler)
 }
 
-func validateCertServiceIssuerSpec(s api.CertServiceIssuerSpec) error {
+func validateCertServiceIssuerSpec(issuerSpec api.CertServiceIssuerSpec) error {
 	switch {
-	case s.URL == "":
+	case issuerSpec.URL == "":
 		return fmt.Errorf("spec.url cannot be empty")
-	case s.KeyRef.Name == "":
+	case issuerSpec.KeyRef.Name == "":
 		return fmt.Errorf("spec.keyRef.name cannot be empty")
-	case s.KeyRef.Key == "":
+	case issuerSpec.KeyRef.Key == "":
 		return fmt.Errorf("spec.keyRef.key cannot be empty")
 	default:
 		return nil
