@@ -28,7 +28,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	certmanager "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1alpha2"
+	certmanager "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	clientgoscheme "k8s.io/client-go/kubernetes/scheme"
 	_ "k8s.io/client-go/plugin/pkg/client/auth/gcp"
@@ -53,7 +53,7 @@ func init() {
 
 func main() {
 	fmt.Println()
-	fmt.Println("                                        ***  Cert Service Provider v1.0.0  ***")
+	fmt.Println("                                        ***  Cert Service Provider v1.0.1  ***")
 	fmt.Println()
 
 	setupLog.Info("Parsing arguments...")

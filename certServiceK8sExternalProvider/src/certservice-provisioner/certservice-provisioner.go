@@ -32,7 +32,7 @@ import (
 	"encoding/base64"
 	"encoding/pem"
 	"fmt"
-	certmanager "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1alpha2"
+	certmanager "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1"
 	"k8s.io/apimachinery/pkg/types"
 	"onap.org/oom-certservice/k8s-external-provider/src/api"
 	ctrl "sigs.k8s.io/controller-runtime"
@@ -80,7 +80,7 @@ func (ca *CertServiceCA) Sign(ctx context.Context, certificateRequest *certmanag
 	key, _ := base64.RawStdEncoding.DecodeString(string(ca.key))
 	log.Info("CA: ", "name", ca.name, "url", ca.url, "key", key)
 
-	crPEM := certificateRequest.Spec.CSRPEM
+	crPEM := certificateRequest.Spec.Request
 	csrBase64 := crPEM
 	log.Info("Csr PEM: ", "bytes", csrBase64)
 
