@@ -59,6 +59,7 @@ func (reconciler *CertServiceIssuerReconciler) Reconcile(req ctrl.Request) (ctrl
 		log.Error(err, "failed to retrieve CertServiceIssuer resource")
 		return ctrl.Result{}, client.IgnoreNotFound(err)
 	}
+	log.Info("Issuer loaded: ", "issuer", issuer)
 
 	statusReconciler := newStatusReconciler(reconciler, issuer, log)
 	if err := validateCertServiceIssuerSpec(issuer.Spec); err != nil {
@@ -66,6 +67,7 @@ func (reconciler *CertServiceIssuerReconciler) Reconcile(req ctrl.Request) (ctrl
 		statusReconciler.UpdateNoError(ctx, api.ConditionFalse, "Validation", "Failed to validate resource: %v", err)
 		return ctrl.Result{}, err
 	}
+	log.Info("Issuer validated. ")
 
 	// Fetch the provisioner password
 	var secret core.Secret
@@ -99,6 +101,7 @@ func (reconciler *CertServiceIssuerReconciler) Reconcile(req ctrl.Request) (ctrl
 	}
 	provisioners.Store(req.NamespacedName, provisioner)
 
+	log.Info( "CertServiceIssuer verified. Updating status to Verified...")
 	return ctrl.Result{}, statusReconciler.Update(ctx, api.ConditionTrue, "Verified", "CertServiceIssuer verified and ready to sign certificates")
 }
 

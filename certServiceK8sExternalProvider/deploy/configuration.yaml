@@ -22,7 +22,7 @@
 # ============LICENSE_END=========================================================
 #
 
-apiVersion: certmanager.onap.org/v1beta1
+apiVersion: certmanager.onap.org/v1
 kind: CertServiceIssuer
 metadata:
   name: certservice-issuer

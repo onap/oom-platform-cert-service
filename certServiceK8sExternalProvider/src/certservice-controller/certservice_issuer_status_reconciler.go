@@ -57,9 +57,11 @@ func (reconciler *certServiceIssuerStatusReconciler) Update(ctx context.Context,
 	if status == api.ConditionFalse {
 		eventType = core.EventTypeWarning
 	}
+	reconciler.logger.Info("Firing event: ", "issuer", reconciler.issuer, "eventtype", eventType, "reason", reason, "message", completeMessage)
 	reconciler.Recorder.Event(reconciler.issuer, eventType, reason, completeMessage)
 
-	return reconciler.Client.Status().Update(ctx, reconciler.issuer)
+	reconciler.logger.Info("Updating issuer... ")
+	return reconciler.Client.Update(ctx, reconciler.issuer)
 }
 
 func (reconciler *certServiceIssuerStatusReconciler) UpdateNoError(ctx context.Context, status api.ConditionStatus, reason, message string, args ...interface{}) {

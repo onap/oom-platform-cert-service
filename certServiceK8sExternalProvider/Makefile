@@ -21,6 +21,9 @@
 build:
 	go build -v -o bin/oom-certservice-k8s-external-provider
 
+test: build
+	go test ./...
+
 build-docker-image:
 	docker build -t onap/oom-certservice-k8s-external-provider .
 

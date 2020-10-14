@@ -72,16 +72,15 @@ spec:
           name: https
       - args:
         - --metrics-addr=127.0.0.1:8080
-        - --enable-leader-election
         command:
         - /oom-certservice-k8s-external-provider
         image: onap/oom-certservice-k8s-external-provider:1.0.0
         name: oom-certservice-k8s-external-provider
         resources:
           limits:
-            cpu: 100m
-            memory: 50Mi
+            cpu: 250m
+            memory: 128Mi
           requests:
             cpu: 100m
-            memory: 30Mi
+            memory: 64Mi
       terminationGracePeriodSeconds: 10
