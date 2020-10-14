@@ -16,6 +16,24 @@
       "revId": "720466562b0ea1e67ff36f44e0d95645837316d4",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47554c9e_15c8c8ae",
+        "filename": "certServiceK8sExternalProvider/deploy/configuration.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-10-14T12:32:25Z",
+      "side": 1,
+      "message": "I wanted in this commit only update libs and versions of the resources",
+      "parentUuid": "89326979_218a444c",
+      "revId": "720466562b0ea1e67ff36f44e0d95645837316d4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
