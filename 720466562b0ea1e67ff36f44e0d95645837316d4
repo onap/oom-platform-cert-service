@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89326979_218a444c",
+        "filename": "certServiceK8sExternalProvider/deploy/configuration.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-10-14T12:25:33Z",
+      "side": 1,
+      "message": "Still not changed, why?",
+      "revId": "720466562b0ea1e67ff36f44e0d95645837316d4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
