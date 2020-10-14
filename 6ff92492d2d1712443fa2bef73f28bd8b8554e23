@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "31e92956_0fa37966",
+        "filename": "certServiceK8sExternalProvider/deploy/configuration.yaml",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-10-14T14:50:42Z",
+      "side": 1,
+      "message": "To correctly connect to CertService API we need following on CMPv2Issuer side:\nURL - e.g. https://oom-cert-service:8443/v1/certificate/\nCA_NAME - e.g. RA\nReference to secret with keystore and truststore (e.g. certServiceClient-keystore.jks \u0026\u0026 truststore.jks)\nReference to secret with passwords to above files (e.g. secret \u0026\u0026 secret) - this is different than when we used CertService client as init container\n\nWithin CertService client we have also REQUEST_TIMEOUT but such is not mandatory.",
+      "parentUuid": "2e55fb36_5b0c74e3",
+      "revId": "6ff92492d2d1712443fa2bef73f28bd8b8554e23",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e49c5cbe_20c9853e",
         "filename": "certServiceK8sExternalProvider/deploy/crd.yaml",
         "patchSetId": 9
