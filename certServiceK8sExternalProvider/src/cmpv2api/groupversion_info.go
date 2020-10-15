@@ -23,7 +23,7 @@
  * ============LICENSE_END=========================================================
  */
 
-package api
+package cmpv2api
 
 import (
 	"k8s.io/apimachinery/pkg/runtime/schema"
