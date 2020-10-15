@@ -23,18 +23,18 @@
  * ============LICENSE_END=========================================================
  */
 
-package api
+package cmpv2api
 
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 func init() {
-	SchemeBuilder.Register(&CertServiceIssuer{}, &CertServiceIssuerList{})
+	SchemeBuilder.Register(&CMPv2Issuer{}, &CMPv2IssuerList{})
 }
 
-// CertServiceIssuerSpec defines the desired state of CertServiceIssuer
-type CertServiceIssuerSpec struct {
+// CMPv2IssuerSpec defines the desired state of CMPv2Issuer
+type CMPv2IssuerSpec struct {
 	// URL is the base URL for the CertService certificates instance.
 	URL string `json:"url"`
 
@@ -43,34 +43,28 @@ type CertServiceIssuerSpec struct {
 	KeyRef SecretKeySelector `json:"keyRef"`
 }
 
-// CertServiceIssuerStatus defines the observed state of CertServiceIssuer
-type CertServiceIssuerStatus struct {
-	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
+// CMPv2IssuerStatus defines the observed state of CMPv2Issuer
+type CMPv2IssuerStatus struct {
 
 	// +optional
-	Conditions []CertServiceIssuerCondition `json:"conditions,omitempty"`
+	Conditions []CMPv2IssuerCondition `json:"conditions,omitempty"`
 }
 
-// +kubebuilder:object:root=true
-
-// CertServiceIssuer is the Schema for the certserviceissuers API
-// +kubebuilder:subresource:status
-type CertServiceIssuer struct {
+type CMPv2Issuer struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec   CertServiceIssuerSpec   `json:"spec,omitempty"`
-	Status CertServiceIssuerStatus `json:"status,omitempty"`
+	Spec   CMPv2IssuerSpec   `json:"spec,omitempty"`
+	Status CMPv2IssuerStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 
-// CertServiceIssuerList contains a list of CertServiceIssuer
-type CertServiceIssuerList struct {
+// CMPv2IssuerList contains a list of CMPv2Issuer
+type CMPv2IssuerList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []CertServiceIssuer `json:"items"`
+	Items           []CMPv2Issuer `json:"items"`
 }
 
 // SecretKeySelector contains the reference to a secret.
@@ -83,12 +77,12 @@ type SecretKeySelector struct {
 	Key string `json:"key,omitempty"`
 }
 
-// ConditionType represents a CertServiceIssuer condition type.
+// ConditionType represents a CMPv2Issuer condition type.
 // +kubebuilder:validation:Enum=Ready
 type ConditionType string
 
 const (
-	// ConditionReady indicates that a CertServiceIssuer is ready for use.
+	// ConditionReady indicates that a CMPv2Issuer is ready for use.
 	ConditionReady ConditionType = "Ready"
 )
 
@@ -112,8 +106,8 @@ const (
 	ConditionUnknown ConditionStatus = "Unknown"
 )
 
-// CertServiceIssuerCondition contains condition information for the CertService issuer.
-type CertServiceIssuerCondition struct {
+// CMPv2IssuerCondition contains condition information for the CertService issuer.
+type CMPv2IssuerCondition struct {
 	// Type of the condition, currently ('Ready').
 	Type ConditionType `json:"type"`
 
