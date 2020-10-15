@@ -274,6 +274,24 @@
       "revId": "6ff92492d2d1712443fa2bef73f28bd8b8554e23",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e096643_1653773d",
+        "filename": "certServiceK8sExternalProvider/test/certservice-provisioner/certservice-provisioner_test.go",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-10-15T08:57:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a79e2667_d0841ed9",
+      "revId": "6ff92492d2d1712443fa2bef73f28bd8b8554e23",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
