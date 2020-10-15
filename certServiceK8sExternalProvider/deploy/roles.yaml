@@ -25,7 +25,7 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: certservice-issuer-leader-election-role
+  name: cmpv2-issuer-leader-election-role
   namespace: onap
 rules:
   - apiGroups:
@@ -58,7 +58,7 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: certservice-issuer-manager-role
+  name: cmpv2-issuer-manager-role
 rules:
   - apiGroups:
       - ""
@@ -95,7 +95,7 @@ rules:
   - apiGroups:
       - certmanager.onap.org
     resources:
-      - certserviceissuers
+      - cmpv2issuers
     verbs:
       - create
       - delete
@@ -107,7 +107,7 @@ rules:
   - apiGroups:
       - certmanager.onap.org
     resources:
-      - certserviceissuers/status
+      - cmpv2issuers/status
     verbs:
       - get
       - patch
@@ -116,7 +116,7 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: certservice-issuer-proxy-role
+  name: cmpv2-issuer-proxy-role
 rules:
   - apiGroups:
       - authentication.k8s.io
@@ -134,12 +134,12 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: certservice-issuer-leader-election-rolebinding
+  name: cmpv2-issuer-leader-election-rolebinding
   namespace: onap
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: certservice-issuer-leader-election-role
+  name: cmpv2-issuer-leader-election-role
 subjects:
   - kind: ServiceAccount
     name: default
@@ -148,11 +148,11 @@ subjects:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: certservice-issuer-manager-rolebinding
+  name: cmpv2-issuer-manager-rolebinding
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: certservice-issuer-manager-role
+  name: cmpv2-issuer-manager-role
 subjects:
   - kind: ServiceAccount
     name: default
@@ -161,11 +161,11 @@ subjects:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: certservice-issuer-proxy-rolebinding
+  name: cmpv2-issuer-proxy-rolebinding
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: certservice-issuer-proxy-role
+  name: cmpv2-issuer-proxy-role
 subjects:
   - kind: ServiceAccount
     name: default

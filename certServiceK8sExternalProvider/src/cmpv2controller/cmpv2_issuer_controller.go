@@ -23,7 +23,7 @@
  * ============LICENSE_END=========================================================
  */
 
-package certservice_controller
+package cmpv2controller
 
 import (
 	"context"
@@ -34,37 +34,37 @@ import (
 	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/client-go/tools/record"
 	"k8s.io/utils/clock"
-	"onap.org/oom-certservice/k8s-external-provider/src/api"
-	provisioners "onap.org/oom-certservice/k8s-external-provider/src/certservice-provisioner"
+	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2api"
+	provisioners "onap.org/oom-certservice/k8s-external-provider/src/cmpv2provisioner"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 )
 
-// CertServiceIssuerReconciler reconciles a CertServiceIssuer object
-type CertServiceIssuerReconciler struct {
+// CMPv2IssuerController reconciles a CMPv2Issuer object
+type CMPv2IssuerController struct {
 	client.Client
 	Log      logr.Logger
 	Clock    clock.Clock
 	Recorder record.EventRecorder
 }
 
-// Reconcile will read and validate the CertServiceIssuer resources, it will set the
+// Reconcile will read and validate the CMPv2Issuer resources, it will set the
 // status condition ready to true if everything is right.
-func (reconciler *CertServiceIssuerReconciler) Reconcile(req ctrl.Request) (ctrl.Result, error) {
+func (controller *CMPv2IssuerController) Reconcile(req ctrl.Request) (ctrl.Result, error) {
 	ctx := context.Background()
-	log := reconciler.Log.WithValues("certservice-issuer-controller", req.NamespacedName)
+	log := controller.Log.WithValues("cmpv2-issuer-controller", req.NamespacedName)
 
-	issuer := new(api.CertServiceIssuer)
-	if err := reconciler.Client.Get(ctx, req.NamespacedName, issuer); err != nil {
-		log.Error(err, "failed to retrieve CertServiceIssuer resource")
+	issuer := new(cmpv2api.CMPv2Issuer)
+	if err := controller.Client.Get(ctx, req.NamespacedName, issuer); err != nil {
+		log.Error(err, "failed to retrieve CMPv2Issuer resource")
 		return ctrl.Result{}, client.IgnoreNotFound(err)
 	}
 	log.Info("Issuer loaded: ", "issuer", issuer)
 
-	statusReconciler := newStatusReconciler(reconciler, issuer, log)
-	if err := validateCertServiceIssuerSpec(issuer.Spec); err != nil {
-		log.Error(err, "failed to validate CertServiceIssuer resource")
-		statusReconciler.UpdateNoError(ctx, api.ConditionFalse, "Validation", "Failed to validate resource: %v", err)
+	statusUpdater := newStatusUpdater(controller, issuer, log)
+	if err := validateCMPv2IssuerSpec(issuer.Spec); err != nil {
+		log.Error(err, "failed to validate CMPv2Issuer resource")
+		statusUpdater.UpdateNoError(ctx, cmpv2api.ConditionFalse, "Validation", "Failed to validate resource: %v", err)
 		return ctrl.Result{}, err
 	}
 	log.Info("Issuer validated. ")
@@ -75,20 +75,20 @@ func (reconciler *CertServiceIssuerReconciler) Reconcile(req ctrl.Request) (ctrl
 		Namespace: req.Namespace,
 		Name:      issuer.Spec.KeyRef.Name,
 	}
-	if err := reconciler.Client.Get(ctx, secretNamespaceName, &secret); err != nil {
-		log.Error(err, "failed to retrieve CertServiceIssuer provisioner secret", "namespace", secretNamespaceName.Namespace, "name", secretNamespaceName.Name)
+	if err := controller.Client.Get(ctx, secretNamespaceName, &secret); err != nil {
+		log.Error(err, "failed to retrieve CMPv2Issuer provisioner secret", "namespace", secretNamespaceName.Namespace, "name", secretNamespaceName.Name)
 		if apierrors.IsNotFound(err) {
-			statusReconciler.UpdateNoError(ctx, api.ConditionFalse, "NotFound", "Failed to retrieve provisioner secret: %v", err)
+			statusUpdater.UpdateNoError(ctx, cmpv2api.ConditionFalse, "NotFound", "Failed to retrieve provisioner secret: %v", err)
 		} else {
-			statusReconciler.UpdateNoError(ctx, api.ConditionFalse, "Error", "Failed to retrieve provisioner secret: %v", err)
+			statusUpdater.UpdateNoError(ctx, cmpv2api.ConditionFalse, "Error", "Failed to retrieve provisioner secret: %v", err)
 		}
 		return ctrl.Result{}, err
 	}
 	password, ok := secret.Data[issuer.Spec.KeyRef.Key]
 	if !ok {
 		err := fmt.Errorf("secret %s does not contain key %s", secret.Name, issuer.Spec.KeyRef.Key)
-		log.Error(err, "failed to retrieve CertServiceIssuer provisioner secret", "namespace", secretNamespaceName.Namespace, "name", secretNamespaceName.Name)
-		statusReconciler.UpdateNoError(ctx, api.ConditionFalse, "NotFound", "Failed to retrieve provisioner secret: %v", err)
+		log.Error(err, "failed to retrieve CMPv2Issuer provisioner secret", "namespace", secretNamespaceName.Namespace, "name", secretNamespaceName.Name)
+		statusUpdater.UpdateNoError(ctx, cmpv2api.ConditionFalse, "NotFound", "Failed to retrieve provisioner secret: %v", err)
 		return ctrl.Result{}, err
 	}
 
@@ -96,24 +96,24 @@ func (reconciler *CertServiceIssuerReconciler) Reconcile(req ctrl.Request) (ctrl
 	provisioner, err := provisioners.New(issuer, password)
 	if err != nil {
 		log.Error(err, "failed to initialize provisioner")
-		statusReconciler.UpdateNoError(ctx, api.ConditionFalse, "Error", "failed initialize provisioner")
+		statusUpdater.UpdateNoError(ctx, cmpv2api.ConditionFalse, "Error", "failed initialize provisioner")
 		return ctrl.Result{}, err
 	}
 	provisioners.Store(req.NamespacedName, provisioner)
 
-	log.Info( "CertServiceIssuer verified. Updating status to Verified...")
-	return ctrl.Result{}, statusReconciler.Update(ctx, api.ConditionTrue, "Verified", "CertServiceIssuer verified and ready to sign certificates")
+	log.Info( "CMPv2Issuer verified. Updating status to Verified...")
+	return ctrl.Result{}, statusUpdater.Update(ctx, cmpv2api.ConditionTrue, "Verified", "CMPv2Issuer verified and ready to sign certificates")
 }
 
-// SetupWithManager initializes the CertServiceIssuer controller into the controller
+// SetupWithManager initializes the CMPv2Issuer controller into the controller
 // runtime.
-func (reconciler *CertServiceIssuerReconciler) SetupWithManager(manager ctrl.Manager) error {
+func (controller *CMPv2IssuerController) SetupWithManager(manager ctrl.Manager) error {
 	return ctrl.NewControllerManagedBy(manager).
-		For(&api.CertServiceIssuer{}).
-		Complete(reconciler)
+		For(&cmpv2api.CMPv2Issuer{}).
+		Complete(controller)
 }
 
-func validateCertServiceIssuerSpec(issuerSpec api.CertServiceIssuerSpec) error {
+func validateCMPv2IssuerSpec(issuerSpec cmpv2api.CMPv2IssuerSpec) error {
 	switch {
 	case issuerSpec.URL == "":
 		return fmt.Errorf("spec.url cannot be empty")

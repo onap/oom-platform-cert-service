@@ -33,8 +33,9 @@ import (
 	clientgoscheme "k8s.io/client-go/kubernetes/scheme"
 	_ "k8s.io/client-go/plugin/pkg/client/auth/gcp"
 	"k8s.io/utils/clock"
-	certserviceapi "onap.org/oom-certservice/k8s-external-provider/src/api"
-	controllers "onap.org/oom-certservice/k8s-external-provider/src/certservice-controller"
+	app "onap.org/oom-certservice/k8s-external-provider/src"
+	certserviceapi "onap.org/oom-certservice/k8s-external-provider/src/cmpv2api"
+	controllers "onap.org/oom-certservice/k8s-external-provider/src/cmpv2controller"
 	"os"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
@@ -53,7 +54,7 @@ func init() {
 
 func main() {
 	fmt.Println()
-	fmt.Println("                                        ***  Cert Service Provider v1.0.1  ***")
+	fmt.Println("                                        ***  Cert Service Provider v1.0.2  ***")
 	fmt.Println()
 
 	setupLog.Info("Parsing arguments...")
@@ -73,36 +74,37 @@ func main() {
 		LeaderElection:     enableLeaderElection,
 	})
 	if err != nil {
-		setupLog.Error(err, "unable to start manager")
-		os.Exit(1)
+		exit(app.FAILED_TO_CREATE_CONTROLLER_MANAGER, err)
 	}
 
-	setupLog.Info("Registering CertServiceIssuerReconciler...")
-	if err = (&controllers.CertServiceIssuerReconciler{
+	setupLog.Info("Registering CMPv2IssuerController...")
+	if err = (&controllers.CMPv2IssuerController{
 		Client:   manager.GetClient(),
-		Log:      ctrl.Log.WithName("controllers").WithName("CertServiceIssuer"),
+		Log:      ctrl.Log.WithName("controllers").WithName("CMPv2Issuer"),
 		Clock:    clock.RealClock{},
-		Recorder: manager.GetEventRecorderFor("certservice-issuer-controller"),
+		Recorder: manager.GetEventRecorderFor("cmpv2-issuer-controller"),
 	}).SetupWithManager(manager); err != nil {
-		setupLog.Error(err, "unable to create controller", "controller", "CertServiceIssuer")
-		os.Exit(1)
+		exit(app.FAILED_TO_REGISTER_CMPv2_ISSUER_CONTROLLER, err)
 	}
 
-	setupLog.Info("Registering CertificateRequestReconciler...")
-	if err = (&controllers.CertificateRequestReconciler{
+	setupLog.Info("Registering CertificateRequestController...")
+	if err = (&controllers.CertificateRequestController{
 		Client:   manager.GetClient(),
 		Log:      ctrl.Log.WithName("controllers").WithName("CertificateRequest"),
-		Recorder: manager.GetEventRecorderFor("certificaterequests-controller"),
+		Recorder: manager.GetEventRecorderFor("certificate-requests-controller"),
 	}).SetupWithManager(manager); err != nil {
-		setupLog.Error(err, "unable to create controller", "controller", "CertificateRequest")
-		os.Exit(1)
+		exit(app.FAILED_TO_REGISTER_CERT_REQUEST_CONTROLLER, err)
 	}
 
 	setupLog.Info("Starting k8s manager...")
 	if err := manager.Start(ctrl.SetupSignalHandler()); err != nil {
-		setupLog.Error(err, "problem running manager")
-		os.Exit(1)
+		exit(app.EXCEPTION_WHILE_RUNNING_CONTROLLER_MANAGER, err)
 	}
 	setupLog.Info("Application is up and running.")
 
+}
+
+func exit(exitCode app.ExitCode, err error) {
+	setupLog.Error(err, exitCode.Message)
+	os.Exit(exitCode.Code)
 }

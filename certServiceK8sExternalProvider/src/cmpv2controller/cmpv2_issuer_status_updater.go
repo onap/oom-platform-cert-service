@@ -23,7 +23,7 @@
  * ============LICENSE_END=========================================================
  */
 
-package certservice_controller
+package cmpv2controller
 
 import (
 	"context"
@@ -31,46 +31,46 @@ import (
 	"github.com/go-logr/logr"
 	core "k8s.io/api/core/v1"
 	meta "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"onap.org/oom-certservice/k8s-external-provider/src/api"
+	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2api"
 )
 
-type certServiceIssuerStatusReconciler struct {
-	*CertServiceIssuerReconciler
-	issuer *api.CertServiceIssuer
+type CMPv2IssuerStatusUpdater struct {
+	*CMPv2IssuerController
+	issuer *cmpv2api.CMPv2Issuer
 	logger logr.Logger
 }
 
-func newStatusReconciler(reconciler *CertServiceIssuerReconciler, issuer *api.CertServiceIssuer, log logr.Logger) *certServiceIssuerStatusReconciler {
-	return &certServiceIssuerStatusReconciler{
-		CertServiceIssuerReconciler: reconciler,
-		issuer:                      issuer,
-		logger:                      log,
+func newStatusUpdater(controller *CMPv2IssuerController, issuer *cmpv2api.CMPv2Issuer, log logr.Logger) *CMPv2IssuerStatusUpdater {
+	return &CMPv2IssuerStatusUpdater{
+		CMPv2IssuerController: controller,
+		issuer:                issuer,
+		logger:                log,
 	}
 }
 
-func (reconciler *certServiceIssuerStatusReconciler) Update(ctx context.Context, status api.ConditionStatus, reason, message string, args ...interface{}) error {
+func (updater *CMPv2IssuerStatusUpdater) Update(ctx context.Context, status cmpv2api.ConditionStatus, reason, message string, args ...interface{}) error {
 	completeMessage := fmt.Sprintf(message, args...)
-	reconciler.setCondition(status, reason, completeMessage)
+	updater.setCondition(status, reason, completeMessage)
 
 	// Fire an Event to additionally inform users of the change
 	eventType := core.EventTypeNormal
-	if status == api.ConditionFalse {
+	if status == cmpv2api.ConditionFalse {
 		eventType = core.EventTypeWarning
 	}
-	reconciler.logger.Info("Firing event: ", "issuer", reconciler.issuer, "eventtype", eventType, "reason", reason, "message", completeMessage)
-	reconciler.Recorder.Event(reconciler.issuer, eventType, reason, completeMessage)
+	updater.logger.Info("Firing event: ", "issuer", updater.issuer, "eventtype", eventType, "reason", reason, "message", completeMessage)
+	updater.Recorder.Event(updater.issuer, eventType, reason, completeMessage)
 
-	reconciler.logger.Info("Updating issuer... ")
-	return reconciler.Client.Update(ctx, reconciler.issuer)
+	updater.logger.Info("Updating issuer... ")
+	return updater.Client.Update(ctx, updater.issuer)
 }
 
-func (reconciler *certServiceIssuerStatusReconciler) UpdateNoError(ctx context.Context, status api.ConditionStatus, reason, message string, args ...interface{}) {
-	if err := reconciler.Update(ctx, status, reason, message, args...); err != nil {
-		reconciler.logger.Error(err, "failed to update", "status", status, "reason", reason)
+func (updater *CMPv2IssuerStatusUpdater) UpdateNoError(ctx context.Context, status cmpv2api.ConditionStatus, reason, message string, args ...interface{}) {
+	if err := updater.Update(ctx, status, reason, message, args...); err != nil {
+		updater.logger.Error(err, "failed to update", "status", status, "reason", reason)
 	}
 }
 
-// setCondition will set a 'condition' on the given api.CertServiceIssuer resource.
+// setCondition will set a 'condition' on the given cmpv2api.CMPv2Issuer resource.
 //
 // - If no condition of the same type already exists, the condition will be
 //   inserted with the LastTransitionTime set to the current time.
@@ -79,10 +79,10 @@ func (reconciler *certServiceIssuerStatusReconciler) UpdateNoError(ctx context.C
 // - If a condition of the same type and different state already exists, the
 //   condition will be updated and the LastTransitionTime set to the current
 //   time.
-func (reconciler *certServiceIssuerStatusReconciler) setCondition(status api.ConditionStatus, reason, message string) {
-	now := meta.NewTime(reconciler.Clock.Now())
-	issuerCondition := api.CertServiceIssuerCondition{
-		Type:               api.ConditionReady,
+func (updater *CMPv2IssuerStatusUpdater) setCondition(status cmpv2api.ConditionStatus, reason, message string) {
+	now := meta.NewTime(updater.Clock.Now())
+	issuerCondition := cmpv2api.CMPv2IssuerCondition{
+		Type:               cmpv2api.ConditionReady,
 		Status:             status,
 		Reason:             reason,
 		Message:            message,
@@ -90,9 +90,9 @@ func (reconciler *certServiceIssuerStatusReconciler) setCondition(status api.Con
 	}
 
 	// Search through existing conditions
-	for i, condition := range reconciler.issuer.Status.Conditions {
+	for i, condition := range updater.issuer.Status.Conditions {
 		// Skip unrelated conditions
-		if condition.Type != api.ConditionReady {
+		if condition.Type != cmpv2api.ConditionReady {
 			continue
 		}
 
@@ -101,16 +101,16 @@ func (reconciler *certServiceIssuerStatusReconciler) setCondition(status api.Con
 		if condition.Status == status {
 			issuerCondition.LastTransitionTime = condition.LastTransitionTime
 		} else {
-			reconciler.logger.Info("found status change for CertServiceIssuer condition; setting lastTransitionTime", "condition", condition.Type, "old_status", condition.Status, "new_status", status, "time", now.Time)
+			updater.logger.Info("found status change for CMPv2Issuer condition; setting lastTransitionTime", "condition", condition.Type, "old_status", condition.Status, "new_status", status, "time", now.Time)
 		}
 
 		// Overwrite the existing condition
-		reconciler.issuer.Status.Conditions[i] = issuerCondition
+		updater.issuer.Status.Conditions[i] = issuerCondition
 		return
 	}
 
 	// If we've not found an existing condition of this type, we simply insert
 	// the new condition into the slice.
-	reconciler.issuer.Status.Conditions = append(reconciler.issuer.Status.Conditions, issuerCondition)
-	reconciler.logger.Info("setting lastTransitionTime for CertServiceIssuer condition", "condition", api.ConditionReady, "time", now.Time)
+	updater.issuer.Status.Conditions = append(updater.issuer.Status.Conditions, issuerCondition)
+	updater.logger.Info("setting lastTransitionTime for CMPv2Issuer condition", "condition", cmpv2api.ConditionReady, "time", now.Time)
 }
