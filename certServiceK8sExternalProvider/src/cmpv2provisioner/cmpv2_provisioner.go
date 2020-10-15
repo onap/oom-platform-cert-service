@@ -23,7 +23,7 @@
  * ============LICENSE_END=========================================================
  */
 
-package provisioners
+package cmpv2provisioner
 
 import (
 	"bytes"
@@ -34,7 +34,7 @@ import (
 	"fmt"
 	certmanager "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1"
 	"k8s.io/apimachinery/pkg/types"
-	"onap.org/oom-certservice/k8s-external-provider/src/api"
+	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2api"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sync"
 )
@@ -47,14 +47,14 @@ type CertServiceCA struct {
 	key  []byte
 }
 
-func New(certServiceIssuer *api.CertServiceIssuer, key []byte) (*CertServiceCA, error) {
+func New(cmpv2Issuer *cmpv2api.CMPv2Issuer, key []byte) (*CertServiceCA, error) {
 
 	ca := CertServiceCA{}
-	ca.name = certServiceIssuer.Name
-	ca.url = certServiceIssuer.Spec.URL
+	ca.name = cmpv2Issuer.Name
+	ca.url = cmpv2Issuer.Spec.URL
 	ca.key = key
 
-	log := ctrl.Log.WithName("certservice-provisioner")
+	log := ctrl.Log.WithName("cmpv2-provisioner")
 	log.Info("Configuring CA: ", "name", ca.name, "url", ca.url, "key", ca.key)
 
 	return &ca, nil
