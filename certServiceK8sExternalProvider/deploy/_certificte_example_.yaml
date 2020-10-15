@@ -46,5 +46,5 @@ spec:
   # The reference to the step issuer
   issuerRef:
     group: certmanager.onap.org
-    kind: CertificateRequest
-    name: certservice-issuer
+    kind: CMPv2Issuer
+    name: cmpv2-issuer
