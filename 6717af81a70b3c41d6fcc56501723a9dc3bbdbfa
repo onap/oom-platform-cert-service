@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "feb8ffe7_9ac94a14",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/certificate_request_controller.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-10-15T13:30:46Z",
+      "side": 1,
+      "message": "It is CertificateRequestController, so I think this variable should be named controller or requestController, or requestReconciler.",
+      "range": {
+        "startLine": 56,
+        "startChar": 6,
+        "endLine": 56,
+        "endChar": 16
+      },
+      "revId": "6717af81a70b3c41d6fcc56501723a9dc3bbdbfa",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75000dcf_77b77846",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/cmpv2_issuer_controller.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-10-15T13:30:46Z",
+      "side": 1,
+      "message": "Please change to other name, e.g controller.",
+      "range": {
+        "startLine": 53,
+        "startChar": 6,
+        "endLine": 53,
+        "endChar": 16
+      },
+      "revId": "6717af81a70b3c41d6fcc56501723a9dc3bbdbfa",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ceffa36_5e7b67b3",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/cmpv2_issuer_controller.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-10-15T13:30:46Z",
+      "side": 1,
+      "message": "controller/updater",
+      "range": {
+        "startLine": 64,
+        "startChar": 7,
+        "endLine": 64,
+        "endChar": 17
+      },
+      "revId": "6717af81a70b3c41d6fcc56501723a9dc3bbdbfa",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ba8cf74_d7fad7f0",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/cmpv2_issuer_status_updater.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-10-15T13:30:46Z",
+      "side": 1,
+      "message": "controller",
+      "range": {
+        "startLine": 45,
+        "startChar": 25,
+        "endLine": 45,
+        "endChar": 35
+      },
+      "revId": "6717af81a70b3c41d6fcc56501723a9dc3bbdbfa",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
