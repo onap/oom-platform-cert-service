@@ -43,8 +43,8 @@ spec:
   duration: 24h
   # Renew 8 hours before the certificate expiration
   renewBefore: 8h
-  # The reference to the step issuer
+  # The reference to the CMPv2 issuer
   issuerRef:
     group: certmanager.onap.org
-    kind: CertificateRequest
-    name: certservice-issuer
+    kind: CMPv2Issuer
+    name: cmpv2-issuer

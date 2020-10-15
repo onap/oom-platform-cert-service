@@ -23,13 +23,13 @@
  * ============LICENSE_END=========================================================
  */
 
-package certservice_controller
+package cmpv2controller
 
 import (
 	"context"
 	"fmt"
-	"onap.org/oom-certservice/k8s-external-provider/src/api"
-	provisioners "onap.org/oom-certservice/k8s-external-provider/src/certservice-provisioner"
+	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2api"
+	provisioners "onap.org/oom-certservice/k8s-external-provider/src/cmpv2provisioner"
 
 	"github.com/go-logr/logr"
 	apiutil "github.com/jetstack/cert-manager/pkg/api/util"
@@ -43,19 +43,19 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 )
 
-// CertificateRequestReconciler reconciles a CertServiceIssuer object.
-type CertificateRequestReconciler struct {
+// CertificateRequestController reconciles a CMPv2Issuer object.
+type CertificateRequestController struct {
 	client.Client
 	Log      logr.Logger
 	Recorder record.EventRecorder
 }
 
-// Reconcile will read and validate a CertServiceIssuer resource associated to the
+// Reconcile will read and validate a CMPv2Issuer resource associated to the
 // CertificateRequest resource, and it will sign the CertificateRequest with the
-// provisioner in the CertServiceIssuer.
-func (reconciler *CertificateRequestReconciler) Reconcile(req ctrl.Request) (ctrl.Result, error) {
+// provisioner in the CMPv2Issuer.
+func (reconciler *CertificateRequestController) Reconcile(req ctrl.Request) (ctrl.Result, error) {
 	ctx := context.Background()
-	log := reconciler.Log.WithValues("certificaterequest", req.NamespacedName)
+	log := reconciler.Log.WithValues("certificate-request-controller", req.NamespacedName)
 
 	// Fetch the CertificateRequest resource being reconciled.
 	// Just ignore the request if the certificate request has been deleted.
@@ -69,10 +69,10 @@ func (reconciler *CertificateRequestReconciler) Reconcile(req ctrl.Request) (ctr
 		return ctrl.Result{}, err
 	}
 
-	// Check the CertificateRequest's issuerRef and if it does not match the api
-	// group name, log a message at a debug level and stop processing.
-	if certificateRequest.Spec.IssuerRef.Group != "" && certificateRequest.Spec.IssuerRef.Group != api.GroupVersion.Group {
-		log.V(4).Info("resource does not specify an issuerRef group name that we are responsible for", "group", certificateRequest.Spec.IssuerRef.Group)
+	if !isCMPv2CertificateRequest(certificateRequest) {
+		log.V(4).Info("certificate request is not CMPv2",
+			"group", certificateRequest.Spec.IssuerRef.Group,
+			"kind", certificateRequest.Spec.IssuerRef.Kind)
 		return ctrl.Result{}, nil
 	}
 
@@ -83,23 +83,23 @@ func (reconciler *CertificateRequestReconciler) Reconcile(req ctrl.Request) (ctr
 		return ctrl.Result{}, nil
 	}
 
-	// Fetch the CertServiceIssuer resource
-	issuer := api.CertServiceIssuer{}
+	// Fetch the CMPv2Issuer resource
+	issuer := cmpv2api.CMPv2Issuer{}
 	issuerNamespaceName := types.NamespacedName{
 		Namespace: req.Namespace,
 		Name:      certificateRequest.Spec.IssuerRef.Name,
 	}
 	if err := reconciler.Client.Get(ctx, issuerNamespaceName, &issuer); err != nil {
-		log.Error(err, "failed to retrieve CertServiceIssuer resource", "namespace", req.Namespace, "name", certificateRequest.Spec.IssuerRef.Name)
-		_ = reconciler.setStatus(ctx, certificateRequest, cmmeta.ConditionFalse, cmapi.CertificateRequestReasonPending, "Failed to retrieve CertServiceIssuer resource %s: %v", issuerNamespaceName, err)
+		log.Error(err, "failed to retrieve CMPv2Issuer resource", "namespace", req.Namespace, "name", certificateRequest.Spec.IssuerRef.Name)
+		_ = reconciler.setStatus(ctx, certificateRequest, cmmeta.ConditionFalse, cmapi.CertificateRequestReasonPending, "Failed to retrieve CMPv2Issuer resource %s: %v", issuerNamespaceName, err)
 		return ctrl.Result{}, err
 	}
 
-	// Check if the CertServiceIssuer resource has been marked Ready
-	if !certServiceIssuerHasCondition(issuer, api.CertServiceIssuerCondition{Type: api.ConditionReady, Status: api.ConditionTrue}) {
+	// Check if the CMPv2Issuer resource has been marked Ready
+	if !cmpv2IssuerHasCondition(issuer, cmpv2api.CMPv2IssuerCondition{Type: cmpv2api.ConditionReady, Status: cmpv2api.ConditionTrue}) {
 		err := fmt.Errorf("resource %s is not ready", issuerNamespaceName)
-		log.Error(err, "failed to retrieve CertServiceIssuer resource", "namespace", req.Namespace, "name", certificateRequest.Spec.IssuerRef.Name)
-		_ = reconciler.setStatus(ctx, certificateRequest, cmmeta.ConditionFalse, cmapi.CertificateRequestReasonPending, "CertServiceIssuer resource %s is not Ready", issuerNamespaceName)
+		log.Error(err, "failed to retrieve CMPv2Issuer resource", "namespace", req.Namespace, "name", certificateRequest.Spec.IssuerRef.Name)
+		_ = reconciler.setStatus(ctx, certificateRequest, cmmeta.ConditionFalse, cmapi.CertificateRequestReasonPending, "CMPv2Issuer resource %s is not Ready", issuerNamespaceName)
 		return ctrl.Result{}, err
 	}
 
@@ -107,8 +107,8 @@ func (reconciler *CertificateRequestReconciler) Reconcile(req ctrl.Request) (ctr
 	provisioner, ok := provisioners.Load(issuerNamespaceName)
 	if !ok {
 		err := fmt.Errorf("provisioner %s not found", issuerNamespaceName)
-		log.Error(err, "failed to provisioner for CertServiceIssuer resource")
-		_ = reconciler.setStatus(ctx, certificateRequest, cmmeta.ConditionFalse, cmapi.CertificateRequestReasonPending, "Failed to load provisioner for CertServiceIssuer resource %s", issuerNamespaceName)
+		log.Error(err, "failed to provisioner for CMPv2Issuer resource")
+		_ = reconciler.setStatus(ctx, certificateRequest, cmmeta.ConditionFalse, cmapi.CertificateRequestReasonPending, "Failed to load provisioner for CMPv2Issuer resource %s", issuerNamespaceName)
 		return ctrl.Result{}, err
 	}
 
@@ -126,18 +126,18 @@ func (reconciler *CertificateRequestReconciler) Reconcile(req ctrl.Request) (ctr
 
 // SetupWithManager initializes the CertificateRequest controller into the
 // controller runtime.
-func (reconciler *CertificateRequestReconciler) SetupWithManager(manager ctrl.Manager) error {
+func (reconciler *CertificateRequestController) SetupWithManager(manager ctrl.Manager) error {
 	return ctrl.NewControllerManagedBy(manager).
 		For(&cmapi.CertificateRequest{}).
 		Complete(reconciler)
 }
 
-// certServiceIssuerHasCondition will return true if the given CertServiceIssuer resource has
-// a condition matching the provided CertServiceIssuerCondition. Only the Type and
+// cmpv2IssuerHasCondition will return true if the given CMPv2Issuer resource has
+// a condition matching the provided CMPv2IssuerCondition. Only the Type and
 // Status field will be used in the comparison, meaning that this function will
 // return 'true' even if the Reason, Message and LastTransitionTime fields do
 // not match.
-func certServiceIssuerHasCondition(issuer api.CertServiceIssuer, condition api.CertServiceIssuerCondition) bool {
+func cmpv2IssuerHasCondition(issuer cmpv2api.CMPv2Issuer, condition cmpv2api.CMPv2IssuerCondition) bool {
 	existingConditions := issuer.Status.Conditions
 	for _, cond := range existingConditions {
 		if condition.Type == cond.Type && condition.Status == cond.Status {
@@ -147,7 +147,14 @@ func certServiceIssuerHasCondition(issuer api.CertServiceIssuer, condition api.C
 	return false
 }
 
-func (reconciler *CertificateRequestReconciler) setStatus(ctx context.Context, certificateRequest *cmapi.CertificateRequest, status cmmeta.ConditionStatus, reason, message string, args ...interface{}) error {
+func isCMPv2CertificateRequest(certificateRequest *cmapi.CertificateRequest) bool {
+	return certificateRequest.Spec.IssuerRef.Group != "" &&
+		certificateRequest.Spec.IssuerRef.Group == cmpv2api.GroupVersion.Group &&
+	    certificateRequest.Spec.IssuerRef.Kind == cmpv2api.CMPv2IssuerKind
+
+}
+
+func (reconciler *CertificateRequestController) setStatus(ctx context.Context, certificateRequest *cmapi.CertificateRequest, status cmmeta.ConditionStatus, reason, message string, args ...interface{}) error {
 	completeMessage := fmt.Sprintf(message, args...)
 	apiutil.SetCertificateRequestCondition(certificateRequest, cmapi.CertificateRequestConditionReady, status, reason, completeMessage)
 
