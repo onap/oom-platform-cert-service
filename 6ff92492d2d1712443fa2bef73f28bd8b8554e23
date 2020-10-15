@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "56d8e3b5_e4f3ac97",
+        "filename": "certServiceK8sExternalProvider/deploy/configuration.yaml",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-10-15T08:58:12Z",
+      "side": 1,
+      "message": "Will be done in future task",
+      "parentUuid": "31e92956_0fa37966",
+      "revId": "6ff92492d2d1712443fa2bef73f28bd8b8554e23",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e49c5cbe_20c9853e",
         "filename": "certServiceK8sExternalProvider/deploy/crd.yaml",
         "patchSetId": 9
