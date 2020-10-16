@@ -21,8 +21,8 @@
 package cmpv2controller
 
 const (
-	NotFound = "NotFound"
+	NotFound         = "NotFound"
 	ValidationFailed = "ValidationFailed"
-	Error = "Error"
-	Verified = "Verified"
+	Error            = "Error"
+	Verified         = "Verified"
 )

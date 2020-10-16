@@ -9,13 +9,21 @@ There are two methods for building the project:
 
 ### Installation
 
+Create secret with certificates for communication between CMPv2Issuer and Cert Service API:
+```
+kubectl create secret generic -n onap cmpv2-issuer-secret --from-file=<project-base-dir>/certs/cmpv2Issuer-key.pem
+  --from-file=<project-base-dir>/certs/cmpv2Issuer-cert.pem --from-file=<project-base-dir>/certs/cacert.pem
+```
+
 Apply k8s files from 'deploy' directory in following order:
  
  - crd.yaml
  - roles.yaml
  - deployment.yaml
- - configuration.yaml
+ - configuration.yaml (certRef, keyRef and cacertRef should match file names if secret was created with command listed 
+ above)
 
+**Note:** Files and installation are currently examples, which should be used as a guide for OOM Helm Charts implementation  
 
 ### Usage
 

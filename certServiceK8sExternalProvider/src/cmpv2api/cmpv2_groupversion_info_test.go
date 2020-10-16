@@ -22,6 +22,7 @@ package cmpv2api
 
 import (
 	"testing"
+
 	"github.com/stretchr/testify/assert"
 )
 
@@ -33,4 +34,3 @@ func Test_shouldHaveRightGroupVersion(t *testing.T) {
 func Test_shouldRightIssuerKind(t *testing.T) {
 	assert.Equal(t, "CMPv2Issuer", CMPv2IssuerKind)
 }
-
