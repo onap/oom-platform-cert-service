@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9668c9b0_b533b927",
+        "filename": "certServiceK8sExternalProvider/main_test.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-10-16T12:34:15Z",
+      "side": 1,
+      "message": "pls split on two testing functions\n\nFor example:\nfunc Test_shouldReturnDefaultValuesWhenNoInputArguments()\n\nfunc Test_shouldReturnParsedInputArgumentsWhenInputArgumentsWerePassed()",
+      "revId": "1f564b1f13b2fddbb7b29aba3f70b2646dc8b530",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37ccc61c_ded64edc",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2api/cmpv2_groupversion_info_test.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-10-16T12:34:15Z",
+      "side": 1,
+      "message": "each file must have an information about licensing as it is done in other projects",
+      "revId": "1f564b1f13b2fddbb7b29aba3f70b2646dc8b530",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85a1b198_2438e05f",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2api/cmpv2_groupversion_info_test.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-10-16T12:34:15Z",
+      "side": 1,
+      "message": "pls follow convention: Test_should...when...",
+      "revId": "1f564b1f13b2fddbb7b29aba3f70b2646dc8b530",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7079cd08_c3a990fb",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/cmpv2_issuer_controller.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-10-16T12:34:15Z",
+      "side": 1,
+      "message": "pls extract Error, Validation, NotFound strings to const and reuse it. This will remove error status string duplication.",
+      "revId": "1f564b1f13b2fddbb7b29aba3f70b2646dc8b530",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bacef21f_8432c605",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/cmpv2_issuer_controller_test.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-10-16T12:34:15Z",
+      "side": 1,
+      "message": "header",
+      "revId": "1f564b1f13b2fddbb7b29aba3f70b2646dc8b530",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2c3b11c_ef10e088",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/cmpv2_issuer_controller_test.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-10-16T12:34:15Z",
+      "side": 1,
+      "message": "test naming convention",
+      "revId": "1f564b1f13b2fddbb7b29aba3f70b2646dc8b530",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "038b1053_ef034a44",
+        "filename": "certServiceK8sExternalProvider/src/exit_code_test.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-10-16T12:34:15Z",
+      "side": 1,
+      "message": "header",
+      "revId": "1f564b1f13b2fddbb7b29aba3f70b2646dc8b530",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}

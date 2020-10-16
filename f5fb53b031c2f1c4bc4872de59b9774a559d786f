@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7453b787_faf1cff6",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/certificate_request_controller_test.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-10-16T12:34:15Z",
+      "side": 0,
+      "message": "missing file header",
+      "revId": "f5fb53b031c2f1c4bc4872de59b9774a559d786f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51cc0622_acc82852",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/certificate_request_controller_test.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-10-16T12:34:15Z",
+      "side": 0,
+      "message": "Test_should...when..",
+      "revId": "f5fb53b031c2f1c4bc4872de59b9774a559d786f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "746e3878_88e26353",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/certificate_request_controller_test.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-10-16T12:34:15Z",
+      "side": 0,
+      "message": "extract string to const and reuse it in other tests in this file",
+      "revId": "f5fb53b031c2f1c4bc4872de59b9774a559d786f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
