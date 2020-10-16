@@ -107,7 +107,7 @@ func createControllerManager(metricsAddr string, enableLeaderElection bool) mana
 	return manager
 }
 
-func registerCMPv2IssuerController(manager manager.Manager)  {
+func registerCMPv2IssuerController(manager manager.Manager) {
 	setupLog.Info("Registering CMPv2IssuerController...")
 
 	err := (&controllers.CMPv2IssuerController{

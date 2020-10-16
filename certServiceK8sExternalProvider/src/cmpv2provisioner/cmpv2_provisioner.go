@@ -42,20 +42,27 @@ import (
 var collection = new(sync.Map)
 
 type CertServiceCA struct {
-	name string
-	url  string
-	key  []byte
+	name   string
+	url    string
+	caName string
+	key    []byte
+	cert   []byte
+	cacert []byte
 }
 
-func New(cmpv2Issuer *cmpv2api.CMPv2Issuer, key []byte) (*CertServiceCA, error) {
+func New(cmpv2Issuer *cmpv2api.CMPv2Issuer, key []byte, cert []byte, cacert []byte) (*CertServiceCA, error) {
 
 	ca := CertServiceCA{}
 	ca.name = cmpv2Issuer.Name
 	ca.url = cmpv2Issuer.Spec.URL
+	ca.caName = cmpv2Issuer.Spec.CaName
 	ca.key = key
+	ca.cert = cert
+	ca.cacert = cacert
 
 	log := ctrl.Log.WithName("cmpv2-provisioner")
-	log.Info("Configuring CA: ", "name", ca.name, "url", ca.url, "key", ca.key)
+	log.Info("Configuring CA: ", "name", ca.name, "url", ca.url, "caName", ca.caName, "key", ca.key,
+		"cert", ca.cert, "cacert", ca.cacert)
 
 	return &ca, nil
 }

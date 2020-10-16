@@ -18,18 +18,36 @@
  * ============LICENSE_END=========================================================
  */
 
-package cmpv2api
+package cmpv2provisioner
 
 import (
-	"github.com/stretchr/testify/assert"
-	"testing"
+	"fmt"
+	"k8s.io/api/core/v1"
+	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2api"
 )
 
-func Test_shouldHaveRightGroupVersion(t *testing.T) {
-	assert.Equal(t, "certmanager.onap.org", GroupVersion.Group)
-	assert.Equal(t, "v1", GroupVersion.Version)
+func CreateProvisioner(issuer *cmpv2api.CMPv2Issuer, secret v1.Secret) (*CertServiceCA, error) {
+	secretKeys := issuer.Spec.CertSecretRef
+	key, err := readValueFromSecret(secret, secretKeys.KeyRef)
+	if err != nil {
+		return nil, err
+	}
+	cert, err := readValueFromSecret(secret, secretKeys.CertRef)
+	if err != nil {
+		return nil, err
+	}
+	cacert, err := readValueFromSecret(secret, secretKeys.CacertRef)
+	if err != nil {
+		return nil, err
+	}
+	return New(issuer, key, cert, cacert)
 }
 
-func Test_shouldRightIssuerKind(t *testing.T) {
-	assert.Equal(t, "CMPv2Issuer", CMPv2IssuerKind)
+func readValueFromSecret(secret v1.Secret, secretKey string) ([]byte, error) {
+	value, ok := secret.Data[secretKey]
+	if !ok {
+		err := fmt.Errorf("secret %s does not contain key %s", secret.Name, secretKey)
+		return nil, err
+	}
+	return value, nil
 }

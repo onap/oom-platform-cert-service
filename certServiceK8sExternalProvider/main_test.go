@@ -21,14 +21,14 @@
 package main
 
 import (
+	"flag"
+	"github.com/stretchr/testify/assert"
 	"os"
 	"testing"
-	"github.com/stretchr/testify/assert"
-	"flag"
 )
 
 func Test_shouldParseArguments_defaultValues(t *testing.T) {
-	os.Args = []string {
+	os.Args = []string{
 		"first-arg-is-omitted-by-method-parse-arguments-so-this-only-a-placeholder"}
 	flag.CommandLine = flag.NewFlagSet(os.Args[0], flag.ExitOnError)
 
@@ -39,10 +39,10 @@ func Test_shouldParseArguments_defaultValues(t *testing.T) {
 }
 
 func Test_shouldParseArguments_valuesFromCLI(t *testing.T) {
-	os.Args = []string {
+	os.Args = []string{
 		"first-arg-is-omitted-by-method-parse-arguments-so-this-only-a-placeholder",
 		"--metrics-addr=127.0.0.1:555",
-		"--enable-leader-election=true" }
+		"--enable-leader-election=true"}
 	flag.CommandLine = flag.NewFlagSet(os.Args[0], flag.ExitOnError)
 
 	metricsAddr, enableLeaderElection := parseInputArguments()

@@ -74,21 +74,18 @@ func (controller *CMPv2IssuerController) Reconcile(req ctrl.Request) (ctrl.Resul
 	var secret core.Secret
 	secretNamespaceName := types.NamespacedName{
 		Namespace: req.Namespace,
-		Name:      issuer.Spec.KeyRef.Name,
+		Name:      issuer.Spec.CertSecretRef.Name,
 	}
 	if err := controller.loadResource(ctx, secretNamespaceName, &secret); err != nil {
 		handleErrorInvalidSecret(ctx, log, err, statusUpdater, secretNamespaceName)
 		return ctrl.Result{}, err
 	}
-	password, ok := secret.Data[issuer.Spec.KeyRef.Key]
-	if !ok {
-		err := handleErrorSecretNotFound(ctx, log, issuer, statusUpdater, secretNamespaceName, secret)
-		return ctrl.Result{}, err
-	}
 
 	// 4. Create CMPv2 provisioner and store the instance for further use
-	provisioner, err := provisioners.New(issuer, password)
+	provisioner, err := provisioners.CreateProvisioner(issuer, secret)
 	if err != nil {
+		log.Error(err, "failed to initialize provisioner")
+		statusUpdater.UpdateNoError(ctx, cmpv2api.ConditionFalse, "Error", "Failed to initialize provisioner: %v", err)
 		handleErrorProvisionerInitialization(ctx, log, err, statusUpdater)
 		return ctrl.Result{}, err
 	}
@@ -103,7 +100,6 @@ func (controller *CMPv2IssuerController) Reconcile(req ctrl.Request) (ctrl.Resul
 	return ctrl.Result{}, nil
 }
 
-
 func (controller *CMPv2IssuerController) SetupWithManager(manager ctrl.Manager) error {
 	return ctrl.NewControllerManagedBy(manager).
 		For(&cmpv2api.CMPv2Issuer{}).
@@ -114,18 +110,22 @@ func (controller *CMPv2IssuerController) loadResource(ctx context.Context, key c
 	return controller.Client.Get(ctx, key, obj)
 }
 
-
 func validateCMPv2IssuerSpec(issuerSpec cmpv2api.CMPv2IssuerSpec, log logr.Logger) error {
 	switch {
-		case issuerSpec.URL == "":
-			return fmt.Errorf("spec.url cannot be empty")
-		case issuerSpec.KeyRef.Name == "":
-			return fmt.Errorf("spec.keyRef.name cannot be empty")
-		case issuerSpec.KeyRef.Key == "":
-			return fmt.Errorf("spec.keyRef.key cannot be empty")
-		default:
-			log.Info("CMPv2Issuer validated. ")
-			return nil
+	case issuerSpec.URL == "":
+		return fmt.Errorf("spec.url cannot be empty")
+	case issuerSpec.CaName == "":
+		return fmt.Errorf("spec.caName cannot be empty")
+	case issuerSpec.CertSecretRef.Name == "":
+		return fmt.Errorf("spec.keyRef.name cannot be empty")
+	case issuerSpec.CertSecretRef.KeyRef == "":
+		return fmt.Errorf("spec.certSecretRef.keyRef cannot be empty")
+	case issuerSpec.CertSecretRef.CertRef == "":
+		return fmt.Errorf("spec.certSecretRef.certRef cannot be empty")
+	case issuerSpec.CertSecretRef.CacertRef == "":
+		return fmt.Errorf("spec.certSecretRef.cacertRef cannot be empty")
+	default:
+		return nil
 	}
 }
 
@@ -134,34 +134,24 @@ func updateCMPv2IssuerStatusToVerified(statusUpdater *CMPv2IssuerStatusUpdater, 
 	return statusUpdater.Update(ctx, cmpv2api.ConditionTrue, Verified, "CMPv2Issuer verified and ready to sign certificates")
 }
 
-
 // Error handling
 
 func handleErrorUpdatingCMPv2IssuerStatus(log logr.Logger, err error) {
 	log.Error(err, "Failed to update CMPv2Issuer status")
 }
 
-
 func handleErrorLoadingCMPv2Issuer(log logr.Logger, err error) {
 	log.Error(err, "Failed to retrieve CMPv2Issuer resource")
 }
 
-
 func handleErrorProvisionerInitialization(ctx context.Context, log logr.Logger, err error, statusUpdater *CMPv2IssuerStatusUpdater) {
 	log.Error(err, "Failed to initialize provisioner")
-	statusUpdater.UpdateNoError(ctx, cmpv2api.ConditionFalse, Error, "Failed initialize provisioner")
+	statusUpdater.UpdateNoError(ctx, cmpv2api.ConditionFalse, Error, "Failed to initialize provisioner: %v", err)
 }
 
 func handleErrorCMPv2IssuerValidation(ctx context.Context, log logr.Logger, err error, statusUpdater *CMPv2IssuerStatusUpdater) {
 	log.Error(err, "Failed to validate CMPv2Issuer resource")
 	statusUpdater.UpdateNoError(ctx, cmpv2api.ConditionFalse, ValidationFailed, "Failed to validate resource: %v", err)
-}
-
-func handleErrorSecretNotFound(ctx context.Context, log logr.Logger, issuer *cmpv2api.CMPv2Issuer, statusUpdater *CMPv2IssuerStatusUpdater, secretNamespaceName types.NamespacedName, secret core.Secret) error {
-	err := fmt.Errorf("secret %s does not contain key %s", secret.Name, issuer.Spec.KeyRef.Key)
-	log.Error(err, "Failed to retrieve CMPv2Issuer provisioner secret", "namespace", secretNamespaceName.Namespace, "name", secretNamespaceName.Name)
-	statusUpdater.UpdateNoError(ctx, cmpv2api.ConditionFalse, NotFound, "Failed to retrieve provisioner secret: %v", err)
-	return err
 }
 
 func handleErrorInvalidSecret(ctx context.Context, log logr.Logger, err error, statusUpdater *CMPv2IssuerStatusUpdater, secretNamespaceName types.NamespacedName) {

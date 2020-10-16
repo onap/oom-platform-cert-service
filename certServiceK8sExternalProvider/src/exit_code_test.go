@@ -21,8 +21,8 @@
 package app
 
 import (
-	"testing"
 	"github.com/stretchr/testify/assert"
+	"testing"
 )
 
 func TestExitCodes(t *testing.T) {
