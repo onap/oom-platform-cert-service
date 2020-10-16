@@ -144,7 +144,6 @@ func (controller *CertificateRequestController) setStatus(ctx context.Context, c
 	return controller.Client.Status().Update(ctx, certificateRequest)
 }
 
-
 func isCMPv2IssuerReady(issuer cmpv2api.CMPv2Issuer) bool {
 	condition := cmpv2api.CMPv2IssuerCondition{Type: cmpv2api.ConditionReady, Status: cmpv2api.ConditionTrue}
 	return hasCondition(issuer, condition)
@@ -183,12 +182,12 @@ func (controller *CertificateRequestController) handleErrorCMPv2IssuerIsNotReady
 	return err
 }
 
-func (controller *CertificateRequestController) handleErrorGettingCMPv2Issuer(ctx context.Context, log logr.Logger, err error,  certificateRequest *cmapi.CertificateRequest, issuerNamespaceName types.NamespacedName, req ctrl.Request) {
+func (controller *CertificateRequestController) handleErrorGettingCMPv2Issuer(ctx context.Context, log logr.Logger, err error, certificateRequest *cmapi.CertificateRequest, issuerNamespaceName types.NamespacedName, req ctrl.Request) {
 	log.Error(err, "Failed to retrieve CMPv2Issuer resource", "namespace", req.Namespace, "name", certificateRequest.Spec.IssuerRef.Name)
 	_ = controller.setStatus(ctx, certificateRequest, cmmeta.ConditionFalse, cmapi.CertificateRequestReasonPending, "Failed to retrieve CMPv2Issuer resource %s: %v", issuerNamespaceName, err)
 }
 
-func (controller *CertificateRequestController) handleErrorFailedToSignCertificate(ctx context.Context, log logr.Logger, err error, certificateRequest *cmapi.CertificateRequest)  {
+func (controller *CertificateRequestController) handleErrorFailedToSignCertificate(ctx context.Context, log logr.Logger, err error, certificateRequest *cmapi.CertificateRequest) {
 	log.Error(err, "Failed to sign certificate request")
 	_ = controller.setStatus(ctx, certificateRequest, cmmeta.ConditionFalse, cmapi.CertificateRequestReasonFailed, "Failed to sign certificate request: %v", err)
 }
