@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8224afad_e5763227",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/certificate_request_controller.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-10-16T09:42:49Z",
+      "side": 1,
+      "message": "Try to keep similar methods arguments list in similar order.\nExample:\nhandleErrorGettingCMPv2Issuer(req, log, err, certificateRequest, controller, ctx, issuerNamespaceName)\n\nhandleErrorCMPv2IssuerIsNotReady(req, issuerNamespaceName, log, certificateRequest, controller, ctx)\n\nAlmost the same arguments but cumpletely different order which makes it harder to read.\n\n\nAlso, maybe it would be good to create object like certificateRequestReconcileErrorHandler, which could hold some of often used values, and move those handle methods there. (And reconcileContext which could hold req, log and ctx, as there is the same issue in second reconciler)",
+      "range": {
+        "startLine": 90,
+        "startChar": 2,
+        "endLine": 90,
+        "endChar": 103
+      },
+      "revId": "70c965f1e9df0ff493b2bcbc7fbbb8e7dc649eb4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee403027_c7791b0d",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/cmpv2_issuer_controller.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-10-16T09:42:49Z",
+      "side": 1,
+      "message": "Same - Try to keep similar methods arguments list in similar order.",
+      "range": {
+        "startLine": 85,
+        "startChar": 2,
+        "endLine": 85,
+        "endChar": 13
+      },
+      "revId": "70c965f1e9df0ff493b2bcbc7fbbb8e7dc649eb4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e425c19_08d0be1e",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/cmpv2_issuer_controller.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-10-16T09:42:49Z",
+      "side": 1,
+      "message": "Inconsistent naming\n\n(also seen in methods below)",
+      "range": {
+        "startLine": 150,
+        "startChar": 70,
+        "endLine": 150,
+        "endChar": 86
+      },
+      "revId": "70c965f1e9df0ff493b2bcbc7fbbb8e7dc649eb4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
