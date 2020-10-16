@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "78d5f258_1dbe275c",
+        "filename": "certServiceK8sExternalProvider/main_test.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-10-16T12:46:49Z",
+      "side": 1,
+      "message": "Unfortunately this is impossible. I you do that you will get an error that flags were already defined and can not be overridden.\nOf course i started with to separate methods but failed to get it working decided to put in one method.",
+      "parentUuid": "9668c9b0_b533b927",
+      "revId": "1f564b1f13b2fddbb7b29aba3f70b2646dc8b530",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37ccc61c_ded64edc",
         "filename": "certServiceK8sExternalProvider/src/cmpv2api/cmpv2_groupversion_info_test.go",
         "patchSetId": 2
