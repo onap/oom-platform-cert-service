@@ -1,9 +1,11 @@
-all: step_1 step_2 step_3 step_4 step_5 step_6 step_7 step_8 step_9 step_10 step_11 step_12 step_13 step_14 step_15
+all: step_1 step_2 step_3 step_4 step_5 step_6 step_7 step_8 step_9 step_10 step_11 step_12 step_13 step_14 step_15 \
+			step_16 step_17 step_18 step_19
 .PHONY: all
 #Clear certificates
 clear:
 	@echo "Clear certificates"
-	rm certServiceClient-keystore.jks certServiceServer-keystore.jks root.crt truststore.jks certServiceServer-keystore.p12
+	rm certServiceClient-keystore.jks certServiceServer-keystore.jks root.crt truststore.jks certServiceServer-keystore.p12 \
+			cmpv2Issuer-cert.pem cmpv2Issuer-key.pem cacert.pem
 	@echo "#####done#####"
 
 #Generate root private and public keys
@@ -104,8 +106,36 @@ step_14:
         -destkeystore certServiceServer-keystore.p12 -deststoretype PKCS12 -deststorepass secret
 	@echo "#####done#####"
 
-#Clear unused certificates
+#Convert certServiceClient-keystore(.jks) to PCKS12 format(.p12)
 step_15:
+	@echo "Convert certServiceServer-keystore(.jks) to PCKS12 format(.p12)"
+	keytool -importkeystore -srckeystore certServiceClient-keystore.jks -srcstorepass secret \
+        -destkeystore certServiceClient-keystore.p12 -deststoretype PKCS12 -deststorepass secret
+	@echo "#####done#####"
+
+#Convert truststore(.jks) to PCKS12 format(.p12)
+step_16:
+	@echo "Convert truststore(.jks) to PCKS12 format(.p12)"
+	keytool -importkeystore -srckeystore truststore.jks -srcstorepass secret \
+        -destkeystore truststore.p12 -deststoretype PKCS12 -deststorepass secret
+	@echo "#####done#####"
+
+#Create CMPv2 Issuer PEM key pair from certServiceClient-keystore(.p12)
+step_17:
+	@echo "Create CMPv2 Issuer key pair from certServiceClient-keystore(.p12)"
+	openssl pkcs12 -in certServiceServer-keystore.p12 -passin 'pass:secret' -nokeys -out cmpv2Issuer-cert.pem
+	openssl pkcs12 -in certServiceServer-keystore.p12 -passin 'pass:secret' -nodes -nocerts -out cmpv2Issuer-key.pem
+	@echo "#####done#####"
+
+#Convert truststore(.p12) to PEM format(.pem)
+step_18:
+	@echo "Create CMPv2 Issuer key pair from certServiceClient-keystore(.p12)"
+	openssl pkcs12 -in truststore.p12 -passin 'pass:secret' -out cacert.pem
+	@echo "#####done#####"
+
+#Clear unused certificates
+step_19:
 	@echo "Clear unused certificates"
-	rm certServiceClientByRoot.crt certServiceClient.csr root-keystore.jks certServiceServerByRoot.crt  certServiceServer.csr
+	rm certServiceClientByRoot.crt certServiceClient.csr root-keystore.jks certServiceServerByRoot.crt \
+	      certServiceServer.csr certServiceClient-keystore.p12 truststore.p12
 	@echo "#####done#####"

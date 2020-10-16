@@ -29,6 +29,9 @@ metadata:
   namespace: onap
 spec:
   url: https://certservice.default.svc.cluster.local
-  keyRef:
-    name: certservice-key
-    key: key
+  caName: RA
+  certSecretRef:
+    name: issuer-secret
+    certRef: cmpv2Issuer-cert.pem
+    keyRef: cmpv2Issuer-key.pem
+    cacertRef: cacert.pem
