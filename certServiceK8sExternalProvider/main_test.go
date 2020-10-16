@@ -18,37 +18,36 @@
  * ============LICENSE_END=========================================================
  */
 
-package cmpv2controller
+package main
 
 import (
-	cmapi "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1"
+	"os"
 	"testing"
 	"github.com/stretchr/testify/assert"
-
+	"flag"
 )
 
-const group = "certmanager.onap.org"
+func Test_shouldParseArguments_defaultValues(t *testing.T) {
 
-func Test_shouldBeInvalidCMPv2CertificateRequest_whenEmpty(t *testing.T) {
-	request := new(cmapi.CertificateRequest)
+	// check default values
+	metricsAddr, enableLeaderElection := parseInputArguments()
 
-	assert.False(t, isCMPv2CertificateRequest(request))
+	assert.Equal(t, ":8080", metricsAddr)
+	assert.False(t, enableLeaderElection)
 }
 
-func Test_shouldBeInvalidCMPv2CertificateRequest_whenKindIsCertificateRequest(t *testing.T) {
-	request := new(cmapi.CertificateRequest)
-	request.Spec.IssuerRef.Group = group
-	request.Spec.IssuerRef.Kind = "CertificateRequest"
+func Test_shouldParseArguments_valuesFromCLI(t *testing.T) {
 
-	assert.False(t, isCMPv2CertificateRequest(request))
+	// check values provides from "command line"
+	os.Args = []string {
+		"first-arg-is-omitted-by-method-parse-arguments-so-this-only-a-placeholder",
+		"--metrics-addr=127.0.0.1:555",
+		"--enable-leader-election=true" }
+	flag.CommandLine = flag.NewFlagSet(os.Args[0], flag.ExitOnError)
+
+	metricsAddr, enableLeaderElection := parseInputArguments()
+
+	assert.Equal(t, "127.0.0.1:555", metricsAddr)
+	assert.True(t, enableLeaderElection)
+
 }
-
-
-func Test_shouldBeValidCMPv2CertificateRequest_whenKindIsCMPvIssuer(t *testing.T) {
-	request := new(cmapi.CertificateRequest)
-	request.Spec.IssuerRef.Group = group
-	request.Spec.IssuerRef.Kind = "CMPv2Issuer"
-
-	assert.True(t, isCMPv2CertificateRequest(request))
-}
-
