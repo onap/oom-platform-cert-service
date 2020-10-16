@@ -53,105 +53,81 @@ type CertificateRequestController struct {
 // Reconcile will read and validate a CMPv2Issuer resource associated to the
 // CertificateRequest resource, and it will sign the CertificateRequest with the
 // provisioner in the CMPv2Issuer.
-func (controller *CertificateRequestController) Reconcile(req ctrl.Request) (ctrl.Result, error) {
+func (controller *CertificateRequestController) Reconcile(k8sRequest ctrl.Request) (ctrl.Result, error) {
 	ctx := context.Background()
-	log := controller.Log.WithValues("certificate-request-controller", req.NamespacedName)
+	log := controller.Log.WithValues("certificate-request-controller", k8sRequest.NamespacedName)
 
-	// Fetch the CertificateRequest resource being reconciled.
-	// Just ignore the request if the certificate request has been deleted.
+	// 1. Fetch the CertificateRequest resource being reconciled.
 	certificateRequest := new(cmapi.CertificateRequest)
-	if err := controller.Client.Get(ctx, req.NamespacedName, certificateRequest); err != nil {
-		if apierrors.IsNotFound(err) {
-			return ctrl.Result{}, nil
-		}
-
-		log.Error(err, "failed to retrieve CertificateRequest resource")
+	if err := controller.Client.Get(ctx, k8sRequest.NamespacedName, certificateRequest); err != nil {
+		err = handleErrorResourceNotFound(log, err)
 		return ctrl.Result{}, err
 	}
 
+	// 2. Check if CertificateRequest is meant for CMPv2Issuer (if not ignore)
 	if !isCMPv2CertificateRequest(certificateRequest) {
-		log.V(4).Info("certificate request is not CMPv2",
+		log.V(4).Info("Certificate request is not meant for CMPv2Issuer (ignoring)",
 			"group", certificateRequest.Spec.IssuerRef.Group,
 			"kind", certificateRequest.Spec.IssuerRef.Kind)
 		return ctrl.Result{}, nil
 	}
 
-	// If the certificate data is already set then we skip this request as it
+	// 3. If the certificate data is already set then we skip this request as it
 	// has already been completed in the past.
 	if len(certificateRequest.Status.Certificate) > 0 {
-		log.V(4).Info("existing certificate data found in status, skipping already completed CertificateRequest")
+		log.V(4).Info("Existing certificate data found in status, skipping already completed CertificateRequest")
 		return ctrl.Result{}, nil
 	}
 
-	// Fetch the CMPv2Issuer resource
+	// 4. Fetch the CMPv2Issuer resource
 	issuer := cmpv2api.CMPv2Issuer{}
 	issuerNamespaceName := types.NamespacedName{
-		Namespace: req.Namespace,
+		Namespace: k8sRequest.Namespace,
 		Name:      certificateRequest.Spec.IssuerRef.Name,
 	}
 	if err := controller.Client.Get(ctx, issuerNamespaceName, &issuer); err != nil {
-		log.Error(err, "failed to retrieve CMPv2Issuer resource", "namespace", req.Namespace, "name", certificateRequest.Spec.IssuerRef.Name)
-		_ = controller.setStatus(ctx, certificateRequest, cmmeta.ConditionFalse, cmapi.CertificateRequestReasonPending, "Failed to retrieve CMPv2Issuer resource %s: %v", issuerNamespaceName, err)
+		controller.handleErrorGettingCMPv2Issuer(ctx, log, err, certificateRequest, issuerNamespaceName, k8sRequest)
 		return ctrl.Result{}, err
 	}
 
-	// Check if the CMPv2Issuer resource has been marked Ready
-	if !cmpv2IssuerHasCondition(issuer, cmpv2api.CMPv2IssuerCondition{Type: cmpv2api.ConditionReady, Status: cmpv2api.ConditionTrue}) {
-		err := fmt.Errorf("resource %s is not ready", issuerNamespaceName)
-		log.Error(err, "failed to retrieve CMPv2Issuer resource", "namespace", req.Namespace, "name", certificateRequest.Spec.IssuerRef.Name)
-		_ = controller.setStatus(ctx, certificateRequest, cmmeta.ConditionFalse, cmapi.CertificateRequestReasonPending, "CMPv2Issuer resource %s is not Ready", issuerNamespaceName)
+	// 5. Check if CMPv2Issuer is ready to sing certificates
+	if !isCMPv2IssuerReady(issuer) {
+		err := controller.handleErrorCMPv2IssuerIsNotReady(ctx, log, issuerNamespaceName, certificateRequest, k8sRequest)
 		return ctrl.Result{}, err
 	}
 
-	// Load the provisioner that will sign the CertificateRequest
+	// 6. Load the provisioner that will sign the CertificateRequest
 	provisioner, ok := provisioners.Load(issuerNamespaceName)
 	if !ok {
-		err := fmt.Errorf("provisioner %s not found", issuerNamespaceName)
-		log.Error(err, "failed to provisioner for CMPv2Issuer resource")
-		_ = controller.setStatus(ctx, certificateRequest, cmmeta.ConditionFalse, cmapi.CertificateRequestReasonPending, "Failed to load provisioner for CMPv2Issuer resource %s", issuerNamespaceName)
+		err := controller.handleErrorCouldNotLoadCMPv2Provisioner(ctx, log, issuerNamespaceName, certificateRequest)
 		return ctrl.Result{}, err
 	}
 
-	// Sign CertificateRequest
+	// 7. Sign CertificateRequest
 	signedPEM, trustedCAs, err := provisioner.Sign(ctx, certificateRequest)
 	if err != nil {
-		log.Error(err, "failed to sign certificate request")
-		return ctrl.Result{}, controller.setStatus(ctx, certificateRequest, cmmeta.ConditionFalse, cmapi.CertificateRequestReasonFailed, "Failed to sign certificate request: %v", err)
+		controller.handleErrorFailedToSignCertificate(ctx, log, err, certificateRequest)
+		return ctrl.Result{}, err
 	}
+
+	// 8. Store signed certificates in CertificateRequest
 	certificateRequest.Status.Certificate = signedPEM
 	certificateRequest.Status.CA = trustedCAs
+	if err := controller.updateCertificateRequestWithSignedCerficates(ctx, certificateRequest); err != nil {
+		return ctrl.Result{}, err
+	}
 
-	return ctrl.Result{}, controller.setStatus(ctx, certificateRequest, cmmeta.ConditionTrue, cmapi.CertificateRequestReasonIssued, "Certificate issued")
+	return ctrl.Result{}, nil
 }
 
-// SetupWithManager initializes the CertificateRequest controller into the
-// controller runtime.
+func (controller *CertificateRequestController) updateCertificateRequestWithSignedCerficates(ctx context.Context, certificateRequest *cmapi.CertificateRequest) error {
+	return controller.setStatus(ctx, certificateRequest, cmmeta.ConditionTrue, cmapi.CertificateRequestReasonIssued, "Certificate issued")
+}
+
 func (controller *CertificateRequestController) SetupWithManager(manager ctrl.Manager) error {
 	return ctrl.NewControllerManagedBy(manager).
 		For(&cmapi.CertificateRequest{}).
 		Complete(controller)
-}
-
-// cmpv2IssuerHasCondition will return true if the given CMPv2Issuer resource has
-// a condition matching the provided CMPv2IssuerCondition. Only the Type and
-// Status field will be used in the comparison, meaning that this function will
-// return 'true' even if the Reason, Message and LastTransitionTime fields do
-// not match.
-func cmpv2IssuerHasCondition(issuer cmpv2api.CMPv2Issuer, condition cmpv2api.CMPv2IssuerCondition) bool {
-	existingConditions := issuer.Status.Conditions
-	for _, cond := range existingConditions {
-		if condition.Type == cond.Type && condition.Status == cond.Status {
-			return true
-		}
-	}
-	return false
-}
-
-func isCMPv2CertificateRequest(certificateRequest *cmapi.CertificateRequest) bool {
-	return certificateRequest.Spec.IssuerRef.Group != "" &&
-		certificateRequest.Spec.IssuerRef.Group == cmpv2api.GroupVersion.Group &&
-	    certificateRequest.Spec.IssuerRef.Kind == cmpv2api.CMPv2IssuerKind
-
 }
 
 func (controller *CertificateRequestController) setStatus(ctx context.Context, certificateRequest *cmapi.CertificateRequest, status cmmeta.ConditionStatus, reason, message string, args ...interface{}) error {
@@ -166,4 +142,62 @@ func (controller *CertificateRequestController) setStatus(ctx context.Context, c
 	controller.Recorder.Event(certificateRequest, eventType, reason, completeMessage)
 
 	return controller.Client.Status().Update(ctx, certificateRequest)
+}
+
+
+func isCMPv2IssuerReady(issuer cmpv2api.CMPv2Issuer) bool {
+	condition := cmpv2api.CMPv2IssuerCondition{Type: cmpv2api.ConditionReady, Status: cmpv2api.ConditionTrue}
+	return hasCondition(issuer, condition)
+}
+
+func hasCondition(issuer cmpv2api.CMPv2Issuer, condition cmpv2api.CMPv2IssuerCondition) bool {
+	existingConditions := issuer.Status.Conditions
+	for _, cond := range existingConditions {
+		if condition.Type == cond.Type && condition.Status == cond.Status {
+			return true
+		}
+	}
+	return false
+}
+
+func isCMPv2CertificateRequest(certificateRequest *cmapi.CertificateRequest) bool {
+	return certificateRequest.Spec.IssuerRef.Group != "" &&
+		certificateRequest.Spec.IssuerRef.Group == cmpv2api.GroupVersion.Group &&
+		certificateRequest.Spec.IssuerRef.Kind == cmpv2api.CMPv2IssuerKind
+
+}
+
+// Error handling
+
+func (controller *CertificateRequestController) handleErrorCouldNotLoadCMPv2Provisioner(ctx context.Context, log logr.Logger, issuerNamespaceName types.NamespacedName, certificateRequest *cmapi.CertificateRequest) error {
+	err := fmt.Errorf("provisioner %s not found", issuerNamespaceName)
+	log.Error(err, "Failed to load CMPv2 Provisioner resource")
+	_ = controller.setStatus(ctx, certificateRequest, cmmeta.ConditionFalse, cmapi.CertificateRequestReasonPending, "Failed to load provisioner for CMPv2Issuer resource %s", issuerNamespaceName)
+	return err
+}
+
+func (controller *CertificateRequestController) handleErrorCMPv2IssuerIsNotReady(ctx context.Context, log logr.Logger, issuerNamespaceName types.NamespacedName, certificateRequest *cmapi.CertificateRequest, req ctrl.Request) error {
+	err := fmt.Errorf("resource %s is not ready", issuerNamespaceName)
+	log.Error(err, "CMPv2Issuer not ready", "namespace", req.Namespace, "name", certificateRequest.Spec.IssuerRef.Name)
+	_ = controller.setStatus(ctx, certificateRequest, cmmeta.ConditionFalse, cmapi.CertificateRequestReasonPending, "CMPv2Issuer resource %s is not Ready", issuerNamespaceName)
+	return err
+}
+
+func (controller *CertificateRequestController) handleErrorGettingCMPv2Issuer(ctx context.Context, log logr.Logger, err error,  certificateRequest *cmapi.CertificateRequest, issuerNamespaceName types.NamespacedName, req ctrl.Request) {
+	log.Error(err, "Failed to retrieve CMPv2Issuer resource", "namespace", req.Namespace, "name", certificateRequest.Spec.IssuerRef.Name)
+	_ = controller.setStatus(ctx, certificateRequest, cmmeta.ConditionFalse, cmapi.CertificateRequestReasonPending, "Failed to retrieve CMPv2Issuer resource %s: %v", issuerNamespaceName, err)
+}
+
+func (controller *CertificateRequestController) handleErrorFailedToSignCertificate(ctx context.Context, log logr.Logger, err error, certificateRequest *cmapi.CertificateRequest)  {
+	log.Error(err, "Failed to sign certificate request")
+	_ = controller.setStatus(ctx, certificateRequest, cmmeta.ConditionFalse, cmapi.CertificateRequestReasonFailed, "Failed to sign certificate request: %v", err)
+}
+
+func handleErrorResourceNotFound(log logr.Logger, err error) error {
+	if apierrors.IsNotFound(err) {
+		log.Error(err, "CertificateRequest resource not found")
+	} else {
+		log.Error(err, "Failed to retrieve CertificateRequest resource")
+	}
+	return err
 }

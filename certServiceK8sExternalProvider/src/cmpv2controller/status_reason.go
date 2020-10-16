@@ -20,35 +20,9 @@
 
 package cmpv2controller
 
-import (
-	cmapi "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1"
-	"testing"
-	"github.com/stretchr/testify/assert"
-
+const (
+	NotFound = "NotFound"
+	ValidationFailed = "ValidationFailed"
+	Error = "Error"
+	Verified = "Verified"
 )
-
-const group = "certmanager.onap.org"
-
-func Test_shouldBeInvalidCMPv2CertificateRequest_whenEmpty(t *testing.T) {
-	request := new(cmapi.CertificateRequest)
-
-	assert.False(t, isCMPv2CertificateRequest(request))
-}
-
-func Test_shouldBeInvalidCMPv2CertificateRequest_whenKindIsCertificateRequest(t *testing.T) {
-	request := new(cmapi.CertificateRequest)
-	request.Spec.IssuerRef.Group = group
-	request.Spec.IssuerRef.Kind = "CertificateRequest"
-
-	assert.False(t, isCMPv2CertificateRequest(request))
-}
-
-
-func Test_shouldBeValidCMPv2CertificateRequest_whenKindIsCMPvIssuer(t *testing.T) {
-	request := new(cmapi.CertificateRequest)
-	request.Spec.IssuerRef.Group = group
-	request.Spec.IssuerRef.Kind = "CMPv2Issuer"
-
-	assert.True(t, isCMPv2CertificateRequest(request))
-}
-
