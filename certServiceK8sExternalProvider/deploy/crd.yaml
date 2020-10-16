@@ -58,27 +58,41 @@ spec:
               description: CMPv2IssuerSpec defines the desired state of CMPv2Issuer
               properties:
                 url:
-                  description: URL is the base URL for the certservice certificates instance.
+                  description: URL to CertService API.
                   type: string
-                keyRef:
-                  description: keyRef is a reference to a Secret containing the
-                    cmpv2provisioner password used to decrypt the cmpv2provisioner private key.
+                caName:
+                  description: caName is the name of the external CA server.
+                  type: string
+                certSecretRef:
+                  description: Reference to K8s secret which contains certificate, private key and CA certificate
+                    needed to connect to CertService API (which requires client certificate authentication)
                   properties:
-                    key:
-                      description: The key of the secret to select from. Must be a
+                    name:
+                      description: The name of K8s secret to select certificates from. Secret must be in the same
+                        namespace as CMPv2Issuer.
+                      type: string
+                    keyRef:
+                      description: The key of the secret to select private key from. Must be a
                         valid secret key.
                       type: string
-                    name:
-                      description: The name of the secret in the pod's namespace to
-                        select from.
+                    certRef:
+                      description: The key of the secret to select cert from. Must be a
+                        valid secret key.
+                      type: string
+                    cacertRef:
+                      description: The key of the secret to select cacert from. Must be a
+                        valid secret key.
                       type: string
                   required:
                     - name
-                    - key
+                    - keyRef
+                    - certRef
+                    - cacertRef
                   type: object
               required:
                 - url
-                - keyRef
+                - caName
+                - certSecretRef
               type: object
             status:
               description: CMPv2IssuerStatus defines the observed state of CMPv2Issuer
