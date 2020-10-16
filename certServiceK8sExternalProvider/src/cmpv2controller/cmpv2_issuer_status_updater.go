@@ -57,10 +57,8 @@ func (updater *CMPv2IssuerStatusUpdater) Update(ctx context.Context, status cmpv
 	if status == cmpv2api.ConditionFalse {
 		eventType = core.EventTypeWarning
 	}
-	updater.logger.Info("Firing event: ", "issuer", updater.issuer, "eventtype", eventType, "reason", reason, "message", completeMessage)
 	updater.Recorder.Event(updater.issuer, eventType, reason, completeMessage)
 
-	updater.logger.Info("Updating issuer... ")
 	return updater.Client.Update(ctx, updater.issuer)
 }
 
