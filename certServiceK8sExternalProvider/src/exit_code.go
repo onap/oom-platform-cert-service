@@ -5,13 +5,6 @@ type ExitCode struct {
 	Message string
 }
 
-func newExitCode(code int, message string) *ExitCode{
-	exitCode := new (ExitCode)
-	exitCode.Code = code
-	exitCode.Message = message
-	return exitCode
-}
-
 var (
 	FAILED_TO_CREATE_CONTROLLER_MANAGER = ExitCode{1, "unable to create k8s controller manager"}
 	FAILED_TO_REGISTER_CMPv2_ISSUER_CONTROLLER = ExitCode{2, "unable to register CMPv2Issuer controller"}

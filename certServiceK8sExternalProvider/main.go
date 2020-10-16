@@ -39,6 +39,7 @@ import (
 	"os"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
+	"sigs.k8s.io/controller-runtime/pkg/manager"
 )
 
 var (
@@ -50,23 +51,50 @@ func init() {
 	_ = clientgoscheme.AddToScheme(scheme)
 	_ = certmanager.AddToScheme(scheme)
 	_ = certserviceapi.AddToScheme(scheme)
+
+	ctrl.SetLogger(zap.New(zap.UseDevMode(true)))
 }
 
 func main() {
-	fmt.Println()
-	fmt.Println("                                        ***  Cert Service Provider v1.0.2  ***")
-	fmt.Println()
+	printVersionInfo()
 
-	setupLog.Info("Parsing arguments...")
+	metricsAddr, enableLeaderElection := parseInputArguments()
+
+	manager := createControllerManager(metricsAddr, enableLeaderElection)
+
+	registerCMPv2IssuerController(manager)
+	registerCertificateRequestController(manager)
+
+	startControllerManager(manager)
+
+	setupLog.Info("Application is up and running.")
+}
+
+func printVersionInfo() {
+	fmt.Println()
+	fmt.Println("                                     ***   Cert Service Provider v1.0.3   ***")
+	fmt.Println()
+}
+
+func parseInputArguments() (string, bool) {
+	setupLog.Info("Parsing input arguments...")
 	var metricsAddr string
 	var enableLeaderElection bool
 	flag.StringVar(&metricsAddr, "metrics-addr", ":8080", "The address the metric endpoint binds to.")
 	flag.BoolVar(&enableLeaderElection, "enable-leader-election", false,
 		"Enable leader election for controller manager. Enabling this will ensure there is only one active controller manager.")
 	flag.Parse()
+	return metricsAddr, enableLeaderElection
+}
 
-	ctrl.SetLogger(zap.New(zap.UseDevMode(true)))
+func startControllerManager(manager manager.Manager) {
+	setupLog.Info("Starting k8s manager...")
+	if err := manager.Start(ctrl.SetupSignalHandler()); err != nil {
+		exit(app.EXCEPTION_WHILE_RUNNING_CONTROLLER_MANAGER, err)
+	}
+}
 
+func createControllerManager(metricsAddr string, enableLeaderElection bool) manager.Manager {
 	setupLog.Info("Creating k8s Manager...")
 	manager, err := ctrl.NewManager(ctrl.GetConfigOrDie(), ctrl.Options{
 		Scheme:             scheme,
@@ -76,32 +104,36 @@ func main() {
 	if err != nil {
 		exit(app.FAILED_TO_CREATE_CONTROLLER_MANAGER, err)
 	}
+	return manager
+}
 
+func registerCMPv2IssuerController(manager manager.Manager)  {
 	setupLog.Info("Registering CMPv2IssuerController...")
-	if err = (&controllers.CMPv2IssuerController{
+
+	err := (&controllers.CMPv2IssuerController{
 		Client:   manager.GetClient(),
 		Log:      ctrl.Log.WithName("controllers").WithName("CMPv2Issuer"),
 		Clock:    clock.RealClock{},
 		Recorder: manager.GetEventRecorderFor("cmpv2-issuer-controller"),
-	}).SetupWithManager(manager); err != nil {
+	}).SetupWithManager(manager)
+
+	if err != nil {
 		exit(app.FAILED_TO_REGISTER_CMPv2_ISSUER_CONTROLLER, err)
 	}
+}
 
+func registerCertificateRequestController(manager manager.Manager) {
 	setupLog.Info("Registering CertificateRequestController...")
-	if err = (&controllers.CertificateRequestController{
+
+	err := (&controllers.CertificateRequestController{
 		Client:   manager.GetClient(),
 		Log:      ctrl.Log.WithName("controllers").WithName("CertificateRequest"),
 		Recorder: manager.GetEventRecorderFor("certificate-requests-controller"),
-	}).SetupWithManager(manager); err != nil {
+	}).SetupWithManager(manager)
+
+	if err != nil {
 		exit(app.FAILED_TO_REGISTER_CERT_REQUEST_CONTROLLER, err)
 	}
-
-	setupLog.Info("Starting k8s manager...")
-	if err := manager.Start(ctrl.SetupSignalHandler()); err != nil {
-		exit(app.EXCEPTION_WHILE_RUNNING_CONTROLLER_MANAGER, err)
-	}
-	setupLog.Info("Application is up and running.")
-
 }
 
 func exit(exitCode app.ExitCode, err error) {
