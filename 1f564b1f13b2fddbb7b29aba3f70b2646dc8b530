@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "5806ef29_badb8146",
+        "filename": "certServiceK8sExternalProvider/main_test.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-10-16T13:41:49Z",
+      "side": 1,
+      "message": "I believe calling: flag.CommandLine \u003d flag.NewFlagSet(os.Args[0], flag.ExitOnError)\nallows calling flag.Parse() again\n\nI think separating tests is possible if both functions create their Args set and use flag.NewFlagSet(os.Args[0], flag.ExitOnError)  (assuming order of tests can be random, otherwise only the second one would probably need that, but I still think it would be better if both test cases defined their args and called flag.NewFlagSet)",
+      "parentUuid": "c2ab7979_ffd78b40",
+      "revId": "1f564b1f13b2fddbb7b29aba3f70b2646dc8b530",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37ccc61c_ded64edc",
         "filename": "certServiceK8sExternalProvider/src/cmpv2api/cmpv2_groupversion_info_test.go",
         "patchSetId": 2
