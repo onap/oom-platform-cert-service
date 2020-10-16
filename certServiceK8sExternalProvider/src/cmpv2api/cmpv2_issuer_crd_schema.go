@@ -37,10 +37,10 @@ func init() {
 type CMPv2IssuerSpec struct {
 	// URL is the base URL for the CertService certificates instance.
 	URL string `json:"url"`
-
+	// CaName is the name of the external CA server
+	CaName string `json:"caName"`
 	// KeyRef is a reference to a Secret containing the provisioner
-	// password used to decrypt the provisioner private key.
-	KeyRef SecretKeySelector `json:"keyRef"`
+	CertSecretRef SecretKeySelector `json:"certSecretRef"`
 }
 
 // CMPv2IssuerStatus defines the observed state of CMPv2Issuer
@@ -72,9 +72,12 @@ type SecretKeySelector struct {
 	// The name of the secret in the pod's namespace to select from.
 	Name string `json:"name"`
 
-	// The key of the secret to select from. Must be a valid secret key.
-	// +optional
-	Key string `json:"key,omitempty"`
+	// The key of the secret to select private key from. Must be a valid secret key.
+	KeyRef string `json:"keyRef,omitempty"`
+	// The key of the secret to select cert from. Must be a valid secret key.
+	CertRef string `json:"certRef,omitempty"`
+	// The key of the secret to select cacert from. Must be a valid secret key.
+	CacertRef string `json:"cacertRef,omitempty"`
 }
 
 // ConditionType represents a CMPv2Issuer condition type.

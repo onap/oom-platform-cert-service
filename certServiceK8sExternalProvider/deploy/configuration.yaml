@@ -28,7 +28,10 @@ metadata:
   name: cmpv2-issuer
   namespace: onap
 spec:
-  url: https://certservice.default.svc.cluster.local
-  keyRef:
-    name: certservice-key
-    key: key
+  url: https://oom-cert-service:8443/v1/certificate/
+  caName: RA
+  certSecretRef:
+    name: cmpv2-issuer-secret
+    certRef: cmpv2Issuer-cert.pem
+    keyRef: cmpv2Issuer-key.pem
+    cacertRef: cacert.pem

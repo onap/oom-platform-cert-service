@@ -28,18 +28,20 @@ package main
 import (
 	"flag"
 	"fmt"
+	"os"
+
 	certmanager "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	clientgoscheme "k8s.io/client-go/kubernetes/scheme"
 	_ "k8s.io/client-go/plugin/pkg/client/auth/gcp"
 	"k8s.io/utils/clock"
-	app "onap.org/oom-certservice/k8s-external-provider/src"
-	certserviceapi "onap.org/oom-certservice/k8s-external-provider/src/cmpv2api"
-	controllers "onap.org/oom-certservice/k8s-external-provider/src/cmpv2controller"
-	"os"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 	"sigs.k8s.io/controller-runtime/pkg/manager"
+
+	app "onap.org/oom-certservice/k8s-external-provider/src"
+	certserviceapi "onap.org/oom-certservice/k8s-external-provider/src/cmpv2api"
+	controllers "onap.org/oom-certservice/k8s-external-provider/src/cmpv2controller"
 )
 
 var (
@@ -107,7 +109,7 @@ func createControllerManager(metricsAddr string, enableLeaderElection bool) mana
 	return manager
 }
 
-func registerCMPv2IssuerController(manager manager.Manager)  {
+func registerCMPv2IssuerController(manager manager.Manager) {
 	setupLog.Info("Registering CMPv2IssuerController...")
 
 	err := (&controllers.CMPv2IssuerController{
