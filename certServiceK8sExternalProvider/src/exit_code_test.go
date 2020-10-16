@@ -18,37 +18,16 @@
  * ============LICENSE_END=========================================================
  */
 
-package cmpv2controller
+package app
 
 import (
-	cmapi "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1"
 	"testing"
 	"github.com/stretchr/testify/assert"
-
 )
 
-const group = "certmanager.onap.org"
-
-func Test_shouldBeInvalidCMPv2CertificateRequest_whenEmpty(t *testing.T) {
-	request := new(cmapi.CertificateRequest)
-
-	assert.False(t, isCMPv2CertificateRequest(request))
+func TestExitCodes(t *testing.T) {
+	assert.Equal(t, FAILED_TO_CREATE_CONTROLLER_MANAGER.Code, 1)
+	assert.Equal(t, FAILED_TO_REGISTER_CMPv2_ISSUER_CONTROLLER.Code, 2)
+	assert.Equal(t, FAILED_TO_REGISTER_CERT_REQUEST_CONTROLLER.Code, 3)
+	assert.Equal(t, EXCEPTION_WHILE_RUNNING_CONTROLLER_MANAGER.Code, 4)
 }
-
-func Test_shouldBeInvalidCMPv2CertificateRequest_whenKindIsCertificateRequest(t *testing.T) {
-	request := new(cmapi.CertificateRequest)
-	request.Spec.IssuerRef.Group = group
-	request.Spec.IssuerRef.Kind = "CertificateRequest"
-
-	assert.False(t, isCMPv2CertificateRequest(request))
-}
-
-
-func Test_shouldBeValidCMPv2CertificateRequest_whenKindIsCMPvIssuer(t *testing.T) {
-	request := new(cmapi.CertificateRequest)
-	request.Spec.IssuerRef.Group = group
-	request.Spec.IssuerRef.Kind = "CMPv2Issuer"
-
-	assert.True(t, isCMPv2CertificateRequest(request))
-}
-
