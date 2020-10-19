@@ -151,6 +151,24 @@
       "revId": "ead90ce43200b13d1c820cf3fd336e1e36cfa92d",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "19840611_d181dac6",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/certificate_request_controller.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-10-19T09:06:21Z",
+      "side": 1,
+      "message": "Just to clarify IsNotFound doesn\u0027t check if error is defined in apierrors. It checks if error is of type NotFound\n\nhttps://godoc.org/k8s.io/apimachinery/pkg/api/errors#IsNotFound",
+      "parentUuid": "6c6f0906_f35bf407",
+      "revId": "ead90ce43200b13d1c820cf3fd336e1e36cfa92d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
