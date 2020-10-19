@@ -59,6 +59,23 @@
     },
     {
       "key": {
+        "uuid": "e180cb47_bacfd558",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2provisioner/cmpv2_provisioner_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-10-19T07:44:28Z",
+      "side": 1,
+      "message": "Consider using following lib for asserts: https://github.com/stretchr/testify",
+      "revId": "7bff90473e5ab6e788070778ad986b6528ef9ea3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4032b59c_e1ec6050",
         "filename": "certServiceK8sExternalProvider/src/cmpv2provisioner/expected_signed.pem",
         "patchSetId": 1
