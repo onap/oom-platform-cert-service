@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d3a6108_57a04fc5",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/cmpv2_issuer_controller.go",
+        "patchSetId": 9
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-10-19T09:25:31Z",
+      "side": 1,
+      "message": "Why we call function UpdateNoError and actually passing Error as reason. Maybe there is a typo in function name and it should be called UpdateOnError?",
+      "revId": "311cb14d51f5f9b81c5761d815d5d7a5f9b63817",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
