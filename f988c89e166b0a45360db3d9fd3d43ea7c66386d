@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "952d6e67_3c2a0739",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/certificate_request_controller.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-10-19T08:09:03Z",
+      "side": 1,
+      "message": "Consider using same pattern as for rest of the errors",
+      "range": {
+        "startLine": 110,
+        "startChar": 1,
+        "endLine": 111,
+        "endChar": 177
+      },
+      "revId": "f988c89e166b0a45360db3d9fd3d43ea7c66386d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21118353_af980694",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/certificate_request_controller.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-10-19T08:09:03Z",
+      "side": 1,
+      "message": "Isn\u0027t the err lost now?",
+      "range": {
+        "startLine": 174,
+        "startChar": 1,
+        "endLine": 176,
+        "endChar": 194
+      },
+      "revId": "f988c89e166b0a45360db3d9fd3d43ea7c66386d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
