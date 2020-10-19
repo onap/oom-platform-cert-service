@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "98491302_03023db4",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/certificate_request_controller.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-10-19T08:36:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "952d6e67_3c2a0739",
+      "range": {
+        "startLine": 110,
+        "startChar": 1,
+        "endLine": 111,
+        "endChar": 177
+      },
+      "revId": "f988c89e166b0a45360db3d9fd3d43ea7c66386d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21118353_af980694",
         "filename": "certServiceK8sExternalProvider/src/cmpv2controller/certificate_request_controller.go",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "f988c89e166b0a45360db3d9fd3d43ea7c66386d",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2293dac4_c4427d2b",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/certificate_request_controller.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-10-19T08:36:51Z",
+      "side": 1,
+      "message": "Yes, you\u0027re right, i rolled it back",
+      "parentUuid": "21118353_af980694",
+      "range": {
+        "startLine": 174,
+        "startChar": 1,
+        "endLine": 176,
+        "endChar": 194
+      },
+      "revId": "f988c89e166b0a45360db3d9fd3d43ea7c66386d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
