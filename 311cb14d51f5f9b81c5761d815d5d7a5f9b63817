@@ -16,6 +16,24 @@
       "revId": "311cb14d51f5f9b81c5761d815d5d7a5f9b63817",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09d98175_ef8f6749",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/cmpv2_issuer_controller.go",
+        "patchSetId": 9
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-10-19T09:31:28Z",
+      "side": 1,
+      "message": "This method is called in error handling routines. It should update the status of the resource but if this operations fails it is logged but error is not necessary because we have already an original error which will be returned. So the error produced by updateStatus would not be used anyway.",
+      "parentUuid": "4d3a6108_57a04fc5",
+      "revId": "311cb14d51f5f9b81c5761d815d5d7a5f9b63817",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
