@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87aa79a7_41795fa2",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2provisioner/cmpv2_provisioner_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-10-19T05:49:16Z",
+      "side": 1,
+      "message": "extract string to const and reuse it in tests",
+      "revId": "7bff90473e5ab6e788070778ad986b6528ef9ea3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42369c42_ceb241f6",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2provisioner/cmpv2_provisioner_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-10-19T05:49:16Z",
+      "side": 1,
+      "message": "extract duplicated if\u0027s to separate functions: verifyThat...() and reuse it. Remove code duplication in this file.",
+      "revId": "7bff90473e5ab6e788070778ad986b6528ef9ea3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
