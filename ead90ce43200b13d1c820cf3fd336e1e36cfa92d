@@ -50,6 +50,29 @@
       "revId": "ead90ce43200b13d1c820cf3fd336e1e36cfa92d",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "162a0cc1_47c5f5c6",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/certificate_request_controller.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-10-19T07:53:12Z",
+      "side": 1,
+      "message": "Agree with Bogumil. It shouldn\u0027t be lose.",
+      "range": {
+        "startLine": 194,
+        "startChar": 2,
+        "endLine": 194,
+        "endChar": 11
+      },
+      "revId": "ead90ce43200b13d1c820cf3fd336e1e36cfa92d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
