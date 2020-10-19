@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f004f10_432b68b8",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/certificate_request_controller.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-10-19T05:43:59Z",
+      "side": 1,
+      "message": "Sentence should start from capital letter.",
+      "revId": "ead90ce43200b13d1c820cf3fd336e1e36cfa92d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43c682fe_bef00d64",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/certificate_request_controller.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-10-19T05:43:59Z",
+      "side": 1,
+      "message": "Sentence should start from capital letter.",
+      "revId": "ead90ce43200b13d1c820cf3fd336e1e36cfa92d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e62af84_d0b5ecfb",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/certificate_request_controller.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-10-19T05:43:59Z",
+      "side": 1,
+      "message": "hmm, when error is not defined in apierrors library then it is ok to lose it?",
+      "revId": "ead90ce43200b13d1c820cf3fd336e1e36cfa92d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
