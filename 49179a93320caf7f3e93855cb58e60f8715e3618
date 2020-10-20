@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93472f57_6bfd4b51",
+        "filename": "certServiceK8sExternalProvider/deploy/configuration.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-10-20T07:14:49Z",
+      "side": 1,
+      "message": "Is this a real CMPv2Issuer configuration file? If so, url should be corrected...\n\nIf example, it should be moved to different directory and shouldn\u0027t be mentioned in README",
+      "revId": "49179a93320caf7f3e93855cb58e60f8715e3618",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbc5fead_39be2fe5",
+        "filename": "certServiceK8sExternalProvider/deploy/configuration.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-10-20T07:14:49Z",
+      "side": 1,
+      "message": "I don\u0027t see secret creation with that name 😞\nAdditionally cmpv2-issuer-secret is more precise 😊",
+      "revId": "49179a93320caf7f3e93855cb58e60f8715e3618",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8863817c_6c2bdd46",
+        "filename": "certServiceK8sExternalProvider/deploy/crd.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-10-20T07:14:49Z",
+      "side": 1,
+      "message": "Please change to: \nURL to CertService API.",
+      "revId": "49179a93320caf7f3e93855cb58e60f8715e3618",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac8058fc_e60e3d0d",
+        "filename": "certServiceK8sExternalProvider/deploy/crd.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-10-20T07:14:49Z",
+      "side": 1,
+      "message": "Please change to:\nName of the external CA server configured on CertService API side.",
+      "revId": "49179a93320caf7f3e93855cb58e60f8715e3618",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "883816f4_1c1a9704",
+        "filename": "certServiceK8sExternalProvider/deploy/crd.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-10-20T07:14:49Z",
+      "side": 1,
+      "message": "Not updated description.\nReference to K8s secret which contains certificate, private key and CA certificate needed to connect to CertService API (which requires client certificate authentication)",
+      "revId": "49179a93320caf7f3e93855cb58e60f8715e3618",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ccf6406_3fc90386",
+        "filename": "certServiceK8sExternalProvider/deploy/crd.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-10-20T07:14:49Z",
+      "side": 1,
+      "message": "The name of such K8s secret. Secret must be in the same namespace as CMPv2Issuer.\n\nPlease also move name to first place in the properties list",
+      "revId": "49179a93320caf7f3e93855cb58e60f8715e3618",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ba6e938_fb9b4731",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/cmpv2_issuer_controller.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-10-20T07:14:49Z",
+      "side": 1,
+      "message": "spec.certSecretRef.name :)",
+      "revId": "49179a93320caf7f3e93855cb58e60f8715e3618",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15151b9e_092ee8e2",
+        "filename": "certServiceK8sExternalProvider/src/exit_code.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-10-20T07:14:49Z",
+      "side": 1,
+      "message": "K8s instead of k8s",
+      "revId": "49179a93320caf7f3e93855cb58e60f8715e3618",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69562a42_d819b1fb",
+        "filename": "certServiceK8sExternalProvider/src/exit_code.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-10-20T07:14:49Z",
+      "side": 1,
+      "message": "K8s instead of k8s",
+      "revId": "49179a93320caf7f3e93855cb58e60f8715e3618",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
