@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8e17c5f7_ecc99cec",
+        "filename": "certServiceK8sExternalProvider/deploy/configuration.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-10-20T07:31:02Z",
+      "side": 1,
+      "message": "This is an exemplary configuration, however should be close to the final version used in LAB/PROD. I think we should extend the README with the information, that\u0027s this is (just) an example and the values like URL and secret names could/should be adjusted while installation.\n\nSo we should provide a guide for someone who would like to install this software locally or on lab.\n\nI would leave it where it is now. Maybe we could rename this directory it a better name could be found.",
+      "parentUuid": "93472f57_6bfd4b51",
+      "revId": "49179a93320caf7f3e93855cb58e60f8715e3618",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cbc5fead_39be2fe5",
         "filename": "certServiceK8sExternalProvider/deploy/configuration.yaml",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2020-10-20T07:14:49Z",
       "side": 1,
       "message": "I don\u0027t see secret creation with that name 😞\nAdditionally cmpv2-issuer-secret is more precise 😊",
+      "revId": "49179a93320caf7f3e93855cb58e60f8715e3618",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "892ccf55_85869d62",
+        "filename": "certServiceK8sExternalProvider/deploy/configuration.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-10-20T07:31:02Z",
+      "side": 1,
+      "message": "The secret creation would/should be done on the specific environment. It is an external dependency on which CMPv2Issuer count on (like e.g. cert-manager).\n\nWe could extend README file to describe what format of the secret is expected and how it can be created.",
+      "parentUuid": "cbc5fead_39be2fe5",
       "revId": "49179a93320caf7f3e93855cb58e60f8715e3618",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
