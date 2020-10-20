@@ -23,37 +23,41 @@ package cmpv2provisioner
 import (
 	"bytes"
 	"context"
+	"io/ioutil"
 	"log"
 	"testing"
 	"time"
-	"io/ioutil"
 
 	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2api"
-	
-	"github.com/stretchr/testify/assert"
-	"k8s.io/apimachinery/pkg/types"
+
 	cmapi "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1"
+	"github.com/stretchr/testify/assert"
 	apimach "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/types"
 )
 
 const ISSUER_NAME = "cmpv2-issuer"
 const ISSUER_URL = "issuer/url"
-const KEY_NAME ="onapwro"
+const KEY = "onapwro-key"
+const CERT = "onapwro-cert"
+const CACERT = "onapwro-cacert"
 const ISSUER_NAMESPACE = "onap"
 
-func Test_shouldCreateCorrectCertServiceCA(t *testing.T){
-	issuer, key := createIssuerAndKey(ISSUER_NAME, ISSUER_URL, KEY_NAME)
-	provisioner, err := New(&issuer, key)
+func Test_shouldCreateCorrectCertServiceCA(t *testing.T) {
+	issuer, key, cert, cacert := createIssuerAndCerts(ISSUER_NAME, ISSUER_URL, KEY, CERT, CACERT)
+	provisioner, err := New(&issuer, key, cert, cacert)
 
 	assert.Nil(t, err)
 	assert.Equal(t, string(provisioner.key), string(key), "Unexpected provisioner key.")
+	assert.Equal(t, string(provisioner.cert), string(cert), "Unexpected provisioner cert.")
+	assert.Equal(t, string(provisioner.cacert), string(cacert), "Unexpected provisioner cacert.")
 	assert.Equal(t, provisioner.name, issuer.Name, "Unexpected provisioner name.")
 	assert.Equal(t, provisioner.url, issuer.Spec.URL, "Unexpected provisioner url.")
 }
 
-func Test_shouldSuccessfullyLoadPreviouslyStoredProvisioner(t *testing.T){
-	issuer, key := createIssuerAndKey(ISSUER_NAME, ISSUER_URL, KEY_NAME)
-	provisioner, err := New(&issuer, key)
+func Test_shouldSuccessfullyLoadPreviouslyStoredProvisioner(t *testing.T) {
+	issuer, key, cert, cacert := createIssuerAndCerts(ISSUER_NAME, ISSUER_URL, KEY, CERT, CACERT)
+	provisioner, err := New(&issuer, key, cert, cacert)
 
 	assert.Nil(t, err)
 
@@ -64,6 +68,8 @@ func Test_shouldSuccessfullyLoadPreviouslyStoredProvisioner(t *testing.T){
 
 	verifyThatConditionIsTrue(ok, "Provisioner could not be loaded.", t)
 	assert.Equal(t, string(provisioner.key), string(key), "Unexpected provisioner key.")
+	assert.Equal(t, string(provisioner.cert), string(cert), "Unexpected provisioner cert.")
+	assert.Equal(t, string(provisioner.cacert), string(cacert), "Unexpected provisioner cacert.")
 	assert.Equal(t, provisioner.name, issuer.Name, "Unexpected provisioner name.")
 	assert.Equal(t, provisioner.url, issuer.Spec.URL, "Unexpected provisioner url.")
 }
@@ -72,9 +78,9 @@ func Test_shouldReturnCorrectSignedPemsWhenParametersAreCorrect(t *testing.T) {
 	const EXPECTED_SIGNED_FILENAME = "test_resources/expected_signed.pem"
 	const EXPECTED_TRUSTED_FILENAME = "test_resources/expected_trusted.pem"
 
-	issuer, key := createIssuerAndKey(ISSUER_NAME, ISSUER_URL, KEY_NAME)
+	issuer, key, cert, cacert := createIssuerAndCerts(ISSUER_NAME, ISSUER_URL, KEY, CERT, CACERT)
+	provisioner, err := New(&issuer, key, cert, cacert)
 
-	provisioner, err := New(&issuer, key)
 	issuerNamespaceName := createIssuerNamespaceName(ISSUER_NAMESPACE, ISSUER_NAME)
 	Store(issuerNamespaceName, provisioner)
 
@@ -93,27 +99,27 @@ func Test_shouldReturnCorrectSignedPemsWhenParametersAreCorrect(t *testing.T) {
 	verifyThatConditionIsTrue(areSlicesEqual(trustedCAs, readFile(EXPECTED_TRUSTED_FILENAME)), "Trusted CAs pem is different than expected.", t)
 }
 
-func verifyThatConditionIsTrue(cond bool, message string, t *testing.T)  {
-	if(!cond){
+func verifyThatConditionIsTrue(cond bool, message string, t *testing.T) {
+	if !cond {
 		t.Fatal(message)
 	}
 }
 
-func createIssuerNamespaceName(namespace string, name string) types.NamespacedName{
+func createIssuerNamespaceName(namespace string, name string) types.NamespacedName {
 	return types.NamespacedName{
 		Namespace: namespace,
 		Name:      name,
 	}
 }
 
-func createIssuerAndKey(name string, url string, key string) (cmpv2api.CMPv2Issuer, []byte) {
+func createIssuerAndCerts(name string, url string, key string, cert string, cacert string) (cmpv2api.CMPv2Issuer, []byte, []byte, []byte) {
 	issuer := cmpv2api.CMPv2Issuer{}
 	issuer.Name = name
 	issuer.Spec.URL = url
-	return issuer, []byte(key)
+	return issuer, []byte(key), []byte(cert), []byte(cacert)
 }
 
-func readFile(filename string) []byte{
+func readFile(filename string) []byte {
 	certRequest, err := ioutil.ReadFile(filename)
 	if err != nil {
 		log.Fatal(err)
@@ -150,6 +156,6 @@ func createCertificateRequest() *cmapi.CertificateRequest {
 	return request
 }
 
-func areSlicesEqual(slice1 []byte, slice2 []byte) bool{
+func areSlicesEqual(slice1 []byte, slice2 []byte) bool {
 	return bytes.Compare(slice1, slice2) == 0
 }
