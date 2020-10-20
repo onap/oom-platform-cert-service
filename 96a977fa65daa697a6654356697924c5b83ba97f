@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb0bf13c_a563ec27",
+        "filename": "certServiceK8sExternalProvider/main_test.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-10-20T10:01:40Z",
+      "side": 1,
+      "message": "pls reorganize imports: https://github.com/golang/go/wiki/CodeReviewComments#imports",
+      "revId": "96a977fa65daa697a6654356697924c5b83ba97f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "028a4fd7_228aa2b0",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2provisioner/cmpv2_provisioner_factory.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-10-20T10:01:40Z",
+      "side": 1,
+      "message": "pls reorganize imports: https://github.com/golang/go/wiki/CodeReviewComments#imports",
+      "revId": "96a977fa65daa697a6654356697924c5b83ba97f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a31334ac_d792cc4c",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2provisioner/cmpv2_provisioner_factory_test.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-10-20T10:01:40Z",
+      "side": 1,
+      "message": "pls reorganize imports: https://github.com/golang/go/wiki/CodeReviewComments#imports",
+      "revId": "96a977fa65daa697a6654356697924c5b83ba97f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
