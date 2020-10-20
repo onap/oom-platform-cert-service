@@ -18,37 +18,38 @@
  * ============LICENSE_END=========================================================
  */
 
-package main
+package cmpv2provisioner
 
 import (
-	"flag"
-	"os"
-	"testing"
+	"fmt"
 
-	"github.com/stretchr/testify/assert"
+	v1 "k8s.io/api/core/v1"
+
+	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2api"
 )
 
-func Test_shouldParseArguments_defaultValues(t *testing.T) {
-	os.Args = []string{
-		"first-arg-is-omitted-by-method-parse-arguments-so-this-only-a-placeholder"}
-	flag.CommandLine = flag.NewFlagSet(os.Args[0], flag.ExitOnError)
-
-	metricsAddr, enableLeaderElection := parseInputArguments()
-
-	assert.Equal(t, ":8080", metricsAddr)
-	assert.False(t, enableLeaderElection)
+func CreateProvisioner(issuer *cmpv2api.CMPv2Issuer, secret v1.Secret) (*CertServiceCA, error) {
+	secretKeys := issuer.Spec.CertSecretRef
+	key, err := readValueFromSecret(secret, secretKeys.KeyRef)
+	if err != nil {
+		return nil, err
+	}
+	cert, err := readValueFromSecret(secret, secretKeys.CertRef)
+	if err != nil {
+		return nil, err
+	}
+	cacert, err := readValueFromSecret(secret, secretKeys.CacertRef)
+	if err != nil {
+		return nil, err
+	}
+	return New(issuer, key, cert, cacert)
 }
 
-func Test_shouldParseArguments_valuesFromCLI(t *testing.T) {
-	os.Args = []string{
-		"first-arg-is-omitted-by-method-parse-arguments-so-this-only-a-placeholder",
-		"--metrics-addr=127.0.0.1:555",
-		"--enable-leader-election=true"}
-	flag.CommandLine = flag.NewFlagSet(os.Args[0], flag.ExitOnError)
-
-	metricsAddr, enableLeaderElection := parseInputArguments()
-
-	assert.Equal(t, "127.0.0.1:555", metricsAddr)
-	assert.True(t, enableLeaderElection)
-
+func readValueFromSecret(secret v1.Secret, secretKey string) ([]byte, error) {
+	value, ok := secret.Data[secretKey]
+	if !ok {
+		err := fmt.Errorf("secret %s does not contain key %s", secret.Name, secretKey)
+		return nil, err
+	}
+	return value, nil
 }
