@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "076ae0bd_4c844639",
+        "filename": "certServiceK8sExternalProvider/deploy/configuration.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-10-20T08:15:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e17c5f7_ecc99cec",
+      "revId": "49179a93320caf7f3e93855cb58e60f8715e3618",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cbc5fead_39be2fe5",
         "filename": "certServiceK8sExternalProvider/deploy/configuration.yaml",
         "patchSetId": 2
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "ff7b35eb_c70d2ca3",
+        "filename": "certServiceK8sExternalProvider/deploy/configuration.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-10-20T08:15:24Z",
+      "side": 1,
+      "message": "Added info to README. Done",
+      "parentUuid": "892ccf55_85869d62",
+      "revId": "49179a93320caf7f3e93855cb58e60f8715e3618",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8863817c_6c2bdd46",
         "filename": "certServiceK8sExternalProvider/deploy/crd.yaml",
         "patchSetId": 2
@@ -86,6 +122,24 @@
       "revId": "49179a93320caf7f3e93855cb58e60f8715e3618",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fae766c_779da87d",
+        "filename": "certServiceK8sExternalProvider/deploy/crd.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-10-20T08:15:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8863817c_6c2bdd46",
+      "revId": "49179a93320caf7f3e93855cb58e60f8715e3618",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -106,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "95a85b4e_1f04a9e8",
+        "filename": "certServiceK8sExternalProvider/deploy/crd.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-10-20T08:15:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac8058fc_e60e3d0d",
+      "revId": "49179a93320caf7f3e93855cb58e60f8715e3618",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "883816f4_1c1a9704",
         "filename": "certServiceK8sExternalProvider/deploy/crd.yaml",
         "patchSetId": 2
@@ -120,6 +192,24 @@
       "revId": "49179a93320caf7f3e93855cb58e60f8715e3618",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3d873ec_fcbe32e1",
+        "filename": "certServiceK8sExternalProvider/deploy/crd.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-10-20T08:15:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "883816f4_1c1a9704",
+      "revId": "49179a93320caf7f3e93855cb58e60f8715e3618",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "5edb801e_5d9d2a83",
+        "filename": "certServiceK8sExternalProvider/deploy/crd.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-10-20T08:15:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ccf6406_3fc90386",
+      "revId": "49179a93320caf7f3e93855cb58e60f8715e3618",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ba6e938_fb9b4731",
         "filename": "certServiceK8sExternalProvider/src/cmpv2controller/cmpv2_issuer_controller.go",
         "patchSetId": 2
@@ -154,6 +262,24 @@
       "revId": "49179a93320caf7f3e93855cb58e60f8715e3618",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa1d8d47_debd7f67",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/cmpv2_issuer_controller.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-10-20T08:15:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ba6e938_fb9b4731",
+      "revId": "49179a93320caf7f3e93855cb58e60f8715e3618",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -174,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "c1919a5f_29db0696",
+        "filename": "certServiceK8sExternalProvider/src/exit_code.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-10-20T08:15:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15151b9e_092ee8e2",
+      "revId": "49179a93320caf7f3e93855cb58e60f8715e3618",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69562a42_d819b1fb",
         "filename": "certServiceK8sExternalProvider/src/exit_code.go",
         "patchSetId": 2
@@ -188,6 +332,24 @@
       "revId": "49179a93320caf7f3e93855cb58e60f8715e3618",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b550781b_ee72841e",
+        "filename": "certServiceK8sExternalProvider/src/exit_code.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-10-20T08:15:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69562a42_d819b1fb",
+      "revId": "49179a93320caf7f3e93855cb58e60f8715e3618",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
