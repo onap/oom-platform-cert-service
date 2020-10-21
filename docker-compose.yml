@@ -19,7 +19,7 @@ services:
       - certservice
 
   oom-cert-service:
-    image: onap/org.onap.oom.certservice.oom-certservice-api:latest
+    image: onap/org.onap.oom.platform.cert-service.oom-certservice-api:latest
     volumes:
       - ./compose-resources/cmpServers.json:/etc/onap/oom/certservice/cmpServers.json
       - ./certs/truststore.jks:/etc/onap/oom/certservice/certs/truststore.jks
