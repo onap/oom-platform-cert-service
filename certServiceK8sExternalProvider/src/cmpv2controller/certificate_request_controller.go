@@ -44,6 +44,11 @@ import (
 	provisioners "onap.org/oom-certservice/k8s-external-provider/src/cmpv2provisioner"
 )
 
+const (
+	privateKeySecretNameAnnotation = "cert-manager.io/private-key-secret-name"
+	privateKeySecretKey = "tls.key"
+)
+
 // CertificateRequestController reconciles a CMPv2Issuer object.
 type CertificateRequestController struct {
 	client.Client
@@ -104,8 +109,21 @@ func (controller *CertificateRequestController) Reconcile(k8sRequest ctrl.Reques
 		return ctrl.Result{}, err
 	}
 
-	// 7. Sign CertificateRequest
-	signedPEM, trustedCAs, err := provisioner.Sign(ctx, certificateRequest)
+	// 7.
+	privateKeySecretName := certificateRequest.ObjectMeta.Annotations[privateKeySecretNameAnnotation]
+	privateKeySecretNamespaceName := types.NamespacedName{
+		Namespace: k8sRequest.Namespace,
+		Name:      privateKeySecretName,
+	}
+	var privateKeySecret core.Secret
+	if err := controller.Client.Get(ctx, privateKeySecretNamespaceName, &privateKeySecret); err != nil {
+		controller.handleErrorGettingPrivateKey(ctx, log, err, certificateRequest, privateKeySecretNamespaceName)
+		return ctrl.Result{}, err
+	}
+	privateKeyBytes := privateKeySecret.Data[privateKeySecretKey]
+
+	// 8. Sign CertificateRequest
+	signedPEM, trustedCAs, err := provisioner.Sign(ctx, certificateRequest, privateKeyBytes)
 	if err != nil {
 		controller.handleErrorFailedToSignCertificate(ctx, log, err, certificateRequest)
 		return ctrl.Result{}, err
@@ -186,6 +204,11 @@ func (controller *CertificateRequestController) handleErrorCMPv2IssuerIsNotReady
 func (controller *CertificateRequestController) handleErrorGettingCMPv2Issuer(ctx context.Context, log logr.Logger, err error, certificateRequest *cmapi.CertificateRequest, issuerNamespaceName types.NamespacedName, req ctrl.Request) {
 	log.Error(err, "Failed to retrieve CMPv2Issuer resource", "namespace", req.Namespace, "name", certificateRequest.Spec.IssuerRef.Name)
 	_ = controller.setStatus(ctx, certificateRequest, cmmeta.ConditionFalse, cmapi.CertificateRequestReasonPending, "Failed to retrieve CMPv2Issuer resource %s: %v", issuerNamespaceName, err)
+}
+
+func (controller *CertificateRequestController) handleErrorGettingPrivateKey(ctx context.Context, log logr.Logger, err error, certificateRequest *cmapi.CertificateRequest, pkSecretNamespacedName types.NamespacedName) {
+	log.Error(err, "Failed to retrieve private key secret for certificate request", "namespace", pkSecretNamespacedName.Namespace, "name", pkSecretNamespacedName.Name)
+	_ = controller.setStatus(ctx, certificateRequest, cmmeta.ConditionFalse, cmapi.CertificateRequestReasonPending, "Failed to retrieve private key secret: %v", err)
 }
 
 func (controller *CertificateRequestController) handleErrorFailedToSignCertificate(ctx context.Context, log logr.Logger, err error, certificateRequest *cmapi.CertificateRequest) {

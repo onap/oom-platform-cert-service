@@ -18,45 +18,57 @@
  * ============LICENSE_END=========================================================
  */
 
-package cmpv2provisioner
+package certserviceclient
 
 import (
+	"crypto/tls"
+	"crypto/x509"
 	"fmt"
-
-	v1 "k8s.io/api/core/v1"
-
-	"onap.org/oom-certservice/k8s-external-provider/src/certserviceclient"
-	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2api"
+	"net/http"
+	"net/url"
+	"path"
 )
 
-func CreateProvisioner(issuer *cmpv2api.CMPv2Issuer, secret v1.Secret) (*CertServiceCA, error) {
-	secretKeys := issuer.Spec.CertSecretRef
-	keyBase64, err := readValueFromSecret(secret, secretKeys.KeyRef)
+func CreateCertServiceClient(baseUrl string, caName string, keyPemBase64 []byte, certPemBase64 []byte, cacertPemBase64 []byte) (*CertServiceClientImpl, error) {
+	cert, err := tls.X509KeyPair(certPemBase64, keyPemBase64)
 	if err != nil {
 		return nil, err
 	}
-	certBase64, err := readValueFromSecret(secret, secretKeys.CertRef)
+	x509.NewCertPool()
+	caCertPool := x509.NewCertPool()
+	ok := caCertPool.AppendCertsFromPEM(cacertPemBase64)
+	if !ok {
+		return nil, fmt.Errorf("couldn't certs from cacert")
+	}
+	httpClient := &http.Client{
+		Transport: &http.Transport{
+			TLSClientConfig: &tls.Config{
+				RootCAs:      caCertPool,
+				Certificates: []tls.Certificate{cert},
+			},
+		},
+	}
+	certificationUrl, err := parseUrl(baseUrl, caName)
 	if err != nil {
 		return nil, err
 	}
-	cacertBase64, err := readValueFromSecret(secret, secretKeys.CacertRef)
-	if err != nil {
-		return nil, err
+	client := CertServiceClientImpl{
+		certificationUrl: certificationUrl.String(),
+		httpClient:       httpClient,
 	}
 
-	certServiceClient, err := certserviceclient.CreateCertServiceClient(issuer.Spec.URL, issuer.Spec.CaName, keyBase64, certBase64, cacertBase64)
-	if err != nil {
-		return nil, err
-	}
-
-	return New(issuer, certServiceClient)
+	return &client, nil
 }
 
-func readValueFromSecret(secret v1.Secret, secretKey string) ([]byte, error) {
-	value, ok := secret.Data[secretKey]
-	if !ok {
-		err := fmt.Errorf("secret %s does not contain key %s", secret.Name, secretKey)
+func parseUrl(baseUrl string, caName string) (*url.URL, error) {
+	parsedUrl, err := url.Parse(baseUrl)
+	if err != nil {
 		return nil, err
 	}
-	return value, nil
+	if caName == "" {
+		return nil, fmt.Errorf("caName cannot be empty")
+	}
+
+	parsedUrl.Path = path.Join(parsedUrl.Path, caName)
+	return parsedUrl, nil
 }
