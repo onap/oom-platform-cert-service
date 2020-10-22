@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0811390a_45a0d006",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/certificate_request_controller.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-10-22T15:36:52Z",
+      "side": 1,
+      "message": "description e.g. 7. Get private key",
+      "revId": "7a5b2bbe2d4795f26648666e0f70f93e8ca936d9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "348b8034_2f53a4be",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/certificate_request_controller.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-10-22T15:36:52Z",
+      "side": 1,
+      "message": "9. ;)",
+      "revId": "7a5b2bbe2d4795f26648666e0f70f93e8ca936d9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
