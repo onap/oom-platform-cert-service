@@ -38,33 +38,29 @@ import (
 	"k8s.io/apimachinery/pkg/types"
 	ctrl "sigs.k8s.io/controller-runtime"
 
+	"onap.org/oom-certservice/k8s-external-provider/src/certserviceclient"
 	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2api"
 )
 
 var collection = new(sync.Map)
 
 type CertServiceCA struct {
-	name   string
-	url    string
-	caName string
-	key    []byte
-	cert   []byte
-	cacert []byte
+	name              string
+	url               string
+	caName            string
+	certServiceClient *certserviceclient.CertServiceClient
 }
 
-func New(cmpv2Issuer *cmpv2api.CMPv2Issuer, key []byte, cert []byte, cacert []byte) (*CertServiceCA, error) {
+func New(cmpv2Issuer *cmpv2api.CMPv2Issuer, certServiceClient *certserviceclient.CertServiceClient) (*CertServiceCA, error) {
 
 	ca := CertServiceCA{}
 	ca.name = cmpv2Issuer.Name
 	ca.url = cmpv2Issuer.Spec.URL
 	ca.caName = cmpv2Issuer.Spec.CaName
-	ca.key = key
-	ca.cert = cert
-	ca.cacert = cacert
+	ca.certServiceClient = certServiceClient
 
 	log := ctrl.Log.WithName("cmpv2-provisioner")
-	log.Info("Configuring CA: ", "name", ca.name, "url", ca.url, "caName", ca.caName, "key", ca.key,
-		"cert", ca.cert, "cacert", ca.cacert)
+	log.Info("Configuring CA: ", "name", ca.name, "url", ca.url, "caName", ca.caName)
 
 	return &ca, nil
 }
@@ -82,21 +78,22 @@ func Store(namespacedName types.NamespacedName, provisioner *CertServiceCA) {
 	collection.Store(namespacedName, provisioner)
 }
 
-func (ca *CertServiceCA) Sign(ctx context.Context, certificateRequest *certmanager.CertificateRequest) ([]byte, []byte, error) {
+func (ca *CertServiceCA) Sign(ctx context.Context, certificateRequest *certmanager.CertificateRequest, privateKeyBytes []byte) ([]byte, []byte, error) {
 	log := ctrl.Log.WithName("certservice-provisioner")
 	log.Info("Signing certificate: ", "cert-name", certificateRequest.Name)
 
-	key, _ := base64.RawStdEncoding.DecodeString(string(ca.key))
-	log.Info("CA: ", "name", ca.name, "url", ca.url, "key", key)
+	log.Info("CA: ", "name", ca.name, "url", ca.url)
 
-	crPEM := certificateRequest.Spec.Request
-	csrBase64 := crPEM
+	csrBytes := certificateRequest.Spec.Request
+	csrBase64 := csrBytes
 	log.Info("Csr PEM: ", "bytes", csrBase64)
 
-	csr, err := decodeCSR(crPEM)
+	csr, err := decodeCSR(csrBytes)
 	if err != nil {
 		return nil, nil, err
 	}
+
+	ca.certServiceClient.GetCertificates(csrBytes, privateKeyBytes)
 
 	cert := x509.Certificate{}
 	cert.Raw = csr.Raw

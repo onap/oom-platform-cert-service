@@ -25,24 +25,31 @@ import (
 
 	v1 "k8s.io/api/core/v1"
 
+	"onap.org/oom-certservice/k8s-external-provider/src/certserviceclient"
 	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2api"
 )
 
 func CreateProvisioner(issuer *cmpv2api.CMPv2Issuer, secret v1.Secret) (*CertServiceCA, error) {
 	secretKeys := issuer.Spec.CertSecretRef
-	key, err := readValueFromSecret(secret, secretKeys.KeyRef)
+	keyBase64, err := readValueFromSecret(secret, secretKeys.KeyRef)
 	if err != nil {
 		return nil, err
 	}
-	cert, err := readValueFromSecret(secret, secretKeys.CertRef)
+	certBase64, err := readValueFromSecret(secret, secretKeys.CertRef)
 	if err != nil {
 		return nil, err
 	}
-	cacert, err := readValueFromSecret(secret, secretKeys.CacertRef)
+	cacertBase64, err := readValueFromSecret(secret, secretKeys.CacertRef)
 	if err != nil {
 		return nil, err
 	}
-	return New(issuer, key, cert, cacert)
+
+	certServiceClient, err := certserviceclient.CreateCertServiceClient(issuer.Spec.URL, issuer.Spec.CaName, keyBase64, certBase64, cacertBase64)
+	if err != nil {
+		return nil, err
+	}
+
+	return New(issuer, certServiceClient)
 }
 
 func readValueFromSecret(secret v1.Secret, secretKey string) ([]byte, error) {
