@@ -21,6 +21,7 @@
 package cmpv2provisioner
 
 import (
+	"encoding/base64"
 	"fmt"
 	"testing"
 
@@ -28,6 +29,7 @@ import (
 	v1 "k8s.io/api/core/v1"
 
 	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2api"
+	"onap.org/oom-certservice/k8s-external-provider/src/testdata"
 )
 
 const (
@@ -39,12 +41,6 @@ const (
 	cacertSecretKey = "cacert.pem"
 )
 
-var (
-	keySecretValue    = []byte("keyData")
-	certSecretValue   = []byte("certData")
-	cacertSecretValue = []byte("cacertData")
-)
-
 func Test_shouldCreateProvisioner(t *testing.T) {
 	issuer, secret := getValidIssuerAndSecret()
 
@@ -53,9 +49,6 @@ func Test_shouldCreateProvisioner(t *testing.T) {
 	assert.NotNil(t, provisioner)
 	assert.Equal(t, url, provisioner.url)
 	assert.Equal(t, caName, provisioner.caName)
-	assert.Equal(t, keySecretValue, provisioner.key)
-	assert.Equal(t, certSecretValue, provisioner.cert)
-	assert.Equal(t, cacertSecretValue, provisioner.cacert)
 }
 
 func Test_shouldReturnError_whenSecretMissingKeyRef(t *testing.T) {
@@ -94,6 +87,18 @@ func Test_shouldReturnError_whenSecretMissingCacertRef(t *testing.T) {
 	}
 }
 
+
+func Test_shouldReturnError_whenCreationOfCertServiceClientReturnsError(t *testing.T) {
+	issuer, secret := getValidIssuerAndSecret()
+	invalidKeySecretValue, _    := base64.StdEncoding.DecodeString("")
+	secret.Data[keySecretKey] = invalidKeySecretValue
+
+	provisioner, err := CreateProvisioner(&issuer, secret)
+
+	assert.Nil(t, provisioner)
+	assert.Error(t, err)
+}
+
 func getValidIssuerAndSecret() (cmpv2api.CMPv2Issuer, v1.Secret) {
 	issuer := cmpv2api.CMPv2Issuer{
 		Spec: cmpv2api.CMPv2IssuerSpec{
@@ -110,9 +115,9 @@ func getValidIssuerAndSecret() (cmpv2api.CMPv2Issuer, v1.Secret) {
 	secret := v1.Secret{
 
 		Data: map[string][]byte{
-			keySecretKey:    keySecretValue,
-			certSecretKey:   certSecretValue,
-			cacertSecretKey: cacertSecretValue,
+			keySecretKey:    testdata.KeyBytes,
+			certSecretKey:   testdata.CertBytes,
+			cacertSecretKey: testdata.CacertBytes,
 		},
 	}
 	secret.Name = secretName

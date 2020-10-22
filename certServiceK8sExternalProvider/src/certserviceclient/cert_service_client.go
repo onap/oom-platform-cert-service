@@ -18,45 +18,56 @@
  * ============LICENSE_END=========================================================
  */
 
-package cmpv2provisioner
+package certserviceclient
 
 import (
-	"fmt"
-
-	v1 "k8s.io/api/core/v1"
-
-	"onap.org/oom-certservice/k8s-external-provider/src/certserviceclient"
-	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2api"
+	"encoding/base64"
+	"encoding/json"
+	"net/http"
 )
 
-func CreateProvisioner(issuer *cmpv2api.CMPv2Issuer, secret v1.Secret) (*CertServiceCA, error) {
-	secretKeys := issuer.Spec.CertSecretRef
-	keyBase64, err := readValueFromSecret(secret, secretKeys.KeyRef)
-	if err != nil {
-		return nil, err
-	}
-	certBase64, err := readValueFromSecret(secret, secretKeys.CertRef)
-	if err != nil {
-		return nil, err
-	}
-	cacertBase64, err := readValueFromSecret(secret, secretKeys.CacertRef)
-	if err != nil {
-		return nil, err
-	}
+const (
+	CsrHeaderName = "CSR"
+	PkHeaderName = "PK"
+)
 
-	certServiceClient, err := certserviceclient.CreateCertServiceClient(issuer.Spec.URL, issuer.Spec.CaName, keyBase64, certBase64, cacertBase64)
-	if err != nil {
-		return nil, err
-	}
-
-	return New(issuer, certServiceClient)
+type CertServiceClient interface {
+	GetCertificates(csr []byte, key []byte) (*CertificatesResponse, error)
 }
 
-func readValueFromSecret(secret v1.Secret, secretKey string) ([]byte, error) {
-	value, ok := secret.Data[secretKey]
-	if !ok {
-		err := fmt.Errorf("secret %s does not contain key %s", secret.Name, secretKey)
+type CertServiceClientImpl struct {
+	certificationUrl string
+	httpClient       HTTPClient
+}
+
+type HTTPClient interface {
+	Do(req *http.Request) (*http.Response, error)
+}
+
+type CertificatesResponse struct {
+	CertificateChain    []string `json:"certificateChain"`
+	TrustedCertificates []string `json:"trustedCertificates"`
+}
+
+func (client *CertServiceClientImpl) GetCertificates(csr []byte, key []byte) (*CertificatesResponse, error) {
+
+	request, err := http.NewRequest("GET", client.certificationUrl, nil)
+	if err != nil {
 		return nil, err
 	}
-	return value, nil
+
+	request.Header.Add(CsrHeaderName, base64.StdEncoding.EncodeToString(csr))
+	request.Header.Add(PkHeaderName, base64.StdEncoding.EncodeToString(key))
+	response, err := client.httpClient.Do(request)
+	if err != nil {
+		return nil, err
+	}
+
+	var certificatesResponse CertificatesResponse
+	err = json.NewDecoder(response.Body).Decode(&certificatesResponse)
+	if err != nil {
+		return nil, err
+	}
+
+	return &certificatesResponse, err
 }
