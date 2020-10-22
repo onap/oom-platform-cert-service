@@ -33,31 +33,26 @@ import (
 	apimach "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/types"
 
+	"onap.org/oom-certservice/k8s-external-provider/src/certserviceclient"
 	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2api"
 )
 
 const ISSUER_NAME = "cmpv2-issuer"
 const ISSUER_URL = "issuer/url"
-const KEY = "onapwro-key"
-const CERT = "onapwro-cert"
-const CACERT = "onapwro-cacert"
 const ISSUER_NAMESPACE = "onap"
 
 func Test_shouldCreateCorrectCertServiceCA(t *testing.T) {
-	issuer, key, cert, cacert := createIssuerAndCerts(ISSUER_NAME, ISSUER_URL, KEY, CERT, CACERT)
-	provisioner, err := New(&issuer, key, cert, cacert)
+	issuer := createIssuerAndCerts(ISSUER_NAME, ISSUER_URL)
+	provisioner, err := New(&issuer, &certServiceClientMock{})
 
 	assert.Nil(t, err)
-	assert.Equal(t, string(provisioner.key), string(key), "Unexpected provisioner key.")
-	assert.Equal(t, string(provisioner.cert), string(cert), "Unexpected provisioner cert.")
-	assert.Equal(t, string(provisioner.cacert), string(cacert), "Unexpected provisioner cacert.")
 	assert.Equal(t, provisioner.name, issuer.Name, "Unexpected provisioner name.")
 	assert.Equal(t, provisioner.url, issuer.Spec.URL, "Unexpected provisioner url.")
 }
 
 func Test_shouldSuccessfullyLoadPreviouslyStoredProvisioner(t *testing.T) {
-	issuer, key, cert, cacert := createIssuerAndCerts(ISSUER_NAME, ISSUER_URL, KEY, CERT, CACERT)
-	provisioner, err := New(&issuer, key, cert, cacert)
+	issuer := createIssuerAndCerts(ISSUER_NAME, ISSUER_URL)
+	provisioner, err := New(&issuer, &certServiceClientMock{})
 
 	assert.Nil(t, err)
 
@@ -67,19 +62,24 @@ func Test_shouldSuccessfullyLoadPreviouslyStoredProvisioner(t *testing.T) {
 	provisioner, ok := Load(issuerNamespaceName)
 
 	verifyThatConditionIsTrue(ok, "Provisioner could not be loaded.", t)
-	assert.Equal(t, string(provisioner.key), string(key), "Unexpected provisioner key.")
-	assert.Equal(t, string(provisioner.cert), string(cert), "Unexpected provisioner cert.")
-	assert.Equal(t, string(provisioner.cacert), string(cacert), "Unexpected provisioner cacert.")
 	assert.Equal(t, provisioner.name, issuer.Name, "Unexpected provisioner name.")
 	assert.Equal(t, provisioner.url, issuer.Spec.URL, "Unexpected provisioner url.")
 }
 
 func Test_shouldReturnCorrectSignedPemsWhenParametersAreCorrect(t *testing.T) {
-	const EXPECTED_SIGNED_FILENAME = "test_resources/expected_signed.pem"
-	const EXPECTED_TRUSTED_FILENAME = "test_resources/expected_trusted.pem"
+	const EXPECTED_SIGNED_FILENAME = "testdata/expected_signed.pem"
+	const EXPECTED_TRUSTED_FILENAME = "testdata/expected_trusted.pem"
 
-	issuer, key, cert, cacert := createIssuerAndCerts(ISSUER_NAME, ISSUER_URL, KEY, CERT, CACERT)
-	provisioner, err := New(&issuer, key, cert, cacert)
+	issuer := createIssuerAndCerts(ISSUER_NAME, ISSUER_URL)
+	provisioner, err := New(&issuer, &certServiceClientMock{
+		getCertificatesFunc: func(csr []byte, pk []byte) (response *certserviceclient.CertificatesResponse, e error) {
+			mockResponse:= &certserviceclient.CertificatesResponse{
+				CertificateChain:    []string{"cert-0", "cert-1"},
+				TrustedCertificates: []string{"trusted-cert-0", "trusted-cert-1"},
+			} //TODO: mock real certServiceClient response
+			return mockResponse, nil
+		},
+	})
 
 	issuerNamespaceName := createIssuerNamespaceName(ISSUER_NAMESPACE, ISSUER_NAME)
 	Store(issuerNamespaceName, provisioner)
@@ -91,7 +91,7 @@ func Test_shouldReturnCorrectSignedPemsWhenParametersAreCorrect(t *testing.T) {
 	ctx := context.Background()
 	request := createCertificateRequest()
 
-	signedPEM, trustedCAs, err := provisioner.Sign(ctx, request)
+	signedPEM, trustedCAs, err := provisioner.Sign(ctx, request, nil)
 
 	assert.Nil(t, err)
 
@@ -112,11 +112,11 @@ func createIssuerNamespaceName(namespace string, name string) types.NamespacedNa
 	}
 }
 
-func createIssuerAndCerts(name string, url string, key string, cert string, cacert string) (cmpv2api.CMPv2Issuer, []byte, []byte, []byte) {
+func createIssuerAndCerts(name string, url string) cmpv2api.CMPv2Issuer {
 	issuer := cmpv2api.CMPv2Issuer{}
 	issuer.Name = name
 	issuer.Spec.URL = url
-	return issuer, []byte(key), []byte(cert), []byte(cacert)
+	return issuer
 }
 
 func readFile(filename string) []byte {
@@ -133,8 +133,8 @@ func createCertificateRequest() *cmapi.CertificateRequest {
 	const ISSUER_GROUP = "certmanager.onap.org"
 	const CONDITION_TYPE = "Ready"
 
-	const SPEC_REQUEST_FILENAME = "test_resources/test_certificate_request.pem"
-	const STATUS_CERTIFICATE_FILENAME = "test_resources/test_certificate.pem"
+	const SPEC_REQUEST_FILENAME = "testdata/test_certificate_request.pem"
+	const STATUS_CERTIFICATE_FILENAME = "testdata/test_certificate.pem"
 
 	duration := new(apimach.Duration)
 	d, _ := time.ParseDuration(CERTIFICATE_DURATION)
@@ -158,4 +158,12 @@ func createCertificateRequest() *cmapi.CertificateRequest {
 
 func areSlicesEqual(slice1 []byte, slice2 []byte) bool {
 	return bytes.Compare(slice1, slice2) == 0
+}
+
+type certServiceClientMock struct {
+	getCertificatesFunc func(csr []byte, key []byte) (*certserviceclient.CertificatesResponse, error)
+}
+
+func (client *certServiceClientMock) GetCertificates(csr []byte, key []byte) (*certserviceclient.CertificatesResponse, error) {
+	return client.getCertificatesFunc(csr, key)
 }

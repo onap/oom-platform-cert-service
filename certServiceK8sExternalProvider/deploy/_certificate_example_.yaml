@@ -32,17 +32,21 @@ spec:
   secretName: _sample_secret_name_
   # Common Name
   commonName: certissuer.onap.org
+  subject:
+    organizations:
+      - Linux-Foundation
+    countries:
+      - US
+    localities:
+      - San-Francisco
+    provinces:
+      - California
+    organizationalUnits:
+      - ONAP
   # DNS SAN
   dnsNames:
     - localhost
     - certissuer.onap.org
-  # IP Address SAN
-  ipAddresses:
-    - "127.0.0.1"
-  # Duration of the certificate
-  duration: 24h
-  # Renew 8 hours before the certificate expiration
-  renewBefore: 8h
   # The reference to the CMPv2 issuer
   issuerRef:
     group: certmanager.onap.org
