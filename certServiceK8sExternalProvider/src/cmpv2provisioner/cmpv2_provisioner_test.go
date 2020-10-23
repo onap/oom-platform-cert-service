@@ -167,3 +167,8 @@ type certServiceClientMock struct {
 func (client *certServiceClientMock) GetCertificates(csr []byte, key []byte) (*certserviceclient.CertificatesResponse, error) {
 	return client.getCertificatesFunc(csr, key)
 }
+
+func (client *certServiceClientMock) CheckHealth() error {
+	return nil
+}
+

@@ -37,6 +37,10 @@ func init() {
 type CMPv2IssuerSpec struct {
 	// URL is the base URL for the CertService certificates instance.
 	URL string `json:"url"`
+	// Path to health check endpoint.
+	HealthEndpoint string `json:"healthEndpoint"`
+	// Path to certificate signing endpoint.
+	CertEndpoint string `json:"certEndpoint"`
 	// CaName is the name of the external CA server
 	CaName string `json:"caName"`
 	// KeyRef is a reference to a Secret containing the provisioner
