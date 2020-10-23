@@ -60,6 +60,12 @@ spec:
                 url:
                   description: URL to CertService API.
                   type: string
+                healthEndpoint:
+                  description: Path of health check endpoint.
+                  type: string
+                certEndpoint:
+                  description: Path of cerfificate signing enpoint.
+                  type: string
                 caName:
                   description: Name of the external CA server configured on CertService API side.
                   type: string
@@ -91,6 +97,8 @@ spec:
                   type: object
               required:
                 - url
+                - healthEndpoint
+                - certEndpoint
                 - caName
                 - certSecretRef
               type: object

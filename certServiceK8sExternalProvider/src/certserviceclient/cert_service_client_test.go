@@ -37,7 +37,7 @@ const (
 )
 
 
-func Test_shouldParseCertificateResponseCorrectly(t *testing.T) {
+func Test_GetCertificates_shouldParseCertificateResponseCorrectly(t *testing.T) {
 	responseJson := `{"certificateChain": ["cert-0", "cert-1"], "trustedCertificates": ["trusted-cert-0", "trusted-cert-1"]}`
 	responseJsonReader := ioutil.NopCloser(bytes.NewReader([]byte(responseJson)))
 	client := CertServiceClientImpl{
@@ -56,7 +56,7 @@ func Test_shouldParseCertificateResponseCorrectly(t *testing.T) {
 	assert.ElementsMatch(t, []string{"trusted-cert-0", "trusted-cert-1"}, response.TrustedCertificates)
 }
 
-func Test_shouldReturnError_whenResponseIsNotJson(t *testing.T) {
+func Test_GetCertificates_shouldReturnError_whenResponseIsNotJson(t *testing.T) {
 	responseJson := `not a json`
 	responseJsonReader := ioutil.NopCloser(bytes.NewReader([]byte(responseJson)))
 	client := CertServiceClientImpl{
@@ -76,7 +76,7 @@ func Test_shouldReturnError_whenResponseIsNotJson(t *testing.T) {
 	assert.Error(t, err)
 }
 
-func Test_shouldReturnError_whenHttpClientReturnsError(t *testing.T) {
+func Test_GetCertificates_shouldReturnError_whenHttpClientReturnsError(t *testing.T) {
 	client := CertServiceClientImpl{
 		certificationUrl: certificationUrl,
 		httpClient:       &httpClientMock{
@@ -91,6 +91,57 @@ func Test_shouldReturnError_whenHttpClientReturnsError(t *testing.T) {
 	assert.Error(t, err)
 }
 
+func Test_CheckHealth_shouldReturnNil_whenHttpClientReturnsStatusCode200(t *testing.T) {
+	client := CertServiceClientImpl{
+		certificationUrl: certificationUrl,
+		httpClient:       &httpClientMock{
+			DoFunc: func(req *http.Request) (response *http.Response, e error) {
+				mockedResponse := &http.Response{
+					Body: nil,
+					StatusCode: 200,
+				}
+				return mockedResponse, nil
+			},
+		},
+	}
+
+	err := client.CheckHealth()
+
+	assert.Nil(t, err)
+}
+
+func Test_CheckHealth_shouldReturnError_whenHttpClientReturnsStatusCode404(t *testing.T) {
+	client := CertServiceClientImpl{
+		certificationUrl: certificationUrl,
+		httpClient:       &httpClientMock{
+			DoFunc: func(req *http.Request) (response *http.Response, e error) {
+				mockedResponse := &http.Response{
+					Body: nil,
+					StatusCode: 404,
+				}
+				return mockedResponse, nil
+			},
+		},
+	}
+
+	err := client.CheckHealth()
+
+	assert.Error(t, err)
+}
+
+func Test_CheckHealth_shouldReturnError_whenHttpClientReturnsError(t *testing.T) {
+	client := CertServiceClientImpl{
+		certificationUrl: certificationUrl,
+		httpClient:       &httpClientMock{
+			DoFunc: func(req *http.Request) (response *http.Response, err error) {
+				return nil, fmt.Errorf("mock error")
+			},
+		},
+	}
+	err := client.CheckHealth()
+
+	assert.Error(t, err)
+}
 
 type httpClientMock struct {
 	DoFunc func(*http.Request) (*http.Response, error)

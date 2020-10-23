@@ -83,7 +83,7 @@ func (controller *CMPv2IssuerController) Reconcile(req ctrl.Request) (ctrl.Resul
 		return ctrl.Result{}, err
 	}
 
-	// 4. Create CMPv2 provisioner and store the instance for further use
+	// 4. Create CMPv2 provisioner
 	provisioner, err := provisioners.CreateProvisioner(issuer, secret)
 	if err != nil {
 		log.Error(err, "failed to initialize provisioner")
@@ -91,9 +91,14 @@ func (controller *CMPv2IssuerController) Reconcile(req ctrl.Request) (ctrl.Resul
 		handleErrorProvisionerInitialization(ctx, log, err, statusUpdater)
 		return ctrl.Result{}, err
 	}
+
+	// 5. Check health of the provisioner and store the instance for further use
+	if err := provisioner.CheckHealth(); err != nil {
+		return ctrl.Result{}, err
+	}
 	provisioners.Store(req.NamespacedName, provisioner)
 
-	// 5. Update the status of CMPv2Issuer to 'Validated'
+	// 6. Update the status of CMPv2Issuer to 'Validated'
 	if err := updateCMPv2IssuerStatusToVerified(statusUpdater, ctx, log); err != nil {
 		handleErrorUpdatingCMPv2IssuerStatus(log, err)
 		return ctrl.Result{}, err
