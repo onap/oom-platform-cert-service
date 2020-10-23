@@ -65,6 +65,7 @@ func (controller *CertificateRequestController) Reconcile(k8sRequest ctrl.Reques
 
 	// 1. Fetch the CertificateRequest resource being reconciled.
 	certificateRequest := new(cmapi.CertificateRequest)
+	log.Info("Registered new certificate sign request: ", "cert-name", certificateRequest.Name)
 	if err := controller.Client.Get(ctx, k8sRequest.NamespacedName, certificateRequest); err != nil {
 		err = handleErrorResourceNotFound(log, err)
 		return ctrl.Result{}, err
@@ -72,7 +73,7 @@ func (controller *CertificateRequestController) Reconcile(k8sRequest ctrl.Reques
 
 	// 2. Check if CertificateRequest is meant for CMPv2Issuer (if not ignore)
 	if !isCMPv2CertificateRequest(certificateRequest) {
-		log.V(4).Info("Certificate request is not meant for CMPv2Issuer (ignoring)",
+		log.Info("Certificate request is not meant for CMPv2Issuer (ignoring)",
 			"group", certificateRequest.Spec.IssuerRef.Group,
 			"kind", certificateRequest.Spec.IssuerRef.Kind)
 		return ctrl.Result{}, nil
@@ -81,7 +82,7 @@ func (controller *CertificateRequestController) Reconcile(k8sRequest ctrl.Reques
 	// 3. If the certificate data is already set then we skip this request as it
 	// has already been completed in the past.
 	if len(certificateRequest.Status.Certificate) > 0 {
-		log.V(4).Info("Existing certificate data found in status, skipping already completed CertificateRequest")
+		log.Info("Existing certificate data found in status, skipping already completed CertificateRequest")
 		return ctrl.Result{}, nil
 	}
 
