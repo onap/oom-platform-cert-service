@@ -1,0 +1,68 @@
+# ============LICENSE_START=======================================================
+# oom-certservice-k8s-external-provider
+# ================================================================================
+# Copyright (c) 2019 Smallstep Labs, Inc.
+# Modifications copyright (C) 2020 Nokia. All rights reserved.
+# ================================================================================
+# This source code was copied from the following git repository:
+# https://github.com/smallstep/step-issuer
+# The source code was modified for usage in the ONAP project.
+# ================================================================================
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ============LICENSE_END=========================================================
+#
+
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: testcert23n
+  namespace: onap
+spec:
+  secretName: testsecret23n
+  commonName: certissuer.onap.org
+  isCA: true #***NOT SUPPORTED BY CERT SERVICE API***
+  subject:
+    organizations:
+      - Linux-Foundation
+    countries:
+      - US
+    localities:
+      - San-Francisco
+    provinces:
+      - California
+    organizationalUnits:
+      - ONAP
+    streetAddresses: #***NOT SUPPORTED BY CERT SERVICE API***
+      - Lotnicza
+    postalCodes:  #***NOT SUPPORTED BY CERT SERVICE API***
+      - 12-345
+    serialNumber: "12345"  #***NOT SUPPORTED BY CERT SERVICE API***
+  # DNS SAN
+  dnsNames:
+    - localhost
+    - certissuer.onap.org
+  ipAddresses:  #***NOT SUPPORTED BY CERT SERVICE API***
+    - "127.0.0.1"
+  uris:  #***NOT SUPPORTED BY CERT SERVICE API***
+    - onap://cluster.local/
+  emailAddresses:  #***NOT SUPPORTED BY CERT SERVICE API***
+    - onap@onap.org
+  duration: 24h  #***OVERRIDDEN BY CERT SERVICE API***
+  renewBefore: 8h
+  usages: #***OVERRIDDEN BY CERT SERVICE API***
+    - server auth
+    - client auth
+  issuerRef:
+    group: certmanager.onap.org
+    kind: CMPv2Issuer
+    name: cmpv2-issuer

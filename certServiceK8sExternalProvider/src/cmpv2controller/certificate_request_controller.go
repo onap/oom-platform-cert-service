@@ -41,12 +41,13 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
 	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2api"
+	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2controller/logger"
 	provisioners "onap.org/oom-certservice/k8s-external-provider/src/cmpv2provisioner"
 )
 
 const (
 	privateKeySecretNameAnnotation = "cert-manager.io/private-key-secret-name"
-	privateKeySecretKey = "tls.key"
+	privateKeySecretKey            = "tls.key"
 )
 
 // CertificateRequestController reconciles a CMPv2Issuer object.
@@ -122,14 +123,17 @@ func (controller *CertificateRequestController) Reconcile(k8sRequest ctrl.Reques
 	}
 	privateKeyBytes := privateKeySecret.Data[privateKeySecretKey]
 
-	// 8. Sign CertificateRequest
+	// 8. Log Certificate Request properties not supported or overridden by CertService API
+	logger.LogCertRequestProperties(ctrl.Log.WithName("CSR details"), certificateRequest)
+
+	// 9. Sign CertificateRequest
 	signedPEM, trustedCAs, err := provisioner.Sign(ctx, certificateRequest, privateKeyBytes)
 	if err != nil {
 		controller.handleErrorFailedToSignCertificate(ctx, log, err, certificateRequest)
 		return ctrl.Result{}, err
 	}
 
-	// 9. Store signed certificates in CertificateRequest
+	// 10. Store signed certificates in CertificateRequest
 	certificateRequest.Status.Certificate = signedPEM
 	certificateRequest.Status.CA = trustedCAs
 	if err := controller.updateCertificateRequestWithSignedCerficates(ctx, certificateRequest); err != nil {
