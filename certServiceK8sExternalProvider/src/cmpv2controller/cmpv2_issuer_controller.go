@@ -83,12 +83,17 @@ func (controller *CMPv2IssuerController) Reconcile(req ctrl.Request) (ctrl.Resul
 		return ctrl.Result{}, err
 	}
 
-	// 4. Create CMPv2 provisioner and store the instance for further use
+	// 4. Create CMPv2 provisioner
 	provisioner, err := provisioners.CreateProvisioner(issuer, secret)
 	if err != nil {
 		log.Error(err, "failed to initialize provisioner")
 		statusUpdater.UpdateNoError(ctx, cmpv2api.ConditionFalse, "Error", "Failed to initialize provisioner: %v", err)
 		handleErrorProvisionerInitialization(ctx, log, err, statusUpdater)
+		return ctrl.Result{}, err
+	}
+
+	// 5. Check health of the provisioner and store the instance for further use
+	if err := provisioner.CheckHealth(); err != nil {
 		return ctrl.Result{}, err
 	}
 	provisioners.Store(req.NamespacedName, provisioner)

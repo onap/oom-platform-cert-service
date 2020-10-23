@@ -44,7 +44,8 @@ func CreateProvisioner(issuer *cmpv2api.CMPv2Issuer, secret v1.Secret) (*CertSer
 		return nil, err
 	}
 
-	certServiceClient, err := certserviceclient.CreateCertServiceClient(issuer.Spec.URL, issuer.Spec.CaName, keyBase64, certBase64, cacertBase64)
+	certServiceClient, err := certserviceclient.CreateCertServiceClient(issuer.Spec.URL, issuer.Spec.HealthEndpoint, issuer.Spec.CertEndpoint,
+		issuer.Spec.CaName, keyBase64, certBase64, cacertBase64)
 	if err != nil {
 		return nil, err
 	}
