@@ -29,7 +29,8 @@ import (
 	"path"
 )
 
-func CreateCertServiceClient(baseUrl string, caName string, keyPemBase64 []byte, certPemBase64 []byte, cacertPemBase64 []byte) (*CertServiceClientImpl, error) {
+func CreateCertServiceClient(baseUrl string, healthEndpoint string, certEndpoint string, caName string,
+	keyPemBase64 []byte, certPemBase64 []byte, cacertPemBase64 []byte) (*CertServiceClientImpl, error) {
 	cert, err := tls.X509KeyPair(certPemBase64, keyPemBase64)
 	if err != nil {
 		return nil, err
@@ -48,27 +49,48 @@ func CreateCertServiceClient(baseUrl string, caName string, keyPemBase64 []byte,
 			},
 		},
 	}
-	certificationUrl, err := parseUrl(baseUrl, caName)
+	healthUrl, certificationUrl, err := validateAndParseUrls(baseUrl, healthEndpoint, certEndpoint, caName)
 	if err != nil {
 		return nil, err
 	}
 	client := CertServiceClientImpl{
-		certificationUrl: certificationUrl.String(),
+		healthUrl: healthUrl,
+		certificationUrl: certificationUrl,
 		httpClient:       httpClient,
 	}
 
 	return &client, nil
 }
 
-func parseUrl(baseUrl string, caName string) (*url.URL, error) {
-	parsedUrl, err := url.Parse(baseUrl)
-	if err != nil {
-		return nil, err
-	}
-	if caName == "" {
-		return nil, fmt.Errorf("caName cannot be empty")
+func validateAndParseUrls(baseUrl string, healthEndpoint string, certEndpoint string, caName string) (string, string, error) {
+	if err := validateUrls(baseUrl, healthEndpoint, certEndpoint, caName); err != nil {
+		return "", "", err
 	}
 
-	parsedUrl.Path = path.Join(parsedUrl.Path, caName)
-	return parsedUrl, nil
+	certUrl, _ := url.Parse(baseUrl)
+	healthUrl, _ := url.Parse(baseUrl)
+
+	certUrl.Path = path.Join(certEndpoint, caName)
+	healthUrl.Path = path.Join(healthEndpoint)
+
+	return healthUrl.String(), certUrl.String(), nil
+}
+
+func validateUrls(baseUrl string, healthEndpoint string, certEndpoint string, caName string) error {
+	if _, err := url.Parse(baseUrl); err != nil {
+		return err
+	}
+	if caName == "" {
+		return fmt.Errorf("caName cannot be empty")
+	}
+	if _, err := url.Parse(caName); err != nil {
+		return err
+	}
+	if _, err := url.Parse(healthEndpoint); err != nil {
+		return err
+	}
+	if _, err := url.Parse(certEndpoint); err != nil {
+		return err
+	}
+	return nil
 }

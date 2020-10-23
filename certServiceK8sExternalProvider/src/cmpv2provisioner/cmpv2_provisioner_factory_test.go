@@ -35,6 +35,8 @@ import (
 const (
 	secretName      = "issuer-cert-secret"
 	url             = "https://oom-cert-service:8443/v1/certificate/"
+	healthEndpoint  = "actuator/health"
+	certEndpoint    = "v1/certificate"
 	caName          = "RA"
 	keySecretKey    = "cmpv2Issuer-key.pem"
 	certSecretKey   = "cmpv2Issuer-cert.pem"
@@ -49,6 +51,8 @@ func Test_shouldCreateProvisioner(t *testing.T) {
 	assert.NotNil(t, provisioner)
 	assert.Equal(t, url, provisioner.url)
 	assert.Equal(t, caName, provisioner.caName)
+	assert.Equal(t, healthEndpoint, provisioner.healthEndpoint)
+	assert.Equal(t, certEndpoint, provisioner.certEndpoint)
 }
 
 func Test_shouldReturnError_whenSecretMissingKeyRef(t *testing.T) {
@@ -103,6 +107,8 @@ func getValidIssuerAndSecret() (cmpv2api.CMPv2Issuer, v1.Secret) {
 	issuer := cmpv2api.CMPv2Issuer{
 		Spec: cmpv2api.CMPv2IssuerSpec{
 			URL:    url,
+			HealthEndpoint: healthEndpoint,
+			CertEndpoint: certEndpoint,
 			CaName: caName,
 			CertSecretRef: cmpv2api.SecretKeySelector{
 				Name:      secretName,

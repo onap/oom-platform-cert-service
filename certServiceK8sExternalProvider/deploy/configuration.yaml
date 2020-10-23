@@ -28,7 +28,9 @@ metadata:
   name: cmpv2-issuer
   namespace: onap
 spec:
-  url: https://oom-cert-service:8443/v1/certificate/
+  url: https://oom-cert-service:8443
+  healthEndpoint: actuator/health
+  certEndpoint: v1/certificate
   caName: RA
   certSecretRef:
     name: cmpv2-issuer-secret
