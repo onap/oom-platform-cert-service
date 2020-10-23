@@ -122,6 +122,9 @@ func (controller *CertificateRequestController) Reconcile(k8sRequest ctrl.Reques
 	}
 	privateKeyBytes := privateKeySecret.Data[privateKeySecretKey]
 
+	//7. Log Certificate Request properties not supported or ovverided by CertService API
+	logCertRequestProperties(ctrl.Log.WithName("CSR details"), certificateRequest)
+
 	// 8. Sign CertificateRequest
 	signedPEM, trustedCAs, err := provisioner.Sign(ctx, certificateRequest, privateKeyBytes)
 	if err != nil {
