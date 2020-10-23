@@ -23,6 +23,7 @@ package certserviceclient
 import (
 	"encoding/base64"
 	"encoding/json"
+	"fmt"
 	"net/http"
 )
 
@@ -33,9 +34,11 @@ const (
 
 type CertServiceClient interface {
 	GetCertificates(csr []byte, key []byte) (*CertificatesResponse, error)
+	CheckHealth() error
 }
 
 type CertServiceClientImpl struct {
+	healthUrl string
 	certificationUrl string
 	httpClient       HTTPClient
 }
@@ -48,6 +51,25 @@ type CertificatesResponse struct {
 	CertificateChain    []string `json:"certificateChain"`
 	TrustedCertificates []string `json:"trustedCertificates"`
 }
+
+func (client *CertServiceClientImpl) CheckHealth() error {
+	request, err := http.NewRequest("GET", client.healthUrl, nil)
+	if err != nil {
+		return err
+	}
+
+	response, err := client.httpClient.Do(request)
+	if err != nil {
+		return err
+	}
+
+	if response.StatusCode != 200 {
+		return fmt.Errorf("health check retured status code [%d]", response.StatusCode)
+	}
+
+	return nil
+}
+
 
 func (client *CertServiceClientImpl) GetCertificates(csr []byte, key []byte) (*CertificatesResponse, error) {
 
