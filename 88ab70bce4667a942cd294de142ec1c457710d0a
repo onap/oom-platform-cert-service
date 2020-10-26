@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ad591364_a42999c6",
+        "filename": "certServiceK8sExternalProvider/src/certserviceclient/cert_service_client_factory.go",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-10-26T07:58:19Z",
+      "side": 1,
+      "message": "Method renamed",
+      "parentUuid": "44d599f4_cc058914",
+      "range": {
+        "startLine": 52,
+        "startChar": 37,
+        "endLine": 52,
+        "endChar": 92
+      },
+      "revId": "88ab70bce4667a942cd294de142ec1c457710d0a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "956a6b6b_e73c9484",
         "filename": "certServiceK8sExternalProvider/src/certserviceclient/cert_service_client_factory.go",
         "patchSetId": 6
