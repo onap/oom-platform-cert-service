@@ -16,6 +16,24 @@
       "revId": "070a5d2ced2a9cd629c346774c34523ac1a3a097",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f611a311_1099eeca",
+        "filename": "certServiceK8sExternalProvider/go.mod",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-10-26T08:56:40Z",
+      "side": 1,
+      "message": "It is used in logger_test.go (https://gerrit.onap.org/r/c/oom/platform/cert-service/+/114178/3/certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger_test.go)\nIt is provide logger implementation for test cases",
+      "parentUuid": "e977f91f_f976a458",
+      "revId": "070a5d2ced2a9cd629c346774c34523ac1a3a097",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
