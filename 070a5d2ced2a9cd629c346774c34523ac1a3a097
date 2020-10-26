@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e977f91f_f976a458",
+        "filename": "certServiceK8sExternalProvider/go.mod",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-10-26T08:45:31Z",
+      "side": 1,
+      "message": "Just wondering if this dependency is used, cause i can not see usage if klog in this MR.",
+      "revId": "070a5d2ced2a9cd629c346774c34523ac1a3a097",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
