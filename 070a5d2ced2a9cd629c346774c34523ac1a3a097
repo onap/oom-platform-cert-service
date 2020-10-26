@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ba2114a4_1ab39d8b",
+        "filename": "certServiceK8sExternalProvider/deploy/_certificate_example_contains_not_supported_properties.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-10-26T09:11:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4abbebda_125d3f86",
+      "revId": "070a5d2ced2a9cd629c346774c34523ac1a3a097",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9cb93ca9_6c281127",
         "filename": "certServiceK8sExternalProvider/deploy/_certificate_example_contains_not_supported_properties.yaml",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "070a5d2ced2a9cd629c346774c34523ac1a3a097",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3a7970f_7845b7d6",
+        "filename": "certServiceK8sExternalProvider/deploy/_certificate_example_contains_not_supported_properties.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-10-26T09:11:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9cb93ca9_6c281127",
+      "revId": "070a5d2ced2a9cd629c346774c34523ac1a3a097",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "de110cb1_0dbedd7b",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-10-26T09:11:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5035507_ffefc8f5",
+      "revId": "070a5d2ced2a9cd629c346774c34523ac1a3a097",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe8e2d9d_9330d7c9",
         "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger.go",
         "patchSetId": 3
@@ -102,6 +156,24 @@
       "revId": "070a5d2ced2a9cd629c346774c34523ac1a3a097",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b15e30bd_10f8d3f4",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-10-26T09:11:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe8e2d9d_9330d7c9",
+      "revId": "070a5d2ced2a9cd629c346774c34523ac1a3a097",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
