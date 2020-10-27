@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00952657_7d9fff9f",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-10-27T10:50:06Z",
+      "side": 1,
+      "message": "If more methods were to be introduced we should consider creating logger struct wrapping underlying logger.",
+      "range": {
+        "startLine": 39,
+        "startChar": 30,
+        "endLine": 39,
+        "endChar": 45
+      },
+      "revId": "27eb5220a1e33ac8180c64414827c6923b448580",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
