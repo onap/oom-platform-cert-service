@@ -39,6 +39,10 @@ var checkedLogMessages = [7]string{"Property 'duration'", "Property 'usages'", "
 	"Property 'isCA'", "Property 'subject.streetAddress'", "Property 'subject.postalCodes'",
 	"Property 'subject.serialNumber'"}
 
+var supportedProperties = [7]string{"Property 'organization'", "Property 'organization unit'", "Property 'country'",
+	"Property 'state'", "Property 'location'", "Property 'dns names'"}
+
+
 func TestMain(m *testing.M) {
 	klog.InitFlags(nil)
 	flag.CommandLine.Set("v", "10")
@@ -78,6 +82,23 @@ func TestLogShouldProvideInformationAboutSkippedPropertiesIfExistInCSR(t *testin
 
 	//then
 	for _, logMsg := range checkedLogMessages {
+		assert.True(t, logsContainExpectedMessage(logsArray, logMsg), "Logs not contain: "+logMsg)
+	}
+}
+
+func TestLogShouldListSupportedProperties(t *testing.T) {
+	//given
+	logger := klogr.New()
+	request := getCertificateRequestWithSkippedProperties()
+	tmpWriteBuffer := getLogBuffer()
+
+	//when
+	LogCertRequestProperties(logger, request)
+	closeLogBuffer()
+	logsArray := convertBufferToStringArray(tmpWriteBuffer)
+
+	//then
+	for _, logMsg := range supportedProperties {
 		assert.True(t, logsContainExpectedMessage(logsArray, logMsg), "Logs not contain: "+logMsg)
 	}
 }

@@ -21,7 +21,7 @@
 package logger
 
 import (
-	"crypto/x509"
+	x509 "crypto/x509"
 	"encoding/pem"
 	"net"
 	"net/url"
@@ -37,8 +37,38 @@ const (
 )
 
 func LogCertRequestProperties(log logr.Logger, request *cmapi.CertificateRequest) {
+	log.Info("Processing CSR...")
+	block, _ := pem.Decode(request.Spec.Request)
+	csr, err := x509.ParseCertificateRequest(block.Bytes)
+	if err != nil {
+		log.Error(err, "Cannot parse Certificate Signing Request")
+	} else {
+		logSupportedProperties(log, request, csr)
+		logPropertiesNotSupportedByCertService(log, request, csr)
+	}
 	logPropertiesOverriddenByCMPv2Server(log, request)
-	logPropertiesNotSupportedByCertService(log, request)
+}
+
+func logSupportedProperties(log logr.Logger, request *cmapi.CertificateRequest, csr *x509.CertificateRequest) {
+	if len(csr.Subject.Organization) > 0 {
+		log.Info(getSupportedMessage("organization", extractStringArray(csr.Subject.Organization)))
+	}
+	if len(csr.Subject.OrganizationalUnit) > 0 {
+		log.Info(getSupportedMessage("organization unit", extractStringArray(csr.Subject.OrganizationalUnit)))
+	}
+	if len(csr.Subject.Country) > 0 {
+		log.Info(getSupportedMessage("country", extractStringArray(csr.Subject.Country)))
+	}
+	if len(csr.Subject.Province) > 0 {
+		log.Info(getSupportedMessage("state", extractStringArray(csr.Subject.Province)))
+	}
+	if len(csr.Subject.Locality) > 0 {
+		log.Info(getSupportedMessage("location", extractStringArray(csr.Subject.Locality)))
+	}
+	if len(csr.DNSNames) > 0 {
+		log.Info(getSupportedMessage("dns names", extractStringArray(csr.DNSNames)))
+	}
+
 }
 
 func logPropertiesOverriddenByCMPv2Server(log logr.Logger, request *cmapi.CertificateRequest) {
@@ -58,45 +88,36 @@ func extractUsages(usages []cmapi.KeyUsage) string {
 	return values
 }
 
-func getOverriddenMessage(property string, values string) string {
-	return "Property '" + property + "' with value: " + values + ", will be overridden by " + CMPv2ServerName
-}
+func logPropertiesNotSupportedByCertService(log logr.Logger, request *cmapi.CertificateRequest, csr *x509.CertificateRequest) {
 
-func logPropertiesNotSupportedByCertService(log logr.Logger, request *cmapi.CertificateRequest) {
-
-	block, _ := pem.Decode(request.Spec.Request)
-	cert, err := x509.ParseCertificateRequest(block.Bytes)
-	if err != nil {
-		log.Error(err, "Cannot parse Certificate Signing Request")
-	}
 	//IP addresses in SANs
-	if len(cert.IPAddresses) > 0 {
-		log.Info(getNotSupportedMessage("ipAddresses", extractIPAddresses(cert.IPAddresses)))
+	if len(csr.IPAddresses) > 0 {
+		log.Info(getNotSupportedMessage("ipAddresses", extractIPAddresses(csr.IPAddresses)))
 	}
 	//URIs in SANs
-	if len(cert.URIs) > 0 {
-		log.Info(getNotSupportedMessage("uris", extractURIs(cert.URIs)))
+	if len(csr.URIs) > 0 {
+		log.Info(getNotSupportedMessage("uris", extractURIs(csr.URIs)))
 	}
 
 	//Email addresses in SANs
-	if len(cert.EmailAddresses) > 0 {
-		log.Info(getNotSupportedMessage("emailAddresses", extractStringArray(cert.EmailAddresses)))
+	if len(csr.EmailAddresses) > 0 {
+		log.Info(getNotSupportedMessage("emailAddresses", extractStringArray(csr.EmailAddresses)))
 	}
 
 	if request.Spec.IsCA == true {
 		log.Info(getNotSupportedMessage("isCA", strconv.FormatBool(request.Spec.IsCA)))
 	}
 
-	if len(cert.Subject.StreetAddress) > 0 {
-		log.Info(getNotSupportedMessage("subject.streetAddress", extractStringArray(cert.Subject.StreetAddress)))
+	if len(csr.Subject.StreetAddress) > 0 {
+		log.Info(getNotSupportedMessage("subject.streetAddress", extractStringArray(csr.Subject.StreetAddress)))
 	}
 
-	if len(cert.Subject.PostalCode) > 0 {
-		log.Info(getNotSupportedMessage("subject.postalCodes", extractStringArray(cert.Subject.PostalCode)))
+	if len(csr.Subject.PostalCode) > 0 {
+		log.Info(getNotSupportedMessage("subject.postalCodes", extractStringArray(csr.Subject.PostalCode)))
 	}
 
-	if len(cert.Subject.SerialNumber) > 0 {
-		log.Info(getNotSupportedMessage("subject.serialNumber", cert.Subject.SerialNumber))
+	if len(csr.Subject.SerialNumber) > 0 {
+		log.Info(getNotSupportedMessage("subject.serialNumber", csr.Subject.SerialNumber))
 	}
 
 }
@@ -125,6 +146,14 @@ func extractIPAddresses(addresses []net.IP) string {
 	return values
 }
 
-func getNotSupportedMessage(property string, values string) string {
-	return "WARNING: Property '" + property + "' with value: " + values + " is not supported by " + CertServiceName
+func getNotSupportedMessage(property string, value string) string {
+	return "WARNING: Property '" + property + "' with value: " + value + " is not supported by " + CertServiceName
+}
+
+func getSupportedMessage(property string, value string) string {
+	return "Property '" + property + "' with value: " + value + " [OK]"
+}
+
+func getOverriddenMessage(property string, values string) string {
+	return "Property '" + property + "' with value: " + values + ", will be overridden by " + CMPv2ServerName
 }
