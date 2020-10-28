@@ -2,6 +2,108 @@
   "comments": [
     {
       "key": {
+        "uuid": "b367ab72_f37e8fc0",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-10-28T08:09:35Z",
+      "side": 1,
+      "message": "If we cannot parse CSR so why we just log this and not stop processing?",
+      "revId": "224007ca97eed5b66123794c4f4ec00635c8a292",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6980568_7c882f35",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-10-28T08:09:35Z",
+      "side": 1,
+      "message": "I think this should be also in else",
+      "revId": "224007ca97eed5b66123794c4f4ec00635c8a292",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5ce6740_d797a034",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-10-28T08:09:35Z",
+      "side": 1,
+      "message": "Make a function out of if which gets two params: param from CSR and string to logger",
+      "revId": "224007ca97eed5b66123794c4f4ec00635c8a292",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60bbcf78_e7b6dc5e",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-10-28T08:09:35Z",
+      "side": 1,
+      "message": "Use here method created above",
+      "revId": "224007ca97eed5b66123794c4f4ec00635c8a292",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94db7b8b_e0a5386d",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-10-28T08:09:35Z",
+      "side": 1,
+      "message": "Use here method created above",
+      "revId": "224007ca97eed5b66123794c4f4ec00635c8a292",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cbf8f94_85695856",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-10-28T08:09:35Z",
+      "side": 1,
+      "message": "Use here method created above",
+      "revId": "224007ca97eed5b66123794c4f4ec00635c8a292",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2f2f1b3_099ee33e",
         "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger.go",
         "patchSetId": 1
@@ -13,6 +115,30 @@
       "writtenOn": "2020-10-28T07:52:36Z",
       "side": 1,
       "message": "We don\u0027t validate values here, so please remove [OK]",
+      "range": {
+        "startLine": 154,
+        "startChar": 61,
+        "endLine": 154,
+        "endChar": 68
+      },
+      "revId": "224007ca97eed5b66123794c4f4ec00635c8a292",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ccb5fae_0841b8f3",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-10-28T08:09:35Z",
+      "side": 1,
+      "message": "instead of [OK] you should use - \" will be sent in certificate signing request to \" + CMPv2ServerName",
+      "parentUuid": "f2f2f1b3_099ee33e",
       "range": {
         "startLine": 154,
         "startChar": 61,
