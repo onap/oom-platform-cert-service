@@ -70,6 +70,24 @@
     },
     {
       "key": {
+        "uuid": "21858da2_dc77b7fc",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-10-28T08:26:01Z",
+      "side": 1,
+      "message": "Sorry, here we are using getNotSupportedMessgem not getSupportedMessage...",
+      "parentUuid": "60bbcf78_e7b6dc5e",
+      "revId": "224007ca97eed5b66123794c4f4ec00635c8a292",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "94db7b8b_e0a5386d",
         "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger.go",
         "patchSetId": 1
@@ -87,6 +105,24 @@
     },
     {
       "key": {
+        "uuid": "e2d30a10_ed677ad5",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-10-28T08:26:01Z",
+      "side": 1,
+      "message": "Sorry, here we are using getNotSupportedMessgem not getSupportedMessage...",
+      "parentUuid": "94db7b8b_e0a5386d",
+      "revId": "224007ca97eed5b66123794c4f4ec00635c8a292",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7cbf8f94_85695856",
         "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger.go",
         "patchSetId": 1
@@ -98,6 +134,24 @@
       "writtenOn": "2020-10-28T08:09:35Z",
       "side": 1,
       "message": "Use here method created above",
+      "revId": "224007ca97eed5b66123794c4f4ec00635c8a292",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "912fd7b2_d0fc2580",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-10-28T08:26:01Z",
+      "side": 1,
+      "message": "Sorry, here we are using getNotSupportedMessgem not getSupportedMessage...",
+      "parentUuid": "7cbf8f94_85695856",
       "revId": "224007ca97eed5b66123794c4f4ec00635c8a292",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
