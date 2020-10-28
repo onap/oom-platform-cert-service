@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2f2f1b3_099ee33e",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-10-28T07:52:36Z",
+      "side": 1,
+      "message": "We don\u0027t validate values here, so please remove [OK]",
+      "range": {
+        "startLine": 154,
+        "startChar": 61,
+        "endLine": 154,
+        "endChar": 68
+      },
+      "revId": "224007ca97eed5b66123794c4f4ec00635c8a292",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67367e1f_3cbc73f2",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-10-28T07:52:36Z",
+      "side": 1,
+      "message": "It is happy path so please use CSR without skipped properties",
+      "range": {
+        "startLine": 92,
+        "startChar": 33,
+        "endLine": 92,
+        "endChar": 37
+      },
+      "revId": "224007ca97eed5b66123794c4f4ec00635c8a292",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
