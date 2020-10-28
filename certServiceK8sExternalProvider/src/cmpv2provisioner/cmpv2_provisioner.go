@@ -26,11 +26,7 @@
 package cmpv2provisioner
 
 import (
-	"bytes"
 	"context"
-	"crypto/x509"
-	"encoding/pem"
-	"fmt"
 	"sync"
 
 	certmanager "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1"
@@ -96,64 +92,28 @@ func (ca *CertServiceCA) Sign(ctx context.Context, certificateRequest *certmanag
 	csrBytes := certificateRequest.Spec.Request
 	log.Info("Csr PEM: ", "bytes", csrBytes)
 
-	csr, err := decodeCSR(csrBytes)
-	if err != nil {
-		return nil, nil, err
-	}
-
 	response, err := ca.certServiceClient.GetCertificates(csrBytes, privateKeyBytes)
 	if err != nil {
 		return nil, nil, err
 	}
+	log.Info("Successfully received response from CertService API")
+
 	log.Info("Certificate Chain", "cert-chain", response.CertificateChain)
 	log.Info("Trusted Certificates", "trust-certs", response.TrustedCertificates)
 
+	log.Info("Start parsing response")
+	signedCertificateChain, trustedCertificates, signErr := parseResponseToBytes(response)
 
-	// TODO
-	// stored response as PEM
-	cert := x509.Certificate{}
-	cert.Raw = csr.Raw
-	encodedPEM, err := encodeX509(&cert)
-	if err != nil {
-		return nil, nil, err
+	if signErr != nil {
+		log.Error(signErr, "Cannot parse response")
+		return nil, nil, signErr
 	}
-	// END
 
-	signedPEM := encodedPEM
-	trustedCA := encodedPEM
-
-	log.Info("Signed cert PEM: ", "bytes", signedPEM)
-	log.Info("Trusted CA  PEM: ", "bytes", trustedCA)
 	log.Info("Successfully signed: ", "cert-name", certificateRequest.Name)
 
-	return signedPEM, trustedCA, nil
-}
+	//TODO Debug level or skip
+	log.Info("Signed cert PEM: ", "bytes", signedCertificateChain)
+	log.Info("Trusted CA  PEM: ", "bytes", trustedCertificates)
 
-// decodeCSR decodes a certificate request in PEM format and returns the
-func decodeCSR(data []byte) (*x509.CertificateRequest, error) {
-	block, rest := pem.Decode(data)
-	if block == nil || len(rest) > 0 {
-		return nil, fmt.Errorf("unexpected CSR PEM on sign request")
-	}
-	if block.Type != "CERTIFICATE REQUEST" {
-		return nil, fmt.Errorf("PEM is not a certificate request")
-	}
-	csr, err := x509.ParseCertificateRequest(block.Bytes)
-	if err != nil {
-		return nil, fmt.Errorf("error parsing certificate request: %v", err)
-	}
-	if err := csr.CheckSignature(); err != nil {
-		return nil, fmt.Errorf("error checking certificate request signature: %v", err)
-	}
-	return csr, nil
-}
-
-// encodeX509 will encode a *x509.Certificate into PEM format.
-func encodeX509(cert *x509.Certificate) ([]byte, error) {
-	caPem := bytes.NewBuffer([]byte{})
-	err := pem.Encode(caPem, &pem.Block{Type: "CERTIFICATE", Bytes: cert.Raw})
-	if err != nil {
-		return nil, err
-	}
-	return caPem.Bytes(), nil
+	return signedCertificateChain, trustedCertificates, nil
 }
