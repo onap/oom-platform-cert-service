@@ -91,10 +91,9 @@ func Test_shouldReturnError_whenSecretMissingCacertRef(t *testing.T) {
 	}
 }
 
-
 func Test_shouldReturnError_whenCreationOfCertServiceClientReturnsError(t *testing.T) {
 	issuer, secret := getValidIssuerAndSecret()
-	invalidKeySecretValue, _    := base64.StdEncoding.DecodeString("")
+	invalidKeySecretValue, _ := base64.StdEncoding.DecodeString("")
 	secret.Data[keySecretKey] = invalidKeySecretValue
 
 	provisioner, err := CreateProvisioner(&issuer, secret)
@@ -106,10 +105,10 @@ func Test_shouldReturnError_whenCreationOfCertServiceClientReturnsError(t *testi
 func getValidIssuerAndSecret() (cmpv2api.CMPv2Issuer, v1.Secret) {
 	issuer := cmpv2api.CMPv2Issuer{
 		Spec: cmpv2api.CMPv2IssuerSpec{
-			URL:    url,
+			URL:            url,
 			HealthEndpoint: healthEndpoint,
-			CertEndpoint: certEndpoint,
-			CaName: caName,
+			CertEndpoint:   certEndpoint,
+			CaName:         caName,
 			CertSecretRef: cmpv2api.SecretKeySelector{
 				Name:      secretName,
 				KeyRef:    keySecretKey,
