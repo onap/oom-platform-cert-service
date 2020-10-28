@@ -43,6 +43,7 @@ import (
 	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2api"
 	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2controller/logger"
 	provisioners "onap.org/oom-certservice/k8s-external-provider/src/cmpv2provisioner"
+	x509utils "onap.org/oom-certservice/k8s-external-provider/src/x509"
 )
 
 const (
@@ -124,17 +125,24 @@ func (controller *CertificateRequestController) Reconcile(k8sRequest ctrl.Reques
 	}
 	privateKeyBytes := privateKeySecret.Data[privateKeySecretKey]
 
-	// 8. Log Certificate Request properties not supported or overridden by CertService API
-	logger.LogCertRequestProperties(ctrl.Log.WithName("CSR details"), certificateRequest)
+	// 8. Decode CSR
+	log.Info("Decoding CSR...")
+	csr, err := x509utils.DecodeCSR(certificateRequest.Spec.Request)
+	if err != nil {
+		log.Error(err, "Cannot decode Certificate Signing Request")
+	}
 
-	// 9. Sign CertificateRequest
+	// 9. Log Certificate Request properties not supported or overridden by CertService API
+	logger.LogCertRequestProperties(ctrl.Log.WithName("CSR details"), certificateRequest, csr)
+
+	// 10. Sign CertificateRequest
 	signedPEM, trustedCAs, err := provisioner.Sign(ctx, certificateRequest, privateKeyBytes)
 	if err != nil {
 		controller.handleErrorFailedToSignCertificate(ctx, log, err, certificateRequest)
 		return ctrl.Result{}, err
 	}
 
-	// 10. Store signed certificates in CertificateRequest
+	// 11. Store signed certificates in CertificateRequest
 	certificateRequest.Status.Certificate = signedPEM
 	certificateRequest.Status.CA = trustedCAs
 	if err := controller.updateCertificateRequestWithSignedCerficates(ctx, certificateRequest); err != nil {
