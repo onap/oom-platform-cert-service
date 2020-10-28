@@ -68,6 +68,23 @@
       "revId": "a17143f8e83f16fb20f6d55612f4dea67c13e863",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb3e18df_ff80285d",
+        "filename": "certServiceK8sExternalProvider/src/x509/test_data.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-10-28T14:27:32Z",
+      "side": 1,
+      "message": "I think test data should be held in directories named testdata, which are ignored when binary is being built.\n\nhttps://golang.org/pkg/cmd/go/internal/test/",
+      "revId": "a17143f8e83f16fb20f6d55612f4dea67c13e863",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
