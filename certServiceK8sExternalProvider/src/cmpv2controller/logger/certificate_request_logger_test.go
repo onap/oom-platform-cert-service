@@ -33,11 +33,17 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/klog/v2"
 	"k8s.io/klog/v2/klogr"
+
+	x509utils "onap.org/oom-certservice/k8s-external-provider/src/x509"
 )
 
 var checkedLogMessages = [7]string{"Property 'duration'", "Property 'usages'", "Property 'ipAddresses'",
 	"Property 'isCA'", "Property 'subject.streetAddress'", "Property 'subject.postalCodes'",
 	"Property 'subject.serialNumber'"}
+
+var supportedProperties = [7]string{"Property 'organization'", "Property 'organization unit'", "Property 'country'",
+	"Property 'state'", "Property 'location'", "Property 'dns names'"}
+
 
 func TestMain(m *testing.M) {
 	klog.InitFlags(nil)
@@ -55,8 +61,13 @@ func TestLogShouldNotProvideInformationAboutSkippedPropertiesIfNotExistInCSR(t *
 	request := getCertificateRequestWithoutSkippedProperties()
 	tmpWriteBuffer := getLogBuffer()
 
+	csr, err := x509utils.DecodeCSR(request.Spec.Request)
+	if err != nil {
+		assert.FailNow(t, "Could not parse Certificate Sign Request")
+	}
+
 	//when
-	LogCertRequestProperties(logger, request)
+	LogCertRequestProperties(logger, request, csr)
 	closeLogBuffer()
 	logsArray := convertBufferToStringArray(tmpWriteBuffer)
 	//then
@@ -71,13 +82,40 @@ func TestLogShouldProvideInformationAboutSkippedPropertiesIfExistInCSR(t *testin
 	request := getCertificateRequestWithSkippedProperties()
 	tmpWriteBuffer := getLogBuffer()
 
+	csr, err := x509utils.DecodeCSR(request.Spec.Request)
+	if err != nil {
+		assert.FailNow(t, "Could not parse Certificate Sign Request")
+	}
+
 	//when
-	LogCertRequestProperties(logger, request)
+	LogCertRequestProperties(logger, request, csr)
 	closeLogBuffer()
 	logsArray := convertBufferToStringArray(tmpWriteBuffer)
 
 	//then
 	for _, logMsg := range checkedLogMessages {
+		assert.True(t, logsContainExpectedMessage(logsArray, logMsg), "Logs not contain: "+logMsg)
+	}
+}
+
+func TestLogShouldListSupportedProperties(t *testing.T) {
+	//given
+	logger := klogr.New()
+	request := getCertificateRequestWithoutSkippedProperties()
+	tmpWriteBuffer := getLogBuffer()
+
+	csr, err := x509utils.DecodeCSR(request.Spec.Request)
+	if err != nil {
+		assert.FailNow(t, "Could not parse Certificate Sign Request")
+	}
+
+	//when
+	LogCertRequestProperties(logger, request, csr)
+	closeLogBuffer()
+	logsArray := convertBufferToStringArray(tmpWriteBuffer)
+
+	//then
+	for _, logMsg := range supportedProperties {
 		assert.True(t, logsContainExpectedMessage(logsArray, logMsg), "Logs not contain: "+logMsg)
 	}
 }
