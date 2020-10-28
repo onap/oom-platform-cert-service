@@ -27,7 +27,6 @@ package cmpv2provisioner
 
 import (
 	"context"
-	"crypto/x509"
 	"sync"
 
 	certmanager "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1"
@@ -36,7 +35,6 @@ import (
 
 	"onap.org/oom-certservice/k8s-external-provider/src/certserviceclient"
 	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2api"
-	x509utils "onap.org/oom-certservice/k8s-external-provider/src/x509"
 )
 
 var collection = new(sync.Map)
@@ -94,35 +92,27 @@ func (ca *CertServiceCA) Sign(ctx context.Context, certificateRequest *certmanag
 	csrBytes := certificateRequest.Spec.Request
 	log.Info("Csr PEM: ", "bytes", csrBytes)
 
-	csr, err := x509utils.DecodeCSR(csrBytes)
-	if err != nil {
-		return nil, nil, err
-	}
-
 	response, err := ca.certServiceClient.GetCertificates(csrBytes, privateKeyBytes)
 	if err != nil {
 		return nil, nil, err
 	}
+	log.Info("Successfully received response from CertService API")
 	log.Info("Certificate Chain", "cert-chain", response.CertificateChain)
 	log.Info("Trusted Certificates", "trust-certs", response.TrustedCertificates)
 
+	log.Info("Start parsing response")
+	signedCertificateChain, trustedCertificates, signErr := parseResponseToBytes(response)
 
-	// TODO
-	// stored response as PEM
-	cert := x509.Certificate{}
-	cert.Raw = csr.Raw
-	encodedPEM, err := x509utils.EncodeX509(&cert)
-	if err != nil {
-		return nil, nil, err
+	if signErr != nil {
+		log.Error(signErr, "Cannot parse response from CertService API")
+		return nil, nil, signErr
 	}
-	// END
 
-	signedPEM := encodedPEM
-	trustedCA := encodedPEM
-
-	log.Info("Signed cert PEM: ", "bytes", signedPEM)
-	log.Info("Trusted CA  PEM: ", "bytes", trustedCA)
 	log.Info("Successfully signed: ", "cert-name", certificateRequest.Name)
 
-	return signedPEM, trustedCA, nil
+	//TODO Debug level or skip
+	log.Info("Signed cert PEM: ", "bytes", signedCertificateChain)
+	log.Info("Trusted CA  PEM: ", "bytes", trustedCertificates)
+
+	return signedCertificateChain, trustedCertificates, nil
 }

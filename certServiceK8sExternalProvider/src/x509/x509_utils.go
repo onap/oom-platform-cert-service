@@ -55,3 +55,15 @@ func EncodeX509(cert *x509.Certificate) ([]byte, error) {
 	}
 	return caPem.Bytes(), nil
 }
+
+func ParseCertificateArrayToBytes(certificateArray []string) ([]byte, error) {
+	buffer := bytes.NewBuffer([]byte{})
+	for _, cert := range certificateArray {
+		block, _ := pem.Decode([]byte(cert))
+		err := pem.Encode(buffer, &pem.Block{Type: "CERTIFICATE", Bytes: block.Bytes})
+		if err != nil {
+			return nil, err
+		}
+	}
+	return buffer.Bytes(), nil
+}
