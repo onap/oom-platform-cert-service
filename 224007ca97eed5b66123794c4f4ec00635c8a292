@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "94495e8d_dbabd611",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-10-28T10:49:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b367ab72_f37e8fc0",
+      "revId": "224007ca97eed5b66123794c4f4ec00635c8a292",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6980568_7c882f35",
         "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger.go",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ce013eb7_a1b446f4",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-10-28T10:49:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6980568_7c882f35",
+      "revId": "224007ca97eed5b66123794c4f4ec00635c8a292",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5ce6740_d797a034",
         "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger.go",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "224007ca97eed5b66123794c4f4ec00635c8a292",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99b4701c_ee925164",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-10-28T10:49:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5ce6740_d797a034",
+      "revId": "224007ca97eed5b66123794c4f4ec00635c8a292",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "77c1c1e1_ede57cf9",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-10-28T10:49:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21858da2_dc77b7fc",
+      "revId": "224007ca97eed5b66123794c4f4ec00635c8a292",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94db7b8b_e0a5386d",
         "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger.go",
         "patchSetId": 1
@@ -123,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "d7d37f90_7dc738b1",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-10-28T10:49:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2d30a10_ed677ad5",
+      "revId": "224007ca97eed5b66123794c4f4ec00635c8a292",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cbf8f94_85695856",
         "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger.go",
         "patchSetId": 1
@@ -155,6 +245,24 @@
       "revId": "224007ca97eed5b66123794c4f4ec00635c8a292",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd386473_dcd6658f",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-10-28T10:49:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "912fd7b2_d0fc2580",
+      "revId": "224007ca97eed5b66123794c4f4ec00635c8a292",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -205,6 +313,30 @@
     },
     {
       "key": {
+        "uuid": "4c0424bd_7131aae3",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-10-28T10:49:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ccb5fae_0841b8f3",
+      "range": {
+        "startLine": 154,
+        "startChar": 61,
+        "endLine": 154,
+        "endChar": 68
+      },
+      "revId": "224007ca97eed5b66123794c4f4ec00635c8a292",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67367e1f_3cbc73f2",
         "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger_test.go",
         "patchSetId": 1
@@ -225,6 +357,30 @@
       "revId": "224007ca97eed5b66123794c4f4ec00635c8a292",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "792a4db4_310db3c7",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-10-28T10:49:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67367e1f_3cbc73f2",
+      "range": {
+        "startLine": 92,
+        "startChar": 33,
+        "endLine": 92,
+        "endChar": 37
+      },
+      "revId": "224007ca97eed5b66123794c4f4ec00635c8a292",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
