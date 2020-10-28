@@ -26,11 +26,8 @@
 package cmpv2provisioner
 
 import (
-	"bytes"
 	"context"
 	"crypto/x509"
-	"encoding/pem"
-	"fmt"
 	"sync"
 
 	certmanager "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1"
@@ -39,6 +36,7 @@ import (
 
 	"onap.org/oom-certservice/k8s-external-provider/src/certserviceclient"
 	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2api"
+	x509utils "onap.org/oom-certservice/k8s-external-provider/src/x509"
 )
 
 var collection = new(sync.Map)
@@ -96,7 +94,7 @@ func (ca *CertServiceCA) Sign(ctx context.Context, certificateRequest *certmanag
 	csrBytes := certificateRequest.Spec.Request
 	log.Info("Csr PEM: ", "bytes", csrBytes)
 
-	csr, err := decodeCSR(csrBytes)
+	csr, err := x509utils.DecodeCSR(csrBytes)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -113,7 +111,7 @@ func (ca *CertServiceCA) Sign(ctx context.Context, certificateRequest *certmanag
 	// stored response as PEM
 	cert := x509.Certificate{}
 	cert.Raw = csr.Raw
-	encodedPEM, err := encodeX509(&cert)
+	encodedPEM, err := x509utils.EncodeX509(&cert)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -127,33 +125,4 @@ func (ca *CertServiceCA) Sign(ctx context.Context, certificateRequest *certmanag
 	log.Info("Successfully signed: ", "cert-name", certificateRequest.Name)
 
 	return signedPEM, trustedCA, nil
-}
-
-// decodeCSR decodes a certificate request in PEM format and returns the
-func decodeCSR(data []byte) (*x509.CertificateRequest, error) {
-	block, rest := pem.Decode(data)
-	if block == nil || len(rest) > 0 {
-		return nil, fmt.Errorf("unexpected CSR PEM on sign request")
-	}
-	if block.Type != "CERTIFICATE REQUEST" {
-		return nil, fmt.Errorf("PEM is not a certificate request")
-	}
-	csr, err := x509.ParseCertificateRequest(block.Bytes)
-	if err != nil {
-		return nil, fmt.Errorf("error parsing certificate request: %v", err)
-	}
-	if err := csr.CheckSignature(); err != nil {
-		return nil, fmt.Errorf("error checking certificate request signature: %v", err)
-	}
-	return csr, nil
-}
-
-// encodeX509 will encode a *x509.Certificate into PEM format.
-func encodeX509(cert *x509.Certificate) ([]byte, error) {
-	caPem := bytes.NewBuffer([]byte{})
-	err := pem.Encode(caPem, &pem.Block{Type: "CERTIFICATE", Bytes: cert.Raw})
-	if err != nil {
-		return nil, err
-	}
-	return caPem.Bytes(), nil
 }
