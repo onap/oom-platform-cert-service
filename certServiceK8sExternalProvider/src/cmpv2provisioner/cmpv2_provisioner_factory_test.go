@@ -91,7 +91,6 @@ func Test_shouldReturnError_whenSecretMissingCacertRef(t *testing.T) {
 	}
 }
 
-
 func Test_shouldReturnError_whenCreationOfCertServiceClientReturnsError(t *testing.T) {
 	issuer, secret := getValidIssuerAndSecret()
 	invalidKeySecretValue, _    := base64.StdEncoding.DecodeString("")
