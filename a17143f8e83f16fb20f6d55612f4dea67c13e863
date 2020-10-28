@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9d2fb25b_4ff22d6d",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger_test.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-10-28T14:37:06Z",
+      "side": 1,
+      "message": "it tested in separate class - this is test data preparation.",
+      "parentUuid": "66ebc05a_83562ec1",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 63
+      },
+      "revId": "a17143f8e83f16fb20f6d55612f4dea67c13e863",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "656770ea_6a8874f6",
         "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger_test.go",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "cc201c27_40a35e44",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger_test.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-10-28T14:37:06Z",
+      "side": 1,
+      "message": "it tested in separate class - this is test data preparation.",
+      "parentUuid": "656770ea_6a8874f6",
+      "range": {
+        "startLine": 87,
+        "startChar": 2,
+        "endLine": 87,
+        "endChar": 63
+      },
+      "revId": "a17143f8e83f16fb20f6d55612f4dea67c13e863",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf0f2b16_48455b2a",
         "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger_test.go",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "a17143f8e83f16fb20f6d55612f4dea67c13e863",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75173919_b5e16588",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger_test.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-10-28T14:37:06Z",
+      "side": 1,
+      "message": "it tested in separate class - this is test data preparation.",
+      "parentUuid": "cf0f2b16_48455b2a",
+      "range": {
+        "startLine": 109,
+        "startChar": 2,
+        "endLine": 109,
+        "endChar": 63
+      },
+      "revId": "a17143f8e83f16fb20f6d55612f4dea67c13e863",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
