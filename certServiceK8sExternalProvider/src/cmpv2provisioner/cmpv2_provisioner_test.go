@@ -87,8 +87,9 @@ func Test_shouldReturnCorrectSignedPemsWhenParametersAreCorrect(t *testing.T) {
 
 	ctx := context.Background()
 	request := createCertificateRequest()
+	privateKeyBytes := getPrivateKeyBytes()
 
-	signedPEM, trustedCAs, err := provisioner.Sign(ctx, request, nil)
+	signedPEM, trustedCAs, err := provisioner.Sign(ctx, request, privateKeyBytes)
 
 	assert.Nil(t, err)
 
@@ -151,6 +152,10 @@ func createCertificateRequest() *cmapi.CertificateRequest {
 	request.Status.Certificate = readFile(STATUS_CERTIFICATE_FILENAME)
 
 	return request
+}
+
+func getPrivateKeyBytes() []byte {
+	return readFile("testdata/test_private_key.pem")
 }
 
 func areSlicesEqual(slice1 []byte, slice2 []byte) bool {
