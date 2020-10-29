@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "776d7853_74c81014",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2provisioner/cmpv2_provisioner.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-10-29T11:26:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "474cd832_b49a9069",
+      "revId": "185961c045be1a51ca78485c534ca0d3eb4f36ad",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6412e8cc_9947a6a2",
         "filename": "certServiceK8sExternalProvider/src/cmpv2provisioner/response_parser.go",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2020-10-29T08:57:05Z",
       "side": 1,
       "message": "Not trusted certs, but certificate chain. Also trusted certs have different header - TRUSTED CERTIFICATE vs CERTIFICATE",
+      "revId": "185961c045be1a51ca78485c534ca0d3eb4f36ad",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35c2a917_c1db16c2",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2provisioner/response_parser.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-10-29T11:26:31Z",
+      "side": 1,
+      "message": "I used wrong response object.  Trusted certs has same file header -BEGIN-CERTIFICATE-",
+      "parentUuid": "6412e8cc_9947a6a2",
       "revId": "185961c045be1a51ca78485c534ca0d3eb4f36ad",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0a512c5b_1ae5c494",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2provisioner/response_parser.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-10-29T11:26:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a864c9d_55c6fe13",
+      "revId": "185961c045be1a51ca78485c534ca0d3eb4f36ad",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6424b840_b4d34e9a",
         "filename": "certServiceK8sExternalProvider/src/cmpv2provisioner/testdata/expected_signed.pem",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "387b3d28_8a4ca800",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2provisioner/testdata/expected_signed.pem",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-10-29T11:26:31Z",
+      "side": 1,
+      "message": "It is intermediate certificate. I used it because current CertService API return just one element in certificateChain, so I can\u0027t create real mocked response with two different certificates. Should I use array with two same signed certs ? I think for testing we should use array with at least two elements",
+      "parentUuid": "6424b840_b4d34e9a",
+      "revId": "185961c045be1a51ca78485c534ca0d3eb4f36ad",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a627de2b_22d96544",
         "filename": "certServiceK8sExternalProvider/src/cmpv2provisioner/testdata/expected_trusted.pem",
         "patchSetId": 2
@@ -81,6 +153,24 @@
       "writtenOn": "2020-10-29T08:57:05Z",
       "side": 1,
       "message": "Invalid trusted certs",
+      "revId": "185961c045be1a51ca78485c534ca0d3eb4f36ad",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e317f262_44e6f447",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2provisioner/testdata/expected_trusted.pem",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-10-29T11:26:31Z",
+      "side": 1,
+      "message": "Changed",
+      "parentUuid": "a627de2b_22d96544",
       "revId": "185961c045be1a51ca78485c534ca0d3eb4f36ad",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
