@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5160618f_5eef00e0",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-10-29T09:53:20Z",
+      "side": 1,
+      "message": "Sorry to bother you, but please change also here from emailSANs to something more generic",
+      "revId": "b26696428f59b0bfd51852050950c7a1da853d91",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
