@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b58f562d_db1510a5",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2provisioner/response_parser.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-10-29T13:21:53Z",
+      "side": 1,
+      "message": "Consider moving this method to x509utils",
+      "revId": "e357e3b3e27373b2cfa12e32224d2868c7c7cf88",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9182da81_0a53101e",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2provisioner/response_parser_test.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-10-29T13:21:53Z",
+      "side": 1,
+      "message": "// given // when // then - seem to be redundant comments",
+      "revId": "e357e3b3e27373b2cfa12e32224d2868c7c7cf88",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
