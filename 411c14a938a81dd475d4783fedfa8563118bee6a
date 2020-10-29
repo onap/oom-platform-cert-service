@@ -16,6 +16,24 @@
       "revId": "411c14a938a81dd475d4783fedfa8563118bee6a",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c222689_fb126ad9",
+        "filename": "certServiceK8sExternalProvider/src/x509/x509_utils_test.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-10-29T06:54:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "087fe846_4cd1374f",
+      "revId": "411c14a938a81dd475d4783fedfa8563118bee6a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
