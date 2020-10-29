@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "474cd832_b49a9069",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2provisioner/cmpv2_provisioner.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-10-29T08:57:05Z",
+      "side": 1,
+      "message": "Just logger? And going further to Successfully signed?",
+      "revId": "185961c045be1a51ca78485c534ca0d3eb4f36ad",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6412e8cc_9947a6a2",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2provisioner/response_parser.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-10-29T08:57:05Z",
+      "side": 1,
+      "message": "Not trusted certs, but certificate chain. Also trusted certs have different header - TRUSTED CERTIFICATE vs CERTIFICATE",
+      "revId": "185961c045be1a51ca78485c534ca0d3eb4f36ad",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a864c9d_55c6fe13",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2provisioner/response_parser.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-10-29T08:57:05Z",
+      "side": 1,
+      "message": "Why starts with capital letter?",
+      "revId": "185961c045be1a51ca78485c534ca0d3eb4f36ad",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6424b840_b4d34e9a",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2provisioner/testdata/expected_signed.pem",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-10-29T08:57:05Z",
+      "side": 1,
+      "message": "Is this end certificate and intermediate certificate?",
+      "revId": "185961c045be1a51ca78485c534ca0d3eb4f36ad",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a627de2b_22d96544",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2provisioner/testdata/expected_trusted.pem",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-10-29T08:57:05Z",
+      "side": 1,
+      "message": "Invalid trusted certs",
+      "revId": "185961c045be1a51ca78485c534ca0d3eb4f36ad",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
