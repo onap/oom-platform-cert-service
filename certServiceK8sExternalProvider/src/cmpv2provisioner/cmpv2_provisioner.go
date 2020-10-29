@@ -35,6 +35,7 @@ import (
 
 	"onap.org/oom-certservice/k8s-external-provider/src/certserviceclient"
 	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2api"
+	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2provisioner/csr"
 )
 
 var collection = new(sync.Map)
@@ -83,7 +84,11 @@ func Store(namespacedName types.NamespacedName, provisioner *CertServiceCA) {
 	collection.Store(namespacedName, provisioner)
 }
 
-func (ca *CertServiceCA) Sign(ctx context.Context, certificateRequest *certmanager.CertificateRequest, privateKeyBytes []byte) ([]byte, []byte, error) {
+func (ca *CertServiceCA) Sign(
+	ctx context.Context,
+	certificateRequest *certmanager.CertificateRequest,
+	privateKeyBytes []byte,
+) (signedCertificateChain []byte, trustedCertificates []byte, err error) {
 	log := ctrl.Log.WithName("certservice-provisioner")
 	log.Info("Signing certificate: ", "cert-name", certificateRequest.Name)
 
@@ -92,7 +97,12 @@ func (ca *CertServiceCA) Sign(ctx context.Context, certificateRequest *certmanag
 	csrBytes := certificateRequest.Spec.Request
 	log.Info("Csr PEM: ", "bytes", csrBytes)
 
-	response, err := ca.certServiceClient.GetCertificates(csrBytes, privateKeyBytes)
+	filteredCsrBytes, err := csr.FilterFieldsFromCSR(csrBytes, privateKeyBytes)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	response, err := ca.certServiceClient.GetCertificates(filteredCsrBytes, privateKeyBytes)
 	if err != nil {
 		return nil, nil, err
 	}

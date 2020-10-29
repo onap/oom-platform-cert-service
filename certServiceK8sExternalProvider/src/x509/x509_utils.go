@@ -27,14 +27,16 @@ import (
 	"fmt"
 )
 
-// decodeCSR decodes a certificate request in PEM format and returns the
+const (
+	PemCsrType        = "CERTIFICATE REQUEST"
+	pemPrivateKeyType = "PRIVATE KEY"
+)
+
+// decodeCSR decodes a certificate request in PEM format
 func DecodeCSR(data []byte) (*x509.CertificateRequest, error) {
-	block, rest := pem.Decode(data)
-	if block == nil || len(rest) > 0 {
-		return nil, fmt.Errorf("unexpected CSR PEM on sign request")
-	}
-	if block.Type != "CERTIFICATE REQUEST" {
-		return nil, fmt.Errorf("PEM is not a certificate request")
+	block, err := decodePemBlock(data, PemCsrType)
+	if err != nil {
+		return nil,  fmt.Errorf("error decoding CSR PEM: %v", err)
 	}
 	csr, err := x509.ParseCertificateRequest(block.Bytes)
 	if err != nil {
@@ -46,15 +48,29 @@ func DecodeCSR(data []byte) (*x509.CertificateRequest, error) {
 	return csr, nil
 }
 
-// encodeX509 will encode a *x509.Certificate into PEM format.
-func EncodeX509(cert *x509.Certificate) ([]byte, error) {
-	caPem := bytes.NewBuffer([]byte{})
-	err := pem.Encode(caPem, &pem.Block{Type: "CERTIFICATE", Bytes: cert.Raw})
+func DecodePrivateKey(data []byte) (interface{}, error) {
+	block, err := decodePemBlock(data, pemPrivateKeyType)
 	if err != nil {
-		return nil, err
+		return nil,  fmt.Errorf("error decoding Private Key PEM: %v", err)
 	}
-	return caPem.Bytes(), nil
+	key, err := x509.ParsePKCS8PrivateKey(block.Bytes)
+	if err != nil {
+		return nil,  fmt.Errorf("error parsing Private Key: %v", err)
+	}
+	return key, nil
 }
+
+func decodePemBlock(data []byte, pemType string) (*pem.Block, error) {
+	block, rest := pem.Decode(data)
+	if block == nil || len(rest) > 0 {
+		return nil, fmt.Errorf("unexpected PEM")
+	}
+	if block.Type != pemType {
+		return nil, fmt.Errorf("PEM is not: %s", pemType)
+	}
+	return block, nil
+}
+
 
 func ParseCertificateArrayToBytes(certificateArray []string) ([]byte, error) {
 	buffer := bytes.NewBuffer([]byte{})

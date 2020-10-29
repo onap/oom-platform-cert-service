@@ -18,38 +18,45 @@
  * ============LICENSE_END=========================================================
  */
 
-package x509
+package csr
 
 import (
-	"testing"
+	"crypto/rand"
+	"crypto/x509"
+	"crypto/x509/pkix"
+	"encoding/pem"
 
-	"github.com/stretchr/testify/assert"
-
-	"onap.org/oom-certservice/k8s-external-provider/src/x509/testdata"
+	x509utils "onap.org/oom-certservice/k8s-external-provider/src/x509"
 )
 
-func Test_DecodeCSR_ShouldDecodeValidCsr(t *testing.T) {
-	csr, err := DecodeCSR([]byte(testdata.ValidCertificateSignRequest))
+func FilterFieldsFromCSR(csrBytes []byte, privateKeyBytes []byte) ([]byte, error) {
+	csr, err := x509utils.DecodeCSR(csrBytes)
+	if err != nil {
+		return nil, err
+	}
 
-	assert.Nil(t, err)
-	assert.Equal(t, "ONAP", csr.Subject.Organization[0])
+	key, err := x509utils.DecodePrivateKey(privateKeyBytes)
+	if err != nil {
+		return nil, err
+	}
+
+	filteredSubject := filterFieldsFromSubject(csr.Subject)
+
+	filteredCsr, err := x509.CreateCertificateRequest(rand.Reader, &x509.CertificateRequest{
+		Subject:  filteredSubject,
+		DNSNames: csr.DNSNames,
+	}, key)
+	if err != nil {
+		return nil, err
+	}
+
+	csrBytes = pem.EncodeToMemory(&pem.Block{Type: x509utils.PemCsrType, Bytes: filteredCsr})
+	return csrBytes, nil
 }
 
-func Test_DecodeCSR_ShouldReturnErrorForInvalidCsr(t *testing.T) {
-	_, err := DecodeCSR([]byte(testdata.InvalidCertificateSignRequest))
-
-	assert.Error(t, err)
-}
-
-func Test_DecodePrivateKey_ShouldDecodeValidPrivateKey(t *testing.T) {
-	privateKey, err := DecodePrivateKey([]byte(testdata.ValidPrivateKey))
-
-	assert.Nil(t, err)
-	assert.NotNil(t, privateKey)
-}
-
-func Test_DecodePrivateKey_ShouldReturnErrorForInvalidPrivateKey(t *testing.T) {
-	_, err := DecodePrivateKey([]byte(testdata.InvalidPrivateKey))
-
-	assert.Error(t, err)
+func filterFieldsFromSubject(subject pkix.Name) pkix.Name {
+	subject.StreetAddress = []string{}
+	subject.SerialNumber = ""
+	subject.PostalCode = []string{}
+	return subject
 }
