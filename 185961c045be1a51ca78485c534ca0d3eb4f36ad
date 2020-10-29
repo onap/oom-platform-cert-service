@@ -228,6 +228,24 @@
       "revId": "185961c045be1a51ca78485c534ca0d3eb4f36ad",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eec9e06_bf86b929",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2provisioner/testdata/expected_trusted.pem",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-10-29T14:14:36Z",
+      "side": 1,
+      "message": "Certificates was change in patchset3.",
+      "parentUuid": "a135d7cc_76af1966",
+      "revId": "185961c045be1a51ca78485c534ca0d3eb4f36ad",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
