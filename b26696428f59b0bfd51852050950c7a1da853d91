@@ -16,6 +16,24 @@
       "revId": "b26696428f59b0bfd51852050950c7a1da853d91",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0dc4c7b_98081513",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-10-29T09:57:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5160618f_5eef00e0",
+      "revId": "b26696428f59b0bfd51852050950c7a1da853d91",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
