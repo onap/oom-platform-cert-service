@@ -39,6 +39,7 @@ import (
 
 	"onap.org/oom-certservice/k8s-external-provider/src/certserviceclient"
 	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2api"
+	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2provisioner/csr"
 )
 
 var collection = new(sync.Map)
@@ -96,7 +97,12 @@ func (ca *CertServiceCA) Sign(ctx context.Context, certificateRequest *certmanag
 	csrBytes := certificateRequest.Spec.Request
 	log.Info("Csr PEM: ", "bytes", csrBytes)
 
-	csr, err := decodeCSR(csrBytes)
+	x509Csr, err := decodeCSR(csrBytes)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	csrBytes, err = csr.FilterFieldsFromCSR(csrBytes, privateKeyBytes)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -112,7 +118,7 @@ func (ca *CertServiceCA) Sign(ctx context.Context, certificateRequest *certmanag
 	// TODO
 	// stored response as PEM
 	cert := x509.Certificate{}
-	cert.Raw = csr.Raw
+	cert.Raw = x509Csr.Raw
 	encodedPEM, err := encodeX509(&cert)
 	if err != nil {
 		return nil, nil, err
