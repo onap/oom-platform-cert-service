@@ -140,7 +140,7 @@ func (controller *CertificateRequestController) Reconcile(k8sRequest ctrl.Reques
 	signedPEM, trustedCAs, err := provisioner.Sign(ctx, certificateRequest, privateKeyBytes)
 	if err != nil {
 		controller.handleErrorFailedToSignCertificate(ctx, log, err, certificateRequest)
-		return ctrl.Result{}, err
+		return ctrl.Result{}, nil
 	}
 
 	// 11. Store signed certificates in CertificateRequest
