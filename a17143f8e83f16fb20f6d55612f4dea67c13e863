@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "03d84989_fd30740a",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/certificate_request_controller.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-10-29T08:50:55Z",
+      "side": 1,
+      "message": "You\u0027re right, processing should be stopped.\nDone",
+      "parentUuid": "2b5dcc08_8abfef37",
+      "revId": "a17143f8e83f16fb20f6d55612f4dea67c13e863",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66ebc05a_83562ec1",
         "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger_test.go",
         "patchSetId": 4
