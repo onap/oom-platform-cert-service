@@ -108,6 +108,30 @@
     },
     {
       "key": {
+        "uuid": "2b37c19d_33f80b27",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger_test.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-10-29T10:20:47Z",
+      "side": 1,
+      "message": "It\u0027s better to have clear message if something goes wront",
+      "parentUuid": "1e1a56a1_e6621e0a",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 63
+      },
+      "revId": "a17143f8e83f16fb20f6d55612f4dea67c13e863",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "656770ea_6a8874f6",
         "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger_test.go",
         "patchSetId": 4
