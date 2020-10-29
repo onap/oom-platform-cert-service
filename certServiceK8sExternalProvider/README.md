@@ -30,3 +30,21 @@ Apply k8s files from 'deploy' directory in following order:
 To issue a certificate adjust and apply following k8s file:
  
  - certificate_example.yaml
+ 
+#### Unsupported Certificate fields
+
+Some of the fields present in Cert Manager Certificate are not currently supported by CertService API, because of that they are
+filtered from the Certificate Signing Request.
+
+**Filtered fields:**
+ - subjectDN fields:
+   - serialNumber
+   - streetAddresses
+   - postalCodes
+ - isCa
+ - ipAddresses
+ - uris
+ - emails
+ - duration
+ - usages
+ 
