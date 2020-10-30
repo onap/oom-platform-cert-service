@@ -26,105 +26,69 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	v1 "k8s.io/api/core/v1"
-
-	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2api"
 	"onap.org/oom-certservice/k8s-external-provider/src/testdata"
 )
 
-const (
-	secretName      = "issuer-cert-secret"
-	url             = "https://oom-cert-service:8443/v1/certificate/"
-	healthEndpoint  = "actuator/health"
-	certEndpoint    = "v1/certificate"
-	caName          = "RA"
-	keySecretKey    = "cmpv2Issuer-key.pem"
-	certSecretKey   = "cmpv2Issuer-cert.pem"
-	cacertSecretKey = "cacert.pem"
-)
-
 func Test_shouldCreateProvisioner(t *testing.T) {
-	issuer, secret := getValidIssuerAndSecret()
+	issuer, secret := testdata.GetValidIssuerWithSecret()
+	provisionerFactory := ProvisionerFactoryImpl{}
 
-	provisioner, _ := CreateProvisioner(&issuer, secret)
+	provisioner, _ := provisionerFactory.CreateProvisioner(&issuer, secret)
 
 	assert.NotNil(t, provisioner)
-	assert.Equal(t, url, provisioner.url)
-	assert.Equal(t, caName, provisioner.caName)
-	assert.Equal(t, healthEndpoint, provisioner.healthEndpoint)
-	assert.Equal(t, certEndpoint, provisioner.certEndpoint)
+	assert.Equal(t, testdata.Url, provisioner.url)
+	assert.Equal(t, testdata.CaName, provisioner.caName)
+	assert.Equal(t, testdata.HealthEndpoint, provisioner.healthEndpoint)
+	assert.Equal(t, testdata.CertEndpoint, provisioner.certEndpoint)
 }
 
 func Test_shouldReturnError_whenSecretMissingKeyRef(t *testing.T) {
-	issuer, secret := getValidIssuerAndSecret()
-	delete(secret.Data, keySecretKey)
+	issuer, secret := testdata.GetValidIssuerWithSecret()
+	delete(secret.Data, testdata.KeySecretKey)
+	provisionerFactory := ProvisionerFactoryImpl{}
 
-	provisioner, err := CreateProvisioner(&issuer, secret)
+	provisioner, err := provisionerFactory.CreateProvisioner(&issuer, secret)
 
 	assert.Nil(t, provisioner)
 	if assert.Error(t, err) {
-		assert.Equal(t, fmt.Errorf("secret %s does not contain key %s", secretName, keySecretKey), err)
+		assert.Equal(t, fmt.Errorf("secret %s does not contain key %s", testdata.SecretName, testdata.KeySecretKey), err)
 	}
 }
 
 func Test_shouldReturnError_whenSecretMissingCertRef(t *testing.T) {
-	issuer, secret := getValidIssuerAndSecret()
-	delete(secret.Data, certSecretKey)
+	issuer, secret := testdata.GetValidIssuerWithSecret()
+	delete(secret.Data, testdata.CertSecretKey)
+	provisionerFactory := ProvisionerFactoryImpl{}
 
-	provisioner, err := CreateProvisioner(&issuer, secret)
+	provisioner, err := provisionerFactory.CreateProvisioner(&issuer, secret)
 
 	assert.Nil(t, provisioner)
 	if assert.Error(t, err) {
-		assert.Equal(t, fmt.Errorf("secret %s does not contain key %s", secretName, certSecretKey), err)
+		assert.Equal(t, fmt.Errorf("secret %s does not contain key %s", testdata.SecretName, testdata.CertSecretKey), err)
 	}
 }
 
 func Test_shouldReturnError_whenSecretMissingCacertRef(t *testing.T) {
-	issuer, secret := getValidIssuerAndSecret()
-	delete(secret.Data, cacertSecretKey)
+	issuer, secret := testdata.GetValidIssuerWithSecret()
+	delete(secret.Data, testdata.CacertSecretKey)
+	provisionerFactory := ProvisionerFactoryImpl{}
 
-	provisioner, err := CreateProvisioner(&issuer, secret)
+	provisioner, err := provisionerFactory.CreateProvisioner(&issuer, secret)
 
 	assert.Nil(t, provisioner)
 	if assert.Error(t, err) {
-		assert.Equal(t, fmt.Errorf("secret %s does not contain key %s", secretName, cacertSecretKey), err)
+		assert.Equal(t, fmt.Errorf("secret %s does not contain key %s", testdata.SecretName, testdata.CacertSecretKey), err)
 	}
 }
 
 func Test_shouldReturnError_whenCreationOfCertServiceClientReturnsError(t *testing.T) {
-	issuer, secret := getValidIssuerAndSecret()
+	issuer, secret := testdata.GetValidIssuerWithSecret()
 	invalidKeySecretValue, _ := base64.StdEncoding.DecodeString("")
-	secret.Data[keySecretKey] = invalidKeySecretValue
+	secret.Data[testdata.KeySecretKey] = invalidKeySecretValue
+	provisionerFactory := ProvisionerFactoryImpl{}
 
-	provisioner, err := CreateProvisioner(&issuer, secret)
+	provisioner, err := provisionerFactory.CreateProvisioner(&issuer, secret)
 
 	assert.Nil(t, provisioner)
 	assert.Error(t, err)
-}
-
-func getValidIssuerAndSecret() (cmpv2api.CMPv2Issuer, v1.Secret) {
-	issuer := cmpv2api.CMPv2Issuer{
-		Spec: cmpv2api.CMPv2IssuerSpec{
-			URL:            url,
-			HealthEndpoint: healthEndpoint,
-			CertEndpoint:   certEndpoint,
-			CaName:         caName,
-			CertSecretRef: cmpv2api.SecretKeySelector{
-				Name:      secretName,
-				KeyRef:    keySecretKey,
-				CertRef:   certSecretKey,
-				CacertRef: cacertSecretKey,
-			},
-		},
-	}
-	secret := v1.Secret{
-
-		Data: map[string][]byte{
-			keySecretKey:    testdata.KeyBytes,
-			certSecretKey:   testdata.CertBytes,
-			cacertSecretKey: testdata.CacertBytes,
-		},
-	}
-	secret.Name = secretName
-	return issuer, secret
 }
