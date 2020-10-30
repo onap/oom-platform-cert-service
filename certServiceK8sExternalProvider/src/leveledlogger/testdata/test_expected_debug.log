@@ -1,0 +1,4 @@
+DEBUG	loggername	this is a debug message
+INFO	loggername	this is an info message
+WARN	loggername	this is a warning message	{"key1": "value1"}
+ERROR	loggername	err msg	{"error": "this is an error message"}
