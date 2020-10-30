@@ -28,8 +28,8 @@ package cmpv2controller
 import (
 	"context"
 	"fmt"
+	"onap.org/oom-certservice/k8s-external-provider/src/klogger"
 
-	"github.com/go-logr/logr"
 	apiutil "github.com/jetstack/cert-manager/pkg/api/util"
 	cmapi "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1"
 	cmmeta "github.com/jetstack/cert-manager/pkg/apis/meta/v1"
@@ -48,13 +48,13 @@ import (
 
 const (
 	privateKeySecretNameAnnotation = "cert-manager.io/private-key-secret-name"
-	privateKeySecretKey = "tls.key"
+	privateKeySecretKey            = "tls.key"
 )
 
 // CertificateRequestController reconciles a CMPv2Issuer object.
 type CertificateRequestController struct {
 	client.Client
-	Log      logr.Logger
+	Log      klogger.LeveledLogger
 	Recorder record.EventRecorder
 }
 
@@ -63,7 +63,7 @@ type CertificateRequestController struct {
 // provisioner in the CMPv2Issuer.
 func (controller *CertificateRequestController) Reconcile(k8sRequest ctrl.Request) (ctrl.Result, error) {
 	ctx := context.Background()
-	log := controller.Log.WithValues("certificate-request-controller", k8sRequest.NamespacedName)
+	log := klogger.GetLoggerWithValues("certificate-request-controller", k8sRequest.NamespacedName)
 
 	// 1. Fetch the CertificateRequest resource being reconciled.
 	certificateRequest := new(cmapi.CertificateRequest)
@@ -134,7 +134,7 @@ func (controller *CertificateRequestController) Reconcile(k8sRequest ctrl.Reques
 	}
 
 	// 9. Log Certificate Request properties not supported or overridden by CertService API
-	logger.LogCertRequestProperties(ctrl.Log.WithName("CSR details"), certificateRequest, csr)
+	logger.LogCertRequestProperties(klogger.GetLoggerWithName("CSR details"), certificateRequest, csr)
 
 	// 10. Sign CertificateRequest
 	signedPEM, trustedCAs, err := provisioner.Sign(ctx, certificateRequest, privateKeyBytes)
@@ -201,42 +201,41 @@ func isCMPv2CertificateRequest(certificateRequest *cmapi.CertificateRequest) boo
 
 // Error handling
 
-func (controller *CertificateRequestController) handleErrorCouldNotLoadCMPv2Provisioner(ctx context.Context, log logr.Logger, issuerNamespaceName types.NamespacedName, certificateRequest *cmapi.CertificateRequest) error {
+func (controller *CertificateRequestController) handleErrorCouldNotLoadCMPv2Provisioner(ctx context.Context, log klogger.LeveledLogger, issuerNamespaceName types.NamespacedName, certificateRequest *cmapi.CertificateRequest) error {
 	err := fmt.Errorf("provisioner %s not found", issuerNamespaceName)
 	log.Error(err, "Failed to load CMPv2 Provisioner resource")
 	_ = controller.setStatus(ctx, certificateRequest, cmmeta.ConditionFalse, cmapi.CertificateRequestReasonPending, "Failed to load provisioner for CMPv2Issuer resource %s", issuerNamespaceName)
 	return err
 }
 
-func (controller *CertificateRequestController) handleErrorCMPv2IssuerIsNotReady(ctx context.Context, log logr.Logger, issuerNamespaceName types.NamespacedName, certificateRequest *cmapi.CertificateRequest, req ctrl.Request) error {
+func (controller *CertificateRequestController) handleErrorCMPv2IssuerIsNotReady(ctx context.Context, log klogger.LeveledLogger, issuerNamespaceName types.NamespacedName, certificateRequest *cmapi.CertificateRequest, req ctrl.Request) error {
 	err := fmt.Errorf("resource %s is not ready", issuerNamespaceName)
 	log.Error(err, "CMPv2Issuer not ready", "namespace", req.Namespace, "name", certificateRequest.Spec.IssuerRef.Name)
 	_ = controller.setStatus(ctx, certificateRequest, cmmeta.ConditionFalse, cmapi.CertificateRequestReasonPending, "CMPv2Issuer resource %s is not Ready", issuerNamespaceName)
 	return err
 }
 
-func (controller *CertificateRequestController) handleErrorGettingCMPv2Issuer(ctx context.Context, log logr.Logger, err error, certificateRequest *cmapi.CertificateRequest, issuerNamespaceName types.NamespacedName, req ctrl.Request) {
+func (controller *CertificateRequestController) handleErrorGettingCMPv2Issuer(ctx context.Context, log klogger.LeveledLogger, err error, certificateRequest *cmapi.CertificateRequest, issuerNamespaceName types.NamespacedName, req ctrl.Request) {
 	log.Error(err, "Failed to retrieve CMPv2Issuer resource", "namespace", req.Namespace, "name", certificateRequest.Spec.IssuerRef.Name)
 	_ = controller.setStatus(ctx, certificateRequest, cmmeta.ConditionFalse, cmapi.CertificateRequestReasonPending, "Failed to retrieve CMPv2Issuer resource %s: %v", issuerNamespaceName, err)
 }
 
-func (controller *CertificateRequestController) handleErrorGettingPrivateKey(ctx context.Context, log logr.Logger, err error, certificateRequest *cmapi.CertificateRequest, pkSecretNamespacedName types.NamespacedName) {
+func (controller *CertificateRequestController) handleErrorGettingPrivateKey(ctx context.Context, log klogger.LeveledLogger, err error, certificateRequest *cmapi.CertificateRequest, pkSecretNamespacedName types.NamespacedName) {
 	log.Error(err, "Failed to retrieve private key secret for certificate request", "namespace", pkSecretNamespacedName.Namespace, "name", pkSecretNamespacedName.Name)
 	_ = controller.setStatus(ctx, certificateRequest, cmmeta.ConditionFalse, cmapi.CertificateRequestReasonPending, "Failed to retrieve private key secret: %v", err)
 }
 
-func (controller *CertificateRequestController) handleErrorFailedToSignCertificate(ctx context.Context, log logr.Logger, err error, certificateRequest *cmapi.CertificateRequest) {
+func (controller *CertificateRequestController) handleErrorFailedToSignCertificate(ctx context.Context, log klogger.LeveledLogger, err error, certificateRequest *cmapi.CertificateRequest) {
 	log.Error(err, "Failed to sign certificate request")
 	_ = controller.setStatus(ctx, certificateRequest, cmmeta.ConditionFalse, cmapi.CertificateRequestReasonFailed, "Failed to sign certificate request: %v", err)
 }
 
-func (controller *CertificateRequestController) handleErrorFailedToDecodeCSR(ctx context.Context, log logr.Logger, err error, certificateRequest *cmapi.CertificateRequest) {
+func (controller *CertificateRequestController) handleErrorFailedToDecodeCSR(ctx context.Context, log klogger.LeveledLogger, err error, certificateRequest *cmapi.CertificateRequest) {
 	log.Error(err, "Failed to decode certificate sign request")
 	_ = controller.setStatus(ctx, certificateRequest, cmmeta.ConditionFalse, cmapi.CertificateRequestReasonFailed, "Failed to decode CSR: %v", err)
 }
 
-
-func handleErrorResourceNotFound(log logr.Logger, err error) error {
+func handleErrorResourceNotFound(log klogger.LeveledLogger, err error) error {
 	if apierrors.IsNotFound(err) {
 		log.Error(err, "CertificateRequest resource not found")
 	} else {

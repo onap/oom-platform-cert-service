@@ -28,11 +28,11 @@ package cmpv2provisioner
 import (
 	"context"
 	"crypto/x509"
+	"onap.org/oom-certservice/k8s-external-provider/src/klogger"
 	"sync"
 
 	certmanager "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1"
 	"k8s.io/apimachinery/pkg/types"
-	ctrl "sigs.k8s.io/controller-runtime"
 
 	"onap.org/oom-certservice/k8s-external-provider/src/certserviceclient"
 	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2api"
@@ -60,14 +60,14 @@ func New(cmpv2Issuer *cmpv2api.CMPv2Issuer, certServiceClient certserviceclient.
 	ca.certEndpoint = cmpv2Issuer.Spec.CertEndpoint
 	ca.certServiceClient = certServiceClient
 
-	log := ctrl.Log.WithName("cmpv2-provisioner")
+	log := klogger.GetLoggerWithName("cmpv2-provisioner")
 	log.Info("Configuring CA: ", "name", ca.name, "url", ca.url, "caName", ca.caName, "healthEndpoint", ca.healthEndpoint, "certEndpoint", ca.certEndpoint)
 
 	return &ca, nil
 }
 
 func (ca *CertServiceCA) CheckHealth() error {
-	log := ctrl.Log.WithName("cmpv2-provisioner")
+	log := klogger.GetLoggerWithName("cmpv2-provisioner")
 	log.Info("Checking health of CMPv2 issuer: ", "name", ca.name)
 	return ca.certServiceClient.CheckHealth()
 }
@@ -86,7 +86,7 @@ func Store(namespacedName types.NamespacedName, provisioner *CertServiceCA) {
 }
 
 func (ca *CertServiceCA) Sign(ctx context.Context, certificateRequest *certmanager.CertificateRequest, privateKeyBytes []byte) ([]byte, []byte, error) {
-	log := ctrl.Log.WithName("certservice-provisioner")
+	log := klogger.GetLoggerWithName("certservice-provisioner")
 	log.Info("Signing certificate: ", "cert-name", certificateRequest.Name)
 
 	log.Info("CA: ", "name", ca.name, "url", ca.url)
@@ -105,7 +105,6 @@ func (ca *CertServiceCA) Sign(ctx context.Context, certificateRequest *certmanag
 	}
 	log.Info("Certificate Chain", "cert-chain", response.CertificateChain)
 	log.Info("Trusted Certificates", "trust-certs", response.TrustedCertificates)
-
 
 	// TODO
 	// stored response as PEM

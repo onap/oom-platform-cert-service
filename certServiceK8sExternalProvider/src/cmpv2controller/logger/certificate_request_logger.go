@@ -24,9 +24,9 @@ import (
 	x509 "crypto/x509"
 	"net"
 	"net/url"
+	"onap.org/oom-certservice/k8s-external-provider/src/klogger"
 	"strconv"
 
-	"github.com/go-logr/logr"
 	cmapi "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1"
 )
 
@@ -35,13 +35,13 @@ const (
 	CMPv2ServerName = "CMPv2 Server"
 )
 
-func LogCertRequestProperties(log logr.Logger, request *cmapi.CertificateRequest, csr *x509.CertificateRequest) {
+func LogCertRequestProperties(log klogger.LeveledLogger, request *cmapi.CertificateRequest, csr *x509.CertificateRequest) {
 	logSupportedProperties(log, request, csr)
 	logPropertiesNotSupportedByCertService(log, request, csr)
 	logPropertiesOverriddenByCMPv2Server(log, request)
 }
 
-func logSupportedProperties(log logr.Logger, request *cmapi.CertificateRequest, csr *x509.CertificateRequest) {
+func logSupportedProperties(log klogger.LeveledLogger, request *cmapi.CertificateRequest, csr *x509.CertificateRequest) {
 	logSupportedProperty(log, csr.Subject.Organization, "organization")
 	logSupportedProperty(log, csr.Subject.OrganizationalUnit, "organization unit")
 	logSupportedProperty(log, csr.Subject.Country, "country")
@@ -50,13 +50,13 @@ func logSupportedProperties(log logr.Logger, request *cmapi.CertificateRequest, 
 	logSupportedProperty(log, csr.DNSNames, "dns names")
 }
 
-func logSupportedProperty(log logr.Logger, values []string, propertyName string) {
+func logSupportedProperty(log klogger.LeveledLogger, values []string, propertyName string) {
 	if len(values) > 0 {
 		log.Info(getSupportedMessage(propertyName, extractStringArray(values)))
 	}
 }
 
-func logPropertiesOverriddenByCMPv2Server(log logr.Logger, request *cmapi.CertificateRequest) {
+func logPropertiesOverriddenByCMPv2Server(log klogger.LeveledLogger, request *cmapi.CertificateRequest) {
 	if request.Spec.Duration != nil && len(request.Spec.Duration.String()) > 0 {
 		log.Info(getOverriddenMessage("duration", request.Spec.Duration.Duration.String()))
 	}
@@ -73,7 +73,7 @@ func extractUsages(usages []cmapi.KeyUsage) string {
 	return values
 }
 
-func logPropertiesNotSupportedByCertService(log logr.Logger, request *cmapi.CertificateRequest, csr *x509.CertificateRequest) {
+func logPropertiesNotSupportedByCertService(log klogger.LeveledLogger, request *cmapi.CertificateRequest, csr *x509.CertificateRequest) {
 
 	//IP addresses in SANs
 	if len(csr.IPAddresses) > 0 {
