@@ -24,6 +24,7 @@ import (
 	"bytes"
 	"context"
 	"io/ioutil"
+	v1 "k8s.io/api/core/v1"
 	"log"
 	"testing"
 	"time"
@@ -71,15 +72,8 @@ func Test_shouldReturnCorrectSignedPemsWhenParametersAreCorrect(t *testing.T) {
 	const EXPECTED_TRUSTED_FILENAME = "testdata/expected_trusted.pem"
 
 	issuer := createIssuerAndCerts(ISSUER_NAME, ISSUER_URL)
-	provisioner, err := New(&issuer, &certServiceClientMock{
-		getCertificatesFunc: func(csr []byte, pk []byte) (response *certserviceclient.CertificatesResponse, e error) {
-			mockResponse:= &certserviceclient.CertificatesResponse{
-				CertificateChain:    []string{"cert-0", "cert-1"},
-				TrustedCertificates: []string{"trusted-cert-0", "trusted-cert-1"},
-			} //TODO: mock real certServiceClient response
-			return mockResponse, nil
-		},
-	})
+	factoryMock := ProvisionerFactoryMock{}
+	provisioner, err := factoryMock.CreateProvisioner(&issuer, v1.Secret{})
 
 	issuerNamespaceName := createIssuerNamespaceName(ISSUER_NAMESPACE, ISSUER_NAME)
 	Store(issuerNamespaceName, provisioner)
