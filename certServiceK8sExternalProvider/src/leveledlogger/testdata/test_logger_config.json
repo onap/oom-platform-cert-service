@@ -1,0 +1,11 @@
+{
+  "level": "warn",
+  "encoding": "console",
+  "outputPaths": ["stdout", "testdata/test_result.log"],
+  "encoderConfig": {
+    "messageKey": "message",
+    "levelKey": "level",
+    "nameKey": "name",
+    "levelEncoder": "capital"
+  }
+}
