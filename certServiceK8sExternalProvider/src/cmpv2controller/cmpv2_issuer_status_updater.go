@@ -29,20 +29,20 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/go-logr/logr"
 	core "k8s.io/api/core/v1"
 	meta "k8s.io/apimachinery/pkg/apis/meta/v1"
 
 	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2api"
+	"onap.org/oom-certservice/k8s-external-provider/src/leveledlogger"
 )
 
 type CMPv2IssuerStatusUpdater struct {
 	*CMPv2IssuerController
 	issuer *cmpv2api.CMPv2Issuer
-	logger logr.Logger
+	logger leveledlogger.LeveledLogger
 }
 
-func newStatusUpdater(controller *CMPv2IssuerController, issuer *cmpv2api.CMPv2Issuer, log logr.Logger) *CMPv2IssuerStatusUpdater {
+func newStatusUpdater(controller *CMPv2IssuerController, issuer *cmpv2api.CMPv2Issuer, log leveledlogger.LeveledLogger) *CMPv2IssuerStatusUpdater {
 	return &CMPv2IssuerStatusUpdater{
 		CMPv2IssuerController: controller,
 		issuer:                issuer,
