@@ -22,14 +22,21 @@ package cmpv2provisioner
 
 import (
 	"fmt"
-
 	v1 "k8s.io/api/core/v1"
 
 	"onap.org/oom-certservice/k8s-external-provider/src/certserviceclient"
 	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2api"
 )
 
-func CreateProvisioner(issuer *cmpv2api.CMPv2Issuer, secret v1.Secret) (*CertServiceCA, error) {
+
+type ProvisionerFactory interface {
+	CreateProvisioner(issuer *cmpv2api.CMPv2Issuer, secret v1.Secret) (*CertServiceCA, error)
+}
+
+type ProvisionerFactoryImpl struct {
+}
+
+func (f *ProvisionerFactoryImpl) CreateProvisioner(issuer *cmpv2api.CMPv2Issuer, secret v1.Secret) (*CertServiceCA, error) {
 	secretKeys := issuer.Spec.CertSecretRef
 	keyBase64, err := readValueFromSecret(secret, secretKeys.KeyRef)
 	if err != nil {

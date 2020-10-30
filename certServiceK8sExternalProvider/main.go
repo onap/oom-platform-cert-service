@@ -28,6 +28,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2provisioner"
 	"os"
 
 	certmanager "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1"
@@ -117,6 +118,7 @@ func registerCMPv2IssuerController(manager manager.Manager) {
 		Log:      ctrl.Log.WithName("controllers").WithName("CMPv2Issuer"),
 		Clock:    clock.RealClock{},
 		Recorder: manager.GetEventRecorderFor("cmpv2-issuer-controller"),
+		ProvisionerFactory: &cmpv2provisioner.ProvisionerFactoryImpl{},
 	}).SetupWithManager(manager)
 
 	if err != nil {
