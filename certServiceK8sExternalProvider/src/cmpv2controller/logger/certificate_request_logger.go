@@ -26,8 +26,8 @@ import (
 	"net/url"
 	"strconv"
 
-	"github.com/go-logr/logr"
 	cmapi "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1"
+	"onap.org/oom-certservice/k8s-external-provider/src/leveledlogger"
 )
 
 const (
@@ -35,13 +35,13 @@ const (
 	CMPv2ServerName = "CMPv2 Server"
 )
 
-func LogCertRequestProperties(log logr.Logger, request *cmapi.CertificateRequest, csr *x509.CertificateRequest) {
+func LogCertRequestProperties(log leveledlogger.Logger, request *cmapi.CertificateRequest, csr *x509.CertificateRequest) {
 	logSupportedProperties(log, request, csr)
 	logPropertiesNotSupportedByCertService(log, request, csr)
 	logPropertiesOverriddenByCMPv2Server(log, request)
 }
 
-func logSupportedProperties(log logr.Logger, request *cmapi.CertificateRequest, csr *x509.CertificateRequest) {
+func logSupportedProperties(log leveledlogger.Logger, request *cmapi.CertificateRequest, csr *x509.CertificateRequest) {
 	logSupportedProperty(log, csr.Subject.Organization, "organization")
 	logSupportedProperty(log, csr.Subject.OrganizationalUnit, "organization unit")
 	logSupportedProperty(log, csr.Subject.Country, "country")
@@ -50,13 +50,13 @@ func logSupportedProperties(log logr.Logger, request *cmapi.CertificateRequest, 
 	logSupportedProperty(log, csr.DNSNames, "dns names")
 }
 
-func logSupportedProperty(log logr.Logger, values []string, propertyName string) {
+func logSupportedProperty(log leveledlogger.Logger, values []string, propertyName string) {
 	if len(values) > 0 {
 		log.Info(getSupportedMessage(propertyName, extractStringArray(values)))
 	}
 }
 
-func logPropertiesOverriddenByCMPv2Server(log logr.Logger, request *cmapi.CertificateRequest) {
+func logPropertiesOverriddenByCMPv2Server(log leveledlogger.Logger, request *cmapi.CertificateRequest) {
 	if request.Spec.Duration != nil && len(request.Spec.Duration.String()) > 0 {
 		log.Info(getOverriddenMessage("duration", request.Spec.Duration.Duration.String()))
 	}
@@ -73,36 +73,36 @@ func extractUsages(usages []cmapi.KeyUsage) string {
 	return values
 }
 
-func logPropertiesNotSupportedByCertService(log logr.Logger, request *cmapi.CertificateRequest, csr *x509.CertificateRequest) {
+func logPropertiesNotSupportedByCertService(log leveledlogger.Logger, request *cmapi.CertificateRequest, csr *x509.CertificateRequest) {
 
 	//IP addresses in SANs
 	if len(csr.IPAddresses) > 0 {
-		log.Info(getNotSupportedMessage("ipAddresses", extractIPAddresses(csr.IPAddresses)))
+		log.Warning(getNotSupportedMessage("ipAddresses", extractIPAddresses(csr.IPAddresses)))
 	}
 	//URIs in SANs
 	if len(csr.URIs) > 0 {
-		log.Info(getNotSupportedMessage("uris", extractURIs(csr.URIs)))
+		log.Warning(getNotSupportedMessage("uris", extractURIs(csr.URIs)))
 	}
 
 	//Email addresses in SANs
 	if len(csr.EmailAddresses) > 0 {
-		log.Info(getNotSupportedMessage("emailAddresses", extractStringArray(csr.EmailAddresses)))
+		log.Warning(getNotSupportedMessage("emailAddresses", extractStringArray(csr.EmailAddresses)))
 	}
 
 	if request.Spec.IsCA == true {
-		log.Info(getNotSupportedMessage("isCA", strconv.FormatBool(request.Spec.IsCA)))
+		log.Warning(getNotSupportedMessage("isCA", strconv.FormatBool(request.Spec.IsCA)))
 	}
 
 	if len(csr.Subject.StreetAddress) > 0 {
-		log.Info(getNotSupportedMessage("subject.streetAddress", extractStringArray(csr.Subject.StreetAddress)))
+		log.Warning(getNotSupportedMessage("subject.streetAddress", extractStringArray(csr.Subject.StreetAddress)))
 	}
 
 	if len(csr.Subject.PostalCode) > 0 {
-		log.Info(getNotSupportedMessage("subject.postalCodes", extractStringArray(csr.Subject.PostalCode)))
+		log.Warning(getNotSupportedMessage("subject.postalCodes", extractStringArray(csr.Subject.PostalCode)))
 	}
 
 	if len(csr.Subject.SerialNumber) > 0 {
-		log.Info(getNotSupportedMessage("subject.serialNumber", csr.Subject.SerialNumber))
+		log.Warning(getNotSupportedMessage("subject.serialNumber", csr.Subject.SerialNumber))
 	}
 
 }

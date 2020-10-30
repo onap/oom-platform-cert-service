@@ -33,9 +33,10 @@ func Test_shouldParseArguments_defaultValues(t *testing.T) {
 		"first-arg-is-omitted-by-method-parse-arguments-so-this-only-a-placeholder"}
 	flag.CommandLine = flag.NewFlagSet(os.Args[0], flag.ExitOnError)
 
-	metricsAddr, enableLeaderElection := parseInputArguments()
+	metricsAddr, logLevel, enableLeaderElection := parseInputArguments()
 
 	assert.Equal(t, ":8080", metricsAddr)
+	assert.Equal(t, "debug", logLevel)
 	assert.False(t, enableLeaderElection)
 }
 
@@ -43,12 +44,13 @@ func Test_shouldParseArguments_valuesFromCLI(t *testing.T) {
 	os.Args = []string{
 		"first-arg-is-omitted-by-method-parse-arguments-so-this-only-a-placeholder",
 		"--metrics-addr=127.0.0.1:555",
+		"--log-level=error",
 		"--enable-leader-election=true"}
 	flag.CommandLine = flag.NewFlagSet(os.Args[0], flag.ExitOnError)
 
-	metricsAddr, enableLeaderElection := parseInputArguments()
+	metricsAddr, logLevel, enableLeaderElection := parseInputArguments()
 
 	assert.Equal(t, "127.0.0.1:555", metricsAddr)
+	assert.Equal(t, "error", logLevel)
 	assert.True(t, enableLeaderElection)
-
 }
