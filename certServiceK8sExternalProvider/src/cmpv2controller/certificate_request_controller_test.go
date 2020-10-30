@@ -31,13 +31,13 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/client-go/tools/record"
-	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/client/fake"
 
 	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2api"
 	provisioners "onap.org/oom-certservice/k8s-external-provider/src/cmpv2provisioner"
 	provisionersdata "onap.org/oom-certservice/k8s-external-provider/src/cmpv2provisioner/csr/testdata"
+	"onap.org/oom-certservice/k8s-external-provider/src/leveledlogger"
 	"onap.org/oom-certservice/k8s-external-provider/src/testdata"
 	x509 "onap.org/oom-certservice/k8s-external-provider/src/x509/testdata"
 )
@@ -141,7 +141,7 @@ func getValidCertificateRequest() *cmapi.CertificateRequest {
 func getCertRequestController(fakeRecorder *record.FakeRecorder, fakeClient client.Client) CertificateRequestController {
 	controller := CertificateRequestController{
 		Client:   fakeClient,
-		Log:      ctrl.Log.WithName("controllers").WithName("CertificateRequest"),
+		Log:      leveledlogger.GetLoggerWithValues("controllers", "CertificateRequest"),
 		Recorder: fakeRecorder,
 	}
 	return controller
