@@ -23,17 +23,14 @@ package cmpv2controller
 import (
 	"testing"
 
-	"github.com/go-logr/logr"
 	certmanager "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1"
 	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/mock"
 	apiv1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/types"
 	clientgoscheme "k8s.io/client-go/kubernetes/scheme"
 	"k8s.io/client-go/tools/record"
 	"k8s.io/utils/clock"
-	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/client/fake"
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
@@ -41,6 +38,7 @@ import (
 	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2api"
 	certserviceapi "onap.org/oom-certservice/k8s-external-provider/src/cmpv2api"
 	provisioners "onap.org/oom-certservice/k8s-external-provider/src/cmpv2provisioner"
+	"onap.org/oom-certservice/k8s-external-provider/src/leveledlogger"
 	"onap.org/oom-certservice/k8s-external-provider/src/testdata"
 )
 
@@ -66,13 +64,13 @@ func Test_shouldPrepareAndVerifyCMPv2Issuer_whenRequestReceived(t *testing.T) {
 func Test_shouldBeValidCMPv2IssuerSpec_whenAllFieldsAreSet(t *testing.T) {
 	spec := testdata.GetValidCMPv2IssuerSpec()
 
-	err := validateCMPv2IssuerSpec(spec, &MockLogger{})
+	err := validateCMPv2IssuerSpec(spec)
 	assert.Nil(t, err)
 }
 
 func Test_shouldBeInvalidCMPv2IssuerSpec_whenSpecIsEmpty(t *testing.T) {
 	spec := cmpv2api.CMPv2IssuerSpec{}
-	err := validateCMPv2IssuerSpec(spec, nil)
+	err := validateCMPv2IssuerSpec(spec)
 	assert.NotNil(t, err)
 }
 
@@ -96,13 +94,13 @@ func Test_shouldBeInvalidCMPv2IssuerSpec_whenNotAllFieldsAreSet(t *testing.T) {
 func test_shouldBeInvalidCMPv2IssuerSpec_whenFunctionApplied(t *testing.T, transformSpec func(spec *cmpv2api.CMPv2IssuerSpec)) {
 	spec := testdata.GetValidCMPv2IssuerSpec()
 	transformSpec(&spec)
-	err := validateCMPv2IssuerSpec(spec, nil)
+	err := validateCMPv2IssuerSpec(spec)
 	assert.NotNil(t, err)
 }
 
 func getController(fakeRecorder *record.FakeRecorder, mockClient client.Client) CMPv2IssuerController {
 	controller := CMPv2IssuerController{
-		Log:                ctrl.Log.WithName("controllers").WithName("CertificateRequest"),
+		Log:                leveledlogger.GetLoggerWithValues("controllers", "CMPv2Issuer"),
 		Clock:              clock.RealClock{},
 		Recorder:           fakeRecorder,
 		Client:             mockClient,
@@ -135,14 +133,3 @@ func initScheme() *runtime.Scheme {
 	_ = certserviceapi.AddToScheme(scheme)
 	return scheme
 }
-
-type MockLogger struct {
-	mock.Mock
-}
-
-func (m *MockLogger) Info(msg string, keysAndValues ...interface{})             {}
-func (m *MockLogger) Error(err error, msg string, keysAndValues ...interface{}) {}
-func (m *MockLogger) Enabled() bool                                             { return false }
-func (m *MockLogger) V(level int) logr.Logger                                   { return m }
-func (m *MockLogger) WithValues(keysAndValues ...interface{}) logr.Logger       { return m }
-func (m *MockLogger) WithName(name string) logr.Logger                          { return m }

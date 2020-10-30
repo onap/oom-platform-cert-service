@@ -1,0 +1,13 @@
+{
+  "level": "debug",
+  "encoding": "console",
+  "outputPaths": ["stdout"],
+  "encoderConfig": {
+    "timeKey": "timeKey",
+    "messageKey": "message",
+    "levelKey": "level",
+    "nameKey": "name",
+    "levelEncoder": "capital",
+    "timeEncoder": "iso8601"
+  }
+}
