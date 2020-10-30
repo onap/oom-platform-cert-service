@@ -72,6 +72,7 @@ spec:
           name: https
       - args:
         - --metrics-addr=127.0.0.1:8080
+        - --log-level=debug
         command:
         - /oom-certservice-cmpv2issuer
         image: onap/oom-certservice-cmpv2issuer:1.0.0

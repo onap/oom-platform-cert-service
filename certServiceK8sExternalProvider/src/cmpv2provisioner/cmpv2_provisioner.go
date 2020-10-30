@@ -31,8 +31,8 @@ import (
 
 	certmanager "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1"
 	"k8s.io/apimachinery/pkg/types"
-	ctrl "sigs.k8s.io/controller-runtime"
 
+	"onap.org/oom-certservice/k8s-external-provider/src/leveledlogger"
 	"onap.org/oom-certservice/k8s-external-provider/src/certserviceclient"
 	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2api"
 	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2provisioner/csr"
@@ -59,14 +59,14 @@ func New(cmpv2Issuer *cmpv2api.CMPv2Issuer, certServiceClient certserviceclient.
 	ca.certEndpoint = cmpv2Issuer.Spec.CertEndpoint
 	ca.certServiceClient = certServiceClient
 
-	log := ctrl.Log.WithName("cmpv2-provisioner")
+	log := leveledlogger.GetLoggerWithName("cmpv2-provisioner")
 	log.Info("Configuring CA: ", "name", ca.name, "url", ca.url, "caName", ca.caName, "healthEndpoint", ca.healthEndpoint, "certEndpoint", ca.certEndpoint)
 
 	return &ca, nil
 }
 
 func (ca *CertServiceCA) CheckHealth() error {
-	log := ctrl.Log.WithName("cmpv2-provisioner")
+	log := leveledlogger.GetLoggerWithName("cmpv2-provisioner")
 	log.Info("Checking health of CMPv2 issuer: ", "name", ca.name)
 	return ca.certServiceClient.CheckHealth()
 }
@@ -89,7 +89,7 @@ func (ca *CertServiceCA) Sign(
 	certificateRequest *certmanager.CertificateRequest,
 	privateKeyBytes []byte,
 ) (signedCertificateChain []byte, trustedCertificates []byte, err error) {
-	log := ctrl.Log.WithName("certservice-provisioner")
+	log := leveledlogger.GetLoggerWithName("certservice-provisioner")
 	log.Info("Signing certificate: ", "cert-name", certificateRequest.Name)
 
 	log.Info("CA: ", "name", ca.name, "url", ca.url)
@@ -120,9 +120,8 @@ func (ca *CertServiceCA) Sign(
 
 	log.Info("Successfully signed: ", "cert-name", certificateRequest.Name)
 
-	//TODO Debug level or skip
-	log.Info("Signed cert PEM: ", "bytes", signedCertificateChain)
-	log.Info("Trusted CA  PEM: ", "bytes", trustedCertificates)
+	log.Debug("Signed cert PEM: ", "bytes", signedCertificateChain)
+	log.Debug("Trusted CA  PEM: ", "bytes", trustedCertificates)
 
 	return signedCertificateChain, trustedCertificates, nil
 }

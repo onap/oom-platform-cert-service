@@ -36,32 +36,35 @@ import (
 	_ "k8s.io/client-go/plugin/pkg/client/auth/gcp"
 	"k8s.io/utils/clock"
 	ctrl "sigs.k8s.io/controller-runtime"
-	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 	"sigs.k8s.io/controller-runtime/pkg/manager"
 
 	app "onap.org/oom-certservice/k8s-external-provider/src"
 	certserviceapi "onap.org/oom-certservice/k8s-external-provider/src/cmpv2api"
 	controllers "onap.org/oom-certservice/k8s-external-provider/src/cmpv2controller"
 	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2provisioner"
+	"onap.org/oom-certservice/k8s-external-provider/src/leveledlogger"
 )
 
 var (
 	scheme   = runtime.NewScheme()
-	setupLog = ctrl.Log.WithName("setup")
+	setupLog leveledlogger.LeveledLogger
 )
 
 func init() {
 	_ = clientgoscheme.AddToScheme(scheme)
 	_ = certmanager.AddToScheme(scheme)
 	_ = certserviceapi.AddToScheme(scheme)
+	setupLog = leveledlogger.GetLogger()
 
-	ctrl.SetLogger(zap.New(zap.UseDevMode(true)))
+	ctrl.SetLogger(setupLog.Log)
 }
 
 func main() {
 	printVersionInfo()
 
-	metricsAddr, enableLeaderElection := parseInputArguments()
+	metricsAddr, logLevel, enableLeaderElection := parseInputArguments()
+
+	leveledlogger.SetLogLevel(logLevel)
 
 	manager := createControllerManager(metricsAddr, enableLeaderElection)
 
@@ -79,15 +82,17 @@ func printVersionInfo() {
 	fmt.Println()
 }
 
-func parseInputArguments() (string, bool) {
+func parseInputArguments() (string, string, bool) {
 	setupLog.Info("Parsing input arguments...")
 	var metricsAddr string
+	var logLevel string
 	var enableLeaderElection bool
 	flag.StringVar(&metricsAddr, "metrics-addr", ":8080", "The address the metric endpoint binds to.")
+	flag.StringVar(&logLevel, "log-level", "debug", "Min. level for logs visibility. One of: debug, info, warn, error")
 	flag.BoolVar(&enableLeaderElection, "enable-leader-election", false,
 		"Enable leader election for controller manager. Enabling this will ensure there is only one active controller manager.")
 	flag.Parse()
-	return metricsAddr, enableLeaderElection
+	return metricsAddr, logLevel, enableLeaderElection
 }
 
 func startControllerManager(manager manager.Manager) {
@@ -115,7 +120,7 @@ func registerCMPv2IssuerController(manager manager.Manager) {
 
 	err := (&controllers.CMPv2IssuerController{
 		Client:   manager.GetClient(),
-		Log:      ctrl.Log.WithName("controllers").WithName("CMPv2Issuer"),
+		Log:      leveledlogger.GetLoggerWithValues("controllers", "CMPv2Issuer"),
 		Clock:    clock.RealClock{},
 		Recorder: manager.GetEventRecorderFor("cmpv2-issuer-controller"),
 		ProvisionerFactory: &cmpv2provisioner.ProvisionerFactoryImpl{},
@@ -131,7 +136,7 @@ func registerCertificateRequestController(manager manager.Manager) {
 
 	err := (&controllers.CertificateRequestController{
 		Client:   manager.GetClient(),
-		Log:      ctrl.Log.WithName("controllers").WithName("CertificateRequest"),
+		Log:      leveledlogger.GetLoggerWithValues("controllers", "CertificateRequest"),
 		Recorder: manager.GetEventRecorderFor("certificate-requests-controller"),
 	}).SetupWithManager(manager)
 
