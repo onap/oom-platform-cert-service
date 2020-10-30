@@ -23,6 +23,7 @@ package logger
 import (
 	"bytes"
 	"flag"
+	"onap.org/oom-certservice/k8s-external-provider/src/klogger"
 	"os"
 	"strings"
 	"testing"
@@ -32,7 +33,6 @@ import (
 	"github.com/stretchr/testify/assert"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/klog/v2"
-	"k8s.io/klog/v2/klogr"
 
 	x509utils "onap.org/oom-certservice/k8s-external-provider/src/x509"
 )
@@ -43,7 +43,6 @@ var checkedLogMessages = [7]string{"Property 'duration'", "Property 'usages'", "
 
 var supportedProperties = [7]string{"Property 'organization'", "Property 'organization unit'", "Property 'country'",
 	"Property 'state'", "Property 'location'", "Property 'dns names'"}
-
 
 func TestMain(m *testing.M) {
 	klog.InitFlags(nil)
@@ -57,7 +56,7 @@ func TestMain(m *testing.M) {
 
 func TestLogShouldNotProvideInformationAboutSkippedPropertiesIfNotExistInCSR(t *testing.T) {
 	//given
-	logger := klogr.New()
+	logger := klogger.GetLoggerWithName("test")
 	request := getCertificateRequestWithoutSkippedProperties()
 	tmpWriteBuffer := getLogBuffer()
 
@@ -78,7 +77,7 @@ func TestLogShouldNotProvideInformationAboutSkippedPropertiesIfNotExistInCSR(t *
 
 func TestLogShouldProvideInformationAboutSkippedPropertiesIfExistInCSR(t *testing.T) {
 	//given
-	logger := klogr.New()
+	logger := klogger.GetLoggerWithName("test")
 	request := getCertificateRequestWithSkippedProperties()
 	tmpWriteBuffer := getLogBuffer()
 
@@ -100,7 +99,7 @@ func TestLogShouldProvideInformationAboutSkippedPropertiesIfExistInCSR(t *testin
 
 func TestLogShouldListSupportedProperties(t *testing.T) {
 	//given
-	logger := klogr.New()
+	logger := klogger.GetLoggerWithName("test")
 	request := getCertificateRequestWithoutSkippedProperties()
 	tmpWriteBuffer := getLogBuffer()
 
