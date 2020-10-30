@@ -36,25 +36,25 @@ import (
 	_ "k8s.io/client-go/plugin/pkg/client/auth/gcp"
 	"k8s.io/utils/clock"
 	ctrl "sigs.k8s.io/controller-runtime"
-	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 	"sigs.k8s.io/controller-runtime/pkg/manager"
 
 	app "onap.org/oom-certservice/k8s-external-provider/src"
 	certserviceapi "onap.org/oom-certservice/k8s-external-provider/src/cmpv2api"
 	controllers "onap.org/oom-certservice/k8s-external-provider/src/cmpv2controller"
+	"onap.org/oom-certservice/k8s-external-provider/src/klogger"
 )
 
 var (
 	scheme   = runtime.NewScheme()
-	setupLog = ctrl.Log.WithName("setup")
+	setupLog *klogger.LeveledLogger
 )
 
 func init() {
 	_ = clientgoscheme.AddToScheme(scheme)
 	_ = certmanager.AddToScheme(scheme)
 	_ = certserviceapi.AddToScheme(scheme)
-
-	ctrl.SetLogger(zap.New(zap.UseDevMode(true)))
+	setupLog = klogger.CreateLeveledLogger(klogger.DEBUG)
+	ctrl.SetLogger(setupLog.Log)
 }
 
 func main() {

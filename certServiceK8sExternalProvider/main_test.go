@@ -28,6 +28,11 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+var _ = func() bool {
+	testing.Init()
+	return true
+}()
+
 func Test_shouldParseArguments_defaultValues(t *testing.T) {
 	os.Args = []string{
 		"first-arg-is-omitted-by-method-parse-arguments-so-this-only-a-placeholder"}
