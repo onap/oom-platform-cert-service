@@ -22,7 +22,9 @@ package logger
 
 import (
 	"bytes"
-	"flag"
+
+	"io/ioutil"
+	"log"
 	"os"
 	"strings"
 	"testing"
@@ -31,10 +33,9 @@ import (
 	cmapi "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1"
 	"github.com/stretchr/testify/assert"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/klog/v2"
-	"k8s.io/klog/v2/klogr"
 
 	x509utils "onap.org/oom-certservice/k8s-external-provider/src/x509"
+	"onap.org/oom-certservice/k8s-external-provider/src/leveledlogger"
 )
 
 var checkedLogMessages = [7]string{"Property 'duration'", "Property 'usages'", "Property 'ipAddresses'",
@@ -44,22 +45,17 @@ var checkedLogMessages = [7]string{"Property 'duration'", "Property 'usages'", "
 var supportedProperties = [7]string{"Property 'organization'", "Property 'organization unit'", "Property 'country'",
 	"Property 'state'", "Property 'location'", "Property 'dns names'"}
 
+const RESULT_LOG = "testdata/test_result.log"
 
 func TestMain(m *testing.M) {
-	klog.InitFlags(nil)
-	flag.CommandLine.Set("v", "10")
-	flag.CommandLine.Set("skip_headers", "true")
-	flag.CommandLine.Set("logtostderr", "false")
-	flag.CommandLine.Set("alsologtostderr", "false")
-	flag.Parse()
+	leveledlogger.SetConfigFileName("testdata/test_logger_config.json")
 	os.Exit(m.Run())
 }
 
 func TestLogShouldNotProvideInformationAboutSkippedPropertiesIfNotExistInCSR(t *testing.T) {
 	//given
-	logger := klogr.New()
+	logger := leveledlogger.GetLoggerWithName("test")
 	request := getCertificateRequestWithoutSkippedProperties()
-	tmpWriteBuffer := getLogBuffer()
 
 	csr, err := x509utils.DecodeCSR(request.Spec.Request)
 	if err != nil {
@@ -68,19 +64,19 @@ func TestLogShouldNotProvideInformationAboutSkippedPropertiesIfNotExistInCSR(t *
 
 	//when
 	LogCertRequestProperties(logger, request, csr)
-	closeLogBuffer()
-	logsArray := convertBufferToStringArray(tmpWriteBuffer)
+	logsArray := convertLogFileToStringArray(RESULT_LOG)
+
 	//then
 	for _, logMsg := range checkedLogMessages {
 		assert.False(t, logsContainExpectedMessage(logsArray, logMsg), "Logs contain: "+logMsg+", but should not")
 	}
+	removeTemporaryFile(RESULT_LOG)
 }
 
 func TestLogShouldProvideInformationAboutSkippedPropertiesIfExistInCSR(t *testing.T) {
 	//given
-	logger := klogr.New()
+	logger := leveledlogger.GetLoggerWithName("test")
 	request := getCertificateRequestWithSkippedProperties()
-	tmpWriteBuffer := getLogBuffer()
 
 	csr, err := x509utils.DecodeCSR(request.Spec.Request)
 	if err != nil {
@@ -89,20 +85,19 @@ func TestLogShouldProvideInformationAboutSkippedPropertiesIfExistInCSR(t *testin
 
 	//when
 	LogCertRequestProperties(logger, request, csr)
-	closeLogBuffer()
-	logsArray := convertBufferToStringArray(tmpWriteBuffer)
+	logsArray := convertLogFileToStringArray(RESULT_LOG)
 
 	//then
 	for _, logMsg := range checkedLogMessages {
 		assert.True(t, logsContainExpectedMessage(logsArray, logMsg), "Logs not contain: "+logMsg)
 	}
+	removeTemporaryFile(RESULT_LOG)
 }
 
 func TestLogShouldListSupportedProperties(t *testing.T) {
 	//given
-	logger := klogr.New()
+	logger := leveledlogger.GetLoggerWithName("test")
 	request := getCertificateRequestWithoutSkippedProperties()
-	tmpWriteBuffer := getLogBuffer()
 
 	csr, err := x509utils.DecodeCSR(request.Spec.Request)
 	if err != nil {
@@ -111,13 +106,13 @@ func TestLogShouldListSupportedProperties(t *testing.T) {
 
 	//when
 	LogCertRequestProperties(logger, request, csr)
-	closeLogBuffer()
-	logsArray := convertBufferToStringArray(tmpWriteBuffer)
+	logsArray := convertLogFileToStringArray(RESULT_LOG)
 
 	//then
 	for _, logMsg := range supportedProperties {
 		assert.True(t, logsContainExpectedMessage(logsArray, logMsg), "Logs not contain: "+logMsg)
 	}
+	removeTemporaryFile(RESULT_LOG)
 }
 
 func getCertificateRequestWithoutSkippedProperties() *cmapi.CertificateRequest {
@@ -135,18 +130,31 @@ func getCertificateRequestWithSkippedProperties() *cmapi.CertificateRequest {
 	return request
 }
 
-func getLogBuffer() *bytes.Buffer {
-	tmpWriteBuffer := bytes.NewBuffer(nil)
-	klog.SetOutput(tmpWriteBuffer)
-	return tmpWriteBuffer
-}
-
-func closeLogBuffer() {
-	klog.Flush()
-}
-
 func convertBufferToStringArray(buffer *bytes.Buffer) []string {
 	return strings.Split(buffer.String(), "\n")
+}
+
+func convertLogFileToStringArray(filename string) []string {
+	buffer := bytes.NewBuffer(make([]byte, 0))
+	buffer.Write(readFile(filename))
+	return convertBufferToStringArray(buffer)
+}
+
+func readFile(filename string) []byte {
+	certRequest, err := ioutil.ReadFile(filename)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return certRequest
+}
+
+func removeTemporaryFile(fileName string) {
+	if _, err := os.Stat(fileName); err == nil {
+		e := os.Remove(fileName)
+		if e != nil {
+			log.Fatal(e)
+		}
+	}
 }
 
 func logsContainExpectedMessage(array []string, expectedMsg string) bool {
