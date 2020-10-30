@@ -49,6 +49,7 @@ type CMPv2IssuerController struct {
 	Log      logr.Logger
 	Clock    clock.Clock
 	Recorder record.EventRecorder
+	ProvisionerFactory provisioners.ProvisionerFactory
 }
 
 // Reconcile will read and validate the CMPv2Issuer resources, it will set the
@@ -84,7 +85,7 @@ func (controller *CMPv2IssuerController) Reconcile(req ctrl.Request) (ctrl.Resul
 	}
 
 	// 4. Create CMPv2 provisioner
-	provisioner, err := provisioners.CreateProvisioner(issuer, secret)
+	provisioner, err := controller.ProvisionerFactory.CreateProvisioner(issuer, secret)
 	if err != nil {
 		log.Error(err, "failed to initialize provisioner")
 		statusUpdater.UpdateNoError(ctx, cmpv2api.ConditionFalse, "Error", "Failed to initialize provisioner: %v", err)
