@@ -30,12 +30,12 @@ import (
 
 	cmapi "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1"
 	"github.com/stretchr/testify/assert"
+	apiv1 "k8s.io/api/core/v1"
 	apimach "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/types"
 
 	"onap.org/oom-certservice/k8s-external-provider/src/certserviceclient"
 	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2api"
-	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2provisioner/testdata"
 )
 
 const ISSUER_NAME = "cmpv2-issuer"
@@ -72,11 +72,8 @@ func Test_shouldReturnCorrectSignedPemsWhenParametersAreCorrect(t *testing.T) {
 	const EXPECTED_TRUSTED_FILENAME = "testdata/expected_trusted.pem"
 
 	issuer := createIssuerAndCerts(ISSUER_NAME, ISSUER_URL)
-	provisioner, err := New(&issuer, &certServiceClientMock{
-		getCertificatesFunc: func(csr []byte, pk []byte) (response *certserviceclient.CertificatesResponse, e error) {
-			return &testdata.SampleCertServiceResponse, nil
-		},
-	})
+	provisionerFactory := ProvisionerFactoryMock{}
+	provisioner, err := provisionerFactory.CreateProvisioner(&issuer, apiv1.Secret{})
 
 	issuerNamespaceName := createIssuerNamespaceName(ISSUER_NAMESPACE, ISSUER_NAME)
 	Store(issuerNamespaceName, provisioner)
