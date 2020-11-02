@@ -38,11 +38,11 @@ COPY main.go main.go
 COPY src/ ./src
 
 # Build
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 GO111MODULE=on go build -a -o oom-certservice-k8s-external-provider main.go
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 GO111MODULE=on go build -a -o oom-certservice-cmpv2issuer main.go
 
 
 # Runtime container definition
 FROM gcr.io/distroless/static:latest
 WORKDIR /
-COPY --from=builder /workspace/oom-certservice-k8s-external-provider .
-ENTRYPOINT ["/oom-certservice-k8s-external-provider"]
+COPY --from=builder /workspace/oom-certservice-cmpv2issuer .
+ENTRYPOINT ["/oom-certservice-cmpv2issuer"]

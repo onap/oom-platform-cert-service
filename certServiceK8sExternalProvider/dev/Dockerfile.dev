@@ -3,6 +3,10 @@
 # ================================================================================
 # Copyright (C) 2020 Nokia. All rights reserved.
 # ================================================================================
+# This source code was copied from the following git repository:
+# https://github.com/smallstep/step-issuer
+# The source code was modified for usage in the ONAP project.
+# ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -17,26 +21,19 @@
 # ============LICENSE_END=========================================================
 #
 
+#FROM gcr.io/distroless/static:latest
+FROM alpine:latest
+RUN apk add --no-cache bash sudo vim curl jq
 
-build:
-	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 GO111MODULE=on go build -v -o bin/oom-certservice-cmpv2issuer
-test: build
-	go test ./...
+RUN mkdir /certs
 
-copy-certs:
-	mkdir -p dev/certs
-	cp ../certs/cmpv2Issuer-cert.pem dev/certs/cmpv2Issuer-cert.pem
-	cp ../certs/cmpv2Issuer-key.pem  dev/certs/cmpv2Issuer-key.pem
-	cp ../certs/cacert.pem           dev/certs/cacert.pem
+COPY dev/certs/cmpv2Issuer-cert.pem /certs/cmpv2Issuer-cert.pem
+COPY dev/certs/cmpv2Issuer-key.pem  /certs/cmpv2Issuer-key.pem
+COPY dev/certs/cacert.pem           /certs/cacert.pem
 
-build-docker-image:
-	docker build -t onap/oom-certservice-cmpv2issuer:latest .
+WORKDIR /
+COPY bin/oom-certservice-k8s-external-provider /oom-certservice-k8s-external-provider
 
-build-docker-image-dev: build copy-certs
-	docker build -t onap-dev/cmpv2issuer:latest . -f dev/Dockerfile.dev
+ENTRYPOINT ["/oom-certservice-k8s-external-provider"]
 
-run-docker-image:
-	docker run -it onap/oom-certservice-cmpv2issuer:latest
-
-run-docker-image-dev:
-	docker run -it onap-dev/cmpv2issuer:latest
+#ENTRYPOINT ["/bin/sh", "-c" ,"echo 192.168.7.218 oom-cert-service >> /etc/hosts && /oom-certservice-k8s-external-provider"]
