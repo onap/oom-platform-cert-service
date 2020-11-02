@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0afd53c6_993fee85",
+        "filename": "certServiceK8sExternalProvider/README.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-11-02T09:29:40Z",
+      "side": 1,
+      "message": "not currently correctly supported, -\u003e not currently supported by CertService API,",
+      "revId": "d7ca268e7409441963ce427625d973ba6784f04c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
