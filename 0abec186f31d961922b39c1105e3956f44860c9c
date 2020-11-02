@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02a1fe3c_bb546e6e",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2provisioner/csr/csr.go",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-11-02T13:23:11Z",
+      "side": 1,
+      "message": "consider using method x509utils.DecodeCSR",
+      "revId": "0abec186f31d961922b39c1105e3956f44860c9c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9f2b8e7_d144bb55",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2provisioner/csr/csr.go",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-11-02T13:23:11Z",
+      "side": 1,
+      "message": "consider extracting this to x509utils.decodePrivateKey",
+      "revId": "0abec186f31d961922b39c1105e3956f44860c9c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
