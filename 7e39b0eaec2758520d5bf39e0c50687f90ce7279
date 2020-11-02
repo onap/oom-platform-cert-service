@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "e6e3bec7_d7fac821",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/certificate_request_controller.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-11-02T07:39:58Z",
+      "side": 1,
+      "message": "I would like to confirm. If we cannot sign certificate, we don\u0027t return error ?",
+      "range": {
+        "startLine": 143,
+        "startChar": 24,
+        "endLine": 143,
+        "endChar": 27
+      },
+      "revId": "7e39b0eaec2758520d5bf39e0c50687f90ce7279",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62f04380_87fe2cf3",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2provisioner/cmpv2_provisioner.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-11-02T07:39:58Z",
+      "side": 1,
+      "message": "Consider. Use something like csrFiltered.",
+      "range": {
+        "startLine": 96,
+        "startChar": 1,
+        "endLine": 96,
+        "endChar": 9
+      },
+      "revId": "7e39b0eaec2758520d5bf39e0c50687f90ce7279",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3e401f51_eeb36278",
         "filename": "certServiceK8sExternalProvider/src/cmpv2provisioner/csr/csr.go",
         "patchSetId": 4
