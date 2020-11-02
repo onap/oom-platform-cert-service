@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e401f51_eeb36278",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2provisioner/csr/csr.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-11-02T07:28:36Z",
+      "side": 1,
+      "message": "correct order of imports?",
+      "revId": "7e39b0eaec2758520d5bf39e0c50687f90ce7279",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}

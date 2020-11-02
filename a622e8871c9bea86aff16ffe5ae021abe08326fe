@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41abbdf5_6f9c802e",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2provisioner/cmpv2_provisioner.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-11-02T07:28:36Z",
+      "side": 0,
+      "message": "it will be more readable if you use named return parameters\n\nhttps://www.geeksforgeeks.org/named-return-parameters-in-golang/",
+      "revId": "a622e8871c9bea86aff16ffe5ae021abe08326fe",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
