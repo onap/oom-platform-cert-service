@@ -16,6 +16,24 @@
       "revId": "323146270206ba733519d58c8031e64925acb849",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c2652dd_953047ab",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2provisioner/csr/csr.go",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-11-02T08:30:52Z",
+      "side": 1,
+      "message": "Done. Added info in readme.",
+      "parentUuid": "86a2e2b9_84805981",
+      "revId": "323146270206ba733519d58c8031e64925acb849",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
