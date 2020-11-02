@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fb5df6b_7bb21bdd",
+        "filename": "certServiceK8sExternalProvider/src/certserviceclient/cert_service_client_mock.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-11-02T07:30:57Z",
+      "side": 1,
+      "message": "empty method??",
+      "revId": "66e26f9838a5d1624b3bd33d0d76fe98e41aa720",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
