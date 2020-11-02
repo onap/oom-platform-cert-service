@@ -16,6 +16,75 @@
       "revId": "66e26f9838a5d1624b3bd33d0d76fe98e41aa720",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ba5de27_3af08258",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/cmpv2_issuer_controller_test.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-11-02T08:28:10Z",
+      "side": 1,
+      "message": "apiv1 will be more clearful",
+      "range": {
+        "startLine": 25,
+        "startChar": 1,
+        "endLine": 25,
+        "endChar": 3
+      },
+      "revId": "66e26f9838a5d1624b3bd33d0d76fe98e41aa720",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee0aa7bd_bf531f06",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/cmpv2_issuer_controller_test.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-11-02T08:28:10Z",
+      "side": 1,
+      "message": "Please move expected values above assertions.",
+      "range": {
+        "startLine": 60,
+        "startChar": 1,
+        "endLine": 60,
+        "endChar": 18
+      },
+      "revId": "66e26f9838a5d1624b3bd33d0d76fe98e41aa720",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d758bb3_3da19b42",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2provisioner/cmpv2_provisioner_test.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-11-02T08:28:10Z",
+      "side": 1,
+      "message": "apiv1",
+      "range": {
+        "startLine": 27,
+        "startChar": 1,
+        "endLine": 27,
+        "endChar": 3
+      },
+      "revId": "66e26f9838a5d1624b3bd33d0d76fe98e41aa720",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
