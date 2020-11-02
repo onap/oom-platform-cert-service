@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a4cf4ac7_8a75cac3",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/certificate_request_controller.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-11-02T07:54:43Z",
+      "side": 1,
+      "message": "https://godoc.org/sigs.k8s.io/controller-runtime/pkg/reconcile#Reconciler\nif we return non-nil error, the Reconcile function will be retried, but we set the certificateRequest status to failed.",
+      "parentUuid": "e6e3bec7_d7fac821",
+      "range": {
+        "startLine": 143,
+        "startChar": 24,
+        "endLine": 143,
+        "endChar": 27
+      },
+      "revId": "7e39b0eaec2758520d5bf39e0c50687f90ce7279",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "62f04380_87fe2cf3",
         "filename": "certServiceK8sExternalProvider/src/cmpv2provisioner/cmpv2_provisioner.go",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e02829ce_7e0347f7",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2provisioner/cmpv2_provisioner.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-11-02T07:54:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62f04380_87fe2cf3",
+      "range": {
+        "startLine": 96,
+        "startChar": 1,
+        "endLine": 96,
+        "endChar": 9
+      },
+      "revId": "7e39b0eaec2758520d5bf39e0c50687f90ce7279",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e401f51_eeb36278",
         "filename": "certServiceK8sExternalProvider/src/cmpv2provisioner/csr/csr.go",
         "patchSetId": 4
@@ -59,6 +107,24 @@
       "writtenOn": "2020-11-02T07:28:36Z",
       "side": 1,
       "message": "correct order of imports?",
+      "revId": "7e39b0eaec2758520d5bf39e0c50687f90ce7279",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5efd476a_e4a933dc",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2provisioner/csr/csr.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-11-02T07:54:43Z",
+      "side": 1,
+      "message": "I think the order is correct.",
+      "parentUuid": "3e401f51_eeb36278",
       "revId": "7e39b0eaec2758520d5bf39e0c50687f90ce7279",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true

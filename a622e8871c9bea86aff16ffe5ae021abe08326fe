@@ -16,6 +16,24 @@
       "revId": "a622e8871c9bea86aff16ffe5ae021abe08326fe",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e75bf438_80743558",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2provisioner/cmpv2_provisioner.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-11-02T07:54:43Z",
+      "side": 0,
+      "message": "Added named parameters, but didn\u0027t want to use return without parameters, because the function isn\u0027t short.",
+      "parentUuid": "41abbdf5_6f9c802e",
+      "revId": "a622e8871c9bea86aff16ffe5ae021abe08326fe",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
