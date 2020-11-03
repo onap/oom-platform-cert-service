@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b509970b_37ae9004",
+        "filename": "certServiceK8sExternalProvider/Makefile",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-11-03T07:47:06Z",
+      "side": 1,
+      "message": "I don\u0027t understand why this makefile uses kubectl command?\nIs this only for local development? If so please move above commands to update-docker-hosts-file goal and rename goal to inform that this is only for DEV purpose",
+      "revId": "a992a9fa3042ad2075a497a4b84b9c489e5037ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
