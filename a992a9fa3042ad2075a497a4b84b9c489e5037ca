@@ -16,6 +16,24 @@
       "revId": "a992a9fa3042ad2075a497a4b84b9c489e5037ca",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bba201ef_85e3b064",
+        "filename": "certServiceK8sExternalProvider/Makefile",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-11-03T08:01:15Z",
+      "side": 1,
+      "message": "Yes, it is for local development only as commit messages states.\n\nUnfortunately it does not work when moved to \u0027update-docker-hosts-file\u0027 (it was also my first try)\n\nThe job renamed as requested.",
+      "parentUuid": "b509970b_37ae9004",
+      "revId": "a992a9fa3042ad2075a497a4b84b9c489e5037ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
