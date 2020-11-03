@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cb7d81c1_a2e37370",
+        "filename": "certServiceK8sExternalProvider/src/certserviceclient/cert_service_client_mock.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2020-11-03T08:33:25Z",
+      "side": 1,
+      "message": "Yes. This is mock class which is used only in tests. Method return nil (for example instead of error) what means that CertService is available",
+      "parentUuid": "7fb5df6b_7bb21bdd",
+      "revId": "66e26f9838a5d1624b3bd33d0d76fe98e41aa720",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ba5de27_3af08258",
         "filename": "certServiceK8sExternalProvider/src/cmpv2controller/cmpv2_issuer_controller_test.go",
         "patchSetId": 3
@@ -39,6 +57,30 @@
       "revId": "66e26f9838a5d1624b3bd33d0d76fe98e41aa720",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4df22562_ee7f54c8",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/cmpv2_issuer_controller_test.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2020-11-03T08:33:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ba5de27_3af08258",
+      "range": {
+        "startLine": 25,
+        "startChar": 1,
+        "endLine": 25,
+        "endChar": 3
+      },
+      "revId": "66e26f9838a5d1624b3bd33d0d76fe98e41aa720",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "100e8395_02563011",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/cmpv2_issuer_controller_test.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2020-11-03T08:33:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee0aa7bd_bf531f06",
+      "range": {
+        "startLine": 60,
+        "startChar": 1,
+        "endLine": 60,
+        "endChar": 18
+      },
+      "revId": "66e26f9838a5d1624b3bd33d0d76fe98e41aa720",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d758bb3_3da19b42",
         "filename": "certServiceK8sExternalProvider/src/cmpv2provisioner/cmpv2_provisioner_test.go",
         "patchSetId": 3
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "c96ea548_14923cf4",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2provisioner/cmpv2_provisioner_test.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2020-11-03T08:33:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d758bb3_3da19b42",
+      "range": {
+        "startLine": 27,
+        "startChar": 1,
+        "endLine": 27,
+        "endChar": 3
+      },
+      "revId": "66e26f9838a5d1624b3bd33d0d76fe98e41aa720",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "971b860a_d29bd31d",
         "filename": "certServiceK8sExternalProvider/src/testdata/provider.go",
         "patchSetId": 3
@@ -102,6 +192,24 @@
       "revId": "66e26f9838a5d1624b3bd33d0d76fe98e41aa720",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46842f95_79eb08d7",
+        "filename": "certServiceK8sExternalProvider/src/testdata/provider.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2020-11-03T08:33:25Z",
+      "side": 1,
+      "message": "In all method calls it is necessary to have issuer and secret. Method name has been corrected.",
+      "parentUuid": "971b860a_d29bd31d",
+      "revId": "66e26f9838a5d1624b3bd33d0d76fe98e41aa720",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
