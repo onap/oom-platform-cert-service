@@ -21,7 +21,6 @@
 package cmpv2provisioner
 
 import (
-	"bytes"
 	"context"
 	"io/ioutil"
 	"log"
@@ -36,6 +35,7 @@ import (
 
 	"onap.org/oom-certservice/k8s-external-provider/src/certserviceclient"
 	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2api"
+	"onap.org/oom-certservice/k8s-external-provider/src/testdata"
 )
 
 const ISSUER_NAME = "cmpv2-issuer"
@@ -44,7 +44,7 @@ const ISSUER_NAMESPACE = "onap"
 
 func Test_shouldCreateCorrectCertServiceCA(t *testing.T) {
 	issuer := createIssuerAndCerts(ISSUER_NAME, ISSUER_URL)
-	provisioner, err := New(&issuer, &certServiceClientMock{})
+	provisioner, err := New(&issuer, &certserviceclient.CertServiceClientMock{})
 
 	assert.Nil(t, err)
 	assert.Equal(t, provisioner.name, issuer.Name, "Unexpected provisioner name.")
@@ -53,7 +53,7 @@ func Test_shouldCreateCorrectCertServiceCA(t *testing.T) {
 
 func Test_shouldSuccessfullyLoadPreviouslyStoredProvisioner(t *testing.T) {
 	issuer := createIssuerAndCerts(ISSUER_NAME, ISSUER_URL)
-	provisioner, err := New(&issuer, &certServiceClientMock{})
+	provisioner, err := New(&issuer, &certserviceclient.CertServiceClientMock{})
 
 	assert.Nil(t, err)
 
@@ -68,9 +68,6 @@ func Test_shouldSuccessfullyLoadPreviouslyStoredProvisioner(t *testing.T) {
 }
 
 func Test_shouldReturnCorrectSignedPemsWhenParametersAreCorrect(t *testing.T) {
-	const EXPECTED_SIGNED_FILENAME = "testdata/expected_signed.pem"
-	const EXPECTED_TRUSTED_FILENAME = "testdata/expected_trusted.pem"
-
 	issuer := createIssuerAndCerts(ISSUER_NAME, ISSUER_URL)
 	provisionerFactory := ProvisionerFactoryMock{}
 	provisioner, err := provisionerFactory.CreateProvisioner(&issuer, apiv1.Secret{})
@@ -89,8 +86,7 @@ func Test_shouldReturnCorrectSignedPemsWhenParametersAreCorrect(t *testing.T) {
 
 	assert.Nil(t, err)
 
-	verifyThatConditionIsTrue(areSlicesEqual(signedPEM, readFile(EXPECTED_SIGNED_FILENAME)), "Signed pem is different than expected.", t)
-	verifyThatConditionIsTrue(areSlicesEqual(trustedCAs, readFile(EXPECTED_TRUSTED_FILENAME)), "Trusted CAs pem is different than expected.", t)
+	testdata.VerifyCertsAreEqualToExpected(t, signedPEM, trustedCAs)
 }
 
 func verifyThatConditionIsTrue(cond bool, message string, t *testing.T) {
@@ -148,20 +144,4 @@ func createCertificateRequest() *cmapi.CertificateRequest {
 	request.Status.Certificate = readFile(STATUS_CERTIFICATE_FILENAME)
 
 	return request
-}
-
-func areSlicesEqual(slice1 []byte, slice2 []byte) bool {
-	return bytes.Compare(slice1, slice2) == 0
-}
-
-type certServiceClientMock struct {
-	getCertificatesFunc func(csr []byte, key []byte) (*certserviceclient.CertificatesResponse, error)
-}
-
-func (client *certServiceClientMock) GetCertificates(csr []byte, key []byte) (*certserviceclient.CertificatesResponse, error) {
-	return client.getCertificatesFunc(csr, key)
-}
-
-func (client *certServiceClientMock) CheckHealth() error {
-	return nil
 }
