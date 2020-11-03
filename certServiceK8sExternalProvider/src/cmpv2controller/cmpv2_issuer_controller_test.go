@@ -24,43 +24,37 @@ import (
 	"testing"
 
 	"github.com/go-logr/logr"
-	certmanager "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
-	apiv1 "k8s.io/api/core/v1"
-	"k8s.io/apimachinery/pkg/runtime"
-	"k8s.io/apimachinery/pkg/types"
-	clientgoscheme "k8s.io/client-go/kubernetes/scheme"
 	"k8s.io/client-go/tools/record"
 	"k8s.io/utils/clock"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/client/fake"
-	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 
 	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2api"
-	certserviceapi "onap.org/oom-certservice/k8s-external-provider/src/cmpv2api"
 	provisioners "onap.org/oom-certservice/k8s-external-provider/src/cmpv2provisioner"
 	"onap.org/oom-certservice/k8s-external-provider/src/testdata"
 )
 
 func Test_shouldPrepareAndVerifyCMPv2Issuer_whenRequestReceived(t *testing.T) {
-	scheme := initScheme()
+	scheme := testdata.GetScheme()
 	issuer, secret := testdata.GetValidIssuerWithSecret()
-	fakeClient := getFakeClient(scheme, issuer, secret)
-	fakeRequest := getFakeRequest()
-	fakeRecorder := record.NewFakeRecorder(3)
-	controller := getController(fakeRecorder, fakeClient)
+	fakeClient := fake.NewFakeClientWithScheme(scheme, &issuer, &secret)
+	fakeRequest := testdata.GetFakeRequest(testdata.IssuerObjectName)
+	fakeRecorder := record.NewFakeRecorder(1)
+	controller := getCMPv2IssuerController(fakeRecorder, fakeClient)
 
 	res, err := controller.Reconcile(fakeRequest)
 
 	expectedProvisioner, _ := controller.ProvisionerFactory.CreateProvisioner(&issuer, secret)
-	actualProvisioner, _ := provisioners.Load(types.NamespacedName{Name: testdata.IssuerObjectName, Namespace: testdata.Namespace})
+	actualProvisioner, _ := provisioners.Load(testdata.GetIssuerStoreKey())
 	assert.Nil(t, err)
 	assert.NotNil(t, res)
 	assert.Equal(t, <-fakeRecorder.Events, "Normal Verified CMPv2Issuer verified and ready to sign certificates")
 	assert.NotNil(t, actualProvisioner)
 	assert.ObjectsAreEqual(expectedProvisioner, actualProvisioner)
+	clearProvisioner()
 }
 
 func Test_shouldBeValidCMPv2IssuerSpec_whenAllFieldsAreSet(t *testing.T) {
@@ -100,7 +94,7 @@ func test_shouldBeInvalidCMPv2IssuerSpec_whenFunctionApplied(t *testing.T, trans
 	assert.NotNil(t, err)
 }
 
-func getController(fakeRecorder *record.FakeRecorder, mockClient client.Client) CMPv2IssuerController {
+func getCMPv2IssuerController(fakeRecorder *record.FakeRecorder, mockClient client.Client) CMPv2IssuerController {
 	controller := CMPv2IssuerController{
 		Log:                ctrl.Log.WithName("controllers").WithName("CertificateRequest"),
 		Clock:              clock.RealClock{},
@@ -109,31 +103,6 @@ func getController(fakeRecorder *record.FakeRecorder, mockClient client.Client) 
 		ProvisionerFactory: &provisioners.ProvisionerFactoryMock{},
 	}
 	return controller
-}
-
-func getFakeRequest() reconcile.Request {
-	fakeRequest := reconcile.Request{
-		NamespacedName: types.NamespacedName{
-			Namespace: testdata.Namespace,
-			Name:      testdata.IssuerObjectName,
-		},
-	}
-	return fakeRequest
-}
-
-func getFakeClient(scheme *runtime.Scheme, issuer cmpv2api.CMPv2Issuer, secret apiv1.Secret) client.Client {
-	fakeClient := func() client.Client {
-		return fake.NewFakeClientWithScheme(scheme, &issuer, &secret)
-	}()
-	return fakeClient
-}
-
-func initScheme() *runtime.Scheme {
-	scheme := runtime.NewScheme()
-	_ = clientgoscheme.AddToScheme(scheme)
-	_ = certmanager.AddToScheme(scheme)
-	_ = certserviceapi.AddToScheme(scheme)
-	return scheme
 }
 
 type MockLogger struct {
