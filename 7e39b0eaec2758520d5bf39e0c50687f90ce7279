@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "01560a1a_38c684e2",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/certificate_request_controller.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-11-03T14:41:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4cf4ac7_8a75cac3",
+      "range": {
+        "startLine": 143,
+        "startChar": 24,
+        "endLine": 143,
+        "endChar": 27
+      },
+      "revId": "7e39b0eaec2758520d5bf39e0c50687f90ce7279",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62f04380_87fe2cf3",
         "filename": "certServiceK8sExternalProvider/src/cmpv2provisioner/cmpv2_provisioner.go",
         "patchSetId": 4
@@ -128,6 +152,24 @@
       "revId": "7e39b0eaec2758520d5bf39e0c50687f90ce7279",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fc9d3d2_7f39f612",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2provisioner/csr/csr.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-11-03T14:41:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5efd476a_e4a933dc",
+      "revId": "7e39b0eaec2758520d5bf39e0c50687f90ce7279",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
