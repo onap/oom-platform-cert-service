@@ -21,8 +21,13 @@
 package testdata
 
 import (
+	cmapi "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1"
 	"k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/apimachinery/pkg/types"
+	scheme2 "k8s.io/client-go/kubernetes/scheme"
+	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 
 	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2api"
 )
@@ -36,15 +41,15 @@ const (
 	KeySecretKey     = "cmpv2Issuer-key.pem"
 	CertSecretKey    = "cmpv2Issuer-cert.pem"
 	CacertSecretKey  = "cacert.pem"
-	Namespace        = "default"
-	IssuerObjectName = "fakeIssuer"
+	Namespace        = "onap"
+	IssuerObjectName = "cmpv2-issuer"
 	Kind             = "CMPv2Issuer"
 	APIVersion       = "v1"
+	PrivateKeySecret = "privateKeySecretName"
 )
 
 func GetValidIssuerWithSecret() (cmpv2api.CMPv2Issuer, v1.Secret) {
 	issuer := cmpv2api.CMPv2Issuer{
-
 		TypeMeta: metav1.TypeMeta{
 			APIVersion: APIVersion,
 			Kind:       Kind,
@@ -55,8 +60,8 @@ func GetValidIssuerWithSecret() (cmpv2api.CMPv2Issuer, v1.Secret) {
 		},
 		Spec: GetValidCMPv2IssuerSpec(),
 	}
-	secret := v1.Secret{
 
+	secret := v1.Secret{
 		Data: map[string][]byte{
 			KeySecretKey:    KeyBytes,
 			CertSecretKey:   CertBytes,
@@ -87,3 +92,28 @@ func GetValidCMPv2IssuerSpec() cmpv2api.CMPv2IssuerSpec {
 	return issuerSpec
 }
 
+func GetScheme() *runtime.Scheme {
+	scheme := runtime.NewScheme()
+	_ = scheme2.AddToScheme(scheme)
+	_ = cmapi.AddToScheme(scheme)
+	_ = cmpv2api.AddToScheme(scheme)
+	return scheme
+}
+
+func GetFakeRequest(objectName string) reconcile.Request {
+	fakeRequest := reconcile.Request{
+		NamespacedName: CreateIssuerNamespaceName(Namespace, objectName),
+	}
+	return fakeRequest
+}
+
+func GetIssuerStoreKey() types.NamespacedName {
+	return CreateIssuerNamespaceName(Namespace, IssuerObjectName)
+}
+
+func CreateIssuerNamespaceName(namespace string, name string) types.NamespacedName {
+	return types.NamespacedName{
+		Namespace: namespace,
+		Name:      name,
+	}
+}
