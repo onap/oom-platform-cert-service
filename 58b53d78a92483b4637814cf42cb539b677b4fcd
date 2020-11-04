@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fd61ab6e_de01a4f4",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/certificate_request_controller_test.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2020-11-04T12:18:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fdc45b16_274f8822",
+      "range": {
+        "startLine": 55,
+        "startChar": 40,
+        "endLine": 55,
+        "endChar": 41
+      },
+      "revId": "58b53d78a92483b4637814cf42cb539b677b4fcd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce0fd066_79aefcdd",
         "filename": "certServiceK8sExternalProvider/src/testdata/provider.go",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "854980c2_44f5d772",
+        "filename": "certServiceK8sExternalProvider/src/testdata/provider.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2020-11-04T12:18:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce0fd066_79aefcdd",
+      "range": {
+        "startLine": 24,
+        "startChar": 1,
+        "endLine": 24,
+        "endChar": 4
+      },
+      "revId": "58b53d78a92483b4637814cf42cb539b677b4fcd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0cd272f_141d2f03",
         "filename": "certServiceK8sExternalProvider/src/testdata/utils.go",
         "patchSetId": 3
@@ -62,6 +110,24 @@
       "revId": "58b53d78a92483b4637814cf42cb539b677b4fcd",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a1fc6be_ee473e46",
+        "filename": "certServiceK8sExternalProvider/src/testdata/utils.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2020-11-04T12:18:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0cd272f_141d2f03",
+      "revId": "58b53d78a92483b4637814cf42cb539b677b4fcd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
