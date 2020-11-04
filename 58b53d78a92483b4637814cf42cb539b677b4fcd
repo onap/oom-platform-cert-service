@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fdc45b16_274f8822",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/certificate_request_controller_test.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-11-04T12:02:22Z",
+      "side": 1,
+      "message": "Please use const instead of magic number",
+      "range": {
+        "startLine": 55,
+        "startChar": 40,
+        "endLine": 55,
+        "endChar": 41
+      },
+      "revId": "58b53d78a92483b4637814cf42cb539b677b4fcd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce0fd066_79aefcdd",
+        "filename": "certServiceK8sExternalProvider/src/testdata/provider.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-11-04T12:02:22Z",
+      "side": 1,
+      "message": "Please change to some meaningful name e.g certManagerAPI, certmanager, cmapi",
+      "range": {
+        "startLine": 24,
+        "startChar": 1,
+        "endLine": 24,
+        "endChar": 4
+      },
+      "revId": "58b53d78a92483b4637814cf42cb539b677b4fcd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0cd272f_141d2f03",
+        "filename": "certServiceK8sExternalProvider/src/testdata/utils.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-11-04T12:02:22Z",
+      "side": 1,
+      "message": "Missing license info",
+      "revId": "58b53d78a92483b4637814cf42cb539b677b4fcd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
