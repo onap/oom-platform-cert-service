@@ -23,6 +23,7 @@ package certserviceclient
 import (
 	"bytes"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"net/http"
 	"testing"
@@ -38,18 +39,12 @@ const (
 
 
 func Test_GetCertificates_shouldParseCertificateResponseCorrectly(t *testing.T) {
+	const responseOK = 200
 	responseJson := `{"certificateChain": ["cert-0", "cert-1"], "trustedCertificates": ["trusted-cert-0", "trusted-cert-1"]}`
 	responseJsonReader := ioutil.NopCloser(bytes.NewReader([]byte(responseJson)))
 	client := CertServiceClientImpl{
 		certificationUrl: certificationUrl,
-		httpClient:       &httpClientMock{
-			DoFunc: func(req *http.Request) (response *http.Response, e error) {
-				mockedResponse := &http.Response{
-					Body: responseJsonReader,
-				}
-				return mockedResponse, nil
-			},
-		},
+		httpClient:       getMockedClient(responseJsonReader, responseOK),
 	}
 	response, _ := client.GetCertificates(testdata.CsrBytes, testdata.PkBytes)
 	assert.ElementsMatch(t, []string{"cert-0", "cert-1"}, response.CertificateChain)
@@ -84,6 +79,20 @@ func Test_GetCertificates_shouldReturnError_whenHttpClientReturnsError(t *testin
 				return nil, fmt.Errorf("mock error")
 			},
 		},
+	}
+	response, err := client.GetCertificates(testdata.CsrBytes, testdata.PkBytes)
+
+	assert.Nil(t, response)
+	assert.Error(t, err)
+}
+
+func Test_GetCertificates_shouldReturnError_whenResponseOtherThan200(t *testing.T) {
+	const responseErrorCode = 404
+	responseJson := `{"errorMessage": "CertService API error"}`
+	responseJsonReader := ioutil.NopCloser(bytes.NewReader([]byte(responseJson)))
+	client := CertServiceClientImpl{
+		certificationUrl: certificationUrl,
+		httpClient:       getMockedClient(responseJsonReader, responseErrorCode),
 	}
 	response, err := client.GetCertificates(testdata.CsrBytes, testdata.PkBytes)
 
@@ -141,6 +150,18 @@ func Test_CheckHealth_shouldReturnError_whenHttpClientReturnsError(t *testing.T)
 	err := client.CheckHealth()
 
 	assert.Error(t, err)
+}
+
+func getMockedClient(responseJsonReader io.ReadCloser, responseCode int) *httpClientMock {
+	return &httpClientMock{
+		DoFunc: func(req *http.Request) (response *http.Response, e error) {
+			mockedResponse := &http.Response{
+				Body:       responseJsonReader,
+				StatusCode: responseCode,
+			}
+			return mockedResponse, nil
+		},
+	}
 }
 
 type httpClientMock struct {

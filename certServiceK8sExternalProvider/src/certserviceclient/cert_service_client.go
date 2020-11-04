@@ -29,7 +29,7 @@ import (
 
 const (
 	CsrHeaderName = "CSR"
-	PkHeaderName = "PK"
+	PkHeaderName  = "PK"
 )
 
 type CertServiceClient interface {
@@ -38,7 +38,7 @@ type CertServiceClient interface {
 }
 
 type CertServiceClientImpl struct {
-	healthUrl string
+	healthUrl        string
 	certificationUrl string
 	httpClient       HTTPClient
 }
@@ -50,6 +50,10 @@ type HTTPClient interface {
 type CertificatesResponse struct {
 	CertificateChain    []string `json:"certificateChain"`
 	TrustedCertificates []string `json:"trustedCertificates"`
+}
+
+type ResponseException struct {
+	ErrorMessage string `json:"errorMessage"`
 }
 
 func (client *CertServiceClientImpl) CheckHealth() error {
@@ -70,7 +74,6 @@ func (client *CertServiceClientImpl) CheckHealth() error {
 	return nil
 }
 
-
 func (client *CertServiceClientImpl) GetCertificates(csr []byte, key []byte) (*CertificatesResponse, error) {
 
 	request, err := http.NewRequest("GET", client.certificationUrl, nil)
@@ -83,6 +86,13 @@ func (client *CertServiceClientImpl) GetCertificates(csr []byte, key []byte) (*C
 	response, err := client.httpClient.Do(request)
 	if err != nil {
 		return nil, err
+	}
+
+	if response.StatusCode != 200 {
+		var responseException ResponseException
+		err = json.NewDecoder(response.Body).Decode(&responseException)
+		return nil, fmt.Errorf("CertService API returned status code [%d] and message [%s]",
+			response.StatusCode, responseException.ErrorMessage)
 	}
 
 	var certificatesResponse CertificatesResponse
