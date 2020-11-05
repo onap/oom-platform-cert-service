@@ -42,6 +42,7 @@ func LogCertRequestProperties(log leveledlogger.Logger, request *cmapi.Certifica
 }
 
 func logSupportedProperties(log leveledlogger.Logger, request *cmapi.CertificateRequest, csr *x509.CertificateRequest) {
+	log.Info(getSupportedMessage("common name", csr.Subject.CommonName))
 	logSupportedProperty(log, csr.Subject.Organization, "organization")
 	logSupportedProperty(log, csr.Subject.OrganizationalUnit, "organization unit")
 	logSupportedProperty(log, csr.Subject.Country, "country")
@@ -131,14 +132,15 @@ func extractIPAddresses(addresses []net.IP) string {
 	return values
 }
 
-func getNotSupportedMessage(property string, value string) string {
-	return "WARNING: Property '" + property + "' with value: " + value + " is not supported by " + CertServiceName
-}
 
 func getSupportedMessage(property string, value string) string {
-	return "Property '" + property + "' with value: " + value + " will be sent in certificate signing request to " + CMPv2ServerName
+	return "+ property '" + property + "' with value '" + value + "' will be sent in certificate signing request to " + CMPv2ServerName
+}
+
+func getNotSupportedMessage(property string, value string) string {
+	return "- property '" + property + "' with value '" + value + "' is not supported by " + CertServiceName
 }
 
 func getOverriddenMessage(property string, values string) string {
-	return "Property '" + property + "' with value: " + values + " will be overridden by " + CMPv2ServerName
+	return "* property '" + property + "' with value '" + values + "' will be overridden by " + CMPv2ServerName
 }
