@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed649fc1_59c36ce6",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-11-05T08:18:03Z",
+      "side": 1,
+      "message": "Please order imports here.",
+      "range": {
+        "startLine": 27,
+        "startChar": 1,
+        "endLine": 27,
+        "endChar": 2
+      },
+      "revId": "9d61552857943fdf046138abaf4cdb02ffb661cd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd67279a_7f881c31",
+        "filename": "certServiceK8sExternalProvider/src/leveledlogger/leveled_logger.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-11-05T08:18:03Z",
+      "side": 1,
+      "message": "Only Nokia should be here probably.",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 1
+      },
+      "revId": "9d61552857943fdf046138abaf4cdb02ffb661cd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6775ac11_6a2f55c7",
+        "filename": "certServiceK8sExternalProvider/src/leveledlogger/leveled_logger_test.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-11-05T08:18:03Z",
+      "side": 1,
+      "message": "Only Nokia.",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 1
+      },
+      "revId": "9d61552857943fdf046138abaf4cdb02ffb661cd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
