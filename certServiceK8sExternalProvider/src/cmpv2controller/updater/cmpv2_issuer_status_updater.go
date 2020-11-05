@@ -23,50 +23,51 @@
  * ============LICENSE_END=========================================================
  */
 
-package cmpv2controller
+package updater
 
 import (
 	"context"
 	"fmt"
 
-	core "k8s.io/api/core/v1"
 	meta "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/client-go/tools/record"
+	"k8s.io/utils/clock"
+	"sigs.k8s.io/controller-runtime/pkg/client"
 
 	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2api"
 	"onap.org/oom-certservice/k8s-external-provider/src/leveledlogger"
 )
 
 type CMPv2IssuerStatusUpdater struct {
-	*CMPv2IssuerController
-	issuer *cmpv2api.CMPv2Issuer
-	logger leveledlogger.Logger
+	client   client.Client
+	recorder record.EventRecorder
+	issuer   *cmpv2api.CMPv2Issuer
+	clock    clock.Clock
+	logger   leveledlogger.Logger
 }
 
-func newStatusUpdater(controller *CMPv2IssuerController, issuer *cmpv2api.CMPv2Issuer, log leveledlogger.Logger) *CMPv2IssuerStatusUpdater {
+func NewCMPv2IssuerStatusUpdater(client client.Client, recorder record.EventRecorder, issuer *cmpv2api.CMPv2Issuer, clock clock.Clock, log leveledlogger.Logger) *CMPv2IssuerStatusUpdater {
 	return &CMPv2IssuerStatusUpdater{
-		CMPv2IssuerController: controller,
-		issuer:                issuer,
-		logger:                log,
+		client:   client,
+		recorder: recorder,
+		issuer:   issuer,
+		clock:    clock,
+		logger:   log,
 	}
 }
 
-func (updater *CMPv2IssuerStatusUpdater) Update(ctx context.Context, status cmpv2api.ConditionStatus, reason, message string, args ...interface{}) error {
+func (instance *CMPv2IssuerStatusUpdater) Update(ctx context.Context, status cmpv2api.ConditionStatus, reason, message string, args ...interface{}) error {
 	completeMessage := fmt.Sprintf(message, args...)
-	updater.setCondition(status, reason, completeMessage)
+	instance.setCondition(status, reason, completeMessage)
 
-	// Fire an Event to additionally inform users of the change
-	eventType := core.EventTypeNormal
-	if status == cmpv2api.ConditionFalse {
-		eventType = core.EventTypeWarning
-	}
-	updater.Recorder.Event(updater.issuer, eventType, reason, completeMessage)
+	FireEventIssuer(instance.recorder, instance.issuer, status, reason, completeMessage)
 
-	return updater.Client.Update(ctx, updater.issuer)
+	return instance.client.Update(ctx, instance.issuer)
 }
 
-func (updater *CMPv2IssuerStatusUpdater) UpdateNoError(ctx context.Context, status cmpv2api.ConditionStatus, reason, message string, args ...interface{}) {
-	if err := updater.Update(ctx, status, reason, message, args...); err != nil {
-		updater.logger.Error(err, "failed to update", "status", status, "reason", reason)
+func (instance *CMPv2IssuerStatusUpdater) UpdateNoError(ctx context.Context, status cmpv2api.ConditionStatus, reason, message string, args ...interface{}) {
+	if err := instance.Update(ctx, status, reason, message, args...); err != nil {
+		instance.logger.Error(err, "failed to update", "status", status, "reason", reason)
 	}
 }
 
@@ -79,8 +80,8 @@ func (updater *CMPv2IssuerStatusUpdater) UpdateNoError(ctx context.Context, stat
 // - If a condition of the same type and different state already exists, the
 //   condition will be updated and the LastTransitionTime set to the current
 //   time.
-func (updater *CMPv2IssuerStatusUpdater) setCondition(status cmpv2api.ConditionStatus, reason, message string) {
-	now := meta.NewTime(updater.Clock.Now())
+func (instance *CMPv2IssuerStatusUpdater) setCondition(status cmpv2api.ConditionStatus, reason, message string) {
+	now := meta.NewTime(instance.clock.Now())
 	issuerCondition := cmpv2api.CMPv2IssuerCondition{
 		Type:               cmpv2api.ConditionReady,
 		Status:             status,
@@ -90,7 +91,7 @@ func (updater *CMPv2IssuerStatusUpdater) setCondition(status cmpv2api.ConditionS
 	}
 
 	// Search through existing conditions
-	for i, condition := range updater.issuer.Status.Conditions {
+	for i, condition := range instance.issuer.Status.Conditions {
 		// Skip unrelated conditions
 		if condition.Type != cmpv2api.ConditionReady {
 			continue
@@ -101,16 +102,16 @@ func (updater *CMPv2IssuerStatusUpdater) setCondition(status cmpv2api.ConditionS
 		if condition.Status == status {
 			issuerCondition.LastTransitionTime = condition.LastTransitionTime
 		} else {
-			updater.logger.Info("found status change for CMPv2Issuer condition; setting lastTransitionTime", "condition", condition.Type, "old_status", condition.Status, "new_status", status, "time", now.Time)
+			instance.logger.Info("found status change for CMPv2Issuer condition; setting lastTransitionTime", "condition", condition.Type, "old_status", condition.Status, "new_status", status, "time", now.Time)
 		}
 
 		// Overwrite the existing condition
-		updater.issuer.Status.Conditions[i] = issuerCondition
+		instance.issuer.Status.Conditions[i] = issuerCondition
 		return
 	}
 
 	// If we've not found an existing condition of this type, we simply insert
 	// the new condition into the slice.
-	updater.issuer.Status.Conditions = append(updater.issuer.Status.Conditions, issuerCondition)
-	updater.logger.Info("setting lastTransitionTime for CMPv2Issuer condition", "condition", cmpv2api.ConditionReady, "time", now.Time)
+	instance.issuer.Status.Conditions = append(instance.issuer.Status.Conditions, issuerCondition)
+	instance.logger.Info("setting lastTransitionTime for CMPv2Issuer condition", "condition", cmpv2api.ConditionReady, "time", now.Time)
 }
