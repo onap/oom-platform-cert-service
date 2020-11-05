@@ -38,12 +38,11 @@ import (
 	"onap.org/oom-certservice/k8s-external-provider/src/leveledlogger"
 )
 
-var checkedLogMessages = [7]string{"Property 'duration'", "Property 'usages'", "Property 'ipAddresses'",
-	"Property 'isCA'", "Property 'subject.streetAddress'", "Property 'subject.postalCodes'",
-	"Property 'subject.serialNumber'"}
+var checkedLogMessages = [7]string{"'duration'", "'usages'", "'ipAddresses'",
+	"'isCA'", "'subject.streetAddress'", "'subject.postalCodes'", "'subject.serialNumber'"}
 
-var supportedProperties = [7]string{"Property 'organization'", "Property 'organization unit'", "Property 'country'",
-	"Property 'state'", "Property 'location'", "Property 'dns names'"}
+var supportedProperties = [7]string{"'common name'", "'organization'", "'organization unit'", "'country'",
+	"'state'", "'location'", "dns names'"}
 
 const RESULT_LOG = "testdata/test_result.log"
 
