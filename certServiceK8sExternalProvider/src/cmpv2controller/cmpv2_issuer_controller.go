@@ -39,16 +39,17 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
 	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2api"
+	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2controller/updater"
 	provisioners "onap.org/oom-certservice/k8s-external-provider/src/cmpv2provisioner"
 	"onap.org/oom-certservice/k8s-external-provider/src/leveledlogger"
 )
 
 // CMPv2IssuerController reconciles a CMPv2Issuer object
 type CMPv2IssuerController struct {
-	client.Client
-	Log      leveledlogger.Logger
-	Clock    clock.Clock
-	Recorder record.EventRecorder
+	Client             client.Client
+	Log                leveledlogger.Logger
+	Clock              clock.Clock
+	Recorder           record.EventRecorder
 	ProvisionerFactory provisioners.ProvisionerFactory
 }
 
@@ -67,7 +68,7 @@ func (controller *CMPv2IssuerController) Reconcile(req ctrl.Request) (ctrl.Resul
 	log.Info("CMPv2Issuer loaded: ", "issuer", issuer)
 
 	// 2. Validate CMPv2Issuer
-	statusUpdater := newStatusUpdater(controller, issuer, log)
+	statusUpdater := updater.NewCMPv2IssuerStatusUpdater(controller.Client, controller.Recorder, issuer, controller.Clock, log)
 	if err := validateCMPv2IssuerSpec(issuer.Spec); err != nil {
 		handleErrorCMPv2IssuerValidation(ctx, log, err, statusUpdater)
 		return ctrl.Result{}, err
@@ -137,9 +138,9 @@ func validateCMPv2IssuerSpec(issuerSpec cmpv2api.CMPv2IssuerSpec) error {
 	}
 }
 
-func updateCMPv2IssuerStatusToVerified(statusUpdater *CMPv2IssuerStatusUpdater, ctx context.Context, log leveledlogger.Logger) error {
+func updateCMPv2IssuerStatusToVerified(statusUpdater *updater.CMPv2IssuerStatusUpdater, ctx context.Context, log leveledlogger.Logger) error {
 	log.Info("CMPv2 provisioner created -> updating status to of CMPv2Issuer resource to: Verified")
-	return statusUpdater.Update(ctx, cmpv2api.ConditionTrue, Verified, "CMPv2Issuer verified and ready to sign certificates")
+	return statusUpdater.Update(ctx, cmpv2api.ConditionTrue, updater.Verified, "CMPv2Issuer verified and ready to sign certificates")
 }
 
 // Error handling
@@ -152,21 +153,21 @@ func handleErrorLoadingCMPv2Issuer(log leveledlogger.Logger, err error) {
 	log.Error(err, "Failed to retrieve CMPv2Issuer resource")
 }
 
-func handleErrorProvisionerInitialization(ctx context.Context, log leveledlogger.Logger, err error, statusUpdater *CMPv2IssuerStatusUpdater) {
+func handleErrorProvisionerInitialization(ctx context.Context, log leveledlogger.Logger, err error, statusUpdater *updater.CMPv2IssuerStatusUpdater) {
 	log.Error(err, "Failed to initialize provisioner")
-	statusUpdater.UpdateNoError(ctx, cmpv2api.ConditionFalse, Error, "Failed to initialize provisioner: %v", err)
+	statusUpdater.UpdateNoError(ctx, cmpv2api.ConditionFalse, updater.Error, "Failed to initialize provisioner: %v", err)
 }
 
-func handleErrorCMPv2IssuerValidation(ctx context.Context, log leveledlogger.Logger, err error, statusUpdater *CMPv2IssuerStatusUpdater) {
+func handleErrorCMPv2IssuerValidation(ctx context.Context, log leveledlogger.Logger, err error, statusUpdater *updater.CMPv2IssuerStatusUpdater) {
 	log.Error(err, "Failed to validate CMPv2Issuer resource")
-	statusUpdater.UpdateNoError(ctx, cmpv2api.ConditionFalse, ValidationFailed, "Failed to validate resource: %v", err)
+	statusUpdater.UpdateNoError(ctx, cmpv2api.ConditionFalse, updater.ValidationFailed, "Failed to validate resource: %v", err)
 }
 
-func handleErrorInvalidSecret(ctx context.Context, log leveledlogger.Logger, err error, statusUpdater *CMPv2IssuerStatusUpdater, secretNamespaceName types.NamespacedName) {
+func handleErrorInvalidSecret(ctx context.Context, log leveledlogger.Logger, err error, statusUpdater *updater.CMPv2IssuerStatusUpdater, secretNamespaceName types.NamespacedName) {
 	log.Error(err, "Failed to retrieve CMPv2Issuer provisioner secret", "namespace", secretNamespaceName.Namespace, "name", secretNamespaceName.Name)
 	if apierrors.IsNotFound(err) {
-		statusUpdater.UpdateNoError(ctx, cmpv2api.ConditionFalse, NotFound, "Failed to retrieve provisioner secret: %v", err)
+		statusUpdater.UpdateNoError(ctx, cmpv2api.ConditionFalse, updater.NotFound, "Failed to retrieve provisioner secret: %v", err)
 	} else {
-		statusUpdater.UpdateNoError(ctx, cmpv2api.ConditionFalse, Error, "Failed to retrieve provisioner secret: %v", err)
+		statusUpdater.UpdateNoError(ctx, cmpv2api.ConditionFalse, updater.Error, "Failed to retrieve provisioner secret: %v", err)
 	}
 }
