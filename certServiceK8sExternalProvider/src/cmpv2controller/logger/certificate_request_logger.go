@@ -27,6 +27,7 @@ import (
 	"strconv"
 
 	cmapi "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1"
+
 	"onap.org/oom-certservice/k8s-external-provider/src/leveledlogger"
 )
 
@@ -36,24 +37,29 @@ const (
 )
 
 func LogCertRequestProperties(log leveledlogger.Logger, request *cmapi.CertificateRequest, csr *x509.CertificateRequest) {
-	logSupportedProperties(log, request, csr)
+	logSupportedProperties(log, csr)
 	logPropertiesNotSupportedByCertService(log, request, csr)
 	logPropertiesOverriddenByCMPv2Server(log, request)
 }
 
-func logSupportedProperties(log leveledlogger.Logger, request *cmapi.CertificateRequest, csr *x509.CertificateRequest) {
-	logSupportedProperty(log, csr.Subject.Organization, "organization")
-	logSupportedProperty(log, csr.Subject.OrganizationalUnit, "organization unit")
-	logSupportedProperty(log, csr.Subject.Country, "country")
-	logSupportedProperty(log, csr.Subject.Province, "state")
-	logSupportedProperty(log, csr.Subject.Locality, "location")
-	logSupportedProperty(log, csr.DNSNames, "dns names")
+func logSupportedProperties(log leveledlogger.Logger, csr *x509.CertificateRequest) {
+	logSupportedSingleValueProperty(log, csr.Subject.CommonName, "common name")
+	logSupportedMultiValueProperty(log, csr.Subject.Organization, "organization")
+	logSupportedMultiValueProperty(log, csr.Subject.OrganizationalUnit, "organization unit")
+	logSupportedMultiValueProperty(log, csr.Subject.Country, "country")
+	logSupportedMultiValueProperty(log, csr.Subject.Province, "state")
+	logSupportedMultiValueProperty(log, csr.Subject.Locality, "location")
+	logSupportedMultiValueProperty(log, csr.DNSNames, "dns names")
 }
 
-func logSupportedProperty(log leveledlogger.Logger, values []string, propertyName string) {
+func logSupportedMultiValueProperty(log leveledlogger.Logger, values []string, propertyName string) {
 	if len(values) > 0 {
 		log.Info(getSupportedMessage(propertyName, extractStringArray(values)))
 	}
+}
+
+func logSupportedSingleValueProperty(log leveledlogger.Logger, value string, propertyName string) {
+	log.Info(getSupportedMessage(propertyName, value))
 }
 
 func logPropertiesOverriddenByCMPv2Server(log leveledlogger.Logger, request *cmapi.CertificateRequest) {
@@ -131,14 +137,14 @@ func extractIPAddresses(addresses []net.IP) string {
 	return values
 }
 
-func getNotSupportedMessage(property string, value string) string {
-	return "WARNING: Property '" + property + "' with value: " + value + " is not supported by " + CertServiceName
+func getSupportedMessage(property string, value string) string {
+	return "+ property '" + property + "' with value '" + value + "' will be sent in certificate signing request to " + CMPv2ServerName
 }
 
-func getSupportedMessage(property string, value string) string {
-	return "Property '" + property + "' with value: " + value + " will be sent in certificate signing request to " + CMPv2ServerName
+func getNotSupportedMessage(property string, value string) string {
+	return "- property '" + property + "' with value '" + value + "' is not supported by " + CertServiceName
 }
 
 func getOverriddenMessage(property string, values string) string {
-	return "Property '" + property + "' with value: " + values + " will be overridden by " + CMPv2ServerName
+	return "* property '" + property + "' with value '" + values + "' will be overridden by " + CMPv2ServerName
 }
