@@ -18,7 +18,7 @@
  * ============LICENSE_END=========================================================
  */
 
-package cmpv2controller
+package updater
 
 const (
 	NotFound         = "NotFound"
