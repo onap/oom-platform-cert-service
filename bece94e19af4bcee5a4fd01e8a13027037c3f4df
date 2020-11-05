@@ -34,6 +34,24 @@
       "revId": "bece94e19af4bcee5a4fd01e8a13027037c3f4df",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a647ea49_0d188da2",
+        "filename": "certServiceK8sExternalProvider/dev/Dockerfile.dev",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-11-05T07:56:27Z",
+      "side": 1,
+      "message": "If so, add a comment why it is commented",
+      "parentUuid": "acc54bfa_4d93c4db",
+      "revId": "bece94e19af4bcee5a4fd01e8a13027037c3f4df",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
