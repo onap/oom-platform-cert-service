@@ -23,30 +23,36 @@
  * ============LICENSE_END=========================================================
  */
 
-package cmpv2controller
+package updater
 
 import (
 	"context"
 	"fmt"
 
-	core "k8s.io/api/core/v1"
 	meta "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/client-go/tools/record"
+	"k8s.io/utils/clock"
+	"sigs.k8s.io/controller-runtime/pkg/client"
 
 	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2api"
 	"onap.org/oom-certservice/k8s-external-provider/src/leveledlogger"
 )
 
 type CMPv2IssuerStatusUpdater struct {
-	*CMPv2IssuerController
-	issuer *cmpv2api.CMPv2Issuer
-	logger leveledlogger.Logger
+	client   client.Client
+	recorder record.EventRecorder
+	issuer   *cmpv2api.CMPv2Issuer
+	clock    clock.Clock
+	logger   leveledlogger.Logger
 }
 
-func newStatusUpdater(controller *CMPv2IssuerController, issuer *cmpv2api.CMPv2Issuer, log leveledlogger.Logger) *CMPv2IssuerStatusUpdater {
+func NewStatusUpdater(client client.Client, recorder record.EventRecorder, issuer *cmpv2api.CMPv2Issuer, clock clock.Clock, log leveledlogger.Logger) *CMPv2IssuerStatusUpdater {
 	return &CMPv2IssuerStatusUpdater{
-		CMPv2IssuerController: controller,
-		issuer:                issuer,
-		logger:                log,
+		client:   client,
+		recorder: recorder,
+		issuer:   issuer,
+		clock:    clock,
+		logger:   log,
 	}
 }
 
@@ -54,14 +60,9 @@ func (updater *CMPv2IssuerStatusUpdater) Update(ctx context.Context, status cmpv
 	completeMessage := fmt.Sprintf(message, args...)
 	updater.setCondition(status, reason, completeMessage)
 
-	// Fire an Event to additionally inform users of the change
-	eventType := core.EventTypeNormal
-	if status == cmpv2api.ConditionFalse {
-		eventType = core.EventTypeWarning
-	}
-	updater.Recorder.Event(updater.issuer, eventType, reason, completeMessage)
+	FireEventIssuer(updater.recorder, updater.issuer, status, reason, completeMessage)
 
-	return updater.Client.Update(ctx, updater.issuer)
+	return updater.client.Update(ctx, updater.issuer)
 }
 
 func (updater *CMPv2IssuerStatusUpdater) UpdateNoError(ctx context.Context, status cmpv2api.ConditionStatus, reason, message string, args ...interface{}) {
@@ -80,7 +81,7 @@ func (updater *CMPv2IssuerStatusUpdater) UpdateNoError(ctx context.Context, stat
 //   condition will be updated and the LastTransitionTime set to the current
 //   time.
 func (updater *CMPv2IssuerStatusUpdater) setCondition(status cmpv2api.ConditionStatus, reason, message string) {
-	now := meta.NewTime(updater.Clock.Now())
+	now := meta.NewTime(updater.clock.Now())
 	issuerCondition := cmpv2api.CMPv2IssuerCondition{
 		Type:               cmpv2api.ConditionReady,
 		Status:             status,
