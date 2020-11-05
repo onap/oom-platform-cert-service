@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dee4d9ed_171b2ae4",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2020-11-05T08:27:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed649fc1_59c36ce6",
+      "range": {
+        "startLine": 27,
+        "startChar": 1,
+        "endLine": 27,
+        "endChar": 2
+      },
+      "revId": "9d61552857943fdf046138abaf4cdb02ffb661cd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd67279a_7f881c31",
         "filename": "certServiceK8sExternalProvider/src/leveledlogger/leveled_logger.go",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c71dfce1_69e8fabc",
+        "filename": "certServiceK8sExternalProvider/src/leveledlogger/leveled_logger.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2020-11-05T08:27:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd67279a_7f881c31",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 1
+      },
+      "revId": "9d61552857943fdf046138abaf4cdb02ffb661cd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6775ac11_6a2f55c7",
         "filename": "certServiceK8sExternalProvider/src/leveledlogger/leveled_logger_test.go",
         "patchSetId": 7
@@ -68,6 +116,30 @@
       "revId": "9d61552857943fdf046138abaf4cdb02ffb661cd",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60be596f_c6ee9ac5",
+        "filename": "certServiceK8sExternalProvider/src/leveledlogger/leveled_logger_test.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2020-11-05T08:27:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6775ac11_6a2f55c7",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 1
+      },
+      "revId": "9d61552857943fdf046138abaf4cdb02ffb661cd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
