@@ -22,7 +22,6 @@ package logger
 
 import (
 	"bytes"
-
 	"io/ioutil"
 	"log"
 	"os"
@@ -34,16 +33,27 @@ import (
 	"github.com/stretchr/testify/assert"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	x509utils "onap.org/oom-certservice/k8s-external-provider/src/x509"
 	"onap.org/oom-certservice/k8s-external-provider/src/leveledlogger"
+	x509utils "onap.org/oom-certservice/k8s-external-provider/src/x509"
 )
 
-var checkedLogMessages = [7]string{"Property 'duration'", "Property 'usages'", "Property 'ipAddresses'",
-	"Property 'isCA'", "Property 'subject.streetAddress'", "Property 'subject.postalCodes'",
-	"Property 'subject.serialNumber'"}
+var unsupportedProperties = []string{
+	"* property 'duration'",
+	"* property 'usages'",
+	"- property 'ipAddresses'",
+	"- property 'isCA'",
+	"- property 'subject.streetAddress'",
+	"- property 'subject.postalCodes'",
+	"- property 'subject.serialNumber'"}
 
-var supportedProperties = [7]string{"Property 'organization'", "Property 'organization unit'", "Property 'country'",
-	"Property 'state'", "Property 'location'", "Property 'dns names'"}
+var supportedProperties = []string{
+	"+ property 'common name'",
+	"+ property 'organization'",
+	"+ property 'organization unit'",
+	"+ property 'country'",
+	"+ property 'state'",
+	"+ property 'location'",
+	"+ property 'dns names'"}
 
 const RESULT_LOG = "testdata/test_result.log"
 
@@ -67,8 +77,8 @@ func TestLogShouldNotProvideInformationAboutSkippedPropertiesIfNotExistInCSR(t *
 	logsArray := convertLogFileToStringArray(RESULT_LOG)
 
 	//then
-	for _, logMsg := range checkedLogMessages {
-		assert.False(t, logsContainExpectedMessage(logsArray, logMsg), "Logs contain: "+logMsg+", but should not")
+	for _, logMsg := range unsupportedProperties {
+		assert.False(t, logsContainExpectedMessage(logsArray, logMsg), "Logs should not contain: ["+logMsg+"]")
 	}
 	removeTemporaryFile(RESULT_LOG)
 }
@@ -88,8 +98,8 @@ func TestLogShouldProvideInformationAboutSkippedPropertiesIfExistInCSR(t *testin
 	logsArray := convertLogFileToStringArray(RESULT_LOG)
 
 	//then
-	for _, logMsg := range checkedLogMessages {
-		assert.True(t, logsContainExpectedMessage(logsArray, logMsg), "Logs not contain: "+logMsg)
+	for _, logMsg := range unsupportedProperties {
+		assert.True(t, logsContainExpectedMessage(logsArray, logMsg), "Logs should contain: ["+logMsg+"]")
 	}
 	removeTemporaryFile(RESULT_LOG)
 }
@@ -110,7 +120,7 @@ func TestLogShouldListSupportedProperties(t *testing.T) {
 
 	//then
 	for _, logMsg := range supportedProperties {
-		assert.True(t, logsContainExpectedMessage(logsArray, logMsg), "Logs not contain: "+logMsg)
+		assert.True(t, logsContainExpectedMessage(logsArray, logMsg), "Logs should contain: ["+logMsg+"]")
 	}
 	removeTemporaryFile(RESULT_LOG)
 }

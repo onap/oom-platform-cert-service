@@ -95,12 +95,13 @@ func (ca *CertServiceCA) Sign(
 	log.Info("CA: ", "name", ca.name, "url", ca.url)
 
 	csrBytes := certificateRequest.Spec.Request
-	log.Debug("Csr PEM: ", "bytes", csrBytes)
+	log.Debug("Original CSR PEM: ", "bytes", csrBytes)
 
 	filteredCsrBytes, err := csr.FilterFieldsFromCSR(csrBytes, privateKeyBytes)
 	if err != nil {
 		return nil, nil, err
 	}
+	log.Debug("Aligned CSR PEM: ", "bytes", csrBytes)
 
 	response, err := ca.certServiceClient.GetCertificates(filteredCsrBytes, privateKeyBytes)
 	if err != nil {
