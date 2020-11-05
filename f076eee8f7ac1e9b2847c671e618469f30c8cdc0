@@ -1,0 +1,245 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4cc0cb6b_59fed7f1",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/cmpv2_issuer_controller.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-11-05T07:19:20Z",
+      "side": 1,
+      "message": "imports order",
+      "range": {
+        "startLine": 31,
+        "startChar": 1,
+        "endLine": 31,
+        "endChar": 66
+      },
+      "revId": "f076eee8f7ac1e9b2847c671e618469f30c8cdc0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37d5206e_eb1d7578",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/cmpv2_issuer_status_updater.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-11-05T07:19:20Z",
+      "side": 1,
+      "message": "imports order",
+      "range": {
+        "startLine": 31,
+        "startChar": 1,
+        "endLine": 31,
+        "endChar": 67
+      },
+      "revId": "f076eee8f7ac1e9b2847c671e618469f30c8cdc0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "685960f3_c0afafc6",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger_test.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-11-05T07:19:20Z",
+      "side": 1,
+      "message": "Please, change import order",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 67
+      },
+      "revId": "f076eee8f7ac1e9b2847c671e618469f30c8cdc0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a88b01e_4c6bacb0",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger_test.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-11-05T07:19:20Z",
+      "side": 1,
+      "message": "Consider. Change to removeTemporaryFile or something like that.",
+      "range": {
+        "startLine": 73,
+        "startChar": 1,
+        "endLine": 73,
+        "endChar": 11
+      },
+      "revId": "f076eee8f7ac1e9b2847c671e618469f30c8cdc0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b046977_ee43e699",
+        "filename": "certServiceK8sExternalProvider/src/leveledlogger/leveled_logger.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-11-05T07:19:20Z",
+      "side": 1,
+      "message": "missing license",
+      "revId": "f076eee8f7ac1e9b2847c671e618469f30c8cdc0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b11ed7af_7b16efce",
+        "filename": "certServiceK8sExternalProvider/src/leveledlogger/leveled_logger.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-11-05T07:19:20Z",
+      "side": 1,
+      "message": "Now it is not klogger.",
+      "range": {
+        "startLine": 49,
+        "startChar": 1,
+        "endLine": 49,
+        "endChar": 8
+      },
+      "revId": "f076eee8f7ac1e9b2847c671e618469f30c8cdc0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff7677ad_90252f81",
+        "filename": "certServiceK8sExternalProvider/src/leveledlogger/leveled_logger.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-11-05T07:19:20Z",
+      "side": 1,
+      "message": "as above",
+      "range": {
+        "startLine": 55,
+        "startChar": 1,
+        "endLine": 55,
+        "endChar": 8
+      },
+      "revId": "f076eee8f7ac1e9b2847c671e618469f30c8cdc0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67216587_130cd47c",
+        "filename": "certServiceK8sExternalProvider/src/leveledlogger/leveled_logger.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-11-05T07:19:20Z",
+      "side": 1,
+      "message": "Just confirm. Config file should be provided in other MR ?",
+      "range": {
+        "startLine": 98,
+        "startChar": 4,
+        "endLine": 98,
+        "endChar": 18
+      },
+      "revId": "f076eee8f7ac1e9b2847c671e618469f30c8cdc0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03332120_065f5fa6",
+        "filename": "certServiceK8sExternalProvider/src/leveledlogger/leveled_logger_test.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-11-05T07:19:20Z",
+      "side": 1,
+      "message": "1. missing license\n2. Consider to add test with log leveled Eg. Set log level to INFO and DEBUG logs shouldn\u0027t visible.",
+      "revId": "f076eee8f7ac1e9b2847c671e618469f30c8cdc0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be1cdf05_1c0205dc",
+        "filename": "certServiceK8sExternalProvider/src/leveledlogger/leveled_logger_test.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-11-05T07:19:20Z",
+      "side": 1,
+      "message": "Just logger.",
+      "range": {
+        "startLine": 11,
+        "startChar": 9,
+        "endLine": 11,
+        "endChar": 16
+      },
+      "revId": "f076eee8f7ac1e9b2847c671e618469f30c8cdc0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa850721_8c961590",
+        "filename": "certServiceK8sExternalProvider/src/leveledlogger/leveled_logger_test.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-11-05T07:19:20Z",
+      "side": 1,
+      "message": "Please, extract it to other function eg.  assertLogEquals",
+      "range": {
+        "startLine": 26,
+        "startChar": 1,
+        "endLine": 30,
+        "endChar": 2
+      },
+      "revId": "f076eee8f7ac1e9b2847c671e618469f30c8cdc0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
