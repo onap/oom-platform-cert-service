@@ -32,7 +32,7 @@ metadata:
     prometheus.io/scrape: "true"
   labels:
     control-plane: controller-manager
-  name: certservice-issuer-controller-manager-metrics-service
+  name: oom-certservice-cmpv2issuer-metrics-service
   namespace: onap
 spec:
   ports:
@@ -47,7 +47,7 @@ kind: Deployment
 metadata:
   labels:
     control-plane: controller-manager
-  name: certservice-issuer-controller-manager
+  name: oom-certservice-cmpv2issuer
   namespace: onap
 spec:
   replicas: 1
@@ -73,9 +73,9 @@ spec:
       - args:
         - --metrics-addr=127.0.0.1:8080
         command:
-        - /oom-certservice-k8s-external-provider
-        image: onap/oom-certservice-k8s-external-provider:1.0.0
-        name: oom-certservice-k8s-external-provider
+        - /oom-certservice-cmpv2issuer
+        image: onap/oom-certservice-cmpv2issuer:1.0.0
+        name: provider
         resources:
           limits:
             cpu: 250m
