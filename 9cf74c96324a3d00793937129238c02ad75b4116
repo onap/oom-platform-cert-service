@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44efa8ac_48a3ea3f",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger.go",
+        "patchSetId": 10
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-11-06T12:30:49Z",
+      "side": 1,
+      "message": "I know that is it in scope of change, but please remove unused parameter.",
+      "range": {
+        "startLine": 44,
+        "startChar": 54,
+        "endLine": 44,
+        "endChar": 87
+      },
+      "revId": "9cf74c96324a3d00793937129238c02ad75b4116",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e36034a8_d8ef4b12",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger.go",
+        "patchSetId": 10
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-11-06T12:30:49Z",
+      "side": 1,
+      "message": "Please keep common code style",
+      "range": {
+        "startLine": 45,
+        "startChar": 1,
+        "endLine": 45,
+        "endChar": 69
+      },
+      "revId": "9cf74c96324a3d00793937129238c02ad75b4116",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b3996b7_c8b02f2a",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger_test.go",
+        "patchSetId": 10
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-11-06T12:30:49Z",
+      "side": 1,
+      "message": "Please back to convention \"property duration etc...\". See test logic, we looking for text message in logs array, \"duration\" and other words could exist in other logs, so our test could be pass, but should not.",
+      "range": {
+        "startLine": 41,
+        "startChar": 37,
+        "endLine": 41,
+        "endChar": 45
+      },
+      "revId": "9cf74c96324a3d00793937129238c02ad75b4116",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60e8358c_b6bbe97e",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/updater/k8s_resource_updater.go",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-11-06T12:30:49Z",
+      "side": 1,
+      "message": "Missing license",
+      "revId": "9cf74c96324a3d00793937129238c02ad75b4116",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6388843_96d271be",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/updater/k8s_resource_updater_test.go",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-11-06T12:30:49Z",
+      "side": 1,
+      "message": "Missing license",
+      "revId": "9cf74c96324a3d00793937129238c02ad75b4116",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
