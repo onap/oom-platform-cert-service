@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5895c26e_2c8f6da0",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/certificate_request_controller.go",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-11-06T09:10:42Z",
+      "side": 1,
+      "message": "I think it\u0027s not needed",
+      "range": {
+        "startLine": 42,
+        "startChar": 1,
+        "endLine": 42,
+        "endChar": 8
+      },
+      "revId": "9a6e796b6ca7a971f0fbecf1ac7246c8e940a3a9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d483a35_e3e98d7e",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/certificate_request_controller.go",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-11-06T09:10:42Z",
+      "side": 1,
+      "message": "Consider using name different than package name.",
+      "range": {
+        "startLine": 69,
+        "startChar": 1,
+        "endLine": 69,
+        "endChar": 8
+      },
+      "revId": "9a6e796b6ca7a971f0fbecf1ac7246c8e940a3a9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3161f13f_0419baa8",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/updater/cmpv2_issuer_status_updater.go",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-11-06T09:10:42Z",
+      "side": 1,
+      "message": "Consider renaming similar to NewCertificateRequestUpdater",
+      "range": {
+        "startLine": 49,
+        "startChar": 5,
+        "endLine": 49,
+        "endChar": 21
+      },
+      "revId": "9a6e796b6ca7a971f0fbecf1ac7246c8e940a3a9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab086073_a7d0710d",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/updater/cmpv2_issuer_status_updater.go",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-11-06T09:10:42Z",
+      "side": 1,
+      "message": "Consider using name different than package name.",
+      "range": {
+        "startLine": 59,
+        "startChar": 6,
+        "endLine": 59,
+        "endChar": 13
+      },
+      "revId": "9a6e796b6ca7a971f0fbecf1ac7246c8e940a3a9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
