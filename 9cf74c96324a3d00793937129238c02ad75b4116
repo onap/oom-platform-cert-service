@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e85d8bbc_b8b6e788",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger.go",
+        "patchSetId": 10
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-11-06T14:08:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44efa8ac_48a3ea3f",
+      "range": {
+        "startLine": 44,
+        "startChar": 54,
+        "endLine": 44,
+        "endChar": 87
+      },
+      "revId": "9cf74c96324a3d00793937129238c02ad75b4116",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e36034a8_d8ef4b12",
         "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger.go",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "9cf74c96324a3d00793937129238c02ad75b4116",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deffc1ba_942bf48f",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger.go",
+        "patchSetId": 10
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-11-06T14:08:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e36034a8_d8ef4b12",
+      "range": {
+        "startLine": 45,
+        "startChar": 1,
+        "endLine": 45,
+        "endChar": 69
+      },
+      "revId": "9cf74c96324a3d00793937129238c02ad75b4116",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "06bf588d_a255c91e",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/logger/certificate_request_logger_test.go",
+        "patchSetId": 10
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-11-06T14:08:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b3996b7_c8b02f2a",
+      "range": {
+        "startLine": 41,
+        "startChar": 37,
+        "endLine": 41,
+        "endChar": 45
+      },
+      "revId": "9cf74c96324a3d00793937129238c02ad75b4116",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60e8358c_b6bbe97e",
         "filename": "certServiceK8sExternalProvider/src/cmpv2controller/updater/k8s_resource_updater.go",
         "patchSetId": 10
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "9dee2049_497dd480",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/updater/k8s_resource_updater.go",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-11-06T14:08:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60e8358c_b6bbe97e",
+      "revId": "9cf74c96324a3d00793937129238c02ad75b4116",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6388843_96d271be",
         "filename": "certServiceK8sExternalProvider/src/cmpv2controller/updater/k8s_resource_updater_test.go",
         "patchSetId": 10
@@ -102,6 +192,24 @@
       "revId": "9cf74c96324a3d00793937129238c02ad75b4116",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ea069cb_6361cbc8",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/updater/k8s_resource_updater_test.go",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-11-06T14:08:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6388843_96d271be",
+      "revId": "9cf74c96324a3d00793937129238c02ad75b4116",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
