@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afaedb56_76d95d43",
+        "filename": "certServiceK8sExternalProvider/README.md",
+        "patchSetId": 13
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-11-10T11:17:44Z",
+      "side": 1,
+      "message": "K8s 😊",
+      "revId": "039082815e5c0f684b2196276d13f1960911cfca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f23c1b21_a7995002",
+        "filename": "certServiceK8sExternalProvider/README.md",
+        "patchSetId": 13
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-11-10T11:17:44Z",
+      "side": 1,
+      "message": "K8s 😊\nVerb missing - is?",
+      "revId": "039082815e5c0f684b2196276d13f1960911cfca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0cfde60_ef7d641b",
+        "filename": "certServiceK8sExternalProvider/README.md",
+        "patchSetId": 13
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-11-10T11:17:44Z",
+      "side": 1,
+      "message": "Certificate Singing Requests (CSRs)\nCert-Manager (please provide link)",
+      "revId": "039082815e5c0f684b2196276d13f1960911cfca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "894c54ca_2f42cc18",
+        "filename": "certServiceK8sExternalProvider/README.md",
+        "patchSetId": 13
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-11-10T11:17:44Z",
+      "side": 1,
+      "message": "can be found on a dedicated page:",
+      "revId": "039082815e5c0f684b2196276d13f1960911cfca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13d1be6a_5962e79c",
+        "filename": "certServiceK8sExternalProvider/README.md",
+        "patchSetId": 13
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-11-10T11:17:44Z",
+      "side": 1,
+      "message": "K8s 😊",
+      "revId": "039082815e5c0f684b2196276d13f1960911cfca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b5e83c9_1ab3f640",
+        "filename": "certServiceK8sExternalProvider/README.md",
+        "patchSetId": 13
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-11-10T11:17:44Z",
+      "side": 1,
+      "message": "on -\u003e during",
+      "revId": "039082815e5c0f684b2196276d13f1960911cfca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35b10778_a68389ec",
+        "filename": "certServiceK8sExternalProvider/README.md",
+        "patchSetId": 13
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-11-10T11:17:44Z",
+      "side": 1,
+      "message": "Missing verb - is?",
+      "revId": "039082815e5c0f684b2196276d13f1960911cfca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34f28ffa_28fc9248",
+        "filename": "certServiceK8sExternalProvider/README.md",
+        "patchSetId": 13
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-11-10T11:17:44Z",
+      "side": 1,
+      "message": "Is this case sensitive? If so, please add such info",
+      "revId": "039082815e5c0f684b2196276d13f1960911cfca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "339b0df9_0637e7b0",
+        "filename": "certServiceK8sExternalProvider/README.md",
+        "patchSetId": 13
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-11-10T11:17:44Z",
+      "side": 1,
+      "message": "Cert-Manager",
+      "revId": "039082815e5c0f684b2196276d13f1960911cfca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "057d2455_98057abe",
+        "filename": "certServiceK8sExternalProvider/README.md",
+        "patchSetId": 13
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-11-10T11:17:44Z",
+      "side": 1,
+      "message": "Cert-Manager\nby CMPv2 server",
+      "revId": "039082815e5c0f684b2196276d13f1960911cfca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbffc89d_fa626e71",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2provisioner/cmpv2_provisioner.go",
+        "patchSetId": 13
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-11-10T11:17:44Z",
+      "side": 1,
+      "message": "Aligned? Filtered out :)",
+      "revId": "039082815e5c0f684b2196276d13f1960911cfca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
