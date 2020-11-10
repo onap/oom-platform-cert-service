@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5beea7d2_b5895f9b",
+        "filename": "certServiceK8sExternalProvider/README.md",
+        "patchSetId": 15
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-11-10T11:57:49Z",
+      "side": 1,
+      "message": "Certificate Singing Requests",
+      "revId": "93864c0f1cdc512b4dc3705f34091a77e3934d9f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4369773a_8dc5d45b",
+        "filename": "certServiceK8sExternalProvider/README.md",
+        "patchSetId": 15
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-11-10T11:57:49Z",
+      "side": 1,
+      "message": "on -\u003e during",
+      "revId": "93864c0f1cdc512b4dc3705f34091a77e3934d9f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
