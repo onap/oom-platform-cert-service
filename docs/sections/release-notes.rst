@@ -7,6 +7,51 @@ Release Notes
 
 ==============
 
+Version: 2.2.0
+--------------
+
+:Release Date:
+
+**New Features**
+
+* `OOM-2559 <https://jira.onap.org/browse/OOM-2559>`_ - add new module **oom-certservice-k8s-external-provider**
+
+  An external provider is a part of PKI infrastructure. It consumes CertificateRequest CRD from Cert-Manager and calls CertService API to enroll certificate.
+
+  More information can be found on dedicated `wiki page <https://wiki.onap.org/display/DW/CertService+and+K8s+Cert-Manager+integration>`_
+
+**Bug Fixes**
+
+  N/A
+
+**Known Issues**
+
+  N/A
+
+**Security Notes**
+
+  N/A
+
+*Fixed Security Issues*
+
+  N/A
+
+*Known Security Issues*
+
+  N/A
+
+*Known Vulnerabilities in Used Modules*
+
+  N/A
+
+**Upgrade Notes**
+
+**Deprecation Notes**
+
+**Other**
+
+==============
+
 Version: 2.1.0
 --------------
 
