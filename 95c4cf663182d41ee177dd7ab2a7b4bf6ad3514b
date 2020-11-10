@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08ae5e7c_080fa377",
+        "filename": "docs/sections/release-notes.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-11-10T14:15:09Z",
+      "side": 1,
+      "message": "In official documentation avoid adding JIRA links which are not bugs - please remove it. \n\nI would call it differently: \nAdded module **oom-certservice-k8s-external-provider** with following functionality:",
+      "revId": "95c4cf663182d41ee177dd7ab2a7b4bf6ad3514b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ae03074_77620a0f",
+        "filename": "docs/sections/release-notes.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-11-10T14:15:09Z",
+      "side": 1,
+      "message": "An external provider is a part of PKI infrastructure. It consumes CertificateRequest CRD from Cert-Manager and calls CertService API to enroll certificate from CMPv2 server.",
+      "revId": "95c4cf663182d41ee177dd7ab2a7b4bf6ad3514b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
