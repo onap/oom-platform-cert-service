@@ -20,22 +20,26 @@
 
 package org.onap.oom.certservice.client.configuration.factory;
 
+import java.util.Optional;
 import org.onap.oom.certservice.client.configuration.ClientConfigurationEnvs;
 import org.onap.oom.certservice.client.configuration.EnvsForClient;
 import org.onap.oom.certservice.client.configuration.exception.ClientConfigurationException;
 import org.onap.oom.certservice.client.configuration.model.ClientConfiguration;
+import org.onap.oom.certservice.client.configuration.validation.BasicValidationFunctions;
+import org.onap.oom.certservice.client.configuration.validation.ValidatorsFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Optional;
-
-public class ClientConfigurationFactory extends AbstractConfigurationFactory<ClientConfiguration> {
+public class ClientConfigurationFactory implements ConfigurationFactory<ClientConfiguration> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientConfigurationFactory.class);
     private final EnvsForClient envsForClient;
+    private final ValidatorsFactory validatorsFactory;
 
-    public ClientConfigurationFactory(EnvsForClient envsForClient) {
+
+    public ClientConfigurationFactory(EnvsForClient envsForClient, ValidatorsFactory validatorsFactory) {
         this.envsForClient = envsForClient;
+        this.validatorsFactory = validatorsFactory;
     }
 
     @Override
@@ -43,29 +47,29 @@ public class ClientConfigurationFactory extends AbstractConfigurationFactory<Cli
 
         ClientConfiguration configuration = new ClientConfiguration();
 
-
         envsForClient.getUrlToCertService()
-                .map(configuration::setUrlToCertService);
+            .map(configuration::setUrlToCertService);
 
         envsForClient.getRequestTimeOut()
-                .map(timeout -> configuration.setRequestTimeout(Integer.valueOf(timeout)));
+            .map(timeout -> configuration.setRequestTimeoutInMs(Integer.valueOf(timeout)));
 
         envsForClient.getOutputPath()
-                .filter(this::isPathValid)
-                .map(configuration::setCertsOutputPath)
-                .orElseThrow(() -> new ClientConfigurationException(ClientConfigurationEnvs.OUTPUT_PATH + " is invalid."));
+            .filter(BasicValidationFunctions::isPathValid)
+            .map(configuration::setCertsOutputPath)
+            .orElseThrow(() -> new ClientConfigurationException(ClientConfigurationEnvs.OUTPUT_PATH + " is invalid."));
 
         envsForClient.getCaName()
-                .filter(this::isAlphaNumeric)
-                .map(configuration::setCaName)
-                .orElseThrow(() -> new ClientConfigurationException(ClientConfigurationEnvs.CA_NAME + " is invalid."));
+            .filter(BasicValidationFunctions::isAlphaNumeric)
+            .map(configuration::setCaName)
+            .orElseThrow(() -> new ClientConfigurationException(ClientConfigurationEnvs.CA_NAME + " is invalid."));
 
         Optional<String> outputType = envsForClient.getOutputType();
 
         if (outputType.isPresent()) {
-            outputType.filter(this::isOutputTypeValid)
-                    .map(configuration::setOutputType)
-                    .orElseThrow(() -> new ClientConfigurationException(ClientConfigurationEnvs.OUTPUT_TYPE + " is invalid."));
+            outputType.filter(validatorsFactory.outputTypeValidator()::test)
+                .map(configuration::setOutputType)
+                .orElseThrow(
+                    () -> new ClientConfigurationException(ClientConfigurationEnvs.OUTPUT_TYPE + " is invalid."));
         }
 
         LOGGER.info("Successful validation of Client configuration. Configuration data: {}", configuration.toString());

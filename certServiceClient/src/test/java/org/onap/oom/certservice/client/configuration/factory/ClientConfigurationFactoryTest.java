@@ -27,6 +27,7 @@ import org.onap.oom.certservice.client.configuration.exception.ClientConfigurati
 import org.onap.oom.certservice.client.configuration.model.ClientConfiguration;
 
 import java.util.Optional;
+import org.onap.oom.certservice.client.configuration.validation.ValidatorsFactory;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -47,6 +48,7 @@ public class ClientConfigurationFactoryTest {
     private static final String OUTPUT_TYPE_DEFAULT = "P12";
 
     private EnvsForClient envsForClient = mock(EnvsForClient.class);
+    private ValidatorsFactory validatorsFactory = new ValidatorsFactory();
 
 
     @Test
@@ -59,12 +61,12 @@ public class ClientConfigurationFactoryTest {
         when(envsForClient.getOutputType()).thenReturn(Optional.of(OUTPUT_TYPE_VALID));
 
         // when
-        ClientConfiguration configuration = new ClientConfigurationFactory(envsForClient).create();
+        ClientConfiguration configuration = new ClientConfigurationFactory(envsForClient, validatorsFactory).create();
         System.out.println(configuration.toString());
 
         // then
         assertThat(configuration.getCaName()).isEqualTo(CA_NAME_VALID);
-        assertThat(configuration.getRequestTimeout()).isEqualTo(Integer.valueOf(TIME_OUT_VALID));
+        assertThat(configuration.getRequestTimeoutInMs()).isEqualTo(Integer.valueOf(TIME_OUT_VALID));
         assertThat(configuration.getCertsOutputPath()).isEqualTo(OUTPUT_PATH_VALID);
         assertThat(configuration.getUrlToCertService()).isEqualTo(URL_TO_CERT_SERVICE_VALID);
         assertThat(configuration.getOutputType()).isEqualTo(OUTPUT_TYPE_VALID);
@@ -77,11 +79,11 @@ public class ClientConfigurationFactoryTest {
         when(envsForClient.getOutputPath()).thenReturn(Optional.of(OUTPUT_PATH_VALID));
 
         // when
-        ClientConfiguration configuration = new ClientConfigurationFactory(envsForClient).create();
+        ClientConfiguration configuration = new ClientConfigurationFactory(envsForClient, validatorsFactory).create();
 
         // then
         assertThat(configuration.getCaName()).isEqualTo(CA_NAME_VALID);
-        assertThat(configuration.getRequestTimeout()).isEqualTo(Integer.valueOf(TIME_OUT_VALID));
+        assertThat(configuration.getRequestTimeoutInMs()).isEqualTo(Integer.valueOf(TIME_OUT_VALID));
         assertThat(configuration.getCertsOutputPath()).isEqualTo(OUTPUT_PATH_VALID);
         assertThat(configuration.getUrlToCertService()).isEqualTo(URL_TO_CERT_SERVICE_DEFAULT);
         assertThat(configuration.getOutputType()).isEqualTo(OUTPUT_TYPE_DEFAULT);
@@ -93,7 +95,7 @@ public class ClientConfigurationFactoryTest {
         when(envsForClient.getOutputPath()).thenReturn(Optional.of(OUTPUT_PATH_VALID));
 
         // when
-        ClientConfigurationFactory configurationFactory = new ClientConfigurationFactory(envsForClient);
+        ClientConfigurationFactory configurationFactory = new ClientConfigurationFactory(envsForClient, validatorsFactory);
 
         // then
         assertThatExceptionOfType(ClientConfigurationException.class)
@@ -110,7 +112,7 @@ public class ClientConfigurationFactoryTest {
         when(envsForClient.getUrlToCertService()).thenReturn(Optional.of(URL_TO_CERT_SERVICE_VALID));
 
         // when
-        ClientConfigurationFactory configurationFactory = new ClientConfigurationFactory(envsForClient);
+        ClientConfigurationFactory configurationFactory = new ClientConfigurationFactory(envsForClient, validatorsFactory);
 
         // when/then
         assertThatExceptionOfType(ClientConfigurationException.class)
@@ -127,7 +129,7 @@ public class ClientConfigurationFactoryTest {
         when(envsForClient.getUrlToCertService()).thenReturn(Optional.of(URL_TO_CERT_SERVICE_VALID));
 
         // when
-        ClientConfigurationFactory configurationFactory = new ClientConfigurationFactory(envsForClient);
+        ClientConfigurationFactory configurationFactory = new ClientConfigurationFactory(envsForClient, validatorsFactory);
 
         //then
         assertThatExceptionOfType(ClientConfigurationException.class)
@@ -145,7 +147,7 @@ public class ClientConfigurationFactoryTest {
         when(envsForClient.getOutputType()).thenReturn(Optional.of(OUTPUT_TYPE_INVALID));
 
         // when
-        ClientConfigurationFactory configurationFactory = new ClientConfigurationFactory(envsForClient);
+        ClientConfigurationFactory configurationFactory = new ClientConfigurationFactory(envsForClient, validatorsFactory);
 
         //then
         assertThatExceptionOfType(ClientConfigurationException.class)

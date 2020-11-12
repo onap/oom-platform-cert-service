@@ -20,21 +20,29 @@
 
 package org.onap.oom.certservice.client.configuration.factory;
 
+import static org.onap.oom.certservice.client.configuration.validation.BasicValidationFunctions.isSpecialCharPresent;
+
+import java.util.Arrays;
 import org.onap.oom.certservice.client.configuration.CsrConfigurationEnvs;
 import org.onap.oom.certservice.client.configuration.EnvsForCsr;
 import org.onap.oom.certservice.client.configuration.exception.CsrConfigurationException;
 import org.onap.oom.certservice.client.configuration.model.CsrConfiguration;
+import org.onap.oom.certservice.client.configuration.validation.BasicValidationFunctions;
+import org.onap.oom.certservice.client.configuration.validation.ValidatorsFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-public class CsrConfigurationFactory extends AbstractConfigurationFactory<CsrConfiguration> {
+public class CsrConfigurationFactory implements ConfigurationFactory<CsrConfiguration> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CsrConfigurationFactory.class);
-    private final EnvsForCsr envsForCsr;
 
-    public CsrConfigurationFactory(EnvsForCsr envsForCsr) {
+    private final EnvsForCsr envsForCsr;
+    private final ValidatorsFactory validatorsFactory;
+
+    public CsrConfigurationFactory(EnvsForCsr envsForCsr, ValidatorsFactory validatorsFactory) {
         this.envsForCsr = envsForCsr;
+        this.validatorsFactory = validatorsFactory;
     }
 
     @Override
@@ -43,12 +51,12 @@ public class CsrConfigurationFactory extends AbstractConfigurationFactory<CsrCon
         CsrConfiguration configuration = new CsrConfiguration();
 
         envsForCsr.getCommonName()
-                .filter(this::isCommonNameValid)
+                .filter(validatorsFactory.commonNameValidator()::test)
                 .map(configuration::setCommonName)
                 .orElseThrow(() -> new CsrConfigurationException(CsrConfigurationEnvs.COMMON_NAME + " is invalid."));
 
         envsForCsr.getOrganization()
-                .filter(org -> !isSpecialCharsPresent(org))
+                .filter(org -> !isSpecialCharPresent(org))
                 .map(configuration::setOrganization)
                 .orElseThrow(() -> new CsrConfigurationException(CsrConfigurationEnvs.ORGANIZATION + " is invalid."));
 
@@ -57,7 +65,7 @@ public class CsrConfigurationFactory extends AbstractConfigurationFactory<CsrCon
                 .orElseThrow(() -> new CsrConfigurationException(CsrConfigurationEnvs.STATE + " is invalid."));
 
         envsForCsr.getCountry()
-                .filter(this::isCountryValid)
+                .filter(BasicValidationFunctions::isCountryValid)
                 .map(configuration::setCountry)
                 .orElseThrow(() -> new CsrConfigurationException(CsrConfigurationEnvs.COUNTRY + " is invalid."));
 
@@ -68,10 +76,12 @@ public class CsrConfigurationFactory extends AbstractConfigurationFactory<CsrCon
                 .map(configuration::setLocation);
 
         envsForCsr.getSubjectAlternativesName()
+            .map(sans -> Arrays.asList(sans.split(":")))
                 .map(configuration::setSubjectAlternativeNames);
 
         LOGGER.info("Successful validation of CSR configuration. Configuration data: {}", configuration.toString());
 
         return configuration;
     }
+
 }

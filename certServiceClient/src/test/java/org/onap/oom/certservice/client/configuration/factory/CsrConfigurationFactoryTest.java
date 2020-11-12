@@ -20,6 +20,7 @@
 
 package org.onap.oom.certservice.client.configuration.factory;
 
+import java.util.List;
 import org.assertj.core.api.Condition;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,6 +30,7 @@ import org.onap.oom.certservice.client.configuration.exception.CsrConfigurationE
 import org.onap.oom.certservice.client.configuration.model.CsrConfiguration;
 
 import java.util.Optional;
+import org.onap.oom.certservice.client.configuration.validation.ValidatorsFactory;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -39,6 +41,7 @@ import static org.onap.oom.certservice.client.api.ExitStatus.CSR_CONFIGURATION_E
 public class CsrConfigurationFactoryTest {
 
     private static final String COMMON_NAME_VALID = "onap.org";
+    private static final List<String> SANS_SPLITTED_VALID = List.of("test-name");
     private static final String SANS_VALID = "test-name";
     private static final String COUNTRY_VALID = "US";
     private static final String LOCATION_VALID = "San-Francisco";
@@ -50,6 +53,7 @@ public class CsrConfigurationFactoryTest {
     private static final String ORGANIZATION_INVALID = "Linux?Foundation";
 
     private EnvsForCsr envsForCsr = mock(EnvsForCsr.class);
+    private ValidatorsFactory validatorsFactory = new ValidatorsFactory();
     private CsrConfigurationFactory testedFactory;
     private Condition<CsrConfigurationException> expectedExitCodeCondition = new Condition<>("Correct exit code") {
         @Override
@@ -60,7 +64,7 @@ public class CsrConfigurationFactoryTest {
 
     @BeforeEach
     void setUp() {
-        testedFactory = new CsrConfigurationFactory(envsForCsr);
+        testedFactory = new CsrConfigurationFactory(envsForCsr, validatorsFactory);
     }
 
     @Test
@@ -73,7 +77,7 @@ public class CsrConfigurationFactoryTest {
 
         // then
         assertThat(configuration.getCommonName()).isEqualTo(COMMON_NAME_VALID);
-        assertThat(configuration.getSans()).isEqualTo(SANS_VALID);
+        assertThat(configuration.getSans()).isEqualTo(SANS_SPLITTED_VALID);
         assertThat(configuration.getCountry()).isEqualTo(COUNTRY_VALID);
         assertThat(configuration.getLocation()).isEqualTo(LOCATION_VALID);
         assertThat(configuration.getOrganization()).isEqualTo(ORGANIZATION_VALID);

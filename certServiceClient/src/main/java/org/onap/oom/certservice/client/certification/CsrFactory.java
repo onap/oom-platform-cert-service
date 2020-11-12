@@ -19,6 +19,21 @@
 
 package org.onap.oom.certservice.client.certification;
 
+import static org.onap.oom.certservice.client.certification.EncryptionAlgorithmConstants.COMMON_NAME;
+import static org.onap.oom.certservice.client.certification.EncryptionAlgorithmConstants.COUNTRY;
+import static org.onap.oom.certservice.client.certification.EncryptionAlgorithmConstants.LOCATION;
+import static org.onap.oom.certservice.client.certification.EncryptionAlgorithmConstants.ORGANIZATION;
+import static org.onap.oom.certservice.client.certification.EncryptionAlgorithmConstants.ORGANIZATION_UNIT;
+import static org.onap.oom.certservice.client.certification.EncryptionAlgorithmConstants.SIGN_ALGORITHM;
+import static org.onap.oom.certservice.client.certification.EncryptionAlgorithmConstants.STATE;
+
+import java.io.IOException;
+import java.io.StringWriter;
+import java.security.KeyPair;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import javax.security.auth.x500.X500Principal;
 import org.bouncycastle.asn1.pkcs.PKCSObjectIdentifiers;
 import org.bouncycastle.asn1.x509.Extension;
 import org.bouncycastle.asn1.x509.Extensions;
@@ -35,20 +50,6 @@ import org.onap.oom.certservice.client.certification.exception.CsrGenerationExce
 import org.onap.oom.certservice.client.configuration.model.CsrConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.security.auth.x500.X500Principal;
-import java.io.IOException;
-import java.io.StringWriter;
-import java.security.KeyPair;
-import java.util.Optional;
-
-import static org.onap.oom.certservice.client.certification.EncryptionAlgorithmConstants.COMMON_NAME;
-import static org.onap.oom.certservice.client.certification.EncryptionAlgorithmConstants.COUNTRY;
-import static org.onap.oom.certservice.client.certification.EncryptionAlgorithmConstants.LOCATION;
-import static org.onap.oom.certservice.client.certification.EncryptionAlgorithmConstants.ORGANIZATION;
-import static org.onap.oom.certservice.client.certification.EncryptionAlgorithmConstants.ORGANIZATION_UNIT;
-import static org.onap.oom.certservice.client.certification.EncryptionAlgorithmConstants.SIGN_ALGORITHM;
-import static org.onap.oom.certservice.client.certification.EncryptionAlgorithmConstants.STATE;
 
 
 public class CsrFactory {
@@ -75,27 +76,29 @@ public class CsrFactory {
 
     private StringBuilder getMandatoryParameters() {
         return new StringBuilder(String.format("%s=%s, %s=%s, %s=%s, %s=%s",
-                COMMON_NAME, configuration.getCommonName(),
-                COUNTRY, configuration.getCountry(),
-                STATE, configuration.getState(),
-                ORGANIZATION, configuration.getOrganization()));
+            COMMON_NAME, configuration.getCommonName(),
+            COUNTRY, configuration.getCountry(),
+            STATE, configuration.getState(),
+            ORGANIZATION, configuration.getOrganization()));
     }
 
     private String getOptionalParameters() {
         StringBuilder optionalParameters = new StringBuilder();
         Optional.ofNullable(configuration.getOrganizationUnit())
-                .filter(CsrFactory::isParameterPresent)
-                .map(unit -> optionalParameters.append(String.format(", %s=%s", ORGANIZATION_UNIT, unit)));
+            .filter(CsrFactory::isParameterPresent)
+            .map(unit -> optionalParameters.append(String.format(", %s=%s", ORGANIZATION_UNIT, unit)));
         Optional.ofNullable(configuration.getLocation())
-                .filter(CsrFactory::isParameterPresent)
-                .map(location -> optionalParameters.append(String.format(", %s=%s", LOCATION, location)));
+            .filter(CsrFactory::isParameterPresent)
+            .map(location -> optionalParameters.append(String.format(", %s=%s", LOCATION, location)));
         return optionalParameters.toString();
     }
 
-    private PKCS10CertificationRequest createPkcs10Csr(X500Principal subject, KeyPair keyPair) throws CsrGenerationException {
-        JcaPKCS10CertificationRequestBuilder builder = new JcaPKCS10CertificationRequestBuilder(subject, keyPair.getPublic());
+    private PKCS10CertificationRequest createPkcs10Csr(X500Principal subject, KeyPair keyPair)
+        throws CsrGenerationException {
+        JcaPKCS10CertificationRequestBuilder builder = new JcaPKCS10CertificationRequestBuilder(subject,
+            keyPair.getPublic());
 
-        if (isParameterPresent(configuration.getSans())) {
+        if (!configuration.getSans().isEmpty()) {
             builder.addAttribute(PKCSObjectIdentifiers.pkcs_9_at_extensionRequest, generateSansExtension());
         }
 
@@ -138,12 +141,12 @@ public class CsrFactory {
     }
 
     private GeneralNames createGeneralNames() {
-        String[] sansTable = this.configuration.getSans().split(SANS_DELIMITER);
-        int length = sansTable.length;
-        GeneralName[] generalNames = new GeneralName[length];
-        for (int i = 0; i < length; i++) {
-            generalNames[i] = new GeneralName(GeneralName.dNSName, sansTable[i]);
-        }
+        List<String> sans = this.configuration.getSans();
+        GeneralName[] generalNames = new GeneralName[sans.size()];
+        generalNames = sans.stream()
+            .map(san -> new GeneralName(GeneralName.dNSName, san))
+            .collect(Collectors.toList())
+            .toArray(generalNames);
         return new GeneralNames(generalNames);
     }
 
