@@ -21,6 +21,7 @@
 package org.onap.oom.certservice.client.configuration.model;
 
 
+import java.util.List;
 import org.onap.oom.certservice.client.configuration.CsrConfigurationEnvs;
 
 public class CsrConfiguration implements ConfigurationModel {
@@ -31,7 +32,7 @@ public class CsrConfiguration implements ConfigurationModel {
     private String country;
     private String organizationUnit;
     private String location;
-    private String sans;
+    private List<String> sans;
 
 
     public String getCommonName() {
@@ -88,12 +89,12 @@ public class CsrConfiguration implements ConfigurationModel {
         return this;
     }
 
-    public String getSans() {
+    public List<String> getSans() {
         return sans;
     }
 
-    public CsrConfiguration setSubjectAlternativeNames(String subjectAlternativeNames) {
-        this.sans = subjectAlternativeNames;
+    public CsrConfiguration setSubjectAlternativeNames(List<String> subjectAlternativeNames) {
+        this.sans = List.copyOf(subjectAlternativeNames);
         return this;
     }
 

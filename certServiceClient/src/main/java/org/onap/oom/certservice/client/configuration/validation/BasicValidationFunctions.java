@@ -18,60 +18,40 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.certservice.client.configuration.factory;
-
-
-import org.onap.oom.certservice.client.certification.ArtifactsCreatorProvider;
-import org.onap.oom.certservice.client.configuration.exception.ClientConfigurationException;
-import org.onap.oom.certservice.client.configuration.exception.CsrConfigurationException;
-import org.onap.oom.certservice.client.configuration.model.ConfigurationModel;
+package org.onap.oom.certservice.client.configuration.validation;
 
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
-public abstract class AbstractConfigurationFactory<T extends ConfigurationModel> {
+public class BasicValidationFunctions {
 
-    abstract T create() throws ClientConfigurationException, CsrConfigurationException;
-
-    public boolean isPathValid(String path) {
+    public static boolean isPathValid(String path) {
         return path.matches("^/|(/[a-zA-Z0-9_-]+)+/?$");
     }
 
-    public boolean isAlphaNumeric(String caName) {
+    public static boolean isAlphaNumeric(String caName) {
         return caName.matches("^[a-zA-Z0-9]*$");
     }
 
-    public boolean isCommonNameValid(String commonName) {
-        return !isSpecialCharsPresent(commonName)
-                && !isHttpProtocolsPresent(commonName)
-                && !isIpAddressPresent(commonName)
-                && !isPortNumberPresent(commonName);
-    }
-
-    public boolean isSpecialCharsPresent(String stringToCheck) {
+    public static boolean isSpecialCharPresent(String stringToCheck) {
         return Pattern.compile("[~#@*$+%!()?/{}<>\\|_^]").matcher(stringToCheck).find();
     }
 
-    public boolean isCountryValid(String country) {
-        return Arrays.asList(Locale.getISOCountries()).contains(country);
-    }
-
-    public boolean isOutputTypeValid(String outputType) {
-        return Arrays.stream(ArtifactsCreatorProvider.values())
-                .map(ArtifactsCreatorProvider::toString)
-                .anyMatch(name -> name.equals(outputType));
-    }
-
-    private boolean isPortNumberPresent(String stringToCheck) {
+    public static boolean isPortNumberPresent(String stringToCheck) {
         return Pattern.compile(":[0-9]{1,5}").matcher(stringToCheck).find();
     }
 
-    private boolean isIpAddressPresent(String stringToCheck) {
+    public static boolean isIpAddressPresent(String stringToCheck) {
         return Pattern.compile("[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}").matcher(stringToCheck).find();
     }
 
-    private boolean isHttpProtocolsPresent(String stringToCheck) {
+    public static boolean isHttpProtocolsPresent(String stringToCheck) {
         return Pattern.compile("[h][t][t][p][:][/][/]|[h][t][t][p][s][:][/][/]").matcher(stringToCheck).find();
     }
+
+    public static boolean isCountryValid(String country) {
+        return Arrays.asList(Locale.getISOCountries()).contains(country);
+    }
+
 }
