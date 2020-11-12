@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc794970_2be1d649",
+        "filename": "releases/2.2.0-container.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-11-12T14:06:37Z",
+      "side": 1,
+      "message": "Wrong revision, current master: c3c260ac52d12a8a2bcec9c3e2451c48d388ecec\nUse stage-release on https://gerrit.onap.org/r/c/oom/platform/cert-service/+/114808 and align ref and containers.",
+      "range": {
+        "startLine": 7,
+        "startChar": 5,
+        "endLine": 7,
+        "endChar": 45
+      },
+      "revId": "756398d4a08ea39ef2bdca061308c3b6a22a364f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
