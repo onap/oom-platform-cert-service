@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e35fdf4c_59323c55",
+        "filename": "releases/2.2.0-container.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-11-12T10:02:53Z",
+      "side": 1,
+      "message": "It is point to commit which have not correct version.properties. So please split this commit to two (change version, and release).",
+      "range": {
+        "startLine": 7,
+        "startChar": 5,
+        "endLine": 7,
+        "endChar": 45
+      },
+      "revId": "52baf0712089ba0a0f8644340b624b7225604f49",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
