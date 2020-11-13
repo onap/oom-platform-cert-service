@@ -18,31 +18,21 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.certservice.client.configuration.validation;
+package org.onap.oom.certservice.client.configuration.validation.csr;
 
 import static org.onap.oom.certservice.client.configuration.validation.BasicValidationFunctions.isHttpProtocolsPresent;
 import static org.onap.oom.certservice.client.configuration.validation.BasicValidationFunctions.isIpAddressPresent;
 import static org.onap.oom.certservice.client.configuration.validation.BasicValidationFunctions.isPortNumberPresent;
 import static org.onap.oom.certservice.client.configuration.validation.BasicValidationFunctions.isSpecialCharPresent;
 
-import java.util.Arrays;
 import java.util.function.Predicate;
-import org.onap.oom.certservice.client.certification.ArtifactsCreatorProvider;
 
-public class ValidatorsFactory {
+public class CommonNameValidator implements Predicate<String> {
 
-    public Predicate<String> commonNameValidator() {
-        return commonName ->
-            !isSpecialCharPresent(commonName)
-                && !isHttpProtocolsPresent(commonName)
-                && !isIpAddressPresent(commonName)
-                && !isPortNumberPresent(commonName);
+    public boolean test(String commonName) {
+        return !isSpecialCharPresent(commonName)
+            && !isHttpProtocolsPresent(commonName)
+            && !isIpAddressPresent(commonName)
+            && !isPortNumberPresent(commonName);
     }
-
-    public Predicate<String> outputTypeValidator() {
-        return outputType -> Arrays.stream(ArtifactsCreatorProvider.values())
-            .map(ArtifactsCreatorProvider::toString)
-            .anyMatch(name -> name.equals(outputType));
-    }
-
 }

@@ -1,4 +1,5 @@
-/*============LICENSE_START=======================================================
+/*
+ * ============LICENSE_START=======================================================
  * oom-certservice-client
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
@@ -17,16 +18,18 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.certservice.client.api;
+package org.onap.oom.certservice.client.configuration.validation.client;
 
-public abstract class ExitableException extends RuntimeException {
-    public ExitableException(Throwable cause) {
-        super(cause);
+import java.util.Arrays;
+import java.util.function.Predicate;
+import org.onap.oom.certservice.client.certification.ArtifactsCreatorProvider;
+
+public class OutputTypeValidator implements Predicate<String> {
+
+    public boolean test(String outputType) {
+        return Arrays.stream(ArtifactsCreatorProvider.values())
+            .map(ArtifactsCreatorProvider::toString)
+            .anyMatch(name -> name.equals(outputType));
     }
 
-    public ExitableException(String message) {
-        super(message);
-    }
-
-    public abstract ExitStatus applicationExitStatus();
 }
