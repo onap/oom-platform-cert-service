@@ -18,14 +18,84 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.certservice.client.configuration.validation;
+package org.onap.oom.certservice.client.configuration.validation.csr;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.onap.oom.certservice.client.configuration.validation.client.ClientEnvsValueValidators.isPathValid;
+import static org.onap.oom.certservice.client.configuration.validation.csr.CsrEnvsValueValidators.isCountryValid;
+import static org.onap.oom.certservice.client.configuration.validation.csr.CsrEnvsValueValidators.isDomainNameValid;
+import static org.onap.oom.certservice.client.configuration.validation.csr.CsrEnvsValueValidators.isEmailAddressValid;
+import static org.onap.oom.certservice.client.configuration.validation.csr.CsrEnvsValueValidators.isIpAddressValid;
+import static org.onap.oom.certservice.client.configuration.validation.csr.CsrEnvsValueValidators.isSpecialCharPresent;
+import static org.onap.oom.certservice.client.configuration.validation.csr.CsrEnvsValueValidators.isUriValid;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-class UriValidatorTest {
+class CsrEnvsValueValidatorsTest {
+
+    @ParameterizedTest
+    @ValueSource(strings = {"/var/log", "/", "/var/log/", "/second_var", "/second-var"})
+    void shouldAcceptValidPath(String path) {
+        assertThat(isPathValid(path)).isTrue();
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"/var/log?", "", "var_", "var", "//", "/var//log"})
+    void shouldRejectInvalidPath(String path) {
+        assertThat(isPathValid(path)).isFalse();
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"PL", "DE", "PN", "US", "IO", "CA", "KH", "CO", "DK", "EC", "CZ", "CN", "BR", "BD", "BE"})
+    void shouldAcceptValidCountryCode(String countryCode) {
+        assertThat(isCountryValid(countryCode)).isTrue();
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"", "QQ", "AFG", "D", "&*", "!", "ONAP", "p", "pl", "us", "afg"})
+    void shouldRejectInvalidCountryCode(String countryCode) {
+        assertThat(isCountryValid(countryCode)).isFalse();
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"sample@example.com", "onap@domain.pl", "alex.supertramp@onap.com",
+        "al.super^tramp@onap.org"})
+    void shouldAcceptValidEmailAddr(String emailAddr) {
+        assertThat(isEmailAddressValid(emailAddr)).isTrue();
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"<sample@example.com>", "onap@domain", "(mailto)user@onap.com", "mailto:axe@axe.de",
+        "incoreectdomaim@onap.ux"})
+    void shouldRejectInvalidEmailAddr(String address) {
+        assertThat(isEmailAddressValid(address)).isFalse();
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"192.168.0.1", "10.183.34.201", "ff:ff:ff:ff::", "ff:ff:ff:ff:ff:ff:ff:ff"})
+    void shouldAcceptValidIpAddress(String address) {
+        assertThat(isIpAddressValid(address)).isTrue();
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"192.168.0.", "ff:ff:ee:a1:", "fg:ff:ff:ff::", "http://10.183.34.201",
+        "10.183.34.201:8080"})
+    void shouldRejectInvalidIpAddress(String address) {
+        assertThat(isIpAddressValid(address)).isFalse();
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"sample.com", "Sample.com", "onap.org", "SRI-NIC.ARPA", "ves-collector", "sample"})
+    void shouldAcceptValidDomainName(String domain) {
+        assertThat(isDomainNameValid(domain)).isTrue();
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {" ", "", "sample@onap.org", "192.168.0.1", "http://sample.com"})
+    void shouldRejectInvalidDomainNames(String domain) {
+        assertThat(isDomainNameValid(domain)).isFalse();
+    }
 
     /**
      * scheme = ALPHA *( ALPHA / DIGIT / "+" / "-" / "." )
@@ -34,19 +104,19 @@ class UriValidatorTest {
     @ParameterizedTest
     @ValueSource(strings = {"http:/", "http:", "http://", "h4ttp://"})
     void shouldTrueForValidScheme(String uri) {
-        assertThat(UriValidator.isValidUri(uri)).isTrue();
+        assertThat(isUriValid(uri)).isTrue();
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"example.com", "www.example.com", "0.0.0.0", "[2001:0db8:85a3:0000:0000:8a2e:0370:7334]"})
     void shouldFalseForUriWithoutScheme(String uri) {
-        assertThat(UriValidator.isValidUri(uri)).isFalse();
+        assertThat(isUriValid(uri)).isFalse();
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"*http://", "_http://", "?http://", "4http://"})
     void shouldFalseForUriWithInvalidScheme(String uri) {
-        assertThat(UriValidator.isValidUri(uri)).isFalse();
+        assertThat(isUriValid(uri)).isFalse();
     }
 
     /**
@@ -64,7 +134,7 @@ class UriValidatorTest {
         "http://user:password:test@example.com",
         "http://user-info:password@example.com"})
     void shouldTrueForValidUserInAuthority(String uri) {
-        assertThat(UriValidator.isValidUri(uri)).isTrue();
+        assertThat(isUriValid(uri)).isTrue();
     }
 
     @ParameterizedTest
@@ -72,7 +142,7 @@ class UriValidatorTest {
         "http://user:password",
         "http://user:password:test:"})
     void shouldFalseForMissingHostInAuthority(String uri) {
-        assertThat(UriValidator.isValidUri(uri)).isFalse();
+        assertThat(isUriValid(uri)).isFalse();
     }
 
     @ParameterizedTest
@@ -82,7 +152,7 @@ class UriValidatorTest {
         "http://8.8.8.8/",
         "http://8.8.8.8/test"})
     void shouldTrueForUriContainsIP(String uri) {
-        assertThat(UriValidator.isValidUri(uri)).isTrue();
+        assertThat(isUriValid(uri)).isTrue();
     }
 
     @ParameterizedTest
@@ -92,7 +162,7 @@ class UriValidatorTest {
         "http://8.8.8.8:8080/test",
         "https://8.8.8.8:443/"})
     void shouldTrueForUriContainsIPAndPort(String uri) {
-        assertThat(UriValidator.isValidUri(uri)).isTrue();
+        assertThat(isUriValid(uri)).isTrue();
     }
 
     @ParameterizedTest
@@ -101,7 +171,7 @@ class UriValidatorTest {
         "http:/file",
         "http:/ptah/to/file"})
     void shouldTrueForMissingAuthority(String uri) {
-        assertThat(UriValidator.isValidUri(uri)).isTrue();
+        assertThat(isUriValid(uri)).isTrue();
     }
 
     /**
@@ -114,7 +184,7 @@ class UriValidatorTest {
         "http://example.com/path",
         "http://example.com/",})
     void shouldTrueForPathWithAuthority(String uri) {
-        assertThat(UriValidator.isValidUri(uri)).isTrue();
+        assertThat(isUriValid(uri)).isTrue();
     }
 
     @ParameterizedTest
@@ -123,7 +193,7 @@ class UriValidatorTest {
         "http:/path",
         "http:/",})
     void shouldTrueForPathWithoutAuthority(String uri) {
-        assertThat(UriValidator.isValidUri(uri)).isTrue();
+        assertThat(isUriValid(uri)).isTrue();
     }
 
 
@@ -134,7 +204,7 @@ class UriValidatorTest {
         "http://example.com?test=tes1&#",
         "http://example.com#onap"})
     void shouldTrueForUriWithQueryAndFragmentInPath(String uri) {
-        assertThat(UriValidator.isValidUri(uri)).isTrue();
+        assertThat(isUriValid(uri)).isTrue();
     }
 
     @ParameterizedTest
@@ -143,7 +213,7 @@ class UriValidatorTest {
         "http://example.com?##",
         "http://www.example.com/file%GF.html"})
     void shouldFalseForUriWithWrongQueryOrWrongFragmentInPath(String uri) {
-        assertThat(UriValidator.isValidUri(uri)).isFalse();
+        assertThat(isUriValid(uri)).isFalse();
     }
 
     @ParameterizedTest
@@ -157,6 +227,18 @@ class UriValidatorTest {
         "telnet://192.0.2.16:80/",
         "urn:oasis:names:specification:docbook:dtd:xml:4.1.2"})
     void shouldTrueForRFC3986Examples(String uri) {
-        assertThat(UriValidator.isValidUri(uri)).isTrue();
+        assertThat(isUriValid(uri)).isTrue();
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"/text~", "/text#", "/text@", "/text*","/text$", "/text+", "/text%", "/text!", "/text(",
+        "/text)", "/text?", "/text|", "/text_", "/text^"})
+    void shouldBeTrueForStringsWithSpecialChars(String text) {
+        assertThat(isSpecialCharPresent(text)).isTrue();
+    }
+    @ParameterizedTest
+    @ValueSource(strings = {"text", ""})
+    void shouldBeFalseForStringsWithoutSpecialChars(String text) {
+        assertThat(isSpecialCharPresent(text)).isFalse();
     }
 }

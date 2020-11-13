@@ -18,15 +18,18 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.certservice.client.configuration.validation;
+package org.onap.oom.certservice.client.configuration.validation.csr;
 
-/**
- * Compliant with the RFC3986
- */
-public final class UriValidator {
+import java.util.Arrays;
+import java.util.Locale;
+import java.util.regex.Pattern;
+import org.apache.commons.validator.routines.DomainValidator;
+import org.apache.commons.validator.routines.EmailValidator;
+import org.apache.commons.validator.routines.InetAddressValidator;
 
-    private UriValidator() {
-    }
+public final class CsrEnvsValueValidators {
+
+    private static final boolean ALLOW_LOCAL_DOMAINS = true;
 
     private static final String SCHEME = "([A-Za-z][A-Za-z0-9+\\-.]*):";
 
@@ -55,6 +58,8 @@ public final class UriValidator {
     private static final String FRAGMENT = "(?:\\#((?:[A-Za-z0-9\\-._~!$&'()*+,;=:@/?]|%[0-9A-Fa-f]{2})*))?";
 
     /**
+     * Compliant with the RFC3986
+     * <p>
      * URI = scheme ":" hier-part [ "?" query ] [ "#" fragment ]
      * <p>
      * hier-part  = "//" authority path-abempty / path-absolute / path-rootless / path-empty
@@ -63,7 +68,32 @@ public final class UriValidator {
         SCHEME + "(" + AUTHORITY_WITH_PATH + OR + PATH_BEGIN_WITH_SLASH + OR + PATH_WITHOUT_SLASH + OR + "" + ")"
             + QUERY + FRAGMENT;
 
-    public static boolean isValidUri(String uri) {
+    private static final String SPECIAL_CHAR_PRESENCE_REGEX = "[~#@*$+%!()?/{}<>\\|_^]";
+
+    private CsrEnvsValueValidators() {
+    }
+
+    public static boolean isCountryValid(String country) {
+        return Arrays.asList(Locale.getISOCountries()).contains(country);
+    }
+
+    public static boolean isEmailAddressValid(String address) {
+        return EmailValidator.getInstance().isValid(address);
+    }
+
+    public static boolean isIpAddressValid(String address) {
+        return InetAddressValidator.getInstance().isValid(address);
+    }
+
+    public static boolean isDomainNameValid(String domain) {
+        return DomainValidator.getInstance(ALLOW_LOCAL_DOMAINS).isValid(domain);
+    }
+
+    public static boolean isUriValid(String uri) {
         return uri.matches(RFC3986_URI_MATCH_PATTERN);
+    }
+
+    public static boolean isSpecialCharPresent(String stringToCheck) {
+        return Pattern.compile(SPECIAL_CHAR_PRESENCE_REGEX).matcher(stringToCheck).find();
     }
 }

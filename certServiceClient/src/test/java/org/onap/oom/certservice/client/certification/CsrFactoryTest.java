@@ -20,31 +20,35 @@
 package org.onap.oom.certservice.client.certification;
 
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import java.security.KeyPair;
 import java.util.List;
+import org.bouncycastle.asn1.x509.GeneralName;
 import org.junit.jupiter.api.Test;
 import org.onap.oom.certservice.client.certification.exception.CsrGenerationException;
 import org.onap.oom.certservice.client.certification.exception.KeyPairGenerationException;
 import org.onap.oom.certservice.client.configuration.model.CsrConfiguration;
-
-import java.security.KeyPair;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import org.onap.oom.certservice.client.configuration.model.San;
 
 class CsrFactoryTest {
 
     CsrConfiguration config = mock(CsrConfiguration.class);
 
-
     @Test
-    void createEncodedCsr_shouldSucceedWhenAllFieldsAreSetCorrectly() throws KeyPairGenerationException, CsrGenerationException {
+    void createEncodedCsr_shouldSucceedWhenAllFieldsAreSetCorrectly()
+        throws KeyPairGenerationException, CsrGenerationException {
 
         KeyPair keyPair =
-                new KeyPairFactory(EncryptionAlgorithmConstants.RSA_ENCRYPTION_ALGORITHM, EncryptionAlgorithmConstants.KEY_SIZE).create();
+            new KeyPairFactory(EncryptionAlgorithmConstants.RSA_ENCRYPTION_ALGORITHM,
+                EncryptionAlgorithmConstants.KEY_SIZE).create();
+        San san1 = new San("onapexample.com", GeneralName.dNSName);
+        San san2 = new San("onapexample.com.pl", GeneralName.dNSName);
 
         when(config.getCommonName()).thenReturn("onap.org");
-        when(config.getSans()).thenReturn(List.of("onapexample.com","onapexample.com.pl","onapexample.pl"));
+        when(config.getSans()).thenReturn(List.of(san1, san2));
         when(config.getCountry()).thenReturn("US");
         when(config.getLocation()).thenReturn("San-Francisco");
         when(config.getOrganization()).thenReturn("Linux-Foundation");
