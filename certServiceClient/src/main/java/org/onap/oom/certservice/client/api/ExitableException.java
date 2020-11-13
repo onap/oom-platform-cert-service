@@ -19,7 +19,7 @@
 
 package org.onap.oom.certservice.client.api;
 
-public abstract class ExitableException extends Exception {
+public abstract class ExitableException extends RuntimeException {
     public ExitableException(Throwable cause) {
         super(cause);
     }

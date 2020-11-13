@@ -32,7 +32,7 @@ public class CsrConfiguration implements ConfigurationModel {
     private String country;
     private String organizationUnit;
     private String location;
-    private List<String> sans;
+    private List<ValidatedSan> sans;
 
 
     public String getCommonName() {
@@ -89,11 +89,11 @@ public class CsrConfiguration implements ConfigurationModel {
         return this;
     }
 
-    public List<String> getSans() {
+    public List<ValidatedSan> getSans() {
         return sans;
     }
 
-    public CsrConfiguration setSubjectAlternativeNames(List<String> subjectAlternativeNames) {
+    public CsrConfiguration setSans(List<ValidatedSan> subjectAlternativeNames) {
         this.sans = List.copyOf(subjectAlternativeNames);
         return this;
     }

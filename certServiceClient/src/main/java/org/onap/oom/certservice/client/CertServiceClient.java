@@ -39,6 +39,7 @@ import org.onap.oom.certservice.client.configuration.factory.CsrConfigurationFac
 import org.onap.oom.certservice.client.configuration.factory.SslContextFactory;
 import org.onap.oom.certservice.client.configuration.model.ClientConfiguration;
 import org.onap.oom.certservice.client.configuration.model.CsrConfiguration;
+import org.onap.oom.certservice.client.configuration.validation.SanMapper;
 import org.onap.oom.certservice.client.configuration.validation.ValidatorsFactory;
 import org.onap.oom.certservice.client.httpclient.CloseableHttpsClientProvider;
 import org.onap.oom.certservice.client.httpclient.HttpClient;
@@ -64,8 +65,8 @@ public class CertServiceClient {
         try {
             ClientConfiguration clientConfiguration = new ClientConfigurationFactory(new EnvsForClient(),
                 validatorsFactory).create();
-            CsrConfiguration csrConfiguration = new CsrConfigurationFactory(new EnvsForCsr(), validatorsFactory)
-                .create();
+            CsrConfiguration csrConfiguration = new CsrConfigurationFactory(new EnvsForCsr(), validatorsFactory,
+                new SanMapper()).create();
             KeyPair keyPair = keyPairFactory.create();
             CsrFactory csrFactory = new CsrFactory(csrConfiguration);
             SSLContext sslContext = new SslContextFactory(new EnvsForTls()).create();
