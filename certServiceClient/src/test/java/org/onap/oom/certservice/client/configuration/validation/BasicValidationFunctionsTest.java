@@ -23,6 +23,8 @@ package org.onap.oom.certservice.client.configuration.validation;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.onap.oom.certservice.client.configuration.validation.BasicValidationFunctions.isAlphaNumeric;
 import static org.onap.oom.certservice.client.configuration.validation.BasicValidationFunctions.isCountryValid;
+import static org.onap.oom.certservice.client.configuration.validation.BasicValidationFunctions.isEmailAddressValid;
+import static org.onap.oom.certservice.client.configuration.validation.BasicValidationFunctions.isIpAddressValid;
 import static org.onap.oom.certservice.client.configuration.validation.BasicValidationFunctions.isPathValid;
 
 import org.junit.jupiter.params.ParameterizedTest;
@@ -64,6 +66,32 @@ class BasicValidationFunctionsTest {
     @ValueSource(strings = {"44caname$", "#caname1", "1c_aname", "ca1-name"})
     void shouldRejectInvalidAlphanumeric(String caName) {
         assertThat(isAlphaNumeric(caName)).isFalse();
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"sample@example.com", "onap@lolo.pl", "alex.supertramp@onap.com",
+        "al.super^tramp@onap.org"})
+    void shouldAcceptValidEmailAddr(String emailAddr) {
+        assertThat(isEmailAddressValid(emailAddr)).isTrue();
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"<sample@example.com>", "onap@lolo", "(mailto)user@onap.com", "mailto:axe@axe.de",
+        "incoreectdomaim@onap.ux"})
+    void shouldRejectInvalidEmailAddr(String address) {
+        assertThat(isEmailAddressValid(address)).isFalse();
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"192.168.0.1", "10.183.34.201", "ff:ff:ff:ff::", "ff:ff:ff:ff:ff:ff:ff:ff"})
+    void shouldAcceptValidIpAddress(String address) {
+        assertThat(isIpAddressValid(address)).isTrue();
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"fg:ff:ff:ff::", "http://10.183.34.201", "10.183.34.201:8080"})
+    void shouldRejectInvalidIpAddress(String address) {
+        assertThat(isIpAddressValid(address)).isFalse();
     }
 
 }

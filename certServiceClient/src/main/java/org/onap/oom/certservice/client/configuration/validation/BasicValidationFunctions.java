@@ -23,6 +23,8 @@ package org.onap.oom.certservice.client.configuration.validation;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.regex.Pattern;
+import org.apache.commons.validator.routines.EmailValidator;
+import org.apache.commons.validator.routines.InetAddressValidator;
 
 public class BasicValidationFunctions {
 
@@ -52,6 +54,14 @@ public class BasicValidationFunctions {
 
     public static boolean isCountryValid(String country) {
         return Arrays.asList(Locale.getISOCountries()).contains(country);
+    }
+
+    public static boolean isEmailAddressValid(String address) {
+        return EmailValidator.getInstance().isValid(address);
+    }
+
+    public static boolean isIpAddressValid(String address) {
+        return InetAddressValidator.getInstance().isValid(address);
     }
 
 }
