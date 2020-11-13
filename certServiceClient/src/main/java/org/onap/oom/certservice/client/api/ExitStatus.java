@@ -31,7 +31,8 @@ public enum ExitStatus {
     PEM_CONVERSION_EXCEPTION(7, "Fail in PEM conversion"),
     PK_TO_PEM_ENCODING_EXCEPTION(8, "Fail in Private Key to PEM Encoding"),
     TLS_CONFIGURATION_EXCEPTION(9, "Invalid TLS configuration"),
-    FILE_CREATION_EXCEPTION(10, "File could not be created");
+    FILE_CREATION_EXCEPTION(10, "File could not be created"),
+    UNEXPECTED_EXCEPTION(99, "Application exited abnormally");
 
     private final int value;
     private final String message;

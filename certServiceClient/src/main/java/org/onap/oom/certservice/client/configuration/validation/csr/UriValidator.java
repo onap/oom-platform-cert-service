@@ -17,16 +17,12 @@
  * limitations under the License.
  * ============LICENSE_END=========================================================
  */
-
-package org.onap.oom.certservice.client.configuration.validation;
+package org.onap.oom.certservice.client.configuration.validation.csr;
 
 /**
  * Compliant with the RFC3986
  */
-public final class UriValidator {
-
-    private UriValidator() {
-    }
+final class UriValidator {
 
     private static final String SCHEME = "([A-Za-z][A-Za-z0-9+\\-.]*):";
 
@@ -63,7 +59,11 @@ public final class UriValidator {
         SCHEME + "(" + AUTHORITY_WITH_PATH + OR + PATH_BEGIN_WITH_SLASH + OR + PATH_WITHOUT_SLASH + OR + "" + ")"
             + QUERY + FRAGMENT;
 
-    public static boolean isValidUri(String uri) {
+    private UriValidator() {
+    }
+
+    static boolean isValid(String uri) {
         return uri.matches(RFC3986_URI_MATCH_PATTERN);
     }
 }
+
