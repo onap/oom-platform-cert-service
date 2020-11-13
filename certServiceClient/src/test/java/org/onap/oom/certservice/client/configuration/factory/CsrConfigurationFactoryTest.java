@@ -22,6 +22,7 @@ package org.onap.oom.certservice.client.configuration.factory;
 
 import java.util.List;
 import org.assertj.core.api.Condition;
+import org.bouncycastle.asn1.x509.GeneralName;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.onap.oom.certservice.client.configuration.CsrConfigurationEnvs;
@@ -30,7 +31,8 @@ import org.onap.oom.certservice.client.configuration.exception.CsrConfigurationE
 import org.onap.oom.certservice.client.configuration.model.CsrConfiguration;
 
 import java.util.Optional;
-import org.onap.oom.certservice.client.configuration.validation.ValidatorsFactory;
+import org.onap.oom.certservice.client.configuration.model.San;
+import org.onap.oom.certservice.client.configuration.validation.csr.CommonNameValidator;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -41,8 +43,9 @@ import static org.onap.oom.certservice.client.api.ExitStatus.CSR_CONFIGURATION_E
 public class CsrConfigurationFactoryTest {
 
     private static final String COMMON_NAME_VALID = "onap.org";
-    private static final List<String> SANS_SPLITTED_VALID = List.of("test-name", "test-name-1");
-    private static final String SANS_VALID = "test-name,test-name-1";
+    private static final String RAW_SAN1 = "ves-collector";
+    private static final String RAW_SAN2 = "ves";
+    private static final String RAW_SANS_VALID = String.format("%s,%s", RAW_SAN1, RAW_SAN2);
     private static final String COUNTRY_VALID = "US";
     private static final String LOCATION_VALID = "San-Francisco";
     private static final String ORGANIZATION_VALID = "Linux-Foundation";
@@ -51,9 +54,11 @@ public class CsrConfigurationFactoryTest {
     private static final String COMMON_NAME_INVALID = "onap.org*&";
     private static final String COUNTRY_INVALID = "PLA";
     private static final String ORGANIZATION_INVALID = "Linux?Foundation";
+    private static final String INVALID_SANS = "192.168.1.";
 
     private EnvsForCsr envsForCsr = mock(EnvsForCsr.class);
-    private ValidatorsFactory validatorsFactory = new ValidatorsFactory();
+    private CommonNameValidator commonNameValidator = new CommonNameValidator();
+    private SanMapper sanMapper = new SanMapper();
     private CsrConfigurationFactory testedFactory;
     private Condition<CsrConfigurationException> expectedExitCodeCondition = new Condition<>("Correct exit code") {
         @Override
@@ -64,20 +69,23 @@ public class CsrConfigurationFactoryTest {
 
     @BeforeEach
     void setUp() {
-        testedFactory = new CsrConfigurationFactory(envsForCsr, validatorsFactory);
+        testedFactory = new CsrConfigurationFactory(envsForCsr, commonNameValidator, sanMapper);
     }
 
     @Test
     void shouldReturnCorrectConfiguration_WhenAllVariablesAreSetAndValid() throws CsrConfigurationException {
         // given
         mockEnvsWithAllValidParameters();
+        San san1 = new San(RAW_SAN1, GeneralName.dNSName);
+        San san2 = new San(RAW_SAN2, GeneralName.dNSName);
+        List<San> sans = List.of(san1, san2);
 
         // when
         CsrConfiguration configuration = testedFactory.create();
 
         // then
         assertThat(configuration.getCommonName()).isEqualTo(COMMON_NAME_VALID);
-        assertThat(configuration.getSans()).isEqualTo(SANS_SPLITTED_VALID);
+        assertThat(configuration.getSans()).isEqualTo(sans);
         assertThat(configuration.getCountry()).isEqualTo(COUNTRY_VALID);
         assertThat(configuration.getLocation()).isEqualTo(LOCATION_VALID);
         assertThat(configuration.getOrganization()).isEqualTo(ORGANIZATION_VALID);
@@ -150,6 +158,17 @@ public class CsrConfigurationFactoryTest {
                 .has(expectedExitCodeCondition);
     }
 
+    @Test
+    void shouldThrowCsrConfigurationExceptionWhenSansInvalid() {
+        // given
+        mockEnvsWithInvalidSans();
+        // when/then
+        assertThatExceptionOfType(CsrConfigurationException.class)
+                .isThrownBy(testedFactory::create)
+                .withMessageContaining("SAN :" + INVALID_SANS + " does not match any requirements")
+                .has(expectedExitCodeCondition);
+    }
+
     private void mockEnvsWithAllValidParameters() {
         mockEnvsWithValidRequiredParameters();
         mockEnvsWithValidOptionalParameters();
@@ -158,7 +177,7 @@ public class CsrConfigurationFactoryTest {
     private void mockEnvsWithValidOptionalParameters() {
         when(envsForCsr.getOrganizationUnit()).thenReturn(Optional.of(ORGANIZATION_UNIT_VALID));
         when(envsForCsr.getLocation()).thenReturn(Optional.of(LOCATION_VALID));
-        when(envsForCsr.getSubjectAlternativesName()).thenReturn(Optional.of(SANS_VALID));
+        when(envsForCsr.getSubjectAlternativesName()).thenReturn(Optional.of(RAW_SANS_VALID));
     }
 
     private void mockEnvsWithValidRequiredParameters() {
@@ -186,5 +205,10 @@ public class CsrConfigurationFactoryTest {
     private void mockEnvsWithInvalidState() {
         mockEnvsWithAllValidParameters();
         when(envsForCsr.getState()).thenReturn(Optional.empty());
+    }
+
+    private void mockEnvsWithInvalidSans() {
+        mockEnvsWithAllValidParameters();
+        when(envsForCsr.getSubjectAlternativesName()).thenReturn(Optional.of(INVALID_SANS));
     }
 }

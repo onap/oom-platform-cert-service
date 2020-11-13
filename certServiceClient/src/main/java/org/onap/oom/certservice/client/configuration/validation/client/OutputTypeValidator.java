@@ -18,34 +18,18 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.certservice.client.configuration.validation;
-
-import static org.onap.oom.certservice.client.configuration.validation.BasicValidationFunctions.isHttpProtocolsPresent;
-import static org.onap.oom.certservice.client.configuration.validation.BasicValidationFunctions.isIpAddressPresent;
-import static org.onap.oom.certservice.client.configuration.validation.BasicValidationFunctions.isPortNumberPresent;
-import static org.onap.oom.certservice.client.configuration.validation.BasicValidationFunctions.isSpecialCharPresent;
+package org.onap.oom.certservice.client.configuration.validation.client;
 
 import java.util.Arrays;
 import java.util.function.Predicate;
 import org.onap.oom.certservice.client.certification.ArtifactsCreatorProvider;
 
-public class ValidatorsFactory {
+public class OutputTypeValidator implements Predicate<String> {
 
-    public Predicate<String> commonNameValidator() {
-        return commonName ->
-            !isSpecialCharPresent(commonName)
-                && !isHttpProtocolsPresent(commonName)
-                && !isIpAddressPresent(commonName)
-                && !isPortNumberPresent(commonName);
-    }
-
-    public Predicate<String> outputTypeValidator() {
-        return outputType -> Arrays.stream(ArtifactsCreatorProvider.values())
+    public boolean test(String outputType) {
+        return Arrays.stream(ArtifactsCreatorProvider.values())
             .map(ArtifactsCreatorProvider::toString)
             .anyMatch(name -> name.equals(outputType));
     }
 
-    public Predicate<String> uriValidator() {
-        return UriValidator::isValidUri;
-    }
 }

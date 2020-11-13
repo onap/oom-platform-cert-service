@@ -25,6 +25,7 @@ import static org.onap.oom.certservice.client.certification.EncryptionAlgorithmC
 
 import java.security.KeyPair;
 import javax.net.ssl.SSLContext;
+import org.onap.oom.certservice.client.api.ExitStatus;
 import org.onap.oom.certservice.client.api.ExitableException;
 import org.onap.oom.certservice.client.certification.ArtifactsCreatorProvider;
 import org.onap.oom.certservice.client.certification.CsrFactory;
@@ -36,10 +37,12 @@ import org.onap.oom.certservice.client.configuration.EnvsForCsr;
 import org.onap.oom.certservice.client.configuration.EnvsForTls;
 import org.onap.oom.certservice.client.configuration.factory.ClientConfigurationFactory;
 import org.onap.oom.certservice.client.configuration.factory.CsrConfigurationFactory;
+import org.onap.oom.certservice.client.configuration.factory.SanMapper;
 import org.onap.oom.certservice.client.configuration.factory.SslContextFactory;
 import org.onap.oom.certservice.client.configuration.model.ClientConfiguration;
 import org.onap.oom.certservice.client.configuration.model.CsrConfiguration;
-import org.onap.oom.certservice.client.configuration.validation.ValidatorsFactory;
+import org.onap.oom.certservice.client.configuration.validation.client.OutputTypeValidator;
+import org.onap.oom.certservice.client.configuration.validation.csr.CommonNameValidator;
 import org.onap.oom.certservice.client.httpclient.CloseableHttpsClientProvider;
 import org.onap.oom.certservice.client.httpclient.HttpClient;
 import org.onap.oom.certservice.client.httpclient.model.CertServiceResponse;
@@ -60,12 +63,11 @@ public class CertServiceClient {
         KeyPairFactory keyPairFactory = new KeyPairFactory(RSA_ENCRYPTION_ALGORITHM, KEY_SIZE);
         PrivateKeyToPemEncoder pkEncoder = new PrivateKeyToPemEncoder();
         Base64Encoder base64Encoder = new Base64Encoder();
-        ValidatorsFactory validatorsFactory = new ValidatorsFactory();
         try {
             ClientConfiguration clientConfiguration = new ClientConfigurationFactory(new EnvsForClient(),
-                validatorsFactory).create();
-            CsrConfiguration csrConfiguration = new CsrConfigurationFactory(new EnvsForCsr(), validatorsFactory)
-                .create();
+                new OutputTypeValidator()).create();
+            CsrConfiguration csrConfiguration = new CsrConfigurationFactory(new EnvsForCsr(), new CommonNameValidator(),
+                new SanMapper()).create();
             KeyPair keyPair = keyPairFactory.create();
             CsrFactory csrFactory = new CsrFactory(csrConfiguration);
             SSLContext sslContext = new SslContextFactory(new EnvsForTls()).create();
@@ -90,6 +92,9 @@ public class CertServiceClient {
         } catch (ExitableException e) {
             LOGGER.error("Cert Service Client fails in execution: ", e);
             appExitHandler.exit(e.applicationExitStatus());
+        } catch (Exception e) {
+            LOGGER.error("Application failed (unexpected error): ", e);
+            appExitHandler.exit(ExitStatus.UNEXPECTED_EXCEPTION);
         }
         appExitHandler.exit(SUCCESS);
     }
