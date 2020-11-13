@@ -18,17 +18,27 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.certservice.client.configuration.validation;
+package org.onap.oom.certservice.client.configuration.validation.client;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.onap.oom.certservice.client.configuration.validation.BasicValidationFunctions.isAlphaNumeric;
-import static org.onap.oom.certservice.client.configuration.validation.BasicValidationFunctions.isCountryValid;
-import static org.onap.oom.certservice.client.configuration.validation.BasicValidationFunctions.isPathValid;
+import static org.onap.oom.certservice.client.configuration.validation.client.ClientEnvsValueValidators.isAlphaNumeric;
+import static org.onap.oom.certservice.client.configuration.validation.client.ClientEnvsValueValidators.isPathValid;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-class BasicValidationFunctionsTest {
+class ClientEnvsValueValidatorsTest {
+    @ParameterizedTest
+    @ValueSource(strings = {"caname", "caname1", "123caName", "ca1name"})
+    void shouldAcceptValidAlphanumeric(String caName) {
+        assertThat(isAlphaNumeric(caName)).isTrue();
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"44caname$", "#caname1", "1c_aname", "ca1-name"})
+    void shouldRejectInvalidAlphanumeric(String caName) {
+        assertThat(isAlphaNumeric(caName)).isFalse();
+    }
 
     @ParameterizedTest
     @ValueSource(strings = {"/var/log", "/", "/var/log/", "/second_var", "/second-var"})
@@ -40,30 +50,6 @@ class BasicValidationFunctionsTest {
     @ValueSource(strings = {"/var/log?", "", "var_", "var", "//", "/var//log"})
     void shouldRejectInvalidPath(String path) {
         assertThat(isPathValid(path)).isFalse();
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = {"PL", "DE", "PN", "US", "IO", "CA", "KH", "CO", "DK", "EC", "CZ", "CN", "BR", "BD", "BE"})
-    void shouldAcceptValidCountryCode(String countryCode) {
-        assertThat(isCountryValid(countryCode)).isTrue();
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = {"", "QQ", "AFG", "D", "&*", "!", "ONAP", "p", "pl", "us", "afg"})
-    void shouldRejectInvalidCountryCode(String countryCode) {
-        assertThat(isCountryValid(countryCode)).isFalse();
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = {"caname", "caname1", "123caName", "ca1name"})
-    void shouldAcceptValidAlphanumeric(String caName) {
-        assertThat(isAlphaNumeric(caName)).isTrue();
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = {"44caname$", "#caname1", "1c_aname", "ca1-name"})
-    void shouldRejectInvalidAlphanumeric(String caName) {
-        assertThat(isAlphaNumeric(caName)).isFalse();
     }
 
 }

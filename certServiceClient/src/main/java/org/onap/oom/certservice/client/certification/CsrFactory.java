@@ -48,6 +48,7 @@ import org.bouncycastle.pkcs.PKCS10CertificationRequest;
 import org.bouncycastle.pkcs.jcajce.JcaPKCS10CertificationRequestBuilder;
 import org.onap.oom.certservice.client.certification.exception.CsrGenerationException;
 import org.onap.oom.certservice.client.configuration.model.CsrConfiguration;
+import org.onap.oom.certservice.client.configuration.model.San;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -140,9 +141,9 @@ public class CsrFactory {
     }
 
     private GeneralNames createGeneralNames() {
-        List<String> sans = this.configuration.getSans();
+        List<San> sans = this.configuration.getSans();
         GeneralName[] generalNames = sans.stream()
-            .map(san -> new GeneralName(GeneralName.dNSName, san))
+            .map(san -> new GeneralName(san.getType(), san.getValue()))
             .collect(Collectors.toList())
             .toArray(GeneralName[]::new);
         return new GeneralNames(generalNames);

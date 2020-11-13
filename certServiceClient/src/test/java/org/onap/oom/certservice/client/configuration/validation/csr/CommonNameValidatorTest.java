@@ -1,4 +1,5 @@
-/*============LICENSE_START=======================================================
+/*
+ * ============LICENSE_START=======================================================
  * oom-certservice-client
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
@@ -17,16 +18,27 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.certservice.client.api;
+package org.onap.oom.certservice.client.configuration.validation.csr;
 
-public abstract class ExitableException extends RuntimeException {
-    public ExitableException(Throwable cause) {
-        super(cause);
+import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+
+class CommonNameValidatorTest {
+
+    CommonNameValidator cut = new CommonNameValidator();
+
+    @ParameterizedTest
+    @ValueSource(strings = {"example.com", "www.example.com"})
+    void shouldAcceptValidCommonName(String commonName) {
+        assertThat(cut.test(commonName)).isTrue();
     }
 
-    public ExitableException(String message) {
-        super(message);
+    @ParameterizedTest
+    @ValueSource(strings = {"https://example.com", "http://example.com", "example.com:8080", "0.0.0.0", "@#$%.com"})
+    void shouldRejectInvalidCommonName(String commonName) {
+        assertThat(cut.test(commonName)).isFalse();
     }
 
-    public abstract ExitStatus applicationExitStatus();
 }
