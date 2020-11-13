@@ -210,6 +210,30 @@
       "revId": "fb1061900c6ceb0fa1adaee99c7bf23ae81982ad",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3db9a93_e73fab25",
+        "filename": "certServiceClient/src/main/java/org/onap/oom/certservice/client/configuration/factory/CsrConfigurationFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-11-13T06:57:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c3f0517_9f71f71a",
+      "range": {
+        "startLine": 79,
+        "startChar": 51,
+        "endLine": 79,
+        "endChar": 52
+      },
+      "revId": "fb1061900c6ceb0fa1adaee99c7bf23ae81982ad",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
