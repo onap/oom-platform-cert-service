@@ -26,7 +26,7 @@ import org.onap.oom.certservice.client.configuration.EnvsForClient;
 import org.onap.oom.certservice.client.configuration.exception.ClientConfigurationException;
 import org.onap.oom.certservice.client.configuration.model.ClientConfiguration;
 import org.onap.oom.certservice.client.configuration.validation.BasicValidationFunctions;
-import org.onap.oom.certservice.client.configuration.validation.ValidatorsFactory;
+import org.onap.oom.certservice.client.configuration.validation.client.OutputTypeValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,12 +34,12 @@ public class ClientConfigurationFactory implements ConfigurationFactory<ClientCo
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientConfigurationFactory.class);
     private final EnvsForClient envsForClient;
-    private final ValidatorsFactory validatorsFactory;
+    private final OutputTypeValidator outputTypeValidator;
 
 
-    public ClientConfigurationFactory(EnvsForClient envsForClient, ValidatorsFactory validatorsFactory) {
+    public ClientConfigurationFactory(EnvsForClient envsForClient, OutputTypeValidator outputTypeValidator) {
         this.envsForClient = envsForClient;
-        this.validatorsFactory = validatorsFactory;
+        this.outputTypeValidator = outputTypeValidator;
     }
 
     @Override
@@ -66,7 +66,7 @@ public class ClientConfigurationFactory implements ConfigurationFactory<ClientCo
         Optional<String> outputType = envsForClient.getOutputType();
 
         if (outputType.isPresent()) {
-            outputType.filter(validatorsFactory.outputTypeValidator())
+            outputType.filter(outputTypeValidator)
                 .map(configuration::setOutputType)
                 .orElseThrow(
                     () -> new ClientConfigurationException(ClientConfigurationEnvs.OUTPUT_TYPE + " is invalid."));
