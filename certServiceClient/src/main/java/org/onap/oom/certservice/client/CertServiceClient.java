@@ -19,6 +19,12 @@
 
 package org.onap.oom.certservice.client;
 
+import static org.onap.oom.certservice.client.api.ExitStatus.SUCCESS;
+import static org.onap.oom.certservice.client.certification.EncryptionAlgorithmConstants.KEY_SIZE;
+import static org.onap.oom.certservice.client.certification.EncryptionAlgorithmConstants.RSA_ENCRYPTION_ALGORITHM;
+
+import java.security.KeyPair;
+import javax.net.ssl.SSLContext;
 import org.onap.oom.certservice.client.api.ExitableException;
 import org.onap.oom.certservice.client.certification.ArtifactsCreatorProvider;
 import org.onap.oom.certservice.client.certification.CsrFactory;
@@ -33,18 +39,12 @@ import org.onap.oom.certservice.client.configuration.factory.CsrConfigurationFac
 import org.onap.oom.certservice.client.configuration.factory.SslContextFactory;
 import org.onap.oom.certservice.client.configuration.model.ClientConfiguration;
 import org.onap.oom.certservice.client.configuration.model.CsrConfiguration;
+import org.onap.oom.certservice.client.configuration.validation.ValidatorsFactory;
 import org.onap.oom.certservice.client.httpclient.CloseableHttpsClientProvider;
 import org.onap.oom.certservice.client.httpclient.HttpClient;
 import org.onap.oom.certservice.client.httpclient.model.CertServiceResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.net.ssl.SSLContext;
-import java.security.KeyPair;
-
-import static org.onap.oom.certservice.client.api.ExitStatus.SUCCESS;
-import static org.onap.oom.certservice.client.certification.EncryptionAlgorithmConstants.KEY_SIZE;
-import static org.onap.oom.certservice.client.certification.EncryptionAlgorithmConstants.RSA_ENCRYPTION_ALGORITHM;
 
 public class CertServiceClient {
 
@@ -60,29 +60,32 @@ public class CertServiceClient {
         KeyPairFactory keyPairFactory = new KeyPairFactory(RSA_ENCRYPTION_ALGORITHM, KEY_SIZE);
         PrivateKeyToPemEncoder pkEncoder = new PrivateKeyToPemEncoder();
         Base64Encoder base64Encoder = new Base64Encoder();
+        ValidatorsFactory validatorsFactory = new ValidatorsFactory();
         try {
-            ClientConfiguration clientConfiguration = new ClientConfigurationFactory(new EnvsForClient()).create();
-            CsrConfiguration csrConfiguration = new CsrConfigurationFactory(new EnvsForCsr()).create();
+            ClientConfiguration clientConfiguration = new ClientConfigurationFactory(new EnvsForClient(),
+                validatorsFactory).create();
+            CsrConfiguration csrConfiguration = new CsrConfigurationFactory(new EnvsForCsr(), validatorsFactory)
+                .create();
             KeyPair keyPair = keyPairFactory.create();
             CsrFactory csrFactory = new CsrFactory(csrConfiguration);
             SSLContext sslContext = new SslContextFactory(new EnvsForTls()).create();
 
             CloseableHttpsClientProvider provider = new CloseableHttpsClientProvider(
-                    sslContext, clientConfiguration.getRequestTimeout());
+                sslContext, clientConfiguration.getRequestTimeoutInMs());
             HttpClient httpClient = new HttpClient(provider, clientConfiguration.getUrlToCertService());
 
             CertServiceResponse certServiceData =
-                    httpClient.retrieveCertServiceData(
-                            clientConfiguration.getCaName(),
-                            base64Encoder.encode(csrFactory.createCsrInPem(keyPair)),
-                            base64Encoder.encode(pkEncoder.encodePrivateKeyToPem(keyPair.getPrivate())));
+                httpClient.retrieveCertServiceData(
+                    clientConfiguration.getCaName(),
+                    base64Encoder.encode(csrFactory.createCsrInPem(keyPair)),
+                    base64Encoder.encode(pkEncoder.encodePrivateKeyToPem(keyPair.getPrivate())));
 
             ArtifactsCreatorProvider
-                    .get(clientConfiguration.getOutputType(),
-                            clientConfiguration.getCertsOutputPath())
-                    .create(certServiceData.getCertificateChain(),
-                            certServiceData.getTrustedCertificates(),
-                            keyPair.getPrivate());
+                .get(clientConfiguration.getOutputType(),
+                    clientConfiguration.getCertsOutputPath())
+                .create(certServiceData.getCertificateChain(),
+                    certServiceData.getTrustedCertificates(),
+                    keyPair.getPrivate());
 
         } catch (ExitableException e) {
             LOGGER.error("Cert Service Client fails in execution: ", e);

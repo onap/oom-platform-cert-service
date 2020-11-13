@@ -29,7 +29,7 @@ public class ClientConfiguration implements ConfigurationModel {
     private static final String DEFAULT_OUTPUT_TYPE = "P12";
 
     private String urlToCertService;
-    private Integer requestTimeout;
+    private Integer requestTimeoutInMs;
     private String certsOutputPath;
     private String caName;
     private String outputType;
@@ -37,7 +37,7 @@ public class ClientConfiguration implements ConfigurationModel {
 
     public ClientConfiguration() {
         urlToCertService = DEFAULT_REQUEST_URL;
-        requestTimeout = DEFAULT_TIMEOUT_MS;
+        requestTimeoutInMs = DEFAULT_TIMEOUT_MS;
         outputType = DEFAULT_OUTPUT_TYPE;
     }
 
@@ -51,12 +51,12 @@ public class ClientConfiguration implements ConfigurationModel {
         return this;
     }
 
-    public Integer getRequestTimeout() {
-        return requestTimeout;
+    public Integer getRequestTimeoutInMs() {
+        return requestTimeoutInMs;
     }
 
-    public ClientConfiguration setRequestTimeout(Integer requestTimeout) {
-        this.requestTimeout = requestTimeout;
+    public ClientConfiguration setRequestTimeoutInMs(Integer requestTimeoutInMs) {
+        this.requestTimeoutInMs = requestTimeoutInMs;
         return this;
     }
 
@@ -91,7 +91,7 @@ public class ClientConfiguration implements ConfigurationModel {
     public String toString() {
         return String.format("%s: %s, %s: %s, %s: %s, %s: %s, %s: %s",
                 ClientConfigurationEnvs.REQUEST_URL, urlToCertService,
-                ClientConfigurationEnvs.REQUEST_TIMEOUT, requestTimeout,
+                ClientConfigurationEnvs.REQUEST_TIMEOUT, requestTimeoutInMs,
                 ClientConfigurationEnvs.OUTPUT_PATH, certsOutputPath,
                 ClientConfigurationEnvs.CA_NAME, caName,
                 ClientConfigurationEnvs.OUTPUT_TYPE, outputType);

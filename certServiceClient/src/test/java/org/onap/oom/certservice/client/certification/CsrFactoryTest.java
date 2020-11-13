@@ -20,6 +20,7 @@
 package org.onap.oom.certservice.client.certification;
 
 
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.onap.oom.certservice.client.certification.exception.CsrGenerationException;
 import org.onap.oom.certservice.client.certification.exception.KeyPairGenerationException;
@@ -43,7 +44,7 @@ class CsrFactoryTest {
                 new KeyPairFactory(EncryptionAlgorithmConstants.RSA_ENCRYPTION_ALGORITHM, EncryptionAlgorithmConstants.KEY_SIZE).create();
 
         when(config.getCommonName()).thenReturn("onap.org");
-        when(config.getSans()).thenReturn("onapexample.com:onapexample.com.pl:onapexample.pl");
+        when(config.getSans()).thenReturn(List.of("onapexample.com","onapexample.com.pl","onapexample.pl"));
         when(config.getCountry()).thenReturn("US");
         when(config.getLocation()).thenReturn("San-Francisco");
         when(config.getOrganization()).thenReturn("Linux-Foundation");
