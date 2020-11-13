@@ -25,8 +25,8 @@ import org.onap.oom.certservice.client.configuration.ClientConfigurationEnvs;
 import org.onap.oom.certservice.client.configuration.EnvsForClient;
 import org.onap.oom.certservice.client.configuration.exception.ClientConfigurationException;
 import org.onap.oom.certservice.client.configuration.model.ClientConfiguration;
-import org.onap.oom.certservice.client.configuration.validation.BasicValidationFunctions;
-import org.onap.oom.certservice.client.configuration.validation.ValidatorsFactory;
+import org.onap.oom.certservice.client.configuration.validation.client.ClientEnvsValueValidators;
+import org.onap.oom.certservice.client.configuration.validation.client.OutputTypeValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,12 +34,12 @@ public class ClientConfigurationFactory implements ConfigurationFactory<ClientCo
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientConfigurationFactory.class);
     private final EnvsForClient envsForClient;
-    private final ValidatorsFactory validatorsFactory;
+    private final OutputTypeValidator outputTypeValidator;
 
 
-    public ClientConfigurationFactory(EnvsForClient envsForClient, ValidatorsFactory validatorsFactory) {
+    public ClientConfigurationFactory(EnvsForClient envsForClient, OutputTypeValidator outputTypeValidator) {
         this.envsForClient = envsForClient;
-        this.validatorsFactory = validatorsFactory;
+        this.outputTypeValidator = outputTypeValidator;
     }
 
     @Override
@@ -54,19 +54,19 @@ public class ClientConfigurationFactory implements ConfigurationFactory<ClientCo
             .map(timeout -> configuration.setRequestTimeoutInMs(Integer.valueOf(timeout)));
 
         envsForClient.getOutputPath()
-            .filter(BasicValidationFunctions::isPathValid)
+            .filter(ClientEnvsValueValidators::isPathValid)
             .map(configuration::setCertsOutputPath)
             .orElseThrow(() -> new ClientConfigurationException(ClientConfigurationEnvs.OUTPUT_PATH + " is invalid."));
 
         envsForClient.getCaName()
-            .filter(BasicValidationFunctions::isAlphaNumeric)
+            .filter(ClientEnvsValueValidators::isAlphaNumeric)
             .map(configuration::setCaName)
             .orElseThrow(() -> new ClientConfigurationException(ClientConfigurationEnvs.CA_NAME + " is invalid."));
 
         Optional<String> outputType = envsForClient.getOutputType();
 
         if (outputType.isPresent()) {
-            outputType.filter(validatorsFactory.outputTypeValidator())
+            outputType.filter(outputTypeValidator)
                 .map(configuration::setOutputType)
                 .orElseThrow(
                     () -> new ClientConfigurationException(ClientConfigurationEnvs.OUTPUT_TYPE + " is invalid."));

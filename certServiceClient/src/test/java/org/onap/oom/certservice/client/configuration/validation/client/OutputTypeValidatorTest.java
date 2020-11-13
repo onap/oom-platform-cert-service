@@ -18,39 +18,27 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.certservice.client.configuration.validation;
+package org.onap.oom.certservice.client.configuration.validation.client;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-class ValidatorsFactoryTest {
+class OutputTypeValidatorTest {
 
-    ValidatorsFactory cut = new ValidatorsFactory();
+    OutputTypeValidator cut = new OutputTypeValidator();
 
     @ParameterizedTest
     @ValueSource(strings = {"JKS", "P12", "PEM"})
     void shouldAcceptValidOutputType(String outputType) {
-        assertThat(cut.outputTypeValidator().test(outputType)).isTrue();
+        assertThat(cut.test(outputType)).isTrue();
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"jks", "p12", "pem", "", "pass", "!@$#pp"})
     void shouldRejectInvalidOutputType(String outputType) {
-        assertThat(cut.outputTypeValidator().test(outputType)).isFalse();
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = {"example.com", "www.example.com"})
-    void shouldAcceptValidCommonName(String commonName) {
-        assertThat(cut.commonNameValidator().test(commonName)).isTrue();
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = {"https://example.com", "http://example.com", "example.com:8080", "0.0.0.0", "@#$%.com"})
-    void shouldRejectInvalidCommonName(String commonName) {
-        assertThat(cut.commonNameValidator().test(commonName)).isFalse();
+        assertThat(cut.test(outputType)).isFalse();
     }
 
 }
