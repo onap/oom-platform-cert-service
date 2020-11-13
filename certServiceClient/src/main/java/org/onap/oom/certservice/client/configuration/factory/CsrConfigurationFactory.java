@@ -52,33 +52,33 @@ public class CsrConfigurationFactory implements ConfigurationFactory<CsrConfigur
         CsrConfiguration configuration = new CsrConfiguration();
 
         envsForCsr.getCommonName()
-                .filter(validatorsFactory.commonNameValidator())
-                .map(configuration::setCommonName)
-                .orElseThrow(() -> new CsrConfigurationException(CsrConfigurationEnvs.COMMON_NAME + " is invalid."));
+            .filter(validatorsFactory.commonNameValidator())
+            .map(configuration::setCommonName)
+            .orElseThrow(() -> new CsrConfigurationException(CsrConfigurationEnvs.COMMON_NAME + " is invalid."));
 
         envsForCsr.getOrganization()
-                .filter(org -> !isSpecialCharPresent(org))
-                .map(configuration::setOrganization)
-                .orElseThrow(() -> new CsrConfigurationException(CsrConfigurationEnvs.ORGANIZATION + " is invalid."));
+            .filter(org -> !isSpecialCharPresent(org))
+            .map(configuration::setOrganization)
+            .orElseThrow(() -> new CsrConfigurationException(CsrConfigurationEnvs.ORGANIZATION + " is invalid."));
 
         envsForCsr.getState()
-                .map(configuration::setState)
-                .orElseThrow(() -> new CsrConfigurationException(CsrConfigurationEnvs.STATE + " is invalid."));
+            .map(configuration::setState)
+            .orElseThrow(() -> new CsrConfigurationException(CsrConfigurationEnvs.STATE + " is invalid."));
 
         envsForCsr.getCountry()
-                .filter(BasicValidationFunctions::isCountryValid)
-                .map(configuration::setCountry)
-                .orElseThrow(() -> new CsrConfigurationException(CsrConfigurationEnvs.COUNTRY + " is invalid."));
+            .filter(BasicValidationFunctions::isCountryValid)
+            .map(configuration::setCountry)
+            .orElseThrow(() -> new CsrConfigurationException(CsrConfigurationEnvs.COUNTRY + " is invalid."));
 
         envsForCsr.getOrganizationUnit()
-                .map(configuration::setOrganizationUnit);
+            .map(configuration::setOrganizationUnit);
 
         envsForCsr.getLocation()
-                .map(configuration::setLocation);
+            .map(configuration::setLocation);
 
         envsForCsr.getSubjectAlternativesName()
             .map(sans -> Arrays.asList(sans.split(SANS_DELIMITER)))
-                .map(configuration::setSubjectAlternativeNames);
+            .map(configuration::setSubjectAlternativeNames);
 
         LOGGER.info("Successful validation of CSR configuration. Configuration data: {}", configuration.toString());
 
