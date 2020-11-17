@@ -15,7 +15,18 @@
   <properties>
     <version.mvn-clean-plugin>3.1.0</version.mvn-clean-plugin>
     <version.mvn-golang-wrapper-plugin>2.3.5</version.mvn-golang-wrapper-plugin>
+    <sonar.go.coverage.reportPaths>bin/coverage.out</sonar.go.coverage.reportPaths>
+    <sonar.exclusions>**/*_test.go, **/testdata/*</sonar.exclusions>
   </properties>
+
+
+  <dependencies>
+    <dependency>
+      <groupId>org.sonarsource.go</groupId>
+      <artifactId>sonar-go-plugin</artifactId>
+      <version>1.1.1.2000</version>
+    </dependency>
+  </dependencies>
 
   <build>
     <!--Changing standard Maven project source structure to make it Go compatible-->
@@ -45,6 +56,17 @@
         <version>${version.mvn-golang-wrapper-plugin}</version>
         <extensions>true</extensions>
         <executions>
+          <execution>
+            <id>coverage</id>
+            <goals>
+              <goal>test</goal>
+            </goals>
+            <configuration>
+              <testFlags>
+                <flag>-coverprofile=bin/coverage.out</flag>
+              </testFlags>
+            </configuration>
+          </execution>
           <execution>
             <id>install</id>
             <goals>
