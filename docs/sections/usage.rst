@@ -31,7 +31,7 @@ CertService client needs the following configuration parameters to work properly
   - LOCATION *(optional)* - Location for which certificate from CMPv2 server should be issued
   - STATE *(required)* - State for which certificate from CMPv2 server should be issued
   - COUNTRY *(required)* - Country for which certificate from CMPv2 server should be issued
-  - SANS *(optional)(SANS's should be separated by a colon e.g. test.onap.org:onap.com)* - Subject Alternative Names (SANs) for which certificate from CMPv2 server should be issued.
+  - SANS *(optional)(SANS's should be separated by a comma e.g. test.onap.org,onap.com)* - Subject Alternative Names (SANs) for which certificate from CMPv2 server should be issued.
 
 3. Parameters to establish secure communication to CertService:
 
@@ -71,7 +71,7 @@ To run CertService client as standalone docker container execute following steps
   LOCATION=San-Francisco
   STATE=California
   COUNTRY=US
-  SANS=test.onap.org:onap.com
+  SANS=test.onap.org,onap.com
 
   #TLS config envs
   KEYSTORE_PATH=/etc/onap/oom/certservice/certs/certServiceClient-keystore.jks
