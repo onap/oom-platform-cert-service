@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d2da763_27cb167d",
+        "filename": "certServiceClient/src/main/java/org/onap/oom/certservice/client/configuration/validation/RFC3986UriValidator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-11-17T14:57:03Z",
+      "side": 1,
+      "message": "Lets remain here just UriValidator, RFC... is redundant on this level",
+      "range": {
+        "startLine": 23,
+        "startChar": 20,
+        "endLine": 23,
+        "endChar": 32
+      },
+      "revId": "414f07b2c18ea475b3da126bb33221cf0d12355f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cf6fccc_c45754be",
+        "filename": "certServiceClient/src/main/java/org/onap/oom/certservice/client/configuration/validation/RFC3986UriValidator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-11-17T14:57:03Z",
+      "side": 1,
+      "message": "isValidUri should be ok, info about which RFC it meets will be in regex definition",
+      "range": {
+        "startLine": 27,
+        "startChar": 26,
+        "endLine": 27,
+        "endChar": 38
+      },
+      "revId": "414f07b2c18ea475b3da126bb33221cf0d12355f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
