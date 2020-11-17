@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "584e3e86_86d4f103",
+        "filename": "certServiceK8sExternalProvider/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-11-17T14:48:24Z",
+      "side": 1,
+      "message": "Consider, move version to properties section.",
+      "range": {
+        "startLine": 27,
+        "startChar": 15,
+        "endLine": 27,
+        "endChar": 25
+      },
+      "revId": "b08aac890a4056b20169a30f12debfa4007fc088",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
