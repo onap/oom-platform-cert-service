@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d077aa8_8f0a7d89",
+        "filename": "certService/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-11-17T09:29:07Z",
+      "side": 1,
+      "message": "why 2.3.0, not 2.2.1 ?\n\nyou made a little change with separator. Did you add some new functionality?\nIf yes then 2.3.0 is ok, otherwise it should be 2.2.1",
+      "revId": "0f4ac6742d50489fcee7ad13661c3d4d70c3bb37",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
