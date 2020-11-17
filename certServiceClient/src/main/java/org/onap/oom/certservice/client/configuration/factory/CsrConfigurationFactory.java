@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
 public class CsrConfigurationFactory implements ConfigurationFactory<CsrConfiguration> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CsrConfigurationFactory.class);
-    private static final String SANS_DELIMITER = ":";
+    private static final String SANS_DELIMITER = ",";
 
     private final EnvsForCsr envsForCsr;
     private final ValidatorsFactory validatorsFactory;

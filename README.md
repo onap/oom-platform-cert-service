@@ -7,10 +7,11 @@ More information about the project and all its functionalities you can find unde
     https://wiki.onap.org/display/DW/OOM+Certification+Service
     ``` 
   
-Project consists of three submodules:
+Project consists of four submodules:
 1. oom-certservice-api
 2. oom-certservice-client
 3. oom-certservice-post-processor
+4. oom-certservice-k8s-external-provider
 
 Detailed information about submodules can be found in ```README.md``` in their directories.
 
