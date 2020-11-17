@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "340797a7_f0c5f8e6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-11-17T09:57:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6316bc6d_85c42871",
+      "range": {
+        "startLine": 7,
+        "startChar": 1,
+        "endLine": 7,
+        "endChar": 22
+      },
+      "revId": "9d7c4d9194f9f13219d47d09ee926827fbf5e56e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbd8486d_52a182a8",
         "filename": "certServiceClient/src/main/java/org/onap/oom/certservice/client/configuration/validation/ValidatorsFactory.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "9d7c4d9194f9f13219d47d09ee926827fbf5e56e",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faa28bd5_f95930f5",
+        "filename": "certServiceClient/src/main/java/org/onap/oom/certservice/client/configuration/validation/ValidatorsFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-11-17T09:57:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbd8486d_52a182a8",
+      "range": {
+        "startLine": 48,
+        "startChar": 29,
+        "endLine": 48,
+        "endChar": 30
+      },
+      "revId": "9d7c4d9194f9f13219d47d09ee926827fbf5e56e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
