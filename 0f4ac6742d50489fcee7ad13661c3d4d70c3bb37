@@ -16,6 +16,24 @@
       "revId": "0f4ac6742d50489fcee7ad13661c3d4d70c3bb37",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea9ddd51_d0b83615",
+        "filename": "certService/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-11-17T12:58:19Z",
+      "side": 1,
+      "message": "We have upcoming changes for 3 subprojects adding functionality to support SANs in other types than DNSName. Change from this merge request won\u0027t be released alone.",
+      "parentUuid": "6d077aa8_8f0a7d89",
+      "revId": "0f4ac6742d50489fcee7ad13661c3d4d70c3bb37",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
