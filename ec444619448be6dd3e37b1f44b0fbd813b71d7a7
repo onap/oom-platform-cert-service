@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b7dc84e_780aef1d",
+        "filename": "certServiceClient/src/main/java/org/onap/oom/certservice/client/configuration/validation/UriValidator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-11-18T10:17:35Z",
+      "side": 1,
+      "message": "final + private constructor\n\nor you can go in the domain model.\n\nCreate class Uri with method isValid.",
+      "revId": "ec444619448be6dd3e37b1f44b0fbd813b71d7a7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
