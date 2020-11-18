@@ -109,11 +109,10 @@ public final class CmpMessageHelper {
      *
      * @return {@link Extensions}.
      */
-    public static Extensions generateExtension(final List<String> sansList)
+    public static Extensions generateExtension(final GeneralName[] sansArray)
             throws CmpClientException {
         LOG.info("Generating Extensions from Subject Alternative Names");
         final ExtensionsGenerator extGenerator = new ExtensionsGenerator();
-        final GeneralName[] sansGeneralNames = getGeneralNames(sansList);
         // KeyUsage
         try {
             final KeyUsage keyUsage =
@@ -121,7 +120,7 @@ public final class CmpMessageHelper {
                             KeyUsage.digitalSignature | KeyUsage.keyEncipherment | KeyUsage.nonRepudiation);
             extGenerator.addExtension(Extension.keyUsage, false, new DERBitString(keyUsage));
             extGenerator.addExtension(
-                    Extension.subjectAlternativeName, false, new GeneralNames(sansGeneralNames));
+                    Extension.subjectAlternativeName, false, new GeneralNames(sansArray));
         } catch (IOException ioe) {
             CmpClientException cmpClientException =
                     new CmpClientException(
@@ -130,16 +129,6 @@ public final class CmpMessageHelper {
             throw cmpClientException;
         }
         return extGenerator.generate();
-    }
-
-    public static GeneralName[] getGeneralNames(List<String> sansList) {
-        final List<GeneralName> nameList = new ArrayList<>();
-        for (String san : sansList) {
-            nameList.add(new GeneralName(GeneralName.dNSName, san));
-        }
-        final GeneralName[] sansGeneralNames = new GeneralName[nameList.size()];
-        nameList.toArray(sansGeneralNames);
-        return sansGeneralNames;
     }
 
     /**
