@@ -114,6 +114,24 @@
     },
     {
       "key": {
+        "uuid": "8775085c_d9451fb7",
+        "filename": "certServiceClient/src/main/java/org/onap/oom/certservice/client/configuration/validation/UriValidator.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-11-18T08:57:05Z",
+      "side": 1,
+      "message": "Please look on TestClass. It provide test for positive and negative cases with little description. It could be useful for understanding this monster regex. Splitting this regex require huge effort. Do We want it ?",
+      "parentUuid": "0cc20694_d458297d",
+      "revId": "4d9ef95c4a3e3e1dcd10db021f2b0974007d7515",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8065dfd5_73af72a5",
         "filename": "certServiceClient/src/test/java/org/onap/oom/certservice/client/configuration/validation/UriValidatorTest.java",
         "patchSetId": 5
