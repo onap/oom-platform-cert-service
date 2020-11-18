@@ -37,6 +37,7 @@ import org.bouncycastle.asn1.crmf.CertRequest;
 import org.bouncycastle.asn1.crmf.CertTemplateBuilder;
 import org.bouncycastle.asn1.crmf.ProofOfPossession;
 import org.bouncycastle.asn1.x500.X500Name;
+import org.bouncycastle.asn1.x509.GeneralName;
 import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
 import org.onap.oom.certservice.cmpv2client.exceptions.CmpClientException;
 
@@ -48,7 +49,7 @@ class CreateCertRequest {
 
     private X500Name issuerDn;
     private X500Name subjectDn;
-    private List<String> sansList;
+    private List<GeneralName> sansList;
     private KeyPair subjectKeyPair;
     private Date notBefore;
     private Date notAfter;
@@ -67,7 +68,7 @@ class CreateCertRequest {
         this.subjectDn = subjectDn;
     }
 
-    public void setSansList(List<String> sansList) {
+    public void setSansList(List<GeneralName> sansList) {
         this.sansList = sansList;
     }
 

@@ -109,11 +109,11 @@ public final class CmpMessageHelper {
      *
      * @return {@link Extensions}.
      */
-    public static Extensions generateExtension(final List<String> sansList)
+    public static Extensions generateExtension(final List<GeneralName> sansList)
             throws CmpClientException {
         LOG.info("Generating Extensions from Subject Alternative Names");
         final ExtensionsGenerator extGenerator = new ExtensionsGenerator();
-        final GeneralName[] sansGeneralNames = getGeneralNames(sansList);
+        final GeneralName[] sansGeneralNames = sansList.toArray(GeneralName[]::new);
         // KeyUsage
         try {
             final KeyUsage keyUsage =
@@ -130,16 +130,6 @@ public final class CmpMessageHelper {
             throw cmpClientException;
         }
         return extGenerator.generate();
-    }
-
-    public static GeneralName[] getGeneralNames(List<String> sansList) {
-        final List<GeneralName> nameList = new ArrayList<>();
-        for (String san : sansList) {
-            nameList.add(new GeneralName(GeneralName.dNSName, san));
-        }
-        final GeneralName[] sansGeneralNames = new GeneralName[nameList.size()];
-        nameList.toArray(sansGeneralNames);
-        return sansGeneralNames;
     }
 
     /**
