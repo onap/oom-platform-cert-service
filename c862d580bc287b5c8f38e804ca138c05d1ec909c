@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5a4f880b_6c472314",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-11-18T10:18:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a71486b4_ba1ef3d2",
+      "range": {
+        "startLine": 7,
+        "startChar": 5,
+        "endLine": 7,
+        "endChar": 22
+      },
+      "revId": "c862d580bc287b5c8f38e804ca138c05d1ec909c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1cd545a2_10b74e79",
         "filename": "certServiceClient/src/main/java/org/onap/oom/certservice/client/configuration/validation/BasicValidationFunctions.java",
         "patchSetId": 2
@@ -36,6 +60,24 @@
       "writtenOn": "2020-11-18T07:06:20Z",
       "side": 1,
       "message": "Those newly added functions are not used is code so far.",
+      "revId": "c862d580bc287b5c8f38e804ca138c05d1ec909c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20b0bd05_332091a6",
+        "filename": "certServiceClient/src/main/java/org/onap/oom/certservice/client/configuration/validation/BasicValidationFunctions.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-11-18T10:18:18Z",
+      "side": 1,
+      "message": "Will be used in subsequent commit.",
+      "parentUuid": "1cd545a2_10b74e79",
       "revId": "c862d580bc287b5c8f38e804ca138c05d1ec909c",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
