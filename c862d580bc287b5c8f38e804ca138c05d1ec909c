@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1cd545a2_10b74e79",
+        "filename": "certServiceClient/src/main/java/org/onap/oom/certservice/client/configuration/validation/BasicValidationFunctions.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-11-18T07:06:20Z",
+      "side": 1,
+      "message": "Those newly added functions are not used is code so far.",
+      "revId": "c862d580bc287b5c8f38e804ca138c05d1ec909c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
