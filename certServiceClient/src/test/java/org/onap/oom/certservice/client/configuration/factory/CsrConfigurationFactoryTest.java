@@ -41,8 +41,8 @@ import static org.onap.oom.certservice.client.api.ExitStatus.CSR_CONFIGURATION_E
 public class CsrConfigurationFactoryTest {
 
     private static final String COMMON_NAME_VALID = "onap.org";
-    private static final List<String> SANS_SPLITTED_VALID = List.of("test-name");
-    private static final String SANS_VALID = "test-name";
+    private static final List<String> SANS_SPLITTED_VALID = List.of("test-name", "test-name-1");
+    private static final String SANS_VALID = "test-name,test-name-1";
     private static final String COUNTRY_VALID = "US";
     private static final String LOCATION_VALID = "San-Francisco";
     private static final String ORGANIZATION_VALID = "Linux-Foundation";
