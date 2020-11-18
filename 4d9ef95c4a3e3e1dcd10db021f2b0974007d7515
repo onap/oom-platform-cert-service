@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "0cc20694_d458297d",
+        "filename": "certServiceClient/src/main/java/org/onap/oom/certservice/client/configuration/validation/UriValidator.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-11-18T08:31:49Z",
+      "side": 1,
+      "message": "Still, it would look like more \"reliable\" if there would be a comment that this monster regex is based on some smaller regex from official document. Without any comment its hard to understand and to trust that it works ;)\n\nUnless it\u0027s invented from scratch of found on stackoverflow 😄\n\nAnyway any sort of commend would be helpful for further developers.",
+      "parentUuid": "fa4a81d0_2a559621",
+      "revId": "4d9ef95c4a3e3e1dcd10db021f2b0974007d7515",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8065dfd5_73af72a5",
         "filename": "certServiceClient/src/test/java/org/onap/oom/certservice/client/configuration/validation/UriValidatorTest.java",
         "patchSetId": 5
