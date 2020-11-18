@@ -16,6 +16,24 @@
       "revId": "ec444619448be6dd3e37b1f44b0fbd813b71d7a7",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53d080db_cba3b15a",
+        "filename": "certServiceClient/src/main/java/org/onap/oom/certservice/client/configuration/validation/UriValidator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-11-18T10:50:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b7dc84e_780aef1d",
+      "revId": "ec444619448be6dd3e37b1f44b0fbd813b71d7a7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
