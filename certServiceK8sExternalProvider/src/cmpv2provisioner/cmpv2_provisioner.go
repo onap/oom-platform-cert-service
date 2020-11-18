@@ -101,7 +101,7 @@ func (ca *CertServiceCA) Sign(
 	if err != nil {
 		return nil, nil, err
 	}
-	log.Debug("Filtered out CSR PEM: ", "bytes", csrBytes)
+	log.Debug("Filtered out CSR PEM: ", "bytes", filteredCsrBytes)
 
 	response, err := ca.certServiceClient.GetCertificates(filteredCsrBytes, privateKeyBytes)
 	if err != nil {

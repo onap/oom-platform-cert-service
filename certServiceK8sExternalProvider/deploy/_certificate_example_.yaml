@@ -43,10 +43,16 @@ spec:
       - California
     organizationalUnits:
       - ONAP
-  # DNS SAN
+  # SANs
   dnsNames:
     - localhost
     - certissuer.onap.org
+  ipAddresses:
+    - "127.0.0.1"
+  uris:
+    - onap://cluster.local/
+  emailAddresses:
+    - onap@onap.org
   # The reference to the CMPv2 issuer
   issuerRef:
     group: certmanager.onap.org
