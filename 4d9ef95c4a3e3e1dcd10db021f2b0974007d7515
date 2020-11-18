@@ -93,6 +93,30 @@
       "revId": "4d9ef95c4a3e3e1dcd10db021f2b0974007d7515",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51f0c261_c129a278",
+        "filename": "certServiceClient/src/test/java/org/onap/oom/certservice/client/configuration/validation/UriValidatorTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-11-18T08:15:18Z",
+      "side": 1,
+      "message": "According to RFC 3986 section 3.2 (https://tools.ietf.org/html/rfc3986#section-3.2) Authority is optional. And section 3.3 Path could be empty or begin with \"/\". It couldn\u0027t useful in cert, but must be allowed. See RFC 5820 (https://tools.ietf.org/html/rfc5280#section-4.2.1.6), in this we can read: \" \n   When the subjectAltName extension contains a URI, the name MUST be\n   stored in the uniformResourceIdentifier (an IA5String).  The name\n   MUST NOT be a relative URI, and it MUST follow the URI syntax and\n   encoding rules specified in [RFC3986].\"",
+      "parentUuid": "8065dfd5_73af72a5",
+      "range": {
+        "startLine": 35,
+        "startChar": 27,
+        "endLine": 35,
+        "endChar": 57
+      },
+      "revId": "4d9ef95c4a3e3e1dcd10db021f2b0974007d7515",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
