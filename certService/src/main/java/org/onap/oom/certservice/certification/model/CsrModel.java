@@ -29,11 +29,8 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
+import java.util.stream.Collectors;
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.asn1.x509.Extension;
 import org.bouncycastle.asn1.x509.Extensions;
@@ -53,10 +50,10 @@ public class CsrModel {
     private final X500Name subjectData;
     private final PrivateKey privateKey;
     private final PublicKey publicKey;
-    private final List<String> sans;
+    private final GeneralName[] sans;
 
     public CsrModel(PKCS10CertificationRequest csr, X500Name subjectData, PrivateKey privateKey, PublicKey publicKey,
-                    List<String> sans) {
+        GeneralName[] sans) {
         this.csr = csr;
         this.subjectData = subjectData;
         this.privateKey = privateKey;
@@ -80,18 +77,24 @@ public class CsrModel {
         return publicKey;
     }
 
-    public List<String> getSans() {
+    public GeneralName[] getSans() {
         return sans;
     }
 
     @Override
     public String toString() {
-        return "Subject: { " + subjectData + " ,SANs: " + sans + " }";
+        return "CSR: { Subject: { " + subjectData + " }, SANs: [" + getSansInReadableFormat() + "] }";
+    }
+
+    private String getSansInReadableFormat() {
+        return Arrays.stream(this.sans)
+            .map(generalName -> generalName.getName().toString())
+            .collect(Collectors.joining(", "));
     }
 
     public static class CsrModelBuilder {
-
         private final PKCS10CertificationRequest csr;
+
         private final PemObject privateKey;
 
         public CsrModel build() throws DecryptionException {
@@ -99,7 +102,7 @@ public class CsrModel {
             X500Name subjectData = getSubjectData();
             PrivateKey javaPrivateKey = convertingPemPrivateKeyToJavaSecurityPrivateKey(getPrivateKey());
             PublicKey javaPublicKey = convertingPemPublicKeyToJavaSecurityPublicKey(getPublicKey());
-            List<String> sans = getSansData();
+            GeneralName[] sans = getSansData();
 
             return new CsrModel(csr, subjectData, javaPrivateKey, javaPublicKey, sans);
         }
@@ -125,15 +128,12 @@ public class CsrModel {
             return csr.getSubject();
         }
 
-        private List<String> getSansData() {
+        private GeneralName[] getSansData() {
             if (!isAttrsEmpty() && !isAttrsValuesEmpty()) {
                 Extensions extensions = Extensions.getInstance(csr.getAttributes()[0].getAttrValues().getObjectAt(0));
-                GeneralName[] arrayOfAlternativeNames =
-                        GeneralNames.fromExtensions(extensions, Extension.subjectAlternativeName).getNames();
-                return Arrays.stream(arrayOfAlternativeNames).map(GeneralName::getName).map(Objects::toString)
-                               .collect(Collectors.toList());
+                return GeneralNames.fromExtensions(extensions, Extension.subjectAlternativeName).getNames();
             }
-            return Collections.emptyList();
+            return new GeneralName[0];
         }
 
         private boolean isAttrsValuesEmpty() {
@@ -145,7 +145,7 @@ public class CsrModel {
         }
 
         private PrivateKey convertingPemPrivateKeyToJavaSecurityPrivateKey(PemObject privateKey)
-                throws KeyDecryptionException {
+            throws KeyDecryptionException {
             try {
                 KeyFactory factory = KeyFactory.getInstance("RSA");
                 PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(privateKey.getContent());
@@ -154,9 +154,8 @@ public class CsrModel {
                 throw new KeyDecryptionException("Converting Private Key failed", e.getCause());
             }
         }
-
         private PublicKey convertingPemPublicKeyToJavaSecurityPublicKey(PemObject publicKey)
-                throws KeyDecryptionException {
+            throws KeyDecryptionException {
             try {
                 KeyFactory factory = KeyFactory.getInstance("RSA");
                 X509EncodedKeySpec keySpec = new X509EncodedKeySpec(publicKey.getContent());
@@ -165,6 +164,6 @@ public class CsrModel {
                 throw new KeyDecryptionException("Converting Public Key from CSR failed", e.getCause());
             }
         }
-    }
 
+    }
 }
