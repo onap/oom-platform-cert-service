@@ -52,6 +52,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.asn1.x500.X500NameBuilder;
 import org.bouncycastle.asn1.x500.style.BCStyle;
+import org.bouncycastle.asn1.x509.GeneralName;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -273,7 +274,7 @@ class Cmpv2ClientTest {
     }
 
     private void setCsrModelAndServerValues(String iak, String rv, String externalCaUrl, Date notBefore, Date notAfter) {
-        csrModel = new CsrModel(null, dn, keyPair.getPrivate(), keyPair.getPublic(), Collections.emptyList());
+        csrModel = new CsrModel(null, dn, keyPair.getPrivate(), keyPair.getPublic(), new GeneralName[0]);
 
         Authentication authentication = new Authentication();
         authentication.setIak(iak);
