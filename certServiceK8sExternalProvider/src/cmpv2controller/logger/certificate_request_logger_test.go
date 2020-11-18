@@ -40,7 +40,6 @@ import (
 var unsupportedProperties = []string{
 	"* property 'duration'",
 	"* property 'usages'",
-	"- property 'ipAddresses'",
 	"- property 'isCA'",
 	"- property 'subject.streetAddress'",
 	"- property 'subject.postalCodes'",
@@ -53,7 +52,11 @@ var supportedProperties = []string{
 	"+ property 'country'",
 	"+ property 'state'",
 	"+ property 'location'",
-	"+ property 'dns names'"}
+	"+ property 'dns names'",
+	"+ property 'ipAddresses'",
+	"+ property 'uris'",
+	"+ property 'email addresses'",
+	}
 
 const RESULT_LOG = "testdata/test_result.log"
 

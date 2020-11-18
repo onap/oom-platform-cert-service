@@ -50,6 +50,9 @@ func logSupportedProperties(log leveledlogger.Logger, csr *x509.CertificateReque
 	logSupportedMultiValueProperty(log, csr.Subject.Province, "state")
 	logSupportedMultiValueProperty(log, csr.Subject.Locality, "location")
 	logSupportedMultiValueProperty(log, csr.DNSNames, "dns names")
+	logSupportedMultiValueProperty(log, csr.EmailAddresses, "email addresses")
+	logSupportedMultiValueProperty(log, mapIpAddressesToText(csr.IPAddresses), "ipAddresses")
+	logSupportedMultiValueProperty(log, mapUrisToText(csr.URIs), "uris")
 }
 
 func logSupportedMultiValueProperty(log leveledlogger.Logger, values []string, propertyName string) {
@@ -80,21 +83,6 @@ func extractUsages(usages []cmapi.KeyUsage) string {
 }
 
 func logPropertiesNotSupportedByCertService(log leveledlogger.Logger, request *cmapi.CertificateRequest, csr *x509.CertificateRequest) {
-
-	//IP addresses in SANs
-	if len(csr.IPAddresses) > 0 {
-		log.Warning(getNotSupportedMessage("ipAddresses", extractIPAddresses(csr.IPAddresses)))
-	}
-	//URIs in SANs
-	if len(csr.URIs) > 0 {
-		log.Warning(getNotSupportedMessage("uris", extractURIs(csr.URIs)))
-	}
-
-	//Email addresses in SANs
-	if len(csr.EmailAddresses) > 0 {
-		log.Warning(getNotSupportedMessage("emailAddresses", extractStringArray(csr.EmailAddresses)))
-	}
-
 	if request.Spec.IsCA == true {
 		log.Warning(getNotSupportedMessage("isCA", strconv.FormatBool(request.Spec.IsCA)))
 	}
@@ -121,20 +109,20 @@ func extractStringArray(strArray []string) string {
 	return values
 }
 
-func extractURIs(URIs []*url.URL) string {
-	values := ""
-	for _, uri := range URIs {
-		values = values + uri.String() + ", "
+func mapUrisToText(uris []*url.URL) []string {
+	urisAsText := make([]string, len(uris))
+	for i, ipAddress := range uris {
+		urisAsText[i] = ipAddress.String()
 	}
-	return values
+	return urisAsText
 }
 
-func extractIPAddresses(addresses []net.IP) string {
-	values := ""
-	for _, ipAddress := range addresses {
-		values = values + ipAddress.String() + ", "
+func mapIpAddressesToText(addresses []net.IP) []string {
+	ipsAsText := make([]string, len(addresses))
+	for i, ipAddress := range addresses {
+		ipsAsText[i] = ipAddress.String()
 	}
-	return values
+	return ipsAsText
 }
 
 func getSupportedMessage(property string, value string) string {

@@ -45,6 +45,9 @@ func FilterFieldsFromCSR(csrBytes []byte, privateKeyBytes []byte) ([]byte, error
 	filteredCsr, err := x509.CreateCertificateRequest(rand.Reader, &x509.CertificateRequest{
 		Subject:  filteredSubject,
 		DNSNames: csr.DNSNames,
+		IPAddresses: csr.IPAddresses,
+		URIs: csr.URIs,
+		EmailAddresses: csr.EmailAddresses,
 	}, key)
 	if err != nil {
 		return nil, err

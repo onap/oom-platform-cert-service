@@ -67,9 +67,6 @@ filtered out from the Certificate Signing Request.
    - streetAddresses
    - postalCodes
  - isCa
- - ipAddresses
- - uris
- - emails
  - duration
  - usages
  

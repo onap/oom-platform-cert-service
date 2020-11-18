@@ -75,6 +75,9 @@ func assertNotFilteredFieldsNotChanged(t *testing.T, originalCsrBytes []byte, fi
 	filteredCsr := parseCsrBytes(filteredCsrBytes)
 
 	assert.Equal(t, originalCsr.DNSNames, filteredCsr.DNSNames)
+	assert.Equal(t, originalCsr.URIs, filteredCsr.URIs)
+	assert.Equal(t, originalCsr.EmailAddresses, filteredCsr.EmailAddresses)
+	assert.Equal(t, originalCsr.IPAddresses, filteredCsr.IPAddresses)
 	assert.Equal(t, originalCsr.PublicKey, filteredCsr.PublicKey)
 	assert.Equal(t, originalCsr.PublicKeyAlgorithm, filteredCsr.PublicKeyAlgorithm)
 	assert.Equal(t, originalCsr.SignatureAlgorithm, filteredCsr.SignatureAlgorithm)
@@ -88,9 +91,6 @@ func assertNotFilteredFieldsNotChanged(t *testing.T, originalCsrBytes []byte, fi
 
 func assertFilteredFieldsEmpty(t *testing.T, csrBytes []byte) {
 	csr := parseCsrBytes(csrBytes)
-	assert.Nil(t, csr.URIs)
-	assert.Nil(t, csr.EmailAddresses)
-	assert.Nil(t, csr.IPAddresses)
 	assert.Nil(t, csr.Subject.PostalCode)
 	assert.Equal(t, "", csr.Subject.SerialNumber)
 	assert.Nil(t, csr.Subject.StreetAddress)
