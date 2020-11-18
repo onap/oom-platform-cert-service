@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4642a0cd_0b3cf9ec",
+        "filename": "certServiceClient/src/main/java/org/onap/oom/certservice/client/configuration/validation/BasicValidationFunctions.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-11-18T11:01:08Z",
+      "side": 1,
+      "message": "Consider. Introduce const ALLOW_LOCAL.",
+      "range": {
+        "startLine": 69,
+        "startChar": 43,
+        "endLine": 69,
+        "endChar": 47
+      },
+      "revId": "16453701fce4cd03fc0551ed3f21612606bd1199",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
