@@ -20,12 +20,16 @@
 
 package org.onap.oom.certservice.certification.model;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
 import org.bouncycastle.pkcs.PKCS10CertificationRequest;
 import org.bouncycastle.util.io.pem.PemObject;
 import org.junit.jupiter.api.Test;
 import org.onap.oom.certservice.certification.Pkcs10CertificationRequestFactory;
 import org.onap.oom.certservice.certification.PemObjectFactory;
+import org.onap.oom.certservice.certification.TestData;
 import org.onap.oom.certservice.certification.exception.CsrDecryptionException;
 import org.onap.oom.certservice.certification.exception.DecryptionException;
 import org.onap.oom.certservice.certification.exception.KeyDecryptionException;
@@ -37,6 +41,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.onap.oom.certservice.certification.TestData.LOCALHOST_IP_IN_HEX;
 import static org.onap.oom.certservice.certification.TestData.TEST_CSR;
 import static org.onap.oom.certservice.certification.TestData.TEST_PEM;
 import static org.onap.oom.certservice.certification.TestData.TEST_PK;
@@ -45,9 +50,9 @@ import static org.onap.oom.certservice.certification.TestData.TEST_PK;
 class CsrModelTest {
 
     private final Pkcs10CertificationRequestFactory certificationRequestFactory
-            = new Pkcs10CertificationRequestFactory();
+        = new Pkcs10CertificationRequestFactory();
     private final PemObjectFactory pemObjectFactory
-            = new PemObjectFactory();
+        = new PemObjectFactory();
 
     @Test
     void shouldByConstructedAndReturnProperFields() throws DecryptionException, IOException {
@@ -58,20 +63,22 @@ class CsrModelTest {
 
         // When
         CsrModel csrModel = generateTestCsrModel(testCsr);
-
+        List<String> sansList = Arrays.stream(csrModel.getSans())
+            .map(generalName ->  generalName.getName().toString())
+            .collect(Collectors.toList());
         // Then
         assertThat(csrModel.getCsr())
-                .isEqualTo(testCsr);
+            .isEqualTo(testCsr);
         assertThat(csrModel.getPrivateKey().getEncoded())
-                .contains(testPrivateKey.getContent());
+            .contains(testPrivateKey.getContent());
         assertThat(csrModel.getPublicKey().getEncoded())
-                .contains(testPublicKey.getContent());
-        assertThat(csrModel.getSans())
-                .contains(
-                        "gerrit.onap.org", "test.onap.org", "onap.com");
+            .contains(testPublicKey.getContent());
+        assertThat(sansList)
+            .contains("localhost", "onap.org", "test.onap.org", "onap@onap.org", LOCALHOST_IP_IN_HEX,
+                "onap://cluster.local/");
+
         assertThat(csrModel.getSubjectData().toString())
-                .contains(
-                        "C=US,ST=California,L=San-Francisco,O=Linux-Foundation,OU=ONAP,CN=onap.org,E=tester@onap.org");
+            .contains(TestData.EXPECTED_CERT_SUBJECT);
     }
 
     @Test
@@ -81,14 +88,14 @@ class CsrModelTest {
         PKCS10CertificationRequest testCsr = mock(PKCS10CertificationRequest.class);
         SubjectPublicKeyInfo wrongKryInfo = mock(SubjectPublicKeyInfo.class);
         when(testCsr.getSubjectPublicKeyInfo())
-                .thenReturn(wrongKryInfo);
+            .thenReturn(wrongKryInfo);
         when(wrongKryInfo.getEncoded())
-                .thenThrow(new IOException());
+            .thenThrow(new IOException());
 
         // When
         Exception exception = assertThrows(
-                CsrDecryptionException.class,
-                () -> new CsrModel.CsrModelBuilder(testCsr, testPrivateKey).build()
+            CsrDecryptionException.class,
+            () -> new CsrModel.CsrModelBuilder(testCsr, testPrivateKey).build()
         );
 
         String expectedMessage = "Reading Public Key from CSR failed";
@@ -105,14 +112,14 @@ class CsrModelTest {
         PKCS10CertificationRequest testCsr = mock(PKCS10CertificationRequest.class);
         SubjectPublicKeyInfo wrongKryInfo = mock(SubjectPublicKeyInfo.class);
         when(testCsr.getSubjectPublicKeyInfo())
-                .thenReturn(wrongKryInfo);
+            .thenReturn(wrongKryInfo);
         when(wrongKryInfo.getEncoded())
-                .thenThrow(new IOException());
+            .thenThrow(new IOException());
 
         // When
         Exception exception = assertThrows(
-                KeyDecryptionException.class,
-                () -> new CsrModel.CsrModelBuilder(testCsr, testPrivateKey).build()
+            KeyDecryptionException.class,
+            () -> new CsrModel.CsrModelBuilder(testCsr, testPrivateKey).build()
         );
 
         String expectedMessage = "Converting Private Key failed";
@@ -130,14 +137,14 @@ class CsrModelTest {
         PKCS10CertificationRequest testCsr = mock(PKCS10CertificationRequest.class);
         SubjectPublicKeyInfo wrongKryInfo = mock(SubjectPublicKeyInfo.class);
         when(testCsr.getSubjectPublicKeyInfo())
-                .thenReturn(wrongKryInfo);
+            .thenReturn(wrongKryInfo);
         when(wrongKryInfo.getEncoded())
-                .thenReturn(testPublicKey.getContent());
+            .thenReturn(testPublicKey.getContent());
 
         // When
         Exception exception = assertThrows(
-                KeyDecryptionException.class,
-                () -> new CsrModel.CsrModelBuilder(testCsr, testPrivateKey).build()
+            KeyDecryptionException.class,
+            () -> new CsrModel.CsrModelBuilder(testCsr, testPrivateKey).build()
         );
 
         String expectedMessage = "Converting Public Key from CSR failed";
@@ -150,20 +157,20 @@ class CsrModelTest {
     private PemObject getPemPrivateKey() throws KeyDecryptionException {
         PemObjectFactory pemObjectFactory = new PemObjectFactory();
         return pemObjectFactory.createPemObject(TEST_PK).orElseThrow(
-                () -> new KeyDecryptionException("Private key decoding fail")
+            () -> new KeyDecryptionException("Private key decoding fail")
         );
     }
 
     private PemObject getPemWrongKey() throws KeyDecryptionException {
         PemObjectFactory pemObjectFactory = new PemObjectFactory();
         return pemObjectFactory.createPemObject(TEST_PEM).orElseThrow(
-                () -> new KeyDecryptionException("Private key decoding fail")
+            () -> new KeyDecryptionException("Private key decoding fail")
         );
     }
 
     private CsrModel generateTestCsrModel(PKCS10CertificationRequest testCsr) throws DecryptionException {
         PemObject testPrivateKey = pemObjectFactory.createPemObject(TEST_PK).orElseThrow(
-                () -> new DecryptionException("Incorrect Private Key, decryption failed")
+            () -> new DecryptionException("Incorrect Private Key, decryption failed")
         );
         return new CsrModel.CsrModelBuilder(testCsr, testPrivateKey).build();
     }
@@ -175,11 +182,11 @@ class CsrModelTest {
 
     private PKCS10CertificationRequest generateTestCertificationRequest() throws DecryptionException {
         return pemObjectFactory.createPemObject(TEST_CSR)
-                .flatMap(
-                        certificationRequestFactory::createPkcs10CertificationRequest
-                ).orElseThrow(
-                        () -> new DecryptionException("Incorrect CSR, decryption failed")
-                );
+            .flatMap(
+                certificationRequestFactory::createPkcs10CertificationRequest
+            ).orElseThrow(
+                () -> new DecryptionException("Incorrect CSR, decryption failed")
+            );
     }
 
 }

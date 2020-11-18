@@ -26,7 +26,6 @@ import static org.onap.oom.certservice.cmpv2client.impl.CmpUtil.generatePkiHeade
 
 import java.security.KeyPair;
 import java.util.Date;
-import java.util.List;
 
 import org.bouncycastle.asn1.cmp.PKIBody;
 import org.bouncycastle.asn1.cmp.PKIHeader;
@@ -37,6 +36,7 @@ import org.bouncycastle.asn1.crmf.CertRequest;
 import org.bouncycastle.asn1.crmf.CertTemplateBuilder;
 import org.bouncycastle.asn1.crmf.ProofOfPossession;
 import org.bouncycastle.asn1.x500.X500Name;
+import org.bouncycastle.asn1.x509.GeneralName;
 import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
 import org.onap.oom.certservice.cmpv2client.exceptions.CmpClientException;
 
@@ -48,7 +48,7 @@ class CreateCertRequest {
 
     private X500Name issuerDn;
     private X500Name subjectDn;
-    private List<String> sansList;
+    private GeneralName[] sansArray;
     private KeyPair subjectKeyPair;
     private Date notBefore;
     private Date notAfter;
@@ -67,8 +67,8 @@ class CreateCertRequest {
         this.subjectDn = subjectDn;
     }
 
-    public void setSansList(List<String> sansList) {
-        this.sansList = sansList;
+    public void setSansArray(GeneralName[] sansArray) {
+        this.sansArray = sansArray;
     }
 
     public void setSubjectKeyPair(KeyPair subjectKeyPair) {
@@ -102,7 +102,7 @@ class CreateCertRequest {
                 new CertTemplateBuilder()
                         .setIssuer(issuerDn)
                         .setSubject(subjectDn)
-                        .setExtensions(CmpMessageHelper.generateExtension(sansList))
+                        .setExtensions(CmpMessageHelper.generateExtension(sansArray))
                         .setValidity(CmpMessageHelper.generateOptionalValidity(notBefore, notAfter))
                         .setPublicKey(
                                 SubjectPublicKeyInfo.getInstance(subjectKeyPair.getPublic().getEncoded()));

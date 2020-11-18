@@ -86,7 +86,7 @@ public class CmpClientImpl implements CmpClient {
                 CmpMessageBuilder.of(CreateCertRequest::new)
                         .with(CreateCertRequest::setIssuerDn, server.getIssuerDN())
                         .with(CreateCertRequest::setSubjectDn, csrModel.getSubjectData())
-                        .with(CreateCertRequest::setSansList, csrModel.getSans())
+                        .with(CreateCertRequest::setSansArray, csrModel.getSans())
                         .with(CreateCertRequest::setSubjectKeyPair, keyPair)
                         .with(CreateCertRequest::setNotBefore, notBefore)
                         .with(CreateCertRequest::setNotAfter, notAfter)
