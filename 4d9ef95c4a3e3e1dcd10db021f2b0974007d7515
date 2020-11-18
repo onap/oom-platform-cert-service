@@ -52,6 +52,24 @@
       "revId": "4d9ef95c4a3e3e1dcd10db021f2b0974007d7515",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa4a81d0_2a559621",
+        "filename": "certServiceClient/src/main/java/org/onap/oom/certservice/client/configuration/validation/UriValidator.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-11-18T08:02:39Z",
+      "side": 1,
+      "message": "I told that I was researching RFC :-) I added in this patch-set small info \"compliant with RFC 3986\" above class keyword. RFC is official document which can be easily find.",
+      "parentUuid": "c328d140_5532d0c9",
+      "revId": "4d9ef95c4a3e3e1dcd10db021f2b0974007d7515",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
