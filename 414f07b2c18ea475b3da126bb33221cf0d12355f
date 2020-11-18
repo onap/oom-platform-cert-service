@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "798ef264_a050b232",
+        "filename": "certServiceClient/src/main/java/org/onap/oom/certservice/client/configuration/validation/RFC3986UriValidator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-11-18T07:09:38Z",
+      "side": 1,
+      "message": "I agree - UriValidator looks better, we can add in the description of the class information that this is actually RFC3986 validator and possible give some link to this document.",
+      "parentUuid": "6d2da763_27cb167d",
+      "range": {
+        "startLine": 23,
+        "startChar": 20,
+        "endLine": 23,
+        "endChar": 32
+      },
+      "revId": "414f07b2c18ea475b3da126bb33221cf0d12355f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6cf6fccc_c45754be",
         "filename": "certServiceClient/src/main/java/org/onap/oom/certservice/client/configuration/validation/RFC3986UriValidator.java",
         "patchSetId": 3
