@@ -45,4 +45,7 @@ public class ValidatorsFactory {
             .anyMatch(name -> name.equals(outputType));
     }
 
+    public Predicate<String> uriValidator() {
+        return RFC3986UriValidator::isRFC3986Uri;
+    }
 }
