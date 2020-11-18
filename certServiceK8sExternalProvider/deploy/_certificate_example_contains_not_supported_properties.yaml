@@ -51,12 +51,6 @@ spec:
   dnsNames:
     - localhost
     - certissuer.onap.org
-  ipAddresses:  #***NOT SUPPORTED BY CERT SERVICE API***
-    - "127.0.0.1"
-  uris:  #***NOT SUPPORTED BY CERT SERVICE API***
-    - onap://cluster.local/
-  emailAddresses:  #***NOT SUPPORTED BY CERT SERVICE API***
-    - onap@onap.org
   duration: 24h  #***OVERRIDDEN BY CMPV2 SERVER***
   renewBefore: 8h
   usages: #***OVERRIDDEN BY CMPV2 SERVER***
