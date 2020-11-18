@@ -70,6 +70,29 @@
       "revId": "4d9ef95c4a3e3e1dcd10db021f2b0974007d7515",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8065dfd5_73af72a5",
+        "filename": "certServiceClient/src/test/java/org/onap/oom/certservice/client/configuration/validation/UriValidatorTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-11-18T08:03:01Z",
+      "side": 1,
+      "message": "Should these be valid URIs? Doesn\u0027t seem useful for certs.",
+      "range": {
+        "startLine": 35,
+        "startChar": 27,
+        "endLine": 35,
+        "endChar": 57
+      },
+      "revId": "4d9ef95c4a3e3e1dcd10db021f2b0974007d7515",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
