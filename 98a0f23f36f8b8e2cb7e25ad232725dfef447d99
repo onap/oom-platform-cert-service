@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "84681d73_463ccbd0",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/certification/model/CsrModel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-11-19T12:49:28Z",
+      "side": 1,
+      "message": "SANs should be outside subject - so please change to:\nreturn \"Subject: { \" + subjectData + \"} ,SANs: [\" + getSansInReadableFormat() + \"]\"",
+      "revId": "98a0f23f36f8b8e2cb7e25ad232725dfef447d99",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "afbc76a6_1305e9c8",
         "filename": "certService/src/main/java/org/onap/oom/certservice/certification/model/CsrModel.java",
         "patchSetId": 2
@@ -13,6 +30,30 @@
       "writtenOn": "2020-11-19T08:40:04Z",
       "side": 1,
       "message": "Why convert to list?",
+      "range": {
+        "startLine": 132,
+        "startChar": 23,
+        "endLine": 132,
+        "endChar": 61
+      },
+      "revId": "98a0f23f36f8b8e2cb7e25ad232725dfef447d99",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72ac3cd1_db08eeb5",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/certification/model/CsrModel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-11-19T12:49:28Z",
+      "side": 1,
+      "message": "I also don\u0027t see a reason if later on it is converted back to array again",
+      "parentUuid": "afbc76a6_1305e9c8",
       "range": {
         "startLine": 132,
         "startChar": 23,
