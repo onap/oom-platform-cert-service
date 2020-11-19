@@ -32,7 +32,7 @@ class UriValidatorTest {
      */
 
     @ParameterizedTest
-    @ValueSource(strings = {"http:/", "http:", "http://"})
+    @ValueSource(strings = {"http:/", "http:", "http://", "h4ttp://"})
     void shouldTrueForValidScheme(String uri) {
         assertThat(UriValidator.isValidUri(uri)).isTrue();
     }
@@ -44,7 +44,7 @@ class UriValidatorTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"*http://", "_http://", "?http://"})
+    @ValueSource(strings = {"*http://", "_http://", "?http://", "4http://"})
     void shouldFalseForUriWithInvalidScheme(String uri) {
         assertThat(UriValidator.isValidUri(uri)).isFalse();
     }
