@@ -192,6 +192,24 @@
     },
     {
       "key": {
+        "uuid": "02e00d40_0363521c",
+        "filename": "certServiceClient/src/main/java/org/onap/oom/certservice/client/configuration/validation/UriValidator.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-11-19T08:19:31Z",
+      "side": 1,
+      "message": "Than please, explain me how would you debug (or possibly worse - someone else in the future) this regex if it comes out that this work not as expected?\n\nHow can a person expected to maintain this code understand this expression?\n\nI think a comment at development time is not a high effort and can spare many WTF\u0027s in the future... ;)",
+      "parentUuid": "c11a394f_a9156b25",
+      "revId": "4d9ef95c4a3e3e1dcd10db021f2b0974007d7515",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8065dfd5_73af72a5",
         "filename": "certServiceClient/src/test/java/org/onap/oom/certservice/client/configuration/validation/UriValidatorTest.java",
         "patchSetId": 5
