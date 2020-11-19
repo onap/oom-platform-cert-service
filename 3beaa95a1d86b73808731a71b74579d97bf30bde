@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fc65c8b_c091a713",
+        "filename": "certServiceClient/src/main/java/org/onap/oom/certservice/client/configuration/validation/UriValidator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-11-19T13:58:42Z",
+      "side": 1,
+      "message": "We have a problem with posistive validation of: \"ff:ff:ee:a1:\", \"fg:ff:ff:ff::\", \"mailto:axe@axe.de\".",
+      "revId": "3beaa95a1d86b73808731a71b74579d97bf30bde",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
