@@ -156,6 +156,24 @@
     },
     {
       "key": {
+        "uuid": "9e402ee2_640583eb",
+        "filename": "certServiceClient/src/main/java/org/onap/oom/certservice/client/configuration/validation/UriValidator.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-11-19T07:28:14Z",
+      "side": 1,
+      "message": "I didn\u0027t say i want to split it. I just wanted to know what\u0027s the origin. So if you invented it your self just write a small description how it is constructed. If you copied it from some source, please write here what is the origin.\n\nMaybe it\u0027s possible to divide it separate lines not only automatically to fit the line length (like already did it) but to make line breaks to outline some logical parts.",
+      "parentUuid": "8775085c_d9451fb7",
+      "revId": "4d9ef95c4a3e3e1dcd10db021f2b0974007d7515",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8065dfd5_73af72a5",
         "filename": "certServiceClient/src/test/java/org/onap/oom/certservice/client/configuration/validation/UriValidatorTest.java",
         "patchSetId": 5
