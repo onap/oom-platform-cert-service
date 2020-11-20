@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2c4ff180_91c893fb",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/certification/model/CsrModel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-11-20T08:08:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84681d73_463ccbd0",
+      "revId": "98a0f23f36f8b8e2cb7e25ad232725dfef447d99",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "afbc76a6_1305e9c8",
         "filename": "certService/src/main/java/org/onap/oom/certservice/certification/model/CsrModel.java",
         "patchSetId": 2
@@ -66,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "5bb0667c_95ca1f39",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/certification/model/CsrModel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-11-20T08:08:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72ac3cd1_db08eeb5",
+      "range": {
+        "startLine": 132,
+        "startChar": 23,
+        "endLine": 132,
+        "endChar": 61
+      },
+      "revId": "98a0f23f36f8b8e2cb7e25ad232725dfef447d99",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2564aac_0fa965ef",
         "filename": "certService/src/main/java/org/onap/oom/certservice/certification/model/CsrModel.java",
         "patchSetId": 2
@@ -86,6 +128,30 @@
       "revId": "98a0f23f36f8b8e2cb7e25ad232725dfef447d99",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c57eb93_25c9bd4e",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/certification/model/CsrModel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-11-20T08:08:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2564aac_0fa965ef",
+      "range": {
+        "startLine": 168,
+        "startChar": 0,
+        "endLine": 172,
+        "endChar": 5
+      },
+      "revId": "98a0f23f36f8b8e2cb7e25ad232725dfef447d99",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
