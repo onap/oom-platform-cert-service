@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "a66b316f_cef4574a",
+        "filename": "certServiceClient/src/main/java/org/onap/oom/certservice/client/configuration/validation/UriValidator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-11-20T11:06:27Z",
+      "side": 1,
+      "message": "Side note maybe its worth to add to test this scheme: \"4ttp://\"",
+      "range": {
+        "startLine": 31,
+        "startChar": 31,
+        "endLine": 31,
+        "endChar": 39
+      },
+      "revId": "3beaa95a1d86b73808731a71b74579d97bf30bde",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7fc65c8b_c091a713",
         "filename": "certServiceClient/src/main/java/org/onap/oom/certservice/client/configuration/validation/UriValidator.java",
         "patchSetId": 1
@@ -30,6 +53,24 @@
       "writtenOn": "2020-11-20T11:00:28Z",
       "side": 1,
       "message": "They are correct URI.",
+      "parentUuid": "7fc65c8b_c091a713",
+      "revId": "3beaa95a1d86b73808731a71b74579d97bf30bde",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1906a2e8_8aeabb95",
+        "filename": "certServiceClient/src/main/java/org/onap/oom/certservice/client/configuration/validation/UriValidator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-11-20T11:06:27Z",
+      "side": 1,
+      "message": "We have confirmed that its valid URI examples.",
       "parentUuid": "7fc65c8b_c091a713",
       "revId": "3beaa95a1d86b73808731a71b74579d97bf30bde",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
