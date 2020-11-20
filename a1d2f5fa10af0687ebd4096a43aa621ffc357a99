@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81158e4f_4076cb30",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/certification/model/CsrModel.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-11-20T15:39:03Z",
+      "side": 1,
+      "message": "Please move the method above CsrModelBuilder",
+      "range": {
+        "startLine": 166,
+        "startChar": 1,
+        "endLine": 170,
+        "endChar": 5
+      },
+      "revId": "a1d2f5fa10af0687ebd4096a43aa621ffc357a99",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
