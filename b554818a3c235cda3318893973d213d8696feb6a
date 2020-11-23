@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "2c0d4d60_a3432e72",
+        "filename": "certServiceClient/src/main/java/org/onap/oom/certservice/client/api/ExitableException.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-11-23T09:17:47Z",
+      "side": 1,
+      "message": "Please see, similar approach in post-processor, we have agreed there on RuntimeException and generic error handling in centralized place.\n\nI not great fun of checked exceptions.",
+      "parentUuid": "05e3f66e_365589bc",
+      "range": {
+        "startLine": 22,
+        "startChar": 48,
+        "endLine": 22,
+        "endChar": 64
+      },
+      "revId": "b554818a3c235cda3318893973d213d8696feb6a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3042b639_4cc536a7",
         "filename": "certServiceClient/src/main/java/org/onap/oom/certservice/client/configuration/factory/SanMapper.java",
         "patchSetId": 8
