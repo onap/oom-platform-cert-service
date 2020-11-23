@@ -54,18 +54,12 @@ class CsrModelFactoryTest {
 
         // when
         CsrModel decryptedCsr = csrModelFactory
-                .createCsrModel(new StringBase64(encoderCsr), new StringBase64(encoderPK));
+            .createCsrModel(new StringBase64(encoderCsr), new StringBase64(encoderPK));
 
-        // then
-        assertTrue(
-                decryptedCsr.toString()
-                        .contains(
-                                "C=US,ST=California,L=San-Francisco,O=Linux-Foundation,"
-                                        + "OU=ONAP,CN=onap.org,E=tester@onap.org")
-                        &&
-                        decryptedCsr.toString()
-                                .contains("SANs: [gerrit.onap.org, test.onap.org, onap.com]")
-        );
+        assertTrue(decryptedCsr.toString()
+            .contains(TestData.EXPECTED_CERT_SUBJECT));
+        assertTrue(decryptedCsr.toString()
+            .contains(TestData.EXPECTED_CERT_SANS));
     }
 
     @Test
@@ -76,8 +70,8 @@ class CsrModelFactoryTest {
 
         // when
         Exception exception = assertThrows(
-                CsrDecryptionException.class, () -> csrModelFactory
-                        .createCsrModel(new StringBase64(wrongCsr), new StringBase64(encoderPK))
+            CsrDecryptionException.class, () -> csrModelFactory
+                .createCsrModel(new StringBase64(wrongCsr), new StringBase64(encoderPK))
         );
 
         String expectedMessage = "Incorrect CSR, decryption failed";
@@ -95,8 +89,8 @@ class CsrModelFactoryTest {
 
         // when
         Exception exception = assertThrows(
-                KeyDecryptionException.class, () -> csrModelFactory
-                        .createCsrModel(new StringBase64(wrongCsr), new StringBase64(encoderPK))
+            KeyDecryptionException.class, () -> csrModelFactory
+                .createCsrModel(new StringBase64(wrongCsr), new StringBase64(encoderPK))
         );
 
         String expectedMessage = "Incorrect Key, decryption failed";
@@ -115,8 +109,8 @@ class CsrModelFactoryTest {
 
         // when
         Exception exception = assertThrows(
-                CsrDecryptionException.class, () -> csrModelFactory
-                        .createCsrModel(new StringBase64(wrongCsr), new StringBase64(encoderPK))
+            CsrDecryptionException.class, () -> csrModelFactory
+                .createCsrModel(new StringBase64(wrongCsr), new StringBase64(encoderPK))
         );
 
         String expectedMessage = "Incorrect CSR, decryption failed";
@@ -134,8 +128,8 @@ class CsrModelFactoryTest {
 
         // when
         Exception exception = assertThrows(
-                KeyDecryptionException.class, () -> csrModelFactory
-                        .createCsrModel(new StringBase64(wrongCsr), new StringBase64(encoderPK))
+            KeyDecryptionException.class, () -> csrModelFactory
+                .createCsrModel(new StringBase64(wrongCsr), new StringBase64(encoderPK))
         );
 
         String expectedMessage = "Incorrect Key, decryption failed";
