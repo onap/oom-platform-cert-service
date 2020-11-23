@@ -25,6 +25,64 @@
     },
     {
       "key": {
+        "uuid": "05e3f66e_365589bc",
+        "filename": "certServiceClient/src/main/java/org/onap/oom/certservice/client/api/ExitableException.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-11-23T08:51:23Z",
+      "side": 1,
+      "message": "I agree with Tomasz",
+      "parentUuid": "2b2b5436_d36f3925",
+      "range": {
+        "startLine": 22,
+        "startChar": 48,
+        "endLine": 22,
+        "endChar": 64
+      },
+      "revId": "b554818a3c235cda3318893973d213d8696feb6a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3042b639_4cc536a7",
+        "filename": "certServiceClient/src/main/java/org/onap/oom/certservice/client/configuration/factory/SanMapper.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-11-23T08:51:23Z",
+      "side": 1,
+      "message": "SAN or Subject Alternative Name",
+      "revId": "b554818a3c235cda3318893973d213d8696feb6a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04ed6a7b_229bcb0a",
+        "filename": "certServiceClient/src/main/java/org/onap/oom/certservice/client/configuration/model/San.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-11-23T08:51:23Z",
+      "side": 1,
+      "message": "SAN value",
+      "revId": "b554818a3c235cda3318893973d213d8696feb6a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1eb79df4_ed516e39",
         "filename": "certServiceClient/src/test/java/org/onap/oom/certservice/client/configuration/factory/SanMapperTest.java",
         "patchSetId": 8
