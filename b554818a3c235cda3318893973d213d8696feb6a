@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "9efc69d2_99e11535",
+        "filename": "certServiceClient/src/main/java/org/onap/oom/certservice/client/api/ExitableException.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-11-24T08:45:20Z",
+      "side": 1,
+      "message": "I agree here with Jan. Besides remaining here Exception class will disallow us to use Function interface for SanMapper (this is key point of validation and mapping design). Writing code containing RE with proper tests and direct usage of mentioned code (tests also needed there) should give us enough safety of implementation.\n\nI have added also handling of Excepion class to CertServiceClient.java.",
+      "parentUuid": "2c0d4d60_a3432e72",
+      "range": {
+        "startLine": 22,
+        "startChar": 48,
+        "endLine": 22,
+        "endChar": 64
+      },
+      "revId": "b554818a3c235cda3318893973d213d8696feb6a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3042b639_4cc536a7",
         "filename": "certServiceClient/src/main/java/org/onap/oom/certservice/client/configuration/factory/SanMapper.java",
         "patchSetId": 8
@@ -90,6 +114,24 @@
     },
     {
       "key": {
+        "uuid": "96069f90_8f9499d8",
+        "filename": "certServiceClient/src/main/java/org/onap/oom/certservice/client/configuration/factory/SanMapper.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-11-24T08:45:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3042b639_4cc536a7",
+      "revId": "b554818a3c235cda3318893973d213d8696feb6a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04ed6a7b_229bcb0a",
         "filename": "certServiceClient/src/main/java/org/onap/oom/certservice/client/configuration/model/San.java",
         "patchSetId": 8
@@ -104,6 +146,24 @@
       "revId": "b554818a3c235cda3318893973d213d8696feb6a",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9a10bc0_bff75fea",
+        "filename": "certServiceClient/src/main/java/org/onap/oom/certservice/client/configuration/model/San.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-11-24T08:45:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04ed6a7b_229bcb0a",
+      "revId": "b554818a3c235cda3318893973d213d8696feb6a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -130,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "85008060_75eaba2f",
+        "filename": "certServiceClient/src/test/java/org/onap/oom/certservice/client/configuration/factory/SanMapperTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-11-24T08:45:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1eb79df4_ed516e39",
+      "range": {
+        "startLine": 48,
+        "startChar": 71,
+        "endLine": 48,
+        "endChar": 78
+      },
+      "revId": "b554818a3c235cda3318893973d213d8696feb6a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f810721_668e77bd",
         "filename": "certServiceClient/src/test/java/org/onap/oom/certservice/client/configuration/factory/SanMapperTest.java",
         "patchSetId": 8
@@ -150,6 +234,30 @@
       "revId": "b554818a3c235cda3318893973d213d8696feb6a",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50a387c4_e3e4ad78",
+        "filename": "certServiceClient/src/test/java/org/onap/oom/certservice/client/configuration/factory/SanMapperTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-11-24T08:45:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f810721_668e77bd",
+      "range": {
+        "startLine": 70,
+        "startChar": 14,
+        "endLine": 70,
+        "endChar": 18
+      },
+      "revId": "b554818a3c235cda3318893973d213d8696feb6a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -176,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "90af1014_2704017f",
+        "filename": "certServiceClient/src/test/java/org/onap/oom/certservice/client/configuration/validation/csr/CommonNameValidatorTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-11-24T08:45:20Z",
+      "side": 1,
+      "message": "cut stands for class under test, If you mind I can change it.",
+      "parentUuid": "e09fec7d_8ad3bae2",
+      "range": {
+        "startLine": 30,
+        "startChar": 24,
+        "endLine": 30,
+        "endChar": 27
+      },
+      "revId": "b554818a3c235cda3318893973d213d8696feb6a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbda52a9_770bb8b1",
         "filename": "certServiceClient/src/test/java/org/onap/oom/certservice/client/configuration/validation/csr/CsrEnvsValueValidatorsTest.java",
         "patchSetId": 8
@@ -196,6 +328,30 @@
       "revId": "b554818a3c235cda3318893973d213d8696feb6a",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6cdbae7_37a24dfb",
+        "filename": "certServiceClient/src/test/java/org/onap/oom/certservice/client/configuration/validation/csr/CsrEnvsValueValidatorsTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-11-24T08:45:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbda52a9_770bb8b1",
+      "range": {
+        "startLine": 67,
+        "startChar": 58,
+        "endLine": 67,
+        "endChar": 62
+      },
+      "revId": "b554818a3c235cda3318893973d213d8696feb6a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
