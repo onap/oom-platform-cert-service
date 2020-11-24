@@ -31,7 +31,7 @@ CertService client needs the following configuration parameters to work properly
   - LOCATION *(optional)* - Location for which certificate from CMPv2 server should be issued
   - STATE *(required)* - State for which certificate from CMPv2 server should be issued
   - COUNTRY *(required)* - Country for which certificate from CMPv2 server should be issued
-  - SANS *(optional)(SANS's should be separated by a comma e.g. test.onap.org,onap.com)* - Subject Alternative Names (SANs) for which certificate from CMPv2 server should be issued.
+  - SANS *(optional)(SANS's should be separated by a comma e.g. test.onap.org,onap.com)* - Subject Alternative Names (SANs) for which certificate from CMPv2 server should be issued. All SANs types are supported (DNS names, IPs, URIs, emails).
 
 3. Parameters to establish secure communication to CertService:
 
@@ -71,7 +71,7 @@ To run CertService client as standalone docker container execute following steps
   LOCATION=San-Francisco
   STATE=California
   COUNTRY=US
-  SANS=test.onap.org,onap.com
+  SANS=test.onap.org,onap.com,onap@onap.org,127.0.0.1,onap://cluster.local/
 
   #TLS config envs
   KEYSTORE_PATH=/etc/onap/oom/certservice/certs/certServiceClient-keystore.jks
@@ -99,24 +99,24 @@ After successful creation of certifications, container exits with exit code 0, e
 
 .. code-block:: bash
 
-   INFO 1 [           main] o.o.a.c.c.c.f.ClientConfigurationFactory : Successful validation of Client configuration. Configuration data: REQUEST_URL: https://oom-cert-service:8443/v1/certificate/, REQUEST_TIMEOUT: 10000, OUTPUT_PATH: /var/certs, CA_NAME: RA, OUTPUT_TYPE: P12
-   INFO 1 [           main] o.o.a.c.c.c.f.CsrConfigurationFactory    : Successful validation of CSR configuration. Configuration data: COMMON_NAME: onap.org, COUNTRY: US, STATE: California, ORGANIZATION: Linux-Foundation, ORGANIZATION_UNIT: ONAP, LOCATION: San-Francisco, SANS: test.onap.org:onap.org
-   INFO 1 [           main] o.o.a.c.c.c.KeyPairFactory               : KeyPair generation started with algorithm: RSA and key size: 2048
-   INFO 1 [           main] o.o.a.c.c.c.CsrFactory                   : Creation of CSR has been started with following parameters: COMMON_NAME: onap.org, COUNTRY: US, STATE: California, ORGANIZATION: Linux-Foundation, ORGANIZATION_UNIT: ONAP, LOCATION: San-Francisco, SANS: test.onap.org:onap.org
-   INFO 1 [           main] o.o.a.c.c.c.CsrFactory                   : Creation of CSR has been completed successfully
-   INFO 1 [           main] o.o.a.c.c.c.CsrFactory                   : Conversion of CSR to PEM has been started
-   INFO 1 [           main] o.o.a.c.c.c.PrivateKeyToPemEncoder       : Attempt to encode private key to PEM
-   INFO 1 [           main] o.o.a.c.c.h.HttpClient                   : Attempt to send request to API, on url: https://oom-cert-service:8443/v1/certificate/RA
-   INFO 1 [           main] o.o.a.c.c.h.HttpClient                   : Received response from API
-  DEBUG 1 [           main] o.o.a.c.c.c.c.ConvertedArtifactsCreator  : Attempt to create keystore files and saving data. File names: keystore.p12, keystore.pass
-   INFO 1 [           main] o.o.a.c.c.c.c.PemConverter               : Conversion of PEM certificates to PKCS12 keystore
-  DEBUG 1 [           main] o.o.a.c.c.c.w.CertFileWriter             : Attempt to save file keystore.p12 in path /var/certs
-  DEBUG 1 [           main] o.o.a.c.c.c.w.CertFileWriter             : Attempt to save file keystore.pass in path /var/certs
-  DEBUG 1 [           main] o.o.a.c.c.c.c.ConvertedArtifactsCreator  : Attempt to create truststore files and saving data. File names: truststore.p12, truststore.pass
-   INFO 1 [           main] o.o.a.c.c.c.c.PemConverter               : Conversion of PEM certificates to PKCS12 truststore
-  DEBUG 1 [           main] o.o.a.c.c.c.w.CertFileWriter             : Attempt to save file truststore.p12 in path /var/certs
-  DEBUG 1 [           main] o.o.a.c.c.c.w.CertFileWriter             : Attempt to save file truststore.pass in path /var/certs
-   INFO 1 [           main] o.o.a.c.c.AppExitHandler                 : Application exits with following exit code: 0 and message: Success
+   INFO 1 [           main] o.o.o.c.c.c.f.ClientConfigurationFactory : Successful validation of Client configuration. Configuration data: REQUEST_URL: https://oom-cert-service:8443/v1/certificate/, REQUEST_TIMEOUT: 10000, OUTPUT_PATH: /var/certs, CA_NAME: RA, OUTPUT_TYPE: P12
+   INFO 1 [           main] o.o.o.c.c.c.f.CsrConfigurationFactory    : Successful validation of CSR configuration. Configuration data: COMMON_NAME: onap.org, COUNTRY: US, STATE: California, ORGANIZATION: Linux-Foundation, ORGANIZATION_UNIT: ONAP, LOCATION: San-Francisco, SANS: [{SAN value: example.org, type: dNSName}, {SAN value: test.onap.org, type: dNSName}, {SAN value: onap@onap.org, type: rfc822Name}, {SAN value: 127.0.0.1, type: iPAddress}, {SAN value: onap://cluster.local/, type: uniformResourceIdentifier}]
+   INFO 1 [           main] o.o.o.c.c.c.KeyPairFactory               : KeyPair generation started with algorithm: RSA and key size: 2048
+   INFO 1 [           main] o.o.o.c.c.c.CsrFactory                   : Creation of CSR has been started with following parameters: COMMON_NAME: onap.org, COUNTRY: US, STATE: California, ORGANIZATION: Linux-Foundation, ORGANIZATION_UNIT: ONAP, LOCATION: San-Francisco, SANS: [{SAN value: example.org, type: dNSName}, {SAN value: test.onap.org, type: dNSName}, {SAN value: onap@onap.org, type: rfc822Name}, {SAN value: 127.0.0.1, type: iPAddress}, {SAN value: onap://cluster.local/, type: uniformResourceIdentifier}]
+   INFO 1 [           main] o.o.o.c.c.c.CsrFactory                   : Creation of CSR has been completed successfully
+   INFO 1 [           main] o.o.o.c.c.c.CsrFactory                   : Conversion of CSR to PEM has been started
+   INFO 1 [           main] o.o.o.c.c.c.PrivateKeyToPemEncoder       : Attempt to encode private key to PEM
+   INFO 1 [           main] o.o.o.c.c.h.HttpClient                   : Attempt to send request to API, on url: https://oom-cert-service:8443/v1/certificate/RA
+   INFO 1 [           main] o.o.o.c.c.h.HttpClient                   : Received response from API
+  DEBUG 1 [           main] o.o.o.c.c.c.c.ConvertedArtifactsCreator  : Attempt to create keystore files and saving data. File names: keystore.p12, keystore.pass
+   INFO 1 [           main] o.o.o.c.c.c.c.PemConverter               : Conversion of PEM certificates to PKCS12 keystore
+  DEBUG 1 [           main] o.o.o.c.c.c.w.CertFileWriter             : Attempt to save file keystore.p12 in path /var/certs
+  DEBUG 1 [           main] o.o.o.c.c.c.w.CertFileWriter             : Attempt to save file keystore.pass in path /var/certs
+  DEBUG 1 [           main] o.o.o.c.c.c.c.ConvertedArtifactsCreator  : Attempt to create truststore files and saving data. File names: truststore.p12, truststore.pass
+   INFO 1 [           main] o.o.o.c.c.c.c.PemConverter               : Conversion of PEM certificates to PKCS12 truststore
+  DEBUG 1 [           main] o.o.o.c.c.c.w.CertFileWriter             : Attempt to save file truststore.p12 in path /var/certs
+  DEBUG 1 [           main] o.o.o.c.c.c.w.CertFileWriter             : Attempt to save file truststore.pass in path /var/certs
+   INFO 1 [           main] o.o.o.c.c.AppExitHandler                 : Application exits with following exit code: 0 and message: Success
 
 
 
@@ -186,7 +186,7 @@ You can use the following deployment example as a reference:
               - name: COUNTRY
                 value: US
               - name: SANS
-                value: test.onap.org:onap.com
+                value: test.onap.org,onap.com,onap@onap.org,127.0.0.1,onap://cluster.local/
               - name: KEYSTORE_PATH
                 value: /etc/onap/oom/certservice/certs/certServiceClient-keystore.jks
               - name: KEYSTORE_PASSWORD
