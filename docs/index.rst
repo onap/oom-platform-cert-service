@@ -18,6 +18,7 @@ OOM Certification Service
    sections/logging.rst
    sections/installation.rst
    sections/configuration.rst
+   sections/change-log.rst
    sections/release-notes.rst
    sections/troubleshooting.rst
 
