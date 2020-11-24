@@ -122,3 +122,5 @@ Client application exits with following exit codes:
 +-------+------------------------------------------------+
 | 10    | File could not be created                      |
 +-------+------------------------------------------------+
+| 99    | Application exited abnormally                  |
++-------+------------------------------------------------+
