@@ -22,7 +22,7 @@ run-client:
 	    --rm \
 	    --name oomcert-client \
 	    --env-file ./compose-resources/client-configuration.env \
-	    --network cert-service_certservice \
+	    --network certservice_certservice \
 	    --mount type=bind,src=`pwd`/compose-resources/client-volume/,dst=/var/certs \
 	    --volume `pwd`/certs/truststore.jks:/etc/onap/oom/certservice/certs/truststore.jks \
 	    --volume `pwd`/certs/certServiceClient-keystore.jks:/etc/onap/oom/certservice/certs/certServiceClient-keystore.jks \
