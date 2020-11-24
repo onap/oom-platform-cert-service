@@ -3,307 +3,120 @@
 .. Copyright 2020 NOKIA
 .. _release_notes:
 
-==========================
-Cert Service Release Notes
-==========================
+***************************************
+OOM Certification Service Release Notes
+***************************************
 
-==============
+Abstract
+========
 
-Version: 2.2.0
---------------
+This document provides the release notes for the Guilin release.
 
-:Release Date:
+Summary
+=======
 
-**New Features**
+Certification Service provides certificates signed by external CMPv2 server - further on such certificates are called operators certificates. Operators certificates are meant to secure external ONAP traffic - traffic between network functions (xNFs) and ONAP.
 
-* Added module **oom-certservice-k8s-external-provider** with following functionality:
+This project was moved from Application Authorization Framework (AAF), to check previous release notes see,  `AAF CertService release notes <https://docs.onap.org/projects/onap-aaf-certservice/en/frankfurt/sections/release-notes.html>`_ .
 
-  An external provider is a part of PKI infrastructure. It consumes CertificateRequest CRD from Cert-Manager and calls CertService API to enroll certificate from CMPv2 server.
 
-  More information can be found on dedicated `wiki page <https://wiki.onap.org/display/DW/CertService+and+K8s+Cert-Manager+integration>`_
+Release Data
+============
 
-**Bug Fixes**
++--------------------------------------+--------------------------------------------------------------------------------+
+| **Project**                          | OOM                                                                            |
+|                                      |                                                                                |
++--------------------------------------+--------------------------------------------------------------------------------+
+| **Docker images**                    |  * onap/org.onap.oom.platform.cert-service.oom-certservice-api:2.1.0           |
+|                                      |  * onap/org.onap.oom.platform.cert-service.oom-certservice-client:2.1.0        |
+|                                      |  * onap/org.onap.oom.platform.cert-service.oom-certservice-post-processor:2.1.0|
+|                                      |                                                                                |
++--------------------------------------+--------------------------------------------------------------------------------+
+| **Release designation**              | Guilin                                                                         |
+|                                      |                                                                                |
++--------------------------------------+--------------------------------------------------------------------------------+
 
-  N/A
 
-**Known Issues**
+New features
+------------
 
-  N/A
+- `AAF-1152 <https://jira.onap.org/browse/AAF-1152>`_ Added to CertService's client parameter which controls output type of certificates (JKS, PKCS12, PEM)
 
-**Security Notes**
+- `DCAEGEN2-2252 <https://jira.onap.org/browse/DCAEGEN2-2252>`_ Added new not existing subfolders creation in output path (CMPv2 Integration).
 
-  N/A
+- `DCAEGEN2-2253 <https://jira.onap.org/browse/DCAEGEN2-2253>`_ Implemented CertServicePostprocessor, which allow merge truststores in different types and move keystore files.
 
-*Fixed Security Issues*
+- `OOM-2526 <https://jira.onap.org/browse/OOM-2526>`_ Moved project from AAF to OOM platform.
 
-  N/A
+**Bug fixes**
 
-*Known Security Issues*
-
-  N/A
-
-*Known Vulnerabilities in Used Modules*
-
-  N/A
-
-**Upgrade Notes**
-
-**Deprecation Notes**
-
-**Other**
-
-==============
-
-Version: 2.1.0
---------------
-
-:Release Date:
-
-**New Features**
-
-* Added module **oom-certservice-post-processor** with following functionality:
-
-  * appending CMPv2 certificates to CertMan truststore
-  * replacing CertMan keystore with CMPv2 keystore
-
-**Bug Fixes**
-
-  N/A
+- `OOM-2524 <https://jira.onap.org/browse/OOM-2524>`_ Fixed project makefile.
 
 **Known Issues**
 
-  N/A
+None
 
-**Security Notes**
+Deliverables
+------------
 
-  N/A
+Software Deliverables
+~~~~~~~~~~~~~~~~~~~~~
+Docker images mentioned in Release Date section.
 
-*Fixed Security Issues*
+Documentation Deliverables
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+Documentation moved from AAF - `OOM Certification Service <https://docs.onap.org/projects/onap-oom-platform-cert-service/en/latest/index.html#master-index>`_ .
 
-  N/A
+Known Limitations, Issues and Workarounds
+=========================================
 
-*Known Security Issues*
+System Limitations
+------------------
 
-  N/A
+Any known system limitations.
 
-*Known Vulnerabilities in Used Modules*
 
-  N/A
+Known Vulnerabilities
+---------------------
 
-**Upgrade Notes**
+Any known vulnerabilities.
 
-**Deprecation Notes**
 
-**Other**
+Workarounds
+-----------
 
-==============
+Any known workarounds.
 
-Version: 2.0.0
+
+Security Notes
 --------------
 
-:Release Date:
+**Fixed Security Issues**
 
-**New Features**
+None
 
-        - The same functionality as in aaf-certservice 1.2.0
+**Known Security Issues**
 
-**Bug Fixes**
+None
 
-        N/A
 
-**Known Issues**
+Test Results
+============
+Not applicable
 
-        N/A
 
-**Security Notes**
+References
+==========
 
-        N/A
+For more information on the ONAP Guilin release, please see:
 
-*Fixed Security Issues*
+#. `ONAP Home Page`_
+#. `ONAP Documentation`_
+#. `ONAP Release Downloads`_
+#. `ONAP Wiki Page`_
 
-        N/A
 
-*Known Security Issues*
-
-        N/A
-
-*Known Vulnerabilities in Used Modules*
-
-        N/A
-
-**Upgrade Notes**
-
-**Deprecation Notes**
-
-**Other**
-
-===========
-
-Version: 1.2.0
---------------
-
-:Release Date:
-
-**New Features**
-
-        - Client creates subdirectories in given OUTPUT_PATH and place certificate into it.
-
-**Bug Fixes**
-
-        N/A
-
-**Known Issues**
-
-        N/A
-
-**Security Notes**
-
-        N/A
-
-*Fixed Security Issues*
-
-        N/A
-
-*Known Security Issues*
-
-        N/A
-
-*Known Vulnerabilities in Used Modules*
-
-        N/A
-
-**Upgrade Notes**
-
-**Deprecation Notes**
-
-**Other**
-
-===========
-
-Version: 1.1.0
---------------
-
-:Release Date: 2020-06-29
-
-**New Features**
-
-        - Added property to CertService Client to allow selection of output certificates type (One of: PEM, JKS, P12).
-
-**Bug Fixes**
-
-        - Resolved issue where created PKCS12 certificates had jks extension.
-
-**Known Issues**
-
-        N/A
-
-**Security Notes**
-
-        N/A
-
-*Fixed Security Issues*
-
-        N/A
-
-*Known Security Issues*
-
-        N/A
-
-*Known Vulnerabilities in Used Modules*
-
-        N/A
-
-**Upgrade Notes**
-
-**Deprecation Notes**
-
-**Other**
-
-===========
-
-Version: 1.0.1
---------------
-
-:Release Date: 2020-05-22
-
-**New Features**
-
-The Frankfurt Release is the first release of the Certification Service.
-
-
-**Bug Fixes**
-
-        - `AAF-1132 <https://jira.onap.org/browse/AAF-1132>`_ - CertService Client returns exit status 5 when TLS configuration fails
-
-**Known Issues**
-
-        - PKCS12 certificates have jks extension
-
-**Security Notes**
-
-        N/A
-
-*Fixed Security Issues*
-
-        N/A
-
-*Known Security Issues*
-
-        N/A
-
-*Known Vulnerabilities in Used Modules*
-
-        N/A
-
-**Upgrade Notes**
-
-**Deprecation Notes**
-
-**Other**
-
-===========
-
-Version: 1.0.0
---------------
-
-:Release Date: 2020-04-16
-
-**New Features**
-
-The Frankfurt Release is the first release of the Certification Service.
-
-**Bug Fixes**
-
-        - No new fixes were implemented for this release
-
-**Known Issues**
-
-        - `AAF-1132 <https://jira.onap.org/browse/AAF-1132>`_ - CertService Client returns exit status 5 when TLS configuration fails
-
-        - PKCS12 certificates have jks extension
-
-**Security Notes**
-
-        N/A
-
-*Fixed Security Issues*
-
-        N/A
-
-*Known Security Issues*
-
-        N/A
-
-*Known Vulnerabilities in Used Modules*
-
-        N/A
-
-**Upgrade Notes**
-
-**Deprecation Notes**
-
-**Other**
-
-===========
-
-End of Release Notes
+.. _`ONAP Home Page`: https://www.onap.org
+.. _`ONAP Wiki Page`: https://wiki.onap.org
+.. _`ONAP Documentation`: https://docs.onap.org
+.. _`ONAP Release Downloads`: https://git.onap.org
