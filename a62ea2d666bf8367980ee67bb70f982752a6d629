@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84f91f15_d6605bac",
+        "filename": "certServiceClient/src/main/java/org/onap/oom/certservice/client/configuration/validation/csr/CsrEnvsValueValidators.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-11-24T11:40:13Z",
+      "side": 1,
+      "message": "As it is not very straight-forward validator, I would prefer if it stayed in its own class, and in here we would only call UriValidator methods.",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 31
+      },
+      "revId": "a62ea2d666bf8367980ee67bb70f982752a6d629",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "122190ba_42191ade",
+        "filename": "certServiceClient/src/test/java/org/onap/oom/certservice/client/configuration/validation/csr/CsrEnvsValueValidatorsTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-11-24T11:40:13Z",
+      "side": 1,
+      "message": "I would prefer if we had two tests for isUriValid here, and test UriValidator extensively in its own test class (comment from CsrEnvsValueValidators).",
+      "revId": "a62ea2d666bf8367980ee67bb70f982752a6d629",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
