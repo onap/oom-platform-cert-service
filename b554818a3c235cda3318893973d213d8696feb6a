@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "58b2b8d0_7e7acb9d",
+        "filename": "certServiceClient/src/main/java/org/onap/oom/certservice/client/api/ExitableException.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-11-24T21:20:33Z",
+      "side": 1,
+      "message": "Lets make it in subsequent MR.",
+      "parentUuid": "0323fac9_7b797b23",
+      "range": {
+        "startLine": 22,
+        "startChar": 48,
+        "endLine": 22,
+        "endChar": 64
+      },
+      "revId": "b554818a3c235cda3318893973d213d8696feb6a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3042b639_4cc536a7",
         "filename": "certServiceClient/src/main/java/org/onap/oom/certservice/client/configuration/factory/SanMapper.java",
         "patchSetId": 8

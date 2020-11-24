@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6483ceb9_3f2123cc",
+        "filename": "certServiceClient/src/main/java/org/onap/oom/certservice/client/configuration/validation/csr/CsrEnvsValueValidators.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-11-24T21:20:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84f91f15_d6605bac",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 31
+      },
+      "revId": "a62ea2d666bf8367980ee67bb70f982752a6d629",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "122190ba_42191ade",
         "filename": "certServiceClient/src/test/java/org/onap/oom/certservice/client/configuration/validation/csr/CsrEnvsValueValidatorsTest.java",
         "patchSetId": 11
@@ -57,6 +81,24 @@
       "revId": "a62ea2d666bf8367980ee67bb70f982752a6d629",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90716035_1a90ea82",
+        "filename": "certServiceClient/src/test/java/org/onap/oom/certservice/client/configuration/validation/csr/CsrEnvsValueValidatorsTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-11-24T21:20:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b549444e_044110a5",
+      "revId": "a62ea2d666bf8367980ee67bb70f982752a6d629",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
