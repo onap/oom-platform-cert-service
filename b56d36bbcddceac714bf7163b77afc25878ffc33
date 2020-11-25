@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c00b5aa6_48e416de",
+        "filename": "docs/sections/release-notes.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2020-11-25T08:21:11Z",
+      "side": 1,
+      "message": "Two questions:\n* I hope that after this will be merged and cherry picked, you will create new MR with 2.2.0 version. Am I right?\n* In Guilin release we should add ONLY information about version (-s) delivered by such release? And skip information about previous versions?",
+      "revId": "b56d36bbcddceac714bf7163b77afc25878ffc33",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
