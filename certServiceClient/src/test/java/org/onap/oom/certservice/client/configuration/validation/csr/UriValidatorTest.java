@@ -18,9 +18,10 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.certservice.client.configuration.validation;
+package org.onap.oom.certservice.client.configuration.validation.csr;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.onap.oom.certservice.client.configuration.validation.csr.UriValidator.isValid;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -34,19 +35,19 @@ class UriValidatorTest {
     @ParameterizedTest
     @ValueSource(strings = {"http:/", "http:", "http://", "h4ttp://"})
     void shouldTrueForValidScheme(String uri) {
-        assertThat(UriValidator.isValidUri(uri)).isTrue();
+        assertThat(isValid(uri)).isTrue();
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"example.com", "www.example.com", "0.0.0.0", "[2001:0db8:85a3:0000:0000:8a2e:0370:7334]"})
     void shouldFalseForUriWithoutScheme(String uri) {
-        assertThat(UriValidator.isValidUri(uri)).isFalse();
+        assertThat(isValid(uri)).isFalse();
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"*http://", "_http://", "?http://", "4http://"})
     void shouldFalseForUriWithInvalidScheme(String uri) {
-        assertThat(UriValidator.isValidUri(uri)).isFalse();
+        assertThat(isValid(uri)).isFalse();
     }
 
     /**
@@ -64,7 +65,7 @@ class UriValidatorTest {
         "http://user:password:test@example.com",
         "http://user-info:password@example.com"})
     void shouldTrueForValidUserInAuthority(String uri) {
-        assertThat(UriValidator.isValidUri(uri)).isTrue();
+        assertThat(isValid(uri)).isTrue();
     }
 
     @ParameterizedTest
@@ -72,7 +73,7 @@ class UriValidatorTest {
         "http://user:password",
         "http://user:password:test:"})
     void shouldFalseForMissingHostInAuthority(String uri) {
-        assertThat(UriValidator.isValidUri(uri)).isFalse();
+        assertThat(isValid(uri)).isFalse();
     }
 
     @ParameterizedTest
@@ -82,7 +83,7 @@ class UriValidatorTest {
         "http://8.8.8.8/",
         "http://8.8.8.8/test"})
     void shouldTrueForUriContainsIP(String uri) {
-        assertThat(UriValidator.isValidUri(uri)).isTrue();
+        assertThat(isValid(uri)).isTrue();
     }
 
     @ParameterizedTest
@@ -92,7 +93,7 @@ class UriValidatorTest {
         "http://8.8.8.8:8080/test",
         "https://8.8.8.8:443/"})
     void shouldTrueForUriContainsIPAndPort(String uri) {
-        assertThat(UriValidator.isValidUri(uri)).isTrue();
+        assertThat(isValid(uri)).isTrue();
     }
 
     @ParameterizedTest
@@ -101,7 +102,7 @@ class UriValidatorTest {
         "http:/file",
         "http:/ptah/to/file"})
     void shouldTrueForMissingAuthority(String uri) {
-        assertThat(UriValidator.isValidUri(uri)).isTrue();
+        assertThat(isValid(uri)).isTrue();
     }
 
     /**
@@ -114,7 +115,7 @@ class UriValidatorTest {
         "http://example.com/path",
         "http://example.com/",})
     void shouldTrueForPathWithAuthority(String uri) {
-        assertThat(UriValidator.isValidUri(uri)).isTrue();
+        assertThat(isValid(uri)).isTrue();
     }
 
     @ParameterizedTest
@@ -123,7 +124,7 @@ class UriValidatorTest {
         "http:/path",
         "http:/",})
     void shouldTrueForPathWithoutAuthority(String uri) {
-        assertThat(UriValidator.isValidUri(uri)).isTrue();
+        assertThat(isValid(uri)).isTrue();
     }
 
 
@@ -134,7 +135,7 @@ class UriValidatorTest {
         "http://example.com?test=tes1&#",
         "http://example.com#onap"})
     void shouldTrueForUriWithQueryAndFragmentInPath(String uri) {
-        assertThat(UriValidator.isValidUri(uri)).isTrue();
+        assertThat(isValid(uri)).isTrue();
     }
 
     @ParameterizedTest
@@ -143,7 +144,7 @@ class UriValidatorTest {
         "http://example.com?##",
         "http://www.example.com/file%GF.html"})
     void shouldFalseForUriWithWrongQueryOrWrongFragmentInPath(String uri) {
-        assertThat(UriValidator.isValidUri(uri)).isFalse();
+        assertThat(isValid(uri)).isFalse();
     }
 
     @ParameterizedTest
@@ -157,6 +158,7 @@ class UriValidatorTest {
         "telnet://192.0.2.16:80/",
         "urn:oasis:names:specification:docbook:dtd:xml:4.1.2"})
     void shouldTrueForRFC3986Examples(String uri) {
-        assertThat(UriValidator.isValidUri(uri)).isTrue();
+        assertThat(isValid(uri)).isTrue();
     }
+
 }

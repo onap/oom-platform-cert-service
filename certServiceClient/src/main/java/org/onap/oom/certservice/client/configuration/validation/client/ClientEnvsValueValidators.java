@@ -1,4 +1,5 @@
-/*============LICENSE_START=======================================================
+/*
+ * ============LICENSE_START=======================================================
  * oom-certservice-client
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
@@ -16,17 +17,17 @@
  * limitations under the License.
  * ============LICENSE_END=========================================================
  */
+package org.onap.oom.certservice.client.configuration.validation.client;
 
-package org.onap.oom.certservice.client.api;
+public final class ClientEnvsValueValidators {
+    private static final String ALPHA_NUMERIC_REGEX = "^[a-zA-Z0-9]*$";
+    private static final String VALID_PATH_REGEX = "^/|(/[a-zA-Z0-9_-]+)+/?$";
 
-public abstract class ExitableException extends RuntimeException {
-    public ExitableException(Throwable cause) {
-        super(cause);
+    public static boolean isAlphaNumeric(String caName) {
+        return caName.matches(ALPHA_NUMERIC_REGEX);
     }
 
-    public ExitableException(String message) {
-        super(message);
+    public static boolean isPathValid(String path) {
+        return path.matches(VALID_PATH_REGEX);
     }
-
-    public abstract ExitStatus applicationExitStatus();
 }
