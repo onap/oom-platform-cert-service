@@ -12,6 +12,7 @@ OOM Certification Service
 
    sections/introduction.rst
    sections/architecture.rst
+   sections/external-provider.rst
    sections/build.rst
    sections/offeredapis.rst
    sections/usage.rst
