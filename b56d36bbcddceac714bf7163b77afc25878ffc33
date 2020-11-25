@@ -16,6 +16,24 @@
       "revId": "b56d36bbcddceac714bf7163b77afc25878ffc33",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86374dd0_21cdd5bf",
+        "filename": "docs/sections/release-notes.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-11-25T08:29:55Z",
+      "side": 1,
+      "message": "1. Yes I will do. \n2. Yes, as you can see in template notes: https://git.onap.org/doc/tree/docs/templates/sections/release-notes.rst\n\"Only the current release is to be documented in this document\" \nMaybe we should create other RTD page which contains all versions descriptions? I mean moved old release notes to page named e.g versions. What do you think?",
+      "parentUuid": "c00b5aa6_48e416de",
+      "revId": "b56d36bbcddceac714bf7163b77afc25878ffc33",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
