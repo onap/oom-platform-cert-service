@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3710c8b7_5d5ae0d2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-11-25T06:49:41Z",
+      "side": 1,
+      "message": "Update \"How to run\" / \"Update expected logs\".",
+      "range": {
+        "startLine": 10,
+        "startChar": 2,
+        "endLine": 10,
+        "endChar": 13
+      },
+      "revId": "2f23dda05a822a25fb14879d987f1eaa8301c261",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
