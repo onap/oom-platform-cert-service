@@ -66,7 +66,7 @@
         <docker-image.namespace>onap</docker-image.namespace>
         <docker-image.name>${project.groupId}.${project.artifactId}</docker-image.name>
         <docker-image.latest>${project.version}</docker-image.latest>
-        <docker-image.tag.latest>latest</docker-image.tag.latest>
+        <docker-image.tag.latest>guilin-latest</docker-image.tag.latest>
         <version>${project.version}</version>
         <docker.http_proxy/>
 
