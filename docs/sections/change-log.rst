@@ -14,6 +14,47 @@ Honolulu
 
 ==============
 
+Version: 2.3.0
+--------------
+
+:Release Date: 2020-12-01
+
+**New Features**
+
+* Extended CertService by support for new SANs types - IPs, E-mails, URIs
+
+**Bug Fixes**
+
+  N/A
+
+**Known Issues**
+
+  N/A
+
+**Security Notes**
+
+  N/A
+
+*Fixed Security Issues*
+
+  N/A
+
+*Known Security Issues*
+
+  N/A
+
+*Known Vulnerabilities in Used Modules*
+
+  N/A
+
+**Upgrade Notes**
+
+**Deprecation Notes**
+
+**Other**
+
+==============
+
 Version: 2.2.0
 --------------
 
