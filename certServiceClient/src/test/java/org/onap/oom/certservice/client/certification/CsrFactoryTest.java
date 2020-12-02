@@ -35,27 +35,57 @@ import org.onap.oom.certservice.client.configuration.model.San;
 
 class CsrFactoryTest {
 
-    CsrConfiguration config = mock(CsrConfiguration.class);
+    private CsrConfiguration config = mock(CsrConfiguration.class);
 
     @Test
     void createEncodedCsr_shouldSucceedWhenAllFieldsAreSetCorrectly()
         throws KeyPairGenerationException, CsrGenerationException {
 
-        KeyPair keyPair =
-            new KeyPairFactory(EncryptionAlgorithmConstants.RSA_ENCRYPTION_ALGORITHM,
-                EncryptionAlgorithmConstants.KEY_SIZE).create();
+        KeyPair keyPair = createKeyPair();
+
+        mockRequiredConfigFields();
+        mockOptionalConfigFields();
+
+        assertThat(new CsrFactory(config).createCsrInPem(keyPair)).isNotEmpty();
+    }
+
+    @Test
+    void createEncodedCsr_shouldSucceedWhenRequiredFieldsAreSetCorrectly()
+        throws KeyPairGenerationException, CsrGenerationException {
+
+        KeyPair keyPair = createKeyPair();
+
+        mockRequiredConfigFields();
+        mockOptionalConfigFieldsEmpty();
+
+        assertThat(new CsrFactory(config).createCsrInPem(keyPair)).isNotEmpty();
+    }
+
+    private KeyPair createKeyPair() {
+        return new KeyPairFactory(EncryptionAlgorithmConstants.RSA_ENCRYPTION_ALGORITHM,
+            EncryptionAlgorithmConstants.KEY_SIZE).create();
+    }
+
+    private void mockRequiredConfigFields() {
+        when(config.getCommonName()).thenReturn("onap.org");
+        when(config.getOrganization()).thenReturn("Linux-Foundation");
+        when(config.getCountry()).thenReturn("US");
+        when(config.getState()).thenReturn("California");
+    }
+
+    private void mockOptionalConfigFields() {
         San san1 = new San("onapexample.com", GeneralName.dNSName);
         San san2 = new San("onapexample.com.pl", GeneralName.dNSName);
 
-        when(config.getCommonName()).thenReturn("onap.org");
-        when(config.getSans()).thenReturn(List.of(san1, san2));
-        when(config.getCountry()).thenReturn("US");
         when(config.getLocation()).thenReturn("San-Francisco");
-        when(config.getOrganization()).thenReturn("Linux-Foundation");
+        when(config.getSans()).thenReturn(List.of(san1, san2));
         when(config.getOrganizationUnit()).thenReturn("ONAP");
-        when(config.getState()).thenReturn("California");
+    }
 
-        assertThat(new CsrFactory(config).createCsrInPem(keyPair)).isNotEmpty();
+    private void mockOptionalConfigFieldsEmpty() {
+        when(config.getLocation()).thenReturn(null);
+        when(config.getSans()).thenReturn(null);
+        when(config.getOrganizationUnit()).thenReturn(null);
     }
 }
 
