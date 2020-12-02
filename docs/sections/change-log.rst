@@ -14,6 +14,47 @@ Honolulu
 
 ==============
 
+Version: 2.3.1
+--------------
+
+:Release Date: 2020-12-02
+
+**New Features**
+
+  N/A
+
+**Bug Fixes**
+
+  Fix NullPointerException in CertService Client when SANs environment variable is not defined.
+
+**Known Issues**
+
+  N/A
+
+**Security Notes**
+
+  N/A
+
+*Fixed Security Issues*
+
+  N/A
+
+*Known Security Issues*
+
+  N/A
+
+*Known Vulnerabilities in Used Modules*
+
+  N/A
+
+**Upgrade Notes**
+
+**Deprecation Notes**
+
+**Other**
+
+==============
+
 Version: 2.3.0
 --------------
 
@@ -29,7 +70,8 @@ Version: 2.3.0
 
 **Known Issues**
 
-  N/A
+  CertService Client exits unsuccessfully with code 99 when SANs environment variable is not defined, because of
+  NullPointerException
 
 **Security Notes**
 
