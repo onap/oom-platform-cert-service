@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.security.auth.x500.X500Principal;
+import org.apache.commons.collections.CollectionUtils;
 import org.bouncycastle.asn1.pkcs.PKCSObjectIdentifiers;
 import org.bouncycastle.asn1.x509.Extension;
 import org.bouncycastle.asn1.x509.Extensions;
@@ -98,7 +99,7 @@ public class CsrFactory {
         JcaPKCS10CertificationRequestBuilder builder = new JcaPKCS10CertificationRequestBuilder(subject,
             keyPair.getPublic());
 
-        if (!configuration.getSans().isEmpty()) {
+        if (!CollectionUtils.isEmpty(configuration.getSans())) {
             builder.addAttribute(PKCSObjectIdentifiers.pkcs_9_at_extensionRequest, generateSansExtension());
         }
 

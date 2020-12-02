@@ -57,5 +57,24 @@ class CsrFactoryTest {
 
         assertThat(new CsrFactory(config).createCsrInPem(keyPair)).isNotEmpty();
     }
+
+    @Test
+    void createEncodedCsr_shouldSucceedWhenRequiredFieldsAreSetCorrectly()
+        throws KeyPairGenerationException, CsrGenerationException {
+
+        KeyPair keyPair =
+            new KeyPairFactory(EncryptionAlgorithmConstants.RSA_ENCRYPTION_ALGORITHM,
+                EncryptionAlgorithmConstants.KEY_SIZE).create();
+
+        when(config.getCommonName()).thenReturn("onap.org");
+        when(config.getOrganization()).thenReturn("Linux-Foundation");
+        when(config.getCountry()).thenReturn("US");
+        when(config.getState()).thenReturn("California");
+        when(config.getLocation()).thenReturn(null);
+        when(config.getSans()).thenReturn(null);
+        when(config.getOrganizationUnit()).thenReturn(null);
+
+        assertThat(new CsrFactory(config).createCsrInPem(keyPair)).isNotEmpty();
+    }
 }
 
