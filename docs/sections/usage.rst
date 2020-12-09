@@ -31,7 +31,7 @@ CertService client needs the following configuration parameters to work properly
   - LOCATION *(optional)* - Location for which certificate from CMPv2 server should be issued
   - STATE *(required)* - State for which certificate from CMPv2 server should be issued
   - COUNTRY *(required)* - Country for which certificate from CMPv2 server should be issued
-  - SANS *(optional)(SANS's should be separated by a comma e.g. test.onap.org,onap.com)* - Subject Alternative Names (SANs) for which certificate from CMPv2 server should be issued. All SANs types are supported (DNS names, IPs, URIs, emails).
+  - SANS *(optional)(SANS's should be separated by a comma e.g. test.onap.org,onap.com)* - Subject Alternative Names (SANs) for which certificate from CMPv2 server should be issued. The following SANs types are supported: DNS names, IPs, URIs, emails.
 
 3. Parameters to establish secure communication to CertService:
 

@@ -25,6 +25,7 @@ import (
 	"net"
 	"net/url"
 	"strconv"
+	"strings"
 
 	cmapi "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1"
 
@@ -102,11 +103,8 @@ func logPropertiesNotSupportedByCertService(log leveledlogger.Logger, request *c
 }
 
 func extractStringArray(strArray []string) string {
-	values := ""
-	for _, val := range strArray {
-		values = values + val + ", "
-	}
-	return values
+	separator := ","
+	return strings.Join(strArray, separator)
 }
 
 func mapUrisToText(uris []*url.URL) []string {
