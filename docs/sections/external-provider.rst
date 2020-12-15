@@ -58,6 +58,8 @@ Signed certificate as well as trust anchor (CA root certificate) will be stored 
 
 By default certificates will be stored in PEM format. It is possible to get certificates also in JKS and P12 format - see example below - more information can be found on official cert manager page.
 
+The following SANs types are supported: DNS names, IPs, URIs, emails.
+
 Here is an example of a *Certificate*:
 
 .. code-block:: yaml
@@ -83,10 +85,16 @@ Here is an example of a *Certificate*:
         - California
       organizationalUnits:
         - ONAP
-    # DNS SAN
+    # SANs
     dnsNames:
       - localhost
       - certissuer.onap.org
+    ipAddresses:
+      - "127.0.0.1"
+    uris:
+      - onap://cluster.local/
+    emailAddresses:
+      - onap@onap.org
     # The reference to the CMPv2 issuer
     issuerRef:
       group: certmanager.onap.org
