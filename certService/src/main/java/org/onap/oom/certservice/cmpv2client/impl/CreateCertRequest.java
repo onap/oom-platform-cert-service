@@ -28,6 +28,7 @@ import java.security.KeyPair;
 import java.util.Date;
 import java.util.List;
 
+import org.bouncycastle.asn1.ASN1Integer;
 import org.bouncycastle.asn1.cmp.PKIBody;
 import org.bouncycastle.asn1.cmp.PKIHeader;
 import org.bouncycastle.asn1.cmp.PKIMessage;
@@ -37,7 +38,13 @@ import org.bouncycastle.asn1.crmf.CertRequest;
 import org.bouncycastle.asn1.crmf.CertTemplateBuilder;
 import org.bouncycastle.asn1.crmf.ProofOfPossession;
 import org.bouncycastle.asn1.x500.X500Name;
+<<<<<<< HEAD   (4f9225 [OOM-CERT-SERVICE] Add Guilin tag to image)
+=======
+import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
+import org.bouncycastle.asn1.x509.GeneralName;
+>>>>>>> CHANGE (ee8b5c [OOM-CERT-SERVICE] Align implementation with RFC4210)
 import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
+import org.bouncycastle.operator.DefaultSignatureAlgorithmIdentifierFinder;
 import org.onap.oom.certservice.cmpv2client.exceptions.CmpClientException;
 
 /**
@@ -55,9 +62,11 @@ class CreateCertRequest {
     private String initAuthPassword;
     private String senderKid;
 
-    private static final int ITERATIONS = createRandomInt(5000);
+    private static final int ITERATIONS = createRandomInt(1000);
     private static final byte[] SALT = createRandomBytes();
     private final int certReqId = createRandomInt(Integer.MAX_VALUE);
+    private final AlgorithmIdentifier signingAlgorithm = new DefaultSignatureAlgorithmIdentifierFinder()
+            .find("SHA256withRSA");
 
     public void setIssuerDn(X500Name issuerDn) {
         this.issuerDn = issuerDn;
@@ -104,6 +113,9 @@ class CreateCertRequest {
                         .setSubject(subjectDn)
                         .setExtensions(CmpMessageHelper.generateExtension(sansList))
                         .setValidity(CmpMessageHelper.generateOptionalValidity(notBefore, notAfter))
+                        .setVersion(2)
+                        .setSerialNumber(new ASN1Integer(0L))
+                        .setSigningAlg(signingAlgorithm)
                         .setPublicKey(
                                 SubjectPublicKeyInfo.getInstance(subjectKeyPair.getPublic().getEncoded()));
 
