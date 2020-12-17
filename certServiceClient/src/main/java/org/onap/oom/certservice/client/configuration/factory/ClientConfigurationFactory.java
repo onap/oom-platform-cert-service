@@ -56,7 +56,7 @@ public class ClientConfigurationFactory extends AbstractConfigurationFactory<Cli
                 .orElseThrow(() -> new ClientConfigurationException(ClientConfigurationEnvs.OUTPUT_PATH + " is invalid."));
 
         envsForClient.getCaName()
-                .filter(this::isAlphaNumeric)
+                .filter(this::isCaNameValid)
                 .map(configuration::setCaName)
                 .orElseThrow(() -> new ClientConfigurationException(ClientConfigurationEnvs.CA_NAME + " is invalid."));
 
