@@ -56,9 +56,15 @@ public class ClientConfigurationFactory extends AbstractConfigurationFactory<Cli
                 .orElseThrow(() -> new ClientConfigurationException(ClientConfigurationEnvs.OUTPUT_PATH + " is invalid."));
 
         envsForClient.getCaName()
+<<<<<<< HEAD   (4f9225 [OOM-CERT-SERVICE] Add Guilin tag to image)
                 .filter(this::isAlphaNumeric)
                 .map(configuration::setCaName)
                 .orElseThrow(() -> new ClientConfigurationException(ClientConfigurationEnvs.CA_NAME + " is invalid."));
+=======
+            .filter(ClientEnvsValueValidators::isCaNameValid)
+            .map(configuration::setCaName)
+            .orElseThrow(() -> new ClientConfigurationException(ClientConfigurationEnvs.CA_NAME + " is invalid."));
+>>>>>>> CHANGE (ee8b5c [OOM-CERT-SERVICE] Align implementation with RFC4210)
 
         Optional<String> outputType = envsForClient.getOutputType();
 
