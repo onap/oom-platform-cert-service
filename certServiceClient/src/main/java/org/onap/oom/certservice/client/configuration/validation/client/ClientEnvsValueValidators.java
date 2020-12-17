@@ -20,11 +20,11 @@
 package org.onap.oom.certservice.client.configuration.validation.client;
 
 public final class ClientEnvsValueValidators {
-    private static final String ALPHA_NUMERIC_REGEX = "^[a-zA-Z0-9]*$";
+    private static final String CA_NAME_REGEX = "^[a-zA-Z0-9_.~-]{1,128}$";
     private static final String VALID_PATH_REGEX = "^/|(/[a-zA-Z0-9_-]+)+/?$";
 
-    public static boolean isAlphaNumeric(String caName) {
-        return caName.matches(ALPHA_NUMERIC_REGEX);
+    public static boolean isCaNameValid(String caName) {
+        return caName.matches(CA_NAME_REGEX);
     }
 
     public static boolean isPathValid(String path) {
