@@ -56,15 +56,15 @@ class AbstractConfigurationFactoryTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"caname", "caname1", "123caName", "ca1name"})
-    void shouldAcceptValidAlphanumeric(String caName) {
-        assertThat(cut.isAlphaNumeric(caName)).isTrue();
+    @ValueSource(strings = {"caname", "caname1", "123caName", "ca1name", "ca_name", "ca-name", "ca.na~me"})
+    void shouldAcceptValidCaName(String caName) {
+        assertThat(cut.isCaNameValid(caName)).isTrue();
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"44caname$", "#caname1", "1c_aname", "ca1-name"})
-    void shouldRejectInvalidAlphanumeric(String caName) {
-        assertThat(cut.isAlphaNumeric(caName)).isFalse();
+    @ValueSource(strings = {"44caname$", "#caname1", "1c[aname]", "ca1/name", "", " "})
+    void shouldRejectInvalidCaName(String caName) {
+        assertThat(cut.isCaNameValid(caName)).isFalse();
     }
 
     @ParameterizedTest
