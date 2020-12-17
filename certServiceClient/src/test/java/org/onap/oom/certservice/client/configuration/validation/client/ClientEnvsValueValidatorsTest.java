@@ -21,7 +21,7 @@
 package org.onap.oom.certservice.client.configuration.validation.client;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.onap.oom.certservice.client.configuration.validation.client.ClientEnvsValueValidators.isAlphaNumeric;
+import static org.onap.oom.certservice.client.configuration.validation.client.ClientEnvsValueValidators.isCaNameValid;
 import static org.onap.oom.certservice.client.configuration.validation.client.ClientEnvsValueValidators.isPathValid;
 
 import org.junit.jupiter.params.ParameterizedTest;
@@ -30,14 +30,14 @@ import org.junit.jupiter.params.provider.ValueSource;
 class ClientEnvsValueValidatorsTest {
     @ParameterizedTest
     @ValueSource(strings = {"caname", "caname1", "123caName", "ca1name"})
-    void shouldAcceptValidAlphanumeric(String caName) {
-        assertThat(isAlphaNumeric(caName)).isTrue();
+    void shouldAcceptValidCaName(String caName) {
+        assertThat(isCaNameValid(caName)).isTrue();
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"44caname$", "#caname1", "1c_aname", "ca1-name"})
-    void shouldRejectInvalidAlphanumeric(String caName) {
-        assertThat(isAlphaNumeric(caName)).isFalse();
+    @ValueSource(strings = {"44caname$", "#caname1", "1c[aname]", "ca1/name", "", " "})
+    void shouldRejectInvalidCaName(String caName) {
+        assertThat(isCaNameValid(caName)).isFalse();
     }
 
     @ParameterizedTest
