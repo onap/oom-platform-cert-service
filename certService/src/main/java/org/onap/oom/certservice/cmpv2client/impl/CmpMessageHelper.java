@@ -74,7 +74,7 @@ public final class CmpMessageHelper {
     private static final AlgorithmIdentifier OWF_ALGORITHM =
             new AlgorithmIdentifier(new ASN1ObjectIdentifier("1.3.14.3.2.26"));
     private static final AlgorithmIdentifier MAC_ALGORITHM =
-            new AlgorithmIdentifier(new ASN1ObjectIdentifier("1.2.840.113549.2.9"));
+            new AlgorithmIdentifier(new ASN1ObjectIdentifier("1.3.6.1.5.5.8.1.2"));
     private static final ASN1ObjectIdentifier PASSWORD_BASED_MAC =
             new ASN1ObjectIdentifier("1.2.840.113533.7.66.13");
 

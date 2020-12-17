@@ -38,8 +38,8 @@ public abstract class AbstractConfigurationFactory<T extends ConfigurationModel>
         return path.matches("^/|(/[a-zA-Z0-9_-]+)+/?$");
     }
 
-    public boolean isAlphaNumeric(String caName) {
-        return caName.matches("^[a-zA-Z0-9]*$");
+    public boolean isCaNameValid(String caName) {
+        return caName.matches("^[a-zA-Z0-9_.~-]{1,128}$");
     }
 
     public boolean isCommonNameValid(String commonName) {
