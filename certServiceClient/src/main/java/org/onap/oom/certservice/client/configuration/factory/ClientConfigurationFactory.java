@@ -59,7 +59,7 @@ public class ClientConfigurationFactory implements ConfigurationFactory<ClientCo
             .orElseThrow(() -> new ClientConfigurationException(ClientConfigurationEnvs.OUTPUT_PATH + " is invalid."));
 
         envsForClient.getCaName()
-            .filter(ClientEnvsValueValidators::isAlphaNumeric)
+            .filter(ClientEnvsValueValidators::isCaNameValid)
             .map(configuration::setCaName)
             .orElseThrow(() -> new ClientConfigurationException(ClientConfigurationEnvs.CA_NAME + " is invalid."));
 
