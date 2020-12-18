@@ -70,6 +70,30 @@
       "revId": "aead6151a43a23764c55829bb7a2930979fd7268",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9b1cfdf5_5ae135ac",
+        "filename": "certServiceClient/src/test/java/org/onap/oom/certservice/client/configuration/validation/client/ClientEnvsValueValidatorsTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-12-18T08:17:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f8e0e44_48e09627",
+      "range": {
+        "startLine": 32,
+        "startChar": 63,
+        "endLine": 32,
+        "endChar": 70
+      },
+      "revId": "aead6151a43a23764c55829bb7a2930979fd7268",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
