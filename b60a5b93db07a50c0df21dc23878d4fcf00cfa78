@@ -1,0 +1,11 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Remigiusz Janeczek <remigiusz.janeczek@nokia.com>
+Code-Review+1: Tomasz Wr�bel <tomasz.wrobel@nokia.com>
+Code-Review+1: Piotr Marcinkiewicz <piotr.marcinkiewicz@nokia.com>
+Code-Review+1: Joanna Jeremicz <joanna.jeremicz@nokia.com>
+Code-Review+2: Krzysztof Opasiak <k.opasiak@samsung.com>
+Submitted-by: Krzysztof Opasiak <k.opasiak@samsung.com>
+Submitted-at: Fri, 18 Dec 2020 09:37:28 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/oom/platform/cert-service/+/116472
+Project: oom/platform/cert-service
+Branch: refs/heads/master
