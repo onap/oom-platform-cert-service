@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "270e036c_2d2e3d36",
+        "filename": "certServiceClient/src/test/java/org/onap/oom/certservice/client/configuration/validation/client/ClientEnvsValueValidatorsTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-12-18T07:58:48Z",
+      "side": 1,
+      "message": "Consider adding some more test cases.",
+      "range": {
+        "startLine": 32,
+        "startChar": 63,
+        "endLine": 32,
+        "endChar": 70
+      },
+      "revId": "aead6151a43a23764c55829bb7a2930979fd7268",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
