@@ -13,6 +13,9 @@ The main functionality of the provider is to forward Certificate Signing Request
 
 Additional information can be found on a dedicated page:  https://wiki.onap.org/display/DW/CertService+and+K8s+Cert-Manager+integration.
 
+By default CMPv2 provider is **disabled**. To enable it set following global helm value:
+
+- CMPv2CertManagerIntegration = true
 
 CMPv2 Issuer
 ------------------------------
