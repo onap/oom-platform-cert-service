@@ -1,0 +1,16 @@
+distribution_type: 'container'
+container_release_tag: '2.3.2'
+container_pull_registry: nexus3.onap.org:10003
+container_push_registry: nexus3.onap.org:10002
+project: 'oom-platform-cert-service'
+log_dir: 'oom-platform-cert-service-maven-docker-stage-master/167'
+ref: 5e78fb3b88eda2dd8d1a29173399328c2256ac09
+containers:
+  - name: 'org.onap.oom.platform.cert-service.oom-certservice-api'
+    version: '2.3.2-20201227T201527Z'
+  - name: 'org.onap.oom.platform.cert-service.oom-certservice-client'
+    version: '2.3.2-20201227T201527Z'
+  - name: 'org.onap.oom.platform.cert-service.oom-certservice-post-processor'
+    version: '2.3.2-20201227T201527Z'
+  - name: 'org.onap.oom.platform.cert-service.oom-certservice-k8s-external-provider'
+    version: '2.3.2-20201227T201527Z'
