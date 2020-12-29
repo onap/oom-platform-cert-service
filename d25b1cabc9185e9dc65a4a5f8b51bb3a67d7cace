@@ -1,0 +1,9 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Jan Malkiewicz <jan.malkiewicz@nokia.com>
+Code-Review+1: Joanna Jeremicz <joanna.jeremicz@nokia.com>
+Code-Review+2: Bogumil Zebek <bogumil.zebek@nokia.com>
+Submitted-by: Bogumil Zebek <bogumil.zebek@nokia.com>
+Submitted-at: Tue, 29 Dec 2020 07:41:32 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/oom/platform/cert-service/+/116527
+Project: oom/platform/cert-service
+Branch: refs/heads/master
