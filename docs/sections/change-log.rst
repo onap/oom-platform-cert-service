@@ -7,6 +7,48 @@ Change Log
 ==============
 
 
+Version: 2.1.1
+--------------
+
+:Release Date: 2021-01-07
+
+**New Features**
+
+  N/A
+
+**Bug Fixes**
+
+        - Align Cert Service Api to RFC4210.
+        - Fix Cert Service Client CA_NAME validation.
+
+**Known Issues**
+
+  N/A
+
+**Security Notes**
+
+  N/A
+
+*Fixed Security Issues*
+
+  N/A
+
+*Known Security Issues*
+
+  N/A
+
+*Known Vulnerabilities in Used Modules*
+
+  N/A
+
+**Upgrade Notes**
+
+**Deprecation Notes**
+
+**Other**
+
+==============
+
 Version: 2.1.0
 --------------
 
