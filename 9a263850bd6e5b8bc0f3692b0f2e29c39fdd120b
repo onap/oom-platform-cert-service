@@ -1,0 +1,8 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Tomasz Wr�bel <tomasz.wrobel@nokia.com>
+Code-Review+2: Pawel Baniewski <pawel.baniewski@nokia.com>
+Submitted-by: Pawel Baniewski <pawel.baniewski@nokia.com>
+Submitted-at: Thu, 07 Jan 2021 14:45:24 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/oom/platform/cert-service/+/116669
+Project: oom/platform/cert-service
+Branch: refs/heads/guilin
