@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7006d4fe_debeb96d",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/cmpv2client/impl/CmpClientImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-01-19T13:11:19Z",
+      "side": 1,
+      "message": "Please extract body of this if to separe method e.g handle response status. To many if in one place...",
+      "range": {
+        "startLine": 156,
+        "startChar": 16,
+        "endLine": 156,
+        "endChar": 55
+      },
+      "revId": "5e42da7d8aa52e51af9b3f406093a6bf4e50790c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3361441f_5fec978c",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/cmpv2client/impl/CmpClientImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-01-19T13:11:19Z",
+      "side": 1,
+      "message": "1. Succes response also is logged in WARN level ? \n2. You call getStatus here and in next line you check if is null. It can produce NPE.",
+      "range": {
+        "startLine": 158,
+        "startChar": 57,
+        "endLine": 158,
+        "endChar": 104
+      },
+      "revId": "5e42da7d8aa52e51af9b3f406093a6bf4e50790c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "053be013_8e2f2bb0",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/cmpv2client/impl/CmpClientImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-01-19T13:11:19Z",
+      "side": 1,
+      "message": "Please try to simplify text creation logic. \nSample: \n\nif (certResponse.getStatus().getStatusString() !\u003d null) {\n            LOG.warn(\"Response status text: {}\", certResponse.getStatus().getStatusString().getStringAt(0).getString());\n            LOG.warn(\"Response status code: {}\", certResponse.getStatus().getStatus().toString());\n        }\n        if (certResponse.getStatus().getFailInfo() !\u003d null) {\n            LOG.warn(\"Response fail info:   {}\", certResponse.getStatus().getFailInfo().toString());\n        }\n\n        if (certResponse.getStatus().getStatus().intValue() \u003d\u003d PkiStatus.ERROR.getCode()) {\n            String text \u003d Optional.ofNullable(certResponse.getStatus().getStatusString().getStringAt(0).getString()).orElse(\"N/A\");\n            throw new CmpServerException(text);\n        }",
+      "range": {
+        "startLine": 168,
+        "startChar": 53,
+        "endLine": 168,
+        "endChar": 57
+      },
+      "revId": "5e42da7d8aa52e51af9b3f406093a6bf4e50790c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
