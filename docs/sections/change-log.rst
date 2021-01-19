@@ -14,6 +14,48 @@ Honolulu
 
 ==============
 
+Version: 2.3.3
+--------------
+
+:Release Date: 2021-01-19
+
+**New Features**
+
+  N/A
+
+**Bug Fixes**
+
+  Fix NPE in CertServiceAPI.
+  Enhance CertServiceAPI response (include CMP server error messages).
+
+**Known Issues**
+
+  N/A
+
+**Security Notes**
+
+  N/A
+
+*Fixed Security Issues*
+
+  N/A
+
+*Known Security Issues*
+
+  N/A
+
+*Known Vulnerabilities in Used Modules*
+
+  N/A
+
+**Upgrade Notes**
+
+**Deprecation Notes**
+
+**Other**
+
+==============
+
 Version: 2.3.2
 --------------
 

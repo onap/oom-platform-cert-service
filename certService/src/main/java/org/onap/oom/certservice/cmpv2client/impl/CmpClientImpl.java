@@ -2,6 +2,8 @@
  * ============LICENSE_START=======================================================
  *  Copyright (C) 2020 Nordix Foundation.
  * ================================================================================
+ * Modification copyright 2021 Nokia
+ * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -20,9 +22,6 @@
 
 package org.onap.oom.certservice.cmpv2client.impl;
 
-import java.security.KeyPair;
-import java.security.PublicKey;
-
 import static org.onap.oom.certservice.cmpv2client.impl.CmpResponseHelper.checkIfCmpResponseContainsError;
 import static org.onap.oom.certservice.cmpv2client.impl.CmpResponseHelper.getCertFromByteArray;
 import static org.onap.oom.certservice.cmpv2client.impl.CmpResponseHelper.verifyAndReturnCertChainAndTrustSTore;
@@ -31,13 +30,14 @@ import static org.onap.oom.certservice.cmpv2client.impl.CmpResponseValidationHel
 import static org.onap.oom.certservice.cmpv2client.impl.CmpResponseValidationHelper.verifySignature;
 
 import java.io.IOException;
+import java.security.KeyPair;
+import java.security.PublicKey;
 import java.security.cert.CertificateParsingException;
 import java.security.cert.X509Certificate;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Objects;
 import java.util.Optional;
-
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.bouncycastle.asn1.cmp.CMPCertificate;
 import org.bouncycastle.asn1.cmp.CertRepMessage;
@@ -49,8 +49,9 @@ import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
 import org.onap.oom.certservice.certification.configuration.model.CaMode;
 import org.onap.oom.certservice.certification.configuration.model.Cmpv2Server;
 import org.onap.oom.certservice.certification.model.CsrModel;
-import org.onap.oom.certservice.cmpv2client.exceptions.CmpClientException;
 import org.onap.oom.certservice.cmpv2client.api.CmpClient;
+import org.onap.oom.certservice.cmpv2client.exceptions.CmpClientException;
+import org.onap.oom.certservice.cmpv2client.exceptions.CmpServerException;
 import org.onap.oom.certservice.cmpv2client.model.Cmpv2CertificationModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -152,6 +153,21 @@ public class CmpClientImpl implements CmpClient {
             if (Objects.nonNull(certRepMessage)) {
                 final CertResponse certResponse =
                         getCertificateResponseContainingNewCertificate(certRepMessage);
+                if (certResponse.getStatus() != null) {
+                    String text = "N/A";
+                    LOG.warn("Response status code: {}", certResponse.getStatus().getStatus().toString());
+                    if (certResponse.getStatus().getStatusString() != null) {
+                        text = certResponse.getStatus().getStatusString().getStringAt(0).getString();
+                        LOG.warn("Response status text: {}", text);
+                    }
+                    if (certResponse.getStatus().getFailInfo() != null) {
+                        LOG.warn("Response fail info:   {}", certResponse.getStatus().getFailInfo().toString());
+                    }
+
+                    if (certResponse.getStatus().getStatus().intValue() == PkiStatus.ERROR.getCode()) {
+                        throw new CmpServerException(text);
+                    }
+                }
                 try {
                     return verifyReturnCertChainAndTrustStore(respPkiMessage, certRepMessage, certResponse);
                 } catch (IOException | CertificateParsingException ex) {
