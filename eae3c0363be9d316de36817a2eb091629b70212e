@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "6dfa5ba2_114a1dc2",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/cmpv2client/impl/CmpClientImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2021-01-19T09:36:46Z",
+      "side": 1,
+      "message": "I think, that it is enough to write in the response only StatusString as it is human readable.\nI observed that FailInfo contains some error code which does not bring to much info for the called (however it could be useful while trouble shooting that\u0027s why it is written to log)",
+      "parentUuid": "0b67d954_a24384a9",
+      "revId": "eae3c0363be9d316de36817a2eb091629b70212e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc983452_172bed7d",
         "filename": "docs/sections/change-log.rst",
         "patchSetId": 2
