@@ -3,6 +3,7 @@
  * PROJECT
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
+ * Copyright (C) 2021 Nokia. All rights reserved.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,6 +28,7 @@ import org.onap.oom.certservice.certification.exception.CsrDecryptionException;
 import org.onap.oom.certservice.certification.exception.ErrorResponseModel;
 import org.onap.oom.certservice.certification.exception.KeyDecryptionException;
 import org.onap.oom.certservice.cmpv2client.exceptions.CmpClientException;
+import org.onap.oom.certservice.cmpv2client.exceptions.CmpServerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -43,8 +45,8 @@ public final class CertificationExceptionAdvice {
     public ResponseEntity<ErrorResponseModel> handle(CsrDecryptionException exception) {
         LOGGER.error("Exception occurred during decoding certificate sign request:", exception);
         return getErrorResponseEntity(
-                "Wrong certificate signing request (CSR) format",
-                HttpStatus.BAD_REQUEST
+            "Wrong certificate signing request (CSR) format",
+            HttpStatus.BAD_REQUEST
         );
     }
 
@@ -52,8 +54,8 @@ public final class CertificationExceptionAdvice {
     public ResponseEntity<ErrorResponseModel> handle(KeyDecryptionException exception) {
         LOGGER.error("Exception occurred during decoding key:", exception);
         return getErrorResponseEntity(
-                "Wrong key (PK) format",
-                HttpStatus.BAD_REQUEST
+            "Wrong key (PK) format",
+            HttpStatus.BAD_REQUEST
         );
     }
 
@@ -61,8 +63,8 @@ public final class CertificationExceptionAdvice {
     public ResponseEntity<ErrorResponseModel> handle(Cmpv2ServerNotFoundException exception) {
         LOGGER.error("Exception occurred selecting CMPv2 server:", exception);
         return getErrorResponseEntity(
-                "Certification authority not found for given CAName",
-                HttpStatus.NOT_FOUND
+            "Certification authority not found for given CAName",
+            HttpStatus.NOT_FOUND
         );
     }
 
@@ -75,8 +77,17 @@ public final class CertificationExceptionAdvice {
     public ResponseEntity<ErrorResponseModel> handle(CmpClientException exception) {
         LOGGER.error("Exception occurred calling cmp client:", exception);
         return getErrorResponseEntity(
-                "Exception occurred during call to cmp client",
-                HttpStatus.INTERNAL_SERVER_ERROR
+            "Exception occurred during call to cmp client: " + exception.getMessage(),
+            HttpStatus.INTERNAL_SERVER_ERROR
+        );
+    }
+
+    @ExceptionHandler(value = CmpServerException.class)
+    public ResponseEntity<ErrorResponseModel> handle(CmpServerException exception) {
+        LOGGER.error("CMPv2 server returned following error: {} ", exception.getMessage(), exception);
+        return getErrorResponseEntity(
+            "CMPv2 server returned following error: " + exception.getMessage(),
+            HttpStatus.INTERNAL_SERVER_ERROR
         );
     }
 
@@ -84,16 +95,16 @@ public final class CertificationExceptionAdvice {
     public ResponseEntity<ErrorResponseModel> handle(Cmpv2ClientAdapterException exception) {
         LOGGER.error("Exception occurred parsing cmp client response:", exception);
         return getErrorResponseEntity(
-                "Exception occurred parsing cmp client response",
-                HttpStatus.INTERNAL_SERVER_ERROR
+            "Exception occurred parsing cmp client response: " + exception.getMessage(),
+            HttpStatus.INTERNAL_SERVER_ERROR
         );
     }
 
     private ResponseEntity<ErrorResponseModel> getErrorResponseEntity(String errorMessage, HttpStatus status) {
         ErrorResponseModel errorResponse = new ErrorResponseModel(errorMessage);
         return new ResponseEntity<>(
-                errorResponse,
-                status
+            errorResponse,
+            status
         );
     }
 
