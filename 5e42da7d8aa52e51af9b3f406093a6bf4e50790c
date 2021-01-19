@@ -85,6 +85,24 @@
       "revId": "5e42da7d8aa52e51af9b3f406093a6bf4e50790c",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e26ed490_66de82a2",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/cmpv2client/impl/CmpResponseHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2021-01-19T14:27:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9f5a11f_cfe2df5c",
+      "revId": "5e42da7d8aa52e51af9b3f406093a6bf4e50790c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
