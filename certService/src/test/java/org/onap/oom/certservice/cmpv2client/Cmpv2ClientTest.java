@@ -62,6 +62,7 @@ import org.onap.oom.certservice.certification.configuration.model.Authentication
 import org.onap.oom.certservice.certification.configuration.model.Cmpv2Server;
 import org.onap.oom.certservice.certification.model.CsrModel;
 import org.onap.oom.certservice.cmpv2client.exceptions.CmpClientException;
+import org.onap.oom.certservice.cmpv2client.exceptions.CmpServerException;
 import org.onap.oom.certservice.cmpv2client.impl.CmpClientImpl;
 import org.onap.oom.certservice.cmpv2client.model.Cmpv2CertificationModel;
 
@@ -230,7 +231,7 @@ class Cmpv2ClientTest {
 
         // then
         Assertions.assertThrows(
-                CmpClientException.class,
+                CmpServerException.class,
                 () -> cmpClient.createCertificate(csrModel, server, notBefore, notAfter));
     }
 
