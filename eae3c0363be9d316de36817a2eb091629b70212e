@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a23d2403_c18e1cc6",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/cmpv2client/exceptions/CmpServerException.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2021-01-19T14:27:15Z",
+      "side": 1,
+      "message": "As discussed both exceptions will stay.",
+      "parentUuid": "50753bb7_3734ee15",
+      "revId": "eae3c0363be9d316de36817a2eb091629b70212e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b67d954_a24384a9",
         "filename": "certService/src/main/java/org/onap/oom/certservice/cmpv2client/impl/CmpClientImpl.java",
         "patchSetId": 2
