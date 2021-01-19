@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50753bb7_3734ee15",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/cmpv2client/exceptions/CmpServerException.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2021-01-19T08:52:50Z",
+      "side": 1,
+      "message": "Do we really need extra exception. To be honest seems CmpClientException is actually CmpServerException cause it is used in places where server response is checked.",
+      "revId": "eae3c0363be9d316de36817a2eb091629b70212e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b67d954_a24384a9",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/cmpv2client/impl/CmpClientImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2021-01-19T08:52:50Z",
+      "side": 1,
+      "message": "Just a question - shouldn\u0027t we also return fail info (assign or append it to text)?",
+      "revId": "eae3c0363be9d316de36817a2eb091629b70212e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc983452_172bed7d",
+        "filename": "docs/sections/change-log.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2021-01-19T08:52:50Z",
+      "side": 1,
+      "message": "This is official documentation so should be written in non-dev sentences (from user perspective)",
+      "revId": "eae3c0363be9d316de36817a2eb091629b70212e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
