@@ -68,6 +68,23 @@
       "revId": "5e42da7d8aa52e51af9b3f406093a6bf4e50790c",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9f5a11f_cfe2df5c",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/cmpv2client/impl/CmpResponseHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2021-01-19T13:41:24Z",
+      "side": 1,
+      "message": "If you want to keep current implementation here we should return CmpServerException",
+      "revId": "5e42da7d8aa52e51af9b3f406093a6bf4e50790c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
