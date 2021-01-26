@@ -25,6 +25,7 @@ import static org.onap.oom.certservice.cmpv2client.impl.CmpUtil.generateProtecte
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.security.InvalidKeyException;
+import java.security.Key;
 import java.security.KeyPair;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -54,11 +55,13 @@ import org.bouncycastle.asn1.crmf.POPOSigningKey;
 import org.bouncycastle.asn1.crmf.ProofOfPossession;
 import org.bouncycastle.asn1.pkcs.PKCSObjectIdentifiers;
 import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
+import org.bouncycastle.asn1.x509.ExtendedKeyUsage;
 import org.bouncycastle.asn1.x509.Extension;
 import org.bouncycastle.asn1.x509.Extensions;
 import org.bouncycastle.asn1.x509.ExtensionsGenerator;
 import org.bouncycastle.asn1.x509.GeneralName;
 import org.bouncycastle.asn1.x509.GeneralNames;
+import org.bouncycastle.asn1.x509.KeyPurposeId;
 import org.bouncycastle.asn1.x509.KeyUsage;
 import org.bouncycastle.asn1.x509.Time;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
@@ -75,6 +78,7 @@ public final class CmpMessageHelper {
             new AlgorithmIdentifier(new ASN1ObjectIdentifier("1.3.6.1.5.5.8.1.2"));
     private static final ASN1ObjectIdentifier PASSWORD_BASED_MAC =
             new ASN1ObjectIdentifier("1.2.840.113533.7.66.13");
+    private static final boolean CRITICAL_FALSE = false;
 
     private CmpMessageHelper() {
     }
@@ -111,14 +115,11 @@ public final class CmpMessageHelper {
             throws CmpClientException {
         LOG.info("Generating Extensions from Subject Alternative Names");
         final ExtensionsGenerator extGenerator = new ExtensionsGenerator();
-        // KeyUsage
         try {
-            final KeyUsage keyUsage =
-                    new KeyUsage(
-                            KeyUsage.digitalSignature | KeyUsage.keyEncipherment | KeyUsage.nonRepudiation);
-            extGenerator.addExtension(Extension.keyUsage, false, new DERBitString(keyUsage));
+            extGenerator.addExtension(Extension.keyUsage, CRITICAL_FALSE, getKeyUsage());
+            extGenerator.addExtension(Extension.extendedKeyUsage, CRITICAL_FALSE, getExtendedKeyUsage());
             extGenerator.addExtension(
-                    Extension.subjectAlternativeName, false, new GeneralNames(sansArray));
+                    Extension.subjectAlternativeName, CRITICAL_FALSE, new GeneralNames(sansArray));
         } catch (IOException ioe) {
             CmpClientException cmpClientException =
                     new CmpClientException(
@@ -229,5 +230,15 @@ public final class CmpMessageHelper {
         DERBitString bs = new DERBitString(out);
 
         return new PKIMessage(pkiHeader, pkiBody, bs);
+    }
+
+    private static KeyUsage getKeyUsage() {
+        return new KeyUsage(
+            KeyUsage.digitalSignature | KeyUsage.keyEncipherment | KeyUsage.nonRepudiation);
+    }
+
+    private static ExtendedKeyUsage getExtendedKeyUsage() {
+        return new ExtendedKeyUsage(
+            new KeyPurposeId[]{KeyPurposeId.id_kp_clientAuth, KeyPurposeId.id_kp_serverAuth});
     }
 }
