@@ -25,6 +25,7 @@ import static org.onap.oom.certservice.cmpv2client.impl.CmpUtil.generateProtecte
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.security.InvalidKeyException;
+import java.security.Key;
 import java.security.KeyPair;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -54,11 +55,13 @@ import org.bouncycastle.asn1.crmf.POPOSigningKey;
 import org.bouncycastle.asn1.crmf.ProofOfPossession;
 import org.bouncycastle.asn1.pkcs.PKCSObjectIdentifiers;
 import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
+import org.bouncycastle.asn1.x509.ExtendedKeyUsage;
 import org.bouncycastle.asn1.x509.Extension;
 import org.bouncycastle.asn1.x509.Extensions;
 import org.bouncycastle.asn1.x509.ExtensionsGenerator;
 import org.bouncycastle.asn1.x509.GeneralName;
 import org.bouncycastle.asn1.x509.GeneralNames;
+import org.bouncycastle.asn1.x509.KeyPurposeId;
 import org.bouncycastle.asn1.x509.KeyUsage;
 import org.bouncycastle.asn1.x509.Time;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
@@ -113,10 +116,8 @@ public final class CmpMessageHelper {
         final ExtensionsGenerator extGenerator = new ExtensionsGenerator();
         // KeyUsage
         try {
-            final KeyUsage keyUsage =
-                    new KeyUsage(
-                            KeyUsage.digitalSignature | KeyUsage.keyEncipherment | KeyUsage.nonRepudiation);
-            extGenerator.addExtension(Extension.keyUsage, false, new DERBitString(keyUsage));
+            extGenerator.addExtension(Extension.keyUsage, false, getKeyUsage());
+            extGenerator.addExtension(Extension.extendedKeyUsage, false, getExtendedKeyUsage());
             extGenerator.addExtension(
                     Extension.subjectAlternativeName, false, new GeneralNames(sansArray));
         } catch (IOException ioe) {
@@ -229,5 +230,15 @@ public final class CmpMessageHelper {
         DERBitString bs = new DERBitString(out);
 
         return new PKIMessage(pkiHeader, pkiBody, bs);
+    }
+
+    private static KeyUsage getKeyUsage() {
+        return new KeyUsage(
+            KeyUsage.digitalSignature | KeyUsage.keyEncipherment | KeyUsage.nonRepudiation);
+    }
+
+    private static ExtendedKeyUsage getExtendedKeyUsage() {
+        return new ExtendedKeyUsage(
+            new KeyPurposeId[]{KeyPurposeId.id_kp_clientAuth, KeyPurposeId.id_kp_serverAuth});
     }
 }
