@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef2c78f5_f2ba5091",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/cmpv2client/impl/CmpMessageHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-01-26T15:32:26Z",
+      "side": 1,
+      "message": "Please remove comment",
+      "range": {
+        "startLine": 116,
+        "startChar": 8,
+        "endLine": 116,
+        "endChar": 19
+      },
+      "revId": "d2fba632963f776710c6585df9f251f3167c4a7d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd90f517_965c7936",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/cmpv2client/impl/CmpMessageHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-01-26T15:32:26Z",
+      "side": 1,
+      "message": "Consider, introduce const CRITICAL_FALSE in addExtension methods, acording to docs: https://www.bouncycastle.org/docs/docs1.5on/org/bouncycastle/asn1/x509/ExtensionsGenerator.html#addExtension-org.bouncycastle.asn1.ASN1ObjectIdentifier-boolean-org.bouncycastle.asn1.ASN1Encodable-",
+      "range": {
+        "startLine": 118,
+        "startChar": 58,
+        "endLine": 118,
+        "endChar": 63
+      },
+      "revId": "d2fba632963f776710c6585df9f251f3167c4a7d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa646edc_31a0fced",
+        "filename": "certService/src/test/java/org/onap/oom/certservice/cmpv2client/impl/CmpMessageHelperTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-01-26T15:32:26Z",
+      "side": 1,
+      "message": "Use oom-certservice-api",
+      "range": {
+        "startLine": 3,
+        "startChar": 3,
+        "endLine": 3,
+        "endChar": 10
+      },
+      "revId": "d2fba632963f776710c6585df9f251f3167c4a7d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0882b353_45368d6e",
+        "filename": "certService/src/test/java/org/onap/oom/certservice/cmpv2client/impl/CmpMessageHelperTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-01-26T15:32:26Z",
+      "side": 1,
+      "message": "Please add prefix \"expected\"",
+      "range": {
+        "startLine": 38,
+        "startChar": 27,
+        "endLine": 38,
+        "endChar": 35
+      },
+      "revId": "d2fba632963f776710c6585df9f251f3167c4a7d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
