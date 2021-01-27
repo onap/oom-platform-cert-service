@@ -26,6 +26,7 @@ Version: 2.3.3
 **Bug Fixes**
 
   Enhance CertServiceAPI response (include CMP server error messages).
+  Fix KeyUsage extension sent to CMPv2 server
 
 **Known Issues**
 
