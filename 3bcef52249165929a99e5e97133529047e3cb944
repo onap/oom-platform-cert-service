@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a3c1bbe_4eae9b0f",
+        "filename": "docs/sections/release-notes.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2021-02-24T12:17:13Z",
+      "side": 1,
+      "message": "OOM -\u003e Cert-Manager",
+      "revId": "3bcef52249165929a99e5e97133529047e3cb944",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0171e4c3_95012d81",
+        "filename": "docs/sections/release-notes.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2021-02-24T12:17:13Z",
+      "side": 1,
+      "message": "CRD -\u003e custom resource",
+      "revId": "3bcef52249165929a99e5e97133529047e3cb944",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
