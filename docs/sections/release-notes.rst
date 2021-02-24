@@ -1,6 +1,6 @@
 .. This work is licensed under a Creative Commons Attribution 4.0 International License.
 .. http://creativecommons.org/licenses/by/4.0
-.. Copyright 2020 NOKIA
+.. Copyright 2020-2021 NOKIA
 .. _release_notes:
 
 ***************************************
@@ -10,7 +10,7 @@ OOM Certification Service Release Notes
 Abstract
 ========
 
-This document provides the release notes for the Guilin release.
+This document provides the release notes for the Honolulu release.
 
 Summary
 =======
@@ -23,34 +23,40 @@ This project was moved from Application Authorization Framework (AAF), to check 
 Release Data
 ============
 
-+--------------------------------------+--------------------------------------------------------------------------------+
-| **Project**                          | OOM                                                                            |
-|                                      |                                                                                |
-+--------------------------------------+--------------------------------------------------------------------------------+
-| **Docker images**                    |  * onap/org.onap.oom.platform.cert-service.oom-certservice-api:2.1.0           |
-|                                      |  * onap/org.onap.oom.platform.cert-service.oom-certservice-client:2.1.0        |
-|                                      |  * onap/org.onap.oom.platform.cert-service.oom-certservice-post-processor:2.1.0|
-|                                      |                                                                                |
-+--------------------------------------+--------------------------------------------------------------------------------+
-| **Release designation**              | Guilin                                                                         |
-|                                      |                                                                                |
-+--------------------------------------+--------------------------------------------------------------------------------+
++--------------------------------------+---------------------------------------------------------------------------------------+
+| **Project**                          | OOM                                                                                   |
+|                                      |                                                                                       |
++--------------------------------------+---------------------------------------------------------------------------------------+
+| **Docker images**                    |  * onap/org.onap.oom.platform.cert-service.oom-certservice-api:2.3.3                  |
+|                                      |  * onap/org.onap.oom.platform.cert-service.oom-certservice-client:2.3.3               |
+|                                      |  * onap/org.onap.oom.platform.cert-service.oom-certservice-post-processor:2.3.3       |
+|                                      |  * onap/org.onap.oom.platform.cert-service.oom-certservice-k8s-external-provider:2.3.3|
+|                                      |                                                                                       |
++--------------------------------------+---------------------------------------------------------------------------------------+
+| **Release designation**              | Honolulu                                                                              |
+|                                      |                                                                                       |
++--------------------------------------+---------------------------------------------------------------------------------------+
 
 
 New features
 ------------
 
-- `AAF-1152 <https://jira.onap.org/browse/AAF-1152>`_ Added to CertService's client parameter which controls output type of certificates (JKS, PKCS12, PEM)
+- `OOM-2560 <https://jira.onap.org/browse/OOM-2560>`_ Integrated CMPv2 certificate provider with Cert-Manager
 
-- `DCAEGEN2-2252 <https://jira.onap.org/browse/DCAEGEN2-2252>`_ Added new not existing subfolders creation in output path (CMPv2 Integration).
+  An CMPv2 certificate provider is a part of PKI infrastructure. It consumes CertificateRequest custom resource from Cert-Manager and calls CertService API to enroll certificate from CMPv2 server.
+  During ONAP deployment, the CMPv2 certificate provider is enabled when flags cmpv2Enabled, CMPv2CertManagerIntegration and platform.enabled equals true.
 
-- `DCAEGEN2-2253 <https://jira.onap.org/browse/DCAEGEN2-2253>`_ Implemented CertServicePostprocessor, allows merging truststores and moving keystore files.
+  More information can be found on dedicated `wiki page <https://wiki.onap.org/display/DW/CertService+and+K8s+Cert-Manager+integration>`_
 
-- `OOM-2526 <https://jira.onap.org/browse/OOM-2526>`_ Moved project from AAF to OOM platform.
+- `OOM-2632 <https://jira.onap.org/browse/OOM-2632>`_ Extended CertService API and clients to correctly support SANs parameters such as: e-mails, URIs and IP addresses.
 
 **Bug fixes**
 
-- `OOM-2524 <https://jira.onap.org/browse/OOM-2524>`_ Fixed project makefile.
+- `OOM-2656 <https://jira.onap.org/browse/OOM-2656>`_ Adjusted CertService API to RFC4210 - changed MAC protection algorithm and number of iteration for such algorithm.
+
+- `OOM-2657 <https://jira.onap.org/browse/OOM-2657>`_ Enhanced CertServiceAPI response in order to include CMP server error messages.
+
+- `OOM-2658 <https://jira.onap.org/browse/OOM-2658>`_ Fixed KeyUsage extension sent to CMPv2 server
 
 **Known Issues**
 
@@ -65,7 +71,8 @@ Docker images mentioned in Release Date section.
 
 Documentation Deliverables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
-Documentation moved from AAF - `OOM Certification Service <https://docs.onap.org/projects/onap-oom-platform-cert-service/en/latest/index.html#master-index>`_ .
+
+- :doc:`CMPv2 certificate provider description <cmpv2-cert-provider>`
 
 Known Limitations, Issues and Workarounds
 =========================================
@@ -108,7 +115,7 @@ Not applicable
 References
 ==========
 
-For more information on the ONAP Guilin release, please see:
+For more information on the ONAP Honolulu release, please see:
 
 #. `ONAP Home Page`_
 #. `ONAP Documentation`_
