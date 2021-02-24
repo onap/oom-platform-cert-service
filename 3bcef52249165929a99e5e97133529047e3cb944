@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2701b749_b3d03f81",
+        "filename": "docs/sections/release-notes.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2021-02-24T12:37:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c02836a_d35890d0",
+      "revId": "3bcef52249165929a99e5e97133529047e3cb944",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a3c1bbe_4eae9b0f",
         "filename": "docs/sections/release-notes.rst",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "8ffaf031_46245ce3",
+        "filename": "docs/sections/release-notes.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2021-02-24T12:37:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a3c1bbe_4eae9b0f",
+      "revId": "3bcef52249165929a99e5e97133529047e3cb944",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0171e4c3_95012d81",
         "filename": "docs/sections/release-notes.rst",
         "patchSetId": 4
@@ -50,6 +86,24 @@
       "revId": "3bcef52249165929a99e5e97133529047e3cb944",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89ca090a_f71da082",
+        "filename": "docs/sections/release-notes.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2021-02-24T12:37:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0171e4c3_95012d81",
+      "revId": "3bcef52249165929a99e5e97133529047e3cb944",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
