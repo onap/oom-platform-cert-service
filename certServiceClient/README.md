@@ -1,4 +1,8 @@
-# Cert service client
+# Cert service client *(deprecated)*
+
+> Deprecated since Istanbul release in favor of Cert Manager certificates
+> (for more details see certServiceK8sExternalProvider submodule).
+
 
 ### Project building
 ```

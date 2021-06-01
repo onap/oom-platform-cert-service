@@ -26,7 +26,7 @@ run-client:
 	    --mount type=bind,src=`pwd`/compose-resources/client-volume/,dst=/var/certs \
 	    --volume `pwd`/certs/truststore.jks:/etc/onap/oom/certservice/certs/truststore.jks \
 	    --volume `pwd`/certs/certServiceClient-keystore.jks:/etc/onap/oom/certservice/certs/certServiceClient-keystore.jks \
-	    onap/org.onap.oom.platform.cert-service.oom-certservice-client:latest
+	    nexus3.onap.org:10001/onap/org.onap.oom.platform.cert-service.oom-certservice-client:2.3.3
 
 stop-backend:
 	@echo "##### Stop Cert Service #####"

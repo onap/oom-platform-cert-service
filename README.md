@@ -9,7 +9,7 @@ More information about the project and all its functionalities you can find unde
   
 Project consists of four submodules:
 1. oom-certservice-api
-2. oom-certservice-client
+2. *deprecated (no longer built)* oom-certservice-client
 3. oom-certservice-post-processor
 4. oom-certservice-k8s-external-provider
 
@@ -41,8 +41,8 @@ Then execute following command from certs(!) directory:
 ```
 
 ### Running Docker containers from docker-compose with EJBCA
-Docker-compose uses a local image of certservice-api and make run-client uses a local image of certservice-client
-Build docker images locally before running docker compose command.
+Docker-compose uses a local image of certservice-api and make run-client uses a released image of certservice-client
+Build certservice-api docker image locally before running docker compose command.
 ```
 1. Build local images
 make build
