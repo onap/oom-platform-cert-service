@@ -1,0 +1,10 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Verified+1: Bogumil Zebek <bogumil.zebek@nokia.com>
+Code-Review+1: Pawel Baniewski <pawel.baniewski@nokia.com>
+Code-Review+1: Tomasz Wr�bel <tomasz.wrobel@nokia.com>
+Code-Review+2: Bogumil Zebek <bogumil.zebek@nokia.com>
+Submitted-by: Bogumil Zebek <bogumil.zebek@nokia.com>
+Submitted-at: Wed, 02 Jun 2021 06:32:37 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/oom/platform/cert-service/+/121431
+Project: oom/platform/cert-service
+Branch: refs/heads/master
