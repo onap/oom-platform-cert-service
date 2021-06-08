@@ -1,6 +1,6 @@
 .. This work is licensed under a Creative Commons Attribution 4.0 International License.
 .. http://creativecommons.org/licenses/by/4.0
-.. Copyright 2020 NOKIA
+.. Copyright 2020-2021 NOKIA
 
 
 Logging
@@ -62,65 +62,13 @@ Available log files:
 
 User cannot change logging levels.
 
-.. _cert_logs:
-
-CertService client
-------------------
-To see CertService client console logs use :
-
-- Docker: 
-
-.. code-block:: bash
-   
-    docker logs <cert-service-client-container-name>
-
-    e.g.
-    docker logs oomcert-client
-
-- Kubernetes: 
-  CertService client is used as init container in other components. In the following example:
-    - *<some-component-pod-name>* refers to the component that uses CertService client as init container
-    - *<cert-service-client-init-container-name>* refers to name of init container used by the mentioned component. It can be found by executing *'kubectl -n onap descrine pod <some-component-pod-name>'* and looking into 'Init Containers section'
+CMPv2 certificate provider
+--------------------------
+To see CMPv2 certificate provider console logs use :
 
 .. code-block:: bash
 
-    kubectl -n onap logs <some-component-pod-name> -c <cert-service-client-init-container-name>
+    kubectl -n onap logs <cmpv2-certificate-provider-pod-name> provider
 
     e.g.
-    kubectl -n onap logs <some-component-pod-name> -c cert-service-client
-
-
-
-| Container stops after execution, so all available logs are printed on console.
-| User cannot change logging levels.
-
-Client application exits with following exit codes:
-
-
-+-------+------------------------------------------------+
-| Code  | Information                                    |
-+=======+================================================+
-| 0     | Success                                        |
-+-------+------------------------------------------------+
-| 1     | Invalid client configuration                   |
-+-------+------------------------------------------------+
-| 2     | Invalid CSR configuration                      |
-+-------+------------------------------------------------+
-| 3     | Fail in key pair generation                    |
-+-------+------------------------------------------------+
-| 4     | Fail in CSR generation                         |
-+-------+------------------------------------------------+
-| 5     | CertService HTTP unsuccessful response         |
-+-------+------------------------------------------------+
-| 6     | Internal HTTP Client connection problem        |
-+-------+------------------------------------------------+
-| 7     | Fail in PEM conversion                         |
-+-------+------------------------------------------------+
-| 8     | Fail in Private Key to PEM Encoding            |
-+-------+------------------------------------------------+
-| 9     | Wrong TLS configuration                        |
-+-------+------------------------------------------------+
-| 10    | File could not be created                      |
-+-------+------------------------------------------------+
-| 99    | Application exited abnormally                  |
-+-------+------------------------------------------------+
+    kubectl -n onap logs $(kubectl -n onap get pods | grep cmpv2-cert-provider | awk '{print $1}') provider
