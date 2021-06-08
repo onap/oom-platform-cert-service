@@ -10,15 +10,15 @@ Interaction between components
 ------------------------------
 
 .. image:: resources/certservice_high_level.png
-   :width: 855px
-   :height: 223px
+   :width: 978px
+   :height: 201px
    :alt: Interaction between components
 
 The micro-service called CertService is designed for requesting certificates signed by external Certificate Authority (CA) using CMP over HTTP protocol. It uses CMPv2 client to send and receive CMPv2 messages.
 
-CertService's client is also provided so other ONAP components (aka end components) can easily get certificate from CertService. End component is an ONAP component (e.g. DCAE collector or controller) which requires certificate from CMPv2 server to protect external traffic and uses CertService's client to get it.
+CMPv2 external provider is also provided so other ONAP components (aka end components) can easily get certificate from CertService. End component is an ONAP component (e.g. DCAE collector or controller) which requires certificate from CMPv2 server to protect external traffic and uses Certificate CR to get it.
 
-CertService's client communicates with CertService via REST API over HTTPS, while CertService with CMPv2 server via CMP over HTTP.
+CMPv2 external provider communicates with CertService via REST API over HTTPS, while CertService with CMPv2 server via CMP over HTTP.
 
 To proof that CertService works Open Source CMPv2 server (EJBCA) is deployed and used in E2E tests.
 
