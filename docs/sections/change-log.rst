@@ -1,10 +1,57 @@
 .. This work is licensed under a Creative Commons Attribution 4.0 International License.
 .. http://creativecommons.org/licenses/by/4.0
-.. Copyright 2020 NOKIA
+.. Copyright 2020-2021 NOKIA
 
 
 Change Log
 ==============
+
+--------
+Istanbul
+--------
+
+==============
+
+Version: 2.4.0
+--------------
+
+:Release Date:
+
+**New Features**
+
+  N/A
+
+**Bug Fixes**
+
+  N/A
+
+**Known Issues**
+
+  N/A
+
+**Security Notes**
+
+  N/A
+
+*Fixed Security Issues*
+
+  N/A
+
+*Known Security Issues*
+
+  N/A
+
+*Known Vulnerabilities in Used Modules*
+
+  N/A
+
+**Upgrade Notes**
+
+**Deprecation Notes**
+
+  CertService client is not supported since Istanbul release.
+
+**Other**
 
 ==============
 

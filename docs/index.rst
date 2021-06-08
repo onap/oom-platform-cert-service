@@ -1,6 +1,6 @@
 .. This work is licensed under a Creative Commons Attribution 4.0 International License.
 .. http://creativecommons.org/licenses/by/4.0
-.. Copyright 2020 NOKIA
+.. Copyright 2020-2021 NOKIA
 .. _master_index:
 
 OOM Certification Service
@@ -12,7 +12,6 @@ OOM Certification Service
 
    sections/introduction.rst
    sections/architecture.rst
-   sections/cmpv2-cert-provider.rst
    sections/build.rst
    sections/offeredapis.rst
    sections/usage.rst

@@ -1,6 +1,6 @@
 .. This work is licensed under a Creative Commons Attribution 4.0 International License.
 .. http://creativecommons.org/licenses/by/4.0
-.. Copyright 2020 NOKIA
+.. Copyright 2020-2021 NOKIA
 
 Configuration
 ==============
@@ -160,9 +160,9 @@ When CertService is deployed:
     exit
 
 
-Generating certificates for CertService and CertService Client
---------------------------------------------------------------
-CertService and CertService client use mutual TLS for communication. Certificates are generated during CertService installation.
+Generating certificates for CertService and CMPv2 certificate provider
+----------------------------------------------------------------------
+CertService and CMPv2 certificate provider use mutual TLS for communication. Certificates are generated during CertService installation.
 
 Docker mode:
 ^^^^^^^^^^^^
@@ -170,7 +170,6 @@ Docker mode:
 Certificates are mounted to containers by docker volumes:
 
     - CertService volumes are defined in certservice/docker-compose.yaml
-    - CertService Client volumes are defined in certservice/Makefile
 
 All certificates are stored in *certservice/certs* directory. To recreate certificates go to *certservice/certs* directory and execute::
 
@@ -181,51 +180,47 @@ This will clear existing certs and generate new ones.
 ONAP OOM installation:
 ^^^^^^^^^^^^^^^^^^^^^^
 
-Certificates are stored in secrets, which are mounted to pods as volumes. Both secrets are stored in *kubernetes/platform/components/oom-cert-service/templates/secret.yaml*.
-Secrets take certificates from *kubernetes/platform/components/oom-cert-service/resources* directory. Certificates are generated automatically during building (using Make) OOM repository.
+Certificates are stored in secrets, which are mounted to pods as volumes. For CMPv2 certificate provider, certificates are delivered in CMPv2Issuer as secrets name with corresponding keys.
 
-*kubernetes/platform/components/oom-cert-service/Makefile* is similar to the one stored in certservice repository. It actually generates certificates.
-This Makefile is executed by *kubernetes/platform/Makefile*, which is automatically executed during OOM build.
+Both secrets definitions are stored in *kubernetes/platform/components/oom-cert-service/values.yaml* as *secrets:* key.
+
+During platform component deployment, certificates in secrets are generated automatically using *Certificate* resources from cert-manager.
+Their definitions are stored in *kubernetes/platform/components/oom-cert-service/values.yaml* as *certificates:* key.
 
 
-Using external certificates for CertService and CertService Client
-------------------------------------------------------------------
+Using external certificates for CertService and CMPv2 certificate provider
+--------------------------------------------------------------------------
 
-This section describes how to use custom, external certificates for CertService and CertService Client communication in OOM installation.
-*kubernetes/platform/components/oom-cert-service/values.yaml*
-1. Set *tls.certificateExternalSecret* flag to true in *kubernetes/platform/components/oom-cert-service/values.yaml*
+This section describes how to use custom, external certificates for CertService and CMPv2 certificate provider communication in OOM installation.
+
+1. Remove *certificates:* section from *kubernetes/platform/components/oom-cert-service/values.yaml*
+
 2. Prepare secret for CertService. It must be provided before OOM installation. It must contain four files:
 
-    - *certServiceServer-keystore.jks*  - keystore in JKS format. Signed by some Root CA
-    - *certServiceServer-keystore.p12* - same keystore in PKCS#12 format
+    - *keystore.jks*  - keystore in JKS format. Signed by some Root CA
+    - *keystore.p12* - same keystore in PKCS#12 format
     - *truststore.jks* - truststore in JKS format, containing certificates of the Root CA that signed CertService Client certificate
-    - *root.crt* - certificate of the RootCA that signed Client certificate in CRT format
+    - *ca.crt* - certificate of the RootCA that signed Client certificate in CRT format
 
 3. Name the secret properly - the name should match *tls.server.secret.name* value from *kubernetes/platform/components/oom-cert-service/values.yaml* file
 
-4. Prepare secret for CertService Client. It must be provided before OOM installation. It must contain two files:
+4. Prepare secret for CMPv2 certificate provider. It must be provided before OOM installation. It must contain three files:
 
-    - *certServiceClient-keystore.jks*  - keystore in JKS format. Signed by some Root CA
-    - *truststore.jks* - truststore in JKS format, containing certificates of the RootCA that signed CertService certificate
+    - *tls.crt* - certificate in CRT format. Signed by some Root CA
+    - *tls.key* - private key in KEY format
+    - *ca.crt* - certificate of the RootCA that signed CertService certificate in CRT format
 
 5. Name the secret properly - the name should match *global.oom.certService.client.secret.name* value from *kubernetes/onap/values.yaml* file
 
-6. Provide keystore and truststore passwords for CertService. It can be done in two ways:
+6. Provide keystore and truststore passwords (the same for both) for CertService. It can be done in two ways:
 
     - by inlining them into *kubernetes/platform/components/oom-cert-service/values.yaml*:
 
-        - override *credentials.tls.keystorePassword* value with keystore password
-        - override *credentials.tls.truststorePassword* value with truststore password
+        - override *credentials.tls.certificatesPassword* value with keystore and truststore password
 
     - or by providing them as secrets:
 
-        - uncomment *credentials.tls.keystorePasswordExternalSecret* value and provide keystore password
-        - uncomment *credentials.tls.truststorePasswordExternalSecret* value and provide truststore password
-
-7. Override default keystore and truststore passwords for CertService Client in *kubernetes/onap/values.yaml* file:
-
-    - override *global.oom.certServiceClient.envVariables.keystorePassword* value with keystore password
-    - override *global.oom.certServiceClient.envVariables.truststorePassword* value with truststore password
+        - uncomment *credentials.tls.certificatesPasswordExternalSecret* value and provide keystore and truststore password
 
 
 Configuring EJBCA server for testing
