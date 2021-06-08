@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce59cadd_a9f5d3f0",
+        "filename": "certServiceClient/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-06-08T13:04:48Z",
+      "side": 1,
+      "message": "I think we should use 2.3.3",
+      "range": {
+        "startLine": 69,
+        "startChar": 85,
+        "endLine": 69,
+        "endChar": 93
+      },
+      "revId": "e73fc3a8fc01fed68581e68d8ddba208c20136c8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
