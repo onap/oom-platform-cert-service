@@ -30,7 +30,7 @@ public abstract class Truststore {
 
     private final FileTools fileTools;
 
-    public Truststore(File storeFile, FileTools fileTools) {
+    protected Truststore(File storeFile, FileTools fileTools) {
         this.storeFile = storeFile;
         this.fileTools = fileTools;
     }

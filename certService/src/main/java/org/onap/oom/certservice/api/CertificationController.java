@@ -86,7 +86,7 @@ public class CertificationController {
             @Parameter(description = "Private key in form of PEM object encoded in Base64 (with header and footer).")
             @RequestHeader("PK") String encodedPrivateKey
     ) throws DecryptionException, CmpClientException {
-        caName = caName.replaceAll("[\n|\r|\t]", "_");
+        caName = caName.replaceAll("[\n\r\t]", "_");
         LOGGER.info("Received certificate signing request for CA named: {}", caName);
         CertificationModel certificationModel = certificationModelFactory
                 .createCertificationModel(encodedCsr, encodedPrivateKey, caName);

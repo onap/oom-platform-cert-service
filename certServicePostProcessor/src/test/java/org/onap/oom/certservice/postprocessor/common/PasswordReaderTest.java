@@ -37,7 +37,8 @@ class PasswordReaderTest {
 
     @Test
     void shouldThrowExceptionForNonExistingFile() {
+        final File file = new File("src/test/resources/non-esisting-file.pass");
         assertThatExceptionOfType(PasswordReaderException.class)
-                .isThrownBy(() -> PasswordReader.readPassword(new File("src/test/resources/non-esisting-file.pass")));
+                .isThrownBy(() -> PasswordReader.readPassword(file));
     }
 }

@@ -36,7 +36,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 @ExtendWith(MockitoExtension.class)
-public class ReloadConfigControllerTest {
+class ReloadConfigControllerTest {
 
     private static final String ERROR_MESSAGE = "Exception occurred during CMP Servers configuration loading";
 

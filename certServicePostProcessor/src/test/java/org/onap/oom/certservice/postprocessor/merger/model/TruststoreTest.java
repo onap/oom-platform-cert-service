@@ -69,8 +69,8 @@ class TruststoreTest {
 
         //then
         File backupFile = new File(PEM_BACKUP_FILE_PATH);
-        assertThat(backupFile.getName().endsWith(BACKUP_EXTENSION)).isTrue();
-        assertThat(backupFile.isFile()).isTrue();
+        assertThat(backupFile.getName()).endsWith(BACKUP_EXTENSION);
+        assertThat(backupFile).isFile();
     }
 
     @ParameterizedTest

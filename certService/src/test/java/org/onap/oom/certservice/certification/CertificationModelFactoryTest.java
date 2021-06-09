@@ -111,8 +111,8 @@ class CertificationModelFactoryTest {
         String expectedMessage = "Incorrect CSR, decryption failed";
         when(
                 csrModelFactory.createCsrModel(
-                        eq(new CsrModelFactory.StringBase64(ENCODED_WRONG_CSR)),
-                        eq(new CsrModelFactory.StringBase64(ENCODED_WRONG_PK))
+                        new CsrModelFactory.StringBase64(ENCODED_WRONG_CSR),
+                        new CsrModelFactory.StringBase64(ENCODED_WRONG_PK)
                 )
         ).thenThrow(
                 new CsrDecryptionException(expectedMessage)
@@ -158,7 +158,7 @@ class CertificationModelFactoryTest {
         CsrModel csrModel = mockCsrFactoryModelCreation();
         Cmpv2Server testServer = mockCmpv2ProviderServerSelection();
         when(
-                certificationProvider.signCsr(eq(csrModel), eq(testServer))
+                certificationProvider.signCsr(csrModel, testServer)
         ).thenThrow(
                 new CmpClientException(expectedMessage)
         );
@@ -178,14 +178,14 @@ class CertificationModelFactoryTest {
             throws CmpClientException, Cmpv2ClientAdapterException {
         CertificationModel expectedCertificationModel = getCertificationModel();
         when(
-                certificationProvider.signCsr(eq(csrModel), eq(testServer))
+                certificationProvider.signCsr(csrModel, testServer)
         ).thenReturn(expectedCertificationModel);
     }
 
     private Cmpv2Server mockCmpv2ProviderServerSelection() {
         Cmpv2Server testServer = getCmpv2Server();
         when(
-                cmpv2ServerProvider.getCmpv2Server(eq(TEST_CA))
+                cmpv2ServerProvider.getCmpv2Server(TEST_CA)
         ).thenReturn(testServer);
         return testServer;
     }
@@ -195,8 +195,8 @@ class CertificationModelFactoryTest {
         CsrModel csrModel = getCsrModel();
         when(
                 csrModelFactory.createCsrModel(
-                        eq(new CsrModelFactory.StringBase64(ENCODED_CSR)),
-                        eq(new CsrModelFactory.StringBase64(ENCODED_PK))
+                        new CsrModelFactory.StringBase64(ENCODED_CSR),
+                        new CsrModelFactory.StringBase64(ENCODED_PK)
                 )
         ).thenReturn(csrModel);
         return csrModel;
