@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08dfa83e_c9a0f6e6",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/api/CertificationController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2021-06-09T11:07:52Z",
+      "side": 1,
+      "message": "-2021",
+      "range": {
+        "startLine": 5,
+        "startChar": 21,
+        "endLine": 5,
+        "endChar": 22
+      },
+      "revId": "c23b5a52376289fbc8bb4bd112c8f4db3e0476cc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3da55855_c144b414",
+        "filename": "certService/src/test/java/org/onap/oom/certservice/api/ReloadConfigControllerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2021-06-09T11:07:52Z",
+      "side": 1,
+      "message": "-2021",
+      "range": {
+        "startLine": 5,
+        "startChar": 21,
+        "endLine": 5,
+        "endChar": 22
+      },
+      "revId": "c23b5a52376289fbc8bb4bd112c8f4db3e0476cc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e23b819_f3252854",
+        "filename": "certService/src/test/java/org/onap/oom/certservice/certification/CertificationModelFactoryTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2021-06-09T11:07:52Z",
+      "side": 1,
+      "message": "-2021",
+      "range": {
+        "startLine": 5,
+        "startChar": 21,
+        "endLine": 5,
+        "endChar": 22
+      },
+      "revId": "c23b5a52376289fbc8bb4bd112c8f4db3e0476cc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "befc400f_a56a9df6",
+        "filename": "certService/src/test/java/org/onap/oom/certservice/certification/configuration/CmpServersConfigLoaderTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2021-06-09T11:07:52Z",
+      "side": 1,
+      "message": "-2021",
+      "range": {
+        "startLine": 5,
+        "startChar": 21,
+        "endLine": 5,
+        "endChar": 22
+      },
+      "revId": "c23b5a52376289fbc8bb4bd112c8f4db3e0476cc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1c87cf1_b562add8",
+        "filename": "certServicePostProcessor/src/main/java/org/onap/oom/certservice/postprocessor/merger/model/PemTruststore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2021-06-09T11:07:52Z",
+      "side": 1,
+      "message": "-2021",
+      "range": {
+        "startLine": 4,
+        "startChar": 21,
+        "endLine": 4,
+        "endChar": 22
+      },
+      "revId": "c23b5a52376289fbc8bb4bd112c8f4db3e0476cc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c2ce605_ee2064de",
+        "filename": "certServicePostProcessor/src/main/java/org/onap/oom/certservice/postprocessor/merger/model/Truststore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2021-06-09T11:07:52Z",
+      "side": 1,
+      "message": "-2021",
+      "range": {
+        "startLine": 4,
+        "startChar": 21,
+        "endLine": 4,
+        "endChar": 22
+      },
+      "revId": "c23b5a52376289fbc8bb4bd112c8f4db3e0476cc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e573cf6f_ef1b29ad",
+        "filename": "certServicePostProcessor/src/test/java/org/onap/oom/certservice/postprocessor/common/PasswordReaderTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2021-06-09T11:07:52Z",
+      "side": 1,
+      "message": "-2021",
+      "range": {
+        "startLine": 4,
+        "startChar": 21,
+        "endLine": 4,
+        "endChar": 22
+      },
+      "revId": "c23b5a52376289fbc8bb4bd112c8f4db3e0476cc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e6bbca9_bee3ef12",
+        "filename": "certServicePostProcessor/src/test/java/org/onap/oom/certservice/postprocessor/configuration/path/DelimitedPathsSplitterTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2021-06-09T11:07:52Z",
+      "side": 1,
+      "message": "-2021",
+      "range": {
+        "startLine": 4,
+        "startChar": 21,
+        "endLine": 4,
+        "endChar": 22
+      },
+      "revId": "c23b5a52376289fbc8bb4bd112c8f4db3e0476cc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "733dbcd8_54e2f839",
+        "filename": "certServicePostProcessor/src/test/java/org/onap/oom/certservice/postprocessor/copier/KeystoreCopierTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2021-06-09T11:07:52Z",
+      "side": 1,
+      "message": "-2021",
+      "range": {
+        "startLine": 4,
+        "startChar": 21,
+        "endLine": 4,
+        "endChar": 22
+      },
+      "revId": "c23b5a52376289fbc8bb4bd112c8f4db3e0476cc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c33f218_6d4893c7",
+        "filename": "certServicePostProcessor/src/test/java/org/onap/oom/certservice/postprocessor/merger/model/TruststoreTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2021-06-09T11:07:52Z",
+      "side": 1,
+      "message": "-2021",
+      "range": {
+        "startLine": 4,
+        "startChar": 21,
+        "endLine": 4,
+        "endChar": 22
+      },
+      "revId": "c23b5a52376289fbc8bb4bd112c8f4db3e0476cc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
