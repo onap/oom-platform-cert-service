@@ -1,7 +1,7 @@
 /*============LICENSE_START=======================================================
  * oom-truststore-merger
  * ================================================================================
- * Copyright (C) 2020 Nokia. All rights reserved.
+ * Copyright (C) 2020-2021 Nokia. All rights reserved.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,7 +38,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.onap.oom.certservice.postprocessor.api.CertificateConstants;
 import org.onap.oom.certservice.postprocessor.api.ExitableException;
 import org.onap.oom.certservice.postprocessor.merger.exception.CreateBackupException;
 import org.onap.oom.certservice.postprocessor.merger.exception.KeystoreInstanceException;
@@ -69,8 +68,8 @@ class TruststoreTest {
 
         //then
         File backupFile = new File(PEM_BACKUP_FILE_PATH);
-        assertThat(backupFile.getName().endsWith(BACKUP_EXTENSION)).isTrue();
-        assertThat(backupFile.isFile()).isTrue();
+        assertThat(backupFile.getName()).endsWith(BACKUP_EXTENSION);
+        assertThat(backupFile).isFile();
     }
 
     @ParameterizedTest
@@ -192,15 +191,6 @@ class TruststoreTest {
     @AfterEach
     void removeTemporaryFiles() throws IOException {
         TestCertificateProvider.removeTemporaryFiles();
-    }
-
-    private static Stream<Arguments> truststoreProvider()
-        throws LoadTruststoreException, KeystoreInstanceException, PasswordReaderException {
-        return Stream.of(
-            Arguments.of(TestCertificateProvider.getSampleJksTruststoreFile()),
-            Arguments.of(TestCertificateProvider.getSampleP12Truststore()),
-            Arguments.of(TestCertificateProvider.getSamplePemTruststoreFile())
-        );
     }
 
 }

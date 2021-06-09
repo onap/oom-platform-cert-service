@@ -33,7 +33,7 @@ import org.bouncycastle.asn1.x509.KeyUsage;
 import org.junit.jupiter.api.Test;
 import org.onap.oom.certservice.cmpv2client.exceptions.CmpClientException;
 
-public class CmpMessageHelperTest {
+class CmpMessageHelperTest {
 
     private final KeyUsage expectedKeyUsage = new KeyUsage(
         KeyUsage.digitalSignature | KeyUsage.keyEncipherment | KeyUsage.nonRepudiation);

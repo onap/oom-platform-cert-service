@@ -2,7 +2,7 @@
  * ============LICENSE_START=======================================================
  * PROJECT
  * ================================================================================
- * Copyright (C) 2020 Nokia. All rights reserved.
+ * Copyright (C) 2020-2021 Nokia. All rights reserved.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -70,8 +70,9 @@ class CmpServersConfigLoaderTest {
         List<Cmpv2Server> cmpServers = configLoader.load(path);
 
         // Then
-        assertThat(cmpServers).isNotNull();
-        assertThat(cmpServers).hasSize(2);
+        assertThat(cmpServers)
+            .isNotNull()
+            .hasSize(2);
         verifyThatCmpServerEquals(cmpServers.get(0), EXPECTED_FIRST_CMP_SERVER);
         verifyThatCmpServerEquals(cmpServers.get(1), EXPECTED_SECOND_CMP_SERVER);
     }
@@ -109,7 +110,7 @@ class CmpServersConfigLoaderTest {
     private void verifyThatCmpServerEquals(Cmpv2Server cmpv2Server, Map<String, String> expected) {
         assertThat(cmpv2Server.getCaName()).isEqualTo(expected.get("CA_NAME"));
         assertThat(cmpv2Server.getUrl()).isEqualTo(expected.get("URL"));
-        assertThat(cmpv2Server.getIssuerDN().toString()).isEqualTo(expected.get("ISSUER_DN"));
+        assertThat(cmpv2Server.getIssuerDN()).hasToString(expected.get("ISSUER_DN"));
         assertThat(cmpv2Server.getCaMode().name()).isEqualTo(expected.get("CA_MODE"));
         assertThat(cmpv2Server.getAuthentication().getIak()).isEqualTo(expected.get("IAK"));
         assertThat(cmpv2Server.getAuthentication().getRv()).isEqualTo(expected.get("RV"));
