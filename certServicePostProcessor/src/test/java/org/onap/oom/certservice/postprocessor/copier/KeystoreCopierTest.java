@@ -1,7 +1,7 @@
 /*============LICENSE_START=======================================================
  * oom-truststore-merger
  * ================================================================================
- * Copyright (C) 2020 Nokia. All rights reserved.
+ * Copyright (C) 2020-2021 Nokia. All rights reserved.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,7 +34,7 @@ import org.onap.oom.certservice.postprocessor.copier.exception.KeystoreNotExistE
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-public class KeystoreCopierTest {
+class KeystoreCopierTest {
 
     private static final String SOURCE_CONTENT = "source content";
     private static final String DESTINATION_CONTENT = "destination content";
@@ -50,7 +50,7 @@ public class KeystoreCopierTest {
 
         copier.copyKeystores(configuration);
 
-        assertThat(dir.listFiles()).isEmpty();
+        assertThat(dir).isEmptyDirectory();
     }
 
 
@@ -64,7 +64,7 @@ public class KeystoreCopierTest {
         copier.copyKeystores(configuration);
 
         assertThat(readFile(destination)).isEqualTo(readFile(source));
-        assertThat(backup.exists()).isTrue();
+        assertThat(backup).exists();
         assertThat(readFile(backup)).isEqualTo(DESTINATION_CONTENT);
     }
 
@@ -77,9 +77,9 @@ public class KeystoreCopierTest {
 
         copier.copyKeystores(configuration);
 
-        assertThat(destination.exists()).isTrue();
+        assertThat(destination).exists();
         assertThat(readFile(destination)).isEqualTo(readFile(source));
-        assertThat(backup.exists()).isFalse();
+        assertThat(backup).doesNotExist();
     }
 
     @Test
@@ -93,9 +93,9 @@ public class KeystoreCopierTest {
             copier.copyKeystores(configuration)
         );
 
-        assertThat(source.exists()).isFalse();
-        assertThat(destination.exists()).isFalse();
-        assertThat(backup.exists()).isFalse();
+        assertThat(source).doesNotExist();
+        assertThat(destination).doesNotExist();
+        assertThat(backup).doesNotExist();
     }
 
     @Test
@@ -110,9 +110,9 @@ public class KeystoreCopierTest {
             copier.copyKeystores(configuration)
         );
 
-        assertThat(source.exists()).isTrue();
-        assertThat(destination.exists()).isFalse();
-        assertThat(backup.exists()).isFalse();
+        assertThat(source).exists();
+        assertThat(destination).doesNotExist();
+        assertThat(backup).doesNotExist();
     }
 
     private AppConfiguration createConfiguration(File source, File destination) {

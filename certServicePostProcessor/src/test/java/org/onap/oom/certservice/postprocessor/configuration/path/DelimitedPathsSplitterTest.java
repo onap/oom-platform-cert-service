@@ -1,7 +1,7 @@
 /*============LICENSE_START=======================================================
  * oom-truststore-merger
  * ================================================================================
- * Copyright (C) 2020 Nokia. All rights reserved.
+ * Copyright (C) 2020-2021 Nokia. All rights reserved.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,6 +30,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.onap.oom.certservice.postprocessor.configuration.exception.CertificatesPathsValidationException;
+import org.onap.oom.certservice.postprocessor.configuration.model.EnvVariable;
 
 @ExtendWith(MockitoExtension.class)
 class DelimitedPathsSplitterTest {
@@ -58,16 +59,13 @@ class DelimitedPathsSplitterTest {
     @Test
     void shouldThrowExceptionWhenTruststoresPathsEnvIsEmpty() {
         // when, then
-        assertThatExceptionOfType(CertificatesPathsValidationException.class)
-            .isThrownBy(() -> delimitedPathsSplitter.getValidatedPaths(TRUSTSTORES_PATHS, Optional.of("")));
+        assertCorrectExceptionIsThrownFor(TRUSTSTORES_PATHS, "");
     }
 
     @Test
     void shouldThrowExceptionWhenOneOfTruststoresPathsInvalid() {
         // when, then
-        assertThatExceptionOfType(CertificatesPathsValidationException.class)
-            .isThrownBy(() -> delimitedPathsSplitter
-                .getValidatedPaths(TRUSTSTORES_PATHS, Optional.of(INVALID_TRUSTSTORES)));
+        assertCorrectExceptionIsThrownFor(TRUSTSTORES_PATHS, INVALID_TRUSTSTORES);
     }
 
     @Test
@@ -92,16 +90,19 @@ class DelimitedPathsSplitterTest {
     @Test
     void shouldThrowExceptionWhenTruststoresPasswordsPathEnvIsEmpty() {
         // when, then
-        assertThatExceptionOfType(CertificatesPathsValidationException.class)
-            .isThrownBy(
-                () -> delimitedPathsSplitter.getValidatedPaths(TRUSTSTORES_PASSWORDS_PATHS, Optional.of("")));
+        assertCorrectExceptionIsThrownFor(TRUSTSTORES_PASSWORDS_PATHS, "");
     }
 
     @Test
     void shouldThrowExceptionWhenOneOfTruststorePasswordPathsInvalid() {
         // when, then
+        assertCorrectExceptionIsThrownFor(TRUSTSTORES_PASSWORDS_PATHS, INVALID_TRUSTSTORES_PASSWORDS);
+    }
+
+    private void assertCorrectExceptionIsThrownFor(EnvVariable envVariable, String envValue) {
+        final Optional<String> envValueOptional = Optional.of(envValue);
         assertThatExceptionOfType(CertificatesPathsValidationException.class)
             .isThrownBy(() -> delimitedPathsSplitter
-                .getValidatedPaths(TRUSTSTORES_PASSWORDS_PATHS, Optional.of(INVALID_TRUSTSTORES_PASSWORDS)));
+                .getValidatedPaths(envVariable, envValueOptional));
     }
 }

@@ -1,7 +1,7 @@
 /*============LICENSE_START=======================================================
  * oom-truststore-merger
  * ================================================================================
- * Copyright (C) 2020 Nokia. All rights reserved.
+ * Copyright (C) 2020-2021 Nokia. All rights reserved.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -69,8 +69,8 @@ class TruststoreTest {
 
         //then
         File backupFile = new File(PEM_BACKUP_FILE_PATH);
-        assertThat(backupFile.getName().endsWith(BACKUP_EXTENSION)).isTrue();
-        assertThat(backupFile.isFile()).isTrue();
+        assertThat(backupFile.getName()).endsWith(BACKUP_EXTENSION);
+        assertThat(backupFile).isFile();
     }
 
     @ParameterizedTest

@@ -180,13 +180,15 @@ public class CmpClientImpl implements CmpClient {
     }
 
     private void logServerResponse(CertResponse certResponse) {
-        LOG.info("Response status code: {}", certResponse.getStatus().getStatus().toString());
+        if (LOG.isInfoEnabled()) {
+            LOG.info("Response status code: {}", certResponse.getStatus().getStatus());
+        }
         if (certResponse.getStatus().getStatusString() != null) {
             String serverMessage = certResponse.getStatus().getStatusString().getStringAt(0).getString();
             LOG.warn("Response status text: {}", serverMessage);
         }
-        if (certResponse.getStatus().getFailInfo() != null) {
-            LOG.warn("Response fail info:   {}", certResponse.getStatus().getFailInfo().toString());
+        if (LOG.isWarnEnabled() && certResponse.getStatus().getFailInfo() != null) {
+            LOG.warn("Response fail info:   {}", certResponse.getStatus().getFailInfo());
         }
     }
 

@@ -1,7 +1,7 @@
 /*============LICENSE_START=======================================================
  * oom-truststore-merger
  * ================================================================================
- * Copyright (C) 2020 Nokia. All rights reserved.
+ * Copyright (C) 2020-2021 Nokia. All rights reserved.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,10 +37,10 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.openssl.jcajce.JcaMiscPEMGenerator;
 import org.bouncycastle.util.io.pem.PemObjectGenerator;
 import org.bouncycastle.util.io.pem.PemWriter;
+import org.onap.oom.certservice.postprocessor.common.FileTools;
 import org.onap.oom.certservice.postprocessor.merger.exception.MissingTruststoreException;
 import org.onap.oom.certservice.postprocessor.merger.exception.TruststoreDataOperationException;
 import org.onap.oom.certservice.postprocessor.merger.exception.WriteTruststoreFileException;
-import org.onap.oom.certservice.postprocessor.common.FileTools;
 import org.onap.oom.certservice.postprocessor.merger.model.certificate.CertificateWithAlias;
 import org.onap.oom.certservice.postprocessor.merger.model.certificate.CertificateWithAliasFactory;
 import org.slf4j.Logger;
@@ -110,8 +110,8 @@ public class PemTruststore extends Truststore {
     private List<Certificate> extractCertificatesFromFile() throws TruststoreDataOperationException {
         try (FileInputStream inputStream = new FileInputStream(storeFile)) {
             Security.addProvider(new BouncyCastleProvider());
-            CertificateFactory factory = CertificateFactory.getInstance(X_509_CERTIFICATE, BOUNCY_CASTLE_PROVIDER);
-            return new ArrayList<>(factory.generateCertificates(inputStream));
+            CertificateFactory certFactory = CertificateFactory.getInstance(X_509_CERTIFICATE, BOUNCY_CASTLE_PROVIDER);
+            return new ArrayList<>(certFactory.generateCertificates(inputStream));
         } catch (Exception e) {
             LOGGER.error("Cannot read certificates from file: {}", storeFile.getPath());
             throw new TruststoreDataOperationException(e);
@@ -145,8 +145,7 @@ public class PemTruststore extends Truststore {
     }
 
     private void appendToFile(String certificatesAsString) throws WriteTruststoreFileException {
-        try {
-            FileOutputStream fileOutputStream = new FileOutputStream(storeFile, APPEND_TO_FILE);
+        try (FileOutputStream fileOutputStream = new FileOutputStream(storeFile, APPEND_TO_FILE)) {
             fileOutputStream.write(certificatesAsString.getBytes());
         } catch (Exception e) {
             LOGGER.error("Cannot write certificates to file");
