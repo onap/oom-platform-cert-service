@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b106db7_e596c393",
+        "filename": "certService/src/test/java/org/onap/oom/certservice/certification/CertificationModelFactoryTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2021-06-10T06:40:30Z",
+      "side": 1,
+      "message": "unused import",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 46
+      },
+      "revId": "d13a164c73203c712b7313d136edad6c161f3af1",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
