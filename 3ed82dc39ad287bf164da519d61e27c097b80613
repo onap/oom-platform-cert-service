@@ -22,6 +22,30 @@
       "revId": "3ed82dc39ad287bf164da519d61e27c097b80613",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7b1dc7a_e1420c8b",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/certificate_request_controller.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2021-06-14T09:33:27Z",
+      "side": 1,
+      "message": "We can remain error",
+      "parentUuid": "a5de27e4_4c6acacf",
+      "range": {
+        "startLine": 223,
+        "startChar": 6,
+        "endLine": 223,
+        "endChar": 11
+      },
+      "revId": "3ed82dc39ad287bf164da519d61e27c097b80613",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
