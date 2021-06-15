@@ -97,7 +97,7 @@ func (controller *CertificateRequestController) Reconcile(k8sRequest ctrl.Reques
 	}
 	if err := controller.Client.Get(ctx, issuerNamespaceName, &issuer); err != nil {
 		controller.handleErrorGettingCMPv2Issuer(certUpdater, log, err, certificateRequest, issuerNamespaceName, k8sRequest)
-		return ctrl.Result{}, err
+		return ctrl.Result{}, client.IgnoreNotFound(err)
 	}
 
 	// 5. Check if CMPv2Issuer is ready to sing certificates
@@ -110,7 +110,7 @@ func (controller *CertificateRequestController) Reconcile(k8sRequest ctrl.Reques
 	provisioner, ok := provisioners.Load(issuerNamespaceName)
 	if !ok {
 		err := controller.handleErrorCouldNotLoadCMPv2Provisioner(certUpdater, log, issuerNamespaceName)
-		return ctrl.Result{}, err
+		return ctrl.Result{}, client.IgnoreNotFound(err)
 	}
 
 	// 7. Get private key matching CertificateRequest
@@ -221,8 +221,9 @@ func (controller *CertificateRequestController) handleErrorFailedToDecodeCSR(upd
 func handleErrorResourceNotFound(log leveledlogger.Logger, err error) error {
 	if apierrors.IsNotFound(err) {
 		log.Error(err, "CertificateRequest resource not found")
+		return nil
 	} else {
 		log.Error(err, "Failed to retrieve CertificateRequest resource")
+		return err
 	}
-	return err
 }
