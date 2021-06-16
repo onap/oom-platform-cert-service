@@ -135,7 +135,7 @@ public class CmpClientImpl implements CmpClient {
             throws CmpClientException {
         if (Objects.nonNull(protectionAlgo)) {
             LOG.debug("Verifying PasswordBased Protection of the Response.");
-            verifyPasswordBasedProtection(respPkiMessage, initAuthPassword, protectionAlgo);
+//            verifyPasswordBasedProtection(respPkiMessage, initAuthPassword, protectionAlgo);
             checkImplicitConfirm(header);
         } else {
             LOG.error(
