@@ -32,3 +32,55 @@ stop-backend:
 	@echo "##### Stop Cert Service #####"
 	docker-compose down
 	@echo "##### DONE #####"
+
+send-initialization-request:
+	@echo "##### Create folder for certificates from curl: `pwd`/compose-resources/certs-from-curl/ #####"
+	mkdir -p `pwd`/compose-resources/certs-from-curl/
+	@echo "##### Generate CSR and Key #####"
+	openssl req -new -newkey rsa:2048 -nodes -keyout `pwd`/compose-resources/certs-from-curl/ir.key \
+	    -out `pwd`/compose-resources/certs-from-curl/ir.csr \
+	    -subj "/C=US/ST=California/L=San-Francisco/O=ONAP/OU=Linux-Foundation/CN=onap.org" \
+	    -addext "subjectAltName = DNS:test.onap.org"
+	@echo "##### Send Initialization Request #####"
+	curl -s https://localhost:8443/v1/certificate/RA -H "PK: $$(cat ./compose-resources/certs-from-curl/ir.key | base64 | tr -d \\n)" \
+	    -H "CSR: $$(cat ./compose-resources/certs-from-curl/ir.csr | base64 | tr -d \\n)" \
+	    --cert `pwd`/certs/cmpv2Issuer-cert.pem \
+	    --key `pwd`/certs/cmpv2Issuer-key.pem \
+	    --cacert `pwd`/certs/cacert.pem | tac | tac | `pwd`/parseCertServiceResponse.sh "ir"
+
+send-key-update-request: verify-initialization-request-files-exist
+	@echo "##### Generate CSR and Key #####"
+	openssl req -new -newkey rsa:2048 -nodes -keyout `pwd`/compose-resources/certs-from-curl/kur.key \
+	    -out `pwd`/compose-resources/certs-from-curl/kur.csr \
+	    -subj "/C=US/ST=California/L=San-Francisco/O=ONAP/OU=Linux-Foundation/CN=onap.org" \
+	    -addext "subjectAltName = DNS:test.onap.org"
+	@echo "##### Send Key Update Request #####"
+	curl -s https://localhost:8443/v1/certificate-update/RA -H "PK: $$(cat ./compose-resources/certs-from-curl/kur.key | base64 | tr -d \\n)" \
+	    -H "CSR: $$(cat ./compose-resources/certs-from-curl/kur.csr | base64 | tr -d \\n)" \
+	    -H "OLD_PK: $$(cat ./compose-resources/certs-from-curl/ir.key | base64 | tr -d \\n)" \
+	    -H "OLD_CERT: $$(cat ./compose-resources/certs-from-curl/ir-cert.pem | base64 | tr -d \\n)" \
+	    --cert `pwd`/certs/cmpv2Issuer-cert.pem \
+	    --key `pwd`/certs/cmpv2Issuer-key.pem \
+	    --cacert `pwd`/certs/cacert.pem | tac | tac | `pwd`/parseCertServiceResponse.sh "kur"
+
+send-certification-request: verify-initialization-request-files-exist
+	@echo "##### Generate CSR and Key #####"
+	openssl req -new -newkey rsa:2048 -nodes -keyout `pwd`/compose-resources/certs-from-curl/cr.key \
+	    -out `pwd`/compose-resources/certs-from-curl/cr.csr \
+	    -subj "/C=US/ST=California/L=San-Francisco/O=ONAP/OU=Linux-Foundation/CN=new-onap.org" \
+	    -addext "subjectAltName = DNS:test.onap.org"
+	@echo "##### Send Key Update Request #####"
+	curl -s https://localhost:8443/v1/certificate-update/RA -H "PK: $$(cat ./compose-resources/certs-from-curl/cr.key | base64 | tr -d \\n)" \
+	    -H "CSR: $$(cat ./compose-resources/certs-from-curl/cr.csr | base64 | tr -d \\n)" \
+	    -H "OLD_PK: $$(cat ./compose-resources/certs-from-curl/ir.key | base64 | tr -d \\n)" \
+	    -H "OLD_CERT: $$(cat ./compose-resources/certs-from-curl/ir-cert.pem | base64 | tr -d \\n)" \
+	    --cert `pwd`/certs/cmpv2Issuer-cert.pem \
+	    --key `pwd`/certs/cmpv2Issuer-key.pem \
+	    --cacert `pwd`/certs/cacert.pem | tac | tac | `pwd`/parseCertServiceResponse.sh "cr"
+
+verify-initialization-request-files-exist:
+  ifeq (,$(wildcard compose-resources/certs-from-curl/ir.key))
+  ifeq (,$(wildcard compose-resources/certs-from-curl/ir-cert.pem))
+			$(error Execute send-initialization-request first)
+  endif
+  endif

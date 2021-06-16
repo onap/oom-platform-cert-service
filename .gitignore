@@ -3,6 +3,7 @@ target/
 !**/src/test/**
 **/var
 compose-resources/client-volume
+compose-resources/certs-from-curl
 
 ### STS ###
 .apt_generated
