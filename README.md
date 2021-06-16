@@ -54,6 +54,87 @@ make run-client
 make stop-backend
 ```
 
+### Generating certificates via REST Api
+Certificates can be requested manually using OpenSSL and cURL.
+#### Initialization Request
+1. Create Certificate Signing Request and Private Key
+```
+openssl req -new -newkey rsa:2048 -nodes -keyout ./compose-resources/certs-from-curl/ir.key \
+	    -out ./compose-resources/certs-from-curl/ir.csr \
+	    -subj "/C=US/ST=California/L=San-Francisco/O=ONAP/OU=Linux-Foundation/CN=onap.org" \
+	    -addext "subjectAltName = DNS:test.onap.org"
+```
+2. Send Initialization Request
+```
+curl -s https://localhost:8443/v1/certificate/RA -H "PK: $(cat ./compose-resources/certs-from-curl/ir.key | base64 | tr -d \\n)" \
+        -H "CSR: $(cat ./compose-resources/certs-from-curl/ir.csr | base64 | tr -d \\n)" \
+        --cert ./certs/cmpv2Issuer-cert.pem \
+        --key ./certs/cmpv2Issuer-key.pem \
+        --cacert ./certs/cacert.pem
+```
+to parse the response pipe the output to `parseCertserviceResponse.sh` script, providing prefix as argument
+```
+curl -s https://localhost:8443/v1/certificate/RA -H "PK: $(cat ./compose-resources/certs-from-curl/ir.key | base64 | tr -d \\n)" \
+        -H "CSR: $(cat ./compose-resources/certs-from-curl/ir.csr | base64 | tr -d \\n)" \
+        --cert ./certs/cmpv2Issuer-cert.pem \
+        --key ./certs/cmpv2Issuer-key.pem \
+        --cacert ./certs/cacert.pem | tac | tac | `pwd`/parseCertServiceResponse.sh "ir"
+```
+
+#### Update Request
+1. Create Certificate Signing Request and Private Key - same as for Initialization Request.
+When CSR data (like Subject and SANS) is unchanged, Key Update Request will be performed.
+Otherwise Certification Request will be performed. 
+Example for KUR:
+```
+openssl req -new -newkey rsa:2048 -nodes -keyout ./compose-resources/certs-from-curl/kur.key \
+-out ./compose-resources/certs-from-curl/kur.csr \
+-subj "/C=US/ST=California/L=San-Francisco/O=ONAP/OU=Linux-Foundation/CN=onap.org" \
+-addext "subjectAltName = DNS:test.onap.org"
+```
+Example for CR:
+```
+openssl req -new -newkey rsa:2048 -nodes -keyout ./compose-resources/certs-from-curl/cr.key \
+-out ./compose-resources/certs-from-curl/cr.csr \
+-subj "/C=US/ST=California/L=San-Francisco/O=ONAP/OU=Linux-Foundation/CN=new-onap.org" \
+-addext "subjectAltName = DNS:test.onap.org"
+```
+2. Send Update Request.
+Example for KUR:
+```
+curl -s https://localhost:8443/v1/certificate-update/RA -H "PK: $(cat ./compose-resources/certs-from-curl/kur.key | base64 | tr -d \\n)" \
+	    -H "CSR: $(cat ./compose-resources/certs-from-curl/kur.csr | base64 | tr -d \\n)" \
+	    -H "OLDPK: $(cat ./compose-resources/certs-from-curl/ir.key | base64 | tr -d \\n)" \
+	    -H "OLDCERT: $(cat ./compose-resources/certs-from-curl/ir-cert.pem | base64 | tr -d \\n)" \
+	    --cert ./certs/cmpv2Issuer-cert.pem \
+	    --key ./certs/cmpv2Issuer-key.pem \
+	    --cacert ./certs/cacert.pem | tac | tac | `pwd`/parseCertServiceResponse.sh "kur"
+```
+Example CR:
+```
+curl -s https://localhost:8443/v1/certificate-update/RA -H "PK: $$(cat ./compose-resources/certs-from-curl/cr.key | base64 | tr -d \\n)" \
+	    -H "CSR: $$(cat ./compose-resources/certs-from-curl/cr.csr | base64 | tr -d \\n)" \
+	    -H "OLD_PK: $$(cat ./compose-resources/certs-from-curl/ir.key | base64 | tr -d \\n)" \
+	    -H "OLD_CERT: $$(cat ./compose-resources/certs-from-curl/ir-cert.pem | base64 | tr -d \\n)" \
+	    --cert ./certs/cmpv2Issuer-cert.pem \
+	    --key ./certs/cmpv2Issuer-key.pem \
+	    --cacert ./certs/cacert.pem | tac | tac | `pwd`/parseCertServiceResponse.sh "cr"
+```
+
+#### Using makefile
+1. Perform Initialization Request:
+```
+make send-initialization-request
+```
+2. Perform Update Request:
+```
+make send-key-update-request
+```
+or:
+```
+make send-certification-request
+```
+
 ### OOM CertService CSITs
 #### CSIT repository
 ```
