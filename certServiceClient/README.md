@@ -22,7 +22,7 @@ mvn clean install -P docker
 
 ### Nexus container image
 ```
-nexus3.onap.org:10001/onap/org.onap.oom.platform.cert-service.oom-certservice-client:latest
+nexus3.onap.org:10001/onap/org.onap.oom.platform.cert-service.oom-certservice-client:2.3.3
 ```
 
 ### Running local client application as standalone docker container
@@ -30,8 +30,45 @@ CertService API and client must be running in same network.
 
 You need certificate and trust anchors (in JKS format) to connect to CertService API via HTTPS. Information how to generate truststore and keystore files you can find in CertService main README.
 
-Information how to run you can find in CertService main README and official documentation, see [Read The Docs](https://docs.onap.org/projects/onap-oom-platform-cert-service/en/latest/sections/usage.html)
+To run CertService client as standalone docker container execute following steps:
 
+1. Create file ‘$PWD/client.env’ with environment variables as in example below:
+```
+#Client envs
+REQUEST_URL=<URL to CertService API>
+REQUEST_TIMEOUT=10000
+OUTPUT_PATH=/var/certs
+CA_NAME=RA
+OUTPUT_TYPE=P12
+
+#CSR config envs
+COMMON_NAME=onap.org
+ORGANIZATION=Linux-Foundation
+ORGANIZATION_UNIT=ONAP
+LOCATION=San-Francisco
+STATE=California
+COUNTRY=US
+SANS=test.onap.org,onap.com,onap@onap.org,127.0.0.1,onap://cluster.local/
+
+#TLS config envs
+KEYSTORE_PATH=/etc/onap/oom/certservice/certs/certServiceClient-keystore.jks
+KEYSTORE_PASSWORD=<password to certServiceClient-keystore.jks>
+TRUSTSTORE_PATH=/etc/onap/oom/certservice/certs/certServiceClient-truststore.jks
+TRUSTSTORE_PASSWORD=<password to certServiceClient-truststore.jks>
+```
+2. Run docker container as in following example (API and client must be running in same network):
+```
+docker run \
+--rm \
+--name oomcert-client \
+--env-file <$PWD/client.env (same as in step1)> \
+--network <docker network of cert service> \
+--mount type=bind,src=<path to local host directory where certificate and trust anchor will be created>,dst=<OUTPUT_PATH (same as in step 1)> \
+--volume <local path to keystore in JKS format>:<KEYSTORE_PATH> \
+--volume <local path to truststore in JKS format>:<TRUSTSTORE_PATH> \
+nexus3.onap.org:10001/onap/org.onap.oom.platform.cert-service.oom-certservice-client:2.3.3
+```
+After successful creation of certifications, container exits with exit code 0.
 
 ### Logs locally
 
@@ -56,3 +93,4 @@ docker logs oom-certservice-client
 8	Fail in Private Key to PEM Encoding
 9	Wrong TLS configuration
 10	File could not be created
+99	Application exited abnormally
