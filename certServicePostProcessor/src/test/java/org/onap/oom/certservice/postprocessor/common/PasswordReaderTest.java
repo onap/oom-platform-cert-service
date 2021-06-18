@@ -1,7 +1,7 @@
 /*============LICENSE_START=======================================================
  * oom-truststore-merger
  * ================================================================================
- * Copyright (C) 2020 Nokia. All rights reserved.
+ * Copyright (C) 2020-2021 Nokia. All rights reserved.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,7 +37,8 @@ class PasswordReaderTest {
 
     @Test
     void shouldThrowExceptionForNonExistingFile() {
+        final File file = new File("src/test/resources/non-esisting-file.pass");
         assertThatExceptionOfType(PasswordReaderException.class)
-                .isThrownBy(() -> PasswordReader.readPassword(new File("src/test/resources/non-esisting-file.pass")));
+                .isThrownBy(() -> PasswordReader.readPassword(file));
     }
 }

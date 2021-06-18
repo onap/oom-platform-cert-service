@@ -25,7 +25,6 @@ import static org.onap.oom.certservice.cmpv2client.impl.CmpUtil.generateProtecte
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.security.InvalidKeyException;
-import java.security.Key;
 import java.security.KeyPair;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
