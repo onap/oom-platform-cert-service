@@ -83,6 +83,8 @@ public class CmpClientImpl implements CmpClient {
         validate(csrModel, server, httpClient, notBefore, notAfter);
         KeyPair keyPair = new KeyPair(csrModel.getPublicKey(), csrModel.getPrivateKey());
 
+        final String iak = server.getAuthentication().getIak();
+        final PkiMessageProtection pkiMessageProtection = new PasswordBasedProtection(iak);
         final CreateCertRequest certRequest =
                 CmpMessageBuilder.of(CreateCertRequest::new)
                         .with(CreateCertRequest::setIssuerDn, server.getIssuerDN())
@@ -91,8 +93,8 @@ public class CmpClientImpl implements CmpClient {
                         .with(CreateCertRequest::setSubjectKeyPair, keyPair)
                         .with(CreateCertRequest::setNotBefore, notBefore)
                         .with(CreateCertRequest::setNotAfter, notAfter)
-                        .with(CreateCertRequest::setInitAuthPassword, server.getAuthentication().getIak())
                         .with(CreateCertRequest::setSenderKid, server.getAuthentication().getRv())
+                        .with(CreateCertRequest::setProtection, pkiMessageProtection)
                         .build();
 
         final PKIMessage pkiMessage = certRequest.generateCertReq();
