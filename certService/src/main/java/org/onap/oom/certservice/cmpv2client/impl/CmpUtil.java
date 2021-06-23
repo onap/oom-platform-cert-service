@@ -1,6 +1,7 @@
 /*-
  * ============LICENSE_START=======================================================
  *  Copyright (C) 2020 Nordix Foundation.
+ *  Copyright (C) 2021 Nokia.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -127,12 +128,13 @@ public final class CmpUtil {
     }
 
     /**
-     * Generates a PKIHeader Builder object.
+     * Generates a PKIHeader object.
      *
      * @param subjectDn     distinguished name of Subject
      * @param issuerDn      distinguished name of external CA
      * @param protectionAlg protection Algorithm used to protect PKIMessage
-     * @return PKIHeaderBuilder
+     * @param senderKid     sender identifier for receiver used for verification
+     * @return PKIHeader
      */
     static PKIHeader generatePkiHeader(
             X500Name subjectDn, X500Name issuerDn, AlgorithmIdentifier protectionAlg, String senderKid) {
@@ -146,7 +148,7 @@ public final class CmpUtil {
         pkiHeaderBuilder.setTransactionID(new DEROctetString(createRandomBytes()));
         pkiHeaderBuilder.setProtectionAlg(protectionAlg);
         pkiHeaderBuilder.setGeneralInfo(new InfoTypeAndValue(CMPObjectIdentifiers.it_implicitConfirm));
-        pkiHeaderBuilder.setSenderKID(new DEROctetString(senderKid.getBytes()));
+        pkiHeaderBuilder.setSenderKID(senderKid != null ? new DEROctetString(senderKid.getBytes()) : null);
 
         return pkiHeaderBuilder.build();
     }

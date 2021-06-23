@@ -1,6 +1,7 @@
 /*-
  * ============LICENSE_START=======================================================
  *  Copyright (C) 2020 Nordix Foundation.
+ *  Copyright (C) 2021 Nokia.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,34 +21,22 @@
 
 package org.onap.oom.certservice.cmpv2client.impl;
 
-import static org.onap.oom.certservice.cmpv2client.impl.CmpUtil.generateProtectedBytes;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.KeyPair;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.Signature;
 import java.security.SignatureException;
 import java.util.Date;
-import javax.crypto.Mac;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
 
 import org.bouncycastle.asn1.ASN1EncodableVector;
-import org.bouncycastle.asn1.ASN1Integer;
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
 import org.bouncycastle.asn1.DERBitString;
-import org.bouncycastle.asn1.DEROctetString;
 import org.bouncycastle.asn1.DEROutputStream;
 import org.bouncycastle.asn1.DERSequence;
 import org.bouncycastle.asn1.DERTaggedObject;
-import org.bouncycastle.asn1.cmp.PBMParameter;
-import org.bouncycastle.asn1.cmp.PKIBody;
-import org.bouncycastle.asn1.cmp.PKIHeader;
-import org.bouncycastle.asn1.cmp.PKIMessage;
 import org.bouncycastle.asn1.crmf.CertRequest;
 import org.bouncycastle.asn1.crmf.OptionalValidity;
 import org.bouncycastle.asn1.crmf.POPOSigningKey;
@@ -71,12 +60,6 @@ import org.slf4j.LoggerFactory;
 public final class CmpMessageHelper {
 
     private static final Logger LOG = LoggerFactory.getLogger(CmpMessageHelper.class);
-    private static final AlgorithmIdentifier OWF_ALGORITHM =
-            new AlgorithmIdentifier(new ASN1ObjectIdentifier("1.3.14.3.2.26"));
-    private static final AlgorithmIdentifier MAC_ALGORITHM =
-            new AlgorithmIdentifier(new ASN1ObjectIdentifier("1.3.6.1.5.5.8.1.2"));
-    private static final ASN1ObjectIdentifier PASSWORD_BASED_MAC =
-            new ASN1ObjectIdentifier("1.2.840.113533.7.66.13");
     private static final boolean CRITICAL_FALSE = false;
 
     private CmpMessageHelper() {
@@ -170,65 +153,6 @@ public final class CmpMessageHelper {
             throw cmpClientException;
         }
         return proofOfPossession;
-    }
-
-    /**
-     * Generic code to create Algorithm Identifier for protection of PKIMessage.
-     *
-     * @return Algorithm Identifier
-     */
-    public static AlgorithmIdentifier protectionAlgoIdentifier(int iterations, byte[] salt) {
-        ASN1Integer iteration = new ASN1Integer(iterations);
-        DEROctetString derSalt = new DEROctetString(salt);
-
-        PBMParameter pp = new PBMParameter(derSalt, OWF_ALGORITHM, iteration, MAC_ALGORITHM);
-        return new AlgorithmIdentifier(PASSWORD_BASED_MAC, pp);
-    }
-
-    /**
-     * Adds protection to the PKIMessage via a specified protection algorithm.
-     *
-     * @param password  password used to authenticate PkiMessage with external CA
-     * @param pkiHeader Header of PKIMessage containing generic details for any PKIMessage
-     * @param pkiBody   Body of PKIMessage containing specific details for certificate request
-     * @return Protected Pki Message
-     * @throws CmpClientException Wraps several exceptions into one general-purpose exception.
-     */
-    public static PKIMessage protectPkiMessage(
-            PKIHeader pkiHeader, PKIBody pkiBody, String password, int iterations, byte[] salt)
-            throws CmpClientException {
-
-        byte[] raSecret = password.getBytes();
-        byte[] basekey = new byte[raSecret.length + salt.length];
-        System.arraycopy(raSecret, 0, basekey, 0, raSecret.length);
-        System.arraycopy(salt, 0, basekey, raSecret.length, salt.length);
-        byte[] out;
-        try {
-            MessageDigest dig =
-                    MessageDigest.getInstance(
-                            OWF_ALGORITHM.getAlgorithm().getId(), BouncyCastleProvider.PROVIDER_NAME);
-            for (int i = 0; i < iterations; i++) {
-                basekey = dig.digest(basekey);
-                dig.reset();
-            }
-            byte[] protectedBytes = generateProtectedBytes(pkiHeader, pkiBody);
-            Mac mac =
-                    Mac.getInstance(MAC_ALGORITHM.getAlgorithm().getId(), BouncyCastleProvider.PROVIDER_NAME);
-            SecretKey key = new SecretKeySpec(basekey, MAC_ALGORITHM.getAlgorithm().getId());
-            mac.init(key);
-            mac.reset();
-            mac.update(protectedBytes, 0, protectedBytes.length);
-            out = mac.doFinal();
-        } catch (NoSuchAlgorithmException | NoSuchProviderException | InvalidKeyException ex) {
-            CmpClientException cmpClientException =
-                    new CmpClientException(
-                            "Exception occurred while generating proof of possession for PKIMessage", ex);
-            LOG.error("Exception occured while generating the proof of possession for PKIMessage");
-            throw cmpClientException;
-        }
-        DERBitString bs = new DERBitString(out);
-
-        return new PKIMessage(pkiHeader, pkiBody, bs);
     }
 
     private static KeyUsage getKeyUsage() {
