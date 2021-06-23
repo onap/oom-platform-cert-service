@@ -1,6 +1,7 @@
 /*-
  * ============LICENSE_START=======================================================
  *  Copyright (C) 2020 Nordix Foundation.
+ *  Copyright (C) 2021 Nokia.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +21,6 @@
 
 package org.onap.oom.certservice.cmpv2client.impl;
 
-import static org.onap.oom.certservice.cmpv2client.impl.CmpUtil.createRandomBytes;
 import static org.onap.oom.certservice.cmpv2client.impl.CmpUtil.createRandomInt;
 import static org.onap.oom.certservice.cmpv2client.impl.CmpUtil.generatePkiHeader;
 
@@ -28,6 +28,7 @@ import java.security.KeyPair;
 import java.util.Date;
 
 import org.bouncycastle.asn1.ASN1Integer;
+import org.bouncycastle.asn1.DERBitString;
 import org.bouncycastle.asn1.cmp.PKIBody;
 import org.bouncycastle.asn1.cmp.PKIHeader;
 import org.bouncycastle.asn1.cmp.PKIMessage;
@@ -49,17 +50,15 @@ import org.onap.oom.certservice.cmpv2client.exceptions.CmpClientException;
  */
 class CreateCertRequest {
 
+    private PkiMessageProtection pkiMessageProtection;
     private X500Name issuerDn;
     private X500Name subjectDn;
     private GeneralName[] sansArray;
     private KeyPair subjectKeyPair;
     private Date notBefore;
     private Date notAfter;
-    private String initAuthPassword;
     private String senderKid;
 
-    private static final int ITERATIONS = createRandomInt(1000);
-    private static final byte[] SALT = createRandomBytes();
     private final int certReqId = createRandomInt(Integer.MAX_VALUE);
     private final AlgorithmIdentifier signingAlgorithm = new DefaultSignatureAlgorithmIdentifierFinder()
             .find("SHA256withRSA");
@@ -88,8 +87,8 @@ class CreateCertRequest {
         this.notAfter = notAfter;
     }
 
-    public void setInitAuthPassword(String initAuthPassword) {
-        this.initAuthPassword = initAuthPassword;
+    public void setProtection(PkiMessageProtection pkiMessageProtection) {
+        this.pkiMessageProtection = pkiMessageProtection;
     }
 
     public void setSenderKid(String senderKid) {
@@ -100,9 +99,10 @@ class CreateCertRequest {
      * Method to create {@link PKIMessage} from {@link CertRequest},{@link ProofOfPossession}, {@link
      * CertReqMsg}, {@link CertReqMessages}, {@link PKIHeader} and {@link PKIBody}.
      *
+     * @param requestType   type of CMP request (IR, CR or KUR)
      * @return {@link PKIMessage}
      */
-    public PKIMessage generateCertReq() throws CmpClientException {
+    public PKIMessage generateCertReq(int requestType) throws CmpClientException {
         final CertTemplateBuilder certTemplateBuilder =
                 new CertTemplateBuilder()
                         .setIssuer(issuerDn)
@@ -126,11 +126,11 @@ class CreateCertRequest {
                 generatePkiHeader(
                         subjectDn,
                         issuerDn,
-                        CmpMessageHelper.protectionAlgoIdentifier(ITERATIONS, SALT),
+                        pkiMessageProtection.getAlgorithmIdentifier(),
                         senderKid);
-        final PKIBody pkiBody = new PKIBody(PKIBody.TYPE_INIT_REQ, certReqMessages);
+        final PKIBody pkiBody = new PKIBody(requestType, certReqMessages);
 
-        return CmpMessageHelper.protectPkiMessage(
-                pkiHeader, pkiBody, initAuthPassword, ITERATIONS, SALT);
+        final DERBitString messageProtection = this.pkiMessageProtection.generatePkiMessageProtection(pkiHeader, pkiBody);
+        return new PKIMessage(pkiHeader, pkiBody, messageProtection);
     }
 }
