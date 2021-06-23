@@ -1,6 +1,7 @@
 /*-
  * ============LICENSE_START=======================================================
  *  Copyright (C) 2020 Nordix Foundation.
+ *  Copyright (C) 2021 Nokia.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,6 +30,7 @@ import java.util.Objects;
 import org.bouncycastle.asn1.ASN1Encodable;
 import org.bouncycastle.asn1.ASN1EncodableVector;
 import org.bouncycastle.asn1.ASN1GeneralizedTime;
+import org.bouncycastle.asn1.ASN1OctetString;
 import org.bouncycastle.asn1.DEROctetString;
 import org.bouncycastle.asn1.DEROutputStream;
 import org.bouncycastle.asn1.DERSequence;
@@ -127,12 +129,13 @@ public final class CmpUtil {
     }
 
     /**
-     * Generates a PKIHeader Builder object.
+     * Generates a PKIHeader object.
      *
      * @param subjectDn     distinguished name of Subject
      * @param issuerDn      distinguished name of external CA
      * @param protectionAlg protection Algorithm used to protect PKIMessage
-     * @return PKIHeaderBuilder
+     * @param senderKid     sender identifier for receiver used for verification
+     * @return PKIHeader
      */
     static PKIHeader generatePkiHeader(
             X500Name subjectDn, X500Name issuerDn, AlgorithmIdentifier protectionAlg, String senderKid) {
@@ -146,8 +149,12 @@ public final class CmpUtil {
         pkiHeaderBuilder.setTransactionID(new DEROctetString(createRandomBytes()));
         pkiHeaderBuilder.setProtectionAlg(protectionAlg);
         pkiHeaderBuilder.setGeneralInfo(new InfoTypeAndValue(CMPObjectIdentifiers.it_implicitConfirm));
-        pkiHeaderBuilder.setSenderKID(new DEROctetString(senderKid.getBytes()));
+        pkiHeaderBuilder.setSenderKID(mapToAsn1OctetString(senderKid));
 
         return pkiHeaderBuilder.build();
+    }
+
+    private static ASN1OctetString mapToAsn1OctetString(String string) {
+        return string != null ? new DEROctetString(string.getBytes()) : null;
     }
 }
