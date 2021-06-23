@@ -154,6 +154,7 @@ public class CsrModel {
                 throw new KeyDecryptionException("Converting Private Key failed", e.getCause());
             }
         }
+
         private PublicKey convertingPemPublicKeyToJavaSecurityPublicKey(PemObject publicKey)
             throws KeyDecryptionException {
             try {
