@@ -67,4 +67,12 @@ public class CertificationModelFactory {
         return certificationProvider.signCsr(csrModel, cmpv2Server);
     }
 
+    public CertificationModel createCertificationModel(String encodedCsr,
+                                                       String encodedPrivateKey,
+                                                       String encodedOldCert,
+                                                       String encodedOldPrivateKey,
+                                                       String caName) {
+        LOGGER.info("Test endpoint");
+        return null;
+    }
 }

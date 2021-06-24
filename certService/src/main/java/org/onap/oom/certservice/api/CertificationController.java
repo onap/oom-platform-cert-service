@@ -28,9 +28,11 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.onap.oom.certservice.certification.CertificationModelFactory;
+import org.onap.oom.certservice.certification.CsrModelFactory;
 import org.onap.oom.certservice.certification.exception.DecryptionException;
 import org.onap.oom.certservice.certification.exception.ErrorResponseModel;
 import org.onap.oom.certservice.certification.model.CertificationModel;
+import org.onap.oom.certservice.certification.model.CsrModel;
 import org.onap.oom.certservice.cmpv2client.exceptions.CmpClientException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -93,4 +95,28 @@ public class CertificationController {
         return new ResponseEntity<>(certificationModel, HttpStatus.OK);
     }
 
+    /**
+     * Request for updating certificate by given CA.
+     *
+     * @param caName                the name of Certification Authority that will sign root certificate
+     * @param encodedCsr            Certificate Sign Request encoded in Base64 form
+     * @param encodedPrivateKey     Private key for CSR, needed for PoP, encoded in Base64 form
+     * @param encodedOldCert        Certificate (signed by Certification Authority) that should be renew
+     * @param encodedOldPrivateKey  Old private key corresponding with old certificate
+     * @return JSON containing trusted certificates and certificate chain
+     */
+    @GetMapping(value = "v1/certificate-update/{caName}", produces = "application/json")
+    public ResponseEntity<CertificationModel> updateCertificate(
+            @PathVariable String caName,
+            @RequestHeader("CSR") String encodedCsr,
+            @RequestHeader("PK") String encodedPrivateKey,
+            @RequestHeader("OLD_CERT") String encodedOldCert,
+            @RequestHeader("OLD_PK") String encodedOldPrivateKey
+    ) throws DecryptionException, CmpClientException {
+        caName = caName.replaceAll("[\n\r\t]", "_");
+        LOGGER.info("Received certificate update request for CA named: {}", caName);
+        CertificationModel certificationModel = certificationModelFactory
+                .createCertificationModel(encodedCsr, encodedPrivateKey, encodedOldCert, encodedOldPrivateKey, caName);
+        return new ResponseEntity<>(certificationModel, HttpStatus.OK);
+    }
 }
