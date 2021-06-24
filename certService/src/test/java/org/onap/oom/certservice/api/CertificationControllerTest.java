@@ -32,8 +32,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.onap.oom.certservice.certification.model.CertificateUpdateModel;
 import org.onap.oom.certservice.certification.CertificationModelFactory;
-import org.onap.oom.certservice.certification.exception.Cmpv2ClientAdapterException;
 import org.onap.oom.certservice.certification.exception.Cmpv2ServerNotFoundException;
 import org.onap.oom.certservice.certification.exception.CsrDecryptionException;
 import org.onap.oom.certservice.certification.exception.DecryptionException;
@@ -52,6 +52,8 @@ class CertificationControllerTest {
     private static final String TEST_WRONG_ENCODED_CSR = "wrongEncodedCSR";
     private static final String TEST_WRONG_ENCODED_PK = "wrongEncodedPK";
     private static final String TEST_WRONG_CA_NAME = "wrongTestCa";
+    private static final String TEST_ENCODED_OLD_PK = "encodedOldPK";
+    private static final String TEST_ENCODED_OLD_CERT = "encodedOldCert";
 
     private CertificationController certificationController;
 
@@ -65,7 +67,7 @@ class CertificationControllerTest {
 
     @Test
     void shouldReturnDataAboutCsrBaseOnEncodedParameters()
-            throws DecryptionException, CmpClientException, Cmpv2ClientAdapterException {
+            throws DecryptionException, CmpClientException {
         // Given
         CertificationModel testCertificationModel = new CertificationModel(
                 Arrays.asList("ENTITY_CERT", "INTERMEDIATE_CERT"),
@@ -87,7 +89,7 @@ class CertificationControllerTest {
 
     @Test
     void shouldThrowCsrDecryptionExceptionWhenCreatingCsrModelFails()
-            throws DecryptionException, CmpClientException, Cmpv2ClientAdapterException {
+            throws DecryptionException, CmpClientException {
         // Given
         String expectedMessage = "Incorrect CSR, decryption failed";
         when(certificationModelFactory.createCertificationModel(TEST_WRONG_ENCODED_CSR, TEST_ENCODED_PK, TEST_CA_NAME))
@@ -107,7 +109,7 @@ class CertificationControllerTest {
 
     @Test
     void shouldThrowPemDecryptionExceptionWhenCreatingPemModelFails()
-            throws DecryptionException, CmpClientException, Cmpv2ClientAdapterException {
+            throws DecryptionException, CmpClientException {
         // Given
         String expectedMessage = "Incorrect PEM, decryption failed";
         when(certificationModelFactory.createCertificationModel(TEST_ENCODED_CSR, TEST_WRONG_ENCODED_PK, TEST_CA_NAME))
@@ -127,7 +129,7 @@ class CertificationControllerTest {
 
     @Test
     void shouldThrowCmpv2ServerNotFoundWhenGivenWrongCaName()
-            throws DecryptionException, CmpClientException, Cmpv2ClientAdapterException {
+            throws DecryptionException, CmpClientException {
         // Given
         String expectedMessage = "No server found for given CA name";
         when(certificationModelFactory.createCertificationModel(TEST_ENCODED_CSR, TEST_ENCODED_PK, TEST_WRONG_CA_NAME))
@@ -144,4 +146,31 @@ class CertificationControllerTest {
         // Then
         assertEquals(expectedMessage, actualMessage);
     }
+
+    @Test
+    void shouldUpdateEndpointReturnDataAboutCsrBaseOnEncodedParameters() {
+        // Given
+        CertificationModel testCertificationModel = new CertificationModel(
+                Arrays.asList("ENTITY_CERT", "INTERMEDIATE_CERT"),
+                Arrays.asList("CA_CERT", "EXTRA_CA_CERT")
+        );
+        CertificateUpdateModel certificateUpdateModel = new CertificateUpdateModel.CertificateUpdateDataBuilder()
+                .setEncodedCsr(TEST_ENCODED_CSR)
+                .setEncodedPrivateKey(TEST_ENCODED_PK)
+                .setEncodedOldCert(TEST_ENCODED_OLD_CERT)
+                .setEncodedOldPrivateKey(TEST_ENCODED_OLD_PK)
+                .setCaName(TEST_CA_NAME)
+                .createCertificateUpdateData();
+        when(certificationModelFactory.createCertificationModel(certificateUpdateModel)).thenReturn(testCertificationModel);
+
+        // When
+        ResponseEntity<CertificationModel> responseCertificationModel =
+                certificationController.updateCertificate(TEST_CA_NAME, TEST_ENCODED_CSR,
+                        TEST_ENCODED_PK, TEST_ENCODED_OLD_CERT, TEST_ENCODED_OLD_PK);
+
+        // Then
+        assertEquals(HttpStatus.OK, responseCertificationModel.getStatusCode());
+        assertThat(responseCertificationModel.getBody()).isEqualToComparingFieldByField(testCertificationModel);
+    }
+
 }
