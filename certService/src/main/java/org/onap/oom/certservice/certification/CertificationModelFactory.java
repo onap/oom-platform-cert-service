@@ -23,6 +23,7 @@ package org.onap.oom.certservice.certification;
 import org.onap.oom.certservice.certification.configuration.Cmpv2ServerProvider;
 import org.onap.oom.certservice.certification.configuration.model.Cmpv2Server;
 import org.onap.oom.certservice.certification.exception.DecryptionException;
+import org.onap.oom.certservice.certification.model.CertificateUpdateModel;
 import org.onap.oom.certservice.certification.model.CertificationModel;
 import org.onap.oom.certservice.certification.model.CsrModel;
 import org.onap.oom.certservice.cmpv2client.exceptions.CmpClientException;
@@ -67,4 +68,13 @@ public class CertificationModelFactory {
         return certificationProvider.signCsr(csrModel, cmpv2Server);
     }
 
+    public CertificationModel createCertificationModel(CertificateUpdateModel certificateUpdateModel) {
+        LOGGER.info("CSR: " + certificateUpdateModel.getEncodedCsr() +
+                ", PK: " + certificateUpdateModel.getEncodedPrivateKey() +
+                ", old cert: " + certificateUpdateModel.getEncodedOldCert() +
+                ", old PK: " + certificateUpdateModel.getEncodedOldPrivateKey() +
+                ", CA: " + certificateUpdateModel.getCaName());
+        //TODO: remove PK from logger
+        return null;
+    }
 }
