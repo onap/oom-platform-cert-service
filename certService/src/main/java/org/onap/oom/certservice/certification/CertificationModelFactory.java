@@ -67,4 +67,14 @@ public class CertificationModelFactory {
         return certificationProvider.signCsr(csrModel, cmpv2Server);
     }
 
+    public CertificationModel createCertificationModel(String encodedCsr,
+                                                       String encodedPrivateKey,
+                                                       String encodedOldCert,
+                                                       String encodedOldPrivateKey,
+                                                       String caName) {
+        LOGGER.info("CSR: " + encodedCsr + ", PK: " + encodedPrivateKey + ", old cert: " +
+                encodedOldCert + ", old PK: " + encodedOldPrivateKey + ", CA: " + caName);
+        //TODO: remove PK from logger
+        return null;
+    }
 }

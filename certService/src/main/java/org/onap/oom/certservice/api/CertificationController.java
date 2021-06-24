@@ -86,11 +86,39 @@ public class CertificationController {
             @Parameter(description = "Private key in form of PEM object encoded in Base64 (with header and footer).")
             @RequestHeader("PK") String encodedPrivateKey
     ) throws DecryptionException, CmpClientException {
-        caName = caName.replaceAll("[\n\r\t]", "_");
+        caName = replaceWhiteSpaceChars(caName);
         LOGGER.info("Received certificate signing request for CA named: {}", caName);
         CertificationModel certificationModel = certificationModelFactory
                 .createCertificationModel(encodedCsr, encodedPrivateKey, caName);
         return new ResponseEntity<>(certificationModel, HttpStatus.OK);
     }
 
+    /**
+     * Request for updating certificate by given CA.
+     *
+     * @param caName                the name of Certification Authority that will sign root certificate
+     * @param encodedCsr            Certificate Sign Request encoded in Base64 form
+     * @param encodedPrivateKey     Private key for CSR, needed for PoP, encoded in Base64 form
+     * @param encodedOldCert        Certificate (signed by Certification Authority) that should be renewed
+     * @param encodedOldPrivateKey  Old private key corresponding with old certificate
+     * @return JSON containing trusted certificates and certificate chain
+     */
+    @GetMapping(value = "v1/certificate-update/{caName}", produces = "application/json")
+    public ResponseEntity<CertificationModel> updateCertificate(
+            @PathVariable String caName,
+            @RequestHeader("CSR") String encodedCsr,
+            @RequestHeader("PK") String encodedPrivateKey,
+            @RequestHeader("OLD_CERT") String encodedOldCert,
+            @RequestHeader("OLD_PK") String encodedOldPrivateKey
+    ) {
+        caName = replaceWhiteSpaceChars(caName);
+        LOGGER.info("Received certificate update request for CA named: {}", caName);
+        CertificationModel certificationModel = certificationModelFactory
+                .createCertificationModel(encodedCsr, encodedPrivateKey, encodedOldCert, encodedOldPrivateKey, caName);
+        return new ResponseEntity<>(certificationModel, HttpStatus.OK);
+    }
+
+    private String replaceWhiteSpaceChars(String text) {
+        return text.replaceAll("[\n\r\t]", "_");
+    }
 }
