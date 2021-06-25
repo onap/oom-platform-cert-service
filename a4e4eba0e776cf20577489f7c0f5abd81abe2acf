@@ -22,6 +22,30 @@
       "revId": "a4e4eba0e776cf20577489f7c0f5abd81abe2acf",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efe46ef0_c7bd5170",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/cmpv2client/impl/CmpClientImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2021-06-25T09:23:51Z",
+      "side": 1,
+      "message": "I reverted method to the previous version.\nDuring KUR/CR implementation it may happen that it will be necessary to create IR/KUR/CR enum and it will wrap int value from PKIBody.TYPE_INIT_REQ.",
+      "parentUuid": "8a226d2d_8934e33e",
+      "range": {
+        "startLine": 100,
+        "startChar": 50,
+        "endLine": 100,
+        "endChar": 88
+      },
+      "revId": "a4e4eba0e776cf20577489f7c0f5abd81abe2acf",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
