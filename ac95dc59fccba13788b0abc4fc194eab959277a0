@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6b9c067_b46fa563",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/api/CertificationController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2021-06-25T09:47:51Z",
+      "side": 1,
+      "message": "renewed",
+      "range": {
+        "startLine": 104,
+        "startChar": 99,
+        "endLine": 104,
+        "endChar": 104
+      },
+      "revId": "ac95dc59fccba13788b0abc4fc194eab959277a0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "565eac48_e237d620",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/api/CertificationController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2021-06-25T09:47:51Z",
+      "side": 1,
+      "message": "Consider extracting method",
+      "range": {
+        "startLine": 116,
+        "startChar": 17,
+        "endLine": 116,
+        "endChar": 52
+      },
+      "revId": "ac95dc59fccba13788b0abc4fc194eab959277a0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf0fcd5d_9c794c4c",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/certification/CertificationModelFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2021-06-25T09:47:51Z",
+      "side": 1,
+      "message": "Consider adding TODO here to remove encodedOldPrivateKey from logger later on (when implementing logic here)",
+      "revId": "ac95dc59fccba13788b0abc4fc194eab959277a0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
