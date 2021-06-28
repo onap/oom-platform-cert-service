@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c35145e0_93206ba5",
+        "filename": "Makefile",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-06-28T12:58:12Z",
+      "side": 1,
+      "message": "Why do you use \"tac\" twice, instead of \"cat\" ?",
+      "range": {
+        "startLine": 49,
+        "startChar": 37,
+        "endLine": 49,
+        "endChar": 50
+      },
+      "revId": "e535ee2d4a505ff799ae8bd254f1d198d66c0892",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e30032b6_7ae93fd2",
+        "filename": "README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-06-28T12:58:12Z",
+      "side": 1,
+      "message": "Please add \"jq is required\" or \"requirements section\". \"jq\" it is not standard linux command.",
+      "range": {
+        "startLine": 58,
+        "startChar": 45,
+        "endLine": 58,
+        "endChar": 62
+      },
+      "revId": "e535ee2d4a505ff799ae8bd254f1d198d66c0892",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
