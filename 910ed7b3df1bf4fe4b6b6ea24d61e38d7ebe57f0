@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22107e38_baa93159",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/api/CertificationController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-06-28T08:00:42Z",
+      "side": 1,
+      "message": "We should use as soon as possible (I suggest in next MR) immutable object (builder patter could be used) with request parameters e.g KeyUpdateRequestModel to avoid fall in to the trap of methods with many parameters (over three)",
+      "range": {
+        "startLine": 117,
+        "startChar": 41,
+        "endLine": 117,
+        "endChar": 117
+      },
+      "revId": "910ed7b3df1bf4fe4b6b6ea24d61e38d7ebe57f0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe27142d_f2373652",
+        "filename": "certService/src/test/java/org/onap/oom/certservice/api/CertificationControllerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-06-28T08:00:42Z",
+      "side": 1,
+      "message": "2020-2021",
+      "revId": "910ed7b3df1bf4fe4b6b6ea24d61e38d7ebe57f0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
