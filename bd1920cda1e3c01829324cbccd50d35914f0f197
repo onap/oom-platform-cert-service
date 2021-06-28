@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c31d7705_ec284069",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/cmpv2client/impl/CmpUtil.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-06-28T08:13:07Z",
+      "side": 1,
+      "message": "Consider: extract method.",
+      "range": {
+        "startLine": 151,
+        "startChar": 38,
+        "endLine": 151,
+        "endChar": 106
+      },
+      "revId": "bd1920cda1e3c01829324cbccd50d35914f0f197",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16af5c00_59f53e6d",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/cmpv2client/impl/PasswordBasedProtection.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-06-28T08:13:07Z",
+      "side": 1,
+      "message": "Please remove",
+      "range": {
+        "startLine": 3,
+        "startChar": 3,
+        "endLine": 3,
+        "endChar": 41
+      },
+      "revId": "bd1920cda1e3c01829324cbccd50d35914f0f197",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff902940_29a0c0b4",
+        "filename": "certService/src/test/java/org/onap/oom/certservice/cmpv2client/impl/PasswordBasedProtectionTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-06-28T08:13:07Z",
+      "side": 1,
+      "message": "I think that you should check result of this methods.",
+      "range": {
+        "startLine": 110,
+        "startChar": 8,
+        "endLine": 110,
+        "endChar": 32
+      },
+      "revId": "bd1920cda1e3c01829324cbccd50d35914f0f197",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
