@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b61016f4_3069b091",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/cmpv2client/impl/CmpUtil.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2021-06-28T12:43:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c31d7705_ec284069",
+      "range": {
+        "startLine": 151,
+        "startChar": 38,
+        "endLine": 151,
+        "endChar": 106
+      },
+      "revId": "bd1920cda1e3c01829324cbccd50d35914f0f197",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16af5c00_59f53e6d",
         "filename": "certService/src/main/java/org/onap/oom/certservice/cmpv2client/impl/PasswordBasedProtection.java",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "0578d039_f53be4a9",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/cmpv2client/impl/PasswordBasedProtection.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2021-06-28T12:43:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16af5c00_59f53e6d",
+      "range": {
+        "startLine": 3,
+        "startChar": 3,
+        "endLine": 3,
+        "endChar": 41
+      },
+      "revId": "bd1920cda1e3c01829324cbccd50d35914f0f197",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff902940_29a0c0b4",
         "filename": "certService/src/test/java/org/onap/oom/certservice/cmpv2client/impl/PasswordBasedProtectionTest.java",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "bd1920cda1e3c01829324cbccd50d35914f0f197",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0303342_24a00da7",
+        "filename": "certService/src/test/java/org/onap/oom/certservice/cmpv2client/impl/PasswordBasedProtectionTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2021-06-28T12:43:12Z",
+      "side": 1,
+      "message": "Assertions aren\u0027t necessary here because interation count and salt have been tested in separated test cases. I removed it.",
+      "parentUuid": "ff902940_29a0c0b4",
+      "range": {
+        "startLine": 110,
+        "startChar": 8,
+        "endLine": 110,
+        "endChar": 32
+      },
+      "revId": "bd1920cda1e3c01829324cbccd50d35914f0f197",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
