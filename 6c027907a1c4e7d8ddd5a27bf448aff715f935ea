@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1b932bc1_29b5d142",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/certification/CertificationModelFactory.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2021-06-29T12:23:13Z",
+      "side": 1,
+      "message": "Logging PK and old PK were added only for testing endpoint, but I have removed it and TODO section as well.",
+      "parentUuid": "43d9b810_c5f23a4f",
+      "revId": "6c027907a1c4e7d8ddd5a27bf448aff715f935ea",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22031b7c_2170b0bc",
         "filename": "certService/src/main/java/org/onap/oom/certservice/certification/CertificationModelFactory.java",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "6c027907a1c4e7d8ddd5a27bf448aff715f935ea",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd2b1f73_0cdab743",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/certification/CertificationModelFactory.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2021-06-29T12:23:13Z",
+      "side": 1,
+      "message": "Logic will be implemented in next MRs. Changed to throwing UnsupportedOperationException",
+      "parentUuid": "22031b7c_2170b0bc",
+      "revId": "6c027907a1c4e7d8ddd5a27bf448aff715f935ea",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
