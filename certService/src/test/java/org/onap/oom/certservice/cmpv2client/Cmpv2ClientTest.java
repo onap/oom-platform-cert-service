@@ -16,6 +16,7 @@
 
 package org.onap.oom.certservice.cmpv2client;
 
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
@@ -24,6 +25,7 @@ import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -41,14 +43,24 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.bouncycastle.asn1.ASN1GeneralizedTime;
+import org.bouncycastle.asn1.ASN1Integer;
+import org.bouncycastle.asn1.DERBitString;
+import org.bouncycastle.asn1.cmp.PKIBody;
+import org.bouncycastle.asn1.cmp.PKIHeader;
+import org.bouncycastle.asn1.cmp.PKIHeaderBuilder;
+import org.bouncycastle.asn1.cmp.PKIMessage;
+import org.bouncycastle.asn1.crmf.CertReqMessages;
+import org.bouncycastle.asn1.crmf.CertReqMsg;
+import org.bouncycastle.asn1.crmf.CertRequest;
+import org.bouncycastle.asn1.crmf.CertTemplateBuilder;
+import org.bouncycastle.asn1.crmf.ProofOfPossession;
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.asn1.x500.X500NameBuilder;
 import org.bouncycastle.asn1.x500.style.BCStyle;
@@ -78,8 +90,6 @@ class Cmpv2ClientTest {
     private Date notAfter;
     private X500Name dn;
 
-    @Mock
-    X509Certificate cert;
 
     @Mock
     CloseableHttpClient httpClient;
@@ -235,6 +245,47 @@ class Cmpv2ClientTest {
                 () -> cmpClient.createCertificate(csrModel, server, notBefore, notAfter));
     }
 
+
+    @Test
+    void shouldThrowExceptionWhenResponseNotContainProtectionAlgorithmField()
+        throws IOException, ParseException {
+
+        Date beforeDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").parse("2019/11/11 12:00:00");
+        Date afterDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").parse("2020/11/11 12:00:00");
+        setCsrModelAndServerValues(
+            "password",
+            "senderKID",
+            "http://127.0.0.1/ejbca/publicweb/cmp/cmp",
+            beforeDate,
+            afterDate);
+
+        when(httpClient.execute(any())).thenReturn(httpResponse);
+        when(httpResponse.getEntity()).thenReturn(httpEntity);
+
+        try (
+            BufferedInputStream bis = new BufferedInputStream(new ByteArrayInputStream(
+                preparePKIMessageWithoutProtectionAlgorithm().getEncoded()
+            ))) {
+
+            byte[] ba = IOUtils.toByteArray(bis);
+            doAnswer(
+                invocation -> {
+                    OutputStream os = (ByteArrayOutputStream) invocation.getArguments()[0];
+                    os.write(ba);
+                    return null;
+                })
+                .when(httpEntity)
+                .writeTo(any(OutputStream.class));
+        }
+
+        CmpClientImpl cmpClient = spy(new CmpClientImpl(httpClient));
+
+        assertThatExceptionOfType(CmpClientException.class)
+            .isThrownBy(() -> cmpClient.createCertificate(csrModel, server, notBefore, notAfter))
+            .withMessageContaining("CMP response does not contain Protection Algorithm field");
+
+    }
+
     @Test
     void shouldThrowIllegalArgumentExceptionWhencreateCertificateCalledWithInvalidCsr()
             throws ParseException {
@@ -287,4 +338,33 @@ class Cmpv2ClientTest {
         this.notBefore = notBefore;
         this.notAfter = notAfter;
     }
+
+    private PKIMessage preparePKIMessageWithoutProtectionAlgorithm() {
+
+        CertTemplateBuilder certTemplateBuilder = new CertTemplateBuilder();
+        X500Name issuerDN = getTestIssuerDN();
+
+        certTemplateBuilder.setIssuer(issuerDN);
+        certTemplateBuilder.setSerialNumber(new ASN1Integer(0L));
+
+        CertRequest certRequest = new CertRequest(4, certTemplateBuilder.build(), null);
+        CertReqMsg certReqMsg = new CertReqMsg(certRequest, new ProofOfPossession(), null);
+        CertReqMessages certReqMessages = new CertReqMessages(certReqMsg);
+
+        PKIHeaderBuilder pkiHeaderBuilder = new PKIHeaderBuilder(PKIHeader.CMP_2000, new GeneralName(issuerDN), new GeneralName(issuerDN));
+        pkiHeaderBuilder.setMessageTime(new ASN1GeneralizedTime(new Date()));
+        pkiHeaderBuilder.setProtectionAlg(null);
+
+        PKIBody pkiBody = new PKIBody(PKIBody.TYPE_INIT_REQ, certReqMessages);
+        return new PKIMessage(pkiHeaderBuilder.build(), pkiBody, new DERBitString("test".getBytes()));
+    }
+
+    private X500Name getTestIssuerDN() {
+        return new X500NameBuilder()
+            .addRDN(BCStyle.O, "Test_Organization")
+            .addRDN(BCStyle.UID, "Test_UID")
+            .addRDN(BCStyle.CN, "Test_CA")
+            .build();
+    }
+
 }
