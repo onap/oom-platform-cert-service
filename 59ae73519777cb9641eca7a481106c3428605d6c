@@ -22,6 +22,30 @@
       "revId": "59ae73519777cb9641eca7a481106c3428605d6c",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f6771fd_d0c3c8f7",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/certification/model/CertificateUpdateModel.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2021-06-29T06:54:23Z",
+      "side": 1,
+      "message": "Renamed to \"build()\"",
+      "parentUuid": "1c0852b6_74c02b50",
+      "range": {
+        "startLine": 112,
+        "startChar": 38,
+        "endLine": 112,
+        "endChar": 65
+      },
+      "revId": "59ae73519777cb9641eca7a481106c3428605d6c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
