@@ -29,15 +29,23 @@ import static org.onap.oom.certservice.cmpv2client.impl.CmpResponseValidationHel
 import static org.onap.oom.certservice.cmpv2client.impl.CmpResponseValidationHelper.verifyPasswordBasedProtection;
 import static org.onap.oom.certservice.cmpv2client.impl.CmpResponseValidationHelper.verifySignature;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.security.KeyFactory;
 import java.security.KeyPair;
+import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.cert.CertificateParsingException;
 import java.security.cert.X509Certificate;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Objects;
 import java.util.Optional;
+import org.apache.commons.codec.binary.Base64;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
 import org.bouncycastle.asn1.cmp.CMPCertificate;
@@ -47,8 +55,11 @@ import org.bouncycastle.asn1.cmp.PKIBody;
 import org.bouncycastle.asn1.cmp.PKIHeader;
 import org.bouncycastle.asn1.cmp.PKIMessage;
 import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
+import org.bouncycastle.asn1.x509.Certificate;
+import org.bouncycastle.util.io.pem.PemReader;
 import org.onap.oom.certservice.certification.configuration.model.CaMode;
 import org.onap.oom.certservice.certification.configuration.model.Cmpv2Server;
+import org.onap.oom.certservice.certification.model.CertificateUpdateModel;
 import org.onap.oom.certservice.certification.model.CsrModel;
 import org.onap.oom.certservice.cmpv2client.api.CmpClient;
 import org.onap.oom.certservice.cmpv2client.exceptions.CmpClientException;
@@ -96,6 +107,7 @@ public class CmpClientImpl implements CmpClient {
                         .with(CreateCertRequest::setNotBefore, notBefore)
                         .with(CreateCertRequest::setNotAfter, notAfter)
                         .with(CreateCertRequest::setSenderKid, server.getAuthentication().getRv())
+                        .with(CreateCertRequest::setCmpRequestType, PKIBody.TYPE_INIT_REQ)
                         .with(CreateCertRequest::setProtection, pkiMessageProtection)
                         .build();
 
@@ -108,6 +120,61 @@ public class CmpClientImpl implements CmpClient {
     public Cmpv2CertificationModel createCertificate(CsrModel csrModel, Cmpv2Server server)
             throws CmpClientException {
         return createCertificate(csrModel, server, null, null);
+    }
+
+    @Override
+    public Cmpv2CertificationModel updateCertificate(CsrModel csrModel, Cmpv2Server cmpv2Server,
+        CertificateUpdateModel certificateUpdateModel) throws CmpClientException {
+        validate(csrModel, cmpv2Server, httpClient, null, null);
+        KeyPair keyPair = new KeyPair(csrModel.getPublicKey(), csrModel.getPrivateKey());
+
+        final PkiMessageProtection pkiMessageProtection =
+            new SignatureProtection(getPrivateKey(certificateUpdateModel.getEncodedOldPrivateKey()));
+        final CreateCertRequest certRequest =
+            CmpMessageBuilder.of(CreateCertRequest::new)
+                .with(CreateCertRequest::setIssuerDn, cmpv2Server.getIssuerDN())
+                .with(CreateCertRequest::setSubjectDn, csrModel.getSubjectData())
+                .with(CreateCertRequest::setSansArray, csrModel.getSans())
+                .with(CreateCertRequest::setSubjectKeyPair, keyPair)
+                .with(CreateCertRequest::setCmpRequestType, PKIBody.TYPE_KEY_UPDATE_REQ)
+                .with(CreateCertRequest::setExtraCerts, getCertsFromPem(certificateUpdateModel.getEncodedOldCert()))
+                .with(CreateCertRequest::setProtection, pkiMessageProtection)
+                .build();
+
+        final PKIMessage pkiMessage = certRequest.generateCertReq();
+        Cmpv2HttpClient cmpv2HttpClient = new Cmpv2HttpClient(httpClient);
+        return retrieveCertificates(csrModel, cmpv2Server, pkiMessage, cmpv2HttpClient);
+
+//        return null;
+    }
+    public CMPCertificate[] getCertsFromPem(String encodedCertPem) throws CmpClientException {
+//        Base64.decodeBase64(encodedCertPem);
+        try {
+            Certificate certificate = Certificate.getInstance(new PemReader
+                (new InputStreamReader(
+                    new ByteArrayInputStream(Base64.decodeBase64(encodedCertPem)))).readPemObject().getContent());
+            CMPCertificate cert = new CMPCertificate(certificate);
+            return new CMPCertificate[]{cert};
+        } catch (IOException e) {
+            throw new CmpClientException("Cannot parse old certificate", e);
+        }
+    }
+    private PrivateKey getPrivateKey(String encodedOldPrivateKey) throws CmpClientException {
+
+        try {
+            byte[] decodedOldPrivateKey = Base64.decodeBase64(encodedOldPrivateKey);
+            String key = new String(decodedOldPrivateKey);
+            String privateKeyPEM = key
+                .replace("-----BEGIN PRIVATE KEY-----", "")
+                .replaceAll(System.lineSeparator(), "")
+                .replace("-----END PRIVATE KEY-----", "");
+            byte[] encoded = Base64.decodeBase64(privateKeyPEM);
+            PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(encoded);
+            KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+            return keyFactory.generatePrivate(keySpec);
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+            throw new CmpClientException("Cannot parse old private key ", e);
+        }
     }
 
     private void checkCmpResponse(
