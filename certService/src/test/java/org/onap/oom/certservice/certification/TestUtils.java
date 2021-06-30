@@ -1,6 +1,6 @@
 /*
  * ============LICENSE_START=======================================================
- * PROJECT
+ * Cert Service
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
  * ================================================================================
@@ -56,6 +56,6 @@ public final class TestUtils {
         String encoderCsr = new String(Base64.encode(TEST_CSR.getBytes()));
         String encoderPK = new String(Base64.encode(TEST_PK.getBytes()));
         return csrModelFactory
-                .createCsrModel(new CsrModelFactory.StringBase64(encoderCsr), new CsrModelFactory.StringBase64(encoderPK));
+                .createCsrModel(new StringBase64(encoderCsr), new StringBase64(encoderPK));
     }
 }
