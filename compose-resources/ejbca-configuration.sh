@@ -1,6 +1,16 @@
 #!/bin/bash
 
 configureEjbca() {
+    ejbca.sh ca init \
+      --caname ManagementCA \
+      --dn "O=EJBCA Container Quickstart,CN=ManagementCA,UID=12345" \
+      --tokenType soft \
+      --keyspec 3072 \
+      --keytype RSA \
+      -v 3652 \
+      --policy null \
+      -s SHA256WithRSA \
+      -type "x509"
     ejbca.sh config cmp addalias --alias cmpRA
     ejbca.sh config cmp updatealias --alias cmpRA --key operationmode --value ra
     ejbca.sh ca editca --caname ManagementCA --field cmpRaAuthSecret --value mypassword
