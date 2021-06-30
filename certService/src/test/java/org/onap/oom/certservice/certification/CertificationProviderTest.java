@@ -2,7 +2,7 @@
  * ============LICENSE_START=======================================================
  * OOM Certification Service
  * ================================================================================
- * Copyright (C) 2020 Nokia. All rights reserved.
+ * Copyright (C) 2020-2021 Nokia. All rights reserved.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,13 +20,21 @@
 
 package org.onap.oom.certservice.certification;
 
+import java.io.StringReader;
+import java.util.List;
 import org.apache.commons.io.IOUtils;
+import org.bouncycastle.cert.X509CertificateHolder;
+import org.bouncycastle.cert.jcajce.JcaX509CertificateConverter;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.bouncycastle.openssl.PEMParser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.onap.oom.certservice.certification.configuration.model.Cmpv2Server;
+import org.onap.oom.certservice.certification.model.CertificateUpdateModel;
+import org.onap.oom.certservice.certification.model.CertificateUpdateModel.CertificateUpdateModelBuilder;
 import org.onap.oom.certservice.certification.model.CertificationModel;
 import org.onap.oom.certservice.certification.model.CsrModel;
 import org.onap.oom.certservice.cmpv2client.api.CmpClient;
@@ -46,10 +54,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.onap.oom.certservice.certification.TestData.TEST_CMPv2_KEYSTORE;
+import static org.onap.oom.certservice.certification.TestData.TEST_CMPv2_TRUSTSTORE;
 
 @ExtendWith(MockitoExtension.class)
 class CertificationProviderTest {
 
+    public static final int EXPECTED_SIZE_ONE = 1;
     @Mock
     private CsrModel csrModel;
     @Mock
@@ -63,13 +74,23 @@ class CertificationProviderTest {
 
     private CertificationProvider certificationProvider;
 
+    private static final CertificateUpdateModel TEST_CERTIFICATE_UPDATE_MODEL = new CertificateUpdateModelBuilder()
+        .setEncodedCsr("encodedCSR")
+        .setEncodedPrivateKey("encodedPK")
+        .setEncodedOldCert("encodedOldCert")
+        .setEncodedOldPrivateKey("encodedOldPK")
+        .setCaName("TestCA")
+        .build();
+    private static final String EXPECTED_BEGIN_OF_CERTIFICATE = "-----BEGIN CERTIFICATE-----\n";
+    private static final String EXPECTED_END_OF_CERTIFICATE = "-----END CERTIFICATE-----\n";
+
     @BeforeEach
     public void init() {
         certificationProvider = new CertificationProvider(cmpClient);
     }
 
     @Test
-    void shouldConvertToCertificationModel()
+    void shouldConvertToCertificationModelForSignCsr()
             throws CertificateException, NoSuchProviderException, IOException, CmpClientException {
         // When
         when(
@@ -94,8 +115,9 @@ class CertificationProviderTest {
     }
 
 
+
     @Test
-    void certificationProviderThrowCmpClientWhenCallingClientFails()
+    void certificationProviderThrowCmpClientWhenCallingClientFailsForSignCsr()
             throws CmpClientException {
         // Given
         String expectedErrorMessage = "connecting to CMP client failed";
@@ -114,6 +136,50 @@ class CertificationProviderTest {
         assertThat(exception.getMessage()).isEqualTo(expectedErrorMessage);
     }
 
+    @Test
+    void shouldCorrectConvertToCertificationModelForUpdateRequest()
+        throws IOException, CertificateException, CmpClientException {
+
+        // When
+        when(
+            cmpClient.updateCertificate(any(CsrModel.class), any(Cmpv2Server.class), any(CertificateUpdateModel.class))
+        ).thenReturn(getCMPv2CertificationModel());
+
+        CertificationModel certificationModel = certificationProvider
+            .updateCertificate(csrModel, server, TEST_CERTIFICATE_UPDATE_MODEL);
+        List<String> certificateChain = certificationModel.getCertificateChain();
+        List<String> trustedCertificates = certificationModel.getTrustedCertificates();
+
+        assertThat(certificateChain.size()).isEqualTo(EXPECTED_SIZE_ONE);
+        assertThat(certificateChain.get(0)).startsWith(EXPECTED_BEGIN_OF_CERTIFICATE);
+        assertThat(certificateChain.get(0)).endsWith(EXPECTED_END_OF_CERTIFICATE);
+
+        assertThat(trustedCertificates.size()).isEqualTo(EXPECTED_SIZE_ONE);
+        assertThat(trustedCertificates.get(0)).startsWith(EXPECTED_BEGIN_OF_CERTIFICATE);
+        assertThat(trustedCertificates.get(0)).endsWith(EXPECTED_END_OF_CERTIFICATE);
+    }
+
+    @Test
+    void certificationProviderThrowCmpClientWhenCallingClientFailsForUpdateCertificate()
+        throws CmpClientException {
+        // Given
+        String expectedErrorMessage = "Exception occurred while send request to CMPv2 Server";
+
+        when(
+            cmpClient.updateCertificate(any(CsrModel.class), any(Cmpv2Server.class), any(CertificateUpdateModel.class))
+        ).thenThrow(new CmpClientException(expectedErrorMessage));
+
+        // When
+        Exception exception = assertThrows(
+            CmpClientException.class, () ->
+                certificationProvider.updateCertificate(testCsrModel, testServer, TEST_CERTIFICATE_UPDATE_MODEL)
+        );
+
+        // Then
+        assertThat(exception.getMessage()).isEqualTo(expectedErrorMessage);
+    }
+
+
     private Cmpv2CertificationModel createCorrectClientResponse()
             throws CertificateException, NoSuchProviderException {
         InputStream certificateChain = getClass().getClassLoader().getResourceAsStream("certificateChain.first");
@@ -128,5 +194,21 @@ class CertificationProviderTest {
 
     private String removeLineEndings(String string) {
         return string.replace("\n", "").replace("\r", "");
+    }
+
+    private Cmpv2CertificationModel getCMPv2CertificationModel() throws IOException, CertificateException {
+        List<X509Certificate> certificateChain = getX509CertificateFromPem(TEST_CMPv2_KEYSTORE);
+        List<X509Certificate> trustedCertificates = getX509CertificateFromPem(TEST_CMPv2_TRUSTSTORE);
+        return new Cmpv2CertificationModel(certificateChain, trustedCertificates);
+    }
+
+
+    private List<X509Certificate> getX509CertificateFromPem(String pemString) throws IOException, CertificateException {
+        PEMParser pemParser = new PEMParser(new StringReader(pemString));
+        X509CertificateHolder certHolder = (X509CertificateHolder) pemParser.readObject();
+        X509Certificate x509Certificate = new JcaX509CertificateConverter()
+            .setProvider(new BouncyCastleProvider())
+            .getCertificate(certHolder);
+        return List.of(x509Certificate);
     }
 }
