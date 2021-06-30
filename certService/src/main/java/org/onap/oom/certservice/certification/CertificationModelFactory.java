@@ -68,10 +68,24 @@ public class CertificationModelFactory {
         return certificationProvider.signCsr(csrModel, cmpv2Server);
     }
 
-    public CertificationModel createCertificationModel(CertificateUpdateModel certificateUpdateModel) {
-        LOGGER.info("CSR: " + certificateUpdateModel.getEncodedCsr() +
+    public CertificationModel createCertificationModel(CertificateUpdateModel certificateUpdateModel)
+        throws DecryptionException, CmpClientException {
+        LOGGER.debug("CSR: " + certificateUpdateModel.getEncodedCsr() +
                 ", old cert: " + certificateUpdateModel.getEncodedOldCert() +
                 ", CA: " + certificateUpdateModel.getCaName());
-        throw new UnsupportedOperationException("TODO: it will be delivered in the next MR");
+
+        CsrModel csrModel = csrModelFactory.createCsrModel(
+            new CsrModelFactory.StringBase64(certificateUpdateModel.getEncodedCsr()),
+            new CsrModelFactory.StringBase64(certificateUpdateModel.getEncodedPrivateKey())
+        );
+
+        Cmpv2Server cmpv2Server = cmpv2ServerProvider.getCmpv2Server(certificateUpdateModel.getCaName());
+        LOGGER.debug("Found server for given CA name: \n{}", cmpv2Server);
+        LOGGER.info("Sending update request for certification model for CA named: {}, and certificate update request:\n{}",
+            certificateUpdateModel.getCaName(), csrModel);
+
+        return certificationProvider.updateCertificate(csrModel, cmpv2Server, certificateUpdateModel);
+
+//        throw new UnsupportedOperationException("TODO: it will be delivered in the next MR");
     }
 }

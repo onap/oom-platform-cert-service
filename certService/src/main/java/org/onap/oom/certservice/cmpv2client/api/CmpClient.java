@@ -23,6 +23,7 @@ package org.onap.oom.certservice.cmpv2client.api;
 import java.util.Date;
 
 import org.onap.oom.certservice.certification.configuration.model.Cmpv2Server;
+import org.onap.oom.certservice.certification.model.CertificateUpdateModel;
 import org.onap.oom.certservice.certification.model.CsrModel;
 import org.onap.oom.certservice.cmpv2client.exceptions.CmpClientException;
 import org.onap.oom.certservice.cmpv2client.model.Cmpv2CertificationModel;
@@ -71,4 +72,7 @@ public interface CmpClient {
       CsrModel csrModel,
       Cmpv2Server server)
       throws CmpClientException;
+
+  Cmpv2CertificationModel updateCertificate(CsrModel csrModel, Cmpv2Server cmpv2Server,
+      CertificateUpdateModel certificateUpdateModel) throws CmpClientException;
 }
