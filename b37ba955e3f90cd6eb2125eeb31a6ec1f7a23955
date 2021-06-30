@@ -22,6 +22,30 @@
       "revId": "b37ba955e3f90cd6eb2125eeb31a6ec1f7a23955",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90e6b7a4_3bf9d0b7",
+        "filename": "compose-resources/cmpServers.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2021-06-30T15:37:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aab01864_94c3f3d8",
+      "range": {
+        "startLine": 16,
+        "startChar": 19,
+        "endLine": 16,
+        "endChar": 44
+      },
+      "revId": "b37ba955e3f90cd6eb2125eeb31a6ec1f7a23955",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
