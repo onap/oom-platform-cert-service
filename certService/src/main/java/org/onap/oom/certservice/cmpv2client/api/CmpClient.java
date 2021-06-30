@@ -1,6 +1,7 @@
 /*-
  * ============LICENSE_START=======================================================
  *  Copyright (C) 2020 Nordix Foundation.
+ *  Copyright (C) 2021 Nokia.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +24,7 @@ package org.onap.oom.certservice.cmpv2client.api;
 import java.util.Date;
 
 import org.onap.oom.certservice.certification.configuration.model.Cmpv2Server;
+import org.onap.oom.certservice.certification.model.CertificateUpdateModel;
 import org.onap.oom.certservice.certification.model.CsrModel;
 import org.onap.oom.certservice.cmpv2client.exceptions.CmpClientException;
 import org.onap.oom.certservice.cmpv2client.model.Cmpv2CertificationModel;
@@ -71,4 +73,19 @@ public interface CmpClient {
       CsrModel csrModel,
       Cmpv2Server server)
       throws CmpClientException;
+
+  /**
+   * Requests for a External Root CA Certificate to be updated for the passed keyPair wrapped
+   * in a CSRMeta with common details. Authentication using End Entity Certificate. Old certificate and old privateKey
+   * are wrapped in CertificateUpdateModel.class
+   * Exception thrown if verification fails or issue encountered in fetching certificate from CA.
+   *
+   * @param csrModel  Certificate Signing Request Model. Must not be {@code null}.
+   * @param cmpv2Server    CMPv2 server. Must not be {@code null}.
+   * @param certificateUpdateModel    Model with key update parameters {@code null}.
+   * @return model for certification containing certificate chain and trusted certificates
+   * @throws CmpClientException if client error occurs.
+   */
+  Cmpv2CertificationModel updateCertificate(CsrModel csrModel, Cmpv2Server cmpv2Server,
+      CertificateUpdateModel certificateUpdateModel) throws CmpClientException;
 }

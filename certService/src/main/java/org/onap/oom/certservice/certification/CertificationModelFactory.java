@@ -76,7 +76,7 @@ public class CertificationModelFactory {
     }
 
     public CertificationModel createCertificationModel(CertificateUpdateModel certificateUpdateModel)
-        throws DecryptionException, CertificateDecryptionException {
+        throws DecryptionException, CmpClientException, CertificateDecryptionException {
         LOGGER.info("CSR: " + certificateUpdateModel.getEncodedCsr() +
                 ", old cert: " + certificateUpdateModel.getEncodedOldCert() +
                 ", CA: " + certificateUpdateModel.getCaName());
@@ -87,10 +87,15 @@ public class CertificationModelFactory {
         final X509CertificateModel certificateModel = x509CertificateModelFactory.createCertificateModel(
             new StringBase64(certificateUpdateModel.getEncodedOldCert()));
 
+        Cmpv2Server cmpv2Server = cmpv2ServerProvider.getCmpv2Server(certificateUpdateModel.getCaName());
+        LOGGER.debug("Found server for given CA name: \n{}", cmpv2Server);
+        LOGGER.info("Sending update request for certification model for CA named: {}, and certificate update request:\n{}",
+            certificateUpdateModel.getCaName(), csrModel);
+
         if (updateRequestTypeDetector.isKur(csrModel.getCertificateData(), certificateModel.getCertificateData())) {
             LOGGER.info(
                 "Certificate Signing Request and Old Certificate have the same parameters. Preparing Key Update Request");
-            throw new UnsupportedOperationException("TODO: implement KUR in separate MR");
+            return certificationProvider.updateCertificate(csrModel, cmpv2Server, certificateUpdateModel);
         } else {
             LOGGER.info(
                 "Certificate Signing Request and Old Certificate have different parameters. Preparing Certification Request");
