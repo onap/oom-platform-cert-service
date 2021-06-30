@@ -2,7 +2,7 @@
  * ============LICENSE_START=======================================================
  * Cert Service
  * ================================================================================
- * Copyright (C) 2020 Nokia. All rights reserved.
+ * Copyright (C) 2020-2021 Nokia. All rights reserved.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@ import org.bouncycastle.openssl.jcajce.JcaMiscPEMGenerator;
 import org.bouncycastle.util.io.pem.PemObjectGenerator;
 import org.bouncycastle.util.io.pem.PemWriter;
 import org.onap.oom.certservice.certification.configuration.model.Cmpv2Server;
+import org.onap.oom.certservice.certification.model.CertificateUpdateModel;
 import org.onap.oom.certservice.certification.model.CertificationModel;
 import org.onap.oom.certservice.certification.model.CsrModel;
 import org.onap.oom.certservice.cmpv2client.api.CmpClient;
@@ -59,6 +60,13 @@ public class CertificationProvider {
                 convertFromX509CertificateListToPemList(certificates.getTrustedCertificates()));
     }
 
+    public CertificationModel updateCertificate(CsrModel csrModel, Cmpv2Server cmpv2Server,
+        CertificateUpdateModel certificateUpdateModel) throws CmpClientException {
+        Cmpv2CertificationModel certificates = cmpClient.updateCertificate(csrModel, cmpv2Server, certificateUpdateModel);
+        return new CertificationModel(convertFromX509CertificateListToPemList(certificates.getCertificateChain()),
+            convertFromX509CertificateListToPemList(certificates.getTrustedCertificates()));
+    }
+
     private static List<String> convertFromX509CertificateListToPemList(List<X509Certificate> certificates) {
         return certificates.stream().map(CertificationProvider::convertFromX509CertificateToPem).filter(cert -> !cert.isEmpty())
                 .collect(Collectors.toList());
@@ -74,5 +82,4 @@ public class CertificationProvider {
         }
         return sw.toString();
     }
-
 }

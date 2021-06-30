@@ -17,6 +17,7 @@
 
 package org.onap.oom.certservice.cmpv2client;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
@@ -44,6 +45,8 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Base64;
+import java.util.Base64.Decoder;
 import java.util.Date;
 
 import org.apache.commons.io.IOUtils;
@@ -103,6 +106,8 @@ class Cmpv2ClientTest {
 
     private static KeyPair keyPair;
 
+    private final static Decoder BASE64_DECODER = Base64.getDecoder();
+
     @BeforeEach
     void setUp()
             throws NoSuchProviderException, NoSuchAlgorithmException, IOException,
@@ -134,6 +139,60 @@ class Cmpv2ClientTest {
 
         return new KeyPair(publicKey, privateKey);
     }
+
+    @Test
+    void shouldReturnCorrectCmpCertificateForCorrectKeyUpdateResponse() throws CmpClientException, IOException {
+
+        // given
+        setCsrModelAndServerTestDefaultValues();
+        when(httpClient.execute(any())).thenReturn(httpResponse);
+        when(httpResponse.getEntity()).thenReturn(httpEntity);
+
+        doAnswer(
+            invocation -> {
+                OutputStream os = invocation.getArgument(0);
+                os.write(BASE64_DECODER.decode(ClientTestData.KUR_CORRECT_SERVER_RESPONSE_ENCODED.getBytes()));
+                return null;
+            })
+            .when(httpEntity)
+            .writeTo(any(OutputStream.class));
+        CmpClientImpl cmpClient = new CmpClientImpl(httpClient);
+
+        // when
+        Cmpv2CertificationModel cmpClientResult =
+            cmpClient.updateCertificate(csrModel, server, ClientTestData.TEST_CERTIFICATE_UPDATE_MODEL);
+
+        // then
+        assertNotNull(cmpClientResult);
+        assertThat(cmpClientResult.getCertificateChain()).isNotEmpty();
+        assertThat(cmpClientResult.getCertificateChain()).isNotEmpty();
+
+    }
+
+    @Test
+    void shouldThrowCmpClientExceptionWhenCannotParseOldPrivateKey() {
+        setCsrModelAndServerTestDefaultValues();
+
+        CmpClientImpl cmpClient = new CmpClientImpl(httpClient);
+        assertThatExceptionOfType(CmpClientException.class)
+            .isThrownBy(() -> cmpClient.updateCertificate(csrModel, server, ClientTestData.TEST_CERTIFICATE_UPDATE_MODEL_WITH_WRONG_PRIVATE_KEY))
+            .withMessageContaining("Cannot parse old private key");
+
+    }
+
+
+    @Test
+    void shouldThrowCMPClientExceptionWhenCannotParseOldCertificate() {
+        setCsrModelAndServerTestDefaultValues();
+
+        CmpClientImpl cmpClient = new CmpClientImpl(httpClient);
+
+        // When // Then
+        assertThatExceptionOfType(CmpClientException.class)
+            .isThrownBy(() -> cmpClient.updateCertificate(csrModel, server, ClientTestData.TEST_CERTIFICATE_UPDATE_MODEL_WITH_WRONG_OLD_CERT))
+            .withMessageContaining("Cannot parse old certificate");
+    }
+
 
     @Test
     void shouldReturnValidPkiMessageWhenCreateCertificateRequestMessageMethodCalledWithValidCsr()
@@ -338,6 +397,18 @@ class Cmpv2ClientTest {
         server.setIssuerDN(dn);
         this.notBefore = notBefore;
         this.notAfter = notAfter;
+    }
+
+    private void setCsrModelAndServerTestDefaultValues() {
+        csrModel = new CsrModel(null, dn, keyPair.getPrivate(), keyPair.getPublic(), new GeneralName[0]);
+
+        Authentication authentication = new Authentication();
+        authentication.setIak("mypassword");
+        authentication.setRv("senderKID");
+        server = new Cmpv2Server();
+        server.setAuthentication(authentication);
+        server.setUrl("http://127.0.0.1/ejbca/publicweb/cmp/cmp");
+        server.setIssuerDN(dn);
     }
 
     private PKIMessage preparePKIMessageWithoutProtectionAlgorithm() {

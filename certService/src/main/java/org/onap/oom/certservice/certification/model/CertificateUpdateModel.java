@@ -20,7 +20,16 @@
 
 package org.onap.oom.certservice.certification.model;
 
+import java.security.KeyFactory;
+import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.Objects;
+import org.bouncycastle.util.io.pem.PemObject;
+import org.onap.oom.certservice.certification.PemObjectFactory;
+import org.onap.oom.certservice.certification.StringBase64;
+import org.onap.oom.certservice.certification.exception.KeyDecryptionException;
 
 public final class CertificateUpdateModel {
 
@@ -29,6 +38,7 @@ public final class CertificateUpdateModel {
     private final String encodedOldCert;
     private final String encodedOldPrivateKey;
     private final String caName;
+    private static final PemObjectFactory PEM_OBJECT_FACTORY = new PemObjectFactory();
 
     private CertificateUpdateModel(String encodedCsr, String encodedPrivateKey, String encodedOldCert,
                                    String encodedOldPrivateKey, String caName) {
@@ -57,6 +67,20 @@ public final class CertificateUpdateModel {
 
     public String getCaName() {
         return caName;
+    }
+
+    public PrivateKey getOldPrivateKeyObject()
+        throws KeyDecryptionException, InvalidKeySpecException, NoSuchAlgorithmException {
+
+        StringBase64 stringBase64 = new StringBase64(encodedOldPrivateKey);
+        PemObject pemObject = stringBase64.asString()
+            .flatMap(PEM_OBJECT_FACTORY::createPemObject)
+            .orElseThrow(
+                () -> new KeyDecryptionException("Incorrect Key, decryption failed")
+            );
+        PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(pemObject.getContent());
+        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+        return keyFactory.generatePrivate(keySpec);
     }
 
     @Override
