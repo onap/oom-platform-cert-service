@@ -1,6 +1,6 @@
 /*
  * ============LICENSE_START=======================================================
- * PROJECT
+ * Cert Service
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
  * ================================================================================
@@ -23,7 +23,6 @@ package org.onap.oom.certservice.certification;
 import org.bouncycastle.util.encoders.Base64;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.onap.oom.certservice.certification.CsrModelFactory.StringBase64;
 import org.onap.oom.certservice.certification.exception.CsrDecryptionException;
 import org.onap.oom.certservice.certification.exception.DecryptionException;
 import org.onap.oom.certservice.certification.exception.KeyDecryptionException;
@@ -58,6 +57,7 @@ class CsrModelFactoryTest {
 
         assertTrue(decryptedCsr.toString()
             .contains(TestData.EXPECTED_CERT_SUBJECT));
+        System.out.println(decryptedCsr.toString());
         assertTrue(decryptedCsr.toString()
             .contains(TestData.EXPECTED_CERT_SANS));
     }

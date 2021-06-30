@@ -2,7 +2,7 @@
  * ============LICENSE_START=======================================================
  * PROJECT
  * ================================================================================
- * Copyright (C) 2020 Nokia. All rights reserved.
+ * Copyright (C) 2020-2021 Nokia. All rights reserved.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ public final class TestData {
 
     public static final String EXPECTED_CERT_SUBJECT = "C=US,ST=California,L=San-Francisco,O=Linux-Foundation,OU=ONAP,CN=onap.org";
     public static final String EXPECTED_CERT_SANS =
-        "SANs: [localhost, onap.org, test.onap.org, onap@onap.org, " + LOCALHOST_IP_IN_HEX + ", onap://cluster.local/]";
+        "SANs: [onap@onap.org, localhost, onap.org, test.onap.org, onap://cluster.local/, " + LOCALHOST_IP_IN_HEX +"]";
 
 
     public static final String TEST_CSR = "-----BEGIN CERTIFICATE REQUEST-----\n"
