@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aab01864_94c3f3d8",
+        "filename": "compose-resources/cmpServers.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-06-30T15:31:57Z",
+      "side": 1,
+      "message": "\u0027O\u003dEJBCA Container Quickstart\u0027 is also required (for KUR request)",
+      "range": {
+        "startLine": 16,
+        "startChar": 19,
+        "endLine": 16,
+        "endChar": 44
+      },
+      "revId": "b37ba955e3f90cd6eb2125eeb31a6ec1f7a23955",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
