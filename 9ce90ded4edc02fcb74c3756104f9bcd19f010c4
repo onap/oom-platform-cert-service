@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27ab2b0e_8878be1e",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/cmpv2client/impl/CmpClientImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2021-06-30T06:58:20Z",
+      "side": 1,
+      "message": "Result may be null.\nConsider change to:\nPASSWORD_BASED_MAC.equals(protectionAlgo.getAlgorithm())\nor\nObjects.equals(PASSWORD_BASED_MAC, protectionAlgo.getAlgorithm())",
+      "range": {
+        "startLine": 128,
+        "startChar": 15,
+        "endLine": 128,
+        "endChar": 44
+      },
+      "revId": "9ce90ded4edc02fcb74c3756104f9bcd19f010c4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
