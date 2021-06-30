@@ -159,7 +159,7 @@ class CertificationControllerTest {
 
     @Test
     void shouldUpdateEndpointReturnDataAboutCsrBaseOnEncodedParameters()
-        throws DecryptionException, CertificateDecryptionException {
+        throws DecryptionException, CmpClientException, CertificateDecryptionException {
         // Given
         CertificationModel testCertificationModel = new CertificationModel(
                 Arrays.asList("ENTITY_CERT", "INTERMEDIATE_CERT"),
