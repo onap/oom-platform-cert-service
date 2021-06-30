@@ -10,6 +10,7 @@ services:
       - "443:8443"
     environment:
       - INITIAL_ADMIN=;PublicAccessAuthenticationToken:TRANSPORT_ANY;
+      - NO_CREATE_CA=true
     volumes:
       - ./compose-resources/ejbca-configuration.sh:/opt/primekey/scripts/ejbca-configuration.sh
       - ./compose-resources/certprofile_CUSTOM_ENDUSER-1834889499.xml:/opt/primekey/custom_profiles/certprofile_CUSTOM_ENDUSER-1834889499.xml
