@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "362f6fd8_2893f659",
+        "filename": "certService/src/test/java/org/onap/oom/certservice/cmpv2client/Cmpv2ClientTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-06-30T14:33:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68ec469e_959c87b6",
+      "revId": "037d85e3f0a8b959c1780fda5df12693d3055771",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66fcca0e_f15475d0",
         "filename": "certService/src/test/java/org/onap/oom/certservice/cmpv2client/Cmpv2ClientTest.java",
         "patchSetId": 3
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "714c7ede_78f81762",
+        "filename": "certService/src/test/java/org/onap/oom/certservice/cmpv2client/Cmpv2ClientTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-06-30T14:33:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66fcca0e_f15475d0",
+      "range": {
+        "startLine": 273,
+        "startChar": 38,
+        "endLine": 273,
+        "endChar": 90
+      },
+      "revId": "037d85e3f0a8b959c1780fda5df12693d3055771",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "806606f4_a4a380ec",
         "filename": "certService/src/test/java/org/onap/oom/certservice/cmpv2client/Cmpv2ClientTest.java",
         "patchSetId": 3
@@ -62,6 +104,30 @@
       "revId": "037d85e3f0a8b959c1780fda5df12693d3055771",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08175ed3_f2443b1f",
+        "filename": "certService/src/test/java/org/onap/oom/certservice/cmpv2client/Cmpv2ClientTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-06-30T14:33:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "806606f4_a4a380ec",
+      "range": {
+        "startLine": 281,
+        "startChar": 34,
+        "endLine": 281,
+        "endChar": 38
+      },
+      "revId": "037d85e3f0a8b959c1780fda5df12693d3055771",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
