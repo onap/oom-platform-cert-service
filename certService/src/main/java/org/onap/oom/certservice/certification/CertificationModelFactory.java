@@ -1,6 +1,6 @@
 /*
  * ============LICENSE_START=======================================================
- * PROJECT
+ * Cert Service
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
  * ================================================================================
@@ -22,10 +22,13 @@ package org.onap.oom.certservice.certification;
 
 import org.onap.oom.certservice.certification.configuration.Cmpv2ServerProvider;
 import org.onap.oom.certservice.certification.configuration.model.Cmpv2Server;
+import org.onap.oom.certservice.certification.exception.CertificateDecryptionException;
 import org.onap.oom.certservice.certification.exception.DecryptionException;
+import org.onap.oom.certservice.certification.exception.StringToCertificateConversionException;
 import org.onap.oom.certservice.certification.model.CertificateUpdateModel;
 import org.onap.oom.certservice.certification.model.CertificationModel;
 import org.onap.oom.certservice.certification.model.CsrModel;
+import org.onap.oom.certservice.certification.model.X509CertificateModel;
 import org.onap.oom.certservice.cmpv2client.exceptions.CmpClientException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,23 +43,28 @@ public class CertificationModelFactory {
     private final CsrModelFactory csrModelFactory;
     private final Cmpv2ServerProvider cmpv2ServerProvider;
     private final CertificationProvider certificationProvider;
+    private final X509CertificateModelFactory x509CertificateModelFactory;
+    private final CertificateDataComparator certificateDataComparator;
 
     @Autowired
     CertificationModelFactory(
             CsrModelFactory csrModelFactory,
             Cmpv2ServerProvider cmpv2ServerProvider,
-            CertificationProvider certificationProvider
-    ) {
+            CertificationProvider certificationProvider,
+            X509CertificateModelFactory x509CertificateModelFactory,
+            CertificateDataComparator certificateDataComparator) {
         this.cmpv2ServerProvider = cmpv2ServerProvider;
         this.csrModelFactory = csrModelFactory;
         this.certificationProvider = certificationProvider;
+        this.x509CertificateModelFactory = x509CertificateModelFactory;
+        this.certificateDataComparator = certificateDataComparator;
     }
 
     public CertificationModel createCertificationModel(String encodedCsr, String encodedPrivateKey, String caName)
             throws DecryptionException, CmpClientException {
         CsrModel csrModel = csrModelFactory.createCsrModel(
-                new CsrModelFactory.StringBase64(encodedCsr),
-                new CsrModelFactory.StringBase64(encodedPrivateKey)
+                new StringBase64(encodedCsr),
+                new StringBase64(encodedPrivateKey)
         );
         LOGGER.debug("Received CSR meta data: \n{}", csrModel);
 
@@ -68,10 +76,30 @@ public class CertificationModelFactory {
         return certificationProvider.signCsr(csrModel, cmpv2Server);
     }
 
-    public CertificationModel createCertificationModel(CertificateUpdateModel certificateUpdateModel) {
+    public CertificationModel createCertificationModel(CertificateUpdateModel certificateUpdateModel)
+        throws DecryptionException, CertificateDecryptionException {
         LOGGER.info("CSR: " + certificateUpdateModel.getEncodedCsr() +
                 ", old cert: " + certificateUpdateModel.getEncodedOldCert() +
                 ", CA: " + certificateUpdateModel.getCaName());
-        throw new UnsupportedOperationException("TODO: it will be delivered in the next MR");
+        final CsrModel csrModel = csrModelFactory.createCsrModel(
+            new StringBase64(certificateUpdateModel.getEncodedCsr()),
+            new StringBase64(certificateUpdateModel.getEncodedPrivateKey())
+        );
+        final X509CertificateModel certificateModel = x509CertificateModelFactory.createCertificateModel(
+            new StringBase64(certificateUpdateModel.getEncodedOldCert()));
+
+        if (shouldSendKur(csrModel, certificateModel)) {
+            LOGGER.info(
+                "Certificate Signing Request and Old Certificate have the same parameters. Preparing Key Update Request");
+            throw new UnsupportedOperationException("TODO: implement KUR in separate MR");
+        } else {
+            LOGGER.info(
+                "Certificate Signing Request and Old Certificate have different parameters. Preparing Certification Request");
+            throw new UnsupportedOperationException("TODO: implement CR in separate MR");
+        }
+    }
+
+    private boolean shouldSendKur(CsrModel csrModel, X509CertificateModel certificateModel) {
+        return certificateDataComparator.compare(csrModel, certificateModel);
     }
 }
