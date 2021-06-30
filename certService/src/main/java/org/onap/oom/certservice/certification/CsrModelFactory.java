@@ -1,8 +1,8 @@
 /*
  * ============LICENSE_START=======================================================
- * PROJECT
+ * Cert Service
  * ================================================================================
- * Copyright (C) 2020 Nokia. All rights reserved.
+ * Copyright (C) 2020-2021 Nokia. All rights reserved.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,18 +20,12 @@
 
 package org.onap.oom.certservice.certification;
 
-import java.util.Base64;
-import java.util.Objects;
-import java.util.Optional;
-
 import org.bouncycastle.pkcs.PKCS10CertificationRequest;
 import org.bouncycastle.util.io.pem.PemObject;
 import org.onap.oom.certservice.certification.exception.CsrDecryptionException;
 import org.onap.oom.certservice.certification.exception.DecryptionException;
 import org.onap.oom.certservice.certification.exception.KeyDecryptionException;
 import org.onap.oom.certservice.certification.model.CsrModel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 
@@ -69,43 +63,6 @@ public class CsrModelFactory {
                 .orElseThrow(
                         () -> new CsrDecryptionException("Incorrect CSR, decryption failed")
                 );
-    }
-
-    public static class StringBase64 {
-        private final String value;
-        private final Base64.Decoder decoder = Base64.getDecoder();
-        private static final Logger LOGGER = LoggerFactory.getLogger(StringBase64.class);
-
-        public StringBase64(String value) {
-            this.value = value;
-        }
-
-        public Optional<String> asString() {
-            try {
-                String decodedString = new String(decoder.decode(value));
-                return Optional.of(decodedString);
-            } catch (RuntimeException e) {
-                LOGGER.error("Exception occurred during decoding:", e);
-                return Optional.empty();
-            }
-        }
-
-        @Override
-        public boolean equals(Object otherObject) {
-            if (this == otherObject) {
-                return true;
-            }
-            if (otherObject == null || getClass() != otherObject.getClass()) {
-                return false;
-            }
-            StringBase64 that = (StringBase64) otherObject;
-            return Objects.equals(value, that.value);
-        }
-
-        @Override
-        public int hashCode() {
-            return value.hashCode();
-        }
     }
 
 }

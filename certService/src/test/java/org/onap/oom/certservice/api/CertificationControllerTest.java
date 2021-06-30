@@ -1,6 +1,6 @@
 /*
  * ============LICENSE_START=======================================================
- * PROJECT
+ * Cert Service
  * ================================================================================
  * Copyright (C) 2020-2021 Nokia. All rights reserved.
  * ================================================================================
@@ -32,12 +32,15 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.onap.oom.certservice.certification.exception.CertificateDecryptionException;
+import org.onap.oom.certservice.certification.exception.StringToCertificateConversionException;
 import org.onap.oom.certservice.certification.model.CertificateUpdateModel;
 import org.onap.oom.certservice.certification.CertificationModelFactory;
 import org.onap.oom.certservice.certification.exception.Cmpv2ServerNotFoundException;
 import org.onap.oom.certservice.certification.exception.CsrDecryptionException;
 import org.onap.oom.certservice.certification.exception.DecryptionException;
 import org.onap.oom.certservice.certification.exception.KeyDecryptionException;
+import org.onap.oom.certservice.certification.model.CertificateUpdateModel.CertificateUpdateModelBuilder;
 import org.onap.oom.certservice.certification.model.CertificationModel;
 import org.onap.oom.certservice.cmpv2client.exceptions.CmpClientException;
 import org.springframework.http.HttpStatus;
@@ -54,6 +57,13 @@ class CertificationControllerTest {
     private static final String TEST_WRONG_CA_NAME = "wrongTestCa";
     private static final String TEST_ENCODED_OLD_PK = "encodedOldPK";
     private static final String TEST_ENCODED_OLD_CERT = "encodedOldCert";
+    private static final CertificateUpdateModel TEST_CERTIFICATE_UPDATE_MODEL = new CertificateUpdateModelBuilder()
+        .setEncodedCsr(TEST_ENCODED_CSR)
+        .setEncodedPrivateKey(TEST_ENCODED_PK)
+        .setEncodedOldCert(TEST_ENCODED_OLD_CERT)
+        .setEncodedOldPrivateKey(TEST_ENCODED_OLD_PK)
+        .setCaName(TEST_CA_NAME)
+        .build();
 
     private CertificationController certificationController;
 
@@ -148,20 +158,14 @@ class CertificationControllerTest {
     }
 
     @Test
-    void shouldUpdateEndpointReturnDataAboutCsrBaseOnEncodedParameters() {
+    void shouldUpdateEndpointReturnDataAboutCsrBaseOnEncodedParameters()
+        throws DecryptionException, CertificateDecryptionException, StringToCertificateConversionException {
         // Given
         CertificationModel testCertificationModel = new CertificationModel(
                 Arrays.asList("ENTITY_CERT", "INTERMEDIATE_CERT"),
                 Arrays.asList("CA_CERT", "EXTRA_CA_CERT")
         );
-        CertificateUpdateModel certificateUpdateModel = new CertificateUpdateModel.CertificateUpdateModelBuilder()
-                .setEncodedCsr(TEST_ENCODED_CSR)
-                .setEncodedPrivateKey(TEST_ENCODED_PK)
-                .setEncodedOldCert(TEST_ENCODED_OLD_CERT)
-                .setEncodedOldPrivateKey(TEST_ENCODED_OLD_PK)
-                .setCaName(TEST_CA_NAME)
-                .build();
-        when(certificationModelFactory.createCertificationModel(certificateUpdateModel)).thenReturn(testCertificationModel);
+        when(certificationModelFactory.createCertificationModel(TEST_CERTIFICATE_UPDATE_MODEL)).thenReturn(testCertificationModel);
 
         // When
         ResponseEntity<CertificationModel> responseCertificationModel =
@@ -171,6 +175,27 @@ class CertificationControllerTest {
         // Then
         assertEquals(HttpStatus.OK, responseCertificationModel.getStatusCode());
         assertThat(responseCertificationModel.getBody()).isEqualToComparingFieldByField(testCertificationModel);
+    }
+
+    @Test
+    void shouldThrowCertificateDecryptionExceptionWhenCreatingPemModelFails()
+        throws DecryptionException, CertificateDecryptionException, StringToCertificateConversionException {
+        // Given
+        String expectedMessage = "Incorrect certificate, decryption failed";
+        when(certificationModelFactory.createCertificationModel(TEST_CERTIFICATE_UPDATE_MODEL))
+            .thenThrow(new CertificateDecryptionException(expectedMessage));
+
+        // When
+        Exception exception = assertThrows(
+            CertificateDecryptionException.class, () ->
+                certificationController.updateCertificate(TEST_CA_NAME, TEST_ENCODED_CSR,
+                    TEST_ENCODED_PK, TEST_ENCODED_OLD_CERT, TEST_ENCODED_OLD_PK)
+        );
+
+        String actualMessage = exception.getMessage();
+
+        // Then
+        assertEquals(expectedMessage, actualMessage);
     }
 
 }
