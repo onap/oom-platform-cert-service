@@ -33,7 +33,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.onap.oom.certservice.certification.exception.CertificateDecryptionException;
-import org.onap.oom.certservice.certification.exception.StringToCertificateConversionException;
 import org.onap.oom.certservice.certification.model.CertificateUpdateModel;
 import org.onap.oom.certservice.certification.CertificationModelFactory;
 import org.onap.oom.certservice.certification.exception.Cmpv2ServerNotFoundException;
@@ -159,7 +158,7 @@ class CertificationControllerTest {
 
     @Test
     void shouldUpdateEndpointReturnDataAboutCsrBaseOnEncodedParameters()
-        throws DecryptionException, CertificateDecryptionException {
+        throws DecryptionException, CmpClientException, CertificateDecryptionException {
         // Given
         CertificationModel testCertificationModel = new CertificationModel(
                 Arrays.asList("ENTITY_CERT", "INTERMEDIATE_CERT"),
@@ -179,7 +178,7 @@ class CertificationControllerTest {
 
     @Test
     void shouldThrowCertificateDecryptionExceptionWhenCreatingPemModelFails()
-        throws DecryptionException, CertificateDecryptionException {
+        throws DecryptionException, CertificateDecryptionException, CmpClientException {
         // Given
         String expectedMessage = "Incorrect certificate, decryption failed";
         when(certificationModelFactory.createCertificationModel(TEST_CERTIFICATE_UPDATE_MODEL))
