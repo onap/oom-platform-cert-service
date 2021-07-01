@@ -39,6 +39,7 @@ import java.util.Date;
 import java.util.Objects;
 import java.util.Optional;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.bouncycastle.asn1.ASN1ObjectIdentifier;
 import org.bouncycastle.asn1.cmp.CMPCertificate;
 import org.bouncycastle.asn1.cmp.CertRepMessage;
 import org.bouncycastle.asn1.cmp.CertResponse;
@@ -67,6 +68,7 @@ public class CmpClientImpl implements CmpClient {
 
     private static final String DEFAULT_CA_NAME = "Certification Authority";
     private static final String DEFAULT_PROFILE = CaMode.RA.getProfile();
+    private static final ASN1ObjectIdentifier PASSWORD_BASED_MAC = new ASN1ObjectIdentifier("1.2.840.113533.7.66.13");
 
     public CmpClientImpl(CloseableHttpClient httpClient) {
         this.httpClient = httpClient;
@@ -114,7 +116,18 @@ public class CmpClientImpl implements CmpClient {
         final PKIHeader header = respPkiMessage.getHeader();
         final AlgorithmIdentifier protectionAlgo = header.getProtectionAlg();
         verifySignatureWithPublicKey(respPkiMessage, publicKey);
-        verifyProtectionWithProtectionAlgo(respPkiMessage, initAuthPassword, header, protectionAlgo);
+        if (isPasswordBasedMacAlgorithm(protectionAlgo)) {
+            LOG.info("CMP response is protected by Password Base Mac Algorithm. Attempt to verify protection");
+            verifyPasswordBasedMacProtection(respPkiMessage, initAuthPassword, header, protectionAlgo);
+        }
+    }
+
+    private boolean isPasswordBasedMacAlgorithm(AlgorithmIdentifier protectionAlgo) throws CmpClientException {
+        if (Objects.isNull(protectionAlgo)) {
+            LOG.error("CMP response does not contain Protection Algorithm field");
+            throw new CmpClientException("CMP response does not contain Protection Algorithm field");
+        }
+        return PASSWORD_BASED_MAC.equals(protectionAlgo.getAlgorithm());
     }
 
     private void verifySignatureWithPublicKey(PKIMessage respPkiMessage, PublicKey publicKey)
@@ -129,22 +142,12 @@ public class CmpClientImpl implements CmpClient {
         }
     }
 
-    private void verifyProtectionWithProtectionAlgo(
-            PKIMessage respPkiMessage,
-            String initAuthPassword,
-            PKIHeader header,
-            AlgorithmIdentifier protectionAlgo)
-            throws CmpClientException {
-        if (Objects.nonNull(protectionAlgo)) {
-            LOG.debug("Verifying PasswordBased Protection of the Response.");
-            verifyPasswordBasedProtection(respPkiMessage, initAuthPassword, protectionAlgo);
-            checkImplicitConfirm(header);
-        } else {
-            LOG.error(
-                    "Protection Algorithm is not available when expecting PBE protected response containing protection algorithm");
-            throw new CmpClientException(
-                    "Protection Algorithm is not available when expecting PBE protected response containing protection algorithm");
-        }
+    private void verifyPasswordBasedMacProtection(PKIMessage respPkiMessage, String initAuthPassword,
+        PKIHeader header, AlgorithmIdentifier protectionAlgo)
+        throws CmpClientException {
+        LOG.debug("Verifying PasswordBased Protection of the Response.");
+        verifyPasswordBasedProtection(respPkiMessage, initAuthPassword, protectionAlgo);
+        checkImplicitConfirm(header);
     }
 
     private Cmpv2CertificationModel checkCmpCertRepMessage(final PKIMessage respPkiMessage)
