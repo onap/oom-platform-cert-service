@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1f3b3d58_267aae2a",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/api/CertificationController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2021-07-01T08:07:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a134c6f_170d9e94",
+      "range": {
+        "startLine": 116,
+        "startChar": 66,
+        "endLine": 116,
+        "endChar": 104
+      },
+      "revId": "d65479b274bc000179734167beb1bdecdf032d77",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f27c92fa_b6eedbb3",
         "filename": "certService/src/main/java/org/onap/oom/certservice/certification/CertificateDataComparator.java",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "68811763_98e10ed3",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/certification/CertificateDataComparator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2021-07-01T08:07:37Z",
+      "side": 1,
+      "message": "Removed interface in favor of composing Csr and Certificate with CertificateData",
+      "parentUuid": "f27c92fa_b6eedbb3",
+      "range": {
+        "startLine": 49,
+        "startChar": 21,
+        "endLine": 49,
+        "endChar": 46
+      },
+      "revId": "d65479b274bc000179734167beb1bdecdf032d77",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c140cbb_7179edd9",
         "filename": "certService/src/main/java/org/onap/oom/certservice/certification/CertificationModelFactory.java",
         "patchSetId": 2
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "a1ad9ef3_36e6d799",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/certification/CertificationModelFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2021-07-01T08:07:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c140cbb_7179edd9",
+      "revId": "d65479b274bc000179734167beb1bdecdf032d77",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c731f904_3ceb6d87",
         "filename": "certService/src/main/java/org/onap/oom/certservice/certification/X509CertificateModelFactory.java",
         "patchSetId": 2
@@ -79,6 +145,24 @@
       "revId": "d65479b274bc000179734167beb1bdecdf032d77",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17fc418d_11ef326d",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/certification/X509CertificateModelFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2021-07-01T08:07:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c731f904_3ceb6d87",
+      "revId": "d65479b274bc000179734167beb1bdecdf032d77",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "8fac6e5c_c48ac12b",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/certification/X509CertificateModelFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2021-07-01T08:07:37Z",
+      "side": 1,
+      "message": "Not needed, removed.",
+      "parentUuid": "3e61e9a1_ba7dc7a4",
+      "range": {
+        "startLine": 73,
+        "startChar": 55,
+        "endLine": 73,
+        "endChar": 57
+      },
+      "revId": "d65479b274bc000179734167beb1bdecdf032d77",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2cb437c5_58c50005",
         "filename": "certService/src/main/java/org/onap/oom/certservice/certification/exception/CertificateDecryptionException.java",
         "patchSetId": 2
@@ -119,6 +227,24 @@
       "revId": "d65479b274bc000179734167beb1bdecdf032d77",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0acd736_ce2d0077",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/certification/exception/CertificateDecryptionException.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2021-07-01T08:07:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2cb437c5_58c50005",
+      "revId": "d65479b274bc000179734167beb1bdecdf032d77",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "dba00a8c_0b85bf6b",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/certification/exception/StringToCertificateConversionException.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2021-07-01T08:07:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff758d83_4d5b6240",
+      "revId": "d65479b274bc000179734167beb1bdecdf032d77",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8dfbd15f_7da000f8",
         "filename": "certService/src/main/java/org/onap/oom/certservice/certification/model/CsrModel.java",
         "patchSetId": 2
@@ -153,6 +297,24 @@
       "revId": "d65479b274bc000179734167beb1bdecdf032d77",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41965043_df1e36ad",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/certification/model/CsrModel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2021-07-01T08:07:37Z",
+      "side": 1,
+      "message": "Removed interface.",
+      "parentUuid": "8dfbd15f_7da000f8",
+      "revId": "d65479b274bc000179734167beb1bdecdf032d77",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -179,6 +341,30 @@
     },
     {
       "key": {
+        "uuid": "cafcc67f_f2f82ff7",
+        "filename": "certService/src/test/java/org/onap/oom/certservice/certification/CertificateDataComparatorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2021-07-01T08:07:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f904459_4ad663ed",
+      "range": {
+        "startLine": 41,
+        "startChar": 4,
+        "endLine": 41,
+        "endChar": 39
+      },
+      "revId": "d65479b274bc000179734167beb1bdecdf032d77",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "716ab520_2bbbd7b6",
         "filename": "certService/src/test/java/org/onap/oom/certservice/certification/CertificationModelFactoryTest.java",
         "patchSetId": 2
@@ -193,6 +379,24 @@
       "revId": "d65479b274bc000179734167beb1bdecdf032d77",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a851595e_7f122c6c",
+        "filename": "certService/src/test/java/org/onap/oom/certservice/certification/CertificationModelFactoryTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2021-07-01T08:07:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "716ab520_2bbbd7b6",
+      "revId": "d65479b274bc000179734167beb1bdecdf032d77",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -219,6 +423,30 @@
     },
     {
       "key": {
+        "uuid": "8c059560_6ee70aac",
+        "filename": "certService/src/test/java/org/onap/oom/certservice/certification/PemStringToCertificateConverterTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2021-07-01T08:07:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f755ffde_10ae6812",
+      "range": {
+        "startLine": 70,
+        "startChar": 3,
+        "endLine": 70,
+        "endChar": 42
+      },
+      "revId": "d65479b274bc000179734167beb1bdecdf032d77",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1c4ffa9_b1f064ff",
         "filename": "certService/src/test/java/org/onap/oom/certservice/certification/X509CertificateModelFactoryTest.java",
         "patchSetId": 2
@@ -233,6 +461,24 @@
       "revId": "d65479b274bc000179734167beb1bdecdf032d77",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1516e8eb_6e9edf0b",
+        "filename": "certService/src/test/java/org/onap/oom/certservice/certification/X509CertificateModelFactoryTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2021-07-01T08:07:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1c4ffa9_b1f064ff",
+      "revId": "d65479b274bc000179734167beb1bdecdf032d77",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -259,6 +505,30 @@
     },
     {
       "key": {
+        "uuid": "b73a5b1c_ca29fb67",
+        "filename": "certService/src/test/java/org/onap/oom/certservice/certification/X509CertificateModelFactoryTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2021-07-01T08:07:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c182e7ef_7b89f592",
+      "range": {
+        "startLine": 164,
+        "startChar": 47,
+        "endLine": 164,
+        "endChar": 85
+      },
+      "revId": "d65479b274bc000179734167beb1bdecdf032d77",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ddd16bfc_2a8db011",
         "filename": "certService/src/test/java/org/onap/oom/certservice/certification/X509CertificateModelFactoryTest.java",
         "patchSetId": 2
@@ -282,6 +552,30 @@
     },
     {
       "key": {
+        "uuid": "d8553ade_9dade0af",
+        "filename": "certService/src/test/java/org/onap/oom/certservice/certification/X509CertificateModelFactoryTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2021-07-01T08:07:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ddd16bfc_2a8db011",
+      "range": {
+        "startLine": 175,
+        "startChar": 47,
+        "endLine": 175,
+        "endChar": 85
+      },
+      "revId": "d65479b274bc000179734167beb1bdecdf032d77",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "431c792d_6b6380f5",
         "filename": "certService/src/test/java/org/onap/oom/certservice/certification/X509CertificateModelFactoryTest.java",
         "patchSetId": 2
@@ -302,6 +596,30 @@
       "revId": "d65479b274bc000179734167beb1bdecdf032d77",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d08456e_5d6b5924",
+        "filename": "certService/src/test/java/org/onap/oom/certservice/certification/X509CertificateModelFactoryTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2021-07-01T08:07:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "431c792d_6b6380f5",
+      "range": {
+        "startLine": 195,
+        "startChar": 47,
+        "endLine": 195,
+        "endChar": 85
+      },
+      "revId": "d65479b274bc000179734167beb1bdecdf032d77",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
