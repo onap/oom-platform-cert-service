@@ -1,8 +1,8 @@
 /*
  * ============LICENSE_START=======================================================
- * PROJECT
+ * Cert Service
  * ================================================================================
- * Copyright (C) 2020 Nokia. All rights reserved.
+ * Copyright (C) 2020-2021 Nokia. All rights reserved.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +29,6 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Arrays;
-
 import java.util.stream.Collectors;
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.asn1.x509.Extension;
@@ -38,7 +37,6 @@ import org.bouncycastle.asn1.x509.GeneralName;
 import org.bouncycastle.asn1.x509.GeneralNames;
 import org.bouncycastle.pkcs.PKCS10CertificationRequest;
 import org.bouncycastle.util.io.pem.PemObject;
-
 import org.onap.oom.certservice.certification.exception.CsrDecryptionException;
 import org.onap.oom.certservice.certification.exception.DecryptionException;
 import org.onap.oom.certservice.certification.exception.KeyDecryptionException;
@@ -47,18 +45,16 @@ import org.onap.oom.certservice.certification.exception.KeyDecryptionException;
 public class CsrModel {
 
     private final PKCS10CertificationRequest csr;
-    private final X500Name subjectData;
     private final PrivateKey privateKey;
     private final PublicKey publicKey;
-    private final GeneralName[] sans;
+    private final CertificateData certificateData;
 
     public CsrModel(PKCS10CertificationRequest csr, X500Name subjectData, PrivateKey privateKey, PublicKey publicKey,
         GeneralName[] sans) {
         this.csr = csr;
-        this.subjectData = subjectData;
         this.privateKey = privateKey;
         this.publicKey = publicKey;
-        this.sans = sans;
+        this.certificateData = new CertificateData(subjectData, sans);
     }
 
     public PKCS10CertificationRequest getCsr() {
@@ -66,7 +62,7 @@ public class CsrModel {
     }
 
     public X500Name getSubjectData() {
-        return subjectData;
+        return certificateData.getSubject();
     }
 
     public PrivateKey getPrivateKey() {
@@ -78,16 +74,20 @@ public class CsrModel {
     }
 
     public GeneralName[] getSans() {
-        return sans;
+        return certificateData.getSortedSans();
+    }
+
+    public CertificateData getCertificateData() {
+        return certificateData;
     }
 
     @Override
     public String toString() {
-        return "CSR: { Subject: { " + subjectData + " }, SANs: [" + getSansInReadableFormat() + "] }";
+        return "CSR: { Subject: { " + certificateData.getSubject() + " }, SANs: [" + getSansInReadableFormat() + "] }";
     }
 
     private String getSansInReadableFormat() {
-        return Arrays.stream(this.sans)
+        return Arrays.stream(this.certificateData.getSortedSans())
             .map(generalName -> generalName.getName().toString())
             .collect(Collectors.joining(", "));
     }

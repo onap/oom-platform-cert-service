@@ -1,6 +1,6 @@
 /*
  * ============LICENSE_START=======================================================
- * PROJECT
+ * Cert Service
  * ================================================================================
  * Copyright (C) 2020-2021 Nokia. All rights reserved.
  * ================================================================================
@@ -27,10 +27,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.onap.oom.certservice.certification.model.CertificateUpdateModel;
 import org.onap.oom.certservice.certification.CertificationModelFactory;
+import org.onap.oom.certservice.certification.exception.CertificateDecryptionException;
 import org.onap.oom.certservice.certification.exception.DecryptionException;
 import org.onap.oom.certservice.certification.exception.ErrorResponseModel;
+import org.onap.oom.certservice.certification.model.CertificateUpdateModel;
 import org.onap.oom.certservice.certification.model.CertificationModel;
 import org.onap.oom.certservice.cmpv2client.exceptions.CmpClientException;
 import org.slf4j.Logger;
@@ -111,7 +112,7 @@ public class CertificationController {
             @RequestHeader("PK") String encodedPrivateKey,
             @RequestHeader("OLD_CERT") String encodedOldCert,
             @RequestHeader("OLD_PK") String encodedOldPrivateKey
-    ) {
+    ) throws DecryptionException, CertificateDecryptionException {
         caName = replaceWhiteSpaceChars(caName);
         LOGGER.info("Received certificate update request for CA named: {}", caName);
         CertificateUpdateModel certificateUpdateModel = new CertificateUpdateModel.CertificateUpdateModelBuilder()
