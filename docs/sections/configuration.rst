@@ -20,7 +20,6 @@ Example cmpServers.json file:
           "caName": "Client",
           "url": "http://oomcert-ejbca:8080/ejbca/publicweb/cmp/cmp",
           "issuerDN": "CN=ManagementCA",
-          "caMode": "CLIENT",
           "authentication": {
             "iak": "mypassword",
             "rv": "mypassword"
@@ -30,11 +29,11 @@ Example cmpServers.json file:
           "caName": "RA",
           "url": "http://oomcert-ejbca:8080/ejbca/publicweb/cmp/cmpRA",
           "issuerDN": "CN=ManagementCA",
-          "caMode": "RA",
           "authentication": {
             "iak": "mypassword",
             "rv": "mypassword"
-          }
+          },
+          "crProtection": "IAK_RV"
         }
       ]
     }
@@ -44,7 +43,7 @@ This contains list of CMP Servers, where each server has following properties:
     - *caName* - name of the external CA server. It's used to match *CA_NAME* sent by CertService client in order to match proper configuration.
     - *url* - URL to CMPv2 server
     - *issuerDN* - Distinguished Name of the CA that will sign the certificate
-    - *caMode* - Issuer mode. Allowed values are *CLIENT* and *RA*
+    - *crProtection* (optional) - Certification Request Protection. Allowed values are *IAK_RV* (default) and *CR_CERT*
     - *authentication*
 
         - *iak* - Initial authentication key, used to authenticate request in CMPv2 server
@@ -240,7 +239,7 @@ Default Values:
 +---------------------+---------------------------------------------------------------------------------------------------------------------------------+
 |  Name               | Value                                                                                                                           |
 +=====================+=================================================================================================================================+
-| Request URL         | http://ejbca:8080/ejbca/publicweb/cmp/cmpRA                                                                                 |
+| Request URL         | http://ejbca:8080/ejbca/publicweb/cmp/cmpRA                                                                                     |
 +---------------------+---------------------------------------------------------------------------------------------------------------------------------+
 | Response Type       | PKI Response                                                                                                                    |
 +---------------------+---------------------------------------------------------------------------------------------------------------------------------+
