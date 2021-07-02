@@ -47,7 +47,6 @@ import org.bouncycastle.asn1.cmp.PKIBody;
 import org.bouncycastle.asn1.cmp.PKIHeader;
 import org.bouncycastle.asn1.cmp.PKIMessage;
 import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
-import org.onap.oom.certservice.certification.configuration.model.CaMode;
 import org.onap.oom.certservice.certification.configuration.model.Cmpv2Server;
 import org.onap.oom.certservice.certification.model.CsrModel;
 import org.onap.oom.certservice.cmpv2client.api.CmpClient;
@@ -67,7 +66,6 @@ public class CmpClientImpl implements CmpClient {
     private final CloseableHttpClient httpClient;
 
     private static final String DEFAULT_CA_NAME = "Certification Authority";
-    private static final String DEFAULT_PROFILE = CaMode.RA.getProfile();
     private static final ASN1ObjectIdentifier PASSWORD_BASED_MAC = new ASN1ObjectIdentifier("1.2.840.113533.7.66.13");
 
     public CmpClientImpl(CloseableHttpClient httpClient) {
@@ -232,9 +230,7 @@ public class CmpClientImpl implements CmpClient {
             final Date notAfter) {
 
         String caName = CmpUtil.isNullOrEmpty(server.getCaName()) ? server.getCaName() : DEFAULT_CA_NAME;
-        String profile = server.getCaMode() != null ? server.getCaMode().getProfile() : DEFAULT_PROFILE;
-        LOG.info(
-                "Validate before creating Certificate Request for CA :{} in Mode {} ", caName, profile);
+        LOG.info("Validate before creating Certificate Request for CA :{}", caName);
 
         CmpUtil.notNull(csrModel, "CsrModel Instance");
         CmpUtil.notNull(csrModel.getSubjectData(), "Subject DN");
