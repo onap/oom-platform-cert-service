@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f20c0d52_d0fffedc",
+        "filename": "certService/src/test/java/org/onap/oom/certservice/certification/configuration/CmpServersConfigLoaderTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2021-07-02T11:42:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73f6e5fc_14a8b917",
+      "range": {
+        "startLine": 49,
+        "startChar": 13,
+        "endLine": 49,
+        "endChar": 30
+      },
+      "revId": "d10d61083ed155cfcaca13dff13fa276b4e0e4b7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ea9df3d_e695077a",
         "filename": "certService/src/test/java/org/onap/oom/certservice/certification/configuration/CmpServersConfigLoaderTest.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "d10d61083ed155cfcaca13dff13fa276b4e0e4b7",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29efb3e7_b123892e",
+        "filename": "certService/src/test/java/org/onap/oom/certservice/certification/configuration/CmpServersConfigLoaderTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2021-07-02T11:42:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ea9df3d_e695077a",
+      "range": {
+        "startLine": 59,
+        "startChar": 12,
+        "endLine": 59,
+        "endChar": 27
+      },
+      "revId": "d10d61083ed155cfcaca13dff13fa276b4e0e4b7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
