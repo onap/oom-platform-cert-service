@@ -1,6 +1,6 @@
 /*
  * ============LICENSE_START=======================================================
- * PROJECT
+ * Cert Service
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
  * ================================================================================
@@ -35,8 +35,6 @@ public class Cmpv2Server {
     @Valid
     private Authentication authentication;
     @NotNull
-    private CaMode caMode;
-    @NotNull
     @Length(min = 1, max = MAX_CA_NAME_LENGTH)
     private String caName;
     @NotNull
@@ -50,14 +48,6 @@ public class Cmpv2Server {
 
     public void setAuthentication(Authentication authentication) {
         this.authentication = authentication;
-    }
-
-    public CaMode getCaMode() {
-        return caMode;
-    }
-
-    public void setCaMode(CaMode caMode) {
-        this.caMode = caMode;
     }
 
     public String getCaName() {
@@ -88,11 +78,9 @@ public class Cmpv2Server {
     public String toString() {
         return "Cmpv2Server{"
                 + "authentication=" + authentication
-                + ", caMode=" + caMode
                 + ", caName='" + caName + '\''
                 + ", issuerDN='" + issuerDN + '\''
                 + ", url='" + url + '\''
                 + '}';
     }
-
 }
