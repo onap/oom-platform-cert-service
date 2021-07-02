@@ -27,7 +27,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.onap.oom.certservice.certification.configuration.model.Authentication;
-import org.onap.oom.certservice.certification.configuration.model.CaMode;
 import org.onap.oom.certservice.certification.configuration.model.Cmpv2Server;
 import org.onap.oom.certservice.certification.exception.Cmpv2ServerNotFoundException;
 
@@ -93,7 +92,6 @@ class Cmpv2ServerProviderTest {
         testAuthentication.setIak("testIak");
         testAuthentication.setRv("testRv");
         testServer.setAuthentication(testAuthentication);
-        testServer.setCaMode(CaMode.RA);
 
         return testServer;
     }

@@ -1,8 +1,8 @@
 /*
  * ============LICENSE_START=======================================================
- * PROJECT
+ * Cert Service
  * ================================================================================
- * Copyright (C) 2020 Nokia. All rights reserved.
+ * Copyright (C) 2020-2021 Nokia. All rights reserved.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,7 +27,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.onap.oom.certservice.CertServiceApplication;
 import org.onap.oom.certservice.certification.configuration.model.Authentication;
-import org.onap.oom.certservice.certification.configuration.model.CaMode;
 import org.onap.oom.certservice.certification.configuration.model.Cmpv2Server;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -141,15 +140,6 @@ class Cmpv2ServersConfigurationValidatorTest {
     }
 
     @Test
-    void shouldThrowExceptionWhenCaModeIsNull() {
-        // Given
-        server.setCaMode(null);
-
-        // Then
-        assertExceptionIsThrown();
-    }
-
-    @Test
     void shouldThrowExceptionWhenUrlIsNull() {
         // Given
         server.setUrl(null);
@@ -186,6 +176,15 @@ class Cmpv2ServersConfigurationValidatorTest {
     }
 
     @Test
+    void shouldThrowExceptionWhenCrProtectionIsNull() {
+        // Given
+        server.setCrProtection(null);
+
+        // Then
+        assertExceptionIsThrown();
+    }
+
+    @Test
     void shouldNotThrowExceptionWhenServerConfigurationIsValid() {
         // Then
         assertDoesNotThrow(() -> validator.validate(servers));
@@ -197,7 +196,6 @@ class Cmpv2ServersConfigurationValidatorTest {
 
     private void setServerConfiguration() {
         server = new Cmpv2Server();
-        server.setCaMode(CaMode.CLIENT);
         server.setCaName("TEST");
         server.setIssuerDN(new X500Name("CN=ManagementCA"));
         server.setUrl("http://127.0.0.1/ejbca/publicweb/cmp/cmp");
