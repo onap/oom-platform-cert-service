@@ -1,27 +1,27 @@
 version: "2.1"
 
 services:
-  ejbca:
-    image: primekey/ejbca-ce:7.4.3.2
-    hostname: cahostname
-    container_name: oomcert-ejbca
-    ports:
-      - "80:8080"
-      - "443:8443"
-    environment:
-      - INITIAL_ADMIN=;PublicAccessAuthenticationToken:TRANSPORT_ANY;
-      - NO_CREATE_CA=true
-    volumes:
-      - ./compose-resources/ejbca-configuration.sh:/opt/primekey/scripts/ejbca-configuration.sh
-      - ./compose-resources/certprofile_CUSTOM_ENDUSER-1834889499.xml:/opt/primekey/custom_profiles/certprofile_CUSTOM_ENDUSER-1834889499.xml
-      - ./compose-resources/entityprofile_Custom_EndEntity-1356531849.xml:/opt/primekey/custom_profiles/entityprofile_Custom_EndEntity-1356531849.xml
-    healthcheck:
-      test: ["CMD-SHELL", "curl -kI https://localhost:8443/ejbca/publicweb/healthcheck/ejbcahealth"]
-      interval: 10s
-      timeout: 3s
-      retries: 15
-    networks:
-      - certservice
+#  ejbca:
+#    image: primekey/ejbca-ce:7.4.3.2
+#    hostname: cahostname
+#    container_name: oomcert-ejbca
+#    ports:
+#      - "80:8080"
+#      - "443:8443"
+#    environment:
+#      - INITIAL_ADMIN=;PublicAccessAuthenticationToken:TRANSPORT_ANY;
+#      - NO_CREATE_CA=true
+#    volumes:
+#      - ./compose-resources/ejbca-configuration.sh:/opt/primekey/scripts/ejbca-configuration.sh
+#      - ./compose-resources/certprofile_CUSTOM_ENDUSER-1834889499.xml:/opt/primekey/custom_profiles/certprofile_CUSTOM_ENDUSER-1834889499.xml
+#      - ./compose-resources/entityprofile_Custom_EndEntity-1356531849.xml:/opt/primekey/custom_profiles/entityprofile_Custom_EndEntity-1356531849.xml
+#    healthcheck:
+#      test: ["CMD-SHELL", "curl -kI https://localhost:8443/ejbca/publicweb/healthcheck/ejbcahealth"]
+#      interval: 10s
+#      timeout: 3s
+#      retries: 15
+#    networks:
+#      - certservice
 
   oom-cert-service:
     image: onap/org.onap.oom.platform.cert-service.oom-certservice-api:latest
@@ -34,9 +34,9 @@ services:
     container_name: oomcert-service
     ports:
       - "8443:8443"
-    depends_on:
-      ejbca:
-        condition: service_healthy
+#    depends_on:
+#      ejbca:
+#        condition: service_healthy
     healthcheck:
       test: ["CMD-SHELL", "curl https://localhost:8443/actuator/health --cacert /etc/onap/oom/certservice/certs/root.crt --cert-type p12 --cert /etc/onap/oom/certservice/certs/certServiceServer-keystore.p12 --pass secret"]
       interval: 10s

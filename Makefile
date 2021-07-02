@@ -11,7 +11,7 @@ start-backend:
 	@echo "##### Start Cert Service #####"
 	docker-compose up -d
 	@echo "## Configure ejbca ##"
-	docker exec oomcert-ejbca /opt/primekey/scripts/ejbca-configuration.sh
+	#docker exec oomcert-ejbca /opt/primekey/scripts/ejbca-configuration.sh
 	@echo "##### DONE #####"
 
 run-client:
@@ -69,7 +69,7 @@ send-certification-request: verify-initialization-request-files-exist
 	    -out `pwd`/compose-resources/certs-from-curl/cr.csr \
 	    -subj "/C=US/ST=California/L=San-Francisco/O=ONAP/OU=Linux-Foundation/CN=new-onap.org" \
 	    -addext "subjectAltName = DNS:test.onap.org"
-	@echo "##### Send Key Update Request #####"
+	@echo "##### Send Certification Request #####"
 	curl -sN https://localhost:8443/v1/certificate-update/RA -H "PK: $$(cat ./compose-resources/certs-from-curl/cr.key | base64 | tr -d \\n)" \
 	    -H "CSR: $$(cat ./compose-resources/certs-from-curl/cr.csr | base64 | tr -d \\n)" \
 	    -H "OLD_PK: $$(cat ./compose-resources/certs-from-curl/ir.key | base64 | tr -d \\n)" \

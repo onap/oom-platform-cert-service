@@ -56,7 +56,7 @@ var supportedProperties = []string{
 	"+ property 'ipAddresses'",
 	"+ property 'uris'",
 	"+ property 'email addresses'",
-	}
+}
 
 const RESULT_LOG = "testdata/test_result.log"
 

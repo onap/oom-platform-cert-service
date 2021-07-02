@@ -112,7 +112,7 @@ public class CertificationController {
             @RequestHeader("PK") String encodedPrivateKey,
             @RequestHeader("OLD_CERT") String encodedOldCert,
             @RequestHeader("OLD_PK") String encodedOldPrivateKey
-    ) throws DecryptionException, CertificateDecryptionException {
+    ) throws DecryptionException, CertificateDecryptionException, CmpClientException {
         caName = replaceWhiteSpaceChars(caName);
         LOGGER.info("Received certificate update request for CA named: {}", caName);
         CertificateUpdateModel certificateUpdateModel = new CertificateUpdateModel.CertificateUpdateModelBuilder()

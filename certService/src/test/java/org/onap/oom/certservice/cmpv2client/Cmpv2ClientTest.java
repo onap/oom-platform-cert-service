@@ -73,6 +73,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.onap.oom.certservice.certification.configuration.model.Authentication;
 import org.onap.oom.certservice.certification.configuration.model.Cmpv2Server;
+import org.onap.oom.certservice.certification.model.CertificateUpdateModel;
+import org.onap.oom.certservice.certification.model.CertificateUpdateModel.CertificateUpdateModelBuilder;
 import org.onap.oom.certservice.certification.model.CsrModel;
 import org.onap.oom.certservice.cmpv2client.exceptions.CmpClientException;
 import org.onap.oom.certservice.cmpv2client.exceptions.CmpServerException;
@@ -170,6 +172,57 @@ class Cmpv2ClientTest {
                 cmpClient.createCertificate(csrModel, server, notBefore, notAfter);
         // then
         assertNotNull(cmpClientResult);
+    }
+
+    @Test
+    void shouldReturnValidPkiMessageWhenCertificationRequestMethodCalledWithValidCsr()
+        throws Exception {
+        // given
+        setCsrModelAndServerValues(
+            "mypassword",
+            "senderKID",
+            "http://127.0.0.1/ejbca/publicweb/cmp/cmp",
+            null,
+            null);
+        when(httpClient.execute(any())).thenReturn(httpResponse);
+        when(httpResponse.getEntity()).thenReturn(httpEntity);
+        try (final InputStream is =
+            this.getClass().getResourceAsStream("/myNCMpbmCR");
+            BufferedInputStream bis = new BufferedInputStream(is)) {
+
+            byte[] ba = IOUtils.toByteArray(bis);
+            doAnswer(
+                invocation -> {
+                    OutputStream os = (ByteArrayOutputStream) invocation.getArguments()[0];
+                    os.write(ba);
+                    return null;
+                })
+                .when(httpEntity)
+                .writeTo(any(OutputStream.class));
+        }
+        CmpClientImpl cmpClient = spy(new CmpClientImpl(httpClient));
+
+
+        final String TEST_CA_NAME = "TestCa";
+        final String TEST_ENCODED_CSR = "encodedCSR";
+        final String TEST_ENCODED_PK = "encodedPK";
+        final String TEST_ENCODED_OLD_PK = "encodedOldPK";
+        final String TEST_ENCODED_OLD_CERT = "encodedOldCert";
+
+        CertificateUpdateModel TEST_CERTIFICATE_UPDATE_MODEL = new CertificateUpdateModelBuilder()
+            .setEncodedCsr(TEST_ENCODED_CSR)
+            .setEncodedPrivateKey(TEST_ENCODED_PK)
+            .setEncodedOldCert(TEST_ENCODED_OLD_CERT)
+            .setEncodedOldPrivateKey(TEST_ENCODED_OLD_PK)
+            .setCaName(TEST_CA_NAME)
+            .build();
+
+        // when
+        Cmpv2CertificationModel cmpClientResult =
+            cmpClient.certificationRequest(csrModel, server, TEST_CERTIFICATE_UPDATE_MODEL);
+        // then
+        assertNotNull(cmpClientResult);
+        System.out.println("============ cmpClientResult ============= " + cmpClientResult.getCertificateChain());
     }
 
     @Test

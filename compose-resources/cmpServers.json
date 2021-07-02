@@ -1,22 +1,42 @@
 {
   "cmpv2Servers": [
     {
-      "caName": "Client",
-      "url": "http://oomcert-ejbca:8080/ejbca/publicweb/cmp/cmp",
-      "issuerDN": "O=EJBCA Container Quickstart,CN=ManagementCA,UID=12345",
+      "caName": "cmp_ncm_1",
+      "url": "http://10.129.65.64:8083/pkix/",
+      "issuerDN": "C=PL, O=Nokia, OU=ONAP, CN=NCM_ROOT_CA_1",
       "authentication": {
-        "iak": "mypassword",
-        "rv": "mypassword"
+        "iak": "nokia123",
+        "rv": "38047"
+      },
+      "crProtection": "IAK_RV"
+    },
+    {
+      "caName": "cmp_ncm_2",
+      "url": "http://10.129.65.64:8083/pkix/",
+      "issuerDN": "C=PL, O=Nokia, OU=ONAP, CN=NCM_SUBCA_2",
+      "authentication": {
+        "iak": "nokia123",
+        "rv": "38047"
+      },
+      "crProtection": "IAK_RV"
+    },
+    {
+      "caName": "cmp_ncm_3",
+      "url": "http://10.129.65.64:8083/pkix/",
+      "issuerDN": "C=PL, O=Nokia, OU=ONAP, CN=NCM_SUB_SUBCA_3",
+      "authentication": {
+        "iak": "nokia123",
+        "rv": "38047"
       },
       "crProtection": "IAK_RV"
     },
     {
       "caName": "RA",
-      "url": "http://oomcert-ejbca:8080/ejbca/publicweb/cmp/cmpRA",
-      "issuerDN": "O=EJBCA Container Quickstart,CN=ManagementCA,UID=12345",
+      "url": "http://10.129.65.64:8083/pkix/",
+      "issuerDN": "C=PL, O=Nokia, OU=ONAP, CN=NCM_SUBCA_2",
       "authentication": {
-        "iak": "mypassword",
-        "rv": "mypassword"
+        "iak": "nokia123",
+        "rv": "38047"
       },
       "crProtection": "IAK_RV"
     }

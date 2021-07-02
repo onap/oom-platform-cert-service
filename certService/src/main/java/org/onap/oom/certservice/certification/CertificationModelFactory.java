@@ -76,7 +76,7 @@ public class CertificationModelFactory {
     }
 
     public CertificationModel createCertificationModel(CertificateUpdateModel certificateUpdateModel)
-        throws DecryptionException, CertificateDecryptionException {
+        throws DecryptionException, CertificateDecryptionException, CmpClientException {
         LOGGER.info("CSR: " + certificateUpdateModel.getEncodedCsr() +
                 ", old cert: " + certificateUpdateModel.getEncodedOldCert() +
                 ", CA: " + certificateUpdateModel.getCaName());
@@ -90,11 +90,28 @@ public class CertificationModelFactory {
         if (updateRequestTypeDetector.isKur(csrModel.getCertificateData(), certificateModel.getCertificateData())) {
             LOGGER.info(
                 "Certificate Signing Request and Old Certificate have the same parameters. Preparing Key Update Request");
-            throw new UnsupportedOperationException("TODO: implement KUR in separate MR");
+
+            Cmpv2Server cmpv2Server = cmpv2ServerProvider.getCmpv2Server(certificateUpdateModel.getCaName());
+            LOGGER.debug("Found server for given CA name: \n{}", cmpv2Server);
+            LOGGER.info("Sending update request for certification model for CA named: {}, and certificate update request:\n{}",
+                certificateUpdateModel.getCaName(), csrModel);
+
+            return certificationProvider.updateCertificate(csrModel, cmpv2Server, certificateUpdateModel);
+
+
+//            throw new UnsupportedOperationException("TODO: implement KUR in separate MR");
         } else {
             LOGGER.info(
                 "Certificate Signing Request and Old Certificate have different parameters. Preparing Certification Request");
-            throw new UnsupportedOperationException("TODO: implement CR in separate MR");
+
+            Cmpv2Server cmpv2Server = cmpv2ServerProvider.getCmpv2Server(certificateUpdateModel.getCaName());
+            LOGGER.debug("Found server for given CA name: \n{}", cmpv2Server);
+//            LOGGER.info("Sending update request for certification model for CA named: {}, and certificate update request:\n{}",
+//                certificateUpdateModel.getCaName(), csrModel);
+
+            return certificationProvider.certificationRequest(csrModel, cmpv2Server, certificateUpdateModel);
+
+//            throw new UnsupportedOperationException("TODO: implement CR in separate MR");
         }
     }
 }

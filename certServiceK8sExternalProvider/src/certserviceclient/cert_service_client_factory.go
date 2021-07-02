@@ -54,7 +54,7 @@ func CreateCertServiceClient(baseUrl string, healthEndpoint string, certEndpoint
 		return nil, err
 	}
 	client := CertServiceClientImpl{
-		healthUrl: healthUrl,
+		healthUrl:        healthUrl,
 		certificationUrl: certificationUrl,
 		httpClient:       httpClient,
 	}

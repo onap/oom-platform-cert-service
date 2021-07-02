@@ -37,7 +37,6 @@ const (
 	certificationUrl = "https://oom-cert-service:8443/v1/certificate/RA"
 )
 
-
 func Test_GetCertificates_shouldParseCertificateResponseCorrectly(t *testing.T) {
 	responseJson := `{"certificateChain": ["cert-0", "cert-1"], "trustedCertificates": ["trusted-cert-0", "trusted-cert-1"]}`
 	responseJsonReader := ioutil.NopCloser(bytes.NewReader([]byte(responseJson)))
@@ -55,7 +54,7 @@ func Test_GetCertificates_shouldReturnError_whenResponseIsNotJson(t *testing.T) 
 	responseJsonReader := ioutil.NopCloser(bytes.NewReader([]byte(responseJson)))
 	client := CertServiceClientImpl{
 		certificationUrl: certificationUrl,
-		httpClient:       &httpClientMock{
+		httpClient: &httpClientMock{
 			DoFunc: func(req *http.Request) (response *http.Response, e error) {
 				mockedResponse := &http.Response{
 					Body: responseJsonReader,
@@ -73,7 +72,7 @@ func Test_GetCertificates_shouldReturnError_whenResponseIsNotJson(t *testing.T) 
 func Test_GetCertificates_shouldReturnError_whenHttpClientReturnsError(t *testing.T) {
 	client := CertServiceClientImpl{
 		certificationUrl: certificationUrl,
-		httpClient:       &httpClientMock{
+		httpClient: &httpClientMock{
 			DoFunc: func(req *http.Request) (response *http.Response, err error) {
 				return nil, fmt.Errorf("mock error")
 			},
@@ -101,10 +100,10 @@ func Test_GetCertificates_shouldReturnError_whenResponseOtherThan200(t *testing.
 func Test_CheckHealth_shouldReturnNil_whenHttpClientReturnsStatusCode200(t *testing.T) {
 	client := CertServiceClientImpl{
 		certificationUrl: certificationUrl,
-		httpClient:       &httpClientMock{
+		httpClient: &httpClientMock{
 			DoFunc: func(req *http.Request) (response *http.Response, e error) {
 				mockedResponse := &http.Response{
-					Body: nil,
+					Body:       nil,
 					StatusCode: 200,
 				}
 				return mockedResponse, nil
@@ -120,10 +119,10 @@ func Test_CheckHealth_shouldReturnNil_whenHttpClientReturnsStatusCode200(t *test
 func Test_CheckHealth_shouldReturnError_whenHttpClientReturnsStatusCode404(t *testing.T) {
 	client := CertServiceClientImpl{
 		certificationUrl: certificationUrl,
-		httpClient:       &httpClientMock{
+		httpClient: &httpClientMock{
 			DoFunc: func(req *http.Request) (response *http.Response, e error) {
 				mockedResponse := &http.Response{
-					Body: nil,
+					Body:       nil,
 					StatusCode: 404,
 				}
 				return mockedResponse, nil
@@ -139,7 +138,7 @@ func Test_CheckHealth_shouldReturnError_whenHttpClientReturnsStatusCode404(t *te
 func Test_CheckHealth_shouldReturnError_whenHttpClientReturnsError(t *testing.T) {
 	client := CertServiceClientImpl{
 		certificationUrl: certificationUrl,
-		httpClient:       &httpClientMock{
+		httpClient: &httpClientMock{
 			DoFunc: func(req *http.Request) (response *http.Response, err error) {
 				return nil, fmt.Errorf("mock error")
 			},

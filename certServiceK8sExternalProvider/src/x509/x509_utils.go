@@ -36,7 +36,7 @@ const (
 func DecodeCSR(data []byte) (*x509.CertificateRequest, error) {
 	block, err := decodePemBlock(data, PemCsrType)
 	if err != nil {
-		return nil,  fmt.Errorf("error decoding CSR PEM: %v", err)
+		return nil, fmt.Errorf("error decoding CSR PEM: %v", err)
 	}
 	csr, err := x509.ParseCertificateRequest(block.Bytes)
 	if err != nil {
@@ -51,11 +51,11 @@ func DecodeCSR(data []byte) (*x509.CertificateRequest, error) {
 func DecodePrivateKey(data []byte) (interface{}, error) {
 	block, err := decodePemBlock(data, pemPrivateKeyType)
 	if err != nil {
-		return nil,  fmt.Errorf("error decoding Private Key PEM: %v", err)
+		return nil, fmt.Errorf("error decoding Private Key PEM: %v", err)
 	}
 	key, err := x509.ParsePKCS8PrivateKey(block.Bytes)
 	if err != nil {
-		return nil,  fmt.Errorf("error parsing Private Key: %v", err)
+		return nil, fmt.Errorf("error parsing Private Key: %v", err)
 	}
 	return key, nil
 }
@@ -70,7 +70,6 @@ func decodePemBlock(data []byte, pemType string) (*pem.Block, error) {
 	}
 	return block, nil
 }
-
 
 func ParseCertificateArrayToBytes(certificateArray []string) ([]byte, error) {
 	buffer := bytes.NewBuffer([]byte{})

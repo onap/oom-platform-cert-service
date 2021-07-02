@@ -27,8 +27,10 @@ import static org.onap.oom.certservice.cmpv2client.impl.CmpUtil.generatePkiHeade
 import java.security.KeyPair;
 import java.util.Date;
 
+import java.util.Objects;
 import org.bouncycastle.asn1.ASN1Integer;
 import org.bouncycastle.asn1.DERBitString;
+import org.bouncycastle.asn1.cmp.CMPCertificate;
 import org.bouncycastle.asn1.cmp.PKIBody;
 import org.bouncycastle.asn1.cmp.PKIHeader;
 import org.bouncycastle.asn1.cmp.PKIMessage;
@@ -58,6 +60,8 @@ class CreateCertRequest {
     private Date notBefore;
     private Date notAfter;
     private String senderKid;
+    private int cmpRequestType;
+    private CMPCertificate[] extraCerts;
 
     private final int certReqId = createRandomInt(Integer.MAX_VALUE);
     private final AlgorithmIdentifier signingAlgorithm = new DefaultSignatureAlgorithmIdentifierFinder()
@@ -95,6 +99,14 @@ class CreateCertRequest {
         this.senderKid = senderKid;
     }
 
+    public void setCmpRequestType(int requestType) {
+        this.cmpRequestType = requestType;
+    }
+
+    public void setExtraCerts(CMPCertificate[] extraCert) {
+        this.extraCerts = extraCert;
+    }
+
     /**
      * Method to create {@link PKIMessage} from {@link CertRequest},{@link ProofOfPossession}, {@link
      * CertReqMsg}, {@link CertReqMessages}, {@link PKIHeader} and {@link PKIBody}.
@@ -127,9 +139,14 @@ class CreateCertRequest {
                         issuerDn,
                         pkiMessageProtection.getAlgorithmIdentifier(),
                         senderKid);
-        final PKIBody pkiBody = new PKIBody(PKIBody.TYPE_INIT_REQ, certReqMessages);
+        final PKIBody pkiBody = new PKIBody(cmpRequestType, certReqMessages);
 
         final DERBitString messageProtection = this.pkiMessageProtection.generatePkiMessageProtection(pkiHeader, pkiBody);
-        return new PKIMessage(pkiHeader, pkiBody, messageProtection);
+
+        if (Objects.isNull(extraCerts)) {
+            return new PKIMessage(pkiHeader, pkiBody, messageProtection);
+        } else {
+            return new PKIMessage(pkiHeader, pkiBody, messageProtection, extraCerts);
+        }
     }
 }

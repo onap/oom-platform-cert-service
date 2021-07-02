@@ -159,7 +159,7 @@ class CertificationControllerTest {
 
     @Test
     void shouldUpdateEndpointReturnDataAboutCsrBaseOnEncodedParameters()
-        throws DecryptionException, CertificateDecryptionException {
+        throws DecryptionException, CertificateDecryptionException, CmpClientException {
         // Given
         CertificationModel testCertificationModel = new CertificationModel(
                 Arrays.asList("ENTITY_CERT", "INTERMEDIATE_CERT"),
@@ -179,7 +179,7 @@ class CertificationControllerTest {
 
     @Test
     void shouldThrowCertificateDecryptionExceptionWhenCreatingPemModelFails()
-        throws DecryptionException, CertificateDecryptionException {
+        throws DecryptionException, CertificateDecryptionException, CmpClientException {
         // Given
         String expectedMessage = "Incorrect certificate, decryption failed";
         when(certificationModelFactory.createCertificationModel(TEST_CERTIFICATE_UPDATE_MODEL))
