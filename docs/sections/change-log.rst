@@ -19,7 +19,7 @@ Version: 2.4.0
 
 **New Features**
 
-  N/A
+  Add certificate update use case (support for CMPv2 messages: Key Update Request and Certification Request).
 
 **Bug Fixes**
 
@@ -46,6 +46,8 @@ Version: 2.4.0
   N/A
 
 **Upgrade Notes**
+
+  caMode is removed from cmpServers.json configuration file.
 
 **Deprecation Notes**
 

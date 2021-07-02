@@ -3,13 +3,11 @@
     {
       "caName": " ",
       "url": "http://127.0.0.1/ejbca/publicweb/cmp/cmp",
-      "issuerDN": "CN=ManagementCA",
-      "caMode": "CLIENT"
+      "issuerDN": "CN=ManagementCA"
     },
     {
       "caName": "TEST2",
       "url": "http://127.0.0.1/ejbca/publicweb/cmp/cmpRA",
-      "caMode": "RA",
       "authentication": {
         "iak": "xxx",
         "rv": "yyy"
