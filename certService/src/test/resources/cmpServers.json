@@ -18,7 +18,8 @@
       "authentication": {
         "iak": "xxx",
         "rv": "yyy"
-      }
+      },
+      "crProtection": "CR_CERT"
     }
   ]
 }

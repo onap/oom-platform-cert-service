@@ -1,6 +1,6 @@
 /*
  * ============LICENSE_START=======================================================
- * PROJECT
+ * Cert Service
  * ================================================================================
  * Copyright (C) 2020 Nokia. All rights reserved.
  * ================================================================================
@@ -43,6 +43,8 @@ public class Cmpv2Server {
     private X500Name issuerDN;
     @Cmpv2Url
     private String url;
+    @NotNull
+    private CrProtection crProtection = CrProtection.IAK_RV;
 
     public Authentication getAuthentication() {
         return authentication;
@@ -84,6 +86,14 @@ public class Cmpv2Server {
         this.url = url;
     }
 
+    public CrProtection getCrProtection() {
+        return crProtection;
+    }
+
+    public void setCrProtection(CrProtection crProtection) {
+        this.crProtection = crProtection;
+    }
+
     @Override
     public String toString() {
         return "Cmpv2Server{"
@@ -94,5 +104,4 @@ public class Cmpv2Server {
                 + ", url='" + url + '\''
                 + '}';
     }
-
 }

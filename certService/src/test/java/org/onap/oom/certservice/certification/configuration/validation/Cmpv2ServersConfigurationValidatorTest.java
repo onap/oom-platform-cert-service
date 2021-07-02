@@ -1,8 +1,8 @@
 /*
  * ============LICENSE_START=======================================================
- * PROJECT
+ * Cert Service
  * ================================================================================
- * Copyright (C) 2020 Nokia. All rights reserved.
+ * Copyright (C) 2020-2021 Nokia. All rights reserved.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -180,6 +180,15 @@ class Cmpv2ServersConfigurationValidatorTest {
     void shouldThrowExceptionWhenRvIsNull() {
         // Given
         authentication.setRv(null);
+
+        // Then
+        assertExceptionIsThrown();
+    }
+
+    @Test
+    void shouldThrowExceptionWhenCrProtectionIsNull() {
+        // Given
+        server.setCrProtection(null);
 
         // Then
         assertExceptionIsThrown();
