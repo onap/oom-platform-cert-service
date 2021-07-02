@@ -25,11 +25,11 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: _sample_cert_name_
+  name: cert-test
   namespace: onap
 spec:
   # The secret name to store the signed certificate
-  secretName: _sample_secret_name_
+  secretName: cert-test-secret-name
   # Common Name
   commonName: certissuer.onap.org
   subject:
@@ -57,4 +57,4 @@ spec:
   issuerRef:
     group: certmanager.onap.org
     kind: CMPv2Issuer
-    name: cmpv2-issuer
+    name: cmpv2-issuer-onap
