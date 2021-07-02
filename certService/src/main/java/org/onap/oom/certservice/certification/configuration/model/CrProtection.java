@@ -1,8 +1,8 @@
 /*
  * ============LICENSE_START=======================================================
- * PROJECT
+ * Cert Service
  * ================================================================================
- * Copyright (C) 2020 Nokia. All rights reserved.
+ * Copyright (C) 2021 Nokia. All rights reserved.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,16 +20,21 @@
 
 package org.onap.oom.certservice.certification.configuration.model;
 
-public enum CaMode {
-    RA("RA"), CLIENT("Client");
+public enum CrProtection {
+    CR_CERT("CR_CERT"), IAK_RV("IAK/RV");
 
-    private String profile;
+    private final String protection;
 
-    CaMode(String profile) {
-        this.profile = profile;
+    CrProtection(String protection) {
+        this.protection = protection;
     }
 
-    public String getProfile() {
-        return profile;
+    public String getProtection() {
+        return protection;
+    }
+
+    @Override
+    public String toString() {
+        return this.getProtection();
     }
 }

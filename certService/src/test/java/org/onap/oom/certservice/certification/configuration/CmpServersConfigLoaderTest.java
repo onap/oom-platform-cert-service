@@ -1,6 +1,6 @@
 /*
  * ============LICENSE_START=======================================================
- * PROJECT
+ * Cert Service
  * ================================================================================
  * Copyright (C) 2020-2021 Nokia. All rights reserved.
  * ================================================================================
@@ -30,6 +30,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.onap.oom.certservice.CertServiceApplication;
 import org.onap.oom.certservice.certification.configuration.model.Cmpv2Server;
+import org.onap.oom.certservice.certification.configuration.model.CrProtection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -45,17 +46,18 @@ class CmpServersConfigLoaderTest {
             "CA_NAME", "TEST",
             "URL", "http://127.0.0.1/ejbca/publicweb/cmp/cmp",
             "ISSUER_DN", "CN=ManagementCA",
-            "CA_MODE", "CLIENT",
             "IAK", "xxx",
-            "RV", "yyy"
+            "RV", "yyy",
+            "CR_PROTECTION", "IAK_RV"
+
     );
     private static final Map<String, String> EXPECTED_SECOND_CMP_SERVER = Map.of(
             "CA_NAME", "TEST2",
             "URL", "http://127.0.0.1/ejbca/publicweb/cmp/cmpRA",
             "ISSUER_DN", "CN=ManagementCA2",
-            "CA_MODE", "RA",
             "IAK", "xxx",
-            "RV", "yyy"
+            "RV", "yyy",
+            "CR_PROTECTION", "CR_CERT"
     );
 
     @Autowired
@@ -111,8 +113,8 @@ class CmpServersConfigLoaderTest {
         assertThat(cmpv2Server.getCaName()).isEqualTo(expected.get("CA_NAME"));
         assertThat(cmpv2Server.getUrl()).isEqualTo(expected.get("URL"));
         assertThat(cmpv2Server.getIssuerDN()).hasToString(expected.get("ISSUER_DN"));
-        assertThat(cmpv2Server.getCaMode().name()).isEqualTo(expected.get("CA_MODE"));
         assertThat(cmpv2Server.getAuthentication().getIak()).isEqualTo(expected.get("IAK"));
         assertThat(cmpv2Server.getAuthentication().getRv()).isEqualTo(expected.get("RV"));
+        assertThat(cmpv2Server.getCrProtection()).isEqualTo(CrProtection.valueOf(expected.get("CR_PROTECTION")));
     }
 }
