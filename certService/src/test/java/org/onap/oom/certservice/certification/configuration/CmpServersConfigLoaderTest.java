@@ -1,6 +1,6 @@
 /*
  * ============LICENSE_START=======================================================
- * PROJECT
+ * Cert Service
  * ================================================================================
  * Copyright (C) 2020-2021 Nokia. All rights reserved.
  * ================================================================================
@@ -45,7 +45,6 @@ class CmpServersConfigLoaderTest {
             "CA_NAME", "TEST",
             "URL", "http://127.0.0.1/ejbca/publicweb/cmp/cmp",
             "ISSUER_DN", "CN=ManagementCA",
-            "CA_MODE", "CLIENT",
             "IAK", "xxx",
             "RV", "yyy"
     );
@@ -53,7 +52,6 @@ class CmpServersConfigLoaderTest {
             "CA_NAME", "TEST2",
             "URL", "http://127.0.0.1/ejbca/publicweb/cmp/cmpRA",
             "ISSUER_DN", "CN=ManagementCA2",
-            "CA_MODE", "RA",
             "IAK", "xxx",
             "RV", "yyy"
     );
@@ -111,7 +109,6 @@ class CmpServersConfigLoaderTest {
         assertThat(cmpv2Server.getCaName()).isEqualTo(expected.get("CA_NAME"));
         assertThat(cmpv2Server.getUrl()).isEqualTo(expected.get("URL"));
         assertThat(cmpv2Server.getIssuerDN()).hasToString(expected.get("ISSUER_DN"));
-        assertThat(cmpv2Server.getCaMode().name()).isEqualTo(expected.get("CA_MODE"));
         assertThat(cmpv2Server.getAuthentication().getIak()).isEqualTo(expected.get("IAK"));
         assertThat(cmpv2Server.getAuthentication().getRv()).isEqualTo(expected.get("RV"));
     }

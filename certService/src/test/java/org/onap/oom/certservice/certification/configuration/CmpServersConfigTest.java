@@ -35,7 +35,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.onap.oom.certservice.certification.configuration.model.Authentication;
-import org.onap.oom.certservice.certification.configuration.model.CaMode;
 import org.onap.oom.certservice.certification.configuration.model.Cmpv2Server;
 
 @ExtendWith(MockitoExtension.class)
@@ -218,7 +217,6 @@ class CmpServersConfigTest {
         testAuthentication1.setIak("testIak");
         testAuthentication1.setRv("testRv");
         testServer1.setAuthentication(testAuthentication1);
-        testServer1.setCaMode(CaMode.RA);
 
         Cmpv2Server testServer2 = new Cmpv2Server();
         testServer2.setCaName("TEST_CA2");
@@ -228,7 +226,6 @@ class CmpServersConfigTest {
         testAuthentication2.setIak("test2Iak");
         testAuthentication2.setRv("test2Rv");
         testServer2.setAuthentication(testAuthentication2);
-        testServer2.setCaMode(CaMode.CLIENT);
 
         return List.of(testServer1, testServer2);
     }
