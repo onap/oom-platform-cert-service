@@ -1,8 +1,8 @@
 /*
  * ============LICENSE_START=======================================================
- * PROJECT
+ * Cert Service
  * ================================================================================
- * Copyright (C) 2020 Nokia. All rights reserved.
+ * Copyright (C) 2020-2021 Nokia. All rights reserved.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,10 +23,12 @@ package org.onap.oom.certservice.certification.configuration.model;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.bouncycastle.asn1.x500.X500Name;
 import org.hibernate.validator.constraints.Length;
 import org.onap.oom.certservice.certification.configuration.validation.constraints.Cmpv2Url;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Cmpv2Server {
 
     private static final int MAX_CA_NAME_LENGTH = 128;
@@ -34,8 +36,6 @@ public class Cmpv2Server {
     @NotNull
     @Valid
     private Authentication authentication;
-    @NotNull
-    private CaMode caMode;
     @NotNull
     @Length(min = 1, max = MAX_CA_NAME_LENGTH)
     private String caName;
@@ -50,14 +50,6 @@ public class Cmpv2Server {
 
     public void setAuthentication(Authentication authentication) {
         this.authentication = authentication;
-    }
-
-    public CaMode getCaMode() {
-        return caMode;
-    }
-
-    public void setCaMode(CaMode caMode) {
-        this.caMode = caMode;
     }
 
     public String getCaName() {
@@ -88,11 +80,9 @@ public class Cmpv2Server {
     public String toString() {
         return "Cmpv2Server{"
                 + "authentication=" + authentication
-                + ", caMode=" + caMode
                 + ", caName='" + caName + '\''
                 + ", issuerDN='" + issuerDN + '\''
                 + ", url='" + url + '\''
                 + '}';
     }
-
 }
