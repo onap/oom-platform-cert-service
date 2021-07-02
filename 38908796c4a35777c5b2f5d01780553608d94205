@@ -22,6 +22,30 @@
       "revId": "38908796c4a35777c5b2f5d01780553608d94205",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c62810a_aee904ec",
+        "filename": "compose-resources/ejbca-configuration.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-07-02T07:35:00Z",
+      "side": 1,
+      "message": "Checked in OOM",
+      "parentUuid": "530d2786_011107be",
+      "range": {
+        "startLine": 32,
+        "startChar": 100,
+        "endLine": 32,
+        "endChar": 116
+      },
+      "revId": "38908796c4a35777c5b2f5d01780553608d94205",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
