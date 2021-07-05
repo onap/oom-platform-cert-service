@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afcc9468_84d46d3f",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/cmpv2client/impl/CmpClientImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2021-07-05T07:33:07Z",
+      "side": 1,
+      "message": "Consider extracting common parts of updateCertificate and createCertificate.",
+      "range": {
+        "startLine": 125,
+        "startChar": 3,
+        "endLine": 146,
+        "endChar": 88
+      },
+      "revId": "b41da016ba1dd72de2c76fb610fb9c84b5a3ae37",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1179b30_0cfec832",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/cmpv2client/impl/CmpClientImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2021-07-05T07:33:07Z",
+      "side": 1,
+      "message": "Couldn\u0027t the certificate from X509CertificateModel be reused here?",
+      "range": {
+        "startLine": 150,
+        "startChar": 0,
+        "endLine": 160,
+        "endChar": 5
+      },
+      "revId": "b41da016ba1dd72de2c76fb610fb9c84b5a3ae37",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f6131d6_1555ab0c",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/cmpv2client/impl/CmpClientImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2021-07-05T07:33:07Z",
+      "side": 1,
+      "message": "Consider putting in a separate class. There already is implementation of PrivateKey parsing as part of CsrModel",
+      "range": {
+        "startLine": 161,
+        "startChar": 0,
+        "endLine": 177,
+        "endChar": 5
+      },
+      "revId": "b41da016ba1dd72de2c76fb610fb9c84b5a3ae37",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
