@@ -99,7 +99,7 @@ public class CertificationModelFactory {
         } else {
             LOGGER.info(
                 "Certificate Signing Request and Old Certificate have different parameters. Preparing Certification Request");
-            throw new UnsupportedOperationException("TODO: implement CR in separate MR");
+            return certificationProvider.certificationRequest(csrModel, cmpv2Server);
         }
     }
 }

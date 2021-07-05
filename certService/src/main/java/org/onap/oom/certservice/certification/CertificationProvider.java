@@ -67,6 +67,12 @@ public class CertificationProvider {
             convertFromX509CertificateListToPemList(certificates.getTrustedCertificates()));
     }
 
+    public CertificationModel certificationRequest(CsrModel csrModel, Cmpv2Server cmpv2Server) throws CmpClientException {
+        Cmpv2CertificationModel certificates = cmpClient.certificationRequest(csrModel, cmpv2Server);
+        return new CertificationModel(convertFromX509CertificateListToPemList(certificates.getCertificateChain()),
+            convertFromX509CertificateListToPemList(certificates.getTrustedCertificates()));
+    }
+
     private static List<String> convertFromX509CertificateListToPemList(List<X509Certificate> certificates) {
         return certificates.stream().map(CertificationProvider::convertFromX509CertificateToPem).filter(cert -> !cert.isEmpty())
                 .collect(Collectors.toList());
