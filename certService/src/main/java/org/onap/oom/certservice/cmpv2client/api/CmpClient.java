@@ -88,4 +88,19 @@ public interface CmpClient {
    */
   Cmpv2CertificationModel updateCertificate(CsrModel csrModel, Cmpv2Server cmpv2Server,
       CertificateUpdateModel certificateUpdateModel) throws CmpClientException;
+
+  /**
+   * Requests for a External Root CA Certificate to be updated for the passed keyPair wrapped
+   * in a CSRMeta with common details. Basic Authentication using IAK/RV, Verification of the signature
+   * (proof-of-possession) on the request is performed and an Exception thrown if verification fails
+   * or issue encountered in fetching certificate from CA.
+   *
+   * @param csrModel  Certificate Signing Request Model. Must not be {@code null}.
+   * @param cmpv2Server    CMPv2 server. Must not be {@code null}.
+   * @param certificateUpdateModel    Model with key update parameters {@code null}.
+   * @return model for certification containing certificate chain and trusted certificates
+   * @throws CmpClientException if client error occurs.
+   */
+  Cmpv2CertificationModel certificationRequest(CsrModel csrModel, Cmpv2Server cmpv2Server,
+      CertificateUpdateModel certificateUpdateModel) throws CmpClientException;
 }

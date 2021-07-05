@@ -160,6 +160,28 @@ class CertificationProviderTest {
     }
 
     @Test
+    void shouldCorrectConvertToCertificationModelForCertificationRequest()
+        throws IOException, CertificateException, CmpClientException {
+
+        when(
+            cmpClient.certificationRequest(any(CsrModel.class), any(Cmpv2Server.class), any(CertificateUpdateModel.class))
+        ).thenReturn(getCMPv2CertificationModel());
+
+        CertificationModel certificationModel = certificationProvider
+            .certificationRequest(csrModel, server, TEST_CERTIFICATE_UPDATE_MODEL);
+        List<String> certificateChain = certificationModel.getCertificateChain();
+        List<String> trustedCertificates = certificationModel.getTrustedCertificates();
+
+        assertThat(certificateChain.size()).isEqualTo(EXPECTED_SIZE_ONE);
+        assertThat(certificateChain.get(0)).startsWith(EXPECTED_BEGIN_OF_CERTIFICATE);
+        assertThat(certificateChain.get(0)).endsWith(EXPECTED_END_OF_CERTIFICATE);
+
+        assertThat(trustedCertificates.size()).isEqualTo(EXPECTED_SIZE_ONE);
+        assertThat(trustedCertificates.get(0)).startsWith(EXPECTED_BEGIN_OF_CERTIFICATE);
+        assertThat(trustedCertificates.get(0)).endsWith(EXPECTED_END_OF_CERTIFICATE);
+    }
+
+    @Test
     void certificationProviderThrowCmpClientWhenCallingClientFailsForUpdateCertificate()
         throws CmpClientException {
         // Given

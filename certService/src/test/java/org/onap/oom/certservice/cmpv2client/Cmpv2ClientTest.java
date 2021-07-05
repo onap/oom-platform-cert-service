@@ -170,6 +170,35 @@ class Cmpv2ClientTest {
     }
 
     @Test
+    void shouldReturnCorrectCmpCertificateForCorrectCertificationRequest() throws CmpClientException, IOException {
+
+        // given
+        setCsrModelAndServerTestDefaultValues();
+        when(httpClient.execute(any())).thenReturn(httpResponse);
+        when(httpResponse.getEntity()).thenReturn(httpEntity);
+
+        doAnswer(
+            invocation -> {
+                OutputStream os = invocation.getArgument(0);
+                os.write(BASE64_DECODER.decode(ClientTestData.CR_CORRECT_SERVER_RESPONSE_ENCODED.getBytes()));
+                return null;
+            })
+            .when(httpEntity)
+            .writeTo(any(OutputStream.class));
+        CmpClientImpl cmpClient = new CmpClientImpl(httpClient);
+
+        // when
+        Cmpv2CertificationModel cmpClientResult =
+            cmpClient.certificationRequest(csrModel, server, ClientTestData.TEST_CERTIFICATE_UPDATE_MODEL);
+
+        // then
+        assertNotNull(cmpClientResult);
+        assertThat(cmpClientResult.getCertificateChain()).isNotEmpty();
+        assertThat(cmpClientResult.getCertificateChain()).isNotEmpty();
+
+    }
+
+    @Test
     void shouldThrowCmpClientExceptionWhenCannotParseOldPrivateKey() {
         setCsrModelAndServerTestDefaultValues();
 
