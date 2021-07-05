@@ -93,18 +93,7 @@ public class CmpClientImpl implements CmpClient {
             throws CmpClientException {
 
         validate(csrModel, server, httpClient, notBefore, notAfter);
-
-        final String iak = server.getAuthentication().getIak();
-        final PkiMessageProtection pkiMessageProtection = new PasswordBasedProtection(iak);
-        final CreateCertRequest certRequest =
-                getCmpMessageBuilderWithCommonRequestValues(csrModel, server)
-                        .with(CreateCertRequest::setNotBefore, notBefore)
-                        .with(CreateCertRequest::setNotAfter, notAfter)
-                        .with(CreateCertRequest::setSenderKid, server.getAuthentication().getRv())
-                        .with(CreateCertRequest::setCmpRequestType, PKIBody.TYPE_INIT_REQ)
-                        .with(CreateCertRequest::setProtection, pkiMessageProtection)
-                        .build();
-
+        final CreateCertRequest certRequest = getIakRvRequest(csrModel, server, notBefore, notAfter, PKIBody.TYPE_INIT_REQ);
         return executeCmpRequest(csrModel, server, certRequest);
     }
 
@@ -129,6 +118,33 @@ public class CmpClientImpl implements CmpClient {
 
         return executeCmpRequest(csrModel, cmpv2Server, certRequest);
 
+    }
+
+    @Override
+    public Cmpv2CertificationModel certificationRequest(CsrModel csrModel, Cmpv2Server cmpv2Server,
+        CertificateUpdateModel certificateUpdateModel) throws CmpClientException {
+
+        validate(csrModel, cmpv2Server, httpClient, null, null);
+        final CreateCertRequest certRequest = getIakRvRequest(csrModel, cmpv2Server, null, null, PKIBody.TYPE_CERT_REQ);
+        return executeCmpRequest(csrModel, cmpv2Server, certRequest);
+    }
+
+    private CreateCertRequest getIakRvRequest(
+        CsrModel csrModel,
+        Cmpv2Server server,
+        Date notBefore,
+        Date notAfter,
+        int type) {
+
+        final String iak = server.getAuthentication().getIak();
+        final PkiMessageProtection pkiMessageProtection = new PasswordBasedProtection(iak);
+        return getCmpMessageBuilderWithCommonRequestValues(csrModel, server)
+            .with(CreateCertRequest::setNotBefore, notBefore)
+            .with(CreateCertRequest::setNotAfter, notAfter)
+            .with(CreateCertRequest::setSenderKid, server.getAuthentication().getRv())
+            .with(CreateCertRequest::setCmpRequestType, type)
+            .with(CreateCertRequest::setProtection, pkiMessageProtection)
+            .build();
     }
 
     private Cmpv2CertificationModel executeCmpRequest(CsrModel csrModel, Cmpv2Server cmpv2Server,

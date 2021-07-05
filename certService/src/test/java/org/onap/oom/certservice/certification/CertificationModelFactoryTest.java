@@ -242,17 +242,25 @@ class CertificationModelFactoryTest {
     }
 
     @Test
-    void shouldPerformCrWhenCsrAndOldCertDataMatch() throws CertificateDecryptionException, DecryptionException {
-        //given
-        mockCsrFactoryModelCreation();
+    void shouldPerformCrWhenCsrAndOldCertDataDontMatch()
+        throws CertificateDecryptionException, DecryptionException, CmpClientException {
+        // Given
+        CsrModel csrModel = mockCsrFactoryModelCreation();
+        Cmpv2Server testServer = mockCmpv2ProviderServerSelection();
+        mockCertificateProviderCertificationRequest(csrModel, testServer);
         mockCertificateFactoryModelCreation();
+        // When
         when(updateRequestTypeDetector.isKur(any(), any())).thenReturn(false);
-        //when, then
-        Exception exception = assertThrows(
-            UnsupportedOperationException.class, () ->
-                certificationModelFactory.createCertificationModel(TEST_CERTIFICATE_UPDATE_MODEL)
-        );
-        assertEquals(exception.getMessage(), "TODO: implement CR in separate MR");
+        CertificationModel certificationModel = certificationModelFactory
+            .createCertificationModel(TEST_CERTIFICATE_UPDATE_MODEL);
+        // Then
+        assertEquals(2, certificationModel.getCertificateChain().size());
+        assertThat(certificationModel.getCertificateChain()).contains(INTERMEDIATE_CERT, ENTITY_CERT);
+        assertEquals(2, certificationModel.getTrustedCertificates().size());
+        assertThat(certificationModel.getTrustedCertificates()).contains(CA_CERT, EXTRA_CA_CERT);
+
+        verify(certificationProvider, times(1))
+            .certificationRequest(csrModel, testServer, TEST_CERTIFICATE_UPDATE_MODEL);
     }
 
     @Test
@@ -273,6 +281,14 @@ class CertificationModelFactoryTest {
         CertificationModel expectedCertificationModel = getCertificationModel();
         when(
             certificationProvider.updateCertificate(csrModel, testServer, TEST_CERTIFICATE_UPDATE_MODEL)
+        ).thenReturn(expectedCertificationModel);
+    }
+
+    private void mockCertificateProviderCertificationRequest(CsrModel csrModel, Cmpv2Server testServer)
+        throws CmpClientException {
+        CertificationModel expectedCertificationModel = getCertificationModel();
+        when(
+            certificationProvider.certificationRequest(csrModel, testServer, TEST_CERTIFICATE_UPDATE_MODEL)
         ).thenReturn(expectedCertificationModel);
     }
 
