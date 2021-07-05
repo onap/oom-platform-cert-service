@@ -32,10 +32,10 @@ import (
 	certmanager "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1"
 	"k8s.io/apimachinery/pkg/types"
 
-	"onap.org/oom-certservice/k8s-external-provider/src/leveledlogger"
 	"onap.org/oom-certservice/k8s-external-provider/src/certserviceclient"
 	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2api"
 	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2provisioner/csr"
+	"onap.org/oom-certservice/k8s-external-provider/src/leveledlogger"
 )
 
 var collection = new(sync.Map)

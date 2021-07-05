@@ -119,10 +119,10 @@ func registerCMPv2IssuerController(manager manager.Manager) {
 	setupLog.Info("Registering CMPv2IssuerController...")
 
 	err := (&controllers.CMPv2IssuerController{
-		Client:   manager.GetClient(),
-		Log:      leveledlogger.GetLoggerWithValues("controllers", "CMPv2Issuer"),
-		Clock:    clock.RealClock{},
-		Recorder: manager.GetEventRecorderFor("cmpv2-issuer-controller"),
+		Client:             manager.GetClient(),
+		Log:                leveledlogger.GetLoggerWithValues("controllers", "CMPv2Issuer"),
+		Clock:              clock.RealClock{},
+		Recorder:           manager.GetEventRecorderFor("cmpv2-issuer-controller"),
 		ProvisionerFactory: &cmpv2provisioner.ProvisionerFactoryImpl{},
 	}).SetupWithManager(manager)
 

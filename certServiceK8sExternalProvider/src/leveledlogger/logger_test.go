@@ -50,7 +50,7 @@ func TestLoggerOnDebugLevel(t *testing.T) {
 	SetConfigFileName("testdata/test_logger_config_debug.json")
 	logger := GetLoggerWithName("loggername")
 
-    logOnAllLevels(logger)
+	logOnAllLevels(logger)
 
 	resultLogBytes := readFile(resultLogName)
 	expectedLogBytes := readFile(expectedLogName)
