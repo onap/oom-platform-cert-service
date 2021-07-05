@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "eb16e734_1d67e9dc",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/cmpv2client/impl/CmpClientImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2021-07-05T13:09:28Z",
+      "side": 1,
+      "message": "Fine for now. We\u0027ll see if any more improvements could be made later",
+      "parentUuid": "bfb3ff28_0f48ed27",
+      "range": {
+        "startLine": 161,
+        "startChar": 0,
+        "endLine": 177,
+        "endChar": 5
+      },
+      "revId": "b41da016ba1dd72de2c76fb610fb9c84b5a3ae37",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40838edb_4ae38467",
         "filename": "certService/src/test/java/org/onap/oom/certservice/certification/CertificationProviderTest.java",
         "patchSetId": 5
