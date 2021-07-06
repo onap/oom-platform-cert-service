@@ -27,7 +27,10 @@ package cmpv2controller
 
 import (
 	"context"
+	b64 "encoding/base64"
+	"encoding/json"
 	"fmt"
+	"strconv"
 
 	cmapi "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1"
 	core "k8s.io/api/core/v1"
@@ -137,6 +140,21 @@ func (controller *CertificateRequestController) Reconcile(k8sRequest ctrl.Reques
 	// 9. Log Certificate Request properties not supported or overridden by CertService API
 	logger.LogCertRequestProperties(leveledlogger.GetLoggerWithName("CSR details:"), certificateRequest, csr)
 
+	revision := certificateRequest.ObjectMeta.Annotations["cert-manager.io/certificate-revision"]
+	i, _ := strconv.Atoi(revision)
+	if i > 1 {
+		log.Info("Attempt to update certificate")
+		log.Info("Revision: " + revision)
+		oldPrivateKey, oldCertificate, err2 := controller.getEncodedOldCertificateData(log, certificateRequest, ctx)
+		if err2 != nil {
+			controller.handleErrorFailedToReceiveOldCertificateData(certUpdater, log, err2)
+			return ctrl.Result{}, nil
+		}
+		//Todo Send Update request
+		log.Info("//TODO Old PK to send: " + oldPrivateKey)
+		log.Info("//TODO Old Cert to send: " + oldCertificate)
+	}
+
 	// 10. Sign CertificateRequest
 	signedPEM, trustedCAs, err := provisioner.Sign(ctx, certificateRequest, privateKeyBytes)
 	if err != nil {
@@ -152,6 +170,32 @@ func (controller *CertificateRequestController) Reconcile(k8sRequest ctrl.Reques
 	}
 
 	return ctrl.Result{}, nil
+}
+
+func (controller *CertificateRequestController) getEncodedOldCertificateData(log leveledlogger.Logger, certificateRequest *cmapi.CertificateRequest, ctx context.Context) (string, string, error) {
+
+	var oldCertificateConfig = certificateRequest.ObjectMeta.Annotations["kubectl.kubernetes.io/last-applied-configuration"]
+	var certificateConfig = new(cmapi.Certificate)
+	err := json.Unmarshal([]byte(oldCertificateConfig), &certificateConfig)
+	if err != nil {
+		return "", "", err
+	}
+	log.Debug("Old Certificate secret name: " + certificateConfig.Spec.SecretName)
+	oldPrivateKeySecretNamespaceName := types.NamespacedName{
+		Namespace: certificateConfig.Namespace,
+		Name:      certificateConfig.Spec.SecretName,
+	}
+	var oldCertificateSecret core.Secret
+	if err := controller.Client.Get(ctx, oldPrivateKeySecretNamespaceName, &oldCertificateSecret); err != nil {
+		return "", "", err
+	}
+
+	encodedOldPK := b64.StdEncoding.EncodeToString(oldCertificateSecret.Data["tls.key"])
+	encodedOldCert := b64.StdEncoding.EncodeToString(oldCertificateSecret.Data["ca.crt"])
+
+	log.Debug("Encoded old Private Key: " + encodedOldPK)
+	log.Debug("Encoded old Certificate: " + encodedOldCert)
+	return encodedOldPK, encodedOldCert, nil
 }
 
 func (controller *CertificateRequestController) SetupWithManager(manager ctrl.Manager) error {
@@ -211,6 +255,11 @@ func (controller *CertificateRequestController) handleErrorGettingPrivateKey(upd
 func (controller *CertificateRequestController) handleErrorFailedToSignCertificate(updater *updater.CertificateRequestStatusUpdater, log leveledlogger.Logger, err error) {
 	log.Error(err, "Failed to sign certificate request")
 	_ = updater.UpdateStatusWithEventTypeWarning(cmapi.CertificateRequestReasonFailed, "Failed to sign certificate request: %v", err)
+}
+
+func (controller *CertificateRequestController) handleErrorFailedToReceiveOldCertificateData(updater *updater.CertificateRequestStatusUpdater, log leveledlogger.Logger, err error) {
+	log.Error(err, "Failed to sign certificate request")
+	_ = updater.UpdateStatusWithEventTypeWarning(cmapi.CertificateRequestReasonFailed, "Failed to receive old certificate data: %v", err)
 }
 
 func (controller *CertificateRequestController) handleErrorFailedToDecodeCSR(updater *updater.CertificateRequestStatusUpdater, log leveledlogger.Logger, err error) {
