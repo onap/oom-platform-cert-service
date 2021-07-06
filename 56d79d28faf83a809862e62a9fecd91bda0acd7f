@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2720e16_ce5fdf0e",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/certification/CertificationProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2021-07-06T09:27:11Z",
+      "side": 1,
+      "message": "not used",
+      "range": {
+        "startLine": 71,
+        "startChar": 8,
+        "endLine": 71,
+        "endChar": 53
+      },
+      "revId": "56d79d28faf83a809862e62a9fecd91bda0acd7f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77ef551f_3571926f",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/certification/CertificationProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2021-07-06T09:27:11Z",
+      "side": 1,
+      "message": "To be extracted. Can be done in a separate refactor commit.",
+      "range": {
+        "startLine": 73,
+        "startChar": 15,
+        "endLine": 74,
+        "endChar": 92
+      },
+      "revId": "56d79d28faf83a809862e62a9fecd91bda0acd7f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c16c4378_c01d630a",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/cmpv2client/api/CmpClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2021-07-06T09:27:11Z",
+      "side": 1,
+      "message": "Maybe:\n Requests for an additional External Root CA Certificate to be created for the passed keyPair wrapped...\n?",
+      "range": {
+        "startLine": 78,
+        "startChar": 5,
+        "endLine": 78,
+        "endChar": 93
+      },
+      "revId": "56d79d28faf83a809862e62a9fecd91bda0acd7f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
