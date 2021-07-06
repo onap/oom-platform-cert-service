@@ -53,6 +53,7 @@ func Test_shouldSaveCorrectSignedPems_whenRequestReceived(t *testing.T) {
 	createProvisioner(verifiedIssuer)
 	fakeClient := fake.NewFakeClientWithScheme(testdata.GetScheme(), &verifiedIssuer,
 		getValidCertificateRequest(), getValidPrivateKeySecret())
+
 	fakeRecorder := record.NewFakeRecorder(recorderBufferSize)
 	controller := getCertRequestController(fakeRecorder, fakeClient)
 	fakeRequest := testdata.GetFakeRequest(certificateRequestName)

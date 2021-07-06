@@ -34,6 +34,7 @@ import (
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/client-go/tools/record"
+	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2controller/util"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
@@ -137,14 +138,22 @@ func (controller *CertificateRequestController) Reconcile(k8sRequest ctrl.Reques
 	// 9. Log Certificate Request properties not supported or overridden by CertService API
 	logger.LogCertRequestProperties(leveledlogger.GetLoggerWithName("CSR details:"), certificateRequest, csr)
 
-	// 10. Sign CertificateRequest
+	// 10. Check if CertificateRequest is an update request
+	isUpdateRevision, oldCertificate, oldPrivateKey := util.CheckIfCertificateUpdateAndRetrieveOldCertificateAndPk(
+		controller.Client, certificateRequest, ctx)
+	if isUpdateRevision {
+		log.Info("Certificate will be updated.", "old-certificate", oldCertificate,
+			"old-private-key", oldPrivateKey)
+	}
+
+	// 11. Sign CertificateRequest
 	signedPEM, trustedCAs, err := provisioner.Sign(ctx, certificateRequest, privateKeyBytes)
 	if err != nil {
 		controller.handleErrorFailedToSignCertificate(certUpdater, log, err)
 		return ctrl.Result{}, nil
 	}
 
-	// 11. Store signed certificates in CertificateRequest
+	// 12. Store signed certificates in CertificateRequest
 	certificateRequest.Status.Certificate = signedPEM
 	certificateRequest.Status.CA = trustedCAs
 	if err := certUpdater.UpdateCertificateRequestWithSignedCertificates(); err != nil {
