@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2d07380_f47af4f5",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/certificate_request_controller.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-07-06T13:11:08Z",
+      "side": 1,
+      "message": "Revision should be greater than 1 and secret with old certificate should exists.\nTo get old certificate you can look at this commit\nhttps://gerrit.onap.org/r/c/oom/platform/cert-service/+/122454",
+      "range": {
+        "startLine": 170,
+        "startChar": 8,
+        "endLine": 170,
+        "endChar": 20
+      },
+      "revId": "ae24b8e7b5864d693b45fa9c7b9f45759d6d77c5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
