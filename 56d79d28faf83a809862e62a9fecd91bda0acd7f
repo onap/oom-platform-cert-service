@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "415d7beb_5a6264a2",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/certification/CertificationProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2021-07-06T10:06:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2720e16_ce5fdf0e",
+      "range": {
+        "startLine": 71,
+        "startChar": 8,
+        "endLine": 71,
+        "endChar": 53
+      },
+      "revId": "56d79d28faf83a809862e62a9fecd91bda0acd7f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77ef551f_3571926f",
         "filename": "certService/src/main/java/org/onap/oom/certservice/certification/CertificationProvider.java",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2021-07-06T09:27:11Z",
       "side": 1,
       "message": "To be extracted. Can be done in a separate refactor commit.",
+      "range": {
+        "startLine": 73,
+        "startChar": 15,
+        "endLine": 74,
+        "endChar": 92
+      },
+      "revId": "56d79d28faf83a809862e62a9fecd91bda0acd7f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e002cfa4_fa4b55c7",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/certification/CertificationProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2021-07-06T10:06:43Z",
+      "side": 1,
+      "message": "Ok, will be done in the refactor commit.",
+      "parentUuid": "77ef551f_3571926f",
       "range": {
         "startLine": 73,
         "startChar": 15,
@@ -68,6 +116,30 @@
       "revId": "56d79d28faf83a809862e62a9fecd91bda0acd7f",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0b53742_82b26b55",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/cmpv2client/api/CmpClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2021-07-06T10:06:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c16c4378_c01d630a",
+      "range": {
+        "startLine": 78,
+        "startChar": 5,
+        "endLine": 78,
+        "endChar": 93
+      },
+      "revId": "56d79d28faf83a809862e62a9fecd91bda0acd7f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
