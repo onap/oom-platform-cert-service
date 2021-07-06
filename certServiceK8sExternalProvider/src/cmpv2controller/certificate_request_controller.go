@@ -28,6 +28,7 @@ package cmpv2controller
 import (
 	"context"
 	"fmt"
+	"strconv"
 
 	cmapi "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1"
 	core "k8s.io/api/core/v1"
@@ -47,6 +48,7 @@ import (
 
 const (
 	privateKeySecretNameAnnotation = "cert-manager.io/private-key-secret-name"
+	revisionAnnotation             = "cert-manager.io/certificate-revision"
 	privateKeySecretKey            = "tls.key"
 )
 
@@ -137,14 +139,20 @@ func (controller *CertificateRequestController) Reconcile(k8sRequest ctrl.Reques
 	// 9. Log Certificate Request properties not supported or overridden by CertService API
 	logger.LogCertRequestProperties(leveledlogger.GetLoggerWithName("CSR details:"), certificateRequest, csr)
 
-	// 10. Sign CertificateRequest
+	// 10. Check if CertificateRequest is an update request
+	isCertificateUpdate := shouldCertificateBeUpdated(certificateRequest)
+	if isCertificateUpdate {
+		log.Info("Certificate will be updated.")
+	}
+
+	// 11. Sign CertificateRequest
 	signedPEM, trustedCAs, err := provisioner.Sign(ctx, certificateRequest, privateKeyBytes)
 	if err != nil {
 		controller.handleErrorFailedToSignCertificate(certUpdater, log, err)
 		return ctrl.Result{}, nil
 	}
 
-	// 11. Store signed certificates in CertificateRequest
+	// 12. Store signed certificates in CertificateRequest
 	certificateRequest.Status.Certificate = signedPEM
 	certificateRequest.Status.CA = trustedCAs
 	if err := certUpdater.UpdateCertificateRequestWithSignedCertificates(); err != nil {
@@ -152,6 +160,14 @@ func (controller *CertificateRequestController) Reconcile(k8sRequest ctrl.Reques
 	}
 
 	return ctrl.Result{}, nil
+}
+
+func shouldCertificateBeUpdated(certificateRequest *cmapi.CertificateRequest) bool {
+	revision, err := strconv.Atoi(certificateRequest.ObjectMeta.Annotations[revisionAnnotation])
+	if err != nil {
+		return false
+	}
+	return revision > 1
 }
 
 func (controller *CertificateRequestController) SetupWithManager(manager ctrl.Manager) error {

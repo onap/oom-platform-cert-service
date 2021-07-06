@@ -22,6 +22,7 @@ package cmpv2controller
 
 import (
 	"context"
+	"fmt"
 	"testing"
 
 	cmapi "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1"
@@ -87,6 +88,32 @@ func Test_shouldBeValidCMPv2CertificateRequest_whenKindIsCMPvIssuer(t *testing.T
 	request.Spec.IssuerRef.Kind = "CMPv2Issuer"
 
 	assert.True(t, isCMPv2CertificateRequest(request))
+}
+
+func Test_shouldCertificateBeUpdated(t *testing.T) {
+	parameters := []struct {
+		revision string
+		expected bool
+	}{
+		{"1", false},
+		{"2", true},
+		{"invalid", false},
+	}
+
+	for _, parameter := range parameters {
+		testName := fmt.Sprintf("Expected:%v for revision=%v", parameter.expected, parameter.revision)
+		t.Run(testName, func(t *testing.T) {
+			testShouldCertificateBeUpdated(t, parameter.revision, parameter.expected)
+		})
+	}
+}
+
+func testShouldCertificateBeUpdated(t *testing.T, revision string, expected bool) {
+	request := new(cmapi.CertificateRequest)
+	request.ObjectMeta.Annotations = map[string]string{
+		revisionAnnotation: revision,
+	}
+	assert.Equal(t, expected, shouldCertificateBeUpdated(request))
 }
 
 func getCertificates(controller CertificateRequestController, namespacedName types.NamespacedName) ([]byte, []byte) {
