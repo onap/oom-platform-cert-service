@@ -138,6 +138,11 @@ or:
 make send-certification-request
 ```
 
+To send request to custom CA use ```make <request> -e CA_NAME=<custom CA>``` e.g: 
+```
+make send-initialization-request -e CA_NAME=CUSTOM_CA
+```
+
 ### OOM CertService CSITs
 #### CSIT repository
 ```
