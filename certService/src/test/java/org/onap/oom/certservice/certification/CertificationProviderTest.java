@@ -20,8 +20,25 @@
 
 package org.onap.oom.certservice.certification;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+import static org.onap.oom.certservice.certification.TestData.TEST_CMPv2_KEYSTORE;
+import static org.onap.oom.certservice.certification.TestData.TEST_CMPv2_TRUSTSTORE;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.StringReader;
+import java.nio.charset.StandardCharsets;
+import java.security.NoSuchProviderException;
+import java.security.Security;
+import java.security.cert.CertificateException;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import org.apache.commons.io.IOUtils;
 import org.bouncycastle.cert.X509CertificateHolder;
 import org.bouncycastle.cert.jcajce.JcaX509CertificateConverter;
@@ -33,29 +50,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.onap.oom.certservice.certification.configuration.model.Cmpv2Server;
-import org.onap.oom.certservice.certification.model.CertificateUpdateModel;
-import org.onap.oom.certservice.certification.model.CertificateUpdateModel.CertificateUpdateModelBuilder;
-import org.onap.oom.certservice.certification.model.CertificationModel;
+import org.onap.oom.certservice.certification.model.CertificationResponseModel;
 import org.onap.oom.certservice.certification.model.CsrModel;
+import org.onap.oom.certservice.certification.model.OldCertificateModel;
 import org.onap.oom.certservice.cmpv2client.api.CmpClient;
 import org.onap.oom.certservice.cmpv2client.exceptions.CmpClientException;
 import org.onap.oom.certservice.cmpv2client.model.Cmpv2CertificationModel;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.security.NoSuchProviderException;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
-import java.util.Collections;
-import java.util.Objects;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-import static org.onap.oom.certservice.certification.TestData.TEST_CMPv2_KEYSTORE;
-import static org.onap.oom.certservice.certification.TestData.TEST_CMPv2_TRUSTSTORE;
 
 @ExtendWith(MockitoExtension.class)
 class CertificationProviderTest {
@@ -71,18 +71,17 @@ class CertificationProviderTest {
     private Cmpv2Server testServer;
     @Mock
     private CmpClient cmpClient;
+    @Mock
+    private OldCertificateModel oldCertificateModel;
 
     private CertificationProvider certificationProvider;
 
-    private static final CertificateUpdateModel TEST_CERTIFICATE_UPDATE_MODEL = new CertificateUpdateModelBuilder()
-        .setEncodedCsr("encodedCSR")
-        .setEncodedPrivateKey("encodedPK")
-        .setEncodedOldCert("encodedOldCert")
-        .setEncodedOldPrivateKey("encodedOldPK")
-        .setCaName("TestCA")
-        .build();
     private static final String EXPECTED_BEGIN_OF_CERTIFICATE = "-----BEGIN CERTIFICATE-----\n";
     private static final String EXPECTED_END_OF_CERTIFICATE = "-----END CERTIFICATE-----\n";
+
+    static {
+        Security.addProvider(new BouncyCastleProvider());
+    }
 
     @BeforeEach
     public void init() {
@@ -94,10 +93,10 @@ class CertificationProviderTest {
             throws CertificateException, NoSuchProviderException, IOException, CmpClientException {
         // When
         when(
-                cmpClient.createCertificate(any(CsrModel.class), any(Cmpv2Server.class))
+                cmpClient.executeInitializationRequest(any(CsrModel.class), any(Cmpv2Server.class))
         ).thenReturn(createCorrectClientResponse());
 
-        CertificationModel certificationModel = certificationProvider.signCsr(csrModel, server);
+        CertificationResponseModel certificationModel = certificationProvider.executeInitializationRequest(csrModel, server);
 
         // Then
         InputStream certificate = getClass().getClassLoader().getResourceAsStream("certificateModelChain.first");
@@ -114,8 +113,6 @@ class CertificationProviderTest {
         assertThat(trustedCertificateModel).isEqualTo(expectedTrustedCertificate);
     }
 
-
-
     @Test
     void certificationProviderThrowCmpClientWhenCallingClientFailsForSignCsr()
             throws CmpClientException {
@@ -123,13 +120,13 @@ class CertificationProviderTest {
         String expectedErrorMessage = "connecting to CMP client failed";
 
         when(
-                cmpClient.createCertificate(any(CsrModel.class), any(Cmpv2Server.class))
+                cmpClient.executeInitializationRequest(any(CsrModel.class), any(Cmpv2Server.class))
         ).thenThrow(new CmpClientException(expectedErrorMessage));
 
         // When
         Exception exception = assertThrows(
                 CmpClientException.class, () ->
-                        certificationProvider.signCsr(testCsrModel, testServer)
+                        certificationProvider.executeInitializationRequest(testCsrModel, testServer)
         );
 
         // Then
@@ -142,11 +139,11 @@ class CertificationProviderTest {
 
         // When
         when(
-            cmpClient.updateCertificate(any(CsrModel.class), any(Cmpv2Server.class), any(CertificateUpdateModel.class))
+            cmpClient.executeKeyUpdateRequest(any(CsrModel.class), any(Cmpv2Server.class), any(OldCertificateModel.class))
         ).thenReturn(getCMPv2CertificationModel());
 
-        CertificationModel certificationModel = certificationProvider
-            .updateCertificate(csrModel, server, TEST_CERTIFICATE_UPDATE_MODEL);
+        CertificationResponseModel certificationModel = certificationProvider
+            .executeKeyUpdateRequest(csrModel, server, oldCertificateModel);
         List<String> certificateChain = certificationModel.getCertificateChain();
         List<String> trustedCertificates = certificationModel.getTrustedCertificates();
 
@@ -164,11 +161,11 @@ class CertificationProviderTest {
         throws IOException, CertificateException, CmpClientException {
 
         when(
-            cmpClient.certificationRequest(any(CsrModel.class), any(Cmpv2Server.class))
+            cmpClient.executeInitializationRequest(any(CsrModel.class), any(Cmpv2Server.class))
         ).thenReturn(getCMPv2CertificationModel());
 
-        CertificationModel certificationModel = certificationProvider
-            .certificationRequest(csrModel, server);
+        CertificationResponseModel certificationModel = certificationProvider
+            .executeInitializationRequest(csrModel, server);
         List<String> certificateChain = certificationModel.getCertificateChain();
         List<String> trustedCertificates = certificationModel.getTrustedCertificates();
 
@@ -188,13 +185,13 @@ class CertificationProviderTest {
         String expectedErrorMessage = "Exception occurred while send request to CMPv2 Server";
 
         when(
-            cmpClient.updateCertificate(any(CsrModel.class), any(Cmpv2Server.class), any(CertificateUpdateModel.class))
+            cmpClient.executeKeyUpdateRequest(any(CsrModel.class), any(Cmpv2Server.class), any(OldCertificateModel.class))
         ).thenThrow(new CmpClientException(expectedErrorMessage));
 
         // When
         Exception exception = assertThrows(
             CmpClientException.class, () ->
-                certificationProvider.updateCertificate(testCsrModel, testServer, TEST_CERTIFICATE_UPDATE_MODEL)
+                certificationProvider.executeKeyUpdateRequest(testCsrModel, testServer, oldCertificateModel)
         );
 
         // Then
@@ -206,9 +203,8 @@ class CertificationProviderTest {
             throws CertificateException, NoSuchProviderException {
         InputStream certificateChain = getClass().getClassLoader().getResourceAsStream("certificateChain.first");
         InputStream trustedCertificate = getClass().getClassLoader().getResourceAsStream("trustedCertificates.first");
-        X509Certificate x509Certificate = new CertificateFactoryProvider().generateCertificate(certificateChain);
-        X509Certificate x509TrustedCertificate =
-                new CertificateFactoryProvider().generateCertificate(trustedCertificate);
+        X509Certificate x509Certificate = generateCertificate(certificateChain);
+        X509Certificate x509TrustedCertificate = generateCertificate(trustedCertificate);
         return new Cmpv2CertificationModel(
                 Collections.singletonList(x509Certificate),
                 Collections.singletonList(x509TrustedCertificate));
@@ -232,5 +228,9 @@ class CertificationProviderTest {
             .setProvider(new BouncyCastleProvider())
             .getCertificate(certHolder);
         return List.of(x509Certificate);
+    }
+
+    private X509Certificate generateCertificate(InputStream inStream) throws CertificateException, NoSuchProviderException {
+        return (X509Certificate) CertificateFactory.getInstance("X.509", "BC").generateCertificate(inStream);
     }
 }

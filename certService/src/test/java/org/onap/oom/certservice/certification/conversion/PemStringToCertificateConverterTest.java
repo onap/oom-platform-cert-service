@@ -18,7 +18,7 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.certservice.certification;
+package org.onap.oom.certservice.certification.conversion;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -29,6 +29,7 @@ import java.security.cert.X509Certificate;
 import java.util.List;
 import org.bouncycastle.asn1.x509.GeneralName;
 import org.junit.jupiter.api.Test;
+import org.onap.oom.certservice.certification.conversion.PemStringToCertificateConverter;
 import org.onap.oom.certservice.certification.exception.StringToCertificateConversionException;
 
 class PemStringToCertificateConverterTest {

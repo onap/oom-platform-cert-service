@@ -18,7 +18,7 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.certservice.certification;
+package org.onap.oom.certservice.certification.conversion;
 
 import java.io.IOException;
 import java.security.PrivateKey;

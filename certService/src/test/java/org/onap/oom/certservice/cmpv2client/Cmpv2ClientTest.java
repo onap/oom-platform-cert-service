@@ -76,6 +76,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.onap.oom.certservice.certification.configuration.model.Authentication;
 import org.onap.oom.certservice.certification.configuration.model.Cmpv2Server;
+import org.onap.oom.certservice.certification.exception.CertificateDecryptionException;
 import org.onap.oom.certservice.certification.model.CsrModel;
 import org.onap.oom.certservice.cmpv2client.exceptions.CmpClientException;
 import org.onap.oom.certservice.cmpv2client.exceptions.CmpServerException;
@@ -141,7 +142,7 @@ class Cmpv2ClientTest {
     }
 
     @Test
-    void shouldReturnCorrectCmpCertificateForCorrectKeyUpdateResponse() throws CmpClientException, IOException {
+    void shouldReturnCorrectCmpCertificateForCorrectKeyUpdateResponse() throws CmpClientException, IOException, CertificateDecryptionException {
 
         // given
         setCsrModelAndServerTestDefaultValues();
@@ -160,7 +161,7 @@ class Cmpv2ClientTest {
 
         // when
         Cmpv2CertificationModel cmpClientResult =
-            cmpClient.updateCertificate(csrModel, server, ClientTestData.TEST_CERTIFICATE_UPDATE_MODEL);
+            cmpClient.executeKeyUpdateRequest(csrModel, server, ClientTestData.createCorrectOldCertificateModel());
 
         // then
         assertNotNull(cmpClientResult);
@@ -189,7 +190,7 @@ class Cmpv2ClientTest {
 
         // when
         Cmpv2CertificationModel cmpClientResult =
-            cmpClient.certificationRequest(csrModel, server);
+            cmpClient.executeCertificationRequest(csrModel, server);
 
         // then
         assertNotNull(cmpClientResult);
@@ -203,9 +204,9 @@ class Cmpv2ClientTest {
         setCsrModelAndServerTestDefaultValues();
 
         CmpClientImpl cmpClient = new CmpClientImpl(httpClient);
-        assertThatExceptionOfType(CmpClientException.class)
-            .isThrownBy(() -> cmpClient.updateCertificate(csrModel, server, ClientTestData.TEST_CERTIFICATE_UPDATE_MODEL_WITH_WRONG_PRIVATE_KEY))
-            .withMessageContaining("Cannot parse old private key");
+        assertThatExceptionOfType(CertificateDecryptionException.class)
+            .isThrownBy(() -> cmpClient.executeKeyUpdateRequest(csrModel, server, ClientTestData.createOldCertificateModelWithWrongPrivateKey()))
+            .withMessageContaining("Cannot convert certificate or key");
 
     }
 
@@ -217,9 +218,9 @@ class Cmpv2ClientTest {
         CmpClientImpl cmpClient = new CmpClientImpl(httpClient);
 
         // When // Then
-        assertThatExceptionOfType(CmpClientException.class)
-            .isThrownBy(() -> cmpClient.updateCertificate(csrModel, server, ClientTestData.TEST_CERTIFICATE_UPDATE_MODEL_WITH_WRONG_OLD_CERT))
-            .withMessageContaining("Cannot parse old certificate");
+        assertThatExceptionOfType(CertificateDecryptionException.class)
+            .isThrownBy(() -> cmpClient.executeKeyUpdateRequest(csrModel, server, ClientTestData.createOldCertificateModelWithWrongCert()))
+            .withMessageContaining("Incorrect certificate, decryption failed");
     }
 
 
@@ -255,7 +256,7 @@ class Cmpv2ClientTest {
         CmpClientImpl cmpClient = spy(new CmpClientImpl(httpClient));
         // when
         Cmpv2CertificationModel cmpClientResult =
-                cmpClient.createCertificate(csrModel, server, notBefore, notAfter);
+                cmpClient.executeInitializationRequest(csrModel, server, notBefore, notAfter);
         // then
         assertNotNull(cmpClientResult);
     }
@@ -294,7 +295,7 @@ class Cmpv2ClientTest {
         // then
         Assertions.assertThrows(
                 CmpClientException.class,
-                () -> cmpClient.createCertificate(csrModel, server, notBefore, notAfter));
+                () -> cmpClient.executeInitializationRequest(csrModel, server, notBefore, notAfter));
     }
 
     @Test
@@ -331,7 +332,7 @@ class Cmpv2ClientTest {
         // then
         Assertions.assertThrows(
                 CmpServerException.class,
-                () -> cmpClient.createCertificate(csrModel, server, notBefore, notAfter));
+                () -> cmpClient.executeInitializationRequest(csrModel, server, notBefore, notAfter));
     }
 
 
@@ -370,7 +371,7 @@ class Cmpv2ClientTest {
         CmpClientImpl cmpClient = new CmpClientImpl(httpClient);
 
         assertThatExceptionOfType(CmpClientException.class)
-            .isThrownBy(() -> cmpClient.createCertificate(csrModel, server, notBefore, notAfter))
+            .isThrownBy(() -> cmpClient.executeInitializationRequest(csrModel, server, notBefore, notAfter))
             .withMessageContaining("CMP response does not contain Protection Algorithm field");
 
     }
@@ -391,7 +392,7 @@ class Cmpv2ClientTest {
         // then
         Assertions.assertThrows(
                 IllegalArgumentException.class,
-                () -> cmpClient.createCertificate(csrModel, server, notBefore, notAfter));
+                () -> cmpClient.executeInitializationRequest(csrModel, server, notBefore, notAfter));
     }
 
     @Test
@@ -411,7 +412,7 @@ class Cmpv2ClientTest {
         // then
         Assertions.assertThrows(
                 CmpClientException.class,
-                () -> cmpClient.createCertificate(csrModel, server, notBefore, notAfter));
+                () -> cmpClient.executeInitializationRequest(csrModel, server, notBefore, notAfter));
     }
 
     private void setCsrModelAndServerValues(String iak, String rv, String externalCaUrl, Date notBefore, Date notAfter) {

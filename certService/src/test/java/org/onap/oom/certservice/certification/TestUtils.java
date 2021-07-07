@@ -23,6 +23,8 @@ package org.onap.oom.certservice.certification;
 import org.bouncycastle.util.encoders.Base64;
 import org.bouncycastle.util.io.pem.PemObject;
 import org.bouncycastle.util.io.pem.PemWriter;
+import org.onap.oom.certservice.certification.conversion.CsrModelFactory;
+import org.onap.oom.certservice.certification.conversion.StringBase64;
 import org.onap.oom.certservice.certification.exception.DecryptionException;
 import org.onap.oom.certservice.certification.exception.KeyDecryptionException;
 import org.onap.oom.certservice.certification.model.CsrModel;
