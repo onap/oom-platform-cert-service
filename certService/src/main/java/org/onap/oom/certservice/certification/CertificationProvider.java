@@ -24,9 +24,9 @@ import org.bouncycastle.openssl.jcajce.JcaMiscPEMGenerator;
 import org.bouncycastle.util.io.pem.PemObjectGenerator;
 import org.bouncycastle.util.io.pem.PemWriter;
 import org.onap.oom.certservice.certification.configuration.model.Cmpv2Server;
-import org.onap.oom.certservice.certification.model.CertificateUpdateModel;
-import org.onap.oom.certservice.certification.model.CertificationModel;
+import org.onap.oom.certservice.certification.model.CertificationResponseModel;
 import org.onap.oom.certservice.certification.model.CsrModel;
+import org.onap.oom.certservice.certification.model.OldCertificateModel;
 import org.onap.oom.certservice.cmpv2client.api.CmpClient;
 import org.onap.oom.certservice.cmpv2client.exceptions.CmpClientException;
 import org.onap.oom.certservice.cmpv2client.model.Cmpv2CertificationModel;
@@ -53,29 +53,32 @@ public class CertificationProvider {
         this.cmpClient = cmpClient;
     }
 
-    public CertificationModel signCsr(CsrModel csrModel, Cmpv2Server server)
+    public CertificationResponseModel executeInitializationRequest(CsrModel csrModel, Cmpv2Server server)
             throws CmpClientException {
-        Cmpv2CertificationModel certificates = cmpClient.createCertificate(csrModel, server);
-        return new CertificationModel(convertFromX509CertificateListToPemList(certificates.getCertificateChain()),
-                convertFromX509CertificateListToPemList(certificates.getTrustedCertificates()));
+        Cmpv2CertificationModel certificates = cmpClient.executeInitializationRequest(csrModel, server);
+        return getCertificationResponseModel(certificates);
     }
 
-    public CertificationModel updateCertificate(CsrModel csrModel, Cmpv2Server cmpv2Server,
-        CertificateUpdateModel certificateUpdateModel) throws CmpClientException {
-        Cmpv2CertificationModel certificates = cmpClient.updateCertificate(csrModel, cmpv2Server, certificateUpdateModel);
-        return new CertificationModel(convertFromX509CertificateListToPemList(certificates.getCertificateChain()),
-            convertFromX509CertificateListToPemList(certificates.getTrustedCertificates()));
+    public CertificationResponseModel executeKeyUpdateRequest(CsrModel csrModel, Cmpv2Server cmpv2Server,
+        OldCertificateModel oldCertificateModel) throws CmpClientException {
+        Cmpv2CertificationModel certificates = cmpClient.executeKeyUpdateRequest(csrModel, cmpv2Server, oldCertificateModel);
+        return getCertificationResponseModel(certificates);
     }
 
-    public CertificationModel certificationRequest(CsrModel csrModel, Cmpv2Server cmpv2Server) throws CmpClientException {
-        Cmpv2CertificationModel certificates = cmpClient.certificationRequest(csrModel, cmpv2Server);
-        return new CertificationModel(convertFromX509CertificateListToPemList(certificates.getCertificateChain()),
-            convertFromX509CertificateListToPemList(certificates.getTrustedCertificates()));
+    public CertificationResponseModel executeCertificationRequest(CsrModel csrModel, Cmpv2Server cmpv2Server) throws CmpClientException {
+        Cmpv2CertificationModel certificates = cmpClient.executeCertificationRequest(csrModel, cmpv2Server);
+        return getCertificationResponseModel(certificates);
     }
 
     private static List<String> convertFromX509CertificateListToPemList(List<X509Certificate> certificates) {
         return certificates.stream().map(CertificationProvider::convertFromX509CertificateToPem).filter(cert -> !cert.isEmpty())
                 .collect(Collectors.toList());
+    }
+
+    private CertificationResponseModel getCertificationResponseModel(Cmpv2CertificationModel certificates) {
+        return new CertificationResponseModel(
+            convertFromX509CertificateListToPemList(certificates.getCertificateChain()),
+            convertFromX509CertificateListToPemList(certificates.getTrustedCertificates()));
     }
 
     private static String convertFromX509CertificateToPem(X509Certificate certificate) {

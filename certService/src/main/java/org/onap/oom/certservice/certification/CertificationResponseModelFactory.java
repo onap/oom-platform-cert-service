@@ -22,12 +22,15 @@ package org.onap.oom.certservice.certification;
 
 import org.onap.oom.certservice.certification.configuration.Cmpv2ServerProvider;
 import org.onap.oom.certservice.certification.configuration.model.Cmpv2Server;
+import org.onap.oom.certservice.certification.conversion.CsrModelFactory;
+import org.onap.oom.certservice.certification.conversion.OldCertificateModelFactory;
+import org.onap.oom.certservice.certification.conversion.StringBase64;
 import org.onap.oom.certservice.certification.exception.CertificateDecryptionException;
 import org.onap.oom.certservice.certification.exception.DecryptionException;
 import org.onap.oom.certservice.certification.model.CertificateUpdateModel;
-import org.onap.oom.certservice.certification.model.CertificationModel;
+import org.onap.oom.certservice.certification.model.CertificationResponseModel;
 import org.onap.oom.certservice.certification.model.CsrModel;
-import org.onap.oom.certservice.certification.model.X509CertificateModel;
+import org.onap.oom.certservice.certification.model.OldCertificateModel;
 import org.onap.oom.certservice.cmpv2client.exceptions.CmpClientException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,31 +38,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CertificationModelFactory {
+public class CertificationResponseModelFactory {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CertificationModelFactory.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CertificationResponseModelFactory.class);
 
     private final CsrModelFactory csrModelFactory;
     private final Cmpv2ServerProvider cmpv2ServerProvider;
     private final CertificationProvider certificationProvider;
-    private final X509CertificateModelFactory x509CertificateModelFactory;
+    private final OldCertificateModelFactory oldCertificateModelFactory;
     private final UpdateRequestTypeDetector updateRequestTypeDetector;
 
     @Autowired
-    CertificationModelFactory(
+    CertificationResponseModelFactory(
             CsrModelFactory csrModelFactory,
             Cmpv2ServerProvider cmpv2ServerProvider,
             CertificationProvider certificationProvider,
-            X509CertificateModelFactory x509CertificateModelFactory,
+            OldCertificateModelFactory oldCertificateModelFactory,
             UpdateRequestTypeDetector updateRequestTypeDetector) {
         this.cmpv2ServerProvider = cmpv2ServerProvider;
         this.csrModelFactory = csrModelFactory;
         this.certificationProvider = certificationProvider;
-        this.x509CertificateModelFactory = x509CertificateModelFactory;
+        this.oldCertificateModelFactory = oldCertificateModelFactory;
         this.updateRequestTypeDetector = updateRequestTypeDetector;
     }
 
-    public CertificationModel createCertificationModel(String encodedCsr, String encodedPrivateKey, String caName)
+    public CertificationResponseModel provideCertificationModelFromInitialRequest(String encodedCsr, String encodedPrivateKey, String caName)
             throws DecryptionException, CmpClientException {
         CsrModel csrModel = csrModelFactory.createCsrModel(
                 new StringBase64(encodedCsr),
@@ -72,10 +75,10 @@ public class CertificationModelFactory {
 
         LOGGER.info("Sending sign request for certification model for CA named: {}, and certificate signing request:\n{}",
                 caName, csrModel);
-        return certificationProvider.signCsr(csrModel, cmpv2Server);
+        return certificationProvider.executeInitializationRequest(csrModel, cmpv2Server);
     }
 
-    public CertificationModel createCertificationModel(CertificateUpdateModel certificateUpdateModel)
+    public CertificationResponseModel provideCertificationModelFromUpdateRequest(CertificateUpdateModel certificateUpdateModel)
         throws DecryptionException, CmpClientException, CertificateDecryptionException {
         LOGGER.info("CSR: " + certificateUpdateModel.getEncodedCsr() +
                 ", old cert: " + certificateUpdateModel.getEncodedOldCert() +
@@ -84,8 +87,8 @@ public class CertificationModelFactory {
             new StringBase64(certificateUpdateModel.getEncodedCsr()),
             new StringBase64(certificateUpdateModel.getEncodedPrivateKey())
         );
-        final X509CertificateModel certificateModel = x509CertificateModelFactory.createCertificateModel(
-            new StringBase64(certificateUpdateModel.getEncodedOldCert()));
+        final OldCertificateModel certificateModel = oldCertificateModelFactory.createCertificateModel(
+            new StringBase64(certificateUpdateModel.getEncodedOldCert()), certificateUpdateModel.getEncodedOldPrivateKey());
 
         Cmpv2Server cmpv2Server = cmpv2ServerProvider.getCmpv2Server(certificateUpdateModel.getCaName());
         LOGGER.debug("Found server for given CA name: \n{}", cmpv2Server);
@@ -95,11 +98,11 @@ public class CertificationModelFactory {
         if (updateRequestTypeDetector.isKur(csrModel.getCertificateData(), certificateModel.getCertificateData())) {
             LOGGER.info(
                 "Certificate Signing Request and Old Certificate have the same parameters. Preparing Key Update Request");
-            return certificationProvider.updateCertificate(csrModel, cmpv2Server, certificateUpdateModel);
+            return certificationProvider.executeKeyUpdateRequest(csrModel, cmpv2Server, certificateModel);
         } else {
             LOGGER.info(
                 "Certificate Signing Request and Old Certificate have different parameters. Preparing Certification Request");
-            return certificationProvider.certificationRequest(csrModel, cmpv2Server);
+            return certificationProvider.executeCertificationRequest(csrModel, cmpv2Server);
         }
     }
 }

@@ -20,22 +20,28 @@
 
 package org.onap.oom.certservice.certification.model;
 
-import java.security.cert.X509Certificate;
+import java.security.PrivateKey;
 import org.bouncycastle.asn1.x500.X500Name;
+import org.bouncycastle.asn1.x509.Certificate;
 import org.bouncycastle.asn1.x509.GeneralName;
 
-public class X509CertificateModel {
+public class OldCertificateModel {
 
-    private final X509Certificate certificate;
     private final CertificateData certificateData;
 
-    public X509CertificateModel(X509Certificate certificate, X500Name subjectData,
-        GeneralName[] sans) {
-        this.certificate = certificate;
+    private final Certificate certificate;
+
+    private final PrivateKey oldPrivateKey;
+
+
+    public OldCertificateModel(Certificate certificate, X500Name subjectData,
+        GeneralName[] sans, PrivateKey oldPrivateKey) {
         this.certificateData = new CertificateData(subjectData, sans);
+        this.certificate = certificate;
+        this.oldPrivateKey = oldPrivateKey;
     }
 
-    public X509Certificate getCertificate() {
+    public Certificate getOldCertificate() {
         return certificate;
     }
 
@@ -49,5 +55,9 @@ public class X509CertificateModel {
 
     public CertificateData getCertificateData() {
         return certificateData;
+    }
+
+    public PrivateKey getOldPrivateKey() {
+        return oldPrivateKey;
     }
 }

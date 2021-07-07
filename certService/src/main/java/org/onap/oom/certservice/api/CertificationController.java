@@ -27,12 +27,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.onap.oom.certservice.certification.CertificationModelFactory;
+import org.onap.oom.certservice.certification.CertificationResponseModelFactory;
 import org.onap.oom.certservice.certification.exception.CertificateDecryptionException;
 import org.onap.oom.certservice.certification.exception.DecryptionException;
 import org.onap.oom.certservice.certification.exception.ErrorResponseModel;
 import org.onap.oom.certservice.certification.model.CertificateUpdateModel;
-import org.onap.oom.certservice.certification.model.CertificationModel;
+import org.onap.oom.certservice.certification.model.CertificationResponseModel;
 import org.onap.oom.certservice.cmpv2client.exceptions.CmpClientException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,11 +51,11 @@ public class CertificationController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CertificationController.class);
 
-    private final CertificationModelFactory certificationModelFactory;
+    private final CertificationResponseModelFactory certificationResponseModelFactory;
 
     @Autowired
-    CertificationController(CertificationModelFactory certificationModelFactory) {
-        this.certificationModelFactory = certificationModelFactory;
+    CertificationController(CertificationResponseModelFactory certificationResponseModelFactory) {
+        this.certificationResponseModelFactory = certificationResponseModelFactory;
     }
 
     /**
@@ -80,7 +80,7 @@ public class CertificationController {
             summary = "sign certificate",
             description = "Web endpoint for requesting certificate signing. Used by system components to gain certificate signed by CA.",
             tags = {"CertificationService"})
-    public ResponseEntity<CertificationModel> signCertificate(
+    public ResponseEntity<CertificationResponseModel> signCertificate(
             @Parameter(description = "Name of certification authority that will sign CSR.")
             @PathVariable String caName,
             @Parameter(description = "Certificate signing request in form of PEM object encoded in Base64 (with header and footer).")
@@ -90,9 +90,9 @@ public class CertificationController {
     ) throws DecryptionException, CmpClientException {
         caName = replaceWhiteSpaceChars(caName);
         LOGGER.info("Received certificate signing request for CA named: {}", caName);
-        CertificationModel certificationModel = certificationModelFactory
-                .createCertificationModel(encodedCsr, encodedPrivateKey, caName);
-        return new ResponseEntity<>(certificationModel, HttpStatus.OK);
+        CertificationResponseModel certificationResponseModel = certificationResponseModelFactory
+                .provideCertificationModelFromInitialRequest(encodedCsr, encodedPrivateKey, caName);
+        return new ResponseEntity<>(certificationResponseModel, HttpStatus.OK);
     }
 
     /**
@@ -106,7 +106,7 @@ public class CertificationController {
      * @return JSON containing trusted certificates and certificate chain
      */
     @GetMapping(value = "v1/certificate-update/{caName}", produces = "application/json")
-    public ResponseEntity<CertificationModel> updateCertificate(
+    public ResponseEntity<CertificationResponseModel> updateCertificate(
             @PathVariable String caName,
             @RequestHeader("CSR") String encodedCsr,
             @RequestHeader("PK") String encodedPrivateKey,
@@ -122,9 +122,9 @@ public class CertificationController {
                 .setEncodedOldPrivateKey(encodedOldPrivateKey)
                 .setCaName(caName)
                 .build();
-        CertificationModel certificationModel = certificationModelFactory
-                .createCertificationModel(certificateUpdateModel);
-        return new ResponseEntity<>(certificationModel, HttpStatus.OK);
+        CertificationResponseModel certificationResponseModel = certificationResponseModelFactory
+                .provideCertificationModelFromUpdateRequest(certificateUpdateModel);
+        return new ResponseEntity<>(certificationResponseModel, HttpStatus.OK);
     }
 
     private String replaceWhiteSpaceChars(String text) {

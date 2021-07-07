@@ -18,32 +18,27 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.certservice.certification;
+package org.onap.oom.certservice.certification.model;
 
-import java.io.IOException;
-import java.io.StringReader;
-import java.util.Optional;
+import java.util.Collections;
+import java.util.List;
 
-import org.bouncycastle.util.encoders.DecoderException;
-import org.bouncycastle.util.io.pem.PemObject;
-import org.bouncycastle.util.io.pem.PemReader;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+public class CertificationResponseModel {
 
+    private final List<String> certificateChain;
+    private final List<String> trustedCertificates;
 
-public class PemObjectFactory {
+    public CertificationResponseModel(List<String> certificateChain, List<String> trustedCertificates) {
+        this.certificateChain = certificateChain;
+        this.trustedCertificates = trustedCertificates;
+    }
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(PemObjectFactory.class);
+    public List<String> getCertificateChain() {
+        return Collections.unmodifiableList(certificateChain);
+    }
 
-    public Optional<PemObject> createPemObject(String pem) {
-
-        try (StringReader stringReader = new StringReader(pem);
-             PemReader pemReader = new PemReader(stringReader)) {
-            return Optional.ofNullable(pemReader.readPemObject());
-        } catch (DecoderException | IOException e) {
-            LOGGER.error("Exception occurred during creation of PEM:", e);
-            return Optional.empty();
-        }
+    public List<String> getTrustedCertificates() {
+        return Collections.unmodifiableList(trustedCertificates);
     }
 
 }

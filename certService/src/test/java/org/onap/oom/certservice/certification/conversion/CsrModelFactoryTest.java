@@ -18,15 +18,7 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.certservice.certification;
-
-import org.bouncycastle.util.encoders.Base64;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.onap.oom.certservice.certification.exception.CsrDecryptionException;
-import org.onap.oom.certservice.certification.exception.DecryptionException;
-import org.onap.oom.certservice.certification.exception.KeyDecryptionException;
-import org.onap.oom.certservice.certification.model.CsrModel;
+package org.onap.oom.certservice.certification.conversion;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -34,6 +26,15 @@ import static org.onap.oom.certservice.certification.TestData.TEST_CSR;
 import static org.onap.oom.certservice.certification.TestData.TEST_PK;
 import static org.onap.oom.certservice.certification.TestData.TEST_WRONG_CSR;
 import static org.onap.oom.certservice.certification.TestData.TEST_WRONG_PEM;
+
+import org.bouncycastle.util.encoders.Base64;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.onap.oom.certservice.certification.TestData;
+import org.onap.oom.certservice.certification.exception.CsrDecryptionException;
+import org.onap.oom.certservice.certification.exception.DecryptionException;
+import org.onap.oom.certservice.certification.exception.KeyDecryptionException;
+import org.onap.oom.certservice.certification.model.CsrModel;
 
 
 class CsrModelFactoryTest {

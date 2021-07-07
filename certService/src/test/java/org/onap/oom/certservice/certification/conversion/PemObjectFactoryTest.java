@@ -18,12 +18,7 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.certservice.certification;
-
-import org.bouncycastle.util.io.pem.PemObject;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.onap.oom.certservice.certification.exception.DecryptionException;
+package org.onap.oom.certservice.certification.conversion;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -31,6 +26,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.onap.oom.certservice.certification.TestData.TEST_PEM;
 import static org.onap.oom.certservice.certification.TestData.TEST_WRONG_PEM;
 import static org.onap.oom.certservice.certification.TestUtils.pemObjectToString;
+
+import org.bouncycastle.util.io.pem.PemObject;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.onap.oom.certservice.certification.exception.DecryptionException;
 
 
 class PemObjectFactoryTest {

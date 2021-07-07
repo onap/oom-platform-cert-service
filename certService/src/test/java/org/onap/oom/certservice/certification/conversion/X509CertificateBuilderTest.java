@@ -18,46 +18,51 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.certservice.certification;
+package org.onap.oom.certservice.certification.conversion;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.onap.oom.certservice.certification.TestUtils.createCsrModel;
+
+import java.io.IOException;
+import java.security.PrivateKey;
+import org.bouncycastle.cert.X509CertificateHolder;
+import org.bouncycastle.cert.X509v3CertificateBuilder;
 import org.bouncycastle.operator.ContentSigner;
 import org.bouncycastle.operator.OperatorCreationException;
 import org.bouncycastle.pkcs.PKCS10CertificationRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.onap.oom.certservice.certification.RsaContentSignerBuilder;
 import org.onap.oom.certservice.certification.exception.DecryptionException;
 import org.onap.oom.certservice.certification.model.CsrModel;
 
-import java.io.IOException;
-import java.security.PrivateKey;
+class X509CertificateBuilderTest {
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.onap.oom.certservice.certification.TestUtils.createCsrModel;
+    private X509CertificateBuilder certificateBuilder;
 
-class RsaContentSignerBuilderTest {
-
-    private RsaContentSignerBuilder rsaContentSignerBuilder;
 
     @BeforeEach
     void setUp() {
-        rsaContentSignerBuilder = new RsaContentSignerBuilder();
+        certificateBuilder = new X509CertificateBuilder();
     }
 
     @Test
-    void shouldBuildProperContentSignerWhenProvidedCertificationRequestAndPrivateKey()
-            throws IOException, OperatorCreationException, DecryptionException {
+    void shouldBuildCertificateBuilderWhenGivenProperCertificationRequest()
+            throws DecryptionException, IOException, OperatorCreationException {
         // Given
         CsrModel testCsrModel = createCsrModel();
         PKCS10CertificationRequest testCertificationRequest = testCsrModel.getCsr();
         PrivateKey testPrivateKey = testCsrModel.getPrivateKey();
-
-        // When
+        RsaContentSignerBuilder rsaContentSignerBuilder = new RsaContentSignerBuilder();
         ContentSigner createdContentSigner = rsaContentSignerBuilder.build(testCertificationRequest, testPrivateKey);
 
-        // Then
-        assertThat(createdContentSigner.getAlgorithmIdentifier())
-                .isEqualTo(testCertificationRequest.getSignatureAlgorithm());
-    }
+        // When
+        X509v3CertificateBuilder certificateBuilder = this.certificateBuilder.build(testCertificationRequest);
+        X509CertificateHolder certificateHolder = certificateBuilder.build(createdContentSigner);
 
+        // Then
+        assertThat(certificateHolder.getIssuer())
+                .isEqualToComparingFieldByField(testCsrModel.getSubjectData());
+        assertThat(certificateHolder.getSubjectPublicKeyInfo())
+                .isEqualToComparingFieldByField(testCertificationRequest.getSubjectPublicKeyInfo());
+    }
 }
