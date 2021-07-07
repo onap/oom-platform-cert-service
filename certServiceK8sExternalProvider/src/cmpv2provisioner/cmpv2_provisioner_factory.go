@@ -29,7 +29,6 @@ import (
 	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2api"
 )
 
-
 type ProvisionerFactory interface {
 	CreateProvisioner(issuer *cmpv2api.CMPv2Issuer, secret v1.Secret) (*CertServiceCA, error)
 }

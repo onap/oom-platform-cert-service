@@ -31,9 +31,8 @@ import (
 )
 
 const (
-	recorderBufferSize     = 3
+	recorderBufferSize = 3
 )
-
 
 func Test_shouldFireWarningEvent_forCmpv2Issuer(t *testing.T) {
 	fakeRecorder := record.NewFakeRecorder(recorderBufferSize)

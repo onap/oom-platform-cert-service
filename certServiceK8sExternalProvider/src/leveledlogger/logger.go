@@ -27,9 +27,9 @@ import (
 	"log"
 
 	"github.com/go-logr/logr"
-	"go.uber.org/zap/zapcore"
 	"github.com/go-logr/zapr"
 	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
 )
 
 const (
@@ -39,7 +39,7 @@ const (
 )
 
 type Logger struct {
-	Log logr.Logger
+	Log        logr.Logger
 	ConfigFile string
 }
 
