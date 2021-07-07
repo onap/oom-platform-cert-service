@@ -18,11 +18,12 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.certservice.certification;
+package org.onap.oom.certservice.certification.conversion;
 
 import org.bouncycastle.util.io.pem.PemObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.onap.oom.certservice.certification.conversion.PemObjectFactory;
 import org.onap.oom.certservice.certification.exception.DecryptionException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

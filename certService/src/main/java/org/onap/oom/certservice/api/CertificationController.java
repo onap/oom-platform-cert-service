@@ -32,7 +32,7 @@ import org.onap.oom.certservice.certification.exception.CertificateDecryptionExc
 import org.onap.oom.certservice.certification.exception.DecryptionException;
 import org.onap.oom.certservice.certification.exception.ErrorResponseModel;
 import org.onap.oom.certservice.certification.model.CertificateUpdateModel;
-import org.onap.oom.certservice.certification.model.CertificationModel;
+import org.onap.oom.certservice.certification.model.CertificationResponseModel;
 import org.onap.oom.certservice.cmpv2client.exceptions.CmpClientException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -80,7 +80,7 @@ public class CertificationController {
             summary = "sign certificate",
             description = "Web endpoint for requesting certificate signing. Used by system components to gain certificate signed by CA.",
             tags = {"CertificationService"})
-    public ResponseEntity<CertificationModel> signCertificate(
+    public ResponseEntity<CertificationResponseModel> signCertificate(
             @Parameter(description = "Name of certification authority that will sign CSR.")
             @PathVariable String caName,
             @Parameter(description = "Certificate signing request in form of PEM object encoded in Base64 (with header and footer).")
@@ -90,9 +90,9 @@ public class CertificationController {
     ) throws DecryptionException, CmpClientException {
         caName = replaceWhiteSpaceChars(caName);
         LOGGER.info("Received certificate signing request for CA named: {}", caName);
-        CertificationModel certificationModel = certificationModelFactory
-                .createCertificationModel(encodedCsr, encodedPrivateKey, caName);
-        return new ResponseEntity<>(certificationModel, HttpStatus.OK);
+        CertificationResponseModel certificationResponseModel = certificationModelFactory
+                .provideCertificationModelFromInitialRequest(encodedCsr, encodedPrivateKey, caName);
+        return new ResponseEntity<>(certificationResponseModel, HttpStatus.OK);
     }
 
     /**
@@ -106,7 +106,7 @@ public class CertificationController {
      * @return JSON containing trusted certificates and certificate chain
      */
     @GetMapping(value = "v1/certificate-update/{caName}", produces = "application/json")
-    public ResponseEntity<CertificationModel> updateCertificate(
+    public ResponseEntity<CertificationResponseModel> updateCertificate(
             @PathVariable String caName,
             @RequestHeader("CSR") String encodedCsr,
             @RequestHeader("PK") String encodedPrivateKey,
@@ -122,9 +122,9 @@ public class CertificationController {
                 .setEncodedOldPrivateKey(encodedOldPrivateKey)
                 .setCaName(caName)
                 .build();
-        CertificationModel certificationModel = certificationModelFactory
-                .createCertificationModel(certificateUpdateModel);
-        return new ResponseEntity<>(certificationModel, HttpStatus.OK);
+        CertificationResponseModel certificationResponseModel = certificationModelFactory
+                .provideCertificationModelFromUpdateRequest(certificateUpdateModel);
+        return new ResponseEntity<>(certificationResponseModel, HttpStatus.OK);
     }
 
     private String replaceWhiteSpaceChars(String text) {

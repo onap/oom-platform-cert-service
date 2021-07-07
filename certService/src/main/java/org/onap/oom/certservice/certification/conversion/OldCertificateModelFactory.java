@@ -18,20 +18,27 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.certservice.certification;
+package org.onap.oom.certservice.certification.conversion;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateEncodingException;
 import java.security.cert.CertificateParsingException;
 import java.security.cert.X509Certificate;
+import java.security.spec.InvalidKeySpecException;
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.asn1.x509.GeneralName;
+import org.onap.oom.certservice.certification.X509CertificateParser;
+import org.onap.oom.certservice.certification.conversion.PemStringToCertificateConverter;
+import org.onap.oom.certservice.certification.conversion.StringBase64;
 import org.onap.oom.certservice.certification.exception.CertificateDecryptionException;
+import org.onap.oom.certservice.certification.exception.KeyDecryptionException;
 import org.onap.oom.certservice.certification.exception.StringToCertificateConversionException;
-import org.onap.oom.certservice.certification.model.X509CertificateModel;
+import org.onap.oom.certservice.certification.model.OldCertificateModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class X509CertificateModelFactory {
+public class OldCertificateModelFactory {
 
     private static final String BEGIN_CERTIFICATE = "-----BEGIN CERTIFICATE-----\n";
     private static final String END_CERTIFICATE = "-----END CERTIFICATE-----\n";
@@ -40,13 +47,13 @@ public class X509CertificateModelFactory {
     private final X509CertificateParser x509CertificateParser;
 
     @Autowired
-    public X509CertificateModelFactory(PemStringToCertificateConverter pemStringToCertificateConverter,
+    public OldCertificateModelFactory(PemStringToCertificateConverter pemStringToCertificateConverter,
         X509CertificateParser x509CertificateParser) {
         this.pemStringToCertificateConverter = pemStringToCertificateConverter;
         this.x509CertificateParser = x509CertificateParser;
     }
 
-    public X509CertificateModel createCertificateModel(StringBase64 base64EncodedCertificate)
+    public OldCertificateModel createCertificateModel(StringBase64 base64EncodedCertificate, String encodedOldPrivateKey)
         throws CertificateDecryptionException {
         final String certificateString = base64EncodedCertificate.asString()
             .map(this::getFirstCertificateFromCertificateChain)
@@ -55,12 +62,14 @@ public class X509CertificateModelFactory {
             final X509Certificate certificate = pemStringToCertificateConverter.convert(certificateString);
             final X500Name subjectData = x509CertificateParser.getSubject(certificate);
             final GeneralName[] sans = x509CertificateParser.getSans(certificate);
-            return new X509CertificateModel(certificate, subjectData, sans);
+            return new OldCertificateModel(certificate, subjectData, sans, encodedOldPrivateKey);
         } catch (StringToCertificateConversionException e) {
             throw new CertificateDecryptionException("Cannot convert certificate", e);
 
         } catch (CertificateParsingException e) {
             throw new CertificateDecryptionException("Cannot read Subject Alternative Names from certificate");
+        } catch (NoSuchAlgorithmException | KeyDecryptionException | CertificateEncodingException | InvalidKeySpecException e) {
+            throw new CertificateDecryptionException("Cannot convert certificate or key", e);
         }
     }
 

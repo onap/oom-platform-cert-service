@@ -24,8 +24,8 @@ package org.onap.oom.certservice.cmpv2client.api;
 import java.util.Date;
 
 import org.onap.oom.certservice.certification.configuration.model.Cmpv2Server;
-import org.onap.oom.certservice.certification.model.CertificateUpdateModel;
 import org.onap.oom.certservice.certification.model.CsrModel;
+import org.onap.oom.certservice.certification.model.OldCertificateModel;
 import org.onap.oom.certservice.cmpv2client.exceptions.CmpClientException;
 import org.onap.oom.certservice.cmpv2client.model.Cmpv2CertificationModel;
 
@@ -51,7 +51,7 @@ public interface CmpClient {
    * @return model for certification containing certificate chain and trusted certificates
    * @throws CmpClientException if client error occurs.
    */
-  Cmpv2CertificationModel createCertificate(
+  Cmpv2CertificationModel executeInitializationRequest(
       CsrModel csrModel,
       Cmpv2Server server,
       Date notBefore,
@@ -69,7 +69,7 @@ public interface CmpClient {
    * @return model for certification containing certificate chain and trusted certificates
    * @throws CmpClientException if client error occurs.
    */
-  Cmpv2CertificationModel createCertificate(
+  Cmpv2CertificationModel executeInitializationRequest(
       CsrModel csrModel,
       Cmpv2Server server)
       throws CmpClientException;
@@ -82,12 +82,12 @@ public interface CmpClient {
    *
    * @param csrModel  Certificate Signing Request Model. Must not be {@code null}.
    * @param cmpv2Server    CMPv2 server. Must not be {@code null}.
-   * @param certificateUpdateModel    Model with key update parameters {@code null}.
+   * @param oldCertificateModel    Model with key update parameters {@code null}.
    * @return model for certification containing certificate chain and trusted certificates
    * @throws CmpClientException if client error occurs.
    */
-  Cmpv2CertificationModel updateCertificate(CsrModel csrModel, Cmpv2Server cmpv2Server,
-      CertificateUpdateModel certificateUpdateModel) throws CmpClientException;
+  Cmpv2CertificationModel executeKeyUpdateRequest(CsrModel csrModel, Cmpv2Server cmpv2Server,
+      OldCertificateModel oldCertificateModel) throws CmpClientException;
 
   /**
    * Requests for an additional External Root CA Certificate to be created for the passed keyPair wrapped
@@ -100,5 +100,5 @@ public interface CmpClient {
    * @return model for certification containing certificate chain and trusted certificates
    * @throws CmpClientException if client error occurs.
    */
-  Cmpv2CertificationModel certificationRequest(CsrModel csrModel, Cmpv2Server cmpv2Server) throws CmpClientException;
+  Cmpv2CertificationModel executeCertificationRequest(CsrModel csrModel, Cmpv2Server cmpv2Server) throws CmpClientException;
 }

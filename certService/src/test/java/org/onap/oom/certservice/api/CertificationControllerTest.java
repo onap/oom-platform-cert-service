@@ -40,7 +40,7 @@ import org.onap.oom.certservice.certification.exception.CsrDecryptionException;
 import org.onap.oom.certservice.certification.exception.DecryptionException;
 import org.onap.oom.certservice.certification.exception.KeyDecryptionException;
 import org.onap.oom.certservice.certification.model.CertificateUpdateModel.CertificateUpdateModelBuilder;
-import org.onap.oom.certservice.certification.model.CertificationModel;
+import org.onap.oom.certservice.certification.model.CertificationResponseModel;
 import org.onap.oom.certservice.cmpv2client.exceptions.CmpClientException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -78,21 +78,21 @@ class CertificationControllerTest {
     void shouldReturnDataAboutCsrBaseOnEncodedParameters()
             throws DecryptionException, CmpClientException {
         // Given
-        CertificationModel testCertificationModel = new CertificationModel(
+        CertificationResponseModel testCertificationResponseModel = new CertificationResponseModel(
                 Arrays.asList("ENTITY_CERT", "INTERMEDIATE_CERT"),
                 Arrays.asList("CA_CERT", "EXTRA_CA_CERT")
         );
-        when(certificationModelFactory.createCertificationModel(TEST_ENCODED_CSR, TEST_ENCODED_PK, TEST_CA_NAME))
-                .thenReturn(testCertificationModel);
+        when(certificationModelFactory.provideCertificationModelFromInitialRequest(TEST_ENCODED_CSR, TEST_ENCODED_PK, TEST_CA_NAME))
+                .thenReturn(testCertificationResponseModel);
 
         // When
-        ResponseEntity<CertificationModel> responseCertificationModel =
+        ResponseEntity<CertificationResponseModel> responseCertificationModel =
                 certificationController.signCertificate(TEST_CA_NAME, TEST_ENCODED_CSR, TEST_ENCODED_PK);
 
         // Then
         assertEquals(HttpStatus.OK, responseCertificationModel.getStatusCode());
         assertThat(responseCertificationModel.getBody()
-        ).isEqualToComparingFieldByField(testCertificationModel);
+        ).isEqualToComparingFieldByField(testCertificationResponseModel);
 
     }
 
@@ -101,7 +101,7 @@ class CertificationControllerTest {
             throws DecryptionException, CmpClientException {
         // Given
         String expectedMessage = "Incorrect CSR, decryption failed";
-        when(certificationModelFactory.createCertificationModel(TEST_WRONG_ENCODED_CSR, TEST_ENCODED_PK, TEST_CA_NAME))
+        when(certificationModelFactory.provideCertificationModelFromInitialRequest(TEST_WRONG_ENCODED_CSR, TEST_ENCODED_PK, TEST_CA_NAME))
                 .thenThrow(new CsrDecryptionException(expectedMessage));
 
         // When
@@ -121,7 +121,7 @@ class CertificationControllerTest {
             throws DecryptionException, CmpClientException {
         // Given
         String expectedMessage = "Incorrect PEM, decryption failed";
-        when(certificationModelFactory.createCertificationModel(TEST_ENCODED_CSR, TEST_WRONG_ENCODED_PK, TEST_CA_NAME))
+        when(certificationModelFactory.provideCertificationModelFromInitialRequest(TEST_ENCODED_CSR, TEST_WRONG_ENCODED_PK, TEST_CA_NAME))
                 .thenThrow(new KeyDecryptionException(expectedMessage));
 
         // When
@@ -141,7 +141,7 @@ class CertificationControllerTest {
             throws DecryptionException, CmpClientException {
         // Given
         String expectedMessage = "No server found for given CA name";
-        when(certificationModelFactory.createCertificationModel(TEST_ENCODED_CSR, TEST_ENCODED_PK, TEST_WRONG_CA_NAME))
+        when(certificationModelFactory.provideCertificationModelFromInitialRequest(TEST_ENCODED_CSR, TEST_ENCODED_PK, TEST_WRONG_CA_NAME))
                 .thenThrow(new Cmpv2ServerNotFoundException(expectedMessage));
 
         // When
@@ -160,20 +160,21 @@ class CertificationControllerTest {
     void shouldUpdateEndpointReturnDataAboutCsrBaseOnEncodedParameters()
         throws DecryptionException, CmpClientException, CertificateDecryptionException {
         // Given
-        CertificationModel testCertificationModel = new CertificationModel(
+        CertificationResponseModel testCertificationResponseModel = new CertificationResponseModel(
                 Arrays.asList("ENTITY_CERT", "INTERMEDIATE_CERT"),
                 Arrays.asList("CA_CERT", "EXTRA_CA_CERT")
         );
-        when(certificationModelFactory.createCertificationModel(TEST_CERTIFICATE_UPDATE_MODEL)).thenReturn(testCertificationModel);
+        when(certificationModelFactory.provideCertificationModelFromUpdateRequest(TEST_CERTIFICATE_UPDATE_MODEL)).thenReturn(
+            testCertificationResponseModel);
 
         // When
-        ResponseEntity<CertificationModel> responseCertificationModel =
+        ResponseEntity<CertificationResponseModel> responseCertificationModel =
                 certificationController.updateCertificate(TEST_CA_NAME, TEST_ENCODED_CSR,
                         TEST_ENCODED_PK, TEST_ENCODED_OLD_CERT, TEST_ENCODED_OLD_PK);
 
         // Then
         assertEquals(HttpStatus.OK, responseCertificationModel.getStatusCode());
-        assertThat(responseCertificationModel.getBody()).isEqualToComparingFieldByField(testCertificationModel);
+        assertThat(responseCertificationModel.getBody()).isEqualToComparingFieldByField(testCertificationResponseModel);
     }
 
     @Test
@@ -181,7 +182,7 @@ class CertificationControllerTest {
         throws DecryptionException, CertificateDecryptionException, CmpClientException {
         // Given
         String expectedMessage = "Incorrect certificate, decryption failed";
-        when(certificationModelFactory.createCertificationModel(TEST_CERTIFICATE_UPDATE_MODEL))
+        when(certificationModelFactory.provideCertificationModelFromUpdateRequest(TEST_CERTIFICATE_UPDATE_MODEL))
             .thenThrow(new CertificateDecryptionException(expectedMessage));
 
         // When
