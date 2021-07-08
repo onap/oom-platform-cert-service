@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4a4b8bb_59367e15",
+        "filename": "certService/src/test/java/org/onap/oom/certservice/cmpv2client/ClientTestData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2021-07-08T08:52:27Z",
+      "side": 1,
+      "message": "unused imports",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 1
+      },
+      "revId": "eaeb43d7e848d7501acd8972aa826aad4ab3fb8a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b0a3293_9b886c36",
+        "filename": "certService/src/test/java/org/onap/oom/certservice/cmpv2client/Cmpv2ClientTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2021-07-08T08:52:27Z",
+      "side": 1,
+      "message": "unused import",
+      "revId": "eaeb43d7e848d7501acd8972aa826aad4ab3fb8a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
