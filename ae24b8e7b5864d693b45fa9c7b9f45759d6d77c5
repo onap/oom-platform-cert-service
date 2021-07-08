@@ -22,6 +22,30 @@
       "revId": "ae24b8e7b5864d693b45fa9c7b9f45759d6d77c5",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3823cdf6_871efdbf",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2controller/certificate_request_controller.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2021-07-08T07:18:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2d07380_f47af4f5",
+      "range": {
+        "startLine": 170,
+        "startChar": 8,
+        "endLine": 170,
+        "endChar": 20
+      },
+      "revId": "ae24b8e7b5864d693b45fa9c7b9f45759d6d77c5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
