@@ -19,12 +19,15 @@ package org.onap.oom.certservice.cmpv2client;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
+import static org.onap.oom.certservice.cmpv2client.ClientTestData.createOldCertificateModelWithPrivateKeyInPKCS1;
+import static org.onap.oom.certservice.cmpv2client.ClientTestData.createOldCertificateModelWithPrivateKeyInPKCS8;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
@@ -49,6 +52,7 @@ import java.util.Base64;
 import java.util.Base64.Decoder;
 import java.util.Date;
 
+import java.util.stream.Stream;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -73,11 +77,15 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.Mock;
 import org.onap.oom.certservice.certification.configuration.model.Authentication;
 import org.onap.oom.certservice.certification.configuration.model.Cmpv2Server;
 import org.onap.oom.certservice.certification.exception.CertificateDecryptionException;
 import org.onap.oom.certservice.certification.model.CsrModel;
+import org.onap.oom.certservice.certification.model.OldCertificateModel;
 import org.onap.oom.certservice.cmpv2client.exceptions.CmpClientException;
 import org.onap.oom.certservice.cmpv2client.exceptions.CmpServerException;
 import org.onap.oom.certservice.cmpv2client.impl.CmpClientImpl;
@@ -149,14 +157,7 @@ class Cmpv2ClientTest {
         when(httpClient.execute(any())).thenReturn(httpResponse);
         when(httpResponse.getEntity()).thenReturn(httpEntity);
 
-        doAnswer(
-            invocation -> {
-                OutputStream os = invocation.getArgument(0);
-                os.write(BASE64_DECODER.decode(ClientTestData.KUR_CORRECT_SERVER_RESPONSE_ENCODED.getBytes()));
-                return null;
-            })
-            .when(httpEntity)
-            .writeTo(any(OutputStream.class));
+        mockCorrectKeyUpdateResponse();
         CmpClientImpl cmpClient = new CmpClientImpl(httpClient);
 
         // when
@@ -196,6 +197,26 @@ class Cmpv2ClientTest {
         assertNotNull(cmpClientResult);
         assertThat(cmpClientResult.getCertificateChain()).isNotEmpty();
         assertThat(cmpClientResult.getCertificateChain()).isNotEmpty();
+
+    }
+
+    @ParameterizedTest
+    @MethodSource("getTestUpdateModelWithSupportedPrivateKeys")
+    void shouldNotThrowExceptionForPrivateKeyInExpectedFormat(OldCertificateModel oldCertificateModel)
+        throws IOException {
+
+        // given
+        setCsrModelAndServerTestDefaultValues();
+        when(httpClient.execute(any())).thenReturn(httpResponse);
+        when(httpResponse.getEntity()).thenReturn(httpEntity);
+
+        mockCorrectKeyUpdateResponse();
+        CmpClientImpl cmpClient = new CmpClientImpl(httpClient);
+
+        // when // then
+        assertDoesNotThrow(() -> cmpClient
+            .executeKeyUpdateRequest(csrModel, server, oldCertificateModel)
+        );
 
     }
 
@@ -415,6 +436,17 @@ class Cmpv2ClientTest {
                 () -> cmpClient.executeInitializationRequest(csrModel, server, notBefore, notAfter));
     }
 
+    private void mockCorrectKeyUpdateResponse() throws IOException {
+        doAnswer(
+            invocation -> {
+                OutputStream os = invocation.getArgument(0);
+                os.write(BASE64_DECODER.decode(ClientTestData.KUR_CORRECT_SERVER_RESPONSE_ENCODED.getBytes()));
+                return null;
+            })
+            .when(httpEntity)
+            .writeTo(any(OutputStream.class));
+    }
+
     private void setCsrModelAndServerValues(String iak, String rv, String externalCaUrl, Date notBefore, Date notAfter) {
         csrModel = new CsrModel(null, dn, keyPair.getPrivate(), keyPair.getPublic(), new GeneralName[0]);
 
@@ -467,6 +499,14 @@ class Cmpv2ClientTest {
             .addRDN(BCStyle.UID, "Test_UID")
             .addRDN(BCStyle.CN, "Test_CA")
             .build();
+    }
+
+    private static Stream<Arguments> getTestUpdateModelWithSupportedPrivateKeys()
+        throws CertificateDecryptionException {
+        return Stream.of(
+            Arguments.of(createOldCertificateModelWithPrivateKeyInPKCS1()),
+            Arguments.of(createOldCertificateModelWithPrivateKeyInPKCS8())
+        );
     }
 
 }
