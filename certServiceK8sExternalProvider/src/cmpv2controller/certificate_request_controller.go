@@ -3,7 +3,7 @@
  * oom-certservice-k8s-external-provider
  * ================================================================================
  * Copyright 2019 The cert-manager authors.
- * Modifications copyright (C) 2020 Nokia. All rights reserved.
+ * Modifications copyright (C) 2020-2021 Nokia. All rights reserved.
  * ================================================================================
  * This source code was copied from the following git repository:
  * https://github.com/smallstep/step-issuer
@@ -40,6 +40,7 @@ import (
 	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2api"
 	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2controller/logger"
 	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2controller/updater"
+	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2controller/util"
 	provisioners "onap.org/oom-certservice/k8s-external-provider/src/cmpv2provisioner"
 	"onap.org/oom-certservice/k8s-external-provider/src/leveledlogger"
 	x509utils "onap.org/oom-certservice/k8s-external-provider/src/x509"
@@ -137,14 +138,22 @@ func (controller *CertificateRequestController) Reconcile(k8sRequest ctrl.Reques
 	// 9. Log Certificate Request properties not supported or overridden by CertService API
 	logger.LogCertRequestProperties(leveledlogger.GetLoggerWithName("CSR details:"), certificateRequest, csr)
 
-	// 10. Sign CertificateRequest
+	// 10. Check if CertificateRequest is an update request
+	isUpdateRevision, oldCertificate, oldPrivateKey := util.CheckIfCertificateUpdateAndRetrieveOldCertificateAndPk(
+		controller.Client, certificateRequest, ctx)
+	if isUpdateRevision {
+		log.Debug("Certificate will be updated.", "old-certificate", oldCertificate,
+			"old-private-key", oldPrivateKey) //TODO: remove private key from logger
+	}
+
+	// 11. Sign CertificateRequest
 	signedPEM, trustedCAs, err := provisioner.Sign(ctx, certificateRequest, privateKeyBytes)
 	if err != nil {
 		controller.handleErrorFailedToSignCertificate(certUpdater, log, err)
 		return ctrl.Result{}, nil
 	}
 
-	// 11. Store signed certificates in CertificateRequest
+	// 12. Store signed certificates in CertificateRequest
 	certificateRequest.Status.Certificate = signedPEM
 	certificateRequest.Status.CA = trustedCAs
 	if err := certUpdater.UpdateCertificateRequestWithSignedCertificates(); err != nil {
