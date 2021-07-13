@@ -43,6 +43,7 @@ import (
 	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2controller/util"
 	provisioners "onap.org/oom-certservice/k8s-external-provider/src/cmpv2provisioner"
 	"onap.org/oom-certservice/k8s-external-provider/src/leveledlogger"
+	model "onap.org/oom-certservice/k8s-external-provider/src/model"
 	x509utils "onap.org/oom-certservice/k8s-external-provider/src/x509"
 )
 
@@ -145,9 +146,24 @@ func (controller *CertificateRequestController) Reconcile(k8sRequest ctrl.Reques
 		log.Debug("Certificate will be updated.", "old-certificate", oldCertificate,
 			"old-private-key", oldPrivateKey) //TODO: remove private key from logger
 	}
+	signCertificateModel := model.SignCertificateModel{
+		CertificateRequest: certificateRequest,
+		PrivateKeyBytes:    privateKeyBytes,
+		IsUpdateRevision:   isUpdateRevision,
+		OldCertificate:     oldCertificate,
+		OldPrivateKey:      oldPrivateKey,
+	}
+	//test := SignCertificateModel.New()
+	//signCertificateModel := SignCertificateModel{
+	//	CertificateRequest: certificateRequest,
+	//	PrivateKeyBytes: privateKeyBytes,
+	//	IsUpdateRevision: isUpdateRevision,
+	//	OldCertificate: oldCertificate,
+	//	OldPrivateKey: oldPrivateKey,
+	//}
 
 	// 11. Sign CertificateRequest
-	signedPEM, trustedCAs, err := provisioner.Sign(ctx, certificateRequest, privateKeyBytes)
+	signedPEM, trustedCAs, err := provisioner.Sign(ctx, signCertificateModel)
 	if err != nil {
 		controller.handleErrorFailedToSignCertificate(certUpdater, log, err)
 		return ctrl.Result{}, nil

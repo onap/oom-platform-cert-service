@@ -36,6 +36,7 @@ import (
 	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2api"
 	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2provisioner/csr"
 	"onap.org/oom-certservice/k8s-external-provider/src/leveledlogger"
+	model "onap.org/oom-certservice/k8s-external-provider/src/model"
 )
 
 var collection = new(sync.Map)
@@ -86,10 +87,12 @@ func Store(namespacedName types.NamespacedName, provisioner *CertServiceCA) {
 
 func (ca *CertServiceCA) Sign(
 	ctx context.Context,
-	certificateRequest *certmanager.CertificateRequest,
-	privateKeyBytes []byte,
+	signCertificateModel model.SignCertificateModel,
 ) (signedCertificateChain []byte, trustedCertificates []byte, err error) {
 	log := leveledlogger.GetLoggerWithName("certservice-provisioner")
+
+	certificateRequest := signCertificateModel.CertificateRequest
+	privateKeyBytes := signCertificateModel.PrivateKeyBytes
 	log.Info("Signing certificate: ", "cert-name", certificateRequest.Name)
 
 	log.Info("CA: ", "name", ca.name, "url", ca.url)
@@ -102,10 +105,17 @@ func (ca *CertServiceCA) Sign(
 		return nil, nil, err
 	}
 	log.Debug("Filtered out CSR PEM: ", "bytes", filteredCsrBytes)
+	var response *certserviceclient.CertificatesResponse
+	var errAPI error
 
-	response, err := ca.certServiceClient.GetCertificates(filteredCsrBytes, privateKeyBytes)
-	if err != nil {
-		return nil, nil, err
+	if signCertificateModel.IsUpdateRevision {
+		response, errAPI = ca.certServiceClient.UpdateCertificate(filteredCsrBytes, privateKeyBytes, signCertificateModel.OldCertificate, signCertificateModel.OldPrivateKey)
+	} else {
+		response, errAPI = ca.certServiceClient.GetCertificates(filteredCsrBytes, privateKeyBytes)
+	}
+
+	if errAPI != nil {
+		return nil, nil, errAPI
 	}
 	log.Info("Successfully received response from CertService API")
 	log.Debug("Certificate Chain", "cert-chain", response.CertificateChain)
@@ -125,4 +135,8 @@ func (ca *CertServiceCA) Sign(
 	log.Debug("Trusted CA  PEM: ", "bytes", trustedCertificates)
 
 	return signedCertificateChain, trustedCertificates, nil
+}
+
+func (ca *CertServiceCA) Update(ctx context.Context, request *certmanager.CertificateRequest, bytes []byte, certificate string, key string) ([]byte, []byte, error) {
+	return nil, nil, nil
 }

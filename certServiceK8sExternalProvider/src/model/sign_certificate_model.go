@@ -2,7 +2,7 @@
  * ============LICENSE_START=======================================================
  * oom-certservice-k8s-external-provider
  * ================================================================================
- * Copyright (C) 2020 Nokia. All rights reserved.
+ * Copyright (C) 2021 Nokia. All rights reserved.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,21 +18,14 @@
  * ============LICENSE_END=========================================================
  */
 
-package certserviceclient
+package model
 
-type CertServiceClientMock struct {
-	GetCertificatesFunc func(csr []byte, key []byte) (*CertificatesResponse, error)
-}
+import cmapi "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1"
 
-func (client *CertServiceClientMock) UpdateCertificate(csr []byte, key []byte, oldCertificate string, oldPrivateKey string) (*CertificatesResponse, error) {
-
-	panic("implement me")
-}
-
-func (client *CertServiceClientMock) GetCertificates(csr []byte, key []byte) (*CertificatesResponse, error) {
-	return client.GetCertificatesFunc(csr, key)
-}
-
-func (client *CertServiceClientMock) CheckHealth() error {
-	return nil
+type SignCertificateModel struct {
+	CertificateRequest *cmapi.CertificateRequest
+	PrivateKeyBytes    []byte
+	IsUpdateRevision   bool
+	OldCertificate     string
+	OldPrivateKey      string
 }

@@ -28,18 +28,22 @@ import (
 )
 
 const (
-	CsrHeaderName = "CSR"
-	PkHeaderName  = "PK"
+	CsrHeaderName            = "CSR"
+	PkHeaderName             = "PK"
+	OldPkHeaderName          = "OLD_PK"
+	OldCertificateHeaderName = "OLD_CERT"
 )
 
 type CertServiceClient interface {
 	GetCertificates(csr []byte, key []byte) (*CertificatesResponse, error)
 	CheckHealth() error
+	UpdateCertificate(csr []byte, key []byte, oldCertificate string, oldPrivateKey string) (*CertificatesResponse, error)
 }
 
 type CertServiceClientImpl struct {
 	healthUrl        string
 	certificationUrl string
+	updateUrl        string
 	httpClient       HTTPClient
 }
 
@@ -83,6 +87,37 @@ func (client *CertServiceClientImpl) GetCertificates(csr []byte, key []byte) (*C
 
 	request.Header.Add(CsrHeaderName, base64.StdEncoding.EncodeToString(csr))
 	request.Header.Add(PkHeaderName, base64.StdEncoding.EncodeToString(key))
+	response, err := client.httpClient.Do(request)
+	if err != nil {
+		return nil, err
+	}
+
+	if response.StatusCode != http.StatusOK {
+		var responseException ResponseException
+		err = json.NewDecoder(response.Body).Decode(&responseException)
+		return nil, fmt.Errorf("CertService API returned status code [%d] and message [%s]",
+			response.StatusCode, responseException.ErrorMessage)
+	}
+
+	var certificatesResponse CertificatesResponse
+	err = json.NewDecoder(response.Body).Decode(&certificatesResponse)
+	if err != nil {
+		return nil, err
+	}
+
+	return &certificatesResponse, err
+}
+
+func (client *CertServiceClientImpl) UpdateCertificate(csr []byte, key []byte, oldCertificate string, oldPrivateKey string) (*CertificatesResponse, error) {
+	request, err := http.NewRequest("GET", client.updateUrl, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	request.Header.Add(CsrHeaderName, base64.StdEncoding.EncodeToString(csr))
+	request.Header.Add(PkHeaderName, base64.StdEncoding.EncodeToString(key))
+	request.Header.Add(OldPkHeaderName, oldPrivateKey)
+	request.Header.Add(OldCertificateHeaderName, oldCertificate)
 	response, err := client.httpClient.Do(request)
 	if err != nil {
 		return nil, err
