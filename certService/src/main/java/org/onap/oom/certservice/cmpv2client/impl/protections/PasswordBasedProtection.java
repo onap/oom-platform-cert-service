@@ -18,7 +18,7 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.certservice.cmpv2client.impl;
+package org.onap.oom.certservice.cmpv2client.impl.protections;
 
 import org.bouncycastle.asn1.ASN1Integer;
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
@@ -54,12 +54,12 @@ public class PasswordBasedProtection extends PkiMessageProtection {
 
     private final String initAuthPassword;
 
-    PasswordBasedProtection(String initAuthPassword) {
+    public PasswordBasedProtection(String initAuthPassword) {
         this.initAuthPassword = initAuthPassword;
     }
 
     @Override
-    AlgorithmIdentifier getAlgorithmIdentifier() {
+    public AlgorithmIdentifier getAlgorithmIdentifier() {
         ASN1Integer iteration = new ASN1Integer(ITERATIONS);
         DEROctetString derSalt = new DEROctetString(SALT);
 

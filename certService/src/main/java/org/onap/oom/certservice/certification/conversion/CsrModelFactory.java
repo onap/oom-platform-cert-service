@@ -21,12 +21,12 @@
 package org.onap.oom.certservice.certification.conversion;
 
 import org.bouncycastle.pkcs.PKCS10CertificationRequest;
-import org.bouncycastle.util.io.pem.PemObject;
 import org.onap.oom.certservice.certification.exception.CsrDecryptionException;
 import org.onap.oom.certservice.certification.exception.DecryptionException;
-import org.onap.oom.certservice.certification.exception.KeyDecryptionException;
 import org.onap.oom.certservice.certification.model.CsrModel;
 import org.springframework.stereotype.Service;
+
+import java.security.PrivateKey;
 
 
 @Service
@@ -36,23 +36,14 @@ public class CsrModelFactory {
             = new PemObjectFactory();
     private final Pkcs10CertificationRequestFactory certificationRequestFactory
             = new Pkcs10CertificationRequestFactory();
-
+    private final StringBase64ToPrivateKeyConverter stringBase64ToPrivateKeyConverter
+            = new StringBase64ToPrivateKeyConverter();
 
     public CsrModel createCsrModel(StringBase64 csr, StringBase64 privateKey)
             throws DecryptionException {
         PKCS10CertificationRequest decodedCsr = decodeCsr(csr);
-        PemObject decodedPrivateKey = decodePrivateKey(privateKey);
-        return new CsrModel.CsrModelBuilder(decodedCsr, decodedPrivateKey).build();
-    }
-
-    private PemObject decodePrivateKey(StringBase64 privateKey)
-            throws KeyDecryptionException {
-
-        return privateKey.asString()
-                .flatMap(pemObjectFactory::createPemObject)
-                .orElseThrow(
-                        () -> new KeyDecryptionException("Incorrect Key, decryption failed")
-                );
+        PrivateKey javaPrivateKey = stringBase64ToPrivateKeyConverter.convert(privateKey);
+        return new CsrModel.CsrModelBuilder(decodedCsr, javaPrivateKey).build();
     }
 
     private PKCS10CertificationRequest decodeCsr(StringBase64 csr)
