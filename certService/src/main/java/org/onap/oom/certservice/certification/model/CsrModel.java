@@ -20,16 +20,6 @@
 
 package org.onap.oom.certservice.certification.model;
 
-import java.io.IOException;
-import java.security.KeyFactory;
-import java.security.NoSuchAlgorithmException;
-import java.security.PrivateKey;
-import java.security.PublicKey;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.PKCS8EncodedKeySpec;
-import java.security.spec.X509EncodedKeySpec;
-import java.util.Arrays;
-import java.util.stream.Collectors;
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.asn1.x509.Extension;
 import org.bouncycastle.asn1.x509.Extensions;
@@ -40,6 +30,16 @@ import org.bouncycastle.util.io.pem.PemObject;
 import org.onap.oom.certservice.certification.exception.CsrDecryptionException;
 import org.onap.oom.certservice.certification.exception.DecryptionException;
 import org.onap.oom.certservice.certification.exception.KeyDecryptionException;
+
+import java.io.IOException;
+import java.security.KeyFactory;
+import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.X509EncodedKeySpec;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 
 public class CsrModel {
@@ -95,19 +95,18 @@ public class CsrModel {
     public static class CsrModelBuilder {
         private final PKCS10CertificationRequest csr;
 
-        private final PemObject privateKey;
+        private final PrivateKey privateKey;
 
         public CsrModel build() throws DecryptionException {
 
             X500Name subjectData = getSubjectData();
-            PrivateKey javaPrivateKey = convertingPemPrivateKeyToJavaSecurityPrivateKey(getPrivateKey());
             PublicKey javaPublicKey = convertingPemPublicKeyToJavaSecurityPublicKey(getPublicKey());
             GeneralName[] sans = getSansData();
 
-            return new CsrModel(csr, subjectData, javaPrivateKey, javaPublicKey, sans);
+            return new CsrModel(csr, subjectData, privateKey, javaPublicKey, sans);
         }
 
-        public CsrModelBuilder(PKCS10CertificationRequest csr, PemObject privateKey) {
+        public CsrModelBuilder(PKCS10CertificationRequest csr, PrivateKey privateKey) {
             this.csr = csr;
             this.privateKey = privateKey;
         }
@@ -118,10 +117,6 @@ public class CsrModel {
             } catch (IOException e) {
                 throw new CsrDecryptionException("Reading Public Key from CSR failed", e.getCause());
             }
-        }
-
-        private PemObject getPrivateKey() {
-            return privateKey;
         }
 
         private X500Name getSubjectData() {
@@ -142,17 +137,6 @@ public class CsrModel {
 
         private boolean isAttrsEmpty() {
             return csr.getAttributes().length == 0;
-        }
-
-        private PrivateKey convertingPemPrivateKeyToJavaSecurityPrivateKey(PemObject privateKey)
-            throws KeyDecryptionException {
-            try {
-                KeyFactory factory = KeyFactory.getInstance("RSA");
-                PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(privateKey.getContent());
-                return factory.generatePrivate(keySpec);
-            } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-                throw new KeyDecryptionException("Converting Private Key failed", e.getCause());
-            }
         }
 
         private PublicKey convertingPemPublicKeyToJavaSecurityPublicKey(PemObject publicKey)

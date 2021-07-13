@@ -2,7 +2,7 @@
  * ============LICENSE_START=======================================================
  * PROJECT
  * ================================================================================
- * Copyright (C) 2020 Nokia. All rights reserved.
+ * Copyright (C) 2020-2021 Nokia. All rights reserved.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,21 +20,26 @@
 
 package org.onap.oom.certservice.certification.model;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
 import org.bouncycastle.pkcs.PKCS10CertificationRequest;
 import org.bouncycastle.util.io.pem.PemObject;
 import org.junit.jupiter.api.Test;
-import org.onap.oom.certservice.certification.conversion.Pkcs10CertificationRequestFactory;
-import org.onap.oom.certservice.certification.conversion.PemObjectFactory;
 import org.onap.oom.certservice.certification.TestData;
+import org.onap.oom.certservice.certification.conversion.PemObjectFactory;
+import org.onap.oom.certservice.certification.conversion.Pkcs10CertificationRequestFactory;
 import org.onap.oom.certservice.certification.exception.CsrDecryptionException;
 import org.onap.oom.certservice.certification.exception.DecryptionException;
 import org.onap.oom.certservice.certification.exception.KeyDecryptionException;
 
 import java.io.IOException;
+import java.security.KeyFactory;
+import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -57,7 +62,7 @@ class CsrModelTest {
     @Test
     void shouldByConstructedAndReturnProperFields() throws DecryptionException, IOException {
         // Given
-        PemObject testPrivateKey = getPemPrivateKey();
+        PrivateKey testPrivateKey = getPemPrivateKey();
         PemObject testPublicKey = generateTestPublicKey();
         PKCS10CertificationRequest testCsr = generateTestCertificationRequest();
 
@@ -70,7 +75,7 @@ class CsrModelTest {
         assertThat(csrModel.getCsr())
             .isEqualTo(testCsr);
         assertThat(csrModel.getPrivateKey().getEncoded())
-            .contains(testPrivateKey.getContent());
+            .isEqualTo(testPrivateKey.getEncoded());
         assertThat(csrModel.getPublicKey().getEncoded())
             .contains(testPublicKey.getContent());
         assertThat(sansList)
@@ -84,7 +89,7 @@ class CsrModelTest {
     @Test
     void shouldThrowExceptionWhenPublicKeyIsNotCorrect() throws DecryptionException, IOException {
         // Given
-        PemObject testPrivateKey = getPemPrivateKey();
+        PrivateKey testPrivateKey = getPemPrivateKey();
         PKCS10CertificationRequest testCsr = mock(PKCS10CertificationRequest.class);
         SubjectPublicKeyInfo wrongKryInfo = mock(SubjectPublicKeyInfo.class);
         when(testCsr.getSubjectPublicKeyInfo())
@@ -106,33 +111,9 @@ class CsrModelTest {
     }
 
     @Test
-    void shouldThrowExceptionWhenPrivateKeyPemIsNotProperPrivateKey() throws KeyDecryptionException, IOException {
-        // Given
-        PemObject testPrivateKey = getPemWrongKey();
-        PKCS10CertificationRequest testCsr = mock(PKCS10CertificationRequest.class);
-        SubjectPublicKeyInfo wrongKryInfo = mock(SubjectPublicKeyInfo.class);
-        when(testCsr.getSubjectPublicKeyInfo())
-            .thenReturn(wrongKryInfo);
-        when(wrongKryInfo.getEncoded())
-            .thenThrow(new IOException());
-
-        // When
-        Exception exception = assertThrows(
-            KeyDecryptionException.class,
-            () -> new CsrModel.CsrModelBuilder(testCsr, testPrivateKey).build()
-        );
-
-        String expectedMessage = "Converting Private Key failed";
-        String actualMessage = exception.getMessage();
-
-        // Then
-        assertTrue(actualMessage.contains(expectedMessage));
-    }
-
-    @Test
     void shouldThrowExceptionWhenPublicKeyPemIsNotProperPublicKey() throws KeyDecryptionException, IOException {
         // Given
-        PemObject testPrivateKey = getPemPrivateKey();
+        PrivateKey testPrivateKey = getPemPrivateKey();
         PemObject testPublicKey = getPemWrongKey();
         PKCS10CertificationRequest testCsr = mock(PKCS10CertificationRequest.class);
         SubjectPublicKeyInfo wrongKryInfo = mock(SubjectPublicKeyInfo.class);
@@ -154,11 +135,12 @@ class CsrModelTest {
         assertTrue(actualMessage.contains(expectedMessage));
     }
 
-    private PemObject getPemPrivateKey() throws KeyDecryptionException {
+    private PrivateKey getPemPrivateKey() throws KeyDecryptionException {
         PemObjectFactory pemObjectFactory = new PemObjectFactory();
-        return pemObjectFactory.createPemObject(TEST_PK).orElseThrow(
-            () -> new KeyDecryptionException("Private key decoding fail")
+        PemObject pemObject = pemObjectFactory.createPemObject(TEST_PK).orElseThrow(
+                () -> new KeyDecryptionException("Private key decoding fail")
         );
+        return convertToPrivateKey(pemObject);
     }
 
     private PemObject getPemWrongKey() throws KeyDecryptionException {
@@ -172,7 +154,7 @@ class CsrModelTest {
         PemObject testPrivateKey = pemObjectFactory.createPemObject(TEST_PK).orElseThrow(
             () -> new DecryptionException("Incorrect Private Key, decryption failed")
         );
-        return new CsrModel.CsrModelBuilder(testCsr, testPrivateKey).build();
+        return new CsrModel.CsrModelBuilder(testCsr, convertToPrivateKey(testPrivateKey)).build();
     }
 
     private PemObject generateTestPublicKey() throws DecryptionException, IOException {
@@ -187,6 +169,17 @@ class CsrModelTest {
             ).orElseThrow(
                 () -> new DecryptionException("Incorrect CSR, decryption failed")
             );
+    }
+
+    private PrivateKey convertToPrivateKey(PemObject privateKey)
+            throws KeyDecryptionException {
+        try {
+            KeyFactory factory = KeyFactory.getInstance("RSA");
+            PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(privateKey.getContent());
+            return factory.generatePrivate(keySpec);
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+            throw new KeyDecryptionException("Converting Private Key failed", e.getCause());
+        }
     }
 
 }
