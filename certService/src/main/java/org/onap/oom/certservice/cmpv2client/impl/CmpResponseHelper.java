@@ -63,12 +63,20 @@ import org.slf4j.LoggerFactory;
 public final class CmpResponseHelper {
 
     private static final Logger LOG = LoggerFactory.getLogger(CmpResponseHelper.class);
+    private static final Map<Integer, String> RESPONSE_TYPE_TO_STRING = Map.of(
+        PKIBody.TYPE_INIT_REP, "INIT_REP",
+        PKIBody.TYPE_CERT_REP, "CERT_REP",
+        PKIBody.TYPE_KEY_UPDATE_REP, "KEY_UPDATE_REP");
 
     private CmpResponseHelper() {
     }
 
     static void checkIfCmpResponseContainsError(PKIMessage respPkiMessage) {
-        LOG.info("Response type: {} ", respPkiMessage.getBody().getType());
+        final int responseKey = respPkiMessage.getBody().getType();
+        final String responseTypeName = RESPONSE_TYPE_TO_STRING.containsKey(responseKey) ?
+            RESPONSE_TYPE_TO_STRING.get(responseKey) : Integer.toString(responseKey);
+        LOG.info("Response type is: {} ", responseTypeName);
+
         if (respPkiMessage.getBody().getType() == PKIBody.TYPE_ERROR) {
             final ErrorMsgContent errorMsgContent =
                 (ErrorMsgContent) respPkiMessage.getBody().getContent();

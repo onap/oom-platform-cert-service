@@ -76,6 +76,7 @@ public class CmpCertificationValidator {
         if (notBefore != null && notAfter != null && notBefore.compareTo(notAfter) > 0) {
             throw new IllegalArgumentException("Before Date is set after the After Date");
         }
+        LOG.info("Validation completed successfully.");
     }
 
     public void checkCmpResponse(final PKIMessage respPkiMessage, final PublicKey publicKey, final String initAuthPassword)
@@ -128,9 +129,7 @@ public class CmpCertificationValidator {
     }
 
     private void logServerResponse(CertResponse certResponse) {
-        if (LOG.isInfoEnabled()) {
-            LOG.info("Response status code: {}", certResponse.getStatus().getStatus());
-        }
+        LOG.info("Response status code: {}", certResponse.getStatus().getStatus());
         if (certResponse.getStatus().getStatusString() != null) {
             String serverMessage = certResponse.getStatus().getStatusString().getStringAt(0).getString();
             LOG.warn("Response status text: {}", serverMessage);

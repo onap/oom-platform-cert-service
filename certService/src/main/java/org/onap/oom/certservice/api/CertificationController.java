@@ -77,19 +77,19 @@ public class CertificationController {
                     content = @Content(schema = @Schema(implementation = ErrorResponseModel.class)))
     })
     @Operation(
-            summary = "sign certificate",
-            description = "Web endpoint for requesting certificate signing. Used by system components to gain certificate signed by CA.",
+            summary = "initialize certificate",
+            description = "Web endpoint for requesting certificate initialization. Used by system components to gain certificate signed by CA.",
             tags = {"CertificationService"})
     public ResponseEntity<CertificationResponseModel> signCertificate(
             @Parameter(description = "Name of certification authority that will sign CSR.")
             @PathVariable String caName,
-            @Parameter(description = "Certificate signing request in form of PEM object encoded in Base64 (with header and footer).")
+            @Parameter(description = "Certificate initialization request in form of PEM object encoded in Base64 (with header and footer).")
             @RequestHeader("CSR") String encodedCsr,
             @Parameter(description = "Private key in form of PEM object encoded in Base64 (with header and footer).")
             @RequestHeader("PK") String encodedPrivateKey
     ) throws DecryptionException, CmpClientException {
         caName = replaceWhiteSpaceChars(caName);
-        LOGGER.info("Received certificate signing request for CA named: {}", caName);
+        LOGGER.info("Received certificate initialization request for CA named: {}", caName);
         CertificationResponseModel certificationResponseModel = certificationResponseModelFactory
                 .provideCertificationModelFromInitialRequest(encodedCsr, encodedPrivateKey, caName);
         return new ResponseEntity<>(certificationResponseModel, HttpStatus.OK);
