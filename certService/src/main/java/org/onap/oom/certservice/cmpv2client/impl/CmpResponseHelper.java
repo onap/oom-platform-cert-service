@@ -1,8 +1,7 @@
 /*-
  * ============LICENSE_START=======================================================
- *  Copyright (C) 2020 Nordix Foundation.
- * ================================================================================
- * Modification copyright 2021 Nokia
+ * Copyright (C) 2020 Nordix Foundation.
+ * Copyright (C) 2021 Nokia.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -63,13 +62,20 @@ import org.slf4j.LoggerFactory;
 public final class CmpResponseHelper {
 
     private static final Logger LOG = LoggerFactory.getLogger(CmpResponseHelper.class);
+    private static final Map<Integer, String> RESPONSE_TYPE_TO_STRING = Map.of(
+        PKIBody.TYPE_INIT_REP, "INIT_REP",
+        PKIBody.TYPE_CERT_REP, "CERT_REP",
+        PKIBody.TYPE_KEY_UPDATE_REP, "KEY_UPDATE_REP");
 
     private CmpResponseHelper() {
     }
 
     static void checkIfCmpResponseContainsError(PKIMessage respPkiMessage) {
-        LOG.info("Response type: {} ", respPkiMessage.getBody().getType());
-        if (respPkiMessage.getBody().getType() == PKIBody.TYPE_ERROR) {
+        final int responseType = respPkiMessage.getBody().getType();
+        final String responseTypeName = RESPONSE_TYPE_TO_STRING.getOrDefault(responseType, Integer.toString(responseType));
+        LOG.info("Response type is: {} ", responseTypeName);
+
+        if (responseType == PKIBody.TYPE_ERROR) {
             final ErrorMsgContent errorMsgContent =
                 (ErrorMsgContent) respPkiMessage.getBody().getContent();
             String text = errorMsgContent.getPKIStatusInfo().getStatusString().getStringAt(0).getString();

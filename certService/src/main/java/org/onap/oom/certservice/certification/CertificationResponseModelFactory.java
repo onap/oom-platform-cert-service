@@ -2,7 +2,7 @@
  * ============LICENSE_START=======================================================
  * Cert Service
  * ================================================================================
- * Copyright (C) 2020 Nokia. All rights reserved.
+ * Copyright (C) 2020-2021 Nokia. All rights reserved.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -73,14 +73,14 @@ public class CertificationResponseModelFactory {
         Cmpv2Server cmpv2Server = cmpv2ServerProvider.getCmpv2Server(caName);
         LOGGER.debug("Found server for given CA name: \n{}", cmpv2Server);
 
-        LOGGER.info("Sending sign request for certification model for CA named: {}, and certificate signing request:\n{}",
+        LOGGER.info("Sending initialization request for certification model for CA named: {}, and certificate signing request:\n{}",
                 caName, csrModel);
         return certificationProvider.executeInitializationRequest(csrModel, cmpv2Server);
     }
 
     public CertificationResponseModel provideCertificationModelFromUpdateRequest(CertificateUpdateModel certificateUpdateModel)
         throws DecryptionException, CmpClientException, CertificateDecryptionException {
-        LOGGER.info("CSR: " + certificateUpdateModel.getEncodedCsr() +
+        LOGGER.debug("CSR: " + certificateUpdateModel.getEncodedCsr() +
                 ", old cert: " + certificateUpdateModel.getEncodedOldCert() +
                 ", CA: " + certificateUpdateModel.getCaName());
         final CsrModel csrModel = csrModelFactory.createCsrModel(

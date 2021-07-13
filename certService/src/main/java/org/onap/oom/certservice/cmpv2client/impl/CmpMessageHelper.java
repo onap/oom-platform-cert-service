@@ -75,7 +75,7 @@ public final class CmpMessageHelper {
      */
     public static OptionalValidity generateOptionalValidity(
             final Date notBefore, final Date notAfter) {
-        LOG.info("Generating Optional Validity from Date objects");
+        LOG.debug("Generating Optional Validity from Date objects");
         ASN1EncodableVector optionalValidityV = new ASN1EncodableVector();
         if (notBefore != null) {
             Time nb = new Time(notBefore);
@@ -95,7 +95,7 @@ public final class CmpMessageHelper {
      */
     public static Extensions generateExtension(final GeneralName[] sansArray)
             throws CmpClientException {
-        LOG.info("Generating Extensions from Subject Alternative Names");
+        LOG.debug("Generating Extensions from Subject Alternative Names");
         final ExtensionsGenerator extGenerator = new ExtensionsGenerator();
         try {
             extGenerator.addExtension(Extension.keyUsage, CRITICAL_FALSE, getKeyUsage());
