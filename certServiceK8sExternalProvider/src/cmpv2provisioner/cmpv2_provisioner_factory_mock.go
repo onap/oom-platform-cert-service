@@ -37,6 +37,9 @@ func (f *ProvisionerFactoryMock) CreateProvisioner(issuer *cmpv2api.CMPv2Issuer,
 		GetCertificatesFunc: func(csr []byte, pk []byte) (response *certserviceclient.CertificatesResponse, e error) {
 			return &testdata.SampleCertServiceResponse, nil
 		},
+		UpdateCertificateFunc: func(csr []byte, key []byte, oldCertificate string, oldPrivateKey string) (*certserviceclient.CertificatesResponse, error) {
+			return &testdata.SampleCertServiceResponse, nil
+		},
 	})
 
 	return provisioner, err
