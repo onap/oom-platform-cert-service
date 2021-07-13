@@ -41,6 +41,8 @@ type CMPv2IssuerSpec struct {
 	HealthEndpoint string `json:"healthEndpoint"`
 	// Path to certificate signing endpoint.
 	CertEndpoint string `json:"certEndpoint"`
+	// Path to certificate update endpoint.
+	UpdateEndpoint string `json:"updateEndpoint"`
 	// CaName is the name of the external CA server
 	CaName string `json:"caName"`
 	// KeyRef is a reference to a Secret containing the provisioner

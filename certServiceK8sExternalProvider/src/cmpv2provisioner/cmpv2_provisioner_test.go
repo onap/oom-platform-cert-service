@@ -32,6 +32,7 @@ import (
 
 	"onap.org/oom-certservice/k8s-external-provider/src/certserviceclient"
 	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2api"
+	"onap.org/oom-certservice/k8s-external-provider/src/model"
 	"onap.org/oom-certservice/k8s-external-provider/src/testdata"
 )
 
@@ -64,7 +65,7 @@ func Test_shouldSuccessfullyLoadPreviouslyStoredProvisioner(t *testing.T) {
 	assert.Equal(t, provisioner.url, issuer.Spec.URL, "Unexpected provisioner url.")
 }
 
-func Test_shouldReturnCorrectSignedPemsWhenParametersAreCorrect(t *testing.T) {
+func Test_shouldReturnCorrectSignedPemsWhenParametersAreCorrectForCertificateRequest(t *testing.T) {
 	issuer := createIssuerAndCerts(ISSUER_NAME, ISSUER_URL)
 	provisionerFactory := ProvisionerFactoryMock{}
 	provisioner, err := provisionerFactory.CreateProvisioner(&issuer, apiv1.Secret{})
@@ -80,7 +81,46 @@ func Test_shouldReturnCorrectSignedPemsWhenParametersAreCorrect(t *testing.T) {
 	request := createCertificateRequest()
 	privateKeyBytes := getPrivateKeyBytes()
 
-	signedPEM, trustedCAs, err := provisioner.Sign(ctx, request, privateKeyBytes)
+	signCertificateModel := model.SignCertificateModel{
+		CertificateRequest: request,
+		PrivateKeyBytes:    privateKeyBytes,
+		IsUpdateRevision:   false,
+		OldCertificate:     "",
+		OldPrivateKey:      "",
+	}
+
+	signedPEM, trustedCAs, err := provisioner.Sign(ctx, signCertificateModel)
+
+	assert.Nil(t, err)
+
+	testdata.VerifyCertsAreEqualToExpected(t, signedPEM, trustedCAs)
+}
+
+func Test_shouldReturnCorrectSignedPemsWhenParametersAreCorrectForUpdateCertificateRequest(t *testing.T) {
+	issuer := createIssuerAndCerts(ISSUER_NAME, ISSUER_URL)
+	provisionerFactory := ProvisionerFactoryMock{}
+	provisioner, err := provisionerFactory.CreateProvisioner(&issuer, apiv1.Secret{})
+
+	issuerNamespaceName := testdata.CreateIssuerNamespaceName(ISSUER_NAMESPACE, ISSUER_NAME)
+	Store(issuerNamespaceName, provisioner)
+
+	provisioner, ok := Load(issuerNamespaceName)
+
+	testdata.VerifyThatConditionIsTrue(ok, "Provisioner could not be loaded", t)
+
+	ctx := context.Background()
+	request := createCertificateRequest()
+	privateKeyBytes := getPrivateKeyBytes()
+
+	signCertificateModel := model.SignCertificateModel{
+		CertificateRequest: request,
+		PrivateKeyBytes:    privateKeyBytes,
+		IsUpdateRevision:   true,
+		OldCertificate:     testdata.OldCertificateEncoded,
+		OldPrivateKey:      testdata.OldPrivateKeyEncoded,
+	}
+
+	signedPEM, trustedCAs, err := provisioner.Sign(ctx, signCertificateModel)
 
 	assert.Nil(t, err)
 

@@ -29,7 +29,7 @@ import (
 	"path"
 )
 
-func CreateCertServiceClient(baseUrl string, healthEndpoint string, certEndpoint string, caName string,
+func CreateCertServiceClient(baseUrl string, healthEndpoint string, certEndpoint string, updateEndpoint string, caName string,
 	keyPemBase64 []byte, certPemBase64 []byte, cacertPemBase64 []byte) (*CertServiceClientImpl, error) {
 	cert, err := tls.X509KeyPair(certPemBase64, keyPemBase64)
 	if err != nil {
@@ -49,31 +49,34 @@ func CreateCertServiceClient(baseUrl string, healthEndpoint string, certEndpoint
 			},
 		},
 	}
-	healthUrl, certificationUrl, err := validateAndParseUrls(baseUrl, healthEndpoint, certEndpoint, caName)
+	healthUrl, certificationUrl, updateUrl, err := validateAndParseUrls(baseUrl, healthEndpoint, certEndpoint, updateEndpoint, caName)
 	if err != nil {
 		return nil, err
 	}
 	client := CertServiceClientImpl{
 		healthUrl:        healthUrl,
 		certificationUrl: certificationUrl,
+		updateUrl:        updateUrl,
 		httpClient:       httpClient,
 	}
 
 	return &client, nil
 }
 
-func validateAndParseUrls(baseUrl string, healthEndpoint string, certEndpoint string, caName string) (string, string, error) {
+func validateAndParseUrls(baseUrl string, healthEndpoint string, certEndpoint string, updateEndpoint string, caName string) (string, string, string, error) {
 	if err := validateUrls(baseUrl, healthEndpoint, certEndpoint, caName); err != nil {
-		return "", "", err
+		return "", "", "", err
 	}
 
 	certUrl, _ := url.Parse(baseUrl)
 	healthUrl, _ := url.Parse(baseUrl)
+	updateUrl, _ := url.Parse(baseUrl)
 
 	certUrl.Path = path.Join(certEndpoint, caName)
 	healthUrl.Path = path.Join(healthEndpoint)
+	updateUrl.Path = path.Join(updateEndpoint, caName)
 
-	return healthUrl.String(), certUrl.String(), nil
+	return healthUrl.String(), certUrl.String(), updateUrl.String(), nil
 }
 
 func validateUrls(baseUrl string, healthEndpoint string, certEndpoint string, caName string) error {
