@@ -84,7 +84,7 @@ public final class CmpUtil {
      * @return bytes containing a random number string representing a nonce
      */
     static byte[] createRandomBytes() {
-        LOGGER.info("Generating random array of bytes");
+        LOGGER.debug("Generating random array of bytes");
         byte[] randomBytes = new byte[RANDOM_BYTE_LENGTH];
         SECURE_RANDOM.nextBytes(randomBytes);
         return randomBytes;
@@ -97,7 +97,7 @@ public final class CmpUtil {
      * @return bytes containing a random number string representing a nonce
      */
     static int createRandomInt(int range) {
-        LOGGER.info("Generating random integer");
+        LOGGER.debug("Generating random integer");
         return SECURE_RANDOM.nextInt(range) + RANDOM_SEED;
     }
 
@@ -109,7 +109,7 @@ public final class CmpUtil {
      * @return bytes representing the PKIHeader and PKIBody thats to be protected
      */
     static byte[] generateProtectedBytes(PKIHeader header, PKIBody body) throws CmpClientException {
-        LOGGER.info("Generating array of bytes representing PkiHeader and PkiBody");
+        LOGGER.debug("Generating array of bytes representing PkiHeader and PkiBody");
         byte[] res;
         ASN1EncodableVector vector = new ASN1EncodableVector();
         vector.add(header);
@@ -139,7 +139,7 @@ public final class CmpUtil {
      */
     static PKIHeader generatePkiHeader(
             X500Name subjectDn, X500Name issuerDn, AlgorithmIdentifier protectionAlg, String senderKid) {
-        LOGGER.info("Generating a Pki Header Builder");
+        LOGGER.debug("Generating a Pki Header Builder");
         PKIHeaderBuilder pkiHeaderBuilder =
                 new PKIHeaderBuilder(
                         PKIHeader.CMP_2000, new GeneralName(subjectDn), new GeneralName(issuerDn));
