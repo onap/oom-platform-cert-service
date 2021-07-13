@@ -43,9 +43,9 @@ import java.util.Date;
 import java.util.Objects;
 import java.util.Optional;
 
-import static org.onap.oom.certservice.cmpv2client.impl.CmpResponseValidationHelper.checkImplicitConfirm;
-import static org.onap.oom.certservice.cmpv2client.impl.CmpResponseValidationHelper.verifyPasswordBasedProtection;
-import static org.onap.oom.certservice.cmpv2client.impl.CmpResponseValidationHelper.verifySignature;
+import static org.onap.oom.certservice.cmpv2client.validation.CmpResponseValidationHelper.checkImplicitConfirm;
+import static org.onap.oom.certservice.cmpv2client.validation.CmpResponseValidationHelper.verifyPasswordBasedProtection;
+import static org.onap.oom.certservice.cmpv2client.validation.CmpResponseValidationHelper.verifySignature;
 
 public class CmpCertificationValidator {
     private static final String DEFAULT_CA_NAME = "Certification Authority";
