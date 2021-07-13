@@ -2,7 +2,7 @@
  * ============LICENSE_START=======================================================
  * oom-certservice-k8s-external-provider
  * ================================================================================
- * Copyright (C) 2020 Nokia. All rights reserved.
+ * Copyright (C) 2020-2021 Nokia. All rights reserved.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@ import (
 	"onap.org/oom-certservice/k8s-external-provider/src/certserviceclient"
 	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2api"
 	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2provisioner/testdata"
+	"onap.org/oom-certservice/k8s-external-provider/src/model"
 )
 
 type ProvisionerFactoryMock struct {
@@ -35,6 +36,9 @@ type ProvisionerFactoryMock struct {
 func (f *ProvisionerFactoryMock) CreateProvisioner(issuer *cmpv2api.CMPv2Issuer, secret v1.Secret) (*CertServiceCA, error) {
 	provisioner, err := New(issuer, &certserviceclient.CertServiceClientMock{
 		GetCertificatesFunc: func(csr []byte, pk []byte) (response *certserviceclient.CertificatesResponse, e error) {
+			return &testdata.SampleCertServiceResponse, nil
+		},
+		UpdateCertificateFunc: func(csr []byte, key []byte, signCertificateModel model.SignCertificateModel) (*certserviceclient.CertificatesResponse, error) {
 			return &testdata.SampleCertServiceResponse, nil
 		},
 	})

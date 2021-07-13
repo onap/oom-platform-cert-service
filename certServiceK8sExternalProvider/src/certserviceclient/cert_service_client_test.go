@@ -2,7 +2,7 @@
  * ============LICENSE_START=======================================================
  * oom-certservice-k8s-external-provider
  * ================================================================================
- * Copyright (C) 2020 Nokia. All rights reserved.
+ * Copyright (C) 2020-2021 Nokia. All rights reserved.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,11 +30,13 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
+	"onap.org/oom-certservice/k8s-external-provider/src/model"
 	"onap.org/oom-certservice/k8s-external-provider/src/testdata"
 )
 
 const (
-	certificationUrl = "https://oom-cert-service:8443/v1/certificate/RA"
+	certificationUrl     = "https://oom-cert-service:8443/v1/certificate/RA"
+	certificateUpdateUrl = "https://oom-cert-service:8443/v1/certificate-update/RA"
 )
 
 func Test_GetCertificates_shouldParseCertificateResponseCorrectly(t *testing.T) {
@@ -92,6 +94,48 @@ func Test_GetCertificates_shouldReturnError_whenResponseOtherThan200(t *testing.
 		httpClient:       getMockedClient(responseJsonReader, http.StatusNotFound),
 	}
 	response, err := client.GetCertificates(testdata.CsrBytes, testdata.PkBytes)
+
+	assert.Nil(t, response)
+	assert.Error(t, err)
+}
+
+func Test_UpdateCertificates_shouldParseCertificateResponseCorrectly(t *testing.T) {
+	responseJson := `{"certificateChain": ["cert-0", "cert-1"], "trustedCertificates": ["trusted-cert-0", "trusted-cert-1"]}`
+	responseJsonReader := ioutil.NopCloser(bytes.NewReader([]byte(responseJson)))
+	client := CertServiceClientImpl{
+		updateUrl:  certificateUpdateUrl,
+		httpClient: getMockedClient(responseJsonReader, http.StatusOK),
+	}
+
+	response, _ := client.UpdateCertificate(testdata.CsrBytes, testdata.PkBytes, getTestSignCertificateModel())
+	assert.ElementsMatch(t, []string{"cert-0", "cert-1"}, response.CertificateChain)
+	assert.ElementsMatch(t, []string{"trusted-cert-0", "trusted-cert-1"}, response.TrustedCertificates)
+}
+
+
+func Test_UpdateCertificates_shouldReturnError_whenHttpClientReturnsError(t *testing.T) {
+	client := CertServiceClientImpl{
+		updateUrl: certificateUpdateUrl,
+		httpClient: &httpClientMock{
+			DoFunc: func(req *http.Request) (response *http.Response, err error) {
+				return nil, fmt.Errorf("mock error")
+			},
+		},
+	}
+	response, err := client.UpdateCertificate(testdata.CsrBytes, testdata.PkBytes, getTestSignCertificateModel())
+
+	assert.Nil(t, response)
+	assert.Error(t, err)
+}
+
+func Test_UpdateCertificates_shouldReturnError_whenResponseOtherThan200(t *testing.T) {
+	responseJson := `{"errorMessage": "CertService API error"}`
+	responseJsonReader := ioutil.NopCloser(bytes.NewReader([]byte(responseJson)))
+	client := CertServiceClientImpl{
+		updateUrl:  updateEndpoint,
+		httpClient: getMockedClient(responseJsonReader, http.StatusNotFound),
+	}
+	response, err := client.UpdateCertificate(testdata.CsrBytes, testdata.PkBytes, getTestSignCertificateModel())
 
 	assert.Nil(t, response)
 	assert.Error(t, err)
@@ -167,4 +211,12 @@ type httpClientMock struct {
 
 func (client httpClientMock) Do(req *http.Request) (*http.Response, error) {
 	return client.DoFunc(req)
+}
+
+func getTestSignCertificateModel() model.SignCertificateModel {
+	testSignCertificateModel := model.SignCertificateModel{
+		OldCertificate: testdata.OldCertificateEncoded,
+		OldPrivateKey:  testdata.OldPrivateKeyEncoded,
+	}
+	return testSignCertificateModel
 }

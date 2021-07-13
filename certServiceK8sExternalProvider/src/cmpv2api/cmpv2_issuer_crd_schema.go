@@ -3,7 +3,7 @@
  * oom-certservice-k8s-external-provider
  * ================================================================================
  * Copyright (c) 2019 Smallstep Labs, Inc.
- * Modifications copyright (C) 2020 Nokia. All rights reserved.
+ * Copyright (C) 2021 Nokia. All rights reserved.
  * ================================================================================
  * This source code was copied from the following git repository:
  * https://github.com/smallstep/step-issuer
@@ -41,6 +41,8 @@ type CMPv2IssuerSpec struct {
 	HealthEndpoint string `json:"healthEndpoint"`
 	// Path to certificate signing endpoint.
 	CertEndpoint string `json:"certEndpoint"`
+	// Path to certificate update endpoint.
+	UpdateEndpoint string `json:"updateEndpoint"`
 	// CaName is the name of the external CA server
 	CaName string `json:"caName"`
 	// KeyRef is a reference to a Secret containing the provisioner
