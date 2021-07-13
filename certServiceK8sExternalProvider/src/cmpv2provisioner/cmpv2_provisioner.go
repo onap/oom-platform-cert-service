@@ -29,13 +29,13 @@ import (
 	"context"
 	"sync"
 
-	certmanager "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1"
 	"k8s.io/apimachinery/pkg/types"
 
 	"onap.org/oom-certservice/k8s-external-provider/src/certserviceclient"
 	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2api"
 	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2provisioner/csr"
 	"onap.org/oom-certservice/k8s-external-provider/src/leveledlogger"
+	"onap.org/oom-certservice/k8s-external-provider/src/model"
 )
 
 var collection = new(sync.Map)
@@ -86,10 +86,17 @@ func Store(namespacedName types.NamespacedName, provisioner *CertServiceCA) {
 
 func (ca *CertServiceCA) Sign(
 	ctx context.Context,
-	certificateRequest *certmanager.CertificateRequest,
-	privateKeyBytes []byte,
+	signCertificateModel model.SignCertificateModel,
 ) (signedCertificateChain []byte, trustedCertificates []byte, err error) {
 	log := leveledlogger.GetLoggerWithName("certservice-provisioner")
+
+	if signCertificateModel.IsUpdateRevision {
+		log.Debug("Certificate will be updated.", "old-certificate", signCertificateModel.OldCertificate,
+			"old-private-key", signCertificateModel.OldPrivateKey) //TODO: remove private key from logger
+	}
+
+	certificateRequest := signCertificateModel.CertificateRequest
+	privateKeyBytes := signCertificateModel.PrivateKeyBytes
 	log.Info("Signing certificate: ", "cert-name", certificateRequest.Name)
 
 	log.Info("CA: ", "name", ca.name, "url", ca.url)
@@ -103,9 +110,19 @@ func (ca *CertServiceCA) Sign(
 	}
 	log.Debug("Filtered out CSR PEM: ", "bytes", filteredCsrBytes)
 
-	response, err := ca.certServiceClient.GetCertificates(filteredCsrBytes, privateKeyBytes)
-	if err != nil {
-		return nil, nil, err
+	var response *certserviceclient.CertificatesResponse
+	var errAPI error
+
+	if signCertificateModel.IsUpdateRevision {
+		log.Info("Attempt to send certificate update request")
+		response, errAPI = ca.certServiceClient.UpdateCertificate(filteredCsrBytes, privateKeyBytes, signCertificateModel.OldCertificate, signCertificateModel.OldPrivateKey)
+	} else {
+		log.Info("Attempt to send certificate request")
+		response, errAPI = ca.certServiceClient.GetCertificates(filteredCsrBytes, privateKeyBytes)
+	}
+
+	if errAPI != nil {
+		return nil, nil, errAPI
 	}
 	log.Info("Successfully received response from CertService API")
 	log.Debug("Certificate Chain", "cert-chain", response.CertificateChain)

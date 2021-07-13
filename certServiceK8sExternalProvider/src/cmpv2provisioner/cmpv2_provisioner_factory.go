@@ -51,7 +51,7 @@ func (f *ProvisionerFactoryImpl) CreateProvisioner(issuer *cmpv2api.CMPv2Issuer,
 		return nil, err
 	}
 
-	certServiceClient, err := certserviceclient.CreateCertServiceClient(issuer.Spec.URL, issuer.Spec.HealthEndpoint, issuer.Spec.CertEndpoint,
+	certServiceClient, err := certserviceclient.CreateCertServiceClient(issuer.Spec.URL, issuer.Spec.HealthEndpoint, issuer.Spec.CertEndpoint, issuer.Spec.UpdateEndpoint,
 		issuer.Spec.CaName, keyBase64, certBase64, cacertBase64)
 	if err != nil {
 		return nil, err
