@@ -28,7 +28,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.onap.oom.certservice.certification.CertificationResponseModelFactory;
-import org.onap.oom.certservice.certification.exception.CertificateDecryptionException;
 import org.onap.oom.certservice.certification.exception.DecryptionException;
 import org.onap.oom.certservice.certification.exception.ErrorResponseModel;
 import org.onap.oom.certservice.certification.model.CertificateUpdateModel;
@@ -112,7 +111,7 @@ public class CertificationController {
             @RequestHeader("PK") String encodedPrivateKey,
             @RequestHeader("OLD_CERT") String encodedOldCert,
             @RequestHeader("OLD_PK") String encodedOldPrivateKey
-    ) throws DecryptionException, CmpClientException, CertificateDecryptionException {
+    ) throws DecryptionException, CmpClientException {
         caName = replaceWhiteSpaceChars(caName);
         LOGGER.info("Received certificate update request for CA named: {}", caName);
         CertificateUpdateModel certificateUpdateModel = new CertificateUpdateModel.CertificateUpdateModelBuilder()

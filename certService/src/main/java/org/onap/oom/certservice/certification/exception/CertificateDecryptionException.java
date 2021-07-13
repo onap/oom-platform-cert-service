@@ -20,7 +20,7 @@
 
 package org.onap.oom.certservice.certification.exception;
 
-public class CertificateDecryptionException extends Exception {
+public class CertificateDecryptionException extends DecryptionException {
 
     public CertificateDecryptionException(String message, Throwable cause) {
         super(message, cause);

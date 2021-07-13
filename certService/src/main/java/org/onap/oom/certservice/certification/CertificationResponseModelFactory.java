@@ -25,7 +25,6 @@ import org.onap.oom.certservice.certification.configuration.model.Cmpv2Server;
 import org.onap.oom.certservice.certification.conversion.CsrModelFactory;
 import org.onap.oom.certservice.certification.conversion.OldCertificateModelFactory;
 import org.onap.oom.certservice.certification.conversion.StringBase64;
-import org.onap.oom.certservice.certification.exception.CertificateDecryptionException;
 import org.onap.oom.certservice.certification.exception.DecryptionException;
 import org.onap.oom.certservice.certification.model.CertificateUpdateModel;
 import org.onap.oom.certservice.certification.model.CertificationResponseModel;
@@ -79,10 +78,9 @@ public class CertificationResponseModelFactory {
     }
 
     public CertificationResponseModel provideCertificationModelFromUpdateRequest(CertificateUpdateModel certificateUpdateModel)
-        throws DecryptionException, CmpClientException, CertificateDecryptionException {
-        LOGGER.info("CSR: " + certificateUpdateModel.getEncodedCsr() +
-                ", old cert: " + certificateUpdateModel.getEncodedOldCert() +
-                ", CA: " + certificateUpdateModel.getCaName());
+        throws DecryptionException, CmpClientException {
+        LOGGER.info("CSR: {}, old cert: {}, CA: {}", certificateUpdateModel.getEncodedCsr(),
+                        certificateUpdateModel.getEncodedOldCert(), certificateUpdateModel.getCaName());
         final CsrModel csrModel = csrModelFactory.createCsrModel(
             new StringBase64(certificateUpdateModel.getEncodedCsr()),
             new StringBase64(certificateUpdateModel.getEncodedPrivateKey())

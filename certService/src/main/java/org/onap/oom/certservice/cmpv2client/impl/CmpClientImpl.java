@@ -100,7 +100,7 @@ public class CmpClientImpl implements CmpClient {
         final CreateCertRequest certRequest =
             getCmpMessageBuilderWithCommonRequestValues(csrModel, cmpv2Server)
                 .with(CreateCertRequest::setCmpRequestType, PKIBody.TYPE_KEY_UPDATE_REQ)
-                .with(CreateCertRequest::setExtraCerts, getCMPCertificate(oldCertificateModel.getOldCertificate()))
+                .with(CreateCertRequest::setExtraCerts, getCmpCertificate(oldCertificateModel.getOldCertificate()))
                 .with(CreateCertRequest::setProtection, pkiMessageProtection)
                 .build();
 
@@ -154,7 +154,7 @@ public class CmpClientImpl implements CmpClient {
             return new SignatureProtection(oldCertificateModel.getOldPrivateKey());
     }
 
-    private CMPCertificate[] getCMPCertificate(Certificate oldCertificate) {
+    private CMPCertificate[] getCmpCertificate(Certificate oldCertificate) {
             CMPCertificate cert = new CMPCertificate(oldCertificate);
             return new CMPCertificate[]{cert};
     }

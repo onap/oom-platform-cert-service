@@ -204,7 +204,7 @@ class CertificationResponseModelFactoryTest {
 
     @Test
     void shouldPerformKurWhenCsrAndOldCertDataMatch()
-        throws CertificateDecryptionException, DecryptionException, CmpClientException {
+        throws DecryptionException, CmpClientException {
         // Given
         CsrModel csrModel = mockCsrFactoryModelCreation();
         Cmpv2Server testServer = mockCmpv2ProviderServerSelection();
@@ -229,7 +229,7 @@ class CertificationResponseModelFactoryTest {
 
     @Test
     void shouldThrowCmpClientExceptionWhenUpdateRequestFailed()
-        throws DecryptionException, CmpClientException, CertificateDecryptionException {
+        throws DecryptionException, CmpClientException {
 
         // Given
         String expectedMessage = "Exception occurred while send request to CMPv2 Server";
@@ -254,7 +254,7 @@ class CertificationResponseModelFactoryTest {
 
     @Test
     void shouldPerformCrWhenCsrAndOldCertDataDontMatch()
-        throws CertificateDecryptionException, DecryptionException, CmpClientException {
+        throws DecryptionException, CmpClientException {
         // Given
         CsrModel csrModel = mockCsrFactoryModelCreation();
         Cmpv2Server testServer = mockCmpv2ProviderServerSelection();

@@ -72,7 +72,6 @@ public class OldCertificateModelFactory {
             return new OldCertificateModel(certificate, subjectData, sans, oldPrivateKey);
         } catch (StringToCertificateConversionException e) {
             throw new CertificateDecryptionException("Cannot convert certificate", e);
-
         } catch (CertificateParsingException e) {
             throw new CertificateDecryptionException("Cannot read Subject Alternative Names from certificate");
         } catch (NoSuchAlgorithmException | KeyDecryptionException | CertificateEncodingException | InvalidKeySpecException e) {

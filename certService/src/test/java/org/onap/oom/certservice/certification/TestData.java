@@ -29,7 +29,7 @@ public final class TestData {
 
     public static final String EXPECTED_CERT_SUBJECT = "C=US,ST=California,L=San-Francisco,O=Linux-Foundation,OU=ONAP,CN=onap.org";
     public static final String EXPECTED_CERT_SANS =
-        "SANs: [onap@onap.org, localhost, onap.org, test.onap.org, onap://cluster.local/, " + LOCALHOST_IP_IN_HEX +"]";
+        "SANs: [onap@onap.org, localhost, onap.org, test.onap.org, onap://cluster.local/, " + LOCALHOST_IP_IN_HEX + "]";
 
 
     public static final String TEST_CSR = "-----BEGIN CERTIFICATE REQUEST-----\n"

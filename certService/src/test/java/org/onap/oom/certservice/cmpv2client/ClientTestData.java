@@ -43,27 +43,27 @@ public final class ClientTestData {
     private static final OldCertificateModelFactory factory =
         new OldCertificateModelFactory(new PemStringToCertificateConverter(), new X509CertificateParser());
 
-    static final OldCertificateModel createCorrectOldCertificateModel() throws CertificateDecryptionException {
+    static OldCertificateModel createCorrectOldCertificateModel() throws CertificateDecryptionException {
         return createOldCertificateModel(TEST_ENCODED_OLD_CERT, TEST_ENCODED_OLD_PRIVATE_KEY);
     }
 
-    static final OldCertificateModel createOldCertificateModelWithWrongCert() throws CertificateDecryptionException {
+    static OldCertificateModel createOldCertificateModelWithWrongCert() throws CertificateDecryptionException {
         return createOldCertificateModel(WRONG_OLD_CERT, TEST_ENCODED_OLD_PRIVATE_KEY);
     }
 
-    static final OldCertificateModel createOldCertificateModelWithWrongPrivateKey() throws CertificateDecryptionException {
+    static OldCertificateModel createOldCertificateModelWithWrongPrivateKey() throws CertificateDecryptionException {
         return createOldCertificateModel(TEST_ENCODED_OLD_CERT, WRONG_OLD_PRIVATE_KEY);
     }
 
-    static final OldCertificateModel createOldCertificateModelWithPrivateKeyInPKCS1() throws CertificateDecryptionException {
+    static OldCertificateModel createOldCertificateModelWithPrivateKeyInPkcs1() throws CertificateDecryptionException {
         return createOldCertificateModel(TEST_ENCODED_OLD_CERT, TEST_ENCODED_PRIVATE_KEY_IN_PKCS1);
     }
 
-    static final OldCertificateModel createOldCertificateModelWithPrivateKeyInPKCS8() throws CertificateDecryptionException {
+    static OldCertificateModel createOldCertificateModelWithPrivateKeyInPkcs8() throws CertificateDecryptionException {
         return createOldCertificateModel(TEST_ENCODED_OLD_CERT, TEST_ENCODED_PRIVATE_KEY_IN_PKCS8);
     }
 
-    private static final OldCertificateModel createOldCertificateModel(String certificate, String privateKey) throws CertificateDecryptionException {
+    private static OldCertificateModel createOldCertificateModel(String certificate, String privateKey) throws CertificateDecryptionException {
         StringBase64 base64EncodedCertificate = new StringBase64(certificate);
         return factory.createCertificateModel(base64EncodedCertificate, privateKey);
     }
