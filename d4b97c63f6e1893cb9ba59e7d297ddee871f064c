@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "666a7935_8600a1c0",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/cmpv2client/impl/CmpResponseHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2021-07-14T09:12:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e09f6c79_0fb021ad",
+      "range": {
+        "startLine": 74,
+        "startChar": 18,
+        "endLine": 74,
+        "endChar": 29
+      },
+      "revId": "d4b97c63f6e1893cb9ba59e7d297ddee871f064c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "deb279f9_f6d61d39",
         "filename": "certService/src/main/java/org/onap/oom/certservice/cmpv2client/impl/CmpResponseHelper.java",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "d4b97c63f6e1893cb9ba59e7d297ddee871f064c",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c17c2a49_a25ac9ba",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/cmpv2client/impl/CmpResponseHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2021-07-14T09:12:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "deb279f9_f6d61d39",
+      "revId": "d4b97c63f6e1893cb9ba59e7d297ddee871f064c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -62,6 +104,30 @@
       "revId": "d4b97c63f6e1893cb9ba59e7d297ddee871f064c",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fcd9055_5463def2",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/cmpv2client/impl/CmpResponseHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2021-07-14T09:12:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a722b085_fdef969f",
+      "range": {
+        "startLine": 79,
+        "startChar": 12,
+        "endLine": 79,
+        "endChar": 46
+      },
+      "revId": "d4b97c63f6e1893cb9ba59e7d297ddee871f064c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
