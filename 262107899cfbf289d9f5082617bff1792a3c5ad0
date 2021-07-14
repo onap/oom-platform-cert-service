@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9dcfea1b_9c72cc2b",
+        "filename": "certServiceK8sExternalProvider/src/certserviceclient/cert_service_client.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2021-07-14T12:27:31Z",
+      "side": 1,
+      "message": "-2021. Fill in all files",
+      "range": {
+        "startLine": 5,
+        "startChar": 17,
+        "endLine": 5,
+        "endChar": 22
+      },
+      "revId": "262107899cfbf289d9f5082617bff1792a3c5ad0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc1c4bca_db4bafa5",
+        "filename": "certServiceK8sExternalProvider/src/certserviceclient/cert_service_client.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2021-07-14T12:27:31Z",
+      "side": 1,
+      "message": "Consider moving encoding (EncodeToString) here from certificate_update_util.go. It would be more consistent with csr and key",
+      "range": {
+        "startLine": 119,
+        "startChar": 37,
+        "endLine": 119,
+        "endChar": 50
+      },
+      "revId": "262107899cfbf289d9f5082617bff1792a3c5ad0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90a6f15b_a0ee6401",
+        "filename": "certServiceK8sExternalProvider/src/certserviceclient/cert_service_client.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2021-07-14T12:27:31Z",
+      "side": 1,
+      "message": "Consider extracting this (120 - 139 lines) into separate method e.g. reteriveCertificate. Then it will be possible to use it in GetCertificates",
+      "revId": "262107899cfbf289d9f5082617bff1792a3c5ad0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaa584b4_b520ae8b",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2provisioner/cmpv2_provisioner.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2021-07-14T12:27:31Z",
+      "side": 1,
+      "message": "Consider refactor by for example creation parameter object",
+      "range": {
+        "startLine": 118,
+        "startChar": 60,
+        "endLine": 118,
+        "endChar": 166
+      },
+      "revId": "262107899cfbf289d9f5082617bff1792a3c5ad0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
