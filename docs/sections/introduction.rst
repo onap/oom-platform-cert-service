@@ -31,8 +31,10 @@ Functionality
 
 In Frankfurt release only `Initialization Request <https://tools.ietf.org/html/rfc4210#section-5.3.1>`_ with `ImplicitConfirm <https://tools.ietf.org/html/rfc4210#section-5.1.1.1>`_ is supported.
 
-Request sent to CMPv2 server is authenticated by secret value (initial authentication key) and reference value (used to identify the secret value) as described in `RFC-4210 <https://tools.ietf.org/html/rfc4210#section-4.2.1.2>`_.
+Istanbul release includes also support for `Key Update Request and Certification Request <https://tools.ietf.org/html/rfc4210#section-5.3.1>`_
 
+Initialization Request and Certification Request sent to CMPv2 server are authenticated by secret value (initial authentication key) and reference value (used to identify the secret value) as described in `RFC-4210 <https://tools.ietf.org/html/rfc4210#section-4.2.1.2>`_.
+Key Update Request uses `signature protection <https://datatracker.ietf.org/doc/html/rfc4210#section-5.1.3.3>`_ so old certificate and private key are needed to authenticate the request.
 
 Security considerations
 -----------------------

@@ -2,6 +2,8 @@
 .. http://creativecommons.org/licenses/by/4.0
 .. Copyright 2020-2021 NOKIA
 
+.. _cmpv2_cert_provider:
+
 How to use functionality
 =========================
 Common information how to use CMPv2 certificate provider described below
@@ -38,6 +40,7 @@ Here is a definition of a *CMPv2Issuer* provided with ONAP installation:
     url: https://oom-cert-service:8443
     healthEndpoint: actuator/health
     certEndpoint: v1/certificate
+    updateEndpoint: v1/certificate-update
     caName: RA
     certSecretRef:
       name: cmpv2-issuer-secret
@@ -146,3 +149,29 @@ Here is an example of generated *secret* containing certificates:
     keystore.jks:    3786 bytes  <-- Certificate and Private Key (JKS)
     keystore.p12:    4047 bytes  <-- Certificate and Private Key (P12)
 
+.. _how_to_use_certificate_update:
+
+Certificate update
+------------------------------
+
+When the certificate already exists, but its date has expired or certificate data should be changed, then the certificate update scenario can be executed.
+This use case requires the update endpoint configured for *CMPv2Issuer* CRD:
+
+.. code-block:: yaml
+
+  ...
+  certEndpoint: v1/certificate
+  updateEndpoint: v1/certificate-update
+  caName: RA
+  ...
+
+If *updateEndpoint* field is not present or empty, then *certEndpoint* will be used to get the certificate and this event will be logged.
+This behavior comes from releases prior to 2.4.0, when the certificate update feature was not implemented. To be able to perform the certificate update scenario,
+make sure the updateEndpoint is present in *CMPv2Issuer* CRD.
+
+There are two possible types of requests when a certificate needs to be updated: Key Update Request (KUR) and Certification Request (CR).
+Certification Service internally compares the old and new certificates fields. When they are equal, KUR request is sent.
+If there is a difference, the type of request is CR.
+
+There is a difference between CR and KUR in terms of the request authentication. Certificate Request uses IAK/RV mechanism, while KUR uses signature protection.
+The old certificate and the old private key are required to be sent in the headers of the update request.
