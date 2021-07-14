@@ -7,13 +7,132 @@
 OOM Certification Service Release Notes
 ***************************************
 
+.. contents::
+    :depth: 2
+..
+
+Version: 2.4.0 [not released yet]
+=================================
+
 Abstract
-========
+--------
+
+This document provides the release notes for the Istanbul release.
+
+Summary
+-------
+
+Certificate update use case is now available. For details go to:
+:ref:`How to use instructions<how_to_use_certificate_update>`
+
+Release Data
+------------
+
++--------------------------------------+---------------------------------------------------------------------------------------+
+| **Project**                          | OOM                                                                                   |
+|                                      |                                                                                       |
++--------------------------------------+---------------------------------------------------------------------------------------+
+| **Docker images**                    |  * onap/org.onap.oom.platform.cert-service.oom-certservice-api:2.4.0                  |
+|                                      |  * onap/org.onap.oom.platform.cert-service.oom-certservice-post-processor:2.4.0       |
+|                                      |  * onap/org.onap.oom.platform.cert-service.oom-certservice-k8s-external-provider:2.4.0|
+|                                      |                                                                                       |
++--------------------------------------+---------------------------------------------------------------------------------------+
+| **Release designation**              | Istanbul                                                                              |
+|                                      |                                                                                       |
++--------------------------------------+---------------------------------------------------------------------------------------+
+
+
+New features
+------------
+
+- `OOM-2754 <https://jira.onap.org/browse/OOM-2754>`_ Implement certificate update in CMPv2 external issuer
+
+- `OOM-2753 <https://jira.onap.org/browse/OOM-2753>`_ Implement certificate update in CMPv2 CertService
+
+- `OOM-2744 <https://jira.onap.org/browse/OOM-2744>`_ Remove CertService Client mechanism from ONAP
+
+- `OOM-2649 <https://jira.onap.org/browse/OOM-2649>`_ Update contrib/ejbca to 7.x
+
+**Bug fixes**
+
+- `OOM-2771 <https://jira.onap.org/browse/OOM-2771>`_ Fix CertificateRequest resource was not found issue in CMPv2 external issuer
+
+- `OOM-2764 <https://jira.onap.org/browse/OOM-2764>`_ Fix sonar issues in CertService
+
+**Known Issues**
+
+None
+
+Deliverables
+------------
+
+Software Deliverables
+~~~~~~~~~~~~~~~~~~~~~
+Docker images mentioned in Release Date section.
+
+Documentation Deliverables
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- :ref:`CMPv2 certificate provider description <cmpv2_cert_provider>`
+
+Known Limitations, Issues and Workarounds
+-----------------------------------------
+
+System Limitations
+~~~~~~~~~~~~~~~~~~
+
+Any known system limitations.
+
+
+Known Vulnerabilities
+~~~~~~~~~~~~~~~~~~~~~
+
+Any known vulnerabilities.
+
+
+Workarounds
+~~~~~~~~~~~
+
+Any known workarounds.
+
+
+Security Notes
+--------------
+
+**Fixed Security Issues**
+
+None
+
+**Known Security Issues**
+
+None
+
+
+Test Results
+------------
+Not applicable
+
+
+References
+----------
+
+For more information on the ONAP Istanbul release, please see:
+
+#. `ONAP Home Page`_
+#. `ONAP Documentation`_
+#. `ONAP Release Downloads`_
+#. `ONAP Wiki Page`_
+
+Version: 2.3.3
+==============
+
+Abstract
+--------
 
 This document provides the release notes for the Honolulu release.
 
 Summary
-=======
+-------
 
 Certification Service provides certificates signed by external CMPv2 server - such certificates are further called operators certificates. Operators certificates are meant to secure external ONAP traffic - traffic between network functions (xNFs) and ONAP.
 
@@ -21,7 +140,7 @@ This project was moved from Application Authorization Framework (AAF), to check 
 
 
 Release Data
-============
+------------
 
 +--------------------------------------+---------------------------------------------------------------------------------------+
 | **Project**                          | OOM                                                                                   |
@@ -72,10 +191,10 @@ Docker images mentioned in Release Date section.
 Documentation Deliverables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-- :doc:`CMPv2 certificate provider description <cmpv2-cert-provider>`
+- :ref:`CMPv2 certificate provider description <cmpv2_cert_provider>`
 
 Known Limitations, Issues and Workarounds
-=========================================
+-----------------------------------------
 
 System Limitations
 ------------------
@@ -108,12 +227,12 @@ None
 
 
 Test Results
-============
+------------
 Not applicable
 
 
 References
-==========
+----------
 
 For more information on the ONAP Honolulu release, please see:
 
