@@ -27,6 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.onap.oom.certservice.certification.exception.CertificateDecryptionException;
 import org.onap.oom.certservice.certification.exception.Cmpv2ClientAdapterException;
 import org.onap.oom.certservice.certification.exception.Cmpv2ServerNotFoundException;
 import org.onap.oom.certservice.certification.exception.CsrDecryptionException;
@@ -146,4 +147,19 @@ class CertificationExceptionAdviceTest {
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
         assertTrue(response.getBody().getErrorMessage().startsWith(expectedMessage));
     }
+
+    @Test
+    void shouldReturnResponseEntityWithCertificateDecryptionMessage() {
+        // Given
+        String expectedMessage = "Wrong certificate format";
+        CertificateDecryptionException exception = new CertificateDecryptionException("Incorrect certificate, decryption failed");
+
+        // When
+        ResponseEntity<ErrorResponseModel> response = certificationExceptionAdvice.handle(exception);
+
+        // Then
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals(expectedMessage, response.getBody().getErrorMessage());
+    }
+
 }

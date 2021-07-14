@@ -22,6 +22,7 @@
 package org.onap.oom.certservice.api.advice;
 
 import org.onap.oom.certservice.api.CertificationController;
+import org.onap.oom.certservice.certification.exception.CertificateDecryptionException;
 import org.onap.oom.certservice.certification.exception.Cmpv2ClientAdapterException;
 import org.onap.oom.certservice.certification.exception.Cmpv2ServerNotFoundException;
 import org.onap.oom.certservice.certification.exception.CsrDecryptionException;
@@ -56,6 +57,15 @@ public final class CertificationExceptionAdvice {
         return getErrorResponseEntity(
             "Wrong key (PK) format",
             HttpStatus.BAD_REQUEST
+        );
+    }
+
+    @ExceptionHandler(value = CertificateDecryptionException.class)
+    public ResponseEntity<ErrorResponseModel> handle(CertificateDecryptionException exception) {
+        LOGGER.error("Exception occurred decoding certificate:", exception);
+        return getErrorResponseEntity(
+                "Wrong certificate format",
+                HttpStatus.BAD_REQUEST
         );
     }
 
