@@ -2,6 +2,69 @@
   "comments": [
     {
       "key": {
+        "uuid": "e09f6c79_0fb021ad",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/cmpv2client/impl/CmpResponseHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2021-07-14T09:01:11Z",
+      "side": 1,
+      "message": "Consider change to responseType",
+      "range": {
+        "startLine": 74,
+        "startChar": 18,
+        "endLine": 74,
+        "endChar": 29
+      },
+      "revId": "d4b97c63f6e1893cb9ba59e7d297ddee871f064c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deb279f9_f6d61d39",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/cmpv2client/impl/CmpResponseHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2021-07-14T09:01:11Z",
+      "side": 1,
+      "message": "Consider change to: RESPONSE_TYPE_TO_STRING.getOrDefault(responseKey, Integer.toString(responseKey));",
+      "revId": "d4b97c63f6e1893cb9ba59e7d297ddee871f064c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a722b085_fdef969f",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/cmpv2client/impl/CmpResponseHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2021-07-14T09:01:11Z",
+      "side": 1,
+      "message": "Consider use variable responseKey",
+      "range": {
+        "startLine": 79,
+        "startChar": 12,
+        "endLine": 79,
+        "endChar": 46
+      },
+      "revId": "d4b97c63f6e1893cb9ba59e7d297ddee871f064c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80d53c02_bcd9f44c",
         "filename": "certService/src/main/java/org/onap/oom/certservice/cmpv2client/validation/CmpCertificationValidator.java",
         "patchSetId": 2
