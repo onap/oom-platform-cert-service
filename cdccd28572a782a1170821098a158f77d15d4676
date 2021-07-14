@@ -22,6 +22,30 @@
       "revId": "cdccd28572a782a1170821098a158f77d15d4676",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51b19f65_579d5903",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/certification/configuration/model/Cmpv2Server.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-07-14T11:40:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "caae63b6_d5c088c1",
+      "range": {
+        "startLine": 5,
+        "startChar": 17,
+        "endLine": 5,
+        "endChar": 21
+      },
+      "revId": "cdccd28572a782a1170821098a158f77d15d4676",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
