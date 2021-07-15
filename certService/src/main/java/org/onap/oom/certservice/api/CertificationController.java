@@ -28,6 +28,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.onap.oom.certservice.certification.CertificationResponseModelFactory;
+import org.onap.oom.certservice.certification.exception.CertificateDecryptionException;
 import org.onap.oom.certservice.certification.exception.DecryptionException;
 import org.onap.oom.certservice.certification.exception.ErrorResponseModel;
 import org.onap.oom.certservice.certification.model.CertificateUpdateModel;
@@ -72,11 +73,11 @@ public class CertificationController {
                     content = @Content(schema = @Schema(implementation = ErrorResponseModel.class))),
             @ApiResponse(responseCode = "404", description = "CA not found for given name",
                     content = @Content(schema = @Schema(implementation = ErrorResponseModel.class))),
-            @ApiResponse(responseCode = "500", description = "Something went wrong during connectiion to CMPv2 server",
+            @ApiResponse(responseCode = "500", description = "Something went wrong during connection to CMPv2 server",
                     content = @Content(schema = @Schema(implementation = ErrorResponseModel.class)))
     })
     @Operation(
-            summary = "initialize certificate",
+            summary = "Initialize certificate",
             description = "Web endpoint for requesting certificate initialization. Used by system components to gain certificate signed by CA.",
             tags = {"CertificationService"})
     public ResponseEntity<CertificationResponseModel> signCertificate(
@@ -105,11 +106,30 @@ public class CertificationController {
      * @return JSON containing trusted certificates and certificate chain
      */
     @GetMapping(value = "v1/certificate-update/{caName}", produces = "application/json")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Certificate successfully updated"),
+            @ApiResponse(responseCode = "400", description = "Given CSR, PK, old certificate or/and old PK is incorrect",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseModel.class))),
+            @ApiResponse(responseCode = "404", description = "CA not found for given name",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseModel.class))),
+            @ApiResponse(responseCode = "500", description = "Something went wrong during connection to CMPv2 server",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseModel.class)))
+    })
+    @Operation(
+            summary = "Update certificate",
+            description = "Web endpoint for updating certificate. Used by system components to update certificate signed by CA.",
+            tags = {"CertificationService"})
     public ResponseEntity<CertificationResponseModel> updateCertificate(
+            @Parameter(description = "Name of certification authority that will update certificate.")
             @PathVariable String caName,
+            @Parameter(description = "Certificate signing request in form of PEM object encoded in Base64 (with header and footer).")
             @RequestHeader("CSR") String encodedCsr,
+            @Parameter(description = "Private key in form of PEM object encoded in Base64 (with header and footer).")
             @RequestHeader("PK") String encodedPrivateKey,
+            @Parameter(description = "Old certificate in form of PEM object encoded in Base64 (with header and footer).")
             @RequestHeader("OLD_CERT") String encodedOldCert,
+            @Parameter(description = "Old private key (corresponding with old certificate) "
+                    + "in form of PEM object encoded in Base64 (with header and footer).")
             @RequestHeader("OLD_PK") String encodedOldPrivateKey
     ) throws DecryptionException, CmpClientException {
         caName = replaceWhiteSpaceChars(caName);
