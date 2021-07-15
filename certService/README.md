@@ -95,9 +95,9 @@ audit.log  error.log  debug.log
 API is described by Swagger ( OpenAPI 3.0 ) on endpoint /docs 
 ( endpoint is defined in properties as springdoc.swagger-ui.path )
 ```
-http://localchost:8080/docs
+http://localhost:8080/docs
 ```
 
 ### OpenAPI
 during project building yaml file with openAPI 3.0 documentation is generated in target directory with name api-docs.yaml
-file OpenAPI.yaml located in certService directory must be update be hand if needed
+file OpenAPI.yaml located in ./docs/sections/resources directory must be update be hand if needed
