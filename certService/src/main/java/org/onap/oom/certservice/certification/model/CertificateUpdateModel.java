@@ -31,7 +31,7 @@ public final class CertificateUpdateModel {
     private final String caName;
 
     private CertificateUpdateModel(String encodedCsr, String encodedPrivateKey, String encodedOldCert,
-                                   String encodedOldPrivateKey, String caName) {
+        String encodedOldPrivateKey, String caName) {
         this.encodedCsr = encodedCsr;
         this.encodedPrivateKey = encodedPrivateKey;
         this.encodedOldCert = encodedOldCert;
@@ -60,15 +60,19 @@ public final class CertificateUpdateModel {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CertificateUpdateModel that = (CertificateUpdateModel) o;
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        CertificateUpdateModel that = (CertificateUpdateModel) obj;
         return Objects.equals(encodedCsr, that.encodedCsr)
-                && Objects.equals(encodedPrivateKey, that.encodedPrivateKey)
-                && Objects.equals(encodedOldCert, that.encodedOldCert)
-                && Objects.equals(encodedOldPrivateKey, that.encodedOldPrivateKey)
-                && Objects.equals(caName, that.caName);
+            && Objects.equals(encodedPrivateKey, that.encodedPrivateKey)
+            && Objects.equals(encodedOldCert, that.encodedOldCert)
+            && Objects.equals(encodedOldPrivateKey, that.encodedOldPrivateKey)
+            && Objects.equals(caName, that.caName);
     }
 
     @Override
@@ -110,7 +114,8 @@ public final class CertificateUpdateModel {
         }
 
         public CertificateUpdateModel build() {
-            return new CertificateUpdateModel(encodedCsr, encodedPrivateKey, encodedOldCert, encodedOldPrivateKey, caName);
+            return new CertificateUpdateModel(encodedCsr, encodedPrivateKey, encodedOldCert, encodedOldPrivateKey,
+                caName);
         }
     }
 }

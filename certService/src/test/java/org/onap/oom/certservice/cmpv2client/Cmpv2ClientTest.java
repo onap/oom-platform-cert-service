@@ -26,8 +26,8 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
-import static org.onap.oom.certservice.cmpv2client.ClientTestData.createOldCertificateModelWithPrivateKeyInPKCS1;
-import static org.onap.oom.certservice.cmpv2client.ClientTestData.createOldCertificateModelWithPrivateKeyInPKCS8;
+import static org.onap.oom.certservice.cmpv2client.ClientTestData.createOldCertificateModelWithPrivateKeyInPkcs1;
+import static org.onap.oom.certservice.cmpv2client.ClientTestData.createOldCertificateModelWithPrivateKeyInPkcs8;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
@@ -115,7 +115,7 @@ class Cmpv2ClientTest {
 
     private static KeyPair keyPair;
 
-    private final static Decoder BASE64_DECODER = Base64.getDecoder();
+    private static final Decoder BASE64_DECODER = Base64.getDecoder();
 
     @BeforeEach
     void setUp()
@@ -233,7 +233,7 @@ class Cmpv2ClientTest {
 
 
     @Test
-    void shouldThrowCMPClientExceptionWhenCannotParseOldCertificate() {
+    void shouldThrowCmpClientExceptionWhenCannotParseOldCertificate() {
         setCsrModelAndServerTestDefaultValues();
 
         CmpClientImpl cmpClient = new CmpClientImpl(httpClient);
@@ -375,7 +375,7 @@ class Cmpv2ClientTest {
 
         try (
             BufferedInputStream bis = new BufferedInputStream(new ByteArrayInputStream(
-                preparePKIMessageWithoutProtectionAlgorithm().getEncoded()
+                preparePkiMessageWithoutProtectionAlgorithm().getEncoded()
             ))) {
 
             byte[] ba = IOUtils.toByteArray(bis);
@@ -473,7 +473,7 @@ class Cmpv2ClientTest {
         server.setIssuerDN(dn);
     }
 
-    private PKIMessage preparePKIMessageWithoutProtectionAlgorithm() {
+    private PKIMessage preparePkiMessageWithoutProtectionAlgorithm() {
 
         CertTemplateBuilder certTemplateBuilder = new CertTemplateBuilder();
         X500Name issuerDN = getTestIssuerDN();
@@ -504,8 +504,8 @@ class Cmpv2ClientTest {
     private static Stream<Arguments> getTestUpdateModelWithSupportedPrivateKeys()
         throws CertificateDecryptionException {
         return Stream.of(
-            Arguments.of(createOldCertificateModelWithPrivateKeyInPKCS1()),
-            Arguments.of(createOldCertificateModelWithPrivateKeyInPKCS8())
+            Arguments.of(createOldCertificateModelWithPrivateKeyInPkcs1()),
+            Arguments.of(createOldCertificateModelWithPrivateKeyInPkcs8())
         );
     }
 

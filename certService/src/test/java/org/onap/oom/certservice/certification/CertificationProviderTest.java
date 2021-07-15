@@ -140,7 +140,7 @@ class CertificationProviderTest {
         // When
         when(
             cmpClient.executeKeyUpdateRequest(any(CsrModel.class), any(Cmpv2Server.class), any(OldCertificateModel.class))
-        ).thenReturn(getCMPv2CertificationModel());
+        ).thenReturn(getCmpv2CertificationModel());
 
         CertificationResponseModel certificationModel = certificationProvider
             .executeKeyUpdateRequest(csrModel, server, oldCertificateModel);
@@ -162,7 +162,7 @@ class CertificationProviderTest {
 
         when(
             cmpClient.executeInitializationRequest(any(CsrModel.class), any(Cmpv2Server.class))
-        ).thenReturn(getCMPv2CertificationModel());
+        ).thenReturn(getCmpv2CertificationModel());
 
         CertificationResponseModel certificationModel = certificationProvider
             .executeInitializationRequest(csrModel, server);
@@ -214,7 +214,7 @@ class CertificationProviderTest {
         return string.replace("\n", "").replace("\r", "");
     }
 
-    private Cmpv2CertificationModel getCMPv2CertificationModel() throws IOException, CertificateException {
+    private Cmpv2CertificationModel getCmpv2CertificationModel() throws IOException, CertificateException {
         List<X509Certificate> certificateChain = getX509CertificateFromPem(TEST_CMPv2_KEYSTORE);
         List<X509Certificate> trustedCertificates = getX509CertificateFromPem(TEST_CMPv2_TRUSTSTORE);
         return new Cmpv2CertificationModel(certificateChain, trustedCertificates);

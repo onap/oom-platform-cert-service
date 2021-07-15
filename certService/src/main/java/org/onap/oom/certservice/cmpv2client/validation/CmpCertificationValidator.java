@@ -50,7 +50,7 @@ public class CmpCertificationValidator {
     private static final ASN1ObjectIdentifier PASSWORD_BASED_MAC = new ASN1ObjectIdentifier("1.2.840.113533.7.66.13");
     private static final Logger LOG = LoggerFactory.getLogger(CmpCertificationValidator.class);
 
-    public static void validate(
+    public void validate(
         final CsrModel csrModel,
         final Cmpv2Server server,
         final CloseableHttpClient httpClient,

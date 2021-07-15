@@ -20,15 +20,14 @@
 
 package org.onap.oom.certservice.certification.model;
 
-import org.bouncycastle.asn1.x500.X500Name;
-import org.bouncycastle.asn1.x509.GeneralName;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import org.bouncycastle.asn1.x500.X500Name;
+import org.bouncycastle.asn1.x509.GeneralName;
 
 public class CertificateData {
 
@@ -49,10 +48,14 @@ public class CertificateData {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CertificateData that = (CertificateData) o;
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        CertificateData that = (CertificateData) obj;
         return Objects.equals(subject, that.subject) && Objects.equals(sortedSans, that.sortedSans);
     }
 
