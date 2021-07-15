@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7afed5ee_b80e46bd",
+        "filename": "certService/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2021-07-15T08:35:24Z",
+      "side": 1,
+      "message": "updated",
+      "range": {
+        "startLine": 103,
+        "startChar": 73,
+        "endLine": 103,
+        "endChar": 79
+      },
+      "revId": "40551568e07b642ea81ffc565c5f9ccaf7a43593",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25d3fbd4_7e4bf0b8",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/api/CertificationController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2021-07-15T08:35:24Z",
+      "side": 1,
+      "message": "connection",
+      "range": {
+        "startLine": 115,
+        "startChar": 90,
+        "endLine": 115,
+        "endChar": 101
+      },
+      "revId": "40551568e07b642ea81ffc565c5f9ccaf7a43593",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "681d4a3f_392138f3",
+        "filename": "docs/sections/resources/OpenAPI.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2021-07-15T08:35:24Z",
+      "side": 1,
+      "message": "connection",
+      "range": {
+        "startLine": 99,
+        "startChar": 51,
+        "endLine": 99,
+        "endChar": 62
+      },
+      "revId": "40551568e07b642ea81ffc565c5f9ccaf7a43593",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
