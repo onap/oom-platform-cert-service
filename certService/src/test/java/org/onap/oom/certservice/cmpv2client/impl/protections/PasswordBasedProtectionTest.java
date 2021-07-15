@@ -18,7 +18,7 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.certservice.cmpv2client.impl;
+package org.onap.oom.certservice.cmpv2client.impl.protections;
 
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
 import org.bouncycastle.asn1.DERBitString;
@@ -44,8 +44,8 @@ import java.security.Security;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.onap.oom.certservice.cmpv2client.impl.PkiTestUtils.getProtectedPkiMessage;
-import static org.onap.oom.certservice.cmpv2client.impl.PkiTestUtils.getTestPkiHeader;
+import static org.onap.oom.certservice.cmpv2client.impl.protections.PkiTestUtils.getProtectedPkiMessage;
+import static org.onap.oom.certservice.cmpv2client.impl.protections.PkiTestUtils.getTestPkiHeader;
 
 class PasswordBasedProtectionTest {
 

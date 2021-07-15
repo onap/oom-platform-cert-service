@@ -2,7 +2,7 @@
  * ============LICENSE_START=======================================================
  * Cert Service
  * ================================================================================
- * Copyright (C) 2020 Nokia. All rights reserved.
+ * Copyright (C) 2020-2021 Nokia. All rights reserved.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,13 +20,6 @@
 
 package org.onap.oom.certservice.certification.conversion;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.onap.oom.certservice.certification.TestData.TEST_CSR;
-import static org.onap.oom.certservice.certification.TestData.TEST_PK;
-import static org.onap.oom.certservice.certification.TestData.TEST_WRONG_CSR;
-import static org.onap.oom.certservice.certification.TestData.TEST_WRONG_PEM;
-
 import org.bouncycastle.util.encoders.Base64;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,6 +28,13 @@ import org.onap.oom.certservice.certification.exception.CsrDecryptionException;
 import org.onap.oom.certservice.certification.exception.DecryptionException;
 import org.onap.oom.certservice.certification.exception.KeyDecryptionException;
 import org.onap.oom.certservice.certification.model.CsrModel;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.onap.oom.certservice.certification.TestData.TEST_CSR;
+import static org.onap.oom.certservice.certification.TestData.TEST_PK;
+import static org.onap.oom.certservice.certification.TestData.TEST_WRONG_CSR;
+import static org.onap.oom.certservice.certification.TestData.TEST_WRONG_PEM;
 
 
 class CsrModelFactoryTest {
@@ -58,7 +58,6 @@ class CsrModelFactoryTest {
 
         assertTrue(decryptedCsr.toString()
             .contains(TestData.EXPECTED_CERT_SUBJECT));
-        System.out.println(decryptedCsr.toString());
         assertTrue(decryptedCsr.toString()
             .contains(TestData.EXPECTED_CERT_SANS));
     }

@@ -18,7 +18,7 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.certservice.cmpv2client.impl;
+package org.onap.oom.certservice.cmpv2client.impl.protections;
 
 
 import org.bouncycastle.asn1.pkcs.PKCSObjectIdentifiers;
@@ -40,12 +40,12 @@ public class SignatureProtection extends PkiMessageProtection {
 
     private final PrivateKey oldPrivateKey;
 
-    SignatureProtection(PrivateKey privateKey) {
+    public SignatureProtection(PrivateKey privateKey) {
         this.oldPrivateKey = privateKey;
     }
 
     @Override
-    AlgorithmIdentifier getAlgorithmIdentifier() {
+    public AlgorithmIdentifier getAlgorithmIdentifier() {
         return SHA256_RSA_ALGORITHM;
     }
 

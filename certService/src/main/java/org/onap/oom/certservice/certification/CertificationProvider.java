@@ -70,7 +70,7 @@ public class CertificationProvider {
         return getCertificationResponseModel(certificates);
     }
 
-    private static List<String> convertFromX509CertificateListToPemList(List<X509Certificate> certificates) {
+    private List<String> convertFromX509CertificateListToPemList(List<X509Certificate> certificates) {
         return certificates.stream().map(CertificationProvider::convertFromX509CertificateToPem).filter(cert -> !cert.isEmpty())
                 .collect(Collectors.toList());
     }

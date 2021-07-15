@@ -20,19 +20,10 @@
 
 package org.onap.oom.certservice.certification.conversion;
 
-import java.security.KeyFactory;
-import java.security.NoSuchAlgorithmException;
-import java.security.PrivateKey;
-import java.security.cert.CertificateEncodingException;
-import java.security.cert.CertificateParsingException;
-import java.security.cert.X509Certificate;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.PKCS8EncodedKeySpec;
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.asn1.x509.Certificate;
 import org.bouncycastle.asn1.x509.GeneralName;
 import org.bouncycastle.cert.jcajce.JcaX509CertificateHolder;
-import org.bouncycastle.util.io.pem.PemObject;
 import org.onap.oom.certservice.certification.X509CertificateParser;
 import org.onap.oom.certservice.certification.exception.CertificateDecryptionException;
 import org.onap.oom.certservice.certification.exception.KeyDecryptionException;
@@ -41,13 +32,19 @@ import org.onap.oom.certservice.certification.model.OldCertificateModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.security.PrivateKey;
+import java.security.cert.CertificateEncodingException;
+import java.security.cert.CertificateParsingException;
+import java.security.cert.X509Certificate;
+
 @Service
 public class OldCertificateModelFactory {
 
     private static final String BEGIN_CERTIFICATE = "-----BEGIN CERTIFICATE-----\n";
     private static final String END_CERTIFICATE = "-----END CERTIFICATE-----\n";
-    private static final PemObjectFactory PEM_OBJECT_FACTORY = new PemObjectFactory();
 
+    private final StringBase64ToPrivateKeyConverter stringBase64ToPrivateKeyConverter
+            = new StringBase64ToPrivateKeyConverter();
     private final PemStringToCertificateConverter pemStringToCertificateConverter;
     private final X509CertificateParser x509CertificateParser;
 
@@ -68,13 +65,13 @@ public class OldCertificateModelFactory {
             final X500Name subjectData = x509CertificateParser.getSubject(x509Certificate);
             final GeneralName[] sans = x509CertificateParser.getSans(x509Certificate);
             final Certificate certificate = new JcaX509CertificateHolder(x509Certificate).toASN1Structure();
-            final PrivateKey oldPrivateKey = getOldPrivateKeyObject(encodedOldPrivateKey);
+            final PrivateKey oldPrivateKey = stringBase64ToPrivateKeyConverter.convert(new StringBase64(encodedOldPrivateKey));
             return new OldCertificateModel(certificate, subjectData, sans, oldPrivateKey);
         } catch (StringToCertificateConversionException e) {
             throw new CertificateDecryptionException("Cannot convert certificate", e);
         } catch (CertificateParsingException e) {
             throw new CertificateDecryptionException("Cannot read Subject Alternative Names from certificate");
-        } catch (NoSuchAlgorithmException | KeyDecryptionException | CertificateEncodingException | InvalidKeySpecException e) {
+        } catch (KeyDecryptionException | CertificateEncodingException e) {
             throw new CertificateDecryptionException("Cannot convert certificate or key", e);
         }
     }
@@ -90,17 +87,4 @@ public class OldCertificateModelFactory {
         return !(certificateChain.contains(BEGIN_CERTIFICATE) && certificateChain.contains(END_CERTIFICATE));
     }
 
-    private PrivateKey getOldPrivateKeyObject(String encodedOldPrivateKey)
-        throws KeyDecryptionException, InvalidKeySpecException, NoSuchAlgorithmException {
-
-        StringBase64 stringBase64 = new StringBase64(encodedOldPrivateKey);
-        PemObject pemObject = stringBase64.asString()
-            .flatMap(PEM_OBJECT_FACTORY::createPemObject)
-            .orElseThrow(
-                () -> new KeyDecryptionException("Incorrect Key, decryption failed")
-            );
-        PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(pemObject.getContent());
-        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-        return keyFactory.generatePrivate(keySpec);
-    }
 }

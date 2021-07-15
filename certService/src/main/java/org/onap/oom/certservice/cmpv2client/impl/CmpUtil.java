@@ -21,12 +21,6 @@
 
 package org.onap.oom.certservice.cmpv2client.impl;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.security.SecureRandom;
-import java.util.Date;
-import java.util.Objects;
-
 import org.bouncycastle.asn1.ASN1Encodable;
 import org.bouncycastle.asn1.ASN1EncodableVector;
 import org.bouncycastle.asn1.ASN1GeneralizedTime;
@@ -45,6 +39,12 @@ import org.bouncycastle.asn1.x509.GeneralName;
 import org.onap.oom.certservice.cmpv2client.exceptions.CmpClientException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.security.SecureRandom;
+import java.util.Date;
+import java.util.Objects;
 
 public final class CmpUtil {
 
@@ -83,7 +83,7 @@ public final class CmpUtil {
      *
      * @return bytes containing a random number string representing a nonce
      */
-    static byte[] createRandomBytes() {
+    public static byte[] createRandomBytes() {
         LOGGER.info("Generating random array of bytes");
         byte[] randomBytes = new byte[RANDOM_BYTE_LENGTH];
         SECURE_RANDOM.nextBytes(randomBytes);
@@ -96,7 +96,7 @@ public final class CmpUtil {
      *
      * @return bytes containing a random number string representing a nonce
      */
-    static int createRandomInt(int range) {
+    public static int createRandomInt(int range) {
         LOGGER.info("Generating random integer");
         return SECURE_RANDOM.nextInt(range) + RANDOM_SEED;
     }
@@ -108,7 +108,7 @@ public final class CmpUtil {
      * @param body   Body of PKIMessage containing specific information for message
      * @return bytes representing the PKIHeader and PKIBody thats to be protected
      */
-    static byte[] generateProtectedBytes(PKIHeader header, PKIBody body) throws CmpClientException {
+    public static byte[] generateProtectedBytes(PKIHeader header, PKIBody body) throws CmpClientException {
         LOGGER.info("Generating array of bytes representing PkiHeader and PkiBody");
         byte[] res;
         ASN1EncodableVector vector = new ASN1EncodableVector();

@@ -21,12 +21,6 @@
 
 package org.onap.oom.certservice.cmpv2client.impl;
 
-import static org.onap.oom.certservice.cmpv2client.impl.CmpUtil.createRandomInt;
-import static org.onap.oom.certservice.cmpv2client.impl.CmpUtil.generatePkiHeader;
-
-import java.security.KeyPair;
-import java.util.Date;
-
 import org.bouncycastle.asn1.ASN1Integer;
 import org.bouncycastle.asn1.DERBitString;
 import org.bouncycastle.asn1.cmp.CMPCertificate;
@@ -44,6 +38,13 @@ import org.bouncycastle.asn1.x509.GeneralName;
 import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
 import org.bouncycastle.operator.DefaultSignatureAlgorithmIdentifierFinder;
 import org.onap.oom.certservice.cmpv2client.exceptions.CmpClientException;
+import org.onap.oom.certservice.cmpv2client.impl.protections.PkiMessageProtection;
+
+import java.security.KeyPair;
+import java.util.Date;
+
+import static org.onap.oom.certservice.cmpv2client.impl.CmpUtil.createRandomInt;
+import static org.onap.oom.certservice.cmpv2client.impl.CmpUtil.generatePkiHeader;
 
 /**
  * Implementation of the CmpClient Interface conforming to RFC4210 (Certificate Management Protocol

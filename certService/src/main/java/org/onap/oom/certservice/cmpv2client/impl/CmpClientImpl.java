@@ -22,19 +22,6 @@
 
 package org.onap.oom.certservice.cmpv2client.impl;
 
-import static org.onap.oom.certservice.cmpv2client.impl.CmpResponseHelper.checkIfCmpResponseContainsError;
-import static org.onap.oom.certservice.cmpv2client.impl.CmpResponseHelper.getCertFromByteArray;
-import static org.onap.oom.certservice.cmpv2client.impl.CmpResponseHelper.verifyAndReturnCertChainAndTrustSTore;
-
-import java.io.IOException;
-import java.security.KeyPair;
-import java.security.Security;
-import java.security.cert.CertificateParsingException;
-import java.security.cert.X509Certificate;
-import java.util.Collections;
-import java.util.Date;
-import java.util.Objects;
-import java.util.Optional;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.bouncycastle.asn1.cmp.CMPCertificate;
 import org.bouncycastle.asn1.cmp.CertRepMessage;
@@ -48,10 +35,27 @@ import org.onap.oom.certservice.certification.model.CsrModel;
 import org.onap.oom.certservice.certification.model.OldCertificateModel;
 import org.onap.oom.certservice.cmpv2client.api.CmpClient;
 import org.onap.oom.certservice.cmpv2client.exceptions.CmpClientException;
+import org.onap.oom.certservice.cmpv2client.impl.protections.PasswordBasedProtection;
+import org.onap.oom.certservice.cmpv2client.impl.protections.PkiMessageProtection;
+import org.onap.oom.certservice.cmpv2client.impl.protections.SignatureProtection;
 import org.onap.oom.certservice.cmpv2client.model.Cmpv2CertificationModel;
 import org.onap.oom.certservice.cmpv2client.validation.CmpCertificationValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.security.KeyPair;
+import java.security.Security;
+import java.security.cert.CertificateParsingException;
+import java.security.cert.X509Certificate;
+import java.util.Collections;
+import java.util.Date;
+import java.util.Objects;
+import java.util.Optional;
+
+import static org.onap.oom.certservice.cmpv2client.impl.CmpResponseHelper.checkIfCmpResponseContainsError;
+import static org.onap.oom.certservice.cmpv2client.impl.CmpResponseHelper.getCertFromByteArray;
+import static org.onap.oom.certservice.cmpv2client.impl.CmpResponseHelper.verifyAndReturnCertChainAndTrustSTore;
 
 /**
  * Implementation of the CmpClient Interface conforming to RFC4210 (Certificate Management Protocol

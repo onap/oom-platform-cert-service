@@ -22,14 +22,7 @@
 
 package org.onap.oom.certservice.cmpv2client.validation;
 
-import static org.onap.oom.certservice.cmpv2client.impl.CmpResponseValidationHelper.checkImplicitConfirm;
-import static org.onap.oom.certservice.cmpv2client.impl.CmpResponseValidationHelper.verifyPasswordBasedProtection;
-import static org.onap.oom.certservice.cmpv2client.impl.CmpResponseValidationHelper.verifySignature;
 
-import java.security.PublicKey;
-import java.util.Date;
-import java.util.Objects;
-import java.util.Optional;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
 import org.bouncycastle.asn1.cmp.CertResponse;
@@ -44,6 +37,15 @@ import org.onap.oom.certservice.cmpv2client.impl.CmpUtil;
 import org.onap.oom.certservice.cmpv2client.impl.PkiStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.security.PublicKey;
+import java.util.Date;
+import java.util.Objects;
+import java.util.Optional;
+
+import static org.onap.oom.certservice.cmpv2client.impl.CmpResponseValidationHelper.checkImplicitConfirm;
+import static org.onap.oom.certservice.cmpv2client.impl.CmpResponseValidationHelper.verifyPasswordBasedProtection;
+import static org.onap.oom.certservice.cmpv2client.impl.CmpResponseValidationHelper.verifySignature;
 
 public class CmpCertificationValidator {
     private static final String DEFAULT_CA_NAME = "Certification Authority";

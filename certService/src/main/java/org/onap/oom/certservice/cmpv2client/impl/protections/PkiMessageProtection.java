@@ -18,7 +18,7 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.oom.certservice.cmpv2client.impl;
+package org.onap.oom.certservice.cmpv2client.impl.protections;
 
 import org.bouncycastle.asn1.DERBitString;
 import org.bouncycastle.asn1.cmp.PKIBody;
@@ -45,7 +45,7 @@ public abstract class PkiMessageProtection {
      *
      * @return bytes representing protection wrapped into DERBitString object.
      */
-    DERBitString generatePkiMessageProtection(PKIHeader pkiHeader, PKIBody pkiBody) throws CmpClientException {
+    public DERBitString generatePkiMessageProtection(PKIHeader pkiHeader, PKIBody pkiBody) throws CmpClientException {
         try {
             byte[] protectedBytes = generateProtectedBytes(pkiHeader, pkiBody);
             byte[] protectionBytes = generateProtectionBytes(protectedBytes);
@@ -60,17 +60,17 @@ public abstract class PkiMessageProtection {
     }
 
     /**
+     * Returns Algorithm Identifier for protection of PKIMessage.
+     *
+     * @return Algorithm Identifier.
+     */
+    public abstract AlgorithmIdentifier getAlgorithmIdentifier();
+
+    /**
      * Takes encoded bytes of PKIMessage (PKIHeader and PKIBody) and generates protection bytes.
      *
      * @return bytes representing protection.
      */
     abstract byte[] generateProtectionBytes(byte[] protectedBytes) throws GeneralSecurityException;
-
-    /**
-     * Returns Algorithm Identifier for protection of PKIMessage.
-     *
-     * @return Algorithm Identifier.
-     */
-    abstract AlgorithmIdentifier getAlgorithmIdentifier();
 
 }
