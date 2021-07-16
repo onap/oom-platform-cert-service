@@ -16,6 +16,24 @@
       "revId": "d63a4674317497fd6700c52c705649ce85ac3725",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e60bbfa_40bbd39b",
+        "filename": "certServiceK8sExternalProvider/src/certserviceclient/cert_service_client.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-07-16T08:08:35Z",
+      "side": 1,
+      "message": "CSR is filtered -it mean that we removed unsupported parameters in CertServiceAPI; postal code, street addres, serial number. Private key not required filtering. \n\nIt is passed ass separate parameter to keep similar declaration in client. \nGetCertificates(csr []byte, key []byte)\nUpdateCertificate(csr []byte, key []byte, signCertificateModel model.SignCertificateModel) \n\nIt could be refactored in separate commit.",
+      "parentUuid": "280db00f_b997e2f4",
+      "revId": "d63a4674317497fd6700c52c705649ce85ac3725",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
