@@ -46,7 +46,7 @@ func Test_GetCertificates_shouldParseCertificateResponseCorrectly(t *testing.T) 
 		certificationUrl: certificationUrl,
 		httpClient:       getMockedClient(responseJsonReader, http.StatusOK),
 	}
-	response, _ := client.GetCertificates(testdata.CsrBytes, testdata.PkBytes)
+	response, _ := client.GetCertificates(getTestSignCertificateModel())
 	assert.ElementsMatch(t, []string{"cert-0", "cert-1"}, response.CertificateChain)
 	assert.ElementsMatch(t, []string{"trusted-cert-0", "trusted-cert-1"}, response.TrustedCertificates)
 }
@@ -65,7 +65,7 @@ func Test_GetCertificates_shouldReturnError_whenResponseIsNotJson(t *testing.T) 
 			},
 		},
 	}
-	response, err := client.GetCertificates(testdata.CsrBytes, testdata.PkBytes)
+	response, err := client.GetCertificates(getTestSignCertificateModel())
 
 	assert.Nil(t, response)
 	assert.Error(t, err)
@@ -80,7 +80,7 @@ func Test_GetCertificates_shouldReturnError_whenHttpClientReturnsError(t *testin
 			},
 		},
 	}
-	response, err := client.GetCertificates(testdata.CsrBytes, testdata.PkBytes)
+	response, err := client.GetCertificates(getTestSignCertificateModel())
 
 	assert.Nil(t, response)
 	assert.Error(t, err)
@@ -93,7 +93,7 @@ func Test_GetCertificates_shouldReturnError_whenResponseOtherThan200(t *testing.
 		certificationUrl: certificationUrl,
 		httpClient:       getMockedClient(responseJsonReader, http.StatusNotFound),
 	}
-	response, err := client.GetCertificates(testdata.CsrBytes, testdata.PkBytes)
+	response, err := client.GetCertificates(getTestSignCertificateModel())
 
 	assert.Nil(t, response)
 	assert.Error(t, err)
@@ -107,11 +107,10 @@ func Test_UpdateCertificates_shouldParseCertificateResponseCorrectly(t *testing.
 		httpClient: getMockedClient(responseJsonReader, http.StatusOK),
 	}
 
-	response, _ := client.UpdateCertificate(testdata.CsrBytes, testdata.PkBytes, getTestSignCertificateModel())
+	response, _ := client.UpdateCertificate(getTestSignCertificateModel())
 	assert.ElementsMatch(t, []string{"cert-0", "cert-1"}, response.CertificateChain)
 	assert.ElementsMatch(t, []string{"trusted-cert-0", "trusted-cert-1"}, response.TrustedCertificates)
 }
-
 
 func Test_UpdateCertificates_shouldReturnError_whenHttpClientReturnsError(t *testing.T) {
 	client := CertServiceClientImpl{
@@ -122,7 +121,7 @@ func Test_UpdateCertificates_shouldReturnError_whenHttpClientReturnsError(t *tes
 			},
 		},
 	}
-	response, err := client.UpdateCertificate(testdata.CsrBytes, testdata.PkBytes, getTestSignCertificateModel())
+	response, err := client.UpdateCertificate(getTestSignCertificateModel())
 
 	assert.Nil(t, response)
 	assert.Error(t, err)
@@ -135,7 +134,7 @@ func Test_UpdateCertificates_shouldReturnError_whenResponseOtherThan200(t *testi
 		updateUrl:  updateEndpoint,
 		httpClient: getMockedClient(responseJsonReader, http.StatusNotFound),
 	}
-	response, err := client.UpdateCertificate(testdata.CsrBytes, testdata.PkBytes, getTestSignCertificateModel())
+	response, err := client.UpdateCertificate(getTestSignCertificateModel())
 
 	assert.Nil(t, response)
 	assert.Error(t, err)
@@ -215,8 +214,10 @@ func (client httpClientMock) Do(req *http.Request) (*http.Response, error) {
 
 func getTestSignCertificateModel() model.SignCertificateModel {
 	testSignCertificateModel := model.SignCertificateModel{
-		OldCertificate: testdata.OldCertificateEncoded,
-		OldPrivateKey:  testdata.OldPrivateKeyEncoded,
+		FilteredCsr: testdata.CsrBytes,
+		PrivateKeyBytes:     testdata.PkBytes,
+		OldCertificateBytes: testdata.OldCertificateBytes,
+		OldPrivateKeyBytes:  testdata.OldPrivateKeyBytes,
 	}
 	return testSignCertificateModel
 }

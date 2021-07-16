@@ -23,16 +23,16 @@ package certserviceclient
 import "onap.org/oom-certservice/k8s-external-provider/src/model"
 
 type CertServiceClientMock struct {
-	GetCertificatesFunc   func(csr []byte, key []byte) (*CertificatesResponse, error)
-	UpdateCertificateFunc func(csr []byte, key []byte, signCertificateModel model.SignCertificateModel) (*CertificatesResponse, error)
+	GetCertificatesFunc   func(signCertificateModel model.SignCertificateModel) (*CertificatesResponse, error)
+	UpdateCertificateFunc func(signCertificateModel model.SignCertificateModel) (*CertificatesResponse, error)
 }
 
-func (client *CertServiceClientMock) UpdateCertificate(csr []byte, key []byte, signCertificateModel model.SignCertificateModel) (*CertificatesResponse, error) {
-	return client.UpdateCertificateFunc(csr, key, signCertificateModel)
+func (client *CertServiceClientMock) UpdateCertificate(signCertificateModel model.SignCertificateModel) (*CertificatesResponse, error) {
+	return client.UpdateCertificateFunc(signCertificateModel)
 }
 
-func (client *CertServiceClientMock) GetCertificates(csr []byte, key []byte) (*CertificatesResponse, error) {
-	return client.GetCertificatesFunc(csr, key)
+func (client *CertServiceClientMock) GetCertificates(signCertificateModel model.SignCertificateModel) (*CertificatesResponse, error) {
+	return client.GetCertificatesFunc(signCertificateModel)
 }
 
 func (client *CertServiceClientMock) CheckHealth() error {

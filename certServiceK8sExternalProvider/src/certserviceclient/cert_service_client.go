@@ -37,9 +37,9 @@ const (
 )
 
 type CertServiceClient interface {
-	GetCertificates(csr []byte, key []byte) (*CertificatesResponse, error)
+	GetCertificates(certificateModel model.SignCertificateModel) (*CertificatesResponse, error)
 	CheckHealth() error
-	UpdateCertificate(csr []byte, key []byte, signCertificateModel model.SignCertificateModel) (*CertificatesResponse, error)
+	UpdateCertificate(signCertificateModel model.SignCertificateModel) (*CertificatesResponse, error)
 }
 
 type CertServiceClientImpl struct {
@@ -80,29 +80,28 @@ func (client *CertServiceClientImpl) CheckHealth() error {
 	return nil
 }
 
-func (client *CertServiceClientImpl) GetCertificates(csr []byte, key []byte) (*CertificatesResponse, error) {
-
+func (client *CertServiceClientImpl) GetCertificates(signCertificateModel model.SignCertificateModel) (*CertificatesResponse, error) {
 	request, err := http.NewRequest("GET", client.certificationUrl, nil)
 	if err != nil {
 		return nil, err
 	}
 
-	request.Header.Add(CsrHeaderName, base64.StdEncoding.EncodeToString(csr))
-	request.Header.Add(PkHeaderName, base64.StdEncoding.EncodeToString(key))
+	request.Header.Add(CsrHeaderName, base64.StdEncoding.EncodeToString(signCertificateModel.FilteredCsr))
+	request.Header.Add(PkHeaderName, base64.StdEncoding.EncodeToString(signCertificateModel.PrivateKeyBytes))
 
 	return client.executeRequest(request)
 }
 
-func (client *CertServiceClientImpl) UpdateCertificate(csr []byte, key []byte, signCertificateModel model.SignCertificateModel) (*CertificatesResponse, error) {
+func (client *CertServiceClientImpl) UpdateCertificate(signCertificateModel model.SignCertificateModel) (*CertificatesResponse, error) {
 	request, err := http.NewRequest("GET", client.updateUrl, nil)
 	if err != nil {
 		return nil, err
 	}
 
-	request.Header.Add(CsrHeaderName, base64.StdEncoding.EncodeToString(csr))
-	request.Header.Add(PkHeaderName, base64.StdEncoding.EncodeToString(key))
-	request.Header.Add(OldPkHeaderName, signCertificateModel.OldPrivateKey)
-	request.Header.Add(OldCertificateHeaderName, signCertificateModel.OldCertificate)
+	request.Header.Add(CsrHeaderName, base64.StdEncoding.EncodeToString(signCertificateModel.FilteredCsr))
+	request.Header.Add(PkHeaderName, base64.StdEncoding.EncodeToString(signCertificateModel.PrivateKeyBytes))
+	request.Header.Add(OldPkHeaderName, base64.StdEncoding.EncodeToString(signCertificateModel.OldPrivateKeyBytes))
+	request.Header.Add(OldCertificateHeaderName, base64.StdEncoding.EncodeToString(signCertificateModel.OldCertificateBytes))
 
 	return client.executeRequest(request)
 }

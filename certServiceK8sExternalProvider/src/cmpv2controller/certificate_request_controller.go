@@ -40,10 +40,8 @@ import (
 	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2api"
 	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2controller/logger"
 	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2controller/updater"
-	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2controller/util"
 	provisioners "onap.org/oom-certservice/k8s-external-provider/src/cmpv2provisioner"
 	"onap.org/oom-certservice/k8s-external-provider/src/leveledlogger"
-	"onap.org/oom-certservice/k8s-external-provider/src/model"
 	x509utils "onap.org/oom-certservice/k8s-external-provider/src/x509"
 )
 
@@ -139,25 +137,17 @@ func (controller *CertificateRequestController) Reconcile(k8sRequest ctrl.Reques
 	// 9. Log Certificate Request properties not supported or overridden by CertService API
 	logger.LogCertRequestProperties(leveledlogger.GetLoggerWithName("CSR details:"), certificateRequest, csr)
 
-	// 10. Check if CertificateRequest is an update request
-	isUpdateRevision, oldCertificate, oldPrivateKey := util.CheckIfCertificateUpdateAndRetrieveOldCertificateAndPk(
-		controller.Client, certificateRequest, ctx)
-	if isUpdateRevision {
-		log.Info("Update revision detected")
-	}
-	signCertificateModel := model.SignCertificateModel{
-		CertificateRequest: certificateRequest,
-		PrivateKeyBytes:    privateKeyBytes,
-		IsUpdateRevision:   isUpdateRevision,
-		OldCertificate:     oldCertificate,
-		OldPrivateKey:      oldPrivateKey,
+	//10. Create sign certificate object with filtered CSR
+	signCertificateModel, err := CreateSignCertificateModel(controller.Client, certificateRequest, ctx, privateKeyBytes)
+	if err != nil {
+		return ctrl.Result{}, err
 	}
 
 	// 11. Sign CertificateRequest
-	signedPEM, trustedCAs, err := provisioner.Sign(ctx, signCertificateModel)
+	signedPEM, trustedCAs, err := provisioner.Sign(signCertificateModel)
 	if err != nil {
 		controller.handleErrorFailedToSignCertificate(certUpdater, log, err)
-		return ctrl.Result{}, nil
+		return ctrl.Result{}, err
 	}
 
 	// 12. Store signed certificates in CertificateRequest

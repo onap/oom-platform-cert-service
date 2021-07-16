@@ -21,7 +21,6 @@
 package cmpv2provisioner
 
 import (
-	"context"
 	"testing"
 	"time"
 
@@ -77,19 +76,17 @@ func Test_shouldReturnCorrectSignedPemsWhenParametersAreCorrectForCertificateReq
 
 	testdata.VerifyThatConditionIsTrue(ok, "Provisioner could not be loaded", t)
 
-	ctx := context.Background()
 	request := createCertificateRequest()
 	privateKeyBytes := getPrivateKeyBytes()
 
 	signCertificateModel := model.SignCertificateModel{
-		CertificateRequest: request,
-		PrivateKeyBytes:    privateKeyBytes,
-		IsUpdateRevision:   false,
-		OldCertificate:     "",
-		OldPrivateKey:      "",
+		CertificateRequest: 	request,
+		PrivateKeyBytes:        privateKeyBytes,
+		OldCertificateBytes:    []byte{},
+		OldPrivateKeyBytes:     []byte{},
 	}
 
-	signedPEM, trustedCAs, err := provisioner.Sign(ctx, signCertificateModel)
+	signedPEM, trustedCAs, err := provisioner.Sign(signCertificateModel)
 
 	assert.Nil(t, err)
 
@@ -108,19 +105,17 @@ func Test_shouldReturnCorrectSignedPemsWhenParametersAreCorrectForUpdateCertific
 
 	testdata.VerifyThatConditionIsTrue(ok, "Provisioner could not be loaded", t)
 
-	ctx := context.Background()
 	request := createCertificateRequest()
 	privateKeyBytes := getPrivateKeyBytes()
 
 	signCertificateModel := model.SignCertificateModel{
-		CertificateRequest: request,
-		PrivateKeyBytes:    privateKeyBytes,
-		IsUpdateRevision:   true,
-		OldCertificate:     testdata.OldCertificateEncoded,
-		OldPrivateKey:      testdata.OldPrivateKeyEncoded,
+		CertificateRequest:	 	request,
+		PrivateKeyBytes:        privateKeyBytes,
+		OldCertificateBytes:    testdata.OldCertificateBytes,
+		OldPrivateKeyBytes:     testdata.OldPrivateKeyBytes,
 	}
 
-	signedPEM, trustedCAs, err := provisioner.Sign(ctx, signCertificateModel)
+	signedPEM, trustedCAs, err := provisioner.Sign(signCertificateModel)
 
 	assert.Nil(t, err)
 
