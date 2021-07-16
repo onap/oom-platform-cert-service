@@ -25,7 +25,6 @@
 package util
 
 import (
-	"encoding/base64"
 	"fmt"
 	"testing"
 
@@ -48,10 +47,9 @@ func Test_CheckIfCertificateUpdateAndRetrieveOldCertificateAndPk_revisionOne(t *
 	request.ObjectMeta.Annotations = map[string]string{
 		revisionAnnotation: "2",
 	}
-	isUpdate, certificate, privateKey := CheckIfCertificateUpdateAndRetrieveOldCertificateAndPk(nil, request, nil)
-	assert.False(t, isUpdate)
-	assert.Equal(t, "", certificate)
-	assert.Equal(t, "", privateKey)
+	certificate, privateKey := RetrieveOldCertificateAndPkForCertificateUpdate(nil, request, nil)
+	assert.Equal(t, []byte{}, certificate)
+	assert.Equal(t, []byte{}, privateKey)
 }
 
 func Test_CheckIfCertificateUpdateAndRetrieveOldCertificateAndPk_revisionTwoSecretPresent(t *testing.T) {
@@ -61,10 +59,9 @@ func Test_CheckIfCertificateUpdateAndRetrieveOldCertificateAndPk_revisionTwoSecr
 		certificateConfigurationAnnotation: oldCertificateConfig,
 	}
 	fakeClient := fake.NewFakeClientWithScheme(testdata.GetScheme(), getValidCertificateSecret())
-	isUpdate, certificate, privateKey := CheckIfCertificateUpdateAndRetrieveOldCertificateAndPk(fakeClient, request, nil)
-	assert.True(t, isUpdate)
-	assert.Equal(t, base64.StdEncoding.EncodeToString([]byte(testCertificateData)), certificate)
-	assert.Equal(t, base64.StdEncoding.EncodeToString([]byte(testPrivateKeyData)), privateKey)
+	certificate, privateKey := RetrieveOldCertificateAndPkForCertificateUpdate(fakeClient, request, nil)
+	assert.Equal(t, []byte(testCertificateData), certificate)
+	assert.Equal(t, []byte(testPrivateKeyData), privateKey)
 }
 
 func Test_CheckIfCertificateUpdateAndRetrieveOldCertificateAndPk_revisionTwoSecretNotPresent(t *testing.T) {
@@ -74,10 +71,9 @@ func Test_CheckIfCertificateUpdateAndRetrieveOldCertificateAndPk_revisionTwoSecr
 		certificateConfigurationAnnotation: oldCertificateConfig,
 	}
 	fakeClient := fake.NewFakeClientWithScheme(testdata.GetScheme())
-	isUpdate, certificate, privateKey := CheckIfCertificateUpdateAndRetrieveOldCertificateAndPk(fakeClient, request, nil)
-	assert.False(t, isUpdate)
-	assert.Equal(t, "", certificate)
-	assert.Equal(t, "", privateKey)
+	certificate, privateKey := RetrieveOldCertificateAndPkForCertificateUpdate(fakeClient, request, nil)
+	assert.Equal(t, []byte{}, certificate)
+	assert.Equal(t, []byte{}, privateKey)
 }
 
 func Test_IsUpdateCertificateRevision(t *testing.T) {
@@ -113,27 +109,27 @@ func Test_RetrieveOldCertificateAndPk_shouldSucceedWhenSecretPresent(t *testing.
 	}
 	fakeClient := fake.NewFakeClientWithScheme(testdata.GetScheme(), getValidCertificateSecret())
 	certificate, privateKey := RetrieveOldCertificateAndPk(fakeClient, request, nil)
-	assert.Equal(t, base64.StdEncoding.EncodeToString([]byte(testCertificateData)), certificate)
-	assert.Equal(t, base64.StdEncoding.EncodeToString([]byte(testPrivateKeyData)), privateKey)
+	assert.Equal(t, []byte(testCertificateData), certificate)
+	assert.Equal(t, []byte(testPrivateKeyData), privateKey)
 }
 
-func Test_RetrieveOldCertificateAndPk_shouldReturnEmptyStringsWhenSecretNotPresent(t *testing.T) {
+func Test_RetrieveOldCertificateAndPk_shouldBeEmptyWhenSecretNotPresent(t *testing.T) {
 	request := new(cmapi.CertificateRequest)
 	request.ObjectMeta.Annotations = map[string]string{
 		certificateConfigurationAnnotation: oldCertificateConfig,
 	}
 	fakeClient := fake.NewFakeClientWithScheme(testdata.GetScheme())
 	certificate, privateKey := RetrieveOldCertificateAndPk(fakeClient, request, nil)
-	assert.Equal(t, "", certificate)
-	assert.Equal(t, "", privateKey)
+	assert.Equal(t, []byte{}, certificate)
+	assert.Equal(t, []byte{}, privateKey)
 }
 
-func Test_RetrieveOldCertificateAndPk_shouldReturnEmptyStringsWhenOldCertificateCannotBeUnmarshalled(t *testing.T) {
+func Test_RetrieveOldCertificateAndPk_shouldBeEmptyWhenOldCertificateCannotBeUnmarshalled(t *testing.T) {
 	request := new(cmapi.CertificateRequest)
 	fakeClient := fake.NewFakeClientWithScheme(testdata.GetScheme())
 	certificate, privateKey := RetrieveOldCertificateAndPk(fakeClient, request, nil)
-	assert.Equal(t, "", certificate)
-	assert.Equal(t, "", privateKey)
+	assert.Equal(t, []byte{}, certificate)
+	assert.Equal(t, []byte{}, privateKey)
 }
 
 func getValidCertificateSecret() *v1.Secret {
