@@ -26,14 +26,12 @@
 package cmpv2provisioner
 
 import (
-	"context"
 	"sync"
 
 	"k8s.io/apimachinery/pkg/types"
 
 	"onap.org/oom-certservice/k8s-external-provider/src/certserviceclient"
 	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2api"
-	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2provisioner/csr"
 	"onap.org/oom-certservice/k8s-external-provider/src/leveledlogger"
 	"onap.org/oom-certservice/k8s-external-provider/src/model"
 )
@@ -85,40 +83,24 @@ func Store(namespacedName types.NamespacedName, provisioner *CertServiceCA) {
 }
 
 func (ca *CertServiceCA) Sign(
-	ctx context.Context,
 	signCertificateModel model.SignCertificateModel,
 ) (signedCertificateChain []byte, trustedCertificates []byte, err error) {
 	log := leveledlogger.GetLoggerWithName("certservice-provisioner")
 
-	if signCertificateModel.IsUpdateRevision {
-		log.Debug("Certificate will be updated.", "old-certificate", signCertificateModel.OldCertificate,
-			"old-private-key", signCertificateModel.OldPrivateKey)
-	}
-
 	certificateRequest := signCertificateModel.CertificateRequest
-	privateKeyBytes := signCertificateModel.PrivateKeyBytes
 	log.Info("Signing certificate: ", "cert-name", certificateRequest.Name)
-
 	log.Info("CA: ", "name", ca.name, "url", ca.url)
-
-	csrBytes := certificateRequest.Spec.Request
-	log.Debug("Original CSR PEM: ", "bytes", csrBytes)
-
-	filteredCsrBytes, err := csr.FilterFieldsFromCSR(csrBytes, privateKeyBytes)
-	if err != nil {
-		return nil, nil, err
-	}
-	log.Debug("Filtered out CSR PEM: ", "bytes", filteredCsrBytes)
 
 	var response *certserviceclient.CertificatesResponse
 	var errAPI error
 
-	if signCertificateModel.IsUpdateRevision {
+	if ca.isCertificateUpdate(signCertificateModel) {
+		log.Debug("Certificate will be updated.", "old-certificate", signCertificateModel.OldCertificateBytes)
 		log.Info("Attempt to send certificate update request")
-		response, errAPI = ca.certServiceClient.UpdateCertificate(filteredCsrBytes, privateKeyBytes, signCertificateModel)
+		response, errAPI = ca.certServiceClient.UpdateCertificate(signCertificateModel)
 	} else {
 		log.Info("Attempt to send certificate request")
-		response, errAPI = ca.certServiceClient.GetCertificates(filteredCsrBytes, privateKeyBytes)
+		response, errAPI = ca.certServiceClient.GetCertificates(signCertificateModel)
 	}
 
 	if errAPI != nil {
@@ -135,11 +117,14 @@ func (ca *CertServiceCA) Sign(
 		log.Error(signErr, "Cannot parse response from CertService API")
 		return nil, nil, signErr
 	}
-
 	log.Info("Successfully signed: ", "cert-name", certificateRequest.Name)
-
 	log.Debug("Signed cert PEM: ", "bytes", signedCertificateChain)
 	log.Debug("Trusted CA  PEM: ", "bytes", trustedCertificates)
 
 	return signedCertificateChain, trustedCertificates, nil
+}
+
+
+func (ca *CertServiceCA) isCertificateUpdate(signCertificateModel model.SignCertificateModel) bool {
+	return len(signCertificateModel.OldCertificateBytes) > 0 && len(signCertificateModel.OldPrivateKeyBytes) > 0
 }

@@ -33,19 +33,20 @@ import (
 )
 
 const (
-	SecretName       = "issuer-cert-secret"
-	Url              = "https://oom-cert-service:8443/v1/certificate/"
-	HealthEndpoint   = "actuator/health"
-	CertEndpoint     = "v1/certificate"
-	CaName           = "RA"
-	KeySecretKey     = "cmpv2Issuer-key.pem"
-	CertSecretKey    = "cmpv2Issuer-cert.pem"
-	CacertSecretKey  = "cacert.pem"
-	Namespace        = "onap"
-	IssuerObjectName = "cmpv2-issuer"
-	Kind             = "CMPv2Issuer"
-	APIVersion       = "v1"
-	PrivateKeySecret = "privateKeySecretName"
+	SecretName           = "issuer-cert-secret"
+	Url                  = "https://oom-cert-service:8443/v1/certificate/"
+	HealthEndpoint       = "actuator/health"
+	CertEndpoint         = "v1/certificate"
+	CaName               = "RA"
+	KeySecretKey         = "cmpv2Issuer-key.pem"
+	CertSecretKey        = "cmpv2Issuer-cert.pem"
+	CacertSecretKey      = "cacert.pem"
+	Namespace            = "onap"
+	IssuerObjectName     = "cmpv2-issuer"
+	Kind                 = "CMPv2Issuer"
+	APIVersion           = "v1"
+	PrivateKeySecret     = "privateKeySecretName"
+	OldCertificateConfig = "{\"apiVersion\":\"cert-manager.io/v1\",\"kind\":\"Certificate\",\"metadata\":{\"annotations\":{},\"name\":\"cert-test\",\"namespace\":\"onap\"},\"spec\":{\"commonName\":\"certissuer.onap.org\",\"dnsNames\":[\"localhost\",\"certissuer.onap.org\"],\"emailAddresses\":[\"onap@onap.org\"],\"ipAddresses\":[\"127.0.0.1\"],\"issuerRef\":{\"group\":\"certmanager.onap.org\",\"kind\":\"CMPv2Issuer\",\"name\":\"cmpv2-issuer-onap\"},\"secretName\":\"cert-test-secret-name\",\"subject\":{\"countries\":[\"US\"],\"localities\":[\"San-Francisco\"],\"organizationalUnits\":[\"ONAP\"],\"organizations\":[\"Linux-Foundation\"],\"provinces\":[\"California\"]},\"uris\":[\"onap://cluster.local/\"]}}\n"
 )
 
 func GetValidIssuerWithSecret() (cmpv2api.CMPv2Issuer, v1.Secret) {
@@ -117,3 +118,20 @@ func CreateIssuerNamespaceName(namespace string, name string) types.NamespacedNa
 		Name:      name,
 	}
 }
+
+func GetValidCertificateSecret() *v1.Secret {
+	const privateKeySecretKey = "tls.key"
+	const certificateSecretKey = "tls.crt"
+
+	return &v1.Secret{
+		Data: map[string][]byte{
+			privateKeySecretKey:  []byte("test-private-key"),
+			certificateSecretKey: []byte("test-certificate"),
+		},
+		ObjectMeta: metav1.ObjectMeta{
+			Name:      "cert-test-secret-name",
+			Namespace: "onap",
+		},
+	}
+}
+
