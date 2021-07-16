@@ -23,9 +23,9 @@ package model
 import cmapi "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1"
 
 type SignCertificateModel struct {
-	CertificateRequest *cmapi.CertificateRequest
-	PrivateKeyBytes    []byte
-	IsUpdateRevision   bool
-	OldCertificate     string
-	OldPrivateKey      string
+	CertificateRequest  *cmapi.CertificateRequest
+	FilteredCsr         []byte
+	PrivateKeyBytes     []byte
+	OldCertificateBytes []byte
+	OldPrivateKeyBytes  []byte
 }

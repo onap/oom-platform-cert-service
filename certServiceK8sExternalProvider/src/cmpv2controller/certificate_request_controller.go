@@ -28,6 +28,7 @@ package cmpv2controller
 import (
 	"context"
 	"fmt"
+	"onap.org/oom-certservice/k8s-external-provider/src/model"
 
 	cmapi "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1"
 	core "k8s.io/api/core/v1"
@@ -40,10 +41,8 @@ import (
 	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2api"
 	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2controller/logger"
 	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2controller/updater"
-	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2controller/util"
 	provisioners "onap.org/oom-certservice/k8s-external-provider/src/cmpv2provisioner"
 	"onap.org/oom-certservice/k8s-external-provider/src/leveledlogger"
-	"onap.org/oom-certservice/k8s-external-provider/src/model"
 	x509utils "onap.org/oom-certservice/k8s-external-provider/src/x509"
 )
 
@@ -139,25 +138,18 @@ func (controller *CertificateRequestController) Reconcile(k8sRequest ctrl.Reques
 	// 9. Log Certificate Request properties not supported or overridden by CertService API
 	logger.LogCertRequestProperties(leveledlogger.GetLoggerWithName("CSR details:"), certificateRequest, csr)
 
-	// 10. Check if CertificateRequest is an update request
-	isUpdateRevision, oldCertificate, oldPrivateKey := util.CheckIfCertificateUpdateAndRetrieveOldCertificateAndPk(
-		controller.Client, certificateRequest, ctx)
-	if isUpdateRevision {
-		log.Info("Update revision detected")
-	}
-	signCertificateModel := model.SignCertificateModel{
-		CertificateRequest: certificateRequest,
-		PrivateKeyBytes:    privateKeyBytes,
-		IsUpdateRevision:   isUpdateRevision,
-		OldCertificate:     oldCertificate,
-		OldPrivateKey:      oldPrivateKey,
+	//10. Create sign certificate object with filtered CSR
+	signCertificateModel, err := model.CreateSignCertificateModel(controller.Client, certificateRequest, ctx, privateKeyBytes)
+	if err != nil {
+		controller.handleErrorFailedToFilterCSR(certUpdater, log, err)
+		return ctrl.Result{}, err
 	}
 
 	// 11. Sign CertificateRequest
-	signedPEM, trustedCAs, err := provisioner.Sign(ctx, signCertificateModel)
+	signedPEM, trustedCAs, err := provisioner.Sign(signCertificateModel)
 	if err != nil {
 		controller.handleErrorFailedToSignCertificate(certUpdater, log, err)
-		return ctrl.Result{}, nil
+		return ctrl.Result{}, err
 	}
 
 	// 12. Store signed certificates in CertificateRequest
@@ -232,6 +224,11 @@ func (controller *CertificateRequestController) handleErrorFailedToSignCertifica
 func (controller *CertificateRequestController) handleErrorFailedToDecodeCSR(updater *updater.CertificateRequestStatusUpdater, log leveledlogger.Logger, err error) {
 	log.Error(err, "Failed to decode certificate sign request")
 	_ = updater.UpdateStatusWithEventTypeWarning(cmapi.CertificateRequestReasonFailed, "Failed to decode CSR: %v", err)
+}
+
+func (controller *CertificateRequestController) handleErrorFailedToFilterCSR(updater *updater.CertificateRequestStatusUpdater, log leveledlogger.Logger, err error) {
+	log.Error(err, "Failed to filter certificate sign request fields")
+	_ = updater.UpdateStatusWithEventTypeWarning(cmapi.CertificateRequestReasonFailed, "Failed to filter CSR: %v", err)
 }
 
 func handleErrorResourceNotFound(log leveledlogger.Logger, err error) error {

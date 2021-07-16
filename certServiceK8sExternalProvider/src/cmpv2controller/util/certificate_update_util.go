@@ -26,7 +26,6 @@ package util
 
 import (
 	"context"
-	"encoding/base64"
 	"encoding/json"
 	"strconv"
 
@@ -43,17 +42,15 @@ const (
 	oldPrivateKeySecretKey             = "tls.key"
 )
 
-func CheckIfCertificateUpdateAndRetrieveOldCertificateAndPk(
+func RetrieveOldCertificateAndPkForCertificateUpdate(
 	k8sClient client.Client,
 	certificateRequest *cmapi.CertificateRequest,
 	ctx context.Context,
-) (bool, string, string) {
+) ([]byte, []byte) {
 	if !IsUpdateCertificateRevision(certificateRequest) {
-		return false, "", ""
+		return []byte{}, []byte{}
 	}
-	certificate, privateKey := RetrieveOldCertificateAndPk(k8sClient, certificateRequest, ctx)
-	areCertAndPkPresent := certificate != "" && privateKey != ""
-	return areCertAndPkPresent, certificate, privateKey
+	return RetrieveOldCertificateAndPk(k8sClient, certificateRequest, ctx)
 }
 
 func IsUpdateCertificateRevision(certificateRequest *cmapi.CertificateRequest) bool {
@@ -68,11 +65,11 @@ func RetrieveOldCertificateAndPk(
 	k8sClient client.Client,
 	certificateRequest *cmapi.CertificateRequest,
 	ctx context.Context,
-) (string, string) {
+) ([]byte, []byte) {
 	certificateConfigString := certificateRequest.ObjectMeta.Annotations[certificateConfigurationAnnotation]
 	var certificateConfig cmapi.Certificate
 	if err := json.Unmarshal([]byte(certificateConfigString), &certificateConfig); err != nil {
-		return "", ""
+		return []byte{}, []byte{}
 	}
 	oldCertificateSecretName := certificateConfig.Spec.SecretName
 	oldCertificateSecretNamespacedName := types.NamespacedName{
@@ -81,9 +78,7 @@ func RetrieveOldCertificateAndPk(
 	}
 	var oldCertificateSecret core.Secret
 	if err := k8sClient.Get(ctx, oldCertificateSecretNamespacedName, &oldCertificateSecret); err != nil {
-		return "", ""
+		return []byte{}, []byte{}
 	}
-	oldCertificateString := base64.StdEncoding.EncodeToString(oldCertificateSecret.Data[oldCertificateSecretKey])
-	oldPrivateKeyString := base64.StdEncoding.EncodeToString(oldCertificateSecret.Data[oldPrivateKeySecretKey])
-	return oldCertificateString, oldPrivateKeyString
+	return oldCertificateSecret.Data[oldCertificateSecretKey], oldCertificateSecret.Data[oldPrivateKeySecretKey]
 }
