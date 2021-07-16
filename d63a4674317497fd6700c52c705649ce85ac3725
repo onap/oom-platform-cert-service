@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "280db00f_b997e2f4",
+        "filename": "certServiceK8sExternalProvider/src/certserviceclient/cert_service_client.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2021-07-16T07:59:24Z",
+      "side": 1,
+      "message": "In cmpv2_provisioner CSR and private Key is taken from signCertificateModel, so why here there are passed as separate params?\n\nI have checked and CSR is filtered one, but private Key not.",
+      "revId": "d63a4674317497fd6700c52c705649ce85ac3725",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
