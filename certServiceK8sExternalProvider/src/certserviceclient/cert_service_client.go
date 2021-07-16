@@ -2,7 +2,7 @@
  * ============LICENSE_START=======================================================
  * oom-certservice-k8s-external-provider
  * ================================================================================
- * Copyright (C) 2020 Nokia. All rights reserved.
+ * Copyright (C) 2020-2021 Nokia. All rights reserved.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,21 +25,27 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+
+	"onap.org/oom-certservice/k8s-external-provider/src/model"
 )
 
 const (
-	CsrHeaderName = "CSR"
-	PkHeaderName  = "PK"
+	CsrHeaderName            = "CSR"
+	PkHeaderName             = "PK"
+	OldPkHeaderName          = "OLD_PK"
+	OldCertificateHeaderName = "OLD_CERT"
 )
 
 type CertServiceClient interface {
 	GetCertificates(csr []byte, key []byte) (*CertificatesResponse, error)
 	CheckHealth() error
+	UpdateCertificate(csr []byte, key []byte, signCertificateModel model.SignCertificateModel) (*CertificatesResponse, error)
 }
 
 type CertServiceClientImpl struct {
 	healthUrl        string
 	certificationUrl string
+	updateUrl        string
 	httpClient       HTTPClient
 }
 
@@ -83,6 +89,25 @@ func (client *CertServiceClientImpl) GetCertificates(csr []byte, key []byte) (*C
 
 	request.Header.Add(CsrHeaderName, base64.StdEncoding.EncodeToString(csr))
 	request.Header.Add(PkHeaderName, base64.StdEncoding.EncodeToString(key))
+
+	return client.executeRequest(request)
+}
+
+func (client *CertServiceClientImpl) UpdateCertificate(csr []byte, key []byte, signCertificateModel model.SignCertificateModel) (*CertificatesResponse, error) {
+	request, err := http.NewRequest("GET", client.updateUrl, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	request.Header.Add(CsrHeaderName, base64.StdEncoding.EncodeToString(csr))
+	request.Header.Add(PkHeaderName, base64.StdEncoding.EncodeToString(key))
+	request.Header.Add(OldPkHeaderName, signCertificateModel.OldPrivateKey)
+	request.Header.Add(OldCertificateHeaderName, signCertificateModel.OldCertificate)
+
+	return client.executeRequest(request)
+}
+
+func (client *CertServiceClientImpl) executeRequest(request *http.Request) (*CertificatesResponse, error) {
 	response, err := client.httpClient.Do(request)
 	if err != nil {
 		return nil, err

@@ -3,7 +3,7 @@
  * oom-certservice-k8s-external-provider
  * ================================================================================
  * Copyright 2019 The cert-manager authors.
- * Modifications copyright (C) 2020-2021 Nokia. All rights reserved.
+ * Copyright (C) 2020-2021 Nokia. All rights reserved.
  * ================================================================================
  * This source code was copied from the following git repository:
  * https://github.com/smallstep/step-issuer
@@ -43,6 +43,7 @@ import (
 	"onap.org/oom-certservice/k8s-external-provider/src/cmpv2controller/util"
 	provisioners "onap.org/oom-certservice/k8s-external-provider/src/cmpv2provisioner"
 	"onap.org/oom-certservice/k8s-external-provider/src/leveledlogger"
+	"onap.org/oom-certservice/k8s-external-provider/src/model"
 	x509utils "onap.org/oom-certservice/k8s-external-provider/src/x509"
 )
 
@@ -142,12 +143,18 @@ func (controller *CertificateRequestController) Reconcile(k8sRequest ctrl.Reques
 	isUpdateRevision, oldCertificate, oldPrivateKey := util.CheckIfCertificateUpdateAndRetrieveOldCertificateAndPk(
 		controller.Client, certificateRequest, ctx)
 	if isUpdateRevision {
-		log.Debug("Certificate will be updated.", "old-certificate", oldCertificate,
-			"old-private-key", oldPrivateKey) //TODO: remove private key from logger
+		log.Info("Update revision detected")
+	}
+	signCertificateModel := model.SignCertificateModel{
+		CertificateRequest: certificateRequest,
+		PrivateKeyBytes:    privateKeyBytes,
+		IsUpdateRevision:   isUpdateRevision,
+		OldCertificate:     oldCertificate,
+		OldPrivateKey:      oldPrivateKey,
 	}
 
 	// 11. Sign CertificateRequest
-	signedPEM, trustedCAs, err := provisioner.Sign(ctx, certificateRequest, privateKeyBytes)
+	signedPEM, trustedCAs, err := provisioner.Sign(ctx, signCertificateModel)
 	if err != nil {
 		controller.handleErrorFailedToSignCertificate(certUpdater, log, err)
 		return ctrl.Result{}, nil
