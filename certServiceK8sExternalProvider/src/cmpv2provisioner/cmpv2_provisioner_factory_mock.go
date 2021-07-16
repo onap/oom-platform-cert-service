@@ -35,10 +35,10 @@ type ProvisionerFactoryMock struct {
 
 func (f *ProvisionerFactoryMock) CreateProvisioner(issuer *cmpv2api.CMPv2Issuer, secret v1.Secret) (*CertServiceCA, error) {
 	provisioner, err := New(issuer, &certserviceclient.CertServiceClientMock{
-		GetCertificatesFunc: func(csr []byte, pk []byte) (response *certserviceclient.CertificatesResponse, e error) {
+		GetCertificatesFunc: func(signCertificateModel model.SignCertificateModel) (response *certserviceclient.CertificatesResponse, e error) {
 			return &testdata.SampleCertServiceResponse, nil
 		},
-		UpdateCertificateFunc: func(csr []byte, key []byte, signCertificateModel model.SignCertificateModel) (*certserviceclient.CertificatesResponse, error) {
+		UpdateCertificateFunc: func(signCertificateModel model.SignCertificateModel) (*certserviceclient.CertificatesResponse, error) {
 			return &testdata.SampleCertServiceResponse, nil
 		},
 	})
