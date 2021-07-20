@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e6d416b_b330d1f0",
+        "filename": "certServiceK8sExternalProvider/src/cmpv2provisioner/cmpv2_provisioner_test.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2021-07-20T11:15:24Z",
+      "side": 1,
+      "message": "Consider to use white spaces instead of tabs",
+      "range": {
+        "startLine": 112,
+        "startChar": 21,
+        "endLine": 112,
+        "endChar": 24
+      },
+      "revId": "aba430c6ca6f8c3b3d94a401d9323c60e65884eb",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab5a8964_89fea89f",
+        "filename": "certServiceK8sExternalProvider/src/testdata/provider.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2021-07-20T11:15:24Z",
+      "side": 1,
+      "message": "-2021",
+      "range": {
+        "startLine": 5,
+        "startChar": 21,
+        "endLine": 5,
+        "endChar": 22
+      },
+      "revId": "aba430c6ca6f8c3b3d94a401d9323c60e65884eb",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
