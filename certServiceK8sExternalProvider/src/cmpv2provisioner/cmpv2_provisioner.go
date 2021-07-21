@@ -43,6 +43,7 @@ type CertServiceCA struct {
 	url               string
 	healthEndpoint    string
 	certEndpoint      string
+	updateEndpoint    string
 	caName            string
 	certServiceClient certserviceclient.CertServiceClient
 }
@@ -55,10 +56,11 @@ func New(cmpv2Issuer *cmpv2api.CMPv2Issuer, certServiceClient certserviceclient.
 	ca.caName = cmpv2Issuer.Spec.CaName
 	ca.healthEndpoint = cmpv2Issuer.Spec.HealthEndpoint
 	ca.certEndpoint = cmpv2Issuer.Spec.CertEndpoint
+	ca.updateEndpoint = cmpv2Issuer.Spec.UpdateEndpoint
 	ca.certServiceClient = certServiceClient
 
 	log := leveledlogger.GetLoggerWithName("cmpv2-provisioner")
-	log.Info("Configuring CA: ", "name", ca.name, "url", ca.url, "caName", ca.caName, "healthEndpoint", ca.healthEndpoint, "certEndpoint", ca.certEndpoint)
+	log.Info("Configuring CA: ", "name", ca.name, "url", ca.url, "caName", ca.caName, "healthEndpoint", ca.healthEndpoint, "certEndpoint", ca.certEndpoint, "updateEndpoint", ca.updateEndpoint)
 
 	return &ca, nil
 }
@@ -93,7 +95,6 @@ func (ca *CertServiceCA) Sign(
 
 	var response *certserviceclient.CertificatesResponse
 	var errAPI error
-
 	if ca.isCertificateUpdate(signCertificateModel) {
 		log.Debug("Certificate will be updated.", "old-certificate", signCertificateModel.OldCertificateBytes)
 		log.Info("Attempt to send certificate update request")
@@ -124,7 +125,17 @@ func (ca *CertServiceCA) Sign(
 	return signedCertificateChain, trustedCertificates, nil
 }
 
+func (ca *CertServiceCA) updateEndpointIsConfigured() bool {
+	log := leveledlogger.GetLoggerWithName("certservice-provisioner")
+	isConfigured := ca.updateEndpoint != ""
+	if !isConfigured {
+		log.Info("Missing 'update endpoint' configuration. Certificates will received by certificate request instead of certificate update request")
+	}
+	return isConfigured
+}
 
 func (ca *CertServiceCA) isCertificateUpdate(signCertificateModel model.SignCertificateModel) bool {
-	return len(signCertificateModel.OldCertificateBytes) > 0 && len(signCertificateModel.OldPrivateKeyBytes) > 0
+	return len(signCertificateModel.OldCertificateBytes) > 0 &&
+		len(signCertificateModel.OldPrivateKeyBytes) > 0 &&
+		ca.updateEndpointIsConfigured()
 }
