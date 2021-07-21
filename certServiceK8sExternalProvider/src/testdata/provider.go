@@ -97,7 +97,7 @@ func GetScheme() *runtime.Scheme {
 	scheme := runtime.NewScheme()
 	_ = scheme2.AddToScheme(scheme)
 	_ = cmapi.AddToScheme(scheme)
-	_ = cmpv2api.AddToScheme(scheme)
+	_ = cmpv2api.AddToSchemeV1(scheme)
 	return scheme
 }
 

@@ -33,12 +33,28 @@ import (
 var (
 	// GroupVersion is group version used to register these objects
 	GroupVersion = schema.GroupVersion{Group: "certmanager.onap.org", Version: "v1"}
-
+	//GroupVersion2 = schema.GroupVersion{Group: "certmanager.onap.org", Version: "v2"}
 	// SchemeBuilder is used to add go types to the GroupVersionKind scheme
+	//SchemeBuilder = &scheme.Builder{GroupVersion: GroupVersion}
 	SchemeBuilder = &scheme.Builder{GroupVersion: GroupVersion}
+	//SchemeBuilderV2 = &scheme.Builder{GroupVersion: GroupVersion2}
 
-	// AddToScheme adds the types in this group-version to the given scheme.
-	AddToScheme = SchemeBuilder.AddToScheme
+	// AddToSchemeV1 adds the types in this group-version to the given scheme.
+	AddToSchemeV1 = SchemeBuilder.AddToScheme
+	//AddToSchemeV2 = SchemeBuilderV2.AddToScheme
+)
+var (
+	// GroupVersion is group version used to register these objects
+	//GroupVersion  = schema.GroupVersion{Group: "certmanager.onap.org", Version: "v1"}
+	GroupVersion2 = schema.GroupVersion{Group: "certmanager.onap.org", Version: "v2"}
+	// SchemeBuilder is used to add go types to the GroupVersionKind scheme
+	//SchemeBuilder = &scheme.Builder{GroupVersion: GroupVersion}
+	//SchemeBuilder   = &scheme.Builder{GroupVersion: GroupVersion}
+	SchemeBuilderV2 = &scheme.Builder{GroupVersion: GroupVersion2}
+
+	// AddToSchemeV1 adds the types in this group-version to the given scheme.
+	//AddToSchemeV1 = SchemeBuilder.AddToScheme
+	AddToSchemeV2 = SchemeBuilderV2.AddToScheme
 )
 
 const CMPv2IssuerKind = "CMPv2Issuer"
