@@ -35,8 +35,8 @@ import (
 )
 
 const (
-	testPrivateKeyData   = "test-private-key"
-	testCertificateData  = "test-certificate"
+	testPrivateKeyData  = "test-private-key"
+	testCertificateData = "test-certificate"
 )
 
 func Test_CheckIfCertificateUpdateAndRetrieveOldCertificateAndPk_revisionOne(t *testing.T) {
@@ -128,4 +128,3 @@ func Test_RetrieveOldCertificateAndPk_shouldBeEmptyWhenOldCertificateCannotBeUnm
 	assert.Equal(t, []byte{}, certificate)
 	assert.Equal(t, []byte{}, privateKey)
 }
-

@@ -47,13 +47,22 @@ import (
 
 var (
 	scheme   = runtime.NewScheme()
+	schemeV2 = runtime.NewScheme()
 	setupLog leveledlogger.Logger
 )
 
 func init() {
 	_ = clientgoscheme.AddToScheme(scheme)
 	_ = certmanager.AddToScheme(scheme)
-	_ = certserviceapi.AddToScheme(scheme)
+
+	_ = certserviceapi.AddToSchemeV1(scheme)
+	fmt.Println("Scheme V1 Added")
+
+	_ = clientgoscheme.AddToScheme(schemeV2)
+	_ = certmanager.AddToScheme(schemeV2)
+	_ = certserviceapi.AddToSchemeV2(schemeV2)
+	fmt.Println("Schema V2 added")
+
 	setupLog = leveledlogger.GetLogger()
 
 	ctrl.SetLogger(setupLog.Log)
@@ -67,18 +76,30 @@ func main() {
 	leveledlogger.SetLogLevel(logLevel)
 
 	manager := createControllerManager(metricsAddr, enableLeaderElection)
-
+	fmt.Println("Manager 1 created")
 	registerCMPv2IssuerController(manager)
+	fmt.Println("Register issuer Done M1")
 	registerCertificateRequestController(manager)
+	fmt.Println("Request cert controller done M1")
+	handler := ctrl.SetupSignalHandler()
+	startControllerManager(manager, handler)
+	fmt.Println("Manager 1 started")
 
-	startControllerManager(manager)
+	managerV2 := createControllerManagerV2("127.0.0.1:8081", enableLeaderElection)
+	fmt.Println("Manager 2 created")
+	registerCMPv2IssuerController(managerV2)
+	fmt.Println("Register issuer Done M2")
+	registerCertificateRequestController(managerV2)
+	fmt.Println("Request cert controller done M2")
+	startControllerManager(managerV2, handler)
+	fmt.Println("Manager 2 started")
 
 	setupLog.Info("Application is up and running.")
 }
 
 func printVersionInfo() {
 	fmt.Println()
-	fmt.Println("                                     ***   CMPv2 Provider v1.0.0   ***")
+	fmt.Println("                                     ***   CMPv2 Provider   ***")
 	fmt.Println()
 }
 
@@ -95,10 +116,13 @@ func parseInputArguments() (string, string, bool) {
 	return metricsAddr, logLevel, enableLeaderElection
 }
 
-func startControllerManager(manager manager.Manager) {
+func startControllerManager(manager manager.Manager, handler <-chan struct{}) {
 	setupLog.Info("Starting CMPv2 controller manager...")
-	if err := manager.Start(ctrl.SetupSignalHandler()); err != nil {
-		exit(app.EXCEPTION_WHILE_RUNNING_CONTROLLER_MANAGER, err)
+	//handler := ctrl.SetupSignalHandler()
+	if err := manager.Start(handler); err != nil {
+		setupLog.Error(err, "An exception occurs while running K8s controller manager")
+		//exit(app.EXCEPTION_WHILE_RUNNING_CONTROLLER_MANAGER, err)
+
 	}
 }
 
@@ -106,6 +130,19 @@ func createControllerManager(metricsAddr string, enableLeaderElection bool) mana
 	setupLog.Info("Creating CMPv2 controller manager...")
 	manager, err := ctrl.NewManager(ctrl.GetConfigOrDie(), ctrl.Options{
 		Scheme:             scheme,
+		MetricsBindAddress: metricsAddr,
+		LeaderElection:     enableLeaderElection,
+	})
+	if err != nil {
+		exit(app.FAILED_TO_CREATE_CONTROLLER_MANAGER, err)
+	}
+	return manager
+}
+
+func createControllerManagerV2(metricsAddr string, enableLeaderElection bool) manager.Manager {
+	setupLog.Info("Creating CMPv2 controller manager V2...")
+	manager, err := ctrl.NewManager(ctrl.GetConfigOrDie(), ctrl.Options{
+		Scheme:             schemeV2,
 		MetricsBindAddress: metricsAddr,
 		LeaderElection:     enableLeaderElection,
 	})

@@ -185,7 +185,7 @@ func hasCondition(issuer cmpv2api.CMPv2Issuer, condition cmpv2api.CMPv2IssuerCon
 
 func isCMPv2CertificateRequest(certificateRequest *cmapi.CertificateRequest) bool {
 	return certificateRequest.Spec.IssuerRef.Group != "" &&
-		certificateRequest.Spec.IssuerRef.Group == cmpv2api.GroupVersion.Group &&
+		certificateRequest.Spec.IssuerRef.Group == cmpv2api.GroupVersion2.Group &&
 		certificateRequest.Spec.IssuerRef.Kind == cmpv2api.CMPv2IssuerKind
 
 }
