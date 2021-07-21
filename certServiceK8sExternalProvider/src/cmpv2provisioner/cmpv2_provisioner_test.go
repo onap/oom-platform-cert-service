@@ -37,6 +37,7 @@ import (
 
 const ISSUER_NAME = "cmpv2-issuer"
 const ISSUER_URL = "issuer/url"
+const ISSUER_UPDATE_URL = "update-url"
 const ISSUER_NAMESPACE = "onap"
 
 func Test_shouldCreateCorrectCertServiceCA(t *testing.T) {
@@ -122,10 +123,41 @@ func Test_shouldReturnCorrectSignedPemsWhenParametersAreCorrectForUpdateCertific
 	testdata.VerifyCertsAreEqualToExpected(t, signedPEM, trustedCAs)
 }
 
+func Test_shouldReturnCorrectSignedPemForCertificateRequestWhenUpdateEndpointConfigurationIsMissing(t *testing.T) {
+	issuer := createIssuerAndCerts(ISSUER_NAME, ISSUER_URL)
+	issuer.Spec.UpdateEndpoint = ""
+	provisionerFactory := ProvisionerFactoryMock{}
+	provisioner, err := provisionerFactory.CreateProvisioner(&issuer, apiv1.Secret{})
+
+	issuerNamespaceName := testdata.CreateIssuerNamespaceName(ISSUER_NAMESPACE, ISSUER_NAME)
+	Store(issuerNamespaceName, provisioner)
+
+	provisioner, ok := Load(issuerNamespaceName)
+
+	testdata.VerifyThatConditionIsTrue(ok, "Provisioner could not be loaded", t)
+
+	request := createCertificateRequest()
+	privateKeyBytes := getPrivateKeyBytes()
+
+	signCertificateModel := model.SignCertificateModel{
+		CertificateRequest:  request,
+		PrivateKeyBytes:     privateKeyBytes,
+		OldCertificateBytes: testdata.OldCertificateBytes,
+		OldPrivateKeyBytes:  testdata.OldPrivateKeyBytes,
+	}
+
+	signedPEM, trustedCAs, err := provisioner.Sign(signCertificateModel)
+
+	assert.Nil(t, err)
+
+	testdata.VerifyCertsAreEqualToExpected(t, signedPEM, trustedCAs)
+}
+
 func createIssuerAndCerts(name string, url string) cmpv2api.CMPv2Issuer {
 	issuer := cmpv2api.CMPv2Issuer{}
 	issuer.Name = name
 	issuer.Spec.URL = url
+	issuer.Spec.UpdateEndpoint = ISSUER_UPDATE_URL
 	return issuer
 }
 
