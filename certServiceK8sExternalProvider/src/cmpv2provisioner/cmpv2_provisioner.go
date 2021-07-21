@@ -93,7 +93,7 @@ func (ca *CertServiceCA) Sign(
 
 	var response *certserviceclient.CertificatesResponse
 	var errAPI error
-
+	//todo  log Update Support Status
 	if ca.isCertificateUpdate(signCertificateModel) {
 		log.Debug("Certificate will be updated.", "old-certificate", signCertificateModel.OldCertificateBytes)
 		log.Info("Attempt to send certificate update request")
@@ -123,7 +123,6 @@ func (ca *CertServiceCA) Sign(
 
 	return signedCertificateChain, trustedCertificates, nil
 }
-
 
 func (ca *CertServiceCA) isCertificateUpdate(signCertificateModel model.SignCertificateModel) bool {
 	return len(signCertificateModel.OldCertificateBytes) > 0 && len(signCertificateModel.OldPrivateKeyBytes) > 0

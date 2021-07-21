@@ -80,10 +80,10 @@ func Test_shouldReturnCorrectSignedPemsWhenParametersAreCorrectForCertificateReq
 	privateKeyBytes := getPrivateKeyBytes()
 
 	signCertificateModel := model.SignCertificateModel{
-		CertificateRequest: 	request,
-		PrivateKeyBytes:        privateKeyBytes,
-		OldCertificateBytes:    []byte{},
-		OldPrivateKeyBytes:     []byte{},
+		CertificateRequest:  request,
+		PrivateKeyBytes:     privateKeyBytes,
+		OldCertificateBytes: []byte{},
+		OldPrivateKeyBytes:  []byte{},
 	}
 
 	signedPEM, trustedCAs, err := provisioner.Sign(signCertificateModel)
@@ -109,10 +109,10 @@ func Test_shouldReturnCorrectSignedPemsWhenParametersAreCorrectForUpdateCertific
 	privateKeyBytes := getPrivateKeyBytes()
 
 	signCertificateModel := model.SignCertificateModel{
-		CertificateRequest:	 	request,
-		PrivateKeyBytes:        privateKeyBytes,
-		OldCertificateBytes:    testdata.OldCertificateBytes,
-		OldPrivateKeyBytes:     testdata.OldPrivateKeyBytes,
+		CertificateRequest:  request,
+		PrivateKeyBytes:     privateKeyBytes,
+		OldCertificateBytes: testdata.OldCertificateBytes,
+		OldPrivateKeyBytes:  testdata.OldPrivateKeyBytes,
 	}
 
 	signedPEM, trustedCAs, err := provisioner.Sign(signCertificateModel)

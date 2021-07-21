@@ -84,6 +84,10 @@ func (controller *CMPv2IssuerController) Reconcile(req ctrl.Request) (ctrl.Resul
 		handleErrorInvalidSecret(ctx, log, err, statusUpdater, secretNamespaceName)
 		return ctrl.Result{}, err
 	}
+	log.Info("NEW IMPL START ======================================")
+
+	log.Info("Version: " + issuer.APIVersion) // todo certmanager.onap.org/v2 if
+	log.Info("NEW IMPL END++++++++++++++++++++++++++++++++++")
 
 	// 4. Create CMPv2 provisioner
 	provisioner, err := controller.ProvisionerFactory.CreateProvisioner(issuer, secret)

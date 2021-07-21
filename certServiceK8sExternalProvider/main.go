@@ -53,7 +53,12 @@ var (
 func init() {
 	_ = clientgoscheme.AddToScheme(scheme)
 	_ = certmanager.AddToScheme(scheme)
-	_ = certserviceapi.AddToScheme(scheme)
+	_ = certserviceapi.AddToSchemeV2(scheme)
+	fmt.Println("Schema V2 added")
+	//if apiV2Error != nil {
+	_ = certserviceapi.AddToSchemeV1(scheme)
+	fmt.Println("Scheme V1 Added")
+	//}
 	setupLog = leveledlogger.GetLogger()
 
 	ctrl.SetLogger(setupLog.Log)
@@ -78,7 +83,7 @@ func main() {
 
 func printVersionInfo() {
 	fmt.Println()
-	fmt.Println("                                     ***   CMPv2 Provider v1.0.0   ***")
+	fmt.Println("                                     ***   CMPv2 Provider   ***")
 	fmt.Println()
 }
 

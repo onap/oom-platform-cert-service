@@ -31,6 +31,7 @@ import (
 
 func init() {
 	SchemeBuilder.Register(&CMPv2Issuer{}, &CMPv2IssuerList{})
+	SchemeBuilderV2.Register(&CMPv2Issuer{}, &CMPv2IssuerList{})
 }
 
 // CMPv2IssuerSpec defines the desired state of CMPv2Issuer
