@@ -46,6 +46,30 @@
       "revId": "b151ffacf655f2e14f99c6850c53bee562c24e9e",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f37ea258_05ce1a01",
+        "filename": "certServiceK8sExternalProvider/deploy/crd.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2021-07-22T08:03:30Z",
+      "side": 1,
+      "message": "Done, sounds good.",
+      "parentUuid": "d204a3c6_d85da3ae",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 105,
+        "endChar": 2
+      },
+      "revId": "b151ffacf655f2e14f99c6850c53bee562c24e9e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
