@@ -15,7 +15,7 @@ Istanbul
 Version: 2.4.0
 --------------
 
-:Release Date:
+:Release Date: 2021-07-22
 
 **New Features**
 

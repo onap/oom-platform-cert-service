@@ -11,8 +11,8 @@ OOM Certification Service Release Notes
     :depth: 2
 ..
 
-Version: 2.4.0 [not released yet]
-=================================
+Version: 2.4.0
+==============
 
 Abstract
 --------
