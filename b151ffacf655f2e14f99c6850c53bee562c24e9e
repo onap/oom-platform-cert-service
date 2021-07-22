@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4d58c52_613aa431",
+        "filename": "certServiceK8sExternalProvider/deploy/crd.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2021-07-22T06:40:36Z",
+      "side": 1,
+      "message": "Shouldn\u0027t updateEndpoint be optional to allow backward compatibility? Here as well as in code\u0027s resource definition?",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 105,
+        "endChar": 2
+      },
+      "revId": "b151ffacf655f2e14f99c6850c53bee562c24e9e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
