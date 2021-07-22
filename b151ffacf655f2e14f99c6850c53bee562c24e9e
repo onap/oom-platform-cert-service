@@ -22,6 +22,30 @@
       "revId": "b151ffacf655f2e14f99c6850c53bee562c24e9e",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d204a3c6_d85da3ae",
+        "filename": "certServiceK8sExternalProvider/deploy/crd.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-07-22T07:33:38Z",
+      "side": 1,
+      "message": "It is required for new CRD, so: \nnew CRD \u003c-\u003e old issuer is incompatible\nold CRD \u003c-\u003e new issuer is compatible\nnew CRD \u003c-\u003e new issuer is compatible\n\nI think that new CRD shoudn\u0027t be compatible with old issuer - if someone install new ONAP or upgrade CRD should also upgrade issuer. \nWhat do you think ?",
+      "parentUuid": "f4d58c52_613aa431",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 105,
+        "endChar": 2
+      },
+      "revId": "b151ffacf655f2e14f99c6850c53bee562c24e9e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
