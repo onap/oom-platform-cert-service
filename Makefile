@@ -69,8 +69,8 @@ send-certification-request: verify-initialization-request-files-exist
 	@echo "##### Generate CSR and Key #####"
 	openssl req -new -newkey rsa:2048 -nodes -keyout `pwd`/compose-resources/certs-from-curl/cr.key \
 	    -out `pwd`/compose-resources/certs-from-curl/cr.csr \
-	    -subj "/C=US/ST=California/L=San-Francisco/OU=ONAP/O=Linux-Foundation/CN=new-onap.org" \
-	    -addext "subjectAltName = DNS.1:test.onap.org,DNS.2:onap.org,IP.1:127.0.0.1,URI.1:ftp://test.org,email.1:test@onap.org"
+	    -subj "/C=US/ST=California/L=San-Francisco/OU=ONAP/O=Linux-Foundation/CN=onap.org" \
+	    -addext "subjectAltName = DNS.1:new-test.onap.org,DNS.2:onap.org,IP.1:127.0.0.1,URI.1:ftp://test.org,email.1:test@onap.org"
 	@echo "##### Send Certification Request #####"
 	curl -sN https://localhost:8443/v1/certificate-update/${CA_NAME} -H "PK: $$(cat ./compose-resources/certs-from-curl/cr.key | base64 | tr -d \\n)" \
 	    -H "CSR: $$(cat ./compose-resources/certs-from-curl/cr.csr | base64 | tr -d \\n)" \

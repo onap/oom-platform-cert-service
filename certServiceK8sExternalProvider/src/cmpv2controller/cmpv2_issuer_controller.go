@@ -65,6 +65,7 @@ func (controller *CMPv2IssuerController) Reconcile(req ctrl.Request) (ctrl.Resul
 		handleErrorLoadingCMPv2Issuer(log, err)
 		return ctrl.Result{}, client.IgnoreNotFound(err)
 	}
+	issuer.APIVersion
 	log.Info("CMPv2Issuer loaded: ", "issuer", issuer)
 
 	// 2. Validate CMPv2Issuer
