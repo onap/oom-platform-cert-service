@@ -154,7 +154,8 @@ Here is an example of generated *secret* containing certificates:
 Certificate update
 ------------------------------
 
-When the certificate already exists, but its date has expired or certificate data should be changed, then the certificate update scenario can be executed.
+When the certificate already exists, but its date is close to expire or certificate data should be changed, then the certificate update scenario can be executed.
+It is performed automatically by cert-manager close to the expiration date or can be triggered manually.
 This use case requires the update endpoint configured for *CMPv2Issuer* CRD:
 
 .. code-block:: yaml
