@@ -61,7 +61,8 @@ New features
 
 **Known Issues**
 
-None
+If Cert-Manager was down for some time and did not trigger certificate update on time, then updating an outdated certificate may require manual actions.
+The required actions are described in :ref:`Troubleshooting section <troubleshooting>`
 
 Deliverables
 ------------
