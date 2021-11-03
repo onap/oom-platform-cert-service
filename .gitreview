@@ -2,6 +2,6 @@
 host=gerrit.onap.org
 port=29418
 project=oom/platform/cert-service
-defaultbranch=master
+defaultbranch=istanbul
 asd=asdf
         

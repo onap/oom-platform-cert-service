@@ -1,6 +1,6 @@
 from docs_conf.conf import *
 
-branch = 'latest'
+branch = 'istanbul'
 master_doc = 'index'
 
 linkcheck_ignore = [
@@ -15,4 +15,5 @@ intersphinx_mapping = {}
 html_last_updated_fmt = '%d-%b-%y %H:%M'
 
 def setup(app):
-    app.add_stylesheet("css/ribbon.css")
+    app.add_css_file("css/ribbon.css")
+
