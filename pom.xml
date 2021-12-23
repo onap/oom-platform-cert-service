@@ -40,13 +40,14 @@
         <!-- Dependencies -->
         <assertj-core.version>3.15.0</assertj-core.version>
         <mockito-core.version>3.2.4</mockito-core.version>
-        <spring-core.version>5.2.3.RELEASE</spring-core.version>
-        <spring-boot-starter.version>2.2.4.RELEASE</spring-boot-starter.version>
         <maven-javadoc-plugin.version>3.1.1</maven-javadoc-plugin.version>
         <maven-surefire-plugin.version>3.0.0-M4</maven-surefire-plugin.version>
-        <spring-boot-starter-actuator.version>2.2.4.RELEASE</spring-boot-starter-actuator.version>
-        <spring-boot-starter-log4j2.version>2.1.5.RELEASE</spring-boot-starter-log4j2.version>
-        <spring-cloud-starter-config.version>2.2.1.RELEASE</spring-cloud-starter-config.version>
+        <spring-boot-starter.version>2.5.8</spring-boot-starter.version>
+        <spring-boot-starter-actuator.version>2.6.1</spring-boot-starter-actuator.version>
+        <spring-boot-starter-log4j2.version>2.6.2</spring-boot-starter-log4j2.version>
+
+        <spring.cloud-version>2020.0.3</spring.cloud-version>
+
         <springdoc-openapi-ui.version>1.2.30</springdoc-openapi-ui.version>
         <bouncycastle.version>1.60</bouncycastle.version>
         <docker-maven-plugin.version>0.33.0</docker-maven-plugin.version>
@@ -58,7 +59,7 @@
         <commons-io.version>2.6</commons-io.version>
         <junit.version>5.5.2</junit.version>
         <mockito-junit-jupiter.version>2.17.0</mockito-junit-jupiter.version>
-
+        <log4j2.version>2.17.1</log4j2.version>
         <!-- Docker -->
         <skipDockerPush>true</skipDockerPush>
         <maven.build.timestamp.format>yyyyMMdd'T'HHmmss</maven.build.timestamp.format>
@@ -184,11 +185,11 @@
                     </exclusion>
                 </exclusions>
             </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-log4j2</artifactId>
-                <version>${spring-boot-starter-log4j2.version}</version>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-starter-log4j2</artifactId>-->
+<!--                <version>${spring-boot-starter-log4j2.version}</version>-->
+<!--            </dependency>-->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-test</artifactId>
@@ -281,6 +282,25 @@
                 <scope>test</scope>
             </dependency>
 
+            <dependency>
+                <groupId>org.hibernate.validator</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>6.2.1.Final</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-bom</artifactId>
+                <version>${log4j2.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring.cloud-version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
