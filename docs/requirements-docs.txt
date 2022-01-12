@@ -2,3 +2,4 @@ setuptools
 six
 sphinxcontrib.openapi
 lfdocs-conf
+mistune==0.8.4

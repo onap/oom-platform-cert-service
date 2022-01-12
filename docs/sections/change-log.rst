@@ -7,6 +7,57 @@ Change Log
 ==============
 
 --------
+Jakarta
+--------
+
+==============
+
+Version: 2.5.0
+--------------
+
+:Release Date: 2022-01-11
+
+**New Features**
+
+  N/A
+
+**Bug Fixes**
+
+  N/A
+
+**Known Issues**
+
+  N/A
+
+**Security Notes**
+
+  N/A
+
+*Fixed Security Issues*
+
+  Vulnerability [CVE-2021-44228] Top up Apache log4j2 to 2.17.1
+
+*Known Security Issues*
+
+  N/A
+
+*Known Vulnerabilities in Used Modules*
+
+  N/A
+
+**Upgrade Notes**
+
+  N/A
+
+**Deprecation Notes**
+
+  N/A
+
+**Other**
+
+==============
+
+--------
 Istanbul
 --------
 
