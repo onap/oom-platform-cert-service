@@ -1,5 +1,5 @@
-six
-sphinxcontrib-swaggerdoc
-sphinxcontrib-openapi
 lfdocs-conf
+sphinx>=4.2.0  # BSD
+sphinx-rtd-theme>=1.0.0  # MIT
+sphinxcontrib.openapi
 mistune==0.8.4
