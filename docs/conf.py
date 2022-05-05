@@ -7,6 +7,10 @@ linkcheck_ignore = [
     'http://localhost',
 ]
 
+exclude_patterns = [
+    '.tox'
+]
+
 extensions = [
     'sphinxcontrib.openapi',
 ]
