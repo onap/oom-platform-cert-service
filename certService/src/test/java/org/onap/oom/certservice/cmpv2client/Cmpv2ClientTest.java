@@ -261,7 +261,7 @@ class Cmpv2ClientTest {
         when(httpResponse.getEntity()).thenReturn(httpEntity);
 
         try (final InputStream is =
-                     this.getClass().getResourceAsStream("/ReturnedSuccessPKIMessageWithCertificateFile");
+                     this.getClass().getResourceAsStream("/ReturnedSuccessPKIMessageWithValidCertificateFile");
              BufferedInputStream bis = new BufferedInputStream(is)) {
 
             byte[] ba = IOUtils.toByteArray(bis);
