@@ -5,6 +5,12 @@ master_doc = 'index'
 
 linkcheck_ignore = [
     'http://localhost',
+    'http://ejbca',
+    'https://localhost'
+]
+
+exclude_patterns = [
+    '.tox'
 ]
 
 extensions = [
