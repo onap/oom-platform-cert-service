@@ -22,6 +22,30 @@
       "revId": "187d1435142c50e627890ddd5049a9f43ebbe1a2",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0af8d8f_8ff37305",
+        "filename": "docs/sections/change-log.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 511
+      },
+      "writtenOn": "2022-06-01T15:01:41Z",
+      "side": 1,
+      "message": "This is meant to be the release date for the image (which was indeed 2022-01-11), not the ONAP release date.",
+      "parentUuid": "877780f4_7e813a88",
+      "range": {
+        "startLine": 16,
+        "startChar": 15,
+        "endLine": 16,
+        "endChar": 25
+      },
+      "revId": "187d1435142c50e627890ddd5049a9f43ebbe1a2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
