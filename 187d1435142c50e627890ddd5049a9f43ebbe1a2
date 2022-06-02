@@ -1,0 +1,7 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+2: Jack Lucas <jflos@sonoris.net>
+Submitted-by: Jack Lucas <jflos@sonoris.net>
+Submitted-at: Thu, 02 Jun 2022 16:59:06 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/oom/platform/cert-service/+/129321
+Project: oom/platform/cert-service
+Branch: refs/heads/master
