@@ -1,0 +1,8 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+2: Jack Lucas <jflos@sonoris.net>
+Code-Review+2: Borislav Glozman <borislav.glozman@amdocs.com>
+Submitted-by: Borislav Glozman <borislav.glozman@amdocs.com>
+Submitted-at: Wed, 08 Jun 2022 16:39:52 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/oom/platform/cert-service/+/129387
+Project: oom/platform/cert-service
+Branch: refs/heads/jakarta
