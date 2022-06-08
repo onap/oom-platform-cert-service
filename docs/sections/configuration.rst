@@ -102,7 +102,7 @@ Note! This must be executed before calling *make all* (from OOM Installation) or
 1. Edit *cmpServers.json* file. If OOM *global.addTestingComponents* flag is set to:
 
     - *true* - edit *kubernetes/platform/components/oom-cert-service/resources/test/cmpServers.json*
-    - *false* - edit *kubernetes/platform/components/oom-cert-service/resources/default/cmpServers.json
+    - *false* - edit *kubernetes/platform/components/oom-cert-service/resources/default/cmpServers.json*
 
 2. Build and start OOM deployment
 

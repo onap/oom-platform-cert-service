@@ -137,7 +137,7 @@ Summary
 
 Certification Service provides certificates signed by external CMPv2 server - such certificates are further called operators certificates. Operators certificates are meant to secure external ONAP traffic - traffic between network functions (xNFs) and ONAP.
 
-This project was moved from Application Authorization Framework (AAF), to check previous release notes see,  `AAF CertService release notes <https://docs.onap.org/projects/onap-aaf-certservice/en/frankfurt/sections/release-notes.html>`_ .
+This project was moved from Application Authorization Framework (AAF).
 
 
 Release Data
