@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f92af1d7_a0883f83",
+        "filename": ".gitreview",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 3685
+      },
+      "writtenOn": "2022-08-23T08:06:50Z",
+      "side": 1,
+      "message": "trailing blanks here",
+      "revId": "f6c386c44a9832e29f555fcad163e579ebabc195",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
