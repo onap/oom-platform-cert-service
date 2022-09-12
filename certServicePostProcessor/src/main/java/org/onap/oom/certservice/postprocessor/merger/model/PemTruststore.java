@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.security.Security;
 import java.security.cert.Certificate;
+import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.util.ArrayList;
 import java.util.List;
@@ -89,8 +90,13 @@ public class PemTruststore extends Truststore {
     }
 
     boolean isFileWithoutPemCertificate() throws TruststoreDataOperationException {
-        List<Certificate> certificateList = extractCertificatesFromFile();
-        return certificateList.isEmpty();
+        try {
+            List<Certificate> certificateList = extractCertificatesFromFile();
+            return certificateList.isEmpty();
+        } catch (TruststoreDataOperationException e) {
+            LOGGER.error("Cannot extract certificates from file: {}", storeFile.getPath());
+        }
+        return true;
     }
 
     String transformToStringInPemFormat(List<Certificate> certificates) throws TruststoreDataOperationException {
@@ -112,7 +118,12 @@ public class PemTruststore extends Truststore {
             Security.addProvider(new BouncyCastleProvider());
             CertificateFactory certFactory = CertificateFactory.getInstance(X_509_CERTIFICATE, BOUNCY_CASTLE_PROVIDER);
             return new ArrayList<>(certFactory.generateCertificates(inputStream));
-        } catch (Exception e) {
+        }
+//        catch (CertificateException e) {
+//            LOGGER.error("Cannot read certificates from file: {}", storeFile.getPath());
+//            throw new TruststoreDataOperationException(e);
+//        }
+        catch (Exception e) {
             LOGGER.error("Cannot read certificates from file: {}", storeFile.getPath());
             throw new TruststoreDataOperationException(e);
         }
