@@ -31,10 +31,11 @@ import java.security.Signature;
 import java.security.SignatureException;
 import java.util.Date;
 
+import org.bouncycastle.asn1.ASN1Encoding;
 import org.bouncycastle.asn1.ASN1EncodableVector;
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
 import org.bouncycastle.asn1.DERBitString;
-import org.bouncycastle.asn1.DEROutputStream;
+import org.bouncycastle.asn1.ASN1OutputStream;
 import org.bouncycastle.asn1.DERSequence;
 import org.bouncycastle.asn1.DERTaggedObject;
 import org.bouncycastle.asn1.crmf.CertRequest;
@@ -127,7 +128,7 @@ public final class CmpMessageHelper {
             final CertRequest certRequest, final KeyPair keypair) throws CmpClientException {
         ProofOfPossession proofOfPossession;
         try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {
-            final DEROutputStream derOutputStream = new DEROutputStream(byteArrayOutputStream);
+            final ASN1OutputStream derOutputStream = new ASN1OutputStream(byteArrayOutputStream,ASN1Encoding.DER);
             derOutputStream.writeObject(certRequest);
 
             byte[] popoProtectionBytes = byteArrayOutputStream.toByteArray();
