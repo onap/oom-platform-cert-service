@@ -36,6 +36,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
 import org.bouncycastle.asn1.DERBitString;
+import org.bouncycastle.asn1.ASN1BitString;
 import org.bouncycastle.asn1.cmp.CMPObjectIdentifiers;
 import org.bouncycastle.asn1.cmp.InfoTypeAndValue;
 import org.bouncycastle.asn1.cmp.PBMParameter;
@@ -66,7 +67,7 @@ public final class CmpResponseValidationHelper {
     static void verifySignature(PKIMessage respPkiMessage, PublicKey pk)
             throws CmpClientException {
         final byte[] protBytes = getProtectedBytes(respPkiMessage);
-        final DERBitString derBitString = respPkiMessage.getProtection();
+        final DERBitString derBitString = (DERBitString) respPkiMessage.getProtection();
         try {
             final Signature signature =
                     Signature.getInstance(

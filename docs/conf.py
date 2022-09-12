@@ -6,7 +6,8 @@ master_doc = 'index'
 linkcheck_ignore = [
     'http://localhost',
     'http://ejbca',
-    'https://localhost'
+    'https://localhost',
+    'https://download.primekey.com'
 ]
 
 exclude_patterns = [
