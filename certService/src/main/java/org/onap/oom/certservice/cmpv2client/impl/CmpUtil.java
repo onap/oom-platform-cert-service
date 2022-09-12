@@ -25,8 +25,8 @@ import org.bouncycastle.asn1.ASN1Encodable;
 import org.bouncycastle.asn1.ASN1EncodableVector;
 import org.bouncycastle.asn1.ASN1GeneralizedTime;
 import org.bouncycastle.asn1.ASN1OctetString;
+import org.bouncycastle.asn1.ASN1OutputStream;
 import org.bouncycastle.asn1.DEROctetString;
-import org.bouncycastle.asn1.DEROutputStream;
 import org.bouncycastle.asn1.DERSequence;
 import org.bouncycastle.asn1.cmp.CMPObjectIdentifiers;
 import org.bouncycastle.asn1.cmp.InfoTypeAndValue;
@@ -116,7 +116,7 @@ public final class CmpUtil {
         vector.add(body);
         ASN1Encodable protectedPart = new DERSequence(vector);
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
-            DEROutputStream out = new DEROutputStream(baos);
+            ASN1OutputStream out = new ASN1OutputStream(baos,ASN1Encoding.DER);
             out.writeObject(protectedPart);
             res = baos.toByteArray();
         } catch (IOException ioe) {
