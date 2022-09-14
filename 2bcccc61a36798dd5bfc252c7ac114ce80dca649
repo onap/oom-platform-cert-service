@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71b1b306_b1ef4188",
+        "filename": "certService/src/main/java/org/onap/oom/certservice/cmpv2client/validation/CmpResponseValidationHelper.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-09-14T14:55:37Z",
+      "side": 1,
+      "message": "DERBitString is subClass of ASN1BitString so casting looks good.",
+      "range": {
+        "startLine": 70,
+        "startChar": 14,
+        "endLine": 70,
+        "endChar": 26
+      },
+      "revId": "2bcccc61a36798dd5bfc252c7ac114ce80dca649",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
