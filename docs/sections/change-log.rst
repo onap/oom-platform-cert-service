@@ -1,10 +1,64 @@
 .. This work is licensed under a Creative Commons Attribution 4.0 International License.
 .. http://creativecommons.org/licenses/by/4.0
 .. Copyright 2020-2021 NOKIA
+.. Copyright 2022 Deutsche Telekom, NOKIA
 
 
 Change Log
 ==========
+
+----
+Kohn
+----
+
+Version: 2.6.0
+--------------
+
+:Release Date: 2022-09-21
+
+**New Features**
+
+  N/A
+
+**Bug Fixes**
+
+  N/A
+
+**Known Issues**
+
+  N/A
+
+**Security Notes**
+
+  N/A
+
+*Fixed Security Issues*
+
+  Vulnerability [SONATYPE-2021-1694] Top up Google gson to 2.9.0
+  Vulnerability [SONATYPE-2018-0705] Top up commons-io to 2.11.0
+  Vulnerability [CVE-2020-13956] Top up Apache httpclient to 4.5.13
+  Vulnerabilities:
+  [CVE-2020-0187 CVE-2020-15522 CVE-2020-26939 SONATYPE-2020-0770
+  SONATYPE-2021-4916 SONATYPE-2019-0673] Top up Bouncycastle bcprov-jdk15on to 1.70
+  Vulnerability [SONATYPE-2021-1694] Top up sonar-go-pluging at 1.1.1.2000
+
+*Known Security Issues*
+
+  N/A
+
+*Known Vulnerabilities in Used Modules*
+
+  N/A
+
+**Upgrade Notes**
+
+  N/A
+
+**Deprecation Notes**
+
+  N/A
+
+**Other**
 
 -------
 Jakarta
