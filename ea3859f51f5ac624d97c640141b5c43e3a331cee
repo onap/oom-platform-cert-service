@@ -1,0 +1,7 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+2: Borislav Glozman <borislav.glozman@amdocs.com>
+Submitted-by: Borislav Glozman <borislav.glozman@amdocs.com>
+Submitted-at: Thu, 22 Sep 2022 14:41:11 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/oom/platform/cert-service/+/131049
+Project: oom/platform/cert-service
+Branch: refs/heads/master
