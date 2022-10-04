@@ -1,0 +1,7 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+2: Andreas Geissler <andreas-geissler@telekom.de>
+Submitted-by: Andreas Geissler <andreas-geissler@telekom.de>
+Submitted-at: Tue, 04 Oct 2022 13:20:43 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/oom/platform/cert-service/+/131363
+Project: oom/platform/cert-service
+Branch: refs/heads/master
