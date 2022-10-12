@@ -20,6 +20,10 @@ intersphinx_mapping = {}
 
 html_last_updated_fmt = '%d-%b-%y %H:%M'
 
-
 def setup(app):
     app.add_css_file("css/ribbon.css")
+
+linkcheck_ignore = [
+    'https://download.primekey.com/docs/EJBCA-Enterprise/6_14_0/CMP.html',
+    'http://ejbca:8080/ejbca/publicweb/cmp/cmpRA'
+]
