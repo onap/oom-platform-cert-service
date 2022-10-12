@@ -1,0 +1,7 @@
+Verified+1: Andreas Geissler <andreas-geissler@telekom.de>
+Code-Review+2: Thomas Kulik <thomas.kulik@telekom.de>
+Submitted-by: Andreas Geissler <andreas-geissler@telekom.de>
+Submitted-at: Wed, 12 Oct 2022 08:27:07 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/oom/platform/cert-service/+/129485
+Project: oom/platform/cert-service
+Branch: refs/heads/jakarta
