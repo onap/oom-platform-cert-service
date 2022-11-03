@@ -7,13 +7,14 @@
   top: 25px;
   right: -50px;
   -webkit-transform: rotate(45deg);
-  -moz-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  -o-transform: rotate(45deg);
-  transform: rotate(45deg);
+     -moz-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+       -o-transform: rotate(45deg);
+          transform: rotate(45deg);
   -webkit-box-shadow: 0 0 10px #888;
-  -moz-box-shadow: 0 0 10px #888;
-  box-shadow: 0 0 10px #888;
+     -moz-box-shadow: 0 0 10px #888;
+          box-shadow: 0 0 10px #888;
+
 }
 
 .ribbon a {
@@ -34,28 +35,29 @@
   color: #fff;
 }
 
+
 /* override table width restrictions */
 @media screen and (min-width: 767px) {
-  .wy-table-responsive table td,
-  .wy-table-responsive table th {
-    /* !important prevents the common CSS stylesheets from overriding
-           this as on RTD they are loaded after this stylesheet */
-    white-space: normal !important;
-  }
 
-  .wy-table-responsive {
-    overflow: visible !important;
-  }
+   .wy-table-responsive table td, .wy-table-responsive table th {
+      /* !important prevents the common CSS stylesheets from overriding
+         this as on RTD they are loaded after this stylesheet */
+      white-space: normal !important;
+   }
+
+   .wy-table-responsive {
+      overflow: visible !important;
+   }
 }
 
 @media screen and (max-width: 767px) {
-  .wy-table-responsive table td {
-    white-space: nowrap;
-  }
+    .wy-table-responsive table td {
+        white-space: nowrap;
+    }
 }
 
 /* fix width of the screen */
 
 .wy-nav-content {
-  max-width: none;
+    max-width: 800px;
 }
