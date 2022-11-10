@@ -1,0 +1,7 @@
+Code-Review+2: Thomas Kulik <thomas.kulik@telekom.de>
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Submitted-by: Thomas Kulik <thomas.kulik@telekom.de>
+Submitted-at: Thu, 10 Nov 2022 16:22:31 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/oom/platform/cert-service/+/132149
+Project: oom/platform/cert-service
+Branch: refs/heads/kohn
